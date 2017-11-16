@@ -1,0 +1,343 @@
+-----
+App
+could be online wensite, but also could be DL as an offline app
+could import google maps customer reviews into personal exprience fierlds
+tag system
+tag cloud (to see most popular tags and other ideas and be able to click them)
+default on where to have lunch in shibuya, but other tab include where to have diner, where eto drink, where to party, and where to rest after last train. lso have all the last and first troains times
+user interaction: complete information, write exp. , just like or dislike buttons, or star rating system
+link to tabelog or other relevant website
+feature: closest combini, now
+feature: closest loveho, now
+feature: closest <tag>, now
+whuen browsing, add the info of how long by foot it would take to reach there from current gps position.
+Basic info for real tourists: always carry enough cash to pay for the meal. Pokemon go? shibuya is like poke heaven.
+-----------
+
+Name: Ramen 1 (yellow sign)
+Location: Ramen Street
+Type: ramen
+Price: around 800
+Points: tonkostsu miso available, up to 2 free kaidama, choice soft/hard for men
+Personal experience: very good ramen, strong taste, good price, not very confortable (narrow counter, crappy pop music...)
+
+Name: Ramen 2
+Location: Ramen Street (further down)
+Type: ramen
+Price: around 900
+Points: (dont remember)
+Personal experience: good ramen, slightly more confortable than ramen 1 but slightly less tasty
+
+Name: Ramen 3
+Location: Ramen Street (in front of ramen 1)
+Type: ramen
+Price: around 900
+Points: (dont remember anything special)
+Personal experience: decent ramen, I didnt like much the meat which was containing too much fat for my enjoyment
+
+Name: Ramen 4 NanaShi tonkotsu ramen
+Location: Big street in front of the Robot Restaurant
+Type: ramen
+Price: around 800
+Points: tonkotsu available, a bit more confortable than the average ramen restaurant (larger counter, quiet jazz music)
+Personal experience: decent ramen, but taste too light for me (I tried the awakoku aji tamago ramen)
+
+Name: Ramen 5 
+Location: next to the McDo of center gai (ramen itself is perpendicular street)
+Type: ramen
+Price: around 900
+Points: miso available (red, white and black), a bit more confortable than the average ramen restaurant (larger counter). Jazz music, but not so quiet. Some small tables are also available. No customization / question asked for the ramens.
+Personal experience: disapointing: maybe decent ramen, but taste way too light for me. Could not feel the miso, men were a bit thick and yellow kind (not my favorite). Meat was good.
+
+Name: Ippudo
+Location: 
+Type: ramen
+Price: around 800
+Points: fairly cistomizable ramen, one free kaidama available
+Personal experience: very good ramen
+
+Name: Burger King
+Location: 
+Type: burger
+Price: around 900
+Points: 
+Personal experience: 
+
+Name: Wendy's first kitchen
+Location: in front of BK
+Type: burger
+Price: around 1000
+Points: various stuff, but mostly famous for burgers. Interior slightly better than average similar chain (better than BK). Price slightly mor eexpensive.
+Personal experience: Good burgers. But no better than BK, for more money.
+
+Name: Taco Bell
+Location: 
+Type: tacos
+Price: around 900
+Points: 
+Personal experience: 
+
+Name: Turk Restaurant
+Location: In front of H&M
+Type: turk
+Price: around 900
+Points: popular turkish dishes such as kehbab, possibility to eat inside on table
+Personal experience: very good turk restaurant, good kehbab, not very confortable (narrow space)
+
+Name: Coco Ichi
+Location: down the tower
+Type: japanese curry
+Price: around 900
+Points: highly customizable japanese curry
+Personal experience: very good
+
+Name: Jonathan's
+Location: behind tower
+Type: family restaurant
+Price: around 900
+Points: wide choice of dishes, also deserts, comfortable
+Personal experience: good
+
+Name: Standing pizza bar Cona
+Location: not far from ramen street
+Type: pizzeria
+Price: around 500
+Points: super cheap, standing at the counter (no chairs)
+Personal experience: decent pizza for a super cheap 500 yen comes with a small salad and a drink. Pizza is a bit small so better be not too much hungry
+
+Name: Something Terace
+Location: couple of streets behind the office
+Type: Indonesian
+Price: diner not to exprensive, but not cheap (5000 per person drinking cheapest wine)
+Points: nice table, nie restaurant, decent food and drinks
+Personal experience: decent. had a nice evening there dining with 4 people
+
+
+Name: Entertainment and sports bar
+Location: next to samrat curry farther after the center gai
+Type: cheap pizza/pasta lunch
+Price: pizza/pasta lunch set is 500yen
+Points: super cheap pizza or pasta, wide and dark sports bar (no windows) with sports video playing on many walls.
+Personal experience: I don't really like this dark, no windows bar atmosphere, playing cheesy music, and I don't enjoy watching sports on TV. The pizza marguerita was pretty much tasteless. Other than that service fast, table and room spacious, and super cheap...
+
+Name: Go Go Curry
+Location: next to samrat curry farther after the center gai
+Type: japanese curry
+Price: around 850
+Points: chain restaurant a bit similar to cocoichi. customizable japanese curry, counter and small tables, basement floor
+Personal experience: Good alternative to cocoichi. Less customizable, less options, but less expensive as well. Not really spicy, but good japanese curry. I enjoyed my chiken katsu with cheese. Basement is not very glamorous, but for a lunch it's OK.
+Loyalty System: Point card. 5 times: free toping. 10 times: free curry.
+
+Name: Nice Pizza/Pasta restaurant
+Location: in front of samrat curry farther after the center gai
+Type: pizza/pasta/salad
+Price: 1000
+Points: 9th floor with nice large bay windows, spacious room with large tables. Real pizza oven. 1000yen menu set with a drink, bowl of soup, large salad, and large pizza. music playing, boom boom type, a bit loud but OK.
+Personal experience: loved the room. fast service. taste was bland (marguerita).
+wtf: the deco is all fine except for taht reindeer head sprouting out of a column for no apparent reason
+
+Name: Matsuya
+Location: down the street from the office , with music shop amp and drums
+Floor: 1F
+Windows: yes
+Type: Japanese fast food
+Price: around 600yen
+Points: Fast and good. Has counter and tables. Choice of curry or gyudon dishes.
+Personal experience: I got a hamburger curry, it was really cheap and really good. Came fast toe. Perfect for a quick meal, but not very glamorous.
+
+Name: mazesoba shichi
+Location: down the street from the office , with music shop amp and drums
+Floor: 1F
+Windows: yes
+Type: Ramen
+Price: around 800yen
+Points: Special ramen without soup.
+Personal experience: Mind blowingly delicious. Meat is awesome, smokey taste, and in large quantity. The shoyu base sauce is delicious. Large counter. Japanese reggai music, not too loud. Extremely small stools. Avoid the ramen, way less delicious than the mazesoba.
+----
+So you know that restaurant created by the gods in an expirement to feed mere mortals divine food? Shichi? Well it seems like, as in any gods stories, one of them was evil and planted a not-so-divine dish in the menu. I unveiled it and am here to warn you: if, for any unimaginable reasons, you still havent been there, when go, do NOT order the ramen. Stick with the mazu soba.
+
+
+Name: pizza bar Cona
+Location: down the street behind our office
+Type: pizzeria
+Price: around 500
+Points: cheap and light pizza, counter or tables available. 500 for just the pizza, +300yen for salad bar and drink bar. pasta lunch also available.
+Personal experience: decent pizza 30cm, but light (very thin crust and topping), better not be hungry. Counter is small, not very confortable. When I went there it was also too cold.
+
+
+Name: kin no kara
+Location: next to ippudo, center gai
+Type: fried chiken karahage take out only
+Price: around 400
+Points: cheap, fast, to have on the go. Fried chicken or fries in a paper bag. Various sauce availble (including lemon juice).
+Personal experience: simple, good, I use it if I still need some more food if my lunch was too light. Nowhere to sit down around there, so have to walk around while eating or just stand there.
+
+Name: mangako thai chicken rice
+Location: alongside the river down the big street our side
+Type: thai
+Price: around 800
+Points: supposedly famous chicken rice
+Personal experience: My wife likes thai food quite a lot and has been in thailand a bunch of times. She told me there were a restaurant there serving chicken rice, and EVEN IN Thailand, there were a line.
+And the have a restaurant in Shibuya too. She's never been, but, if there is a line it HAS to be absolutely delicious, according to Japanese hyper standardized rules that can never been tricked (like say, some people paid to stay in line on day when the reporter is coming).
+So I went there, and arrived shortly in front a restaurant exposing dead chicken on its facade, a bit like youd expect in China.
+No line.
+I go inside, and its small and crappy, with shitty music on the top.
+I order the famous chicken rice, for a cost of f**ing 800yen.
+It comes quicklym with a soup (hot water) and some sauce (like sweet chinese shoyu with a touch of vinegar).
+The amount is ridiculously small (note that you could double it for 400yen). What's more, the chicken is actually half chicken, half chicken skin.
+I eat, nothing special at all. Rice is not really good. Chicken is nice and soft and tasteless, for the few bites I had on it. The sauce was good.
+Oh, and surprisingly enough, it also came with a mini-bucket full of pakuchi... this crap is usually expensive here.
+And that was it, EXTREMELY disapointed. The Singapour chicken rice we had (now closed) near Porters was 100 times better.
+I feel robbed. Of my money. My time. My hopes. And I'm hungry.
+
+
+Name: Soul Kitchen Curry or something
+Location: avenue behind the office
+Type: japanese curry
+Price: around 800
+Points: nice atmosphere. Elvis Presley music.
+Personal experience: well balanced curry
+
+
+Name: ramen and curry
+Location: right behing the office next to Shichi
+Type: ramen
+Price: around 800
+Points: tonkostsu ramen, soupless ramen, curry, gyoza... and mini versions available. Tried the white miso ramne, and it was prety bland, not worth the 800yen. I liked the atmosphere, very local, kinda cossy, with the TV on and the grand mothers as the staff.
+
+Name: Cafde. SALICA
+Location: 2nd floor in front of Samrat
+Type: cafe restaurant, sandwiches burgers desserts...
+Price: from 1000 yen for a burger
+Points: large space and tables, some with sofa, music OK and not too lound, a diverse menu
+Personal experience: 
+Once again I've been blessed with a totally unexpected discovery of divinish food!
+I was going to Shibuya dowtown, wher ethe girls are pretty and the rayds are mighty, when suddenly an irresistible craving of premium burger got into me.
+Keeping my head cool, I thought "awwright no problemo, I can go to that restaurant I spot last month, "meat bank", that was advertising and appetizing burger.
+And so there I went. Confident.
+Looking at the menu before the entrance of the rather new establishment, I realized brutally that there were NO BURGER at all.
+What insolence.
+The worl was crumbling all around me, I started feeling deeply cold and hungry and despaired and angry.
+I wandered around, crossing the street looking at other restaurants, which signs were blurred by my teary eyes.
+This is when I spotted a burger. Right there on a menu sign in the street. Some kind of cafe on the 2nd floor.
+My feeet directly driven by my empty stomach, I climbed the stairs.
+Nice surpise, the restaurant is spacious, empty of customers. Relaxing place.
+I order the avocado cheese burger, at a 1000 yen price tag with a drink.
+And... long story short, that ended up being one, if not the, but most likely top 6, best burger I ever had. And it looked gorgous too. And real delicious, at every levels, bread, lettuce, tomato, onions, sauce, french mustard, MEAT, cheese, avocado... all premium quality. Came served on a wooden palette too, for a little fanciness.
+So be advised, if you crave for premium burgers, do try this place! 
+
+Name: Mediterranean Pizzeria
+Location: behind office along the JR tracks
+Type: italian
+Price: 900~
+Points: inetrior OK. Pizza OK but really nothing special... 900 yen for pizza + salad. The salad (some lattuce) is small but the dressing is delicious. Tables and counter, not small.
+Personal experience: Just OK.
+
+Name: Meat Bank
+Location: that new building front of samrat  6F
+Type: USA, burger, meat
+Price: 1000~
+Points: inetrior nice. sofa and nice chairs. Lots of windows. Nice staff. Premium burgers. Good. Lunch set 1200 avocado  bacon cheese burger with drink and soup.
+Personal experience: Confortable. Good taste.
+So I know you guys were expecting the a final conclusion to the the Asuka Tantan men paradox rumble, or "the singularity".
+But that will have to wait cause I needed fat food to lay a safety layer down my stomach, in preparation for tonight's apoliptycal debauchery.
+So I walked to a place I wanted to try, serving italian food. Unfortunately, I knew this place from 7 years ago, and it was not there anymore... so I had to improvise yet once again.
+After a while, I walked by the Meat Bank restaurant mentioned in earlier passage of my book "Tokyo Burgers Fight", chapter "The revenge of the Meat Bank - a striking return".
+And this time, they were displaying a menu with a choice of premium beef burgers, starting 1000yen.
+Since I just got a Charizar with good IV from a raid on my way there, I decided it was worth celebrating, and good for laying that fat layer I wanted.
+So up 6F I went. Very nice place, nice staff, nice sofa, and, good burger. Not mind blowing like the Cafde one, but definitely premium, with bacon as thick as a McDo patty. I paid 1200 yen for a bacon avocado cheese burger with a soup and a drink.
+Id say, nice place if you want to eat burger in a confy place with your girlfriend on a holloween friday night, avoiding stinking crowd and making that moment a bit special like it should be (this example was taken completly without any connection to any real upcoming event or targetted to particulart existing individual, leading a team or not)
+
+Name: Asuka or something
+Location: down the office
+Type: Ramen
+Price: 780~
+Points: Counter only. Narrow. Served fast. Very good tantan men.
+Personal experience: We eat looking at the open kitchen. Staff was OK but not too polite / busy. Tantan men was maybe the best I had so far. Strong taste, hot but not too much (to me). And rather cheap (780).
+
+Name: Samrat
+Location: Samrat shibuya
+Type: Indian curry
+Price: 900~
+Points: Sucked
+Personal experience: worst indian curry ever.
+When I first discovered indian curry near my office in setagaya-daita, it blew my mind so hard I ate it almost everyday. I just could not imagine eating anythnig else. Then years passed, I realized not all restaurants were equals, but still indian curry was always rhytming with delicious, greatly enjoyable meal.
+Then I worked in aoyama icchome and realized that the world can be a cold and heartless place. The indian food there was bland. Bland AF.
+Then I finally escaped what I thought was the darkest pit of restaurant and companies' hell.
+To Shibuya! Surely one of the most amazing place to stroll for restaurants, and other things...
+But like in any movies and relationships, after all looked so perfect, something ugly, something world breaking happens and it all goes to shit.
+I ended up to Samrat shibuya today, and it sucked like I never thought it could suck. New low for indian curry, which now just joined the rank of my depressed thoughts about the world. Everything was bad, the interior was horrid, the nan was horribly oily, and the curry was doubtlessly the worst I ever had (and i asked for an easy one, the keema). Next time please somebody reconcile me with curry cause I dont feel I have the courage to face another one by myself.
+
+So it's been a couple of month I go get some ice coffe, kori nashi, every morning upstairs.
+And every day, the girl does not understand my 
+Name: Moss Burger
+Location: 
+Type: Burger
+Price: (meal) 1000~
+Points: Japanese fast food burger.
+Personal experience: Slow service. Overpriced. Impossible to eat by hands. I eat it with fork and knife at hme, and taste is good. But possibly the worst burger chain in Japan.
+
+
+Name: Kura
+Location: after bic camera annex shibuya
+Type: Italian
+Price: almost 1000yen
+Points: Decent italian. They have decent gorgonzola pizza. Good choice of pasta, pizza and salad, decent interior.
+Personal experience: Interior was alright, I liked the choice on the menu, and got a decent gorgonzola pizza. I did not make me full, for 1000 yen cost, though.
+
+Name: thai restaurant towards omotesando
+Location: towards omotesando, 2nd floor
+Type: Thai
+Price: ~1000yen
+Points: Decent thai. Nice room, with windows bay.They have a gapao + green curry set, with good soup and small salad, for 980yen. Music. Open drink bar with tea and detox water.
+Personal experience: Nice waitress, enjoyed the room and the set. Was good, but not especially delicious. Still well balanced set for a fair price.
+
+Name: around that corner the best... symetrically opposite from Tower Record
+Location: symetrically opposite from Tower Record
+Type: Burgers and stuff
+Price: ~1000yen
+Points: 1000 yen lunches and expensive 1100+ yen home made burgers. Possible topping customization includes jalapegno and gorgonzola. Big room. Windows. American music a bit loud.
+Personal experience: Room OK. I got the jalapegno burger for 1300 yen. Came with a drink, and a mini soup served in an expresso cup. The burger was quite good, but not worth 1300 yen!
+
+Name: Fast soba katsudon in front of big bic camera
+Location: in front of big bic camera
+Type: soba udon katsudon
+Price: ~750yen
+Points: Decent sets. Fast food style. Narrow counter only. Buy at machine, get your set on a plate and find somewhere to sit.
+Personal experience: Fast and cheap, and decent. I tried the zaru soba + katsudon for 750 yen. Made me full OK. Definitely not delicious, but decent.
+
+Name: Pizza Slice
+Location: towards daikanyama
+Type: pizza
+Price: 500yen/slice
+Points: big, heigh celing room with big windos bay. 500 yen american/newyork style pizza slices. Served fast. Just slices on a paper plate, no knife and fork. Free toppings include spicy stuff (but no oil), and oregan. Big tables avaialbe in addition of small and counter.
+Personal experience: Pizza were decent. I liked the free oregan herbs available as topping on the tables. A bit overpriced though. Room is cool. When I was there, there were 29 young girls for 3 guys.
+
+Name: iBeer
+Location: Hikarie building 7F
+Type: pizza, pasta, salad
+Price: about 1000 yen lunch
+Points: Open space restaurant in nice Hikarie 7F. Busy floor, but nice setting. A bit expensive, but one of the cheapest restaurant in the building.
+Personal experience: 1162 yen Pasta Set with Salad + bread + organic tomatoe avocado pasta. Nice salad, hot bread, and very, very good pasta. I would go as far as to call the pasta "exquisite". I also liked the setting, tables and chairs.
+
+----
+Daikanyama side
+
+Name: some thai
+Location: D side
+Type: Thai
+Price: around 980
+Points: gapao
+Personal experience: very small tables, for most of them. Gapao was OK, came with good soup and small salad, from 980yen.
+
+
+----
+Daikanyama
+
+Name: Blacows
+Location: D
+Type: burger
+Price: around 2000
+Points: waguy beef burgers
+Personal experience: very good burger. 
+
