@@ -6,11 +6,10 @@
 
 @extends('layouts.html')
 
-@section('title', 'Page Title (section)')
+@section('title', 'Test HTML layout')
 
 @section('sidebar')
     @parent
-
     <p>This is appended to the master sidebar (section).</p>
 @endsection
 
