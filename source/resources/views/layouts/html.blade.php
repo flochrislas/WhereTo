@@ -18,7 +18,7 @@
                 app.env = {{ config('app.env') }}<BR>
                 app.debug = {{ config('app.debug') }}<BR>
 				@if(env('POORLY_COPIED') != 'nope')
-					NOT A PROPER COPY OF THE APP<BR>
+					NOT A PROPER COPY OF THE APP!<BR>
 				@endif
     		@endif        	
         @show
