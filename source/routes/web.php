@@ -48,6 +48,18 @@ Route::get('test-html', array('as' => 'test', function()
     return view('test-html');
 }));
 
+// Restaurants Import Export
+Route::get('restaurants', 'RestaurantController@index');
+Route::post('restaurants/import', 'RestaurantController@import');
+Route::get('restaurants/export', 'RestaurantController@export');
+// restaurant CRUD tuto
+Route::get('/create/restaurant','RestaurantController@create');
+Route::post('/create/restaurant','RestaurantController@store');
+Route::get('restaurants-list', 'RestaurantController@index');
+Route::get('/edit/restaurant/{id}','RestaurantController@edit');
+Route::post('/edit/restaurant/{id}','RestaurantController@update');
+Route::delete('/delete/restaurant/{id}','RestaurantController@destroy');
+
 // ===============================================
 // BLOG PAGES ====================================
 // ===============================================
