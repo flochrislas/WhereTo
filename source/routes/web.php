@@ -60,6 +60,15 @@ Route::get('/edit/restaurant/{id}','RestaurantController@edit');
 Route::post('/edit/restaurant/{id}','RestaurantController@update');
 Route::delete('/delete/restaurant/{id}','RestaurantController@destroy');
 
+// restaurant type CRUD
+Route::get('/restaurantType', 'RestaurantTypeController@index')->name('restaurantType.index');
+Route::get('/restaurantType/details/{id}', 'RestaurantTypeController@details')->name('restaurantType.details');
+Route::get('/restaurantType/add', 'RestaurantTypeController@add')->name('restaurantType.add');
+Route::post('/restaurantType/insert', 'RestaurantTypeController@insert')->name('restaurantType.insert');
+Route::get('/restaurantType/edit/{id}', 'RestaurantTypeController@edit')->name('restaurantType.edit');
+Route::post('/restaurantType/update/{id}', 'RestaurantTypeController@update')->name('restaurantType.update');
+Route::get('/restaurantType/delete/{id}', 'RestaurantTypeController@delete')->name('restaurantType.delete');
+
 // ===============================================
 // BLOG PAGES ====================================
 // ===============================================
