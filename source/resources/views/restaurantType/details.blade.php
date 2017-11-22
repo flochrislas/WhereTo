@@ -21,7 +21,7 @@
     <div class="col-xs-12 col-sm-12 col-md-12">
         <div class="form-group">
             <strong>Published On:</strong>
-            {{ $restaurantType->created }}
+            {{ $restaurantType->created_at }}
         </div>
     </div>
 </div>

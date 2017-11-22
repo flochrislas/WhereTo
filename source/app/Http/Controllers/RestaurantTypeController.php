@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\RestaurantType;
+use Session;
 
 /**
  * Restaurant type controller.
@@ -18,7 +20,7 @@ class RestaurantTypeController extends Controller
     public function index()
     {
         //fetch all restaurantTypes data
-        $restaurantTypes = restaurantType::orderBy('created','desc')->get();
+        $restaurantTypes = RestaurantType::orderBy('created_at','desc')->get();
         
         //pass restaurantTypes data to view and load list view
         return view('restaurantType.index', ['restaurantTypes' => $restaurantTypes]);
@@ -45,15 +47,14 @@ class RestaurantTypeController extends Controller
     {
         //validate restaurantType data
         $this->validate($request, [
-            'title' => 'required',
-            'content' => 'required'
+            'label' => 'required'
         ]);
         
         //get restaurantType data
         $restaurantTypeData = $request->all();
         
         //insert restaurantType data
-        restaurantType::create($restaurantTypeData);
+        RestaurantType::create($restaurantTypeData);
         
         //store status message
         Session::flash('success_msg', 'Restaurant Type added successfully!');
@@ -70,7 +71,7 @@ class RestaurantTypeController extends Controller
     public function show($id)
     {
         //fetch restaurantType data
-        $restaurantType = restaurantType::find($id);
+        $restaurantType = RestaurantType::find($id);
         
         //pass restaurantTypes data to view and load list view
         return view('restaurantType.details', ['restaurantType' => $restaurantType]);
@@ -85,7 +86,7 @@ class RestaurantTypeController extends Controller
     public function edit($id)
     {
         //get restaurantType data by id
-        $restaurantType = restaurantType::find($id);
+        $restaurantType = RestaurantType::find($id);
         
         //load form view
         return view('restaurantType.edit', ['restaurantType' => $restaurantType]);
@@ -109,12 +110,14 @@ class RestaurantTypeController extends Controller
         $restaurantTypeData = $request->all();
         
         //update restaurantType data
-        restaurantType::find($id)->update($restaurantTypeData);
+        RestaurantType::find($id)->update($restaurantTypeData);
         
         //store status message
         Session::flash('success_msg', 'Restaurant Type updated successfully!');
         
         return redirect()->route('restaurantType.index');
+        
+        //return redirect('/restaurants-list')->with('success', 'The restaurant has been updated!');
     }
 
     /**
@@ -126,7 +129,7 @@ class RestaurantTypeController extends Controller
     public function destroy($id)
     {
         //update restaurantType data
-        restaurantType::find($id)->delete();
+        RestaurantType::find($id)->delete();
         
         //store status message
         Session::flash('success_msg', 'Restaurant Type deleted successfully!');

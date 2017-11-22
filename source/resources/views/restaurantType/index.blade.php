@@ -23,7 +23,7 @@
                 <table class="table table-striped task-table">
                     <!-- Table Headings -->
                     <thead>
-                        <th width="75%">Label</th>
+                        <th width="65%">Label</th>
                         <th width="15%">Created</th>
                         <th width="20%">Action</th>
                     </thead>
@@ -36,7 +36,7 @@
                                 <div>{{$restaurantType->label}}</div>
                             </td>
                                 <td class="table-text">
-                                <div>{{$restaurantType->created}}</div>
+                                <div>{{$restaurantType->created_at}}</div>
                             </td>
                             <td>
                                 <a href="{{ route('restaurantType.details', $restaurantType->id) }}" class="label label-success">Details</a>
