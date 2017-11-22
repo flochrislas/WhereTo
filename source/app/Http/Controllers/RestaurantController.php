@@ -14,7 +14,13 @@ class RestaurantController extends Controller
      */
     public function index()
     {
-        return view('restaurants');
+        // Simple
+        // return view('restaurants');
+        
+        // Pagination
+        $articles = Restaurant::latest()->paginate(5);        
+        return view('restaurants.index',compact('restaurants'))        
+            ->with('i', (request()->input('page', 1) - 1) * 5);
     }
 
     /**
@@ -24,8 +30,7 @@ class RestaurantController extends Controller
      */
     public function create()
     {
-        // not sure
-        return view('user.create');
+        return view('restaurants.create');
     }
 
     /**
@@ -37,6 +42,7 @@ class RestaurantController extends Controller
     public function store(Request $request)
     {
         // From CRUD tuto https://appdividend.com/2017/10/15/laravel-5-5-crud-example-tutorial/
+        /*
         $restaurant = new restaurant();
         $data = $this->validate($request, [
             'name'=>'required',
@@ -45,7 +51,19 @@ class RestaurantController extends Controller
         
         $restaurant->saverestaurant($data);
         return redirect('/restaurant-create')
-            ->with('success', 'New restaurant has been created! Wait sometime to get resolved');        
+            ->with('success', 'New restaurant has been created! Wait sometime to get resolved');
+        */
+        ////////////////////////////////////////////////// VS
+        
+        request()->validate([
+            'name'=>'required',
+            'type'=> 'required'            
+        ]);
+        
+        Restaurant::create($request->all());
+        
+        return redirect()->route('restaurants.index')        
+            ->with('success','Restaurant created successfully');
     }
 
     /**
@@ -56,7 +74,8 @@ class RestaurantController extends Controller
      */
     public function show($id)
     {
-        //
+        $restaurant = Restaurant::find($id);        
+        return view('restaurants.show',compact('restaurant'));
     }
 
     /**
@@ -67,9 +86,8 @@ class RestaurantController extends Controller
      */
     public function edit($id)
     {
-        //
-        $restaurant = restaurant::where('id', $id)->first();        
-        return view('user.edit', compact('restaurant', 'id'));
+        $restaurant = Restaurant::find($id);        
+        return view('restaurants.edit',compact('restaurant'));
     }
 
     /**
@@ -81,7 +99,7 @@ class RestaurantController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        /*
         $ticket = new Ticket();
         $data = $this->validate($request, [
             'name'=>'required',
@@ -91,6 +109,18 @@ class RestaurantController extends Controller
         $ticket->updateTicket($data);
         
         return redirect('/restaurants-list')->with('success', 'The restaurant has been updated!');
+        */
+        ////////////////////////// VS
+        
+        request()->validate([
+            'name'=>'required',
+            'type'=> 'required'            
+        ]);
+        
+        Restaurant::find($id)->update($request->all());
+        
+        return redirect()->route('restaurants.index')        
+            ->with('success','Restaurant updated successfully');        
     }
 
     /**
@@ -101,11 +131,17 @@ class RestaurantController extends Controller
      */
     public function destroy($id)
     {
-        //
+        /*
         $restaurant = Restaurant::find($id);
-        $restaurant->delete();
-        
+        $restaurant->delete();        
         return redirect('/restaurants-list')->with('success', 'The restaurant has been deleted!');
+        */
+        
+        Restaurant::find($id)->delete();        
+        return redirect()->route('restaurants.index')        
+            ->with('success','Restaurant deleted successfully');
+        
+        
     }
     
     /**
