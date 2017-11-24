@@ -1,0 +1,3 @@
+name,location,type,lunch_price,points,experience,visited,visit_date
+name1,location1,type1,0001,points1,experience1,true,2016-10-10 10:00:00
+name2,location2,type2,0002,points2,experience2,true,2006-10-10 20:00:00
