@@ -34,7 +34,7 @@
         </div>
       </div>
       <div class="row">
-        @if(count($restaurants))
+        @if(isset($restaurants) && count($restaurants))
         <table class="table table-striped">
           <thead>
             <tr>

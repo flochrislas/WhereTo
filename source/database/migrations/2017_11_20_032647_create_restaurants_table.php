@@ -17,14 +17,14 @@ class CreateRestaurantsTable extends Migration
             $table->increments('id');
             $table->timestamps();
             
-            $table->string('name');
-            $table->string('location');
-            $table->string('type');
-            $table->integer('lunch_price');
-            $table->string('points');
-            $table->string('experience');
-            $table->boolean('visited');
-            $table->timestamp('visit_date');
+            $table->string('name')->nullable();
+            $table->string('location')->nullable();
+            $table->string('type')->nullable();
+            $table->integer('lunch_price')->nullable();
+            $table->string('points')->nullable();
+            $table->string('experience')->nullable();
+            $table->boolean('visited')->default(false);
+            $table->timestamp('visit_date')->nullable();
             
         });
     }

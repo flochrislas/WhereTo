@@ -8,5 +8,9 @@
     </head>
     <body>
         home
+        
+        <div class="pull-right">
+                <a class="btn btn-primary" href="{{ route('restaurants.index') }}"> Back</a>
+            </div>
     </body>
 </html>

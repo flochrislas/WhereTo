@@ -1,4 +1,6 @@
-@extends('layout')
+@extends('layouts.html')
+
+@section('title', 'Restaurant Show')
 
 @section('content')
     <div class="row">

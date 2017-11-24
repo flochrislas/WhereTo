@@ -18,7 +18,7 @@ class RestaurantController extends Controller
         // return view('restaurants');
         
         // Pagination
-        $articles = Restaurant::latest()->paginate(5);        
+        $restaurants = Restaurant::latest()->paginate(5);        
         return view('restaurants.index',compact('restaurants'))        
             ->with('i', (request()->input('page', 1) - 1) * 5);
     }

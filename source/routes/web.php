@@ -48,12 +48,17 @@ Route::get('test-html', array('as' => 'test', function()
     return view('test-html');
 }));
 
+Route::get('restaurantsfiles', array('as' => 'restaurantsfiles', function()
+{
+    return view('restaurantsfiles');
+}));
+
 // Restaurants Import Export
-/*
-Route::get('restaurants', 'RestaurantController@index');
+
+// Route::get('restaurants', 'RestaurantController@index');
 Route::post('restaurants/import', 'RestaurantController@import');
 Route::get('restaurants/export', 'RestaurantController@export');
-*/
+
 // restaurant CRUD tuto
 /*
 Route::get('/create/restaurant','RestaurantController@create');

@@ -1,4 +1,6 @@
-@extends('layouts.app')
+@extends('layouts.html')
+
+@section('title', 'Restaurant Type Show')
 
 @section('content')
 <div class="row">

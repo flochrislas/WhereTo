@@ -1,10 +1,14 @@
-@extends('layout')
+// restaurants index
+
+@extends('layouts.html')
+
+@section('title', 'Restaurant Index')
 
 @section('content')
     <div class="row">
         <div class="col-lg-12 margin-tb">
             <div class="pull-left">
-                <h2>Laravel 5.5 CRUD Example from scratch</h2>
+                <h2>Restaurants CRUD</h2>
             </div>
             <div class="pull-right">
                 <a class="btn btn-success" href="{{ route('restaurants.create') }}"> Create New restaurant</a>
