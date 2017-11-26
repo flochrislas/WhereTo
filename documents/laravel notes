@@ -1,0 +1,9 @@
+MIGRATE
+php artisan make:migration create_restaurant_types_table --create=restaurant_types
+php artisan migrate:refresh
+
+SEED
+php artisan make:seeder UsersTableSeeder
+php artisan db:seed
+php artisan db:seed --class=UserTableSeeder
+php artisan migrate:refresh --seed

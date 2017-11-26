@@ -19,6 +19,7 @@ class CreateRestaurantsTable extends Migration
             
             $table->string('name')->nullable();
             $table->string('location')->nullable();
+            $table->string('coord')->nullable();
             $table->string('type')->nullable();
             $table->integer('lunch_price')->nullable();
             $table->string('points')->nullable();
