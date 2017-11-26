@@ -48,13 +48,23 @@ Route::get('test-html', array('as' => 'test', function()
     return view('test-html');
 }));
 
+
+// Restaurants Import Export
+
+Route::get('restaurantsfiles2', array('as' => 'restaurantsfiles2', function()
+{
+    return view('restaurantsfiles2');
+}));
+// Route::get('robots/import-export', ['uses' => 'ImportExportController@importExport', 'as' => 'robots.import.show'])->middleware('auth');
+Route::get('restaurants/export', ['uses' => 'RestaurantController@export', 'as' => 'restaurants.export']);
+Route::get('restaurants/exportType/{type}', ['uses' => 'RestaurantController@exportType', 'as' => 'restaurants.exportType']);
+Route::post('restaurants/import', ['uses' => 'RestaurantController@importAlt', 'as' => 'restaurants.import']);
+
+
 Route::get('restaurantsfiles', array('as' => 'restaurantsfiles', function()
 {
     return view('restaurantsfiles');
 }));
-
-// Restaurants Import Export
-
 // Route::get('restaurants', 'RestaurantController@index');
 Route::post('restaurants/import', 'RestaurantController@import');
 Route::get('restaurants/export', 'RestaurantController@export');

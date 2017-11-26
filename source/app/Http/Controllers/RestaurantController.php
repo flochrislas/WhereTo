@@ -187,8 +187,71 @@ class RestaurantController extends Controller
             {
                 $sheet->fromArray($restaurants);
             });
-        })->export('xls');
+        })->export('xls');        
+    }
+    
+    /**
+     * export a file in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function exportType(Request $request, $type)
+    {        
+        $data = Restaurant::get()->toArray();        
+        return Excel::create('restaurants-export', function($excel) use ($data)
+        {
+            $excel->sheet('Restaurants Export', function($sheet) use ($data)
+            {
+                $sheet->fromArray($data);
+            });
+        })->download($type);
         
+    }
+    
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function importAlt(Request $request)
+    {
+        if($request->hasFile('imported-file'))
+        {
+            $path = $request->file('imported-file')->getRealPath();
+            $data = Excel::load($path, function($reader) {})->get();
+            
+            if (!empty($data) && $data->count())
+            {
+                foreach ($data->toArray() as $key => $value)
+                {
+                    if (!empty($value))
+                    {
+                        foreach ($value as $v)
+                        {
+                            $insert[] = [
+                                'name' => $v['name'],
+                                'location' => $v['location'],
+                                'type' => $v['type'],
+                                'lunch_price' => $v['lunch_price'],
+                                'points' => $v['points'],
+                                'experience' => $v['experience'],
+                                'visited' => $v['visited'],
+                                'visit_time' => $v['visit_time']
+                            ];
+                        }
+                    }
+                }
+                
+                if (!empty($insert))
+                {
+                    Robot::insert($insert);
+                    return back()->with('success','Restaurants import successful.');
+                }
+            }
+        }
+        return back()->with('error','Something seems to be wrong with the import file.');
     }
     
 }
