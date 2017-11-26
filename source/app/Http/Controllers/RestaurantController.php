@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Restaurant;
+use Excel;
 
 class RestaurantController extends Controller
 {
@@ -155,8 +156,7 @@ class RestaurantController extends Controller
         if($request->file('imported-file'))
         {
             $path = $request->file('imported-file')->getRealPath();
-            $data = Excel::load($path, function($reader) {
-            })->get();
+            $data = Excel::load($path, function($reader) {})->get();
             
             if(!empty($data) && $data->count())
             {
@@ -167,8 +167,9 @@ class RestaurantController extends Controller
                 }
             }
             Restaurant::insert($dataImported);
+            return back()->with('success','Restaurants import successful.');
         }
-        return back();
+        return back()->with('error','Something seems to be wrong with the import file.');;
     }
     
     /**

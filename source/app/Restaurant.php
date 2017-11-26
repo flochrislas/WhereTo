@@ -9,6 +9,7 @@ class Restaurant extends Model
     protected $fillable = [
         'name',
         'location',
+        'coord',
         'type',
         'lunch_price',
         'points',
@@ -23,6 +24,7 @@ class Restaurant extends Model
         // $this->user_id = auth()->user()->id;
         $this->name = $data['name'];
         $this->location = $data['location'];
+        $this->coord = $data['coord'];
         $this->type = $data['type'];
         $this->lunch_price = $data['lunch_price'];
         $this->points = $data['points'];
@@ -40,6 +42,7 @@ class Restaurant extends Model
         // $ticket->user_id = auth()->user()->id;
         $this->name = $data['name'];
         $this->location = $data['location'];
+        $this->coord = $data['coord'];
         $this->type = $data['type'];
         $this->lunch_price = $data['lunch_price'];
         $this->points = $data['points'];
