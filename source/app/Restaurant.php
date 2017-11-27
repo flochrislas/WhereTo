@@ -18,6 +18,8 @@ class Restaurant extends Model
         'visit_date'
     ];
     
+    // Confirm useless before removing:
+    /*
     // From CRUD tuto https://appdividend.com/2017/10/15/laravel-5-5-crud-example-tutorial/
     public function saveRestaurant($data)
     {
@@ -52,5 +54,6 @@ class Restaurant extends Model
         $ticket->save();
         return 1;
     }
+    */
     
 }
