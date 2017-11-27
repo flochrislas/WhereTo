@@ -16,17 +16,17 @@ class CreateRestaurantsTable extends Migration
         Schema::create('restaurants', function (Blueprint $table) {
             $table->increments('id');
             $table->timestamps();
-            
+
             $table->string('name')->nullable();
             $table->string('location')->nullable();
             $table->string('coord')->nullable();
             $table->string('type')->nullable();
             $table->integer('lunch_price')->nullable();
-            $table->string('points')->nullable();
-            $table->string('experience')->nullable();
+            $table->text('points')->nullable();
+            $table->text('experience')->nullable();
             $table->boolean('visited')->default(false);
             $table->timestamp('visit_date')->nullable();
-            
+
         });
     }
 
