@@ -17,7 +17,7 @@ class RestaurantsTableSeeder extends Seeder
     public function run()
     {
         DB::table('restaurants')->delete();
-        
+
         // DB method
         /*
         DB::table('restaurants')->insert([
@@ -26,7 +26,7 @@ class RestaurantsTableSeeder extends Seeder
             'password'          => bcrypt('secret'),
         ]);
         */
-        
+
         Restaurant::create(array(
             'name'              => 'Ramen 1 (yellow sign)',
             'location'          => 'Ramen Street',
@@ -467,7 +467,7 @@ class RestaurantsTableSeeder extends Seeder
 
         Restaurant::create(array(
             'name'              => 'some thai',
-            'location'          => 'D side',
+            'location'          => 'near office D side',
             'type'              => 'Thai',
             'lunch_price'       => 980,
             'points'            => 'gapao',
@@ -478,13 +478,24 @@ class RestaurantsTableSeeder extends Seeder
 
         Restaurant::create(array(
             'name'              => 'Blacows',
-            'location'          => 'D',
+            'location'          => 'Daikanyama',
             'type'              => 'burger',
             'lunch_price'       => 2000,
-            'points'            => 'waguy beef burgers',
-            'experience'        => 'very good burger.',
+            'points'            => 'expensive wagyu beef burgers, nice place',
+            'experience'        => 'very good burger. Customizable. Expensive.',
             'visited'           => true,
             'visit_date'        => '2017-09-05 13:00:00'
+        ));
+
+        Restaurant::create(array(
+            'name'              => 'Salasa',
+            'location'          => 'Shibuya - Center gai',
+            'type'              => 'izakaya',
+            'lunch_price'       => 1050,
+            'points'            => 'Various Japanese teishoku (lunch sets). Izakaya style. Small. Smallest tables ever. TV broadcasting news chanel. Slow service. Very good teishoku (lunch set)',
+            'experience'        => 'The chef cooks your lunch from scratch apparently, so it takes up to 20 minutes of wait time. I was surprised because, in Japan, the service is usually very fast. But it was worth the wait as it was quite delicious. I ordered the cheese/porc fried rolls for 1050yen, and it came with pickles, miso soup, rice, and cabage. It was very good and I was fully satisfied.',
+            'visited'           => true,
+            'visit_date'        => '2017-11-28 13:00:00'
         ));
 
     }

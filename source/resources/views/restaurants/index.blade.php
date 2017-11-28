@@ -31,7 +31,7 @@
         </tr>
     @foreach ($restaurants as $restaurant)
     <tr>
-        <td>{{ ++$i }}</td>
+        <td>{{ $restaurant->id }}</td>
         <td>{{ $restaurant->name}}</td>
         <td>{{ $restaurant->type}}</td>
         <td>
@@ -45,5 +45,4 @@
     @endforeach
     </table>
 
-    {!! $restaurants->links() !!}
 @endsection

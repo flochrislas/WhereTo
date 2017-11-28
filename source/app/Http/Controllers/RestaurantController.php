@@ -15,13 +15,14 @@ class RestaurantController extends Controller
      */
     public function index()
     {
-        // Simple
-        // return view('restaurants');
-        
+        $restaurants = Restaurant::all();
+        return view('restaurants.index', compact('restaurants'));
+
         // Pagination
-        $restaurants = Restaurant::latest()->paginate(5);        
-        return view('restaurants.index',compact('restaurants'))        
-            ->with('i', (request()->input('page', 1) - 1) * 5);
+        /*
+        $restaurants = Restaurant::latest()->paginate(5);
+        return view('restaurants.index',compact('restaurants'))
+            ->with('i', (request()->input('page', 1) - 1) * 5);*/
     }
 
     /**
@@ -49,21 +50,21 @@ class RestaurantController extends Controller
             'name'=>'required',
             'type'=> 'required'
         ]);
-        
+
         $restaurant->saverestaurant($data);
         return redirect('/restaurant-create')
             ->with('success', 'New restaurant has been created! Wait sometime to get resolved');
         */
         ////////////////////////////////////////////////// VS
-        
+
         request()->validate([
             'name'=>'required',
-            'type'=> 'required'            
+            'type'=> 'required'
         ]);
-        
+
         Restaurant::create($request->all());
-        
-        return redirect()->route('restaurants.index')        
+
+        return redirect()->route('restaurants.index')
             ->with('success','Restaurant created successfully');
     }
 
@@ -75,7 +76,7 @@ class RestaurantController extends Controller
      */
     public function show($id)
     {
-        $restaurant = Restaurant::find($id);        
+        $restaurant = Restaurant::find($id);
         return view('restaurants.show',compact('restaurant'));
     }
 
@@ -87,7 +88,7 @@ class RestaurantController extends Controller
      */
     public function edit($id)
     {
-        $restaurant = Restaurant::find($id);        
+        $restaurant = Restaurant::find($id);
         return view('restaurants.edit',compact('restaurant'));
     }
 
@@ -108,20 +109,20 @@ class RestaurantController extends Controller
         ]);
         $data['id'] = $id;
         $ticket->updateTicket($data);
-        
+
         return redirect('/restaurants-list')->with('success', 'The restaurant has been updated!');
         */
         ////////////////////////// VS
-        
+
         request()->validate([
             'name'=>'required',
-            'type'=> 'required'            
+            'type'=> 'required'
         ]);
-        
+
         Restaurant::find($id)->update($request->all());
-        
-        return redirect()->route('restaurants.index')        
-            ->with('success','Restaurant updated successfully');        
+
+        return redirect()->route('restaurants.index')
+            ->with('success','Restaurant updated successfully');
     }
 
     /**
@@ -134,17 +135,17 @@ class RestaurantController extends Controller
     {
         /*
         $restaurant = Restaurant::find($id);
-        $restaurant->delete();        
+        $restaurant->delete();
         return redirect('/restaurants-list')->with('success', 'The restaurant has been deleted!');
         */
-        
-        Restaurant::find($id)->delete();        
-        return redirect()->route('restaurants.index')        
+
+        Restaurant::find($id)->delete();
+        return redirect()->route('restaurants.index')
             ->with('success','Restaurant deleted successfully');
-        
-        
+
+
     }
-    
+
     /**
      * Store a newly created resource in storage.
      *
@@ -157,7 +158,7 @@ class RestaurantController extends Controller
         {
             $path = $request->file('imported-file')->getRealPath();
             $data = Excel::load($path, function($reader) {})->get();
-            
+
             if(!empty($data) && $data->count())
             {
                 $data = $data->toArray();
@@ -171,7 +172,7 @@ class RestaurantController extends Controller
         }
         return back()->with('error','Something seems to be wrong with the import file.');;
     }
-    
+
     /**
      * export a file in storage.
      *
@@ -187,9 +188,9 @@ class RestaurantController extends Controller
             {
                 $sheet->fromArray($restaurants);
             });
-        })->export('xls');        
+        })->export('xls');
     }
-    
+
     /**
      * export a file in storage.
      *
@@ -197,8 +198,8 @@ class RestaurantController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function exportType(Request $request, $type)
-    {        
-        $data = Restaurant::get()->toArray();        
+    {
+        $data = Restaurant::get()->toArray();
         return Excel::create('restaurants-export', function($excel) use ($data)
         {
             $excel->sheet('Restaurants Export', function($sheet) use ($data)
@@ -206,9 +207,9 @@ class RestaurantController extends Controller
                 $sheet->fromArray($data);
             });
         })->download($type);
-        
+
     }
-    
+
     /**
      * Store a newly created resource in storage.
      *
@@ -221,7 +222,7 @@ class RestaurantController extends Controller
         {
             $path = $request->file('imported-file')->getRealPath();
             $data = Excel::load($path, function($reader) {})->get();
-            
+
             if (!empty($data) && $data->count())
             {
                 foreach ($data->toArray() as $key => $value)
@@ -243,7 +244,7 @@ class RestaurantController extends Controller
                         }
                     }
                 }
-                
+
                 if (!empty($insert))
                 {
                     Robot::insert($insert);
@@ -253,5 +254,5 @@ class RestaurantController extends Controller
         }
         return back()->with('error','Something seems to be wrong with the import file.');
     }
-    
+
 }
