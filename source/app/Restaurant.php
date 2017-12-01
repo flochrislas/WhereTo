@@ -15,7 +15,15 @@ class Restaurant extends Model
         'points',
         'experience',
         'visited',
-        'visit_date'
+        'visit_date',
+        'google_maps_link',
+        'tabelog_link',
+        'official_website',
+        'score_lunch',
+        'score_place',
+        'score_food',
+        'score_price',
+        'score_date'
     ];
 
     // Confirm useless before removing:

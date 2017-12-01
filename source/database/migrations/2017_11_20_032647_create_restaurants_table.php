@@ -26,6 +26,14 @@ class CreateRestaurantsTable extends Migration
             $table->text('experience')->nullable();
             $table->boolean('visited')->default(false);
             $table->timestamp('visit_date')->nullable();
+            $table->string('google_maps_link')->nullable();
+            $table->string('tabelog_link')->nullable();
+            $table->string('official_website')->nullable();
+            $table->smallInteger('score_lunch')->nullable();
+            $table->smallInteger('score_place')->nullable();
+            $table->smallInteger('score_food')->nullable();
+            $table->smallInteger('score_price')->nullable();
+            $table->smallInteger('score_date')->nullable();
 
         });
     }

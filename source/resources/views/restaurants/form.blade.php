@@ -34,7 +34,7 @@
     <div class="col-xs-12 col-sm-12 col-md-12">
         <div class="form-group">
             <strong>Typical lunch price:</strong>
-            {!! Form::text('lunch_price', null,
+            {!! Form::number('lunch_price', null,
                       array('placeholder' => 'Typical lunch price',
                             'class' => 'form-control')) !!}
         </div>
@@ -60,16 +60,85 @@
     <div class="col-xs-12 col-sm-12 col-md-12">
         <div class="form-group">
             <strong>Visited:</strong>
-            {!! Form::text('visited', null,
-                      array('placeholder' => 'Visited',
-                            'class' => 'form-control')) !!}
+           {!! Form::radio('visited', true, true,
+              array(
+                'placeholder' => 'yes',
+                'class' => 'form-control')) !!}
+           {!! Form::radio('visited', false, false,
+              array(
+                'placeholder' => 'no',
+                'class' => 'form-control')) !!}
         </div>
     </div>
     <div class="col-xs-12 col-sm-12 col-md-12">
         <div class="form-group">
             <strong>Visit date:</strong>
-            {!! Form::text('visit_date', null,
+            {!! Form::date('visit_date', null,
                       array('placeholder' => 'Visit date',
+                            'class' => 'form-control')) !!}
+        </div>
+    </div>
+    <div class="col-xs-12 col-sm-12 col-md-12">
+        <div class="form-group">
+            <strong>Google Maps Link:</strong>
+            {!! Form::url('google_maps_link', null,
+                      array('placeholder' => 'Google Maps Link',
+                            'class' => 'form-control')) !!}
+        </div>
+    </div>
+    <div class="col-xs-12 col-sm-12 col-md-12">
+        <div class="form-group">
+            <strong>Tabelog Link:</strong>
+            {!! Form::url('tabelog_link', null,
+                      array('placeholder' => 'Tabelog Link',
+                            'class' => 'form-control')) !!}
+        </div>
+    </div>
+    <div class="col-xs-12 col-sm-12 col-md-12">
+        <div class="form-group">
+            <strong>Official Website:</strong>
+            {!! Form::url('official_website', null,
+                      array('placeholder' => 'Official Website',
+                            'class' => 'form-control')) !!}
+        </div>
+    </div>
+    <div class="col-xs-12 col-sm-12 col-md-12">
+        <div class="form-group">
+            <strong>Score Global:</strong>
+            {!! Form::number('score_lunch', null,
+                      array('placeholder' => 'Score Lunch',
+                            'class' => 'form-control')) !!}
+        </div>
+    </div>
+    <div class="col-xs-12 col-sm-12 col-md-12">
+        <div class="form-group">
+            <strong>Score Place:</strong>
+            {!! Form::number('score_place', null,
+                      array('placeholder' => 'Score Place',
+                            'class' => 'form-control')) !!}
+        </div>
+    </div>
+    <div class="col-xs-12 col-sm-12 col-md-12">
+        <div class="form-group">
+            <strong>Score Food:</strong>
+            {!! Form::number('score_food', null,
+                      array('placeholder' => 'Score Food',
+                            'class' => 'form-control')) !!}
+        </div>
+    </div>
+    <div class="col-xs-12 col-sm-12 col-md-12">
+        <div class="form-group">
+            <strong>Score Price:</strong>
+            {!! Form::number('score_price', null,
+                      array('placeholder' => 'Score Price',
+                            'class' => 'form-control')) !!}
+        </div>
+    </div>
+    <div class="col-xs-12 col-sm-12 col-md-12">
+        <div class="form-group">
+            <strong>Score Date:</strong>
+            {!! Form::number('score_date', null,
+                      array('placeholder' => 'Score Date',
                             'class' => 'form-control')) !!}
         </div>
     </div>
