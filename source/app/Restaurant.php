@@ -17,7 +17,7 @@ class Restaurant extends Model
         'visited',
         'visit_date'
     ];
-    
+
     // Confirm useless before removing:
     /*
     // From CRUD tuto https://appdividend.com/2017/10/15/laravel-5-5-crud-example-tutorial/
@@ -36,7 +36,7 @@ class Restaurant extends Model
         $this->save();
         return 1;
     }
-    
+
     // From CRUD tuto https://appdividend.com/2017/10/15/laravel-5-5-crud-example-tutorial/
     public function updateTicket($data)
     {
@@ -55,5 +55,5 @@ class Restaurant extends Model
         return 1;
     }
     */
-    
+
 }

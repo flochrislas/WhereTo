@@ -498,5 +498,27 @@ class RestaurantsTableSeeder extends Seeder
             'visit_date'        => '2017-11-28 13:00:00'
         ));
 
+        Restaurant::create(array(
+            'name'              => 'JS Burger',
+            'location'          => 'Shibuya',
+            'type'              => 'burger',
+            'lunch_price'       => 1500,
+            'points'            => 'Very nice place (confortable, various tables, big windows bay, enjoyable music). Expensive. Premium burgers. Salad bar at lunch.',
+            'experience'        => 'Very nice experience, nejoyed the place and the music. Loved the salad bar, with lots of choices, and good. Burger came fast. I tried the JS burger. The ingredient were undeniably good, but globally, it was lacking taste as there were almost no sauce. Still, I ended up full and satisfied.',
+            'visited'           => true,
+            'visit_date'        => '2017-11-29 13:00:00'
+        ));
+
+        Restaurant::create(array(
+            'name'              => 'Pizza Salvatore Cuomo',
+            'location'          => 'Shibuya',
+            'type'              => 'italian',
+            'lunch_price'       => 1280,
+            'points'            => 'Usually for delivery, but also has a nice interior with tables and counter, as well as a terrace (with heaters). 100yen pasta lunch, or 1280 yen pizza lunch. Lunch set includes a salad, a mini soup, and a drink. Decent but overpriced.',
+            'experience'        => 'I was suprized at how nice the interior was. Did not like the music though (some sort of modern hip-hop, kind of loud). I tried the gorgonzola+mozarealla pizza. It was decent, but a bit small. 1280 yen felt overpriced.',
+            'visited'           => true,
+            'visit_date'        => '2017-11-30 13:00:00'
+        ));
+
     }
 }

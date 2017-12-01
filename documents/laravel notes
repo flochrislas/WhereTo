@@ -3,6 +3,10 @@ composer dump-autoload
 or
 composer update
 
+MAKE
+php artisan make:controller RestaurantController --resource
+php artisan make:model Restaurant
+
 MIGRATE
 php artisan make:migration create_restaurant_types_table --create=restaurant_types
 php artisan migrate:refresh
