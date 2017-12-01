@@ -1,21 +1,11 @@
------
-App
-could be online wensite, but also could be DL as an offline app
-could import google maps customer reviews into personal exprience fierlds
-tag system
-tag cloud (to see most popular tags and other ideas and be able to click them)
-default on where to have lunch in shibuya, but other tab include where to have diner, where eto drink, where to party, and where to rest after last train. lso have all the last and first troains times
-user interaction: complete information, write exp. , just like or dislike buttons, or star rating system
-link to tabelog or other relevant website
-feature: closest combini, now
-feature: closest loveho, now
-feature: closest <tag>, now
-whuen browsing, add the info of how long by foot it would take to reach there from current gps position.
-Basic info for real tourists: always carry enough cash to pay for the meal. Pokemon go? shibuya is like poke heaven.
------------
+to try
 
 TEXMEX FACTORY 渋谷神南店
 〒150-0041 Tokyo, 渋谷区Jinnan, 1 Chome−19−3, ハイマンテン神南ビル
+also, ankara
+also more salad and the indian on the same street
+also https://www.google.co.jp/maps/place/%E3%83%9F%E3%83%A9%E3%83%B3%E3%83%BB%E3%83%8A%E3%82%BF%E3%83%A9%E3%82%B8+Milan+Nataraj/@35.6592658,139.7041818,15z/data=!4m5!3m4!1s0x0:0x81f4524b4461190c!8m2!3d35.6611253!4d139.7010487?hl=en
+
 
 ---------------------
 

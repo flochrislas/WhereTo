@@ -1,0 +1,73 @@
+-----
+App
+Name whereTo, lunchTime
+for app offline: enjoyTokyo
+could be online wensite, but also could be DL as an offline app
+could import google maps customer reviews into personal exprience fierlds
+tag system
+tag cloud (to see most popular tags and other ideas and be able to click them)
+default on where to have lunch in shibuya, but other tab include where to have diner, where eto drink, where to party, and where to rest after last train. lso have all the last and first troains times
+user interaction: complete information, write exp. , just like or dislike buttons, or star rating system
+link to tabelog or other relevant website
+feature: closest combini, now
+feature: closest loveho, now
+feature: closest <tag>, now
+whuen browsing, add the info of how long by foot it would take to reach there from current gps position.
+Basic info for real tourists: always carry enough cash to pay for the meal. Pokemon go? shibuya is like poke heaven.
+Sleep[anytime, without booking] -> (solo), (couple) -> (capsule hotels, internet cafe...) (love hotels, how to recognize one, stations with some nearby, magic sentence to tell the taxi)
+Information center: archive info about tons of stuff
+on pages, link to related info from info center (how to call the staff, how to ask for an extension, how to ask for the check...)
+-----------
+Score lunch global:
+0: Absolutely horrible place
+1: Bad or whatever, I won't go again
+2: OK, I might go again if I crave for this specific kind of lunch / or if I extra money I can spare
+3: Very good. I would be down to go again any time
+4: Excellent. It is hard to refrain to go back to that place every week or more
+Score for dates:
+0: Bad for dates
+1: Decent for dates
+2: Great for dates
+
+Place
+0 horrible
+1 decent
+2 very nice
+3 fantastic
+
+Price
+0 overpriced
+1 correct
+2 good deal
+
+---
+
+TAGS
+vegetarian friendly
+vegan friendly
+menu with calories
+menu with allergies
+customisable dishes
+
+italian
+french
+mexican
+indian
+vietnamese
+turk
+indonesian
+american
+japanese
+thai
+
+japanese curry
+sushi
+izakaya
+all you can eat
+all you can drink
+ramen
+tonkotsu
+miso
+sukiyaki
+shabushabu
+burger
