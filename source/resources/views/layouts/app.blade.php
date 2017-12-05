@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ app()->getLocale() }}">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -46,10 +46,10 @@
 	                    @if (Auth::guest())
 							&nbsp;
 						@else
-							<li><a href="{{ url('/fight') }}"><strong>FIGHT!</strong></a></li>
-                            <li><a href="{{ url('/robots') }}">My Robots</a></li>
+							<li><a href="{{ route('admin.dashboard') }}"><strong>DASHBOARD</strong></a></li>
+              <li><a href="{{ url('/admin/restaurants') }}">Restos</a></li>
 						@endif
-                        
+
                     </ul>
 
                     <!-- Right Side Of Navbar -->
@@ -66,20 +66,19 @@
 
                                 <ul class="dropdown-menu" role="menu">
                                     <li>
-                                        <a href="{{ url('/logout') }}"
+                                        <a href="{{ route('logout') }}"
                                             onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
                                             Logout
                                         </a>
 
-                                        <form id="logout-form" action="{{ url('/logout') }}" method="POST" style="display: none;">
+                                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                             {{ csrf_field() }}
                                         </form>
                                     </li>
                                 </ul>
                             </li>
-                        @endif
-                        <li><a href="{{ url('about') }}">About</a></li>
+                        @endguest
                     </ul>
                 </div>
             </div>
@@ -89,6 +88,6 @@
     </div>
 
     <!-- Scripts -->
-    <script src="/js/app.js"></script>
+    <script src="{{ asset('js/app.js') }}"></script>
 </body>
 </html>

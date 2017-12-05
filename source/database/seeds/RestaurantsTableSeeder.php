@@ -880,5 +880,24 @@ class RestaurantsTableSeeder extends Seeder
             'score_date'        => 1
         ));
 
+        Restaurant::create(array(
+            'name'              => 'Sushi stand',
+            'location'          => 'Shibuya',
+            'type'              => 'sushi',
+            'lunch_price'       => 1200,
+            'points'            => 'Rather cheap and decent sushi. Standing at the counter. Avocado sushi available.',
+            'experience'        => 'Standing is not so bad. It is a rather cheap and good sushi bar. The cheapest sushi are 176 for 2 pieces, and include torosamon (some fat saumon). Mid-range sushi are 216 for 2 pieces. Sushi are made in front of you on demand.',
+            'visited'           => true,
+            'visit_date'        => '2017-12-05 13:00:00',
+            'google_maps_link'  => 'http://data',
+            'tabelog_link'      => 'http://data',
+            'official_website'  => 'http://data',
+            'score_lunch'       => 2,
+            'score_place'       => 1,
+            'score_food'        => 1,
+            'score_price'       => 1,
+            'score_date'        => 0
+        ));
+
     }
 }

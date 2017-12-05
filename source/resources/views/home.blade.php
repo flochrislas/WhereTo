@@ -1,16 +1,25 @@
-<!doctype html>
-<html lang="{{ app()->getLocale() }}">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>WhereTo</title>
-    </head>
-    <body>
-        home
-        
-        <div class="pull-right">
-                <a class="btn btn-primary" href="{{ route('restaurants.index') }}"> Back</a>
+@extends('layouts.app')
+
+@section('content')
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <div class="panel panel-default">
+                <div class="panel-heading">Home</div>
+
+                <div class="panel-body">
+                    @if (session('status'))
+                        <div class="alert alert-success">
+                            {{ session('status') }}
+                        </div>
+                    @endif
+
+                    <br>
+                    <br>
+                    <a class="btn btn-info" href="{{ route('restaurants.main') }}">Voir les restos</a>
+                </div>
             </div>
-    </body>
-</html>
+        </div>
+    </div>
+</div>
+@endsection
