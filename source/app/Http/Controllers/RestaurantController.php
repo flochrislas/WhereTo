@@ -13,16 +13,22 @@ class RestaurantController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function main()
+    {
+        // TODO: implement "see more" button
+        $restaurants = Restaurant::all();
+        return view('restaurants.index', compact('restaurants'));
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function index()
     {
         $restaurants = Restaurant::all();
         return view('restaurants.index', compact('restaurants'));
-
-        // Pagination
-        /*
-        $restaurants = Restaurant::latest()->paginate(5);
-        return view('restaurants.index',compact('restaurants'))
-            ->with('i', (request()->input('page', 1) - 1) * 5);*/
     }
 
     /**

@@ -1,12 +1,27 @@
-<!doctype html>
-<html lang="{{ app()->getLocale() }}">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>WhereTo</title>
-    </head>
-    <body>
-        admin home (dashboard)
-    </body>
-</html>
+@extends('layouts.app')
+
+@section('content')
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <div class="panel panel-default">
+                <div class="panel-heading">Admin Dashboard</div>
+
+                <div class="panel-body">
+
+                    @if (session('status'))
+                        <div class="alert alert-success">
+                            {{ session('status') }}
+                        </div>
+                    @endif
+
+                    You are logged in as {{Auth::user()}}.
+                    <br>
+                    <br>
+                    <a class="btn btn-info" href="{{ route('restaurants.index') }}">Manage restaurants</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@endsection
