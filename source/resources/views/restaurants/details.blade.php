@@ -1,4 +1,4 @@
-@extends('layouts.html')
+@extends('layouts.app')
 
 @section('title', 'Restaurant Show')
 
@@ -9,7 +9,7 @@
                 <h2> Show restaurant</h2>
             </div>
             <div class="pull-right">
-                <a class="btn btn-primary" href="{{ route('restaurants.index') }}"> Back</a>
+                <a class="btn btn-primary" href="{{ route('restaurants.main') }}"> Back</a>
             </div>
         </div>
     </div>
