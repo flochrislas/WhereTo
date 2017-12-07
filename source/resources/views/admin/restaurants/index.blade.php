@@ -1,5 +1,3 @@
-// restaurants index
-
 @extends('layouts.html')
 
 @section('title', 'Restaurant Index')
@@ -12,6 +10,7 @@
             </div>
             <div class="pull-right">
                 <a class="btn btn-success" href="{{ route('restaurants.create') }}"> Create New restaurant</a>
+                <a class="btn btn-success" href="{{ route('admin.restaurants.imex') }}"> ImEx restaurant</a>
             </div>
         </div>
     </div>

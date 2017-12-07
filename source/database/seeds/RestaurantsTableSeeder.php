@@ -899,5 +899,42 @@ class RestaurantsTableSeeder extends Seeder
             'score_date'        => 0
         ));
 
+        Restaurant::create(array(
+            'name'              => 'Lotteria',
+            'location'          => 'Shibuya',
+            'type'              => 'burger',
+            'lunch_price'       => 900,
+            'points'            => 'Good alternative to McDo. Fast, unexpensive, and decent burgers.',
+            'experience'        => 'Good alternative to McDo. Similar quality and experience, similar price, with alternative choices and taste.',
+            'visited'           => true,
+            'visit_date'        => '2017-12-07 13:00:00',
+            'google_maps_link'  => 'http://data',
+            'tabelog_link'      => 'http://data',
+            'official_website'  => 'http://data',
+            'score_lunch'       => 2,
+            'score_place'       => 1,
+            'score_food'        => 1,
+            'score_price'       => 1,
+            'score_date'        => 0
+        ));
+
+        Restaurant::create(array(
+            'name'              => 'TGIF',
+            'location'          => 'Shibuya',
+            'type'              => 'American',
+            'lunch_price'       => 900,
+            'points'            => 'Decent casual restaurant with a big room and decent interior. Serve variety of dishes such as burgers, tacos, or pasta. Decent prices. Decent taste. Amount of food is slightly below what I would like and expect.',
+            'experience'        => 'I liked the room, and the windows bay. The service was a bit slow. The food was good (I tried the tacos), but I was still a bit hungry after the meal. The place was mostly crowded with (possibly noisy) groups of high schoolers.',
+            'visited'           => true,
+            'visit_date'        => '2017-12-07 13:00:00',
+            'google_maps_link'  => 'http://data',
+            'tabelog_link'      => 'http://data',
+            'official_website'  => 'http://data',
+            'score_lunch'       => 2,
+            'score_place'       => 1,
+            'score_food'        => 1,
+            'score_price'       => 1,
+            'score_date'        => 1
+        ));
     }
 }

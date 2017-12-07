@@ -9,6 +9,7 @@ use Excel;
 class RestaurantController extends Controller
 {
     /**
+     * Public
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -17,7 +18,20 @@ class RestaurantController extends Controller
     {
         // TODO: implement "see more" button
         $restaurants = Restaurant::all();
-        return view('restaurants.index', compact('restaurants'));
+        return view('restaurants.main', compact('restaurants'));
+    }
+
+    /**
+     * Public
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function details($id)
+    {
+        $restaurant = Restaurant::find($id);
+        return view('restaurants.details', compact('restaurant'));
     }
 
     /**
@@ -28,7 +42,7 @@ class RestaurantController extends Controller
     public function index()
     {
         $restaurants = Restaurant::all();
-        return view('restaurants.index', compact('restaurants'));
+        return view('admin.restaurants.index', compact('restaurants'));
     }
 
     /**
@@ -38,7 +52,7 @@ class RestaurantController extends Controller
      */
     public function create()
     {
-        return view('restaurants.create');
+        return view('admin.restaurants.create');
     }
 
     /**
@@ -70,7 +84,7 @@ class RestaurantController extends Controller
 
         Restaurant::create($request->all());
 
-        return redirect()->route('restaurants.index')
+        return redirect()->route('admin.restaurants.index')
             ->with('success','Restaurant created successfully');
     }
 
@@ -83,7 +97,7 @@ class RestaurantController extends Controller
     public function show($id)
     {
         $restaurant = Restaurant::find($id);
-        return view('restaurants.show',compact('restaurant'));
+        return view('admin.restaurants.show',compact('restaurant'));
     }
 
     /**
@@ -95,7 +109,7 @@ class RestaurantController extends Controller
     public function edit($id)
     {
         $restaurant = Restaurant::find($id);
-        return view('restaurants.edit',compact('restaurant'));
+        return view('admin.restaurants.edit',compact('restaurant'));
     }
 
     /**
@@ -127,7 +141,7 @@ class RestaurantController extends Controller
 
         Restaurant::find($id)->update($request->all());
 
-        return redirect()->route('restaurants.index')
+        return redirect()->route('admin.restaurants.index')
             ->with('success','Restaurant updated successfully');
     }
 
@@ -139,16 +153,27 @@ class RestaurantController extends Controller
      */
     public function destroy($id)
     {
-        /*
-        $restaurant = Restaurant::find($id);
-        $restaurant->delete();
-        return redirect('/restaurants-list')->with('success', 'The restaurant has been deleted!');
-        */
-
         Restaurant::find($id)->delete();
-        return redirect()->route('restaurants.index')
+        return redirect()->route('admin.restaurants.index')
             ->with('success','Restaurant deleted successfully');
+    }
 
+    /**
+     * export a file in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function export(Request $request, $type)
+    {
+        $data = Restaurant::all();
+        return Excel::create('restaurants-export', function($excel) use ($data)
+        {
+            $excel->sheet('Restaurants Export', function($sheet) use ($data)
+            {
+                $sheet->fromArray($data);
+            });
+        })->download($type);
 
     }
 
@@ -177,43 +202,6 @@ class RestaurantController extends Controller
             return back()->with('success','Restaurants import successful.');
         }
         return back()->with('error','Something seems to be wrong with the import file.');;
-    }
-
-    /**
-     * export a file in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function export()
-    {
-        $restaurants = Restaurant::all();
-        Excel::create('restaurants', function($excel) use($restaurants)
-        {
-            $excel->sheet('ExportFile', function($sheet) use($restaurants)
-            {
-                $sheet->fromArray($restaurants);
-            });
-        })->export('xls');
-    }
-
-    /**
-     * export a file in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function exportType(Request $request, $type)
-    {
-        $data = Restaurant::get()->toArray();
-        return Excel::create('restaurants-export', function($excel) use ($data)
-        {
-            $excel->sheet('Restaurants Export', function($sheet) use ($data)
-            {
-                $sheet->fromArray($data);
-            });
-        })->download($type);
-
     }
 
     /**

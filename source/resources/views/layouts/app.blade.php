@@ -23,11 +23,11 @@
 <body>
     <div id="app">
         <!-- HEADER -->
-        @include('header')
+        @include('layouts.header')
         <!-- CONTENT -->
         @yield('content')
         <!-- FOOTER -->
-        @include('header')
+        @include('layouts.footer')
     </div>
 
     <!-- Scripts -->

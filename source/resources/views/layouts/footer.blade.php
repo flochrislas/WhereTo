@@ -1,9 +1,6 @@
 <nav class="navbar navbar-default navbar-static-top">
     <div class="container">
         <div class="navbar-header">
-
-            <!-- NO Collapsed Hamburger -->
-
             <!-- Branding Image -->
             <a class="navbar-brand" href="{{ url('/') }}">
                 {{ config('app.name', 'WhereTo') }}
