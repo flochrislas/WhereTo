@@ -168,7 +168,13 @@ return [
         /*
          * Package Service Providers...
          */
-
+        // To Import Export CSV files:
+        // https://appdividend.com/2017/06/12/import-export-data-csv-excel-laravel-5-4
+        Maatwebsite\Excel\ExcelServiceProvider::class,
+        // To help with forms:
+        // http://itsolutionstuff.com/post/laravel-55-crud-example-from-scratchexample.html
+        Collective\Html\HtmlServiceProvider::class,
+        
         /*
          * Application Service Providers...
          */
@@ -206,6 +212,7 @@ return [
         'DB' => Illuminate\Support\Facades\DB::class,
         'Eloquent' => Illuminate\Database\Eloquent\Model::class,
         'Event' => Illuminate\Support\Facades\Event::class,
+        'Excel' => Maatwebsite\Excel\Facades\Excel::class,
         'File' => Illuminate\Support\Facades\File::class,
         'Gate' => Illuminate\Support\Facades\Gate::class,
         'Hash' => Illuminate\Support\Facades\Hash::class,
@@ -226,6 +233,8 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
+        'Form' => Collective\Html\FormFacade::class,        
+        'Html' => Collective\Html\HtmlFacade::class,
 
     ],
 

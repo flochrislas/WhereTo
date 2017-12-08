@@ -15,4 +15,5 @@
 
 @section('content')
     <p>This is my body content (section).</p>
+    <?php phpinfo() ?>
 @endsection

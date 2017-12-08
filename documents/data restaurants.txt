@@ -368,4 +368,3 @@ Type: burger
 Price: around 2000
 Points: waguy beef burgers
 Personal experience: very good burger. 
-

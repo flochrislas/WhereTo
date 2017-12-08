@@ -1,0 +1,90 @@
+CLEAR THE MYST:
+composer dump-autoload
+or
+composer update
+
+MAKE
+php artisan make:controller RestaurantController --resource
+php artisan make:model Restaurant
+
+MIGRATE
+php artisan make:migration create_restaurant_types_table --create=restaurant_types
+php artisan migrate:refresh
+
+SEED
+php artisan make:seeder UsersTableSeeder
+php artisan db:seed
+php artisan db:seed --class=UserTableSeeder
+php artisan migrate:refresh --seed
+
+
+Laravel version check
+php artisan --version
+5.5.14
+
+Import Export Excel and CSV files
+https://appdividend.com/2017/06/12/import-export-data-csv-excel-laravel-5-4/
+
+Various - lots of links:
+https://belitsoft.com/laravel-development-services/laravel-5-tutorial
+
+HTML and Form
+https://laravelcollective.com/docs/master/html#installation
+Forms
+https://web-presence.ch/formulaire-laravel5
+
+GOOD FR Tuto
+http://laravel.sillo.org/cours-laravel-5-3-les-bases-installation-et-organisation/
+
+
+Import Export csv
+composer require maatwebsite/excel
+Html form helper
+composer require laravelcollective/html
+
+GOOD laravel 5.5 CRUD tuto:
+http://itsolutionstuff.com/post/laravel-55-crud-example-from-scratchexample.html
+http://www.expertphp.in/article/laravel-5-5-crud-create-read-update-delete-example-from-scratch
+
+Translations, multilanguage
+https://laravel.com/docs/5.5/localization
+https://laracasts.com/discuss/channels/tips/example-on-how-to-use-multiple-locales-in-your-laravel-5-website
+
+Enhancing IDE to work with Laravel
+https://www.dunebook.com/5-best-ide-laravel-ide-with-laravel-ide-helper/
+
+Pagination
+https://laravel.com/docs/5.5/pagination
+
+LoadMore vs InfiniteScrolling vs Pagination
+https://www.smashingmagazine.com/2016/03/pagination-infinite-scrolling-load-more-buttons/
+
+Scroll progress detection in JS:
+	// Fetch variables
+	var scrollTop = $(document).scrollTop();
+	var windowHeight = $(window).height();
+	var bodyHeight = $(document).height() - windowHeight;
+	var scrollPercentage = (scrollTop / bodyHeight);
+
+	// if the scroll is more than 90% from the top, load more content.
+	if(scrollPercentage > 0.9) {
+		// Load content
+	}
+---------------------------------- ANOTHER ONE ------------------------
+	$(window).on('scroll', function(){
+	    if( $(window).scrollTop() > $(document).height() - $(window).height() ) {
+	        $("#load-more").click();
+	    }
+	}).scroll();
+-----------------------------------------------------------------------
+Nice link:
+https://www.sitepoint.com/jquery-infinite-scrolling-demos/
+
+nice beginer tuto:
+https://laravel-news.com/your-first-laravel-application
+
+Lots of stuff in Laracast website (videos)
+
+Looks like a great debug bar:
+https://github.com/barryvdh/laravel-debugbar
+
