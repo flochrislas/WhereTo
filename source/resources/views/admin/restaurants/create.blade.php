@@ -1,4 +1,4 @@
-@extends('layouts.html')
+@extends('layouts.app')
 
 @section('title', 'Restaurant Create')
 
@@ -26,7 +26,7 @@
     @endif
 
     {!! Form::open(array('route' => 'restaurants.store','method'=>'POST')) !!}
-         @include('restaurants.form')
+         @include('admin.restaurants.form')
     {!! Form::close() !!}
 
 @endsection

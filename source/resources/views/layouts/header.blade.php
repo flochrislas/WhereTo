@@ -23,7 +23,9 @@
                 &nbsp;
               @else
                 <li><a href="{{ route('admin.dashboard') }}"><strong>DASHBOARD</strong></a></li>
-                <li><a href="{{ url('/admin/restaurants') }}">Restos</a></li>
+                <li><a href="{{ route('restaurants.index') }}">Restos</a></li>
+                <li><a href="{{ route('test') }}"><strong>Test</strong></a></li>
+                <li><a href="{{ route('laravel') }}"><strong>Laravel</strong></a></li>
               @endif
             </ul>
 
@@ -54,6 +56,7 @@
                         </ul>
                     </li>
                 @endguest
+                <li><a href="{{ route('about') }}"><strong>About</strong></a></li>
             </ul>
         </div>
     </div>

@@ -93,8 +93,8 @@ Route::middleware(['auth'])->prefix('admin')->group(function()
 
     // Laravel's welcome page
     Route::get('laravel', function () {
-        return view('laravel');
-    });
+        return view('admin.laravel');
+    })->name('laravel');
 });
 
 // ===============================================

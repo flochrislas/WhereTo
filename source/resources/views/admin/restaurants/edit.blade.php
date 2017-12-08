@@ -1,4 +1,4 @@
-@extends('layouts.html')
+@extends('layouts.app')
 
 @section('title', 'Restaurant Edit')
 
@@ -26,7 +26,7 @@
     @endif
 
     {!! Form::model($restaurant, ['method' => 'PATCH','route' => ['restaurants.update', $restaurant->id]]) !!}
-        @include('restaurants.form')
+        @include('admin.restaurants.form')
     {!! Form::close() !!}
 
 @endsection
