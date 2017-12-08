@@ -13,6 +13,12 @@
     <!-- Styles -->
     <link href="/css/app.css" rel="stylesheet">
 
+    <!-- custom CSS -->
+    <style>
+        h1{font-size:23px;}
+        .pull-left h2{margin-top:0;font-size:20px;}
+    </style>
+
     <!-- Scripts -->
     <script>
         window.Laravel = <?php echo json_encode([

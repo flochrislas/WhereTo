@@ -1,4 +1,4 @@
-@extends('layouts.html')
+@extends('layouts.app')
 
 @section('title', 'Restaurant Index')
 
@@ -6,11 +6,11 @@
     <div class="row">
         <div class="col-lg-12 margin-tb">
             <div class="pull-left">
-                <h2>Restaurants CRUD</h2>
+                <h2>Restaurants CRUDIX</h2>
             </div>
             <div class="pull-right">
                 <a class="btn btn-success" href="{{ route('restaurants.create') }}"> Create New restaurant</a>
-                <a class="btn btn-success" href="{{ route('admin.restaurants.imex') }}"> ImEx restaurant</a>
+                <a class="btn btn-success" href="{{ route('restaurants.imex') }}"> ImEx restaurant</a>
             </div>
         </div>
     </div>

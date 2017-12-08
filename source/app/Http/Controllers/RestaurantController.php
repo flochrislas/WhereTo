@@ -84,7 +84,7 @@ class RestaurantController extends Controller
 
         Restaurant::create($request->all());
 
-        return redirect()->route('admin.restaurants.index')
+        return redirect()->route('restaurants.index')
             ->with('success','Restaurant created successfully');
     }
 
@@ -141,7 +141,7 @@ class RestaurantController extends Controller
 
         Restaurant::find($id)->update($request->all());
 
-        return redirect()->route('admin.restaurants.index')
+        return redirect()->route('restaurants.index')
             ->with('success','Restaurant updated successfully');
     }
 
@@ -154,7 +154,7 @@ class RestaurantController extends Controller
     public function destroy($id)
     {
         Restaurant::find($id)->delete();
-        return redirect()->route('admin.restaurants.index')
+        return redirect()->route('restaurants.index')
             ->with('success','Restaurant deleted successfully');
     }
 
