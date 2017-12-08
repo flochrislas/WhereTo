@@ -17,7 +17,10 @@ class RestaurantController extends Controller
     public function main()
     {
         // TODO: implement "see more" button
-        $restaurants = Restaurant::all();
+        $restaurants = Restaurant::orderBy('score_lunch', 'desc')
+                        ->orderBy('score_food', 'desc')
+                        ->orderBy('score_place', 'desc')
+                        ->get();
         return view('restaurants.main', compact('restaurants'));
     }
 
@@ -41,7 +44,7 @@ class RestaurantController extends Controller
      */
     public function index()
     {
-        $restaurants = Restaurant::all();
+        $restaurants = Restaurant::orderBy('id', 'desc')->get();
         return view('admin.restaurants.index', compact('restaurants'));
     }
 
