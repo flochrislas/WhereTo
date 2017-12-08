@@ -1,13 +1,18 @@
-to try
-
-TEXMEX FACTORY 渋谷神南店
-〒150-0041 Tokyo, 渋谷区Jinnan, 1 Chome−19−3, ハイマンテン神南ビル
-also, ankara
-also more salad and the indian on the same street
-also https://www.google.co.jp/maps/place/%E3%83%9F%E3%83%A9%E3%83%B3%E3%83%BB%E3%83%8A%E3%82%BF%E3%83%A9%E3%82%B8+Milan+Nataraj/@35.6592658,139.7041818,15z/data=!4m5!3m4!1s0x0:0x81f4524b4461190c!8m2!3d35.6611253!4d139.7010487?hl=en
-
-
----------------------
+-----
+App
+could be online wensite, but also could be DL as an offline app
+could import google maps customer reviews into personal exprience fierlds
+tag system
+tag cloud (to see most popular tags and other ideas and be able to click them)
+default on where to have lunch in shibuya, but other tab include where to have diner, where eto drink, where to party, and where to rest after last train. lso have all the last and first troains times
+user interaction: complete information, write exp. , just like or dislike buttons, or star rating system
+link to tabelog or other relevant website
+feature: closest combini, now
+feature: closest loveho, now
+feature: closest <tag>, now
+whuen browsing, add the info of how long by foot it would take to reach there from current gps position.
+Basic info for real tourists: always carry enough cash to pay for the meal. Pokemon go? shibuya is like poke heaven.
+-----------
 
 Name: Ramen 1 (yellow sign)
 Location: Ramen Street
@@ -107,6 +112,7 @@ Price: diner not to exprensive, but not cheap (5000 per person drinking cheapest
 Points: nice table, nie restaurant, decent food and drinks
 Personal experience: decent. had a nice evening there dining with 4 people
 
+
 Name: Entertainment and sports bar
 Location: next to samrat curry farther after the center gai
 Type: cheap pizza/pasta lunch
@@ -119,14 +125,16 @@ Location: next to samrat curry farther after the center gai
 Type: japanese curry
 Price: around 850
 Points: chain restaurant a bit similar to cocoichi. customizable japanese curry, counter and small tables, basement floor
-Personal experience: Good alternative to cocoichi. Less customizable, less options, but less expensive as well. Not really spicy, but good japanese curry. I enjoyed my chiken katsu with cheese. Basement is not very glamorous, but for a lunch it's OK. Loyalty System: Point card. 5 times: free toping. 10 times: free curry.
+Personal experience: Good alternative to cocoichi. Less customizable, less options, but less expensive as well. Not really spicy, but good japanese curry. I enjoyed my chiken katsu with cheese. Basement is not very glamorous, but for a lunch it's OK.
+Loyalty System: Point card. 5 times: free toping. 10 times: free curry.
 
 Name: Nice Pizza/Pasta restaurant
 Location: in front of samrat curry farther after the center gai
 Type: pizza/pasta/salad
 Price: 1000
 Points: 9th floor with nice large bay windows, spacious room with large tables. Real pizza oven. 1000yen menu set with a drink, bowl of soup, large salad, and large pizza. music playing, boom boom type, a bit loud but OK.
-Personal experience: loved the room. fast service. taste was bland (marguerita).wtf: the deco is all fine except for taht reindeer head sprouting out of a column for no apparent reason
+Personal experience: loved the room. fast service. taste was bland (marguerita).
+wtf: the deco is all fine except for taht reindeer head sprouting out of a column for no apparent reason
 
 Name: Matsuya
 Location: down the street from the office , with music shop amp and drums
@@ -145,7 +153,9 @@ Type: Ramen
 Price: around 800yen
 Points: Special ramen without soup.
 Personal experience: Mind blowingly delicious. Meat is awesome, smokey taste, and in large quantity. The shoyu base sauce is delicious. Large counter. Japanese reggai music, not too loud. Extremely small stools. Avoid the ramen, way less delicious than the mazesoba.
+----
 So you know that restaurant created by the gods in an expirement to feed mere mortals divine food? Shichi? Well it seems like, as in any gods stories, one of them was evil and planted a not-so-divine dish in the menu. I unveiled it and am here to warn you: if, for any unimaginable reasons, you still havent been there, when go, do NOT order the ramen. Stick with the mazu soba.
+
 
 Name: pizza bar Cona
 Location: down the street behind our office
@@ -153,6 +163,7 @@ Type: pizzeria
 Price: around 500
 Points: cheap and light pizza, counter or tables available. 500 for just the pizza, +300yen for salad bar and drink bar. pasta lunch also available.
 Personal experience: decent pizza 30cm, but light (very thin crust and topping), better not be hungry. Counter is small, not very confortable. When I went there it was also too cold.
+
 
 Name: kin no kara
 Location: next to ippudo, center gai
@@ -179,12 +190,14 @@ Oh, and surprisingly enough, it also came with a mini-bucket full of pakuchi... 
 And that was it, EXTREMELY disapointed. The Singapour chicken rice we had (now closed) near Porters was 100 times better.
 I feel robbed. Of my money. My time. My hopes. And I'm hungry.
 
+
 Name: Soul Kitchen Curry or something
 Location: avenue behind the office
 Type: japanese curry
 Price: around 800
 Points: nice atmosphere. Elvis Presley music.
 Personal experience: well balanced curry
+
 
 Name: ramen and curry
 Location: right behing the office next to Shichi
@@ -264,6 +277,7 @@ Price: (meal) 1000~
 Points: Japanese fast food burger.
 Personal experience: Slow service. Overpriced. Impossible to eat by hands. I eat it with fork and knife at hme, and taste is good. But possibly the worst burger chain in Japan.
 
+
 Name: Kura
 Location: after bic camera annex shibuya
 Type: Italian
@@ -324,15 +338,18 @@ Name: Il Fiume
 Location: far
 Type: italian
 Price: lunch from 980
-Points: Nnice place, nice interior, even has a terrace, in a calm street. Lunch has salad buffet, with decent variety of salads. Dish can be chosen from the menu. Japanese-italian style. No pizza.
+Points: Nice place, nice interior, even has a terrace, in a calm street. Tables and counter. Lunch has salad buffet, with decent variety of salads. Dish can be chosen from the menu. Japanese-italian style. No pizza.
 Personal experience: Enjoyed the place. Salads were plenty, and good. I tried some pasta, 980yen, but it was... just decent. But it made me want to come back and try another dish.
 
-Name: Verde
-Location: next to Elvis japanese curry place
-Type: curry+gapoa+pizza
-Price: lunch from 980
-Points: Dark place on a 4th floor. Menu offers mostly indian curry sets, but also thai and pizza. Place doesnt look busy and there is a good amount of tables, so might be easy for large groups.
-Personal experience: I tried the pizza+salad for 980yen. They have a real pizza oven to the crust was tasty from the wood fire. But other than that, it was quite plain. A lot of cheese on it though, so it made me well full. Salad was like the salad you get in a curry restaurant. The drink as well. I did not like how dark was the place. And the price was not cheap. So I won't be back. Fun note: the elevator to get there is extremely slow.
+Name: PacoAPaco
+Location: after loveho
+Type: italian
+Price: lunch from 800
+Points: Nice place. Decent price. Offer spicy oil with pizzas.
+Personal experience: For 900 yen I had a decent salad and a half-half pizza. I chose peperoni mushrooms and gorgonzola-mozarella. Pizza was good, especially the cheese. Size was decent and I could feel satisifed with regards to the quantity as well. At the time of my visit it was the best pizza I had in Shibuya.
+
+----
+Daikanyama side
 
 Name: some thai
 Location: D side
@@ -342,10 +359,12 @@ Points: gapao
 Personal experience: very small tables, for most of them. Gapao was OK, came with good soup and small salad, from 980yen.
 
 
+----
+Daikanyama
+
 Name: Blacows
 Location: D
 Type: burger
 Price: around 2000
 Points: waguy beef burgers
 Personal experience: very good burger. 
-

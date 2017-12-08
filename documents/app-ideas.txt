@@ -18,12 +18,14 @@ Sleep[anytime, without booking] -> (solo), (couple) -> (capsule hotels, internet
 Information center: archive info about tons of stuff
 on pages, link to related info from info center (how to call the staff, how to ask for an extension, how to ask for the check...)
 -----------
+
 Score lunch global:
 0: Absolutely horrible place
 1: Bad or whatever, I won't go again
 2: OK, I might go again if I crave for this specific kind of lunch / or if I extra money I can spare
 3: Very good. I would be down to go again any time
 4: Excellent. It is hard to refrain to go back to that place every week or more
+
 Score for dates:
 0: Bad for dates
 1: Decent for dates
