@@ -19,6 +19,8 @@
                     <br>
                     <br>
                     <a class="btn btn-info" href="{{ route('restaurants.index') }}">Manage restaurants</a>
+                    <a class="btn btn-info" href="{{ route('restaurantTag.index') }}">Manage restaurants tags</a>
+                    <a class="btn btn-info" href="{{ route('restaurantType.index') }}">Manage restaurants types</a>
                 </div>
             </div>
         </div>
