@@ -1,4 +1,4 @@
-@extends('layouts.html')
+@extends('layouts.app')
 
 @section('title', 'Restaurant Type Create')
 

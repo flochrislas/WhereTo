@@ -83,6 +83,9 @@ Route::middleware(['auth'])->prefix('admin')->group(function()
     Route::post('/restaurantType/update/{id}', 'RestaurantTypeController@update')->name('restaurantType.update');
     Route::get('/restaurantType/delete/{id}', 'RestaurantTypeController@destroy')->name('restaurantType.delete');
 
+    // Restaurant Tags CRUD
+    Route::resource('restaurantTag','RestaurantTagController');
+
     // Restaurants Import Export
     Route::get('restaurantsFiles', function()
     {

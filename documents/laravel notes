@@ -17,6 +17,8 @@ php artisan db:seed
 php artisan db:seed --class=UserTableSeeder
 php artisan migrate:refresh --seed
 
+SUPER MAKE
+php artisan make:model -m -c -r Test
 
 Laravel version check
 php artisan --version
