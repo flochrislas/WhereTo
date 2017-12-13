@@ -393,17 +393,17 @@ class RestaurantsTableSeeder extends Seeder
             'type'              => 'Ramen',
             'lunch_price'       => 800,
             'points'            => 'Special ramen without soup.',
-            'experience'        => 'Mind blowingly delicious. Meat is awesome, smokey taste, and in large quantity. The shoyu base sauce is delicious. Large counter. Japanese reggai music, not too loud. Extremely small stools. Avoid the ramen, way less delicious than the mazesoba. So you know that restaurant created by the gods in an expirement to feed mere mortals divine food? Shichi? Well it seems like, as in any gods stories, one of them was evil and planted a not-so-divine dish in the menu. I unveiled it and am here to warn you: if, for any unimaginable reasons, you still havent been there, when go, do NOT order the ramen. Stick with the mazu soba.',
+            'experience'        => 'Mind blowingly delicious. Meat is awesome, smokey taste, and in large quantity. The shoyu base sauce is delicious. Large counter. Japanese reggai music, not too loud. Extremely small stools. Avoid the ramen, way less delicious than the mazesoba. So you know that restaurant created by the gods in an expirement to feed mere mortals divine food? Shichi? Well it seems like, as in any gods stories, one of them was evil and planted a not-so-divine dish in the menu. I unveiled it and am here to warn you: if, for any unimaginable reasons, you still havent been there, when go, do NOT order the ramen. Stick with the mazu soba. And about the place itself, it is narrow, stools are uncomfortable, it is cold in winter... but it is all forgiven after tasting their food.',
             'visited'           => true,
             'visit_date'        => '2017-09-05 13:00:00',
             'google_maps_link'  => 'http://data',
             'tabelog_link'      => 'http://data',
             'official_website'  => 'http://data',
-            'score_lunch'       => 1,
-            'score_place'       => 1,
-            'score_food'        => 1,
-            'score_price'       => 1,
-            'score_date'        => 1
+            'score_lunch'       => 4,
+            'score_place'       => 0,
+            'score_food'        => 3,
+            'score_price'       => 2,
+            'score_date'        => 0
         ));
 
         Restaurant::create(array(
