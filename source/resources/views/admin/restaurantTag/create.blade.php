@@ -17,17 +17,17 @@
                 Add a New Restaurant Tag <a href="{{ route('restaurantTag.index') }}" class="label label-primary pull-right">Back</a>
             </div>
             <div class="panel-body">
-                <form action="{{ route('restaurantTag.create') }}" method="POST" class="form-horizontal">
+                <form action="{{ route('restaurantTag.store') }}" method="POST" class="form-horizontal">
                     {{ csrf_field() }}
                     <div class="form-group">
                         <label class="control-label col-sm-2" >Label</label>
                         <div class="col-sm-10">
-                            <input Tag="text" name="label" id="label" class="form-control">
+                            <input type="text" name="label" id="label" class="form-control">
                         </div>
                     </div>
                     <div class="form-group">
                         <div class="col-sm-offset-2 col-sm-10">
-                            <input Tag="submit" class="btn btn-default" value="Add Resaurant Tag" />
+                            <input type="submit" class="btn btn-default" value="Add Resaurant Tag" />
                         </div>
                     </div>
                 </form>

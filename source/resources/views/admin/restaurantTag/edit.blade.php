@@ -22,12 +22,12 @@
                     <div class="form-group">
                         <label class="control-label col-sm-2" >Label</label>
                         <div class="col-sm-10">
-                            <input Tag="text" name="label" id="label" class="form-control" value="{{ $restaurantTag->label }}">
+                            <input type="text" name="label" id="label" class="form-control" value="{{ $restaurantTag->label }}">
                         </div>
                     </div>
                     <div class="form-group">
                         <div class="col-sm-offset-2 col-sm-10">
-                            <input Tag="submit" class="btn btn-default" value="Update Restaurant Tag" />
+                            <input type="submit" class="btn btn-default" value="Update Restaurant Tag" />
                         </div>
                     </div>
                 </form>

@@ -26,6 +26,14 @@ class Restaurant extends Model
         'score_date'
     ];
 
+    /**
+     * The tags that belong to the restaurant.
+     */
+    public function tags()
+    {
+        return $this->belongsToMany('App\RestaurantTag');
+    }
+
     // Confirm useless before removing:
     /*
     // From CRUD tuto https://appdividend.com/2017/10/15/laravel-5-5-crud-example-tutorial/

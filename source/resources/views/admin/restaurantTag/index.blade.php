@@ -43,7 +43,7 @@
                             <td>
                                 <a href="{{ route('restaurantTag.show', $restaurantTag->id) }}" class="label label-success">Details</a>
                                 <a href="{{ route('restaurantTag.edit', $restaurantTag->id) }}" class="label label-warning">Edit</a>
-                                <a href="{{ route('restaurantTag.delete', $restaurantTag->id) }}" class="label label-danger" onclick="return confirm('Are you sure to delete?')">Delete</a>
+                                <a href="{{ route('restaurantTag.destroy', $restaurantTag->id) }}" class="label label-danger" onclick="return confirm('Are you sure to delete?')">Delete</a>
                             </td>
                         </tr>
                     @endforeach
