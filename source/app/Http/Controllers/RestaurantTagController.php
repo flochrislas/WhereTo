@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\RestaurantTag;
+use Session;
 
 class RestaurantTagController extends Controller
 {
@@ -54,7 +55,7 @@ class RestaurantTagController extends Controller
       //store status message
       Session::flash('success_msg', 'Restaurant Tag added successfully!');
 
-      return redirect()->route('admin.restaurantTag.index');
+      return redirect()->route('restaurantTag.index');
   }
 
   /**

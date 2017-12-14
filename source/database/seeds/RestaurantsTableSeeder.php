@@ -199,15 +199,15 @@ class RestaurantsTableSeeder extends Seeder
         ));
 
         Restaurant::create(array(
-            'name'              => 'Turk Restaurant',
-            'location'          => 'In front of H&M',
+            'name'              => 'Kebab Cafe',
+            'location'          => 'Shibuya',
             'type'              => 'turk',
             'lunch_price'       => 900,
-            'points'            => 'popular turkish dishes such as kehbab, possibility to eat inside on table',
-            'experience'        => 'very good turk restaurant, good kehbab, not very confortable (narrow space)',
+            'points'            => 'popular turkish dishes such as kebab, possibility to eat inside on table',
+            'experience'        => 'very good turk restaurant, good kebab, not very confortable (narrow space)',
             'visited'           => true,
             'visit_date'        => '2017-09-05 13:00:00',
-            'google_maps_link'  => 'http://data',
+            'google_maps_link'  => 'https://www.google.co.jp/maps/place/Kebab+Cafe/@35.660247,139.6970756,21z/data=!4m5!3m4!1s0x60188ca99be93651:0x461c229b06865bd9!8m2!3d35.6603228!4d139.6971273?hl=en',
             'tabelog_link'      => 'http://data',
             'official_website'  => 'http://data',
             'score_lunch'       => 1,
@@ -952,6 +952,25 @@ class RestaurantsTableSeeder extends Seeder
             'score_lunch'       => 2,
             'score_place'       => 1,
             'score_food'        => 1,
+            'score_price'       => 1,
+            'score_date'        => 1
+        ));
+
+        Restaurant::create(array(
+            'name'              => 'Ankara',
+            'location'          => 'Shibuya',
+            'type'              => 'Turk',
+            'lunch_price'       => 1000,
+            'points'            => 'Decent Turk restaurant. B1F, quite dark place, but decent interior. Big enough to allow groups.',
+            'experience'        => 'Lunch set was dish + bread/nan + salad + soup + tea, all decent. Not as good as Kebab Cafe though (but more more confortable).',
+            'visited'           => true,
+            'visit_date'        => '2017-12-07 13:00:00',
+            'google_maps_link'  => 'http://data',
+            'tabelog_link'      => 'http://data',
+            'official_website'  => 'http://data',
+            'score_lunch'       => 2,
+            'score_place'       => 1,
+            'score_food'        => 2,
             'score_price'       => 1,
             'score_date'        => 1
         ));
