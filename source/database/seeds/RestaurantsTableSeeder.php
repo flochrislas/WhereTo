@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Seeder;
 use App\Restaurant;
+use App\RestaurantTag;
 
 /**
  * Seeds restaurants.
@@ -964,7 +965,7 @@ class RestaurantsTableSeeder extends Seeder
             'points'            => 'Decent Turk restaurant. B1F, quite dark place, but decent interior. Big enough to allow groups.',
             'experience'        => 'Lunch set was dish + bread/nan + salad + soup + tea, all decent. Not as good as Kebab Cafe though (but more more confortable).',
             'visited'           => true,
-            'visit_date'        => '2017-12-07 13:00:00',
+            'visit_date'        => '2017-12-13 13:00:00',
             'google_maps_link'  => 'http://data',
             'tabelog_link'      => 'http://data',
             'official_website'  => 'http://data',
@@ -974,5 +975,39 @@ class RestaurantsTableSeeder extends Seeder
             'score_price'       => 1,
             'score_date'        => 1
         ));
+
+        Restaurant::create(array(
+            'name'              => 'Dragon Miso',
+            'location'          => 'Shibuya, in front of the Labi',
+            'type'              => 'Ramen',
+            'lunch_price'       => 850,
+            'points'            => 'Decent miso ramen. Spicy "dragon" miso ramen available. Decent gyoza also available. No table, counter only. Staff very friendly to foreigners. English and Chinese menus available.',
+            'experience'        => 'I got a regular miso ramen + gyoza and rice set for less than 1000 yen. That was totally decent. The counter was not too narrow, but the place was quite hot. The miso was OK but a bit light to my taste.',
+            'visited'           => true,
+            'visit_date'        => '2017-12-14 13:00:00',
+            'google_maps_link'  => 'http://data',
+            'tabelog_link'      => 'http://data',
+            'official_website'  => 'http://data',
+            'score_lunch'       => 2,
+            'score_place'       => 1,
+            'score_food'        => 2,
+            'score_price'       => 1,
+            'score_date'        => 0
+        ));
+
+        // this insert , using eloquesnt (create would do the same, using sql)
+        $tag = new RestaurantTag(['label' => 'test save']);
+        $resto = Restaurant::find(1);
+        $resto->tags()->save($tag);
+
+        $resto->tags()->saveMany([
+            new RestaurantTag(['label' => 'test multi1']),
+            new RestaurantTag(['label' => 'test multi2']),
+        ]);
+
+
+// attach would jsut associate existing records : http://laraveldaily.com/pivot-tables-and-many-to-many-relationships/
+
+
     }
 }
