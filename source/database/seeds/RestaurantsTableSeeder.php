@@ -995,7 +995,27 @@ class RestaurantsTableSeeder extends Seeder
             'score_date'        => 0
         ));
 
+        $resto = Restaurant::create(array(
+            'name'              => 'Pancho',
+            'location'          => 'Shibuya, Dogenzaka',
+            'type'              => 'Pasta',
+            'lunch_price'       => 780,
+            'points'            => 'Totally decent pasta. Spagethi with 2 bases: meat sauce or napolitan, starting 780yen and customisable. Basement. Fast service. Tables. Big quantity.',
+            'experience'        => 'I was happy with the quality for the price! And you can order up to 500g of pasta, with no additional charge. This is huge. Quick service. Several toppings on the tables, like free parmesan cheese. Interior is basment and poorly lighted, but decent. Tables are confortable enough.',
+            'visited'           => true,
+            'visit_date'        => '2017-12-15 13:00:00',
+            'google_maps_link'  => 'https://www.google.co.jp/maps/place/Pancho+Shibuya/@35.6591649,139.6969986,17z/data=!3m1!4b1!4m5!3m4!1s0x60188b57d6416803:0xce5bf0b8015be959!8m2!3d35.6591606!4d139.6991873',
+            'tabelog_link'      => 'http://data',
+            'official_website'  => 'http://data',
+            'score_lunch'       => 2,
+            'score_place'       => 1,
+            'score_food'        => 2,
+            'score_price'       => 2,
+            'score_date'        => 0
+        ));
+        
         // this insert , using eloquesnt (create would do the same, using sql)
+        /*
         $tag = new RestaurantTag(['label' => 'test save']);
         $resto = Restaurant::find(1);
         $resto->tags()->save($tag);
@@ -1004,10 +1024,13 @@ class RestaurantsTableSeeder extends Seeder
             new RestaurantTag(['label' => 'test multi1']),
             new RestaurantTag(['label' => 'test multi2']),
         ]);
+*/
 
-
-// attach would jsut associate existing records : http://laraveldaily.com/pivot-tables-and-many-to-many-relationships/
-
+        // attach would jsut associate existing records : http://laraveldaily.com/pivot-tables-and-many-to-many-relationships/
+        // $resto = Restaurant::find($restaurantId);
+        $tagLabel = 'italian';
+        $tag = RestaurantTag::where('label', '=', $tagLabel)->get();
+        $resto->tags()->attach($tag);
 
     }
 }
