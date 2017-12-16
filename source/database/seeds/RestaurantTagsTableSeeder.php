@@ -16,26 +16,6 @@ class RestaurantTagsTableSeeder extends Seeder
         DB::table('restaurant_tags')->delete();
 
         RestaurantTag::create(array(
-            'label'              => 'vegetarian friendly'
-        ));
-
-        RestaurantTag::create(array(
-            'label'              => 'vegan friendly'
-        ));
-
-        RestaurantTag::create(array(
-            'label'              => 'menu with calories'
-        ));
-
-        RestaurantTag::create(array(
-            'label'              => 'menu with allergies'
-        ));
-
-        RestaurantTag::create(array(
-            'label'              => 'customisable dishes'
-        ));
-
-        RestaurantTag::create(array(
             'label'              => 'italian'
         ));
 
@@ -73,18 +53,14 @@ class RestaurantTagsTableSeeder extends Seeder
 
         RestaurantTag::create(array(
             'label'              => 'thai'
-        ));
-
-        RestaurantTag::create(array(
-            'label'              => 'japanese curry'
-        ));
-
-        RestaurantTag::create(array(
-            'label'              => 'sushi'
-        ));
+        ));        
 
         RestaurantTag::create(array(
             'label'              => 'izakaya'
+        ));
+
+        RestaurantTag::create(array(
+            'label'              => 'fast food'
         ));
 
         RestaurantTag::create(array(
@@ -93,6 +69,30 @@ class RestaurantTagsTableSeeder extends Seeder
 
         RestaurantTag::create(array(
             'label'              => 'all you can drink'
+        ));
+
+        RestaurantTag::create(array(
+            'label'              => 'vegetarian friendly'
+        ));
+
+        RestaurantTag::create(array(
+            'label'              => 'vegan friendly'
+        ));
+
+        RestaurantTag::create(array(
+            'label'              => 'menu with calories'
+        ));
+
+        RestaurantTag::create(array(
+            'label'              => 'menu with allergies'
+        ));
+
+        RestaurantTag::create(array(
+            'label'              => 'customisable dishes'
+        ));
+
+        RestaurantTag::create(array(
+            'label'              => 'japanese curry'
         ));
 
         RestaurantTag::create(array(
@@ -117,6 +117,22 @@ class RestaurantTagsTableSeeder extends Seeder
 
         RestaurantTag::create(array(
             'label'              => 'burger'
+        ));
+
+        RestaurantTag::create(array(
+            'label'              => 'pizza'
+        ));
+
+        RestaurantTag::create(array(
+            'label'              => 'pasta'
+        ));
+
+        RestaurantTag::create(array(
+            'label'              => 'curry'
+        ));
+
+        RestaurantTag::create(array(
+            'label'              => 'sushi'
         ));
 
     }

@@ -34,42 +34,25 @@ class Restaurant extends Model
         return $this->belongsToMany('App\RestaurantTag');
     }
 
-    // Confirm useless before removing:
-    /*
-    // From CRUD tuto https://appdividend.com/2017/10/15/laravel-5-5-crud-example-tutorial/
-    public function saveRestaurant($data)
-    {
-        // $this->user_id = auth()->user()->id;
-        $this->name = $data['name'];
-        $this->location = $data['location'];
-        $this->coord = $data['coord'];
-        $this->type = $data['type'];
-        $this->lunch_price = $data['lunch_price'];
-        $this->points = $data['points'];
-        $this->experience = $data['experience'];
-        $this->visited = $data['visited'];
-        $this->visit_date = $data['visit_date'];
-        $this->save();
-        return 1;
-    }
-
-    // From CRUD tuto https://appdividend.com/2017/10/15/laravel-5-5-crud-example-tutorial/
-    public function updateTicket($data)
-    {
-        $ticket = $this->find($data['id']);
-        // $ticket->user_id = auth()->user()->id;
-        $this->name = $data['name'];
-        $this->location = $data['location'];
-        $this->coord = $data['coord'];
-        $this->type = $data['type'];
-        $this->lunch_price = $data['lunch_price'];
-        $this->points = $data['points'];
-        $this->experience = $data['experience'];
-        $this->visited = $data['visited'];
-        $this->visit_date = $data['visit_date'];
-        $ticket->save();
-        return 1;
-    }
+    /**
+    * Attach the given tags (that must already exist) to the restaurant
     */
+    public function attachTags($labels)
+    {
+        if (!empty($labels))
+        {
+            $query = (new RestaurantTag)->newQuery();
+            foreach ($labels as $label)
+            {
+                $query->orWhere('label', '=', $label);
+            }
+            $tags = $query->get();
+            $this->tags()->attach($tags);
+        }
+        // Note:
+        // attach just associate existing records: http://laraveldaily.com/pivot-tables-and-many-to-many-relationships/
+        // otherwise use save or saveMany
+        // awesome https://m.dotdev.co/writing-advanced-eloquent-search-query-filters-de8b6c2598db
+    }
 
 }
