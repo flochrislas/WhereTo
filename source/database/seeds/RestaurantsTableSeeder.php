@@ -28,7 +28,7 @@ class RestaurantsTableSeeder extends Seeder
         ]);
         */
 
-        Restaurant::create(array(
+        $resto = Restaurant::create(array(
             'name'              => 'Hakata Furyu',
             'location'          => 'Shibuya',
             'type'              => 'ramen',
@@ -46,8 +46,9 @@ class RestaurantsTableSeeder extends Seeder
             'score_price'       => 1,
             'score_date'        => 1
         ));
+        $resto->attachTags(['ramen', 'miso']);
 
-        Restaurant::create(array(
+        $resto = Restaurant::create(array(
             'name'              => 'Ramen 2',
             'location'          => 'Ramen Street (further down)',
             'type'              => 'ramen',
@@ -65,8 +66,9 @@ class RestaurantsTableSeeder extends Seeder
             'score_price'       => 1,
             'score_date'        => 1
         ));
+        $resto->attachTags(['ramen']);
 
-        Restaurant::create(array(
+        $resto = Restaurant::create(array(
             'name'              => 'Ramen 3',
             'location'          => 'Ramen Street (in front of ramen 1)',
             'type'              => 'ramen',
@@ -84,8 +86,9 @@ class RestaurantsTableSeeder extends Seeder
             'score_price'       => 1,
             'score_date'        => 1
         ));
+        $resto->attachTags([]);
 
-        Restaurant::create(array(
+        $resto = Restaurant::create(array(
             'name'              => 'Ramen 4 NanaShi tonkotsu ramen',
             'location'          => 'Big street in front of the Robot Restaurant',
             'type'              => 'ramen',
@@ -103,8 +106,9 @@ class RestaurantsTableSeeder extends Seeder
             'score_price'       => 1,
             'score_date'        => 1
         ));
+        $resto->attachTags(['ramen']);
 
-        Restaurant::create(array(
+        $resto = Restaurant::create(array(
             'name'              => 'Ramen 5 ',
             'location'          => 'next to the McDo of center gai (ramen itself is perpendicular street)',
             'type'              => 'ramen',
@@ -122,8 +126,9 @@ class RestaurantsTableSeeder extends Seeder
             'score_price'       => 1,
             'score_date'        => 1
         ));
+        $resto->attachTags(['ramen']);
 
-        Restaurant::create(array(
+        $resto = Restaurant::create(array(
             'name'              => 'Ippudo',
             'location'          => '',
             'type'              => 'ramen',
@@ -141,8 +146,9 @@ class RestaurantsTableSeeder extends Seeder
             'score_price'       => 1,
             'score_date'        => 1
         ));
+        $resto->attachTags(['ramen']);
 
-        Restaurant::create(array(
+        $resto = Restaurant::create(array(
             'name'              => 'Burger King',
             'location'          => '',
             'type'              => 'burger',
@@ -160,8 +166,9 @@ class RestaurantsTableSeeder extends Seeder
             'score_price'       => 1,
             'score_date'        => 1
         ));
+        $resto->attachTags(['burger']);
 
-        Restaurant::create(array(
+        $resto = Restaurant::create(array(
             'name'              => 'Wendy\'s first kitchen',
             'location'          => 'in front of BK',
             'type'              => 'burger',
@@ -179,8 +186,9 @@ class RestaurantsTableSeeder extends Seeder
             'score_price'       => 1,
             'score_date'        => 1
         ));
+        $resto->attachTags(['burder']);
 
-        Restaurant::create(array(
+        $resto = Restaurant::create(array(
             'name'              => 'Taco Bell',
             'location'          => '',
             'type'              => 'tacos',
@@ -198,8 +206,9 @@ class RestaurantsTableSeeder extends Seeder
             'score_price'       => 1,
             'score_date'        => 1
         ));
+        $resto->attachTags(['mexican']);
 
-        Restaurant::create(array(
+        $resto = Restaurant::create(array(
             'name'              => 'Kebab Cafe',
             'location'          => 'Shibuya',
             'type'              => 'turk',
@@ -217,8 +226,9 @@ class RestaurantsTableSeeder extends Seeder
             'score_price'       => 1,
             'score_date'        => 1
         ));
+        $resto->attachTags(['turk']);
 
-        Restaurant::create(array(
+        $resto = Restaurant::create(array(
             'name'              => 'Coco Ichi',
             'location'          => 'down the tower',
             'type'              => 'japanese curry',
@@ -236,8 +246,9 @@ class RestaurantsTableSeeder extends Seeder
             'score_price'       => 1,
             'score_date'        => 1
         ));
+        $resto->attachTags(['japanese curry']);
 
-        Restaurant::create(array(
+        $resto = Restaurant::create(array(
             'name'              => 'Coco Ichi',
             'location'          => 'near center gai',
             'type'              => 'japanese curry',
@@ -255,8 +266,9 @@ class RestaurantsTableSeeder extends Seeder
             'score_price'       => 1,
             'score_date'        => 1
         ));
+        $resto->attachTags(['japanese curry']);
 
-        Restaurant::create(array(
+        $resto = Restaurant::create(array(
             'name'              => 'Jonathan\'s',
             'location'          => 'behind tower',
             'type'              => 'family restaurant',
@@ -274,8 +286,9 @@ class RestaurantsTableSeeder extends Seeder
             'score_price'       => 1,
             'score_date'        => 1
         ));
+        $resto->attachTags([]);
 
-        Restaurant::create(array(
+        $resto = Restaurant::create(array(
             'name'              => 'Standing pizza bar Cona',
             'location'          => 'not far from ramen street',
             'type'              => 'pizzeria',
@@ -293,8 +306,9 @@ class RestaurantsTableSeeder extends Seeder
             'score_price'       => 1,
             'score_date'        => 1
         ));
+        $resto->attachTags(['pizza']);
 
-        Restaurant::create(array(
+        $resto = Restaurant::create(array(
             'name'              => 'Something Terace',
             'location'          => 'couple of streets behind the office',
             'type'              => 'Indonesian',
@@ -311,8 +325,9 @@ class RestaurantsTableSeeder extends Seeder
             'score_price'       => 1,
             'score_date'        => 1
         ));
+        $resto->attachTags([]);
 
-        Restaurant::create(array(
+        $resto = Restaurant::create(array(
             'name'              => 'Entertainment and sports bar',
             'location'          => 'next to samrat curry farther after the center gai',
             'type'              => 'cheap pizza/pasta lunch',
@@ -330,8 +345,9 @@ class RestaurantsTableSeeder extends Seeder
             'score_price'       => 1,
             'score_date'        => 1
         ));
+        $resto->attachTags(['pizza', 'pasta']);
 
-        Restaurant::create(array(
+        $resto = Restaurant::create(array(
             'name'              => 'Go Go Curry',
             'location'          => 'next to samrat curry farther after the center gai',
             'type'              => 'japanese curry',
@@ -349,8 +365,9 @@ class RestaurantsTableSeeder extends Seeder
             'score_price'       => 1,
             'score_date'        => 1
         ));
+        $resto->attachTags(['japanese curry']);
 
-        Restaurant::create(array(
+        $resto = Restaurant::create(array(
             'name'              => 'Nice Pizza/Pasta restaurant',
             'location'          => 'in front of samrat curry farther after the center gai',
             'type'              => 'pizza/pasta/salad',
@@ -368,8 +385,9 @@ class RestaurantsTableSeeder extends Seeder
             'score_price'       => 1,
             'score_date'        => 1
         ));
+        $resto->attachTags(['pizza', 'pasta']);
 
-        Restaurant::create(array(
+        $resto = Restaurant::create(array(
             'name'              => 'Matsuya',
             'location'          => 'down the street from the office , with music shop, amp and drums, Floor: 1F, Windows: yes',
             'type'              => 'Japanese fast food',
@@ -387,8 +405,9 @@ class RestaurantsTableSeeder extends Seeder
             'score_price'       => 1,
             'score_date'        => 1
         ));
+        $resto->attachTags([]);
 
-        Restaurant::create(array(
+        $resto = Restaurant::create(array(
             'name'              => 'mazesoba shichi',
             'location'          => 'down the street from the office',
             'type'              => 'Ramen',
@@ -406,8 +425,9 @@ class RestaurantsTableSeeder extends Seeder
             'score_price'       => 2,
             'score_date'        => 0
         ));
+        $resto->attachTags([]);
 
-        Restaurant::create(array(
+        $resto = Restaurant::create(array(
             'name'              => 'pizza bar Cona',
             'location'          => 'down the street behind our office',
             'type'              => 'pizzeria',
@@ -425,8 +445,9 @@ class RestaurantsTableSeeder extends Seeder
             'score_price'       => 1,
             'score_date'        => 1
         ));
+        $resto->attachTags([]);
 
-        Restaurant::create(array(
+        $resto = Restaurant::create(array(
             'name'              => 'kin no kara',
             'location'          => 'next to ippudo, center gai',
             'type'              => 'fried chiken karahage take out only',
@@ -444,8 +465,9 @@ class RestaurantsTableSeeder extends Seeder
             'score_price'       => 1,
             'score_date'        => 1
         ));
+        $resto->attachTags([]);
 
-        Restaurant::create(array(
+        $resto = Restaurant::create(array(
             'name'              => 'mangako thai chicken rice',
             'location'          => 'alongside the river down the big street our side',
             'type'              => 'thai',
@@ -463,8 +485,9 @@ class RestaurantsTableSeeder extends Seeder
             'score_price'       => 1,
             'score_date'        => 1
         ));
+        $resto->attachTags([]);
 
-        Restaurant::create(array(
+        $resto = Restaurant::create(array(
             'name'              => 'Soul Kitchen Curry or something',
             'location'          => 'avenue behind the office',
             'type'              => 'japanese curry',
@@ -482,8 +505,9 @@ class RestaurantsTableSeeder extends Seeder
             'score_price'       => 1,
             'score_date'        => 1
         ));
+        $resto->attachTags([]);
 
-        Restaurant::create(array(
+        $resto = Restaurant::create(array(
             'name'              => 'ramen and curry',
             'location'          => 'right behing the office next to Shichi',
             'type'              => 'ramen',
@@ -500,8 +524,9 @@ class RestaurantsTableSeeder extends Seeder
             'score_price'       => 1,
             'score_date'        => 1
         ));
+        $resto->attachTags([]);
 
-        Restaurant::create(array(
+        $resto = Restaurant::create(array(
             'name'              => 'Cafde. SALICA',
             'location'          => '2nd floor in front of Samrat',
             'type'              => 'cafe restaurant, sandwiches burgers desserts...',
@@ -519,8 +544,9 @@ class RestaurantsTableSeeder extends Seeder
             'score_price'       => 1,
             'score_date'        => 1
         ));
+        $resto->attachTags([]);
 
-        Restaurant::create(array(
+        $resto = Restaurant::create(array(
             'name'              => 'Mediterranean Pizzeria',
             'location'          => 'behind office along the JR tracks',
             'type'              => 'italian',
@@ -538,8 +564,9 @@ class RestaurantsTableSeeder extends Seeder
             'score_price'       => 1,
             'score_date'        => 1
         ));
+        $resto->attachTags([]);
 
-        Restaurant::create(array(
+        $resto = Restaurant::create(array(
             'name'              => 'Meat Bank',
             'location'          => 'that new building front of samrat  6F',
             'type'              => 'USA, burger, meat',
@@ -557,8 +584,9 @@ class RestaurantsTableSeeder extends Seeder
             'score_price'       => 1,
             'score_date'        => 1
         ));
+        $resto->attachTags([]);
 
-        Restaurant::create(array(
+        $resto = Restaurant::create(array(
             'name'              => 'Asuka or something',
             'location'          => 'down the office',
             'type'              => 'Ramen',
@@ -576,8 +604,9 @@ class RestaurantsTableSeeder extends Seeder
             'score_price'       => 1,
             'score_date'        => 1
         ));
+        $resto->attachTags([]);
 
-        Restaurant::create(array(
+        $resto = Restaurant::create(array(
             'name'              => 'Samrat',
             'location'          => 'Samrat shibuya',
             'type'              => 'Indian curry',
@@ -595,8 +624,9 @@ class RestaurantsTableSeeder extends Seeder
             'score_price'       => 1,
             'score_date'        => 1
         ));
+        $resto->attachTags([]);
 
-        Restaurant::create(array(
+        $resto = Restaurant::create(array(
             'name'              => 'Moss Burger',
             'location'          => '',
             'type'              => 'Burger',
@@ -614,8 +644,9 @@ class RestaurantsTableSeeder extends Seeder
             'score_price'       => 1,
             'score_date'        => 1
         ));
+        $resto->attachTags([]);
 
-        Restaurant::create(array(
+        $resto = Restaurant::create(array(
             'name'              => 'Kura',
             'location'          => 'after bic camera annex shibuya',
             'type'              => 'Italian',
@@ -633,8 +664,9 @@ class RestaurantsTableSeeder extends Seeder
             'score_price'       => 1,
             'score_date'        => 1
         ));
+        $resto->attachTags([]);
 
-        Restaurant::create(array(
+        $resto = Restaurant::create(array(
             'name'              => 'thai restaurant towards omotesando',
             'location'          => 'towards omotesando, 2nd floor',
             'type'              => 'Thai',
@@ -652,8 +684,9 @@ class RestaurantsTableSeeder extends Seeder
             'score_price'       => 1,
             'score_date'        => 1
         ));
+        $resto->attachTags([]);
 
-        Restaurant::create(array(
+        $resto = Restaurant::create(array(
             'name'              => 'around that corner the best... symetrically opposite from Tower Record',
             'location'          => 'symetrically opposite from Tower Record',
             'type'              => 'Burgers and stuff',
@@ -671,8 +704,9 @@ class RestaurantsTableSeeder extends Seeder
             'score_price'       => 1,
             'score_date'        => 1
         ));
+        $resto->attachTags([]);
 
-        Restaurant::create(array(
+        $resto = Restaurant::create(array(
             'name'              => 'Fast soba katsudon in front of big bic camera',
             'location'          => 'in front of big bic camera',
             'type'              => 'soba udon katsudon',
@@ -690,8 +724,9 @@ class RestaurantsTableSeeder extends Seeder
             'score_price'       => 1,
             'score_date'        => 1
         ));
+        $resto->attachTags([]);
 
-        Restaurant::create(array(
+        $resto = Restaurant::create(array(
             'name'              => 'Pizza Slice',
             'location'          => 'towards daikanyama',
             'type'              => 'pizza',
@@ -709,8 +744,9 @@ class RestaurantsTableSeeder extends Seeder
             'score_price'       => 1,
             'score_date'        => 1
         ));
+        $resto->attachTags([]);
 
-        Restaurant::create(array(
+        $resto = Restaurant::create(array(
             'name'              => 'iBeer',
             'location'          => 'Hikarie building 7F',
             'type'              => 'pizza, pasta, salad',
@@ -728,8 +764,9 @@ class RestaurantsTableSeeder extends Seeder
             'score_price'       => 1,
             'score_date'        => 1
         ));
+        $resto->attachTags([]);
 
-        Restaurant::create(array(
+        $resto = Restaurant::create(array(
             'name'              => 'Avatar',
             'location'          => 'D side in front of shibuya language shool',
             'type'              => 'indian curry',
@@ -747,8 +784,9 @@ class RestaurantsTableSeeder extends Seeder
             'score_price'       => 1,
             'score_date'        => 1
         ));
+        $resto->attachTags([]);
 
-        Restaurant::create(array(
+        $resto = Restaurant::create(array(
             'name'              => 'Guzman y Gomez',
             'location'          => 'past tower record',
             'type'              => 'mexican',
@@ -766,8 +804,9 @@ class RestaurantsTableSeeder extends Seeder
             'score_price'       => 1,
             'score_date'        => 1
         ));
+        $resto->attachTags([]);
 
-        Restaurant::create(array(
+        $resto = Restaurant::create(array(
             'name'              => 'Il Fiume',
             'location'          => 'far',
             'type'              => 'italian',
@@ -785,8 +824,9 @@ class RestaurantsTableSeeder extends Seeder
             'score_price'       => 1,
             'score_date'        => 1
         ));
+        $resto->attachTags([]);
 
-        Restaurant::create(array(
+        $resto = Restaurant::create(array(
             'name'              => 'Verde',
             'location'          => 'next to Elvis japanese curry place',
             'type'              => 'curry+gapoa+pizza',
@@ -804,8 +844,9 @@ class RestaurantsTableSeeder extends Seeder
             'score_price'       => 1,
             'score_date'        => 1
         ));
+        $resto->attachTags([]);
 
-        Restaurant::create(array(
+        $resto = Restaurant::create(array(
             'name'              => 'some thai',
             'location'          => 'near office D side',
             'type'              => 'Thai',
@@ -823,8 +864,9 @@ class RestaurantsTableSeeder extends Seeder
             'score_price'       => 1,
             'score_date'        => 1
         ));
+        $resto->attachTags([]);
 
-        Restaurant::create(array(
+        $resto = Restaurant::create(array(
             'name'              => 'Blacows',
             'location'          => 'Daikanyama',
             'type'              => 'burger',
@@ -842,8 +884,9 @@ class RestaurantsTableSeeder extends Seeder
             'score_price'       => 1,
             'score_date'        => 1
         ));
+        $resto->attachTags([]);
 
-        Restaurant::create(array(
+        $resto = Restaurant::create(array(
             'name'              => 'Salasa',
             'location'          => 'Shibuya - Center gai',
             'type'              => 'izakaya',
@@ -861,8 +904,9 @@ class RestaurantsTableSeeder extends Seeder
             'score_price'       => 1,
             'score_date'        => 1
         ));
+        $resto->attachTags([]);
 
-        Restaurant::create(array(
+        $resto = Restaurant::create(array(
             'name'              => 'JS Burger',
             'location'          => 'Shibuya',
             'type'              => 'burger',
@@ -880,8 +924,9 @@ class RestaurantsTableSeeder extends Seeder
             'score_price'       => 1,
             'score_date'        => 1
         ));
+        $resto->attachTags([]);
 
-        Restaurant::create(array(
+        $resto = Restaurant::create(array(
             'name'              => 'Pizza Salvatore Cuomo',
             'location'          => 'Shibuya',
             'type'              => 'italian',
@@ -899,8 +944,9 @@ class RestaurantsTableSeeder extends Seeder
             'score_price'       => 1,
             'score_date'        => 1
         ));
+        $resto->attachTags([]);
 
-        Restaurant::create(array(
+        $resto = Restaurant::create(array(
             'name'              => 'Sushi stand',
             'location'          => 'Shibuya',
             'type'              => 'sushi',
@@ -918,8 +964,9 @@ class RestaurantsTableSeeder extends Seeder
             'score_price'       => 1,
             'score_date'        => 0
         ));
+        $resto->attachTags([]);
 
-        Restaurant::create(array(
+        $resto = Restaurant::create(array(
             'name'              => 'Lotteria',
             'location'          => 'Shibuya',
             'type'              => 'burger',
@@ -937,8 +984,9 @@ class RestaurantsTableSeeder extends Seeder
             'score_price'       => 1,
             'score_date'        => 0
         ));
+        $resto->attachTags([]);
 
-        Restaurant::create(array(
+        $resto = Restaurant::create(array(
             'name'              => 'TGIF',
             'location'          => 'Shibuya',
             'type'              => 'American',
@@ -956,8 +1004,9 @@ class RestaurantsTableSeeder extends Seeder
             'score_price'       => 1,
             'score_date'        => 1
         ));
+        $resto->attachTags([]);
 
-        Restaurant::create(array(
+        $resto = Restaurant::create(array(
             'name'              => 'Ankara',
             'location'          => 'Shibuya',
             'type'              => 'Turk',
@@ -975,8 +1024,9 @@ class RestaurantsTableSeeder extends Seeder
             'score_price'       => 1,
             'score_date'        => 1
         ));
+        $resto->attachTags([]);
 
-        Restaurant::create(array(
+        $resto = Restaurant::create(array(
             'name'              => 'Dragon Miso',
             'location'          => 'Shibuya, in front of the Labi',
             'type'              => 'Ramen',
@@ -994,6 +1044,7 @@ class RestaurantsTableSeeder extends Seeder
             'score_price'       => 1,
             'score_date'        => 0
         ));
+        $resto->attachTags(['ramen', 'miso']);
 
         $resto = Restaurant::create(array(
             'name'              => 'Pancho',
@@ -1013,24 +1064,7 @@ class RestaurantsTableSeeder extends Seeder
             'score_price'       => 2,
             'score_date'        => 0
         ));
-        
-        // this insert , using eloquesnt (create would do the same, using sql)
-        /*
-        $tag = new RestaurantTag(['label' => 'test save']);
-        $resto = Restaurant::find(1);
-        $resto->tags()->save($tag);
-
-        $resto->tags()->saveMany([
-            new RestaurantTag(['label' => 'test multi1']),
-            new RestaurantTag(['label' => 'test multi2']),
-        ]);
-*/
-
-        // attach would jsut associate existing records : http://laraveldaily.com/pivot-tables-and-many-to-many-relationships/
-        // $resto = Restaurant::find($restaurantId);
-        $tagLabel = 'italian';
-        $tag = RestaurantTag::where('label', '=', $tagLabel)->get();
-        $resto->tags()->attach($tag);
+        $resto->attachTags(['italian', 'pasta']);
 
     }
 }
