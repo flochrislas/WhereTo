@@ -17,6 +17,24 @@
         </div>
     @endif
 
+    <!-- Auto complete Experimental -->
+    <form action='' method='post'>
+      <p><label>Country:</label>
+        <input type='text' name='country' value='' class='auto'>
+      </p>
+    </form>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+    <script type="text/javascript" src="http://code.jquery.com/ui/1.10.1/jquery-ui.min.js"></script>
+    <script type="text/javascript">
+      $(function() {
+        $(".auto").autocomplete({
+          source: "autocomplete.php",
+          minLength: 1
+        });
+      });
+    </script>
+
+    <br>
     <!-- SEARCH http://justlaravel.com/search-functionality-laravel/ -->
     <form action="/search" method="POST" role="search">
         {{ csrf_field() }}

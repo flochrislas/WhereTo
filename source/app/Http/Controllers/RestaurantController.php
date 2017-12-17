@@ -14,10 +14,41 @@ class RestaurantController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function main()
+    public function main($tags = ['ramen', 'pizza'], $op = 'OR')
     {
         // TODO: implement "see more" button
-        $restaurants = Restaurant::orderBy('score_lunch', 'desc')
+        $query = (new Restaurant)->newQuery();
+        if (isset($tags) && !empty($tags)) {
+
+            if ($op == 'AND') {
+                $query->whereHas('tags', function ($query) use ($tags) {
+                    foreach ($tags as $tag) {
+                      $query->where('label', '=', $tag);
+                    }
+                });
+            }
+
+            if ($op == 'OR') {
+                $query->whereHas('tags', function ($query) use ($tags) {
+                      $query->whereIn('label', $tags);
+                });
+            }
+
+            if ($op == 'ANDNOT') {
+                $query->whereDoesntHave('tags', function ($query) use ($tags) {
+                    foreach ($tags as $tag) {
+                      $query->where('label', '=', $tag);
+                    }
+                });
+            }
+
+            if ($op == 'ORNOT') {
+                $query->whereHas('tags', function ($query) use ($tags) {
+                      $query->whereNotIn('label', $tags);
+                });
+            }
+        }
+        $restaurants = $query->orderBy('score_lunch', 'desc')
                         ->orderBy('score_food', 'desc')
                         ->orderBy('score_place', 'desc')
                         ->get();
