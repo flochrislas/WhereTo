@@ -792,19 +792,19 @@ class RestaurantsTableSeeder extends Seeder
             'type'              => 'mexican',
             'lunch_price'       => 1300,
             'points'            => 'Good mexican fastfood cuisine. American chain. Expensive.',
-            'experience'        => 'It just feels too grossly overpriced. The interior, and ordering system, is like a cheap fastfood. When I ate there the doors were kept opened despite the cold and I had to keep my jacket on. The music was very cheesy. I got 3 kedasilla for 1070 yen. It felt like a small snack. Definitely insufficient for a lunch. I left hungry and had to go eat something cheaper elsewhere. Taste-wise, it was good, and I could choose the meat amongst 8 different choices, for each of my 3 small kedasilla.',
+            'experience'        => 'First and foremost, this place is insanely overpriced. I got 3 kedasilla for 1070 yen. It felt like a small snack. Definitely insufficient for a lunch. I left hungry and had to go eat something cheaper elsewhere. Taste-wise, it was good, and I could choose the meat amongst 8 different choices, for each of my 3 small kedasilla. The interior, and ordering system, is like a cheap fastfood. When I ate there the doors were kept opened despite the cold and I had to keep my jacket on. The music was very cheesy.',
             'visited'           => true,
             'visit_date'        => '2017-09-05 13:00:00',
             'google_maps_link'  => 'http://data',
             'tabelog_link'      => 'http://data',
             'official_website'  => 'http://data',
-            'score_lunch'       => 1,
-            'score_place'       => 1,
-            'score_food'        => 1,
-            'score_price'       => 1,
-            'score_date'        => 1
+            'score_lunch'       => 2,
+            'score_place'       => 0,
+            'score_food'        => 2,
+            'score_price'       => 0,
+            'score_date'        => 0
         ));
-        $resto->attachTags([]);
+        $resto->attachTags(['mexican']);
 
         $resto = Restaurant::create(array(
             'name'              => 'Il Fiume',
@@ -824,7 +824,7 @@ class RestaurantsTableSeeder extends Seeder
             'score_price'       => 1,
             'score_date'        => 1
         ));
-        $resto->attachTags([]);
+        $resto->attachTags(['italian', 'salad buffet', 'pasta']);
 
         $resto = Restaurant::create(array(
             'name'              => 'Verde',
@@ -844,7 +844,7 @@ class RestaurantsTableSeeder extends Seeder
             'score_price'       => 1,
             'score_date'        => 1
         ));
-        $resto->attachTags([]);
+        $resto->attachTags(['indian', 'curry', 'pizza']);
 
         $resto = Restaurant::create(array(
             'name'              => 'some thai',
@@ -864,7 +864,7 @@ class RestaurantsTableSeeder extends Seeder
             'score_price'       => 1,
             'score_date'        => 1
         ));
-        $resto->attachTags([]);
+        $resto->attachTags(['thai']);
 
         $resto = Restaurant::create(array(
             'name'              => 'Blacows',
@@ -884,7 +884,7 @@ class RestaurantsTableSeeder extends Seeder
             'score_price'       => 1,
             'score_date'        => 1
         ));
-        $resto->attachTags([]);
+        $resto->attachTags(['burger', 'western']);
 
         $resto = Restaurant::create(array(
             'name'              => 'Salasa',
@@ -898,13 +898,13 @@ class RestaurantsTableSeeder extends Seeder
             'google_maps_link'  => 'http://data',
             'tabelog_link'      => 'http://data',
             'official_website'  => 'http://data',
-            'score_lunch'       => 1,
+            'score_lunch'       => 3,
             'score_place'       => 1,
-            'score_food'        => 1,
+            'score_food'        => 3,
             'score_price'       => 1,
-            'score_date'        => 1
+            'score_date'        => 0
         ));
-        $resto->attachTags([]);
+        $resto->attachTags(['japanese', 'izakaya']);
 
         $resto = Restaurant::create(array(
             'name'              => 'JS Burger',
@@ -918,13 +918,13 @@ class RestaurantsTableSeeder extends Seeder
             'google_maps_link'  => 'http://data',
             'tabelog_link'      => 'http://data',
             'official_website'  => 'http://data',
-            'score_lunch'       => 1,
-            'score_place'       => 1,
-            'score_food'        => 1,
-            'score_price'       => 1,
+            'score_lunch'       => 2,
+            'score_place'       => 2,
+            'score_food'        => 3,
+            'score_price'       => 0,
             'score_date'        => 1
         ));
-        $resto->attachTags([]);
+        $resto->attachTags(['burger', 'salad buffet', 'western']);
 
         $resto = Restaurant::create(array(
             'name'              => 'Pizza Salvatore Cuomo',
@@ -944,7 +944,7 @@ class RestaurantsTableSeeder extends Seeder
             'score_price'       => 1,
             'score_date'        => 1
         ));
-        $resto->attachTags([]);
+        $resto->attachTags(['italian', 'pizza']);
 
         $resto = Restaurant::create(array(
             'name'              => 'Sushi stand',
@@ -964,7 +964,7 @@ class RestaurantsTableSeeder extends Seeder
             'score_price'       => 1,
             'score_date'        => 0
         ));
-        $resto->attachTags([]);
+        $resto->attachTags(['sushi']);
 
         $resto = Restaurant::create(array(
             'name'              => 'Lotteria',
@@ -984,7 +984,7 @@ class RestaurantsTableSeeder extends Seeder
             'score_price'       => 1,
             'score_date'        => 0
         ));
-        $resto->attachTags([]);
+        $resto->attachTags(['burger']);
 
         $resto = Restaurant::create(array(
             'name'              => 'TGIF',
@@ -1004,7 +1004,7 @@ class RestaurantsTableSeeder extends Seeder
             'score_price'       => 1,
             'score_date'        => 1
         ));
-        $resto->attachTags([]);
+        $resto->attachTags(['western']);
 
         $resto = Restaurant::create(array(
             'name'              => 'Ankara',
@@ -1024,7 +1024,7 @@ class RestaurantsTableSeeder extends Seeder
             'score_price'       => 1,
             'score_date'        => 1
         ));
-        $resto->attachTags([]);
+        $resto->attachTags(['turk']);
 
         $resto = Restaurant::create(array(
             'name'              => 'Dragon Miso',
@@ -1065,6 +1065,26 @@ class RestaurantsTableSeeder extends Seeder
             'score_date'        => 0
         ));
         $resto->attachTags(['italian', 'pasta']);
+
+        $resto = Restaurant::create(array(
+            'name'              => 'Murugi',
+            'location'          => 'Shibuya, Dogenzaka',
+            'type'              => 'Curry',
+            'lunch_price'       => 1050,
+            'points'            => 'Good (japanese) curry. Cosy interior. A bit overpriced. Small tables, no counter.',
+            'experience'        => 'The interior felt cosy, even if not very confortable, because the chairs and tables are very small. There is no counter, and even just one person has to occupy a 4 persons small table, so the place is full easily. The curry was good. A bit spicy, and I liked how the pieces of chicken were kind of melted in the curry. I was still a bit hungry after that though, and the price was relatively high. For lunch the choice is limited to a couple of dish including the chicken curry.',
+            'visited'           => true,
+            'visit_date'        => '2017-12-18 13:00:00',
+            'google_maps_link'  => 'https://www.google.co.jp/maps/place/Murugi/@35.6599674,139.6976882,16z/data=!4m8!1m2!2m1!1scurry!3m4!1s0x60188ca9f3ff4391:0x86579b54bd13670e!8m2!3d35.6589719!4d139.6965652?hl=en',
+            'tabelog_link'      => 'http://data',
+            'official_website'  => 'http://www.murugi.net/',
+            'score_lunch'       => 2,
+            'score_place'       => 1,
+            'score_food'        => 2,
+            'score_price'       => 0,
+            'score_date'        => 0
+        ));
+        $resto->attachTags(['japanese curry']);
 
     }
 }

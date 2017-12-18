@@ -26,10 +26,12 @@ Score lunch global:
 3: Very good. I would be down to go again any time
 4: Excellent. It is hard to refrain to go back to that place every week or more
 
-Score for dates:
-0: Bad for dates
-1: Decent for dates
-2: Great for dates
+Food:
+0: poor
+1: good
+2: delicious
+3: divine
+
 
 Place
 0 horrible
@@ -42,34 +44,7 @@ Price
 1 correct
 2 good deal
 
----
-
-TAGS
-vegetarian friendly
-vegan friendly
-menu with calories
-menu with allergies
-customisable dishes
-
-italian
-french
-mexican
-indian
-vietnamese
-turk
-indonesian
-american
-japanese
-thai
-
-japanese curry
-sushi
-izakaya
-all you can eat
-all you can drink
-ramen
-tonkotsu
-miso
-sukiyaki
-shabushabu
-burger
+Score for dates:
+0: Bad for dates
+1: Decent for dates
+2: Great for dates
