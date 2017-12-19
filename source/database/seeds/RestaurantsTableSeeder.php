@@ -130,7 +130,7 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create(array(
             'name'              => 'Ippudo',
-            'location'          => '',
+            'location'          => 'Shibuya, Udagawacho',
             'type'              => 'ramen',
             'lunch_price'       => 800,
             'points'            => 'fairly cistomizable ramen, one free kaidama available',
@@ -138,19 +138,19 @@ class RestaurantsTableSeeder extends Seeder
             'visited'           => true,
             'visit_date'        => '2017-09-05 13:00:00',
             'google_maps_link'  => 'https://www.google.co.jp/maps/place/IPPUDO+SHIROMARU+BASE+%E6%B8%8B%E8%B0%B7%E5%BA%97/@35.6603496,139.6970402,17z/data=!4m12!1m6!3m5!1s0x60188ca849c5a249:0xaa481a46e532685c!2zSVBQVURPIFNISVJPTUFSVSBCQVNFIOa4i-iwt-W6lw!8m2!3d35.6603496!4d139.6992289!3m4!1s0x60188ca849c5a249:0xaa481a46e532685c!8m2!3d35.6603496!4d139.6992289?hl=fr',
-            'tabelog_link'      => 'http://data',
+            'tabelog_link'      => 'https://tabelog.com/en/tokyo/A1303/A130301/13176753/',
             'official_website'  => 'http://www.ippudo.com/',
-            'score_lunch'       => 1,
+            'score_lunch'       => 3,
             'score_place'       => 1,
-            'score_food'        => 1,
+            'score_food'        => 2,
             'score_price'       => 1,
-            'score_date'        => 1
+            'score_date'        => 0
         ));
         $resto->attachTags(['ramen']);
 
         $resto = Restaurant::create(array(
             'name'              => 'Burger King',
-            'location'          => '',
+            'location'          => 'Shibuya, Udagawacho',
             'type'              => 'burger',
             'lunch_price'       => 900,
             'points'            => '',
@@ -164,7 +164,7 @@ class RestaurantsTableSeeder extends Seeder
             'score_place'       => 1,
             'score_food'        => 1,
             'score_price'       => 1,
-            'score_date'        => 1
+            'score_date'        => 0
         ));
         $resto->attachTags(['burger']);
 
@@ -297,14 +297,14 @@ class RestaurantsTableSeeder extends Seeder
             'experience'        => 'decent pizza for a super cheap 500 yen comes with a small salad and a drink. Pizza is a bit small so better be not too much hungry',
             'visited'           => true,
             'visit_date'        => '2017-09-05 13:00:00',
-            'google_maps_link'  => 'http://data',
+            'google_maps_link'  => 'https://www.google.co.jp/maps/place/CONA+%E6%B8%8B%E8%B0%B7%E5%BA%97/@35.6589355,139.6984178,18z/data=!4m5!3m4!1s0x60188b562b7be10f:0x5deeb948e867ca8!8m2!3d35.6586609!4d139.6986567?hl=fr',
             'tabelog_link'      => 'http://data',
-            'official_website'  => 'http://data',
+            'official_website'  => 'http://www.candy-box.jp/shop/cona/',
             'score_lunch'       => 1,
-            'score_place'       => 1,
+            'score_place'       => 0,
             'score_food'        => 1,
-            'score_price'       => 1,
-            'score_date'        => 1
+            'score_price'       => 2,
+            'score_date'        => 0
         ));
         $resto->attachTags(['pizza']);
 
@@ -316,11 +316,11 @@ class RestaurantsTableSeeder extends Seeder
             'experience'        => 'decent. had a nice evening there dining with 4 people',
             'visited'           => true,
             'visit_date'        => '2017-09-05 13:00:00',
-            'google_maps_link'  => 'http://data',
+            'google_maps_link'  => 'https://www.google.co.jp/maps/place/Ayung+Teras/@35.6552693,139.7003887,19.75z/data=!4m5!3m4!1s0x60188b574c9611e9:0x46aa4f4ee0d6c8e1!8m2!3d35.6550962!4d139.7003701?hl=fr',
             'tabelog_link'      => 'http://data',
-            'official_website'  => 'http://data',
-            'score_lunch'       => 1,
-            'score_place'       => 1,
+            'official_website'  => 'http://www.ayungteras.com/',
+            'score_lunch'       => 2,
+            'score_place'       => 2,
             'score_food'        => 1,
             'score_price'       => 1,
             'score_date'        => 1
@@ -795,9 +795,9 @@ class RestaurantsTableSeeder extends Seeder
             'experience'        => 'First and foremost, this place is insanely overpriced. I got 3 kedasilla for 1070 yen. It felt like a small snack. Definitely insufficient for a lunch. I left hungry and had to go eat something cheaper elsewhere. Taste-wise, it was good, and I could choose the meat amongst 8 different choices, for each of my 3 small kedasilla. The interior, and ordering system, is like a cheap fastfood. When I ate there the doors were kept opened despite the cold and I had to keep my jacket on. The music was very cheesy.',
             'visited'           => true,
             'visit_date'        => '2017-09-05 13:00:00',
-            'google_maps_link'  => 'http://data',
+            'google_maps_link'  => 'https://www.google.co.jp/maps/place/Guzman+y+Gomez+%E6%B8%8B%E8%B0%B7%E5%BA%97/@35.662334,139.7004488,19z/data=!4m12!1m6!3m5!1s0x60188ca88131ea95:0x111613650b9602bd!2zR3V6bWFuIHkgR29tZXog5riL6LC35bqX!8m2!3d35.662334!4d139.700996!3m4!1s0x60188ca88131ea95:0x111613650b9602bd!8m2!3d35.662334!4d139.700996?hl=fr',
             'tabelog_link'      => 'http://data',
-            'official_website'  => 'http://data',
+            'official_website'  => 'http://gyg.jp/',
             'score_lunch'       => 2,
             'score_place'       => 0,
             'score_food'        => 2,
@@ -815,14 +815,14 @@ class RestaurantsTableSeeder extends Seeder
             'experience'        => 'Enjoyed the place. Salads were plenty, and good. I tried some pasta, 980yen, but it was... just decent. But it made me want to come back and try another dish.',
             'visited'           => true,
             'visit_date'        => '2017-09-05 13:00:00',
-            'google_maps_link'  => 'http://data',
+            'google_maps_link'  => 'https://www.google.co.jp/maps/place/%E3%82%A4%E3%83%AB%E3%83%95%E3%83%A5%E3%83%BC%E3%83%A1/@35.655656,139.70675,21z/data=!4m5!3m4!1s0x60188b5c7914049f:0xdda113f8492b26d9!8m2!3d35.6556367!4d139.7066753?hl=fr',
             'tabelog_link'      => 'http://data',
-            'official_website'  => 'http://data',
-            'score_lunch'       => 1,
-            'score_place'       => 1,
+            'official_website'  => 'https://il-fiume.biz/',
+            'score_lunch'       => 2,
+            'score_place'       => 2,
             'score_food'        => 1,
             'score_price'       => 1,
-            'score_date'        => 1
+            'score_date'        => 2
         ));
         $resto->attachTags(['italian', 'salad buffet', 'pasta']);
 
