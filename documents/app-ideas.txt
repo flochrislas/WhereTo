@@ -12,7 +12,7 @@ link to tabelog or other relevant website
 feature: closest combini, now
 feature: closest loveho, now
 feature: closest <tag>, now
-whuen browsing, add the info of how long by foot it would take to reach there from current gps position.
+when browsing, add the info of how long by foot it would take to reach there from current gps position.
 Basic info for real tourists: always carry enough cash to pay for the meal. Pokemon go? shibuya is like poke heaven.
 Sleep[anytime, without booking] -> (solo), (couple) -> (capsule hotels, internet cafe...) (love hotels, how to recognize one, stations with some nearby, magic sentence to tell the taxi)
 Information center: archive info about tons of stuff
@@ -31,7 +31,6 @@ Food:
 1: good
 2: delicious
 3: divine
-
 
 Place
 0 horrible
