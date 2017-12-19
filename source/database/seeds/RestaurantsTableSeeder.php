@@ -1086,5 +1086,24 @@ class RestaurantsTableSeeder extends Seeder
         ));
         $resto->attachTags(['japanese curry']);
 
+        $resto = Restaurant::create(array(
+            'name'              => 'Texmex Factory',
+            'location'          => 'Shibuya',
+            'type'              => 'Mexican',
+            'lunch_price'       => 1280,
+            'points'            => 'Unlimited "make your own tacos" food, buffet style, until 3pm. Unique price of 1280 yen, that includes drink. Good food, but cold. Big and nice interior with tables.',
+            'experience'        => 'I liked the interior, spacious, with large tables. The music was a bit lound. I was impressed with the amount and variety of the food and sauces you can get. It tasted good too. The only complaint I would have is that the food is cold. If you get the meat right after a new batch has arrived, it will be warm, but otherwise it\'s all cold, which is kind of sad especially in winter. Nevertheless, I left this restaurant full and happy.',
+            'visited'           => true,
+            'visit_date'        => '2017-12-19 13:00:00',
+            'google_maps_link'  => 'https://www.google.co.jp/maps/place/TEXMEX+FACTORY+%E6%B8%8B%E8%B0%B7%E7%A5%9E%E5%8D%97%E5%BA%97/@35.6596109,139.6989321,17z/data=!4m5!3m4!1s0x0:0x1e337a713464cab2!8m2!3d35.6624352!4d139.7000211',
+            'tabelog_link'      => 'https://tabelog.com/en/tokyo/A1303/A130301/13199134/',
+            'official_website'  => 'https://www.texmexfactory2016.com/',
+            'score_lunch'       => 2,
+            'score_place'       => 2,
+            'score_food'        => 2,
+            'score_price'       => 1,
+            'score_date'        => 1
+        ));
+        $resto->attachTags(['mexican', 'tacos', 'all you can eat']);
     }
 }
