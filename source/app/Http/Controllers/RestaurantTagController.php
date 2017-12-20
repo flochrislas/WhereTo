@@ -3,11 +3,27 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use App\RestaurantTag;
 use Session;
 
 class RestaurantTagController extends Controller
 {
+
+  /**
+   * Method for the autocomplete.
+   *
+   * @return \Illuminate\Http\Response
+   */
+  public function autocomplete(Request $request)
+  {
+      $term = request('term');
+      Log::info('autocomplete term: '.$term);
+      $result = RestaurantTag::where('label', 'LIKE', '%' . $term . '%')
+                              ->get(['id', 'label as value']);
+      return response()->json($result);
+  }
+
   /**
    * Display a listing of the resource.
    *

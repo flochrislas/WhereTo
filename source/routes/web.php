@@ -36,8 +36,9 @@ Route::get('test-html', array('as' => 'test', function()
 }));
 
 // Public restaurants pages
-Route::get('/restaurants', 'RestaurantController@main')->name('restaurants.main');
-Route::get('/restaurants/details/{id}', 'RestaurantController@details')->name('restaurants.details');
+Route::get('restaurants', 'RestaurantController@main')->name('restaurants.main');
+Route::get('restaurants/details/{id}', 'RestaurantController@details')->name('restaurants.details');
+Route::get('tags/autocomplete', 'RestaurantTagController@autocomplete')->name('tags.autocomplete');
 
 
 // ===============================================

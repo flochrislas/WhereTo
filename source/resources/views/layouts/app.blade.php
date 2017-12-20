@@ -11,7 +11,10 @@
     <title>{{ config('app.name', 'WhereTo') }}</title>
 
     <!-- Styles -->
+    <!-- includes bootstrap 3.3.7 -->
+
     <link href="/css/app.css" rel="stylesheet">
+  
 
     <!-- custom CSS -->
     <style>
@@ -25,6 +28,12 @@
             'csrfToken' => csrf_token(),
         ]); ?>
     </script>
+
+
+      <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+      <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+      <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+
 </head>
 <body>
     <div id="app">
@@ -36,7 +45,6 @@
         @include('layouts.footer')
     </div>
 
-    <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}"></script>
+
 </body>
 </html>
