@@ -18,9 +18,10 @@ class RestaurantTagController extends Controller
   public function autocomplete(Request $request)
   {
       $term = request('term');
-      Log::info('autocomplete term: '.$term);
+      Log::debug('autocomplete term: '.$term);
       $result = RestaurantTag::where('label', 'LIKE', '%' . $term . '%')
                               ->get(['id', 'label as value']);
+      Log::debug('autocomplete result: '.$result);
       return response()->json($result);
   }
 

@@ -19,7 +19,7 @@
 
     <!-- Auto complete Experimental -->
     <br>Autocomplete tags:
-    <input type="text" name="term" id="q" data-action="{{ route('tags.autocomplete') }}">
+    <input type="search" name="term" id="q" data-action="{{ route('tags.autocomplete') }}">
     <br><input type="text" id="qid">
     <br>
     <script type="text/javascript">
@@ -40,7 +40,7 @@
 
 <BR><BR>
 
-    <input id="searchString" type="text" name="term"
+    <input id="searchString" type="search" name="term"
       placeholder="Enter Search String" class="form-control" />
     <script type="text/javascript">
     $( '#searchString' ).autocomplete({

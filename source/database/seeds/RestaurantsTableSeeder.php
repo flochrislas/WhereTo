@@ -1112,7 +1112,7 @@ class RestaurantsTableSeeder extends Seeder
             'type'              => 'Curry',
             'lunch_price'       => 980,
             'points'            => 'Friendly, small, cosy, with no tables (counter only). Choice of customizable japanese curry. Tastes good, but the quantity for the price is not great.',
-            'experience'        => 'At first I did not feel so great, going to the basement of that building, but in the end I liked the friendly interior. The curry I got was very good, but I would have liked more for the price (980yen for an eggplants curry). Not really spicy-hot, but you can add spices at will from what is available on the counter.'
+            'experience'        => 'At first I did not feel so great, going to the basement of that building, but in the end I liked the friendly interior. The curry I got was very good, but I would have liked more for the price (980yen for an eggplants curry). Not really spicy-hot, but you can add spices at will from what is available on the counter.',
             'visited'           => true,
             'visit_date'        => '2017-12-20 13:00:00',
             'google_maps_link'  => 'https://www.google.co.jp/maps/place/Curry+Park+forest+Shibuya/@35.6586233,139.6963805,17z/data=!4m12!1m6!3m5!1s0x60188ca9fe8bb37f:0x6f3e71a6afb91408!2sCurry+Park+forest+Shibuya!8m2!3d35.658109!4d139.6964878!3m4!1s0x60188ca9fe8bb37f:0x6f3e71a6afb91408!8m2!3d35.658109!4d139.6964878',
@@ -1125,5 +1125,25 @@ class RestaurantsTableSeeder extends Seeder
             'score_date'        => 0
         ));
         $resto->attachTags(['japanese curry']);
+
+        $resto = Restaurant::create(array(
+            'name'              => 'Shakey\'s',
+            'location'          => 'Shibuya',
+            'type'              => 'Pizza',
+            'lunch_price'       => 980,
+            'points'            => 'Cheap all-you-can-eat pizza, pasta and curry.',
+            'experience'        => 'The food is mediocre but this is OK because it is all-you-can-eat for less than a thousand yen, and there is a decent variety of pizza, pasta, and curry. You pay upfront and can leave when you want. The place is usually full of students. The interior is decent.',
+            'visited'           => true,
+            'visit_date'        => '2017-12-20 13:00:00',
+            'google_maps_link'  => 'https://www.google.co.jp/maps/place/Curry+Park+forest+Shibuya/@35.6586233,139.6963805,17z/data=!4m12!1m6!3m5!1s0x60188ca9fe8bb37f:0x6f3e71a6afb91408!2sCurry+Park+forest+Shibuya!8m2!3d35.658109!4d139.6964878!3m4!1s0x60188ca9fe8bb37f:0x6f3e71a6afb91408!8m2!3d35.658109!4d139.6964878',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13001811/',
+            'official_website'  => 'https://www.pakumori.com/',
+            'score_lunch'       => 2,
+            'score_place'       => 1,
+            'score_food'        => 0,
+            'score_price'       => 2,
+            'score_date'        => 0
+        ));
+        $resto->attachTags(['all you can eat', 'pizza', 'pasta', 'japanese curry']);
     }
 }
