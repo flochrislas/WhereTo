@@ -20,9 +20,16 @@ php artisan migrate:refresh --seed
 SUPER MAKE
 php artisan make:model -m -c -r Test
 
+TEST
+php artisan make:test RestaurantTagControllerTest --unit
+
+
 Laravel version check
 php artisan --version
 5.5.14
+
+Great post on Laravel permissions setting
+https://stackoverflow.com/questions/27674597/laravel-daily-log-created-with-wrong-permissions
 
 Import Export Excel and CSV files
 https://appdividend.com/2017/06/12/import-export-data-csv-excel-laravel-5-4/
@@ -114,3 +121,7 @@ jquery UI: https://learn.jquery.com/jquery-ui/getting-started/
 clear search box
 https://stackoverflow.com/questions/6258521/clear-icon-inside-input-text
 https://codepen.io/shidhincr/pen/ICLBD
+
+laravel tests
+https://laravel.com/docs/5.5/testing
+https://phpunit.de/getting-started.html

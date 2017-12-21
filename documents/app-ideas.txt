@@ -1,3 +1,10 @@
+NEXT UP
+
+CACHE
+USE coordiantes to find closeest places
+USE TIME  : make function isLunchTime or getTiming returns lunch(lunch) evening(diner, bar, clubs) morning afternoon (shopping)
+use getMeteo
+
 -----
 App
 Name whereTo, lunchTime
@@ -22,12 +29,17 @@ add links to
 https://www.yelp.com/biz/%E3%82%B9%E3%83%91%E3%82%B2%E3%83%83%E3%83%86%E3%82%A3%E3%81%AE%E3%83%91%E3%83%B3%E3%83%81%E3%83%A7-%E6%B8%8B%E8%B0%B7%E5%BA%97-%E6%B8%8B%E8%B0%B7%E5%8C%BA
 https://jp.openrice.com/en/tokyo/r-spaghetti-no-pancho-shibuya-store-shibuya-pasta-r551322/photos
 
+top:
+depeding on time: its lunch time! input keyword to find a nice place to eat
+second top menu or hidden left panel with default settings: 1 person, more than 1 star, less than 10mn by foot
+one touch display the tags instead of having to type any letters... diaply tags and user add tags by tapping, results update
+
 -----------
 
 Score lunch global:
 0: Absolutely horrible place
 1: Bad or whatever, I won't go again
-2: OK, I might go again if I crave for this specific kind of lunch / or if I extra money I can spare
+2: OK, I might go again if <insert quite particular reason> ex(I crave for this specific kind of lunch / or if I extra money I can spare / Im really hungry)
 3: Very good. I would be down to go again any time
 4: Excellent. It is hard to refrain to go back to that place every week or more
 
