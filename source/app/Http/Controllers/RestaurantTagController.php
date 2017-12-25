@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Cache;
 use App\RestaurantTag;
 use Session;
 
@@ -19,9 +20,22 @@ class RestaurantTagController extends Controller
   {
       $term = request('term');
       Log::debug('autocomplete term: '.$term);
+      $result = Cache::rememberForever($term, function() use ($term) {
+            return $this->autocompleteDB($term);
+        });
+      return $result;
+  }
+
+  /**
+   * Method for the autocomplete query to DB
+   *
+   * @return \Illuminate\Http\Response
+   */
+  private function autocompleteDB(string $term)
+  {
       $result = RestaurantTag::where('label', 'LIKE', '%' . $term . '%')
                               ->get(['id', 'label as value']);
-      Log::debug('autocomplete result: '.$result);
+      Log::debug('autocomplete result from DB: '.$result);
       return response()->json($result);
   }
 

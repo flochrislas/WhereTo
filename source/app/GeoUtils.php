@@ -4,6 +4,11 @@ namespace App;
 
 use Illuminate\Support\Facades\Log;
 
+/**
+* Tools for coordiantes, distances...
+* Some stuff might be put in Postgres : http://grokbase.com/t/postgresql/pgsql-general/1069rn3ca0/calculating-distance-between-longitude-and-latitude
+* or http://workshops.boundlessgeo.com/postgis-intro/
+*/
 class GeoUtils
 {
     /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
@@ -32,7 +37,7 @@ class GeoUtils
     /*::         GeoDataSource.com (C) All Rights Reserved 2017		   		     :*/
     /*::                                                                         :*/
     /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
-    public static function distance($lat1, $lon1, $lat2, $lon2, $unit)
+    public static function distance(float $lat1, float $lon1, float $lat2, float $lon2, string $unit) : float
     {
         $theta = $lon1 - $lon2;
         $dist = sin(deg2rad($lat1)) * sin(deg2rad($lat2)) + cos(deg2rad($lat1)) * cos(deg2rad($lat2)) * cos(deg2rad($theta));
@@ -50,20 +55,62 @@ class GeoUtils
         }
     }
 
+    // faster distance calculation, in Km
+    public static function flatDistance(float $lat1, float $lon1, float $lat2, float $lon2) : float
+    {
+        // The length of a degree of longitude
+        $deglen = 110.25;
+        $x = $lat1 - $lat2;
+        $y = ($lon1 - $lon2) * cos($lat2);
+        return $deglen * sqrt($x*$x + $y*$y);
+    }
+
+    // faster distance calculation, in Km, from 1 to 2
+    // lat lon must be in radians
+    public static function equirectangularApprox(float $lat1, float $lon1, float $lat2, float $lon2) : float
+    {
+        $earthRadius = 6371; //km
+        $p1 = deg2rad($lon2 - $lon1) * cos( deg2rad($lat1+$lat2) / 2 );
+        $p2 = deg2rad($lat1 - $lat2);
+        $distance = $earthRadius * sqrt($p1*$p1 + $p2*$p2);
+        return $distance;
+    }
+
+    /**
+    * Generate SQL string for finding points within distance
+    * TODO: make it faster by having a table with the results for the cosinus already
+    * or check http://grokbase.com/t/postgresql/pgsql-general/1069rn3ca0/calculating-distance-between-longitude-and-latitude
+    */
+    public static function withinDistanceSql(float $lat, float $lon, float $distance) : string
+    {
+        // select lat, lon from points where
+        return 'pow(lat-'.$lat.', 2) + pow((lon-'.$lon.')*cos(radians('.$lat.')), 2) < pow('.$distance.'/110.25, 2)';
+    }
+
     // convert miles to km
-    public static function miles2km($miles)
+    public static function miles2km(float $miles) : float
     {
         return $miles * 1.609344;
     }
 
     // convert km to miles
-    public static function km2miles($km)
+    public static function km2miles(float $km) : float
     {
         return $km / 1.609344;
     }
 
+    /**
+    * Estimate walking time. Distance in Km.
+    * Pace is slow walking 3Km/h by default.
+    * Result in minutes is rounded up.
+    */
+    public static function walkingTime(float $distance, float $pace = 3) : int
+    {
+        return ceil($distance / $pace * 60);
+    }
+
     // convert google URL to coordinate
-    public static function google2coord($url)
+    public static function google2coord(string $url) : array
     {
       Log::debug($url);
       $split1 = explode('/@', $url);
@@ -72,7 +119,10 @@ class GeoUtils
       Log::debug($split2);
       $coord = explode(',', $split2[0]);
       Log::debug($coord);
+      return $coord;
     }
+
+
 
     // Get real distance and time by foot (maybe using google api)
 

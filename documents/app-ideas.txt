@@ -34,6 +34,9 @@ depeding on time: its lunch time! input keyword to find a nice place to eat
 second top menu or hidden left panel with default settings: 1 person, more than 1 star, less than 10mn by foot
 one touch display the tags instead of having to type any letters... diaply tags and user add tags by tapping, results update
 
+global info
+Lunch time: most regular restaurants open between 11:30 and 3pm for lunch. Lots of big chain restaurants just stay opened all the time.
+
 -----------
 
 Score lunch global:
