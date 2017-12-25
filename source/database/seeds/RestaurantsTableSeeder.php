@@ -1134,10 +1134,10 @@ class RestaurantsTableSeeder extends Seeder
             'points'            => 'Cheap all-you-can-eat pizza, pasta and curry.',
             'experience'        => 'The food is mediocre but this is OK because it is all-you-can-eat for less than a thousand yen, and there is a decent variety of pizza, pasta, and curry. You pay upfront and can leave when you want. The place is usually full of students. The interior is decent.',
             'visited'           => true,
-            'visit_date'        => '2017-12-20 13:00:00',
-            'google_maps_link'  => 'https://www.google.co.jp/maps/place/Curry+Park+forest+Shibuya/@35.6586233,139.6963805,17z/data=!4m12!1m6!3m5!1s0x60188ca9fe8bb37f:0x6f3e71a6afb91408!2sCurry+Park+forest+Shibuya!8m2!3d35.658109!4d139.6964878!3m4!1s0x60188ca9fe8bb37f:0x6f3e71a6afb91408!8m2!3d35.658109!4d139.6964878',
-            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13001811/',
-            'official_website'  => 'https://www.pakumori.com/',
+            'visit_date'        => '2017-12-21 13:00:00',
+            'google_maps_link'  => 'https://www.google.co.jp/maps/place/Shakey\'s/@35.6591226,139.6983597,17z/data=!4m12!1m6!3m5!1s0x60188ca90a37c15f:0x15f45e1c33e21be7!2sShakey\'s!8m2!3d35.6609792!4d139.6978445!3m4!1s0x60188ca90a37c15f:0x15f45e1c33e21be7!8m2!3d35.6609792!4d139.6978445',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13012585/',
+            'official_website'  => 'http://shakeys.jp/store/SHIBUYAUDAGAWA/',
             'score_lunch'       => 2,
             'score_place'       => 1,
             'score_food'        => 0,
@@ -1145,5 +1145,27 @@ class RestaurantsTableSeeder extends Seeder
             'score_date'        => 0
         ));
         $resto->attachTags(['all you can eat', 'pizza', 'pasta', 'japanese curry']);
+
+        $resto = Restaurant::create(array(
+            'name'              => 'Kevelos',
+            'location'          => 'Harajuku',
+            'type'              => 'Pizza',
+            'lunch_price'       => 1200,
+            'points'            => 'Decent italian style pizza, but not cheap. Nice place with windows bay and some tables outside, in a small quiet street.',
+            'experience'        => 'I liked the place. I ordered a marguerita pizza and it was decent, but costed 1200 yen with a small salad and some ice tea. I sat at the counter and could watch the guy making pizza in front of me, using a big wood fire oven.',
+            'visited'           => true,
+            'visit_date'        => '2017-12-25 13:00:00',
+            'google_maps_link'  => 'https://www.google.co.jp/maps/place/PIZZA+KEVELOS+%E3%82%B1%E3%83%99%E3%83%AD%E3%82%B9+%E6%98%8E%E6%B2%BB%E7%A5%9E%E5%AE%AE%E5%89%8D%EF%BC%8F%E5%8E%9F%E5%AE%BF/@35.6671604,139.7048253,17z/data=!4m8!1m2!2m1!1spizza!3m4!1s0x0:0x98f5b7919f2719d6!8m2!3d35.6663673!4d139.7048575',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1306/A130601/13171079/',
+            'official_website'  => 'http://kevelos.favy.jp/',
+            'score_lunch'       => 2,
+            'score_place'       => 1,
+            'score_food'        => 1,
+            'score_price'       => 0,
+            'score_date'        => 1
+        ));
+        $resto->attachTags(['pizza']);
+        
+
     }
 }
