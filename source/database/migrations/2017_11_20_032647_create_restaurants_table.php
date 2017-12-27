@@ -19,14 +19,15 @@ class CreateRestaurantsTable extends Migration
 
             $table->string('name')->nullable();
             $table->string('location')->nullable();
-            $table->string('coord')->nullable();
+            $table->float('lat', 3, 7)->nullable();
+            $table->float('lon', 3, 7)->nullable();
             $table->string('type')->nullable();
             $table->integer('lunch_price')->nullable();
             $table->text('points')->nullable();
             $table->text('experience')->nullable();
             $table->boolean('visited')->default(false);
             $table->timestamp('visit_date')->nullable();
-            $table->string('google_maps_link')->nullable();
+            $table->text('google_maps_link')->nullable();
             $table->string('tabelog_link')->nullable();
             $table->string('official_website')->nullable();
             $table->smallInteger('score_lunch')->nullable();

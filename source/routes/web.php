@@ -36,8 +36,9 @@ Route::get('test-html', array('as' => 'test', function()
 }));
 
 // Public restaurants pages
-Route::get('/restaurants', 'RestaurantController@main')->name('restaurants.main');
-Route::get('/restaurants/details/{id}', 'RestaurantController@details')->name('restaurants.details');
+Route::get('restaurants', 'RestaurantController@main')->name('restaurants.main');
+Route::get('restaurants/details/{id}', 'RestaurantController@details')->name('restaurants.details');
+Route::get('tags/autocomplete', 'RestaurantTagController@autocomplete')->name('tags.autocomplete');
 
 
 // ===============================================
@@ -82,6 +83,9 @@ Route::middleware(['auth'])->prefix('admin')->group(function()
     Route::get('/restaurantType/edit/{id}', 'RestaurantTypeController@edit')->name('restaurantType.edit');
     Route::post('/restaurantType/update/{id}', 'RestaurantTypeController@update')->name('restaurantType.update');
     Route::get('/restaurantType/delete/{id}', 'RestaurantTypeController@destroy')->name('restaurantType.delete');
+
+    // Restaurant Tags CRUD
+    Route::resource('restaurantTag','RestaurantTagController');
 
     // Restaurants Import Export
     Route::get('restaurantsFiles', function()

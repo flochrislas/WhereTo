@@ -21,9 +21,9 @@ class RestaurantTypeController extends Controller
     {
         //fetch all restaurantTypes data
         $restaurantTypes = RestaurantType::orderBy('created_at','desc')->get();
-        
+
         //pass restaurantTypes data to view and load list view
-        return view('restaurantType.index', ['restaurantTypes' => $restaurantTypes]);
+        return view('admin.restaurantType.index', ['restaurantTypes' => $restaurantTypes]);
     }
 
     /**
@@ -34,7 +34,7 @@ class RestaurantTypeController extends Controller
     public function create()
     {
         //load form view
-        return view('restaurantType.add');
+        return view('admin.restaurantType.add');
     }
 
     /**
@@ -49,16 +49,16 @@ class RestaurantTypeController extends Controller
         $this->validate($request, [
             'label' => 'required'
         ]);
-        
+
         //get restaurantType data
         $restaurantTypeData = $request->all();
-        
+
         //insert restaurantType data
         RestaurantType::create($restaurantTypeData);
-        
+
         //store status message
         Session::flash('success_msg', 'Restaurant Type added successfully!');
-        
+
         return redirect()->route('restaurantType.index');
     }
 
@@ -72,9 +72,9 @@ class RestaurantTypeController extends Controller
     {
         //fetch restaurantType data
         $restaurantType = RestaurantType::find($id);
-        
+
         //pass restaurantTypes data to view and load list view
-        return view('restaurantType.details', ['restaurantType' => $restaurantType]);
+        return view('admin.restaurantType.details', ['restaurantType' => $restaurantType]);
     }
 
     /**
@@ -87,9 +87,9 @@ class RestaurantTypeController extends Controller
     {
         //get restaurantType data by id
         $restaurantType = RestaurantType::find($id);
-        
+
         //load form view
-        return view('restaurantType.edit', ['restaurantType' => $restaurantType]);
+        return view('admin.restaurantType.edit', ['restaurantType' => $restaurantType]);
     }
 
     /**
@@ -105,18 +105,18 @@ class RestaurantTypeController extends Controller
         $this->validate($request, [
             'label' => 'required'
         ]);
-        
+
         //get restaurantType data
         $restaurantTypeData = $request->all();
-        
+
         //update restaurantType data
         RestaurantType::find($id)->update($restaurantTypeData);
-        
+
         //store status message
         Session::flash('success_msg', 'Restaurant Type updated successfully!');
-        
+
         return redirect()->route('restaurantType.index');
-        
+
         //return redirect('/restaurants-list')->with('success', 'The restaurant has been updated!');
     }
 
@@ -130,10 +130,10 @@ class RestaurantTypeController extends Controller
     {
         //update restaurantType data
         RestaurantType::find($id)->delete();
-        
+
         //store status message
         Session::flash('success_msg', 'Restaurant Type deleted successfully!');
-        
+
         return redirect()->route('restaurantType.index');
     }
 }

@@ -17,6 +17,52 @@
         </div>
     @endif
 
+    <!-- Auto complete Experimental -->
+    <br>Autocomplete tags (script1)<br>
+    <input type="search" name="term" id="q" data-action="{{ route('tags.autocomplete') }}">
+    <br><input type="text" id="qid"><br>
+    <script type="text/javascript">
+      $('#q').each(function() {
+          var $this = $(this);
+          var src = $this.data('action');
+
+          $this.autocomplete({
+              source: src,
+              minLength: 2,
+              select: function(event, ui) {
+                  $this.val(ui.item.value);
+                  $('#qid').val(ui.item.id);
+              }
+          });
+      });
+    </script>
+
+    <BR>Autocomplete tags (script2)<BR>
+    <input id="searchString" type="search" name="term"
+      placeholder="Enter Search String" class="form-control" />
+    <script type="text/javascript">
+    $('#searchString').autocomplete({
+                source: '{!!URL::route('tags.autocomplete')!!}',
+                minLength: 2
+            } );
+    </script>
+
+    <br>
+    <!-- SEARCH http://justlaravel.com/search-functionality-laravel/ -->
+    <form action="/search" method="POST" role="search">
+        {{ csrf_field() }}
+
+        <div class="input-group">
+            <input type="text" class="form-control" name="type"
+                    placeholder="Search type">
+            <span class="input-group-btn">
+                <button type="submit" class="btn btn-default">
+                    <span class="glyphicon glyphicon-search"></span>
+                </button>
+            </span>
+        </div>
+    </form>
+
     <table class="table table-bordered">
         <tr>
             <th>No</th>
