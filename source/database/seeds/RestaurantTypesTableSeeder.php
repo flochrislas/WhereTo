@@ -2,6 +2,8 @@
 
 use Illuminate\Database\Seeder;
 
+use App\RestaurantType;
+
 class RestaurantTypesTableSeeder extends Seeder
 {
     /**
@@ -11,9 +13,9 @@ class RestaurantTypesTableSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('restaurantTypes')->delete();
+        DB::table('restaurant_types')->delete();
 
-        Restaurant::create(array(
+        RestaurantType::create(array(
             'label'              => 'ramen'
         ));
     }

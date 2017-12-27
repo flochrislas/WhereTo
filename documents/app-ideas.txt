@@ -1,3 +1,11 @@
+NEXT UP
+
+CACHE
+Fill coords of al lseeds from google URL
+USE coordiantes to find closeest places
+USE TIME  : make function isLunchTime or getTiming returns lunch(lunch) evening(diner, bar, clubs) morning afternoon (shopping)
+use getMeteo
+
 -----
 App
 Name whereTo, lunchTime
@@ -12,24 +20,38 @@ link to tabelog or other relevant website
 feature: closest combini, now
 feature: closest loveho, now
 feature: closest <tag>, now
-whuen browsing, add the info of how long by foot it would take to reach there from current gps position.
+when browsing, add the info of how long by foot it would take to reach there from current gps position.
 Basic info for real tourists: always carry enough cash to pay for the meal. Pokemon go? shibuya is like poke heaven.
 Sleep[anytime, without booking] -> (solo), (couple) -> (capsule hotels, internet cafe...) (love hotels, how to recognize one, stations with some nearby, magic sentence to tell the taxi)
 Information center: archive info about tons of stuff
 on pages, link to related info from info center (how to call the staff, how to ask for an extension, how to ask for the check...)
+
+add links to
+https://www.yelp.com/biz/%E3%82%B9%E3%83%91%E3%82%B2%E3%83%83%E3%83%86%E3%82%A3%E3%81%AE%E3%83%91%E3%83%B3%E3%83%81%E3%83%A7-%E6%B8%8B%E8%B0%B7%E5%BA%97-%E6%B8%8B%E8%B0%B7%E5%8C%BA
+https://jp.openrice.com/en/tokyo/r-spaghetti-no-pancho-shibuya-store-shibuya-pasta-r551322/photos
+
+top:
+depeding on time: its lunch time! input keyword to find a nice place to eat
+second top menu or hidden left panel with default settings: 1 person, more than 1 star, less than 10mn by foot
+one touch display the tags instead of having to type any letters... diaply tags and user add tags by tapping, results update
+
+global info
+Lunch time: most regular restaurants open between 11:30 and 3pm for lunch. Lots of big chain restaurants just stay opened all the time.
+
 -----------
 
 Score lunch global:
 0: Absolutely horrible place
 1: Bad or whatever, I won't go again
-2: OK, I might go again if I crave for this specific kind of lunch / or if I extra money I can spare
+2: OK, I might go again if <insert quite particular reason> ex(I crave for this specific kind of lunch / or if I extra money I can spare / Im really hungry)
 3: Very good. I would be down to go again any time
 4: Excellent. It is hard to refrain to go back to that place every week or more
 
-Score for dates:
-0: Bad for dates
-1: Decent for dates
-2: Great for dates
+Food:
+0: poor
+1: good
+2: delicious
+3: divine
 
 Place
 0 horrible
@@ -42,34 +64,7 @@ Price
 1 correct
 2 good deal
 
----
-
-TAGS
-vegetarian friendly
-vegan friendly
-menu with calories
-menu with allergies
-customisable dishes
-
-italian
-french
-mexican
-indian
-vietnamese
-turk
-indonesian
-american
-japanese
-thai
-
-japanese curry
-sushi
-izakaya
-all you can eat
-all you can drink
-ramen
-tonkotsu
-miso
-sukiyaki
-shabushabu
-burger
+Score for dates:
+0: Bad for dates
+1: Decent for dates
+2: Great for dates

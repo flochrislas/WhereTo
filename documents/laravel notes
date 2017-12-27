@@ -17,10 +17,19 @@ php artisan db:seed
 php artisan db:seed --class=UserTableSeeder
 php artisan migrate:refresh --seed
 
+SUPER MAKE
+php artisan make:model -m -c -r Test
+
+TEST
+php artisan make:test RestaurantTagControllerTest --unit
+
 
 Laravel version check
 php artisan --version
 5.5.14
+
+Great post on Laravel permissions setting
+https://stackoverflow.com/questions/27674597/laravel-daily-log-created-with-wrong-permissions
 
 Import Export Excel and CSV files
 https://appdividend.com/2017/06/12/import-export-data-csv-excel-laravel-5-4/
@@ -88,3 +97,44 @@ Lots of stuff in Laracast website (videos)
 Looks like a great debug bar:
 https://github.com/barryvdh/laravel-debugbar
 
+debug tools
+https://laracasts.com/discuss/channels/general-discussion/what-is-the-best-way-to-debug-laravel-or-php-application
+
+This website seems to have great tuto and example:
+https://maxoffsky.com/code-blog/laravel-shop-tutorial-3-implementing-smart-search/
+sample shop: http://demos.maxoffsky.com/shop-search/
+shop code: https://github.com/msurguy/laravel-smart-search
+
+Autocomplete using selectize
+https://maxoffsky.com/code-blog/laravel-shop-tutorial-3-implementing-smart-search/
+
+Autocomplete using typehead
+http://itsolutionstuff.com/post/laravel-5-autocomplete-using-bootstrap-typeahead-js-example-with-demoexample.html
+http://www.runningcoder.org/jquerytypeahead/demo/
+
+Autocomplete using JQuery
+https://gist.github.com/imranismail/10200241
+https://laracasts.com/discuss/channels/laravel/laravel-and-ajax-autocomplete-text-field
+style: https://stackoverflow.com/questions/17838380/styling-jquery-ui-autocomplete
+jquery UI: https://learn.jquery.com/jquery-ui/getting-started/
+
+clear search box
+https://stackoverflow.com/questions/6258521/clear-icon-inside-input-text
+https://codepen.io/shidhincr/pen/ICLBD
+
+laravel tests
+https://laravel.com/docs/5.5/testing
+https://phpunit.de/getting-started.html
+
+simple distance calculation
+http://jonisalonen.com/2014/computing-distance-between-coordinates-can-be-simple-and-fast/
+
+real time tracking map
+https://blog.pusher.com/build-realtime-map-laravel/
+
+gps coordinate explanation
+http://www.ubergizmo.com/how-to/read-gps-coordinates/
+
+
+laravel geo distance query builder
+https://laravel.io/forum/04-23-2014-convert-this-geolocation-query-to-query-builder-for

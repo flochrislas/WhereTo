@@ -13,7 +13,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        // Nothing originally
+        // Add setting to separate log files
+        \Log::getMonolog()->popHandler();
+        \Log::useDailyFiles(storage_path('/logs/').php_sapi_name().'-'.get_current_user().'.log');
     }
 
     /**
