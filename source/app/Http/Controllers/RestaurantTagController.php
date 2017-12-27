@@ -13,6 +13,7 @@ class RestaurantTagController extends Controller
 
   /**
    * Method for the autocomplete.
+   * Cache the results.
    *
    * @return \Illuminate\Http\Response
    */
@@ -23,20 +24,21 @@ class RestaurantTagController extends Controller
       $result = Cache::rememberForever($term, function() use ($term) {
             return $this->autocompleteDB($term);
         });
-      return $result;
+      return response()->json($result);
   }
 
   /**
-   * Method for the autocomplete query to DB
+   * Method for the autocomplete query to DB.
+   * No cache.
    *
-   * @return \Illuminate\Http\Response
+   * @return Illuminate\Database\Eloquent\Collection
    */
-  private function autocompleteDB(string $term)
+  public function autocompleteDB(string $term)
   {
       $result = RestaurantTag::where('label', 'LIKE', '%' . $term . '%')
                               ->get(['id', 'label as value']);
       Log::debug('autocomplete result from DB: '.$result);
-      return response()->json($result);
+      return $result;
   }
 
   /**
