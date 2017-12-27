@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Cache;
 use App\Restaurant;
 use Excel;
 
@@ -10,13 +12,36 @@ class RestaurantController extends Controller
 {
     /**
      * Public
-     * Display a listing of the resource.
+     * Search for the list to display.
+     * Cache.
+     * TODO: implement "see more" button
      *
      * @return \Illuminate\Http\Response
      */
-    public function main($tags = ['ramen', 'pizza'], $op = 'OR')
+    public function main(Request $request)
     {
-        // TODO: implement "see more" button
+        Log::debug('Request tags: '.request('tags'));
+        Log::debug('Request op: '.request('op'));
+        $tags = ['ramen', 'pizza'];
+        $op = 'OR';
+
+        $cacheKey = $op; // need to be made of all the used paramters
+        $restaurants = Cache::rememberForever($cacheKey, function() use ($tags, $op) {
+              return $this->mainDB($tags, $op);
+          });
+
+        return view('restaurants.main', compact('restaurants'));
+    }
+
+    /**
+     * Search for the list to display.
+     * No cache, just the DB.
+     *
+     * @return Illuminate\Database\Eloquent\Collection
+     */
+    public function mainDB($tags, $op = 'AND')
+    {
+        Log::debug('Hitting the DB with mainDB with op '.$op);
         $query = (new Restaurant)->newQuery();
         if (isset($tags) && !empty($tags)) {
 
@@ -52,7 +77,8 @@ class RestaurantController extends Controller
                         ->orderBy('score_food', 'desc')
                         ->orderBy('score_place', 'desc')
                         ->get();
-        return view('restaurants.main', compact('restaurants'));
+
+        return $restaurants;
     }
 
     /**

@@ -85,9 +85,7 @@ class GeoUtils
     {
         // select lat, lon from points where
         // TODO: this formula doesnt seem very correct
-        return 'pow(lat-'.$lat.', 2)
-                + pow((lon-'.$lon.')*cos(radians('.$lat.')), 2)
-                < pow('.$distance.'/110.25, 2)';
+        return 'pow(lat-'.$lat.', 2) + pow((lon-'.$lon.')*cos(radians('.$lat.')), 2) < pow('.$distance.'/110.25, 2)';
     }
 
     // convert miles to km
