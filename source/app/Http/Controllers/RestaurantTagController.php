@@ -163,4 +163,17 @@ class RestaurantTagController extends Controller
 
       return redirect()->route('restaurantTag.index');
   }
+
+  /**
+   * Get all restaurants with null coordinates and
+   * try to fill them with the ones found in the Google Maps link
+   */
+  public function fillNullCoordinatesFromGoogleMapsLink() : void
+  {
+      $result = Restaurant::whereNull('lat')->get();
+      foreach ($result as $resto) {
+        $resto->autofillCoordFromGoogleLink();
+      }
+  }
+
 }

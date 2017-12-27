@@ -11,7 +11,9 @@ use App\RestaurantTag;
 class RestaurantsTableSeeder extends Seeder
 {
     /**
-     * Run the database seeds.
+     * Fill the restaurants table
+     * Tags are added with via a method.
+     * Coordiantes can be added by running a method that reads the Google Maps URL
      *
      * @return void
      */
@@ -526,6 +528,7 @@ class RestaurantsTableSeeder extends Seeder
         ));
         $resto->attachTags([]);
 
+        /* Place closed - confirmed 2017-12-26
         $resto = Restaurant::create(array(
             'name'              => 'Cafde. SALICA',
             'location'          => '2nd floor in front of Samrat',
@@ -535,30 +538,31 @@ class RestaurantsTableSeeder extends Seeder
             'experience'        => 'Once again I\'ve been blessed with a totally unexpected discovery of divinish food! I was going to Shibuya dowtown, wher ethe girls are pretty and the rayds are mighty, when suddenly an irresistible craving of premium burger got into me. Keeping my head cool, I thought "awwright no problemo, I can go to that restaurant I spot last month, "meat bank", that was advertising and appetizing burger. And so there I went. Confident. Looking at the menu before the entrance of the rather new establishment, I realized brutally that there were NO BURGER at all. What insolence. The world was crumbling all around me, I started feeling deeply cold and hungry and despaired and angry. I wandered around, crossing the street looking at other restaurants, which signs were blurred by my teary eyes. This is when I spotted a burger. Right there on a menu sign in the street. Some kind of cafe on the 2nd floor. My feeet directly driven by my empty stomach, I climbed the stairs. Nice surpise, the restaurant is spacious, empty of customers. Relaxing place. I order the avocado cheese burger, at a 1000 yen price tag with a drink. And... long story short, that ended up being one, if not the, but most likely top 6, best burger I ever had. And it looked gorgous too. And real delicious, at every levels, bread, lettuce, tomato, onions, sauce, french mustard, MEAT, cheese, avocado... all premium quality. Came served on a wooden palette too, for a little fanciness. So be advised, if you crave for premium burgers, do try this place! ',
             'visited'           => true,
             'visit_date'        => '2017-09-05 13:00:00',
-            'google_maps_link'  => 'http://data',
-            'tabelog_link'      => 'http://data',
+            'google_maps_link'  => '',
+            'tabelog_link'      => '',
             'official_website'  => 'http://www.cafde-salica.com',
-            'score_lunch'       => 1,
-            'score_place'       => 1,
-            'score_food'        => 1,
+            'score_lunch'       => 2,
+            'score_place'       => 2,
+            'score_food'        => 3,
             'score_price'       => 1,
             'score_date'        => 1
         ));
-        $resto->attachTags([]);
+        $resto->attachTags(['burger']);]
+        */
 
         $resto = Restaurant::create(array(
             'name'              => 'Mediterranean Pizzeria',
             'location'          => 'behind office along the JR tracks',
             'type'              => 'italian',
             'lunch_price'       => 900,
-            'points'            => 'inetrior OK. Pizza OK but really nothing special... 900 yen for pizza + salad. The salad (some lattuce) is small but the dressing is delicious. Tables and counter, not small.',
-            'experience'        => 'Just OK.',
+            'points'            => 'Interior OK. Pizza OK but really nothing special... 900 yen for pizza + salad. The salad (some lattuce) is small but the dressing is delicious. Tables and counter, not small.',
+            'experience'        => 'The place is a bit dark, but feels cosy. It is not small and could receive small groups. The food is alright.',
             'visited'           => true,
             'visit_date'        => '2017-09-05 13:00:00',
             'google_maps_link'  => 'http://data',
             'tabelog_link'      => 'http://data',
             'official_website'  => 'http://data',
-            'score_lunch'       => 1,
+            'score_lunch'       => 2,
             'score_place'       => 1,
             'score_food'        => 1,
             'score_price'       => 1,
@@ -568,19 +572,19 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create(array(
             'name'              => 'Meat Bank',
-            'location'          => 'that new building front of samrat  6F',
+            'location'          => 'Shibuya',
             'type'              => 'USA, burger, meat',
-            'lunch_price'       => 1000,
-            'points'            => 'inetrior nice. sofa and nice chairs. Lots of windows. Nice staff. Premium burgers. Good. Lunch set 1200 avocado  bacon cheese burger with drink and soup.',
-            'experience'        => 'Confortable. Good taste. So I know you guys were expecting the a final conclusion to the the Asuka Tantan men paradox rumble, or "the singularity". But that will have to wait cause I needed fat food to lay a safety layer down my stomach, in preparation for tonight\'s apoliptycal debauchery. So I walked to a place I wanted to try, serving italian food. Unfortunately, I knew this place from 7 years ago, and it was not there anymore... so I had to improvise yet once again. After a while, I walked by the Meat Bank restaurant mentioned in earlier passage of my book "Tokyo Burgers Fight", chapter "The revenge of the Meat Bank - a striking return". And this time, they were displaying a menu with a choice of premium beef burgers, starting 1000yen. Since I just got a Charizar with good IV from a raid on my way there, I decided it was worth celebrating, and good for laying that fat layer I wanted. So up 6F I went. Very nice place, nice staff, nice sofa, and, good burger. Not mind blowing like the Cafde one, but definitely premium, with bacon as thick as a McDo patty. I paid 1200 yen for a bacon avocado cheese burger with a soup and a drink. Id say, nice place if you want to eat burger in a confy place with your girlfriend on a holloween friday night, avoiding stinking crowd and making that moment a bit special like it should be (this example was taken completly without any connection to any real upcoming event or targetted to particulart existing individual, leading a team or not)',
+            'lunch_price'       => 1200,
+            'points'            => 'Nice interior, but lound music. Sofa and nice chairs. Wide windows bay. Nice staff. Premium burgers. Good. Lunch set 1200 yen avocado bacon cheese burger with drink and soup.',
+            'experience'        => 'I liked the interior, and the comfort. But I found the music too loud. Not much of a problem when you are alone, but a bit tiring if you want to talk. The choice of burgers is good, and the burgers themselves quite delicious. Not cheap, but not so much overpriced compared with other premium burgers restaurants around there. I paid 1200 yen for a bacon avocado cheese burger with a soup and a drink. Id say, nice place if you want to eat burger in a comfy place.',
             'visited'           => true,
             'visit_date'        => '2017-09-05 13:00:00',
             'google_maps_link'  => 'http://data',
             'tabelog_link'      => 'http://data',
             'official_website'  => 'http://data',
-            'score_lunch'       => 1,
-            'score_place'       => 1,
-            'score_food'        => 1,
+            'score_lunch'       => 2,
+            'score_place'       => 2,
+            'score_food'        => 2,
             'score_price'       => 1,
             'score_date'        => 1
         ));
@@ -1165,7 +1169,43 @@ class RestaurantsTableSeeder extends Seeder
             'score_date'        => 1
         ));
         $resto->attachTags(['pizza']);
+
+        $resto = Restaurant::create(array(
+            'name'              => 'La Soffita',
+            'location'          => 'Shibuya',
+            'type'              => 'Pizza',
+            'lunch_price'       => 1000,
+            'points'            => 'Nice place, second floor with terrace. Pasta or pizza. Very good food. Very decent price.',
+            'experience'        => 'I was impressed by the big terrace. Inside is just decent. And then I was very surprised at how delicious their marguerita pizza was, and how big (32cm). The salad too. And that, with a coffee, for only 1000 yen? I never had such a great treat from an italian restaurant in Shibuya. They also have spicy oil if you ask.',
+            'visited'           => true,
+            'visit_date'        => '2017-12-27 13:00:00',
+            'google_maps_link'  => 'https://www.google.co.jp/maps/place/%E3%83%A9%E3%83%BB%E3%82%BD%E3%83%95%E3%82%A3%E3%83%83%E3%82%BF/@35.659359,139.6979001,18z/data=!4m5!3m4!1s0x60188ca854f6a1ef:0x10dc7b929c86a181!8m2!3d35.6612092!4d139.699032',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13007485/',
+            'official_website'  => 'https://www.lasoffitta.jp/',
+            'score_lunch'       => 3,
+            'score_place'       => 1,
+            'score_food'        => 2,
+            'score_price'       => 1,
+            'score_date'        => 1
+        ));
+        $resto->attachTags(['pizza', 'italian']);     
         
 
+        // fill coordinates
+        $this->fillNullCoordinatesFromGoogleMapsLink();
+        
     }
+
+    /**
+    * Get all restaurants with null coordinates and
+    * try to fill them with the ones found in the Google Maps link
+    */
+    private function fillNullCoordinatesFromGoogleMapsLink() : void
+    {
+          $result = Restaurant::whereNull('lat')->get();
+          foreach ($result as $resto) {
+            $resto->autofillCoordFromGoogleLink();
+          }
+    }
+
 }

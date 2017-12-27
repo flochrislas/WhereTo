@@ -28,13 +28,13 @@ class GeoUtils
     /*::                  'K' is kilometers                                      :*/
     /*::                  'N' is nautical miles                                  :*/
     /*::  Worldwide cities and other features databases with latitude longitude  :*/
-    /*::  are available at https://www.geodatasource.com                          :*/
+    /*::  are available at https://www.geodatasource.com                         :*/
     /*::                                                                         :*/
     /*::  For enquiries, please contact sales@geodatasource.com                  :*/
     /*::                                                                         :*/
-    /*::  Official Web site: https://www.geodatasource.com                        :*/
+    /*::  Official Web site: https://www.geodatasource.com                       :*/
     /*::                                                                         :*/
-    /*::         GeoDataSource.com (C) All Rights Reserved 2017		   		     :*/
+    /*::         GeoDataSource.com (C) All Rights Reserved 2017		   		         :*/
     /*::                                                                         :*/
     /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
     public static function distance(float $lat1, float $lon1, float $lat2, float $lon2, string $unit) : float
@@ -84,7 +84,10 @@ class GeoUtils
     public static function withinDistanceSql(float $lat, float $lon, float $distance) : string
     {
         // select lat, lon from points where
-        return 'pow(lat-'.$lat.', 2) + pow((lon-'.$lon.')*cos(radians('.$lat.')), 2) < pow('.$distance.'/110.25, 2)';
+        // TODO: this formula doesnt seem very correct
+        return 'pow(lat-'.$lat.', 2)
+                + pow((lon-'.$lon.')*cos(radians('.$lat.')), 2)
+                < pow('.$distance.'/110.25, 2)';
     }
 
     // convert miles to km
@@ -112,16 +115,15 @@ class GeoUtils
     // convert google URL to coordinate
     public static function google2coord(string $url) : array
     {
-      Log::debug($url);
-      $split1 = explode('/@', $url);
-      Log::debug($split1);
-      $split2 = explode('z/data', $split1[1]);
-      Log::debug($split2);
-      $coord = explode(',', $split2[0]);
-      Log::debug($coord);
-      return $coord;
+        Log::debug($url);
+        $split1 = explode('/@', $url);
+        Log::debug($split1);
+        $split2 = explode('z/data', $split1[1]);
+        Log::debug($split2);
+        $coord = explode(',', $split2[0]);
+        Log::debug($coord);
+        return $coord;
     }
-
 
 
     // Get real distance and time by foot (maybe using google api)

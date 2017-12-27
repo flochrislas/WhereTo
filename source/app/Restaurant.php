@@ -9,7 +9,8 @@ class Restaurant extends Model
     protected $fillable = [
         'name',
         'location',
-        'coord',
+        'lat',
+        'lon',
         'type',
         'lunch_price',
         'points',
@@ -35,8 +36,8 @@ class Restaurant extends Model
     }
 
     /**
-    * Attach the given tags (that must already exist) to the restaurant
-    */
+     * Attach the given tags (that must already exist) to the restaurant
+     */
     public function attachTags($labels)
     {
         if (!empty($labels))
@@ -53,6 +54,22 @@ class Restaurant extends Model
         // attach just associate existing records: http://laraveldaily.com/pivot-tables-and-many-to-many-relationships/
         // otherwise use save or saveMany
         // awesome https://m.dotdev.co/writing-advanced-eloquent-search-query-filters-de8b6c2598db
+    }
+
+    /**
+     * Try to fill lat and lon with the ones found in the Google Maps link
+     */
+    public function autofillCoordFromGoogleLink() : void
+    {
+      try {
+        $coord = GeoUtils::google2coord($this->google_maps_link);
+        $this->lat = $coord[0];
+        $this->lon = $coord[1];
+        $this->save();
+      } catch (\ErrorException $e) {
+        Log::debug('Could not find coordinates from Google Maps link in restaurant id '.$this->id);
+      }
+
     }
 
 }
