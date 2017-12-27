@@ -18,10 +18,9 @@
     @endif
 
     <!-- Auto complete Experimental -->
-    <br>Autocomplete tags:
+    <br>Autocomplete tags (script1)<br>
     <input type="search" name="term" id="q" data-action="{{ route('tags.autocomplete') }}">
-    <br><input type="text" id="qid">
-    <br>
+    <br><input type="text" id="qid"><br>
     <script type="text/javascript">
       $('#q').each(function() {
           var $this = $(this);
@@ -38,18 +37,15 @@
       });
     </script>
 
-<BR><BR>
-
+    <BR>Autocomplete tags (script2)<BR>
     <input id="searchString" type="search" name="term"
       placeholder="Enter Search String" class="form-control" />
     <script type="text/javascript">
-    $( '#searchString' ).autocomplete({
+    $('#searchString').autocomplete({
                 source: '{!!URL::route('tags.autocomplete')!!}',
                 minLength: 2
             } );
     </script>
-
-
 
     <br>
     <!-- SEARCH http://justlaravel.com/search-functionality-laravel/ -->

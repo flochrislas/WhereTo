@@ -1,6 +1,7 @@
 NEXT UP
 
 CACHE
+Fill coords of al lseeds from google URL
 USE coordiantes to find closeest places
 USE TIME  : make function isLunchTime or getTiming returns lunch(lunch) evening(diner, bar, clubs) morning afternoon (shopping)
 use getMeteo
