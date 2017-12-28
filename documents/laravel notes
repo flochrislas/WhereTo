@@ -23,6 +23,16 @@ php artisan make:model -m -c -r Test
 TEST
 php artisan make:test RestaurantTagControllerTest --unit
 
+CACHE
+php artisan cache:clear
+
+http://laravel-recipes.com/recipes/104/clearing-the-application-cache
+
+You can call an Artisan command outside the CLI !!
+Route::get('/clear-cache', function() {
+    $exitCode = Artisan::call('cache:clear');
+    // return what you want
+});
 
 Laravel version check
 php artisan --version
@@ -138,3 +148,12 @@ http://www.ubergizmo.com/how-to/read-gps-coordinates/
 
 laravel geo distance query builder
 https://laravel.io/forum/04-23-2014-convert-this-geolocation-query-to-query-builder-for
+
+DEBUGING
+http://andreas.heiberg.io/blog/xdebug-debugging-and-profiling/
+
+debugbar:
+https://github.com/barryvdh/laravel-debugbar
+
+cache
+https://bosnadev.com/2014/12/27/laravel-caching-database-queries/

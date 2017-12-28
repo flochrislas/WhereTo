@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+// use Barryvdh\Debugbar\Facade as Debugbar;
 use Illuminate\Support\Facades\Cache;
 use App\RestaurantTag;
 use Session;
@@ -38,6 +39,7 @@ class RestaurantTagController extends Controller
       $result = RestaurantTag::where('label', 'LIKE', '%' . $term . '%')
                               ->get(['id', 'label as value']);
       Log::debug('autocomplete result from DB: '.$result);
+      \Debugbar::info('Hitting DB from autocomplete with term: '.$result);
       return $result;
   }
 

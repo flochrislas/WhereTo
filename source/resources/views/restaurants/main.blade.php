@@ -49,7 +49,7 @@
 
     <br>
     <!-- SEARCH http://justlaravel.com/search-functionality-laravel/ -->
-    <form action="/search" method="POST" role="search">
+    <form action="" method="GET" role="search">
         {{ csrf_field() }}
 
         <div class="input-group">
