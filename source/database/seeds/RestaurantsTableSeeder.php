@@ -1175,7 +1175,7 @@ class RestaurantsTableSeeder extends Seeder
             'location'          => 'Shibuya',
             'type'              => 'Pizza',
             'lunch_price'       => 1000,
-            'points'            => 'Nice place, second floor with terrace. Pasta or pizza. Very good food. Very decent price.',
+            'points'            => 'Nice place, second floor with terrace. Pasta or pizza. Very good food. Very decent price. Warning: the prices get about 500 yen more expensive during weekends and holidays.',
             'experience'        => 'I was impressed by the big terrace. Inside is just decent. And then I was very surprised at how delicious their marguerita pizza was, and how big (32cm). The salad too. And that, with a coffee, for only 1000 yen? I never had such a great treat from an italian restaurant in Shibuya. They also have spicy oil if you ask.',
             'visited'           => true,
             'visit_date'        => '2017-12-27 13:00:00',
@@ -1188,7 +1188,7 @@ class RestaurantsTableSeeder extends Seeder
             'score_price'       => 1,
             'score_date'        => 1
         ));
-        $resto->attachTags(['pizza', 'italian']);     
+        $resto->attachTags(['pizza', 'pasta', 'italian']);     
         
 
         // fill coordinates

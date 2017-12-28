@@ -26,7 +26,7 @@ class RestaurantController extends Controller
         $op = 'OR';
 
         $cacheKey = $op; // need to be made of all the used paramters
-        $restaurants = Cache::rememberForever($cacheKey, function() use ($tags, $op) {
+        $restaurants = Cache::rememberForever(md5($cacheKey), function() use ($tags, $op) {
               return $this->mainDB($tags, $op);
           });
 
@@ -76,6 +76,7 @@ class RestaurantController extends Controller
         $restaurants = $query->orderBy('score_lunch', 'desc')
                         ->orderBy('score_food', 'desc')
                         ->orderBy('score_place', 'desc')
+
                         ->get();
 
         return $restaurants;

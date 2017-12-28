@@ -34,8 +34,8 @@
         <td>{{ $restaurant->name}}</td>
         <td>{{ $restaurant->type}}</td>
         <td>
-            <a class="btn btn-info" href="{{ route('restaurants.show',$restaurant->id) }}">Show</a>
-            <a class="btn btn-primary" href="{{ route('restaurants.edit',$restaurant->id) }}">Edit</a>
+            <a class="btn btn-info" href="{{ route('restaurants.show', $restaurant->id) }}">Show</a>
+            <a class="btn btn-primary" href="{{ route('restaurants.edit', $restaurant->id) }}">Edit</a>
             {!! Form::open(['method' => 'DELETE','route' => ['restaurants.destroy', $restaurant->id],'style'=>'display:inline']) !!}
             {!! Form::submit('Delete', ['class' => 'btn btn-danger']) !!}
             {!! Form::close() !!}
