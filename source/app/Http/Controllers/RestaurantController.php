@@ -24,13 +24,47 @@ class RestaurantController extends Controller
         Log::debug('Request op: '.request('op'));
         $tags = ['ramen', 'pizza'];
         $op = 'OR';
+        // current position from client's GPS
+        $position = '39,135';
 
         $cacheKey = $op; // need to be made of all the used paramters
         $restaurants = Cache::rememberForever(md5($cacheKey), function() use ($tags, $op) {
               return $this->mainDB($tags, $op);
           });
 
+        $distanceSortedRestaurants = $this->sortByDistance($restaurants, $position);
+
         return view('restaurants.main', compact('restaurants'));
+    }
+
+    public function sortByDistance($restaurants, $position)
+    {
+        // Map the restaurants with their current distance
+        $curCoords = explode(',',$position);
+        $curLat = $curCoords[0];
+        $curLon = $curCoords[1];
+        $map = array();
+        foreach ($restaurants as $resto) {
+            $distance = GeoUtils::equirectangularApprox($curLat, $curLon, $resto->lat, $resto->lon);
+            $resto->currentDistance = $distance;
+            $map[$distance] = $resto;
+        }
+        // Sort the map by key
+        ksort($map);
+        // Return just the list of restaurants
+        return array_values($map);
+    }
+
+    public function generateCurrentDistances($restaurants, $position)
+    {
+        // Map the restaurants with their current distance
+        $curCoords = explode(',',$position);
+        $curLat = $curCoords[0];
+        $curLon = $curCoords[1];
+        foreach ($restaurants as $resto) {
+            $distance = GeoUtils::equirectangularApprox($curLat, $curLon, $resto->lat, $resto->lon);
+            $resto->currentDistance = $distance;
+        }
     }
 
     /**
