@@ -11,6 +11,15 @@ use Illuminate\Support\Facades\Log;
 */
 class GeoUtils
 {
+    /**
+    * The method used in the app for calculated the distance
+    */
+    public static function distance(float $lat1, float $lon1, float $lat2, float $lon2) : float
+    {
+        // returns meters
+        return GeoUtils::equirectangularApprox($lat1, $lon1, $lat2, $lon2) * 1000;
+    }
+
     // faster distance calculation, in Km
     public static function flatDistance(float $lat1, float $lon1, float $lat2, float $lon2) : float
     {
@@ -124,7 +133,7 @@ class GeoUtils
     /*::         GeoDataSource.com (C) All Rights Reserved 2017		   		         :*/
     /*::                                                                         :*/
     /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
-    public static function distance(float $lat1, float $lon1, float $lat2, float $lon2, string $unit) : float
+    public static function geodatasourceDistance(float $lat1, float $lon1, float $lat2, float $lon2, string $unit) : float
     {
         $theta = $lon1 - $lon2;
         $dist = sin(deg2rad($lat1)) * sin(deg2rad($lat2)) + cos(deg2rad($lat1)) * cos(deg2rad($lat2)) * cos(deg2rad($theta));
