@@ -22,6 +22,8 @@ php artisan make:model -m -c -r Test
 
 TEST
 php artisan make:test RestaurantTagControllerTest --unit
+Run tests:
+./vendor/bin/phpunit
 
 CACHE
 php artisan cache:clear
@@ -40,6 +42,10 @@ php artisan --version
 
 Great post on Laravel permissions setting
 https://stackoverflow.com/questions/27674597/laravel-daily-log-created-with-wrong-permissions
+
+
+PHPUnit tetse with Laravel:
+https://semaphoreci.com/community/tutorials/getting-started-with-phpunit-in-laravel
 
 Import Export Excel and CSV files
 https://appdividend.com/2017/06/12/import-export-data-csv-excel-laravel-5-4/

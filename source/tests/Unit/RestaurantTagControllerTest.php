@@ -15,16 +15,6 @@ use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 
 class RestaurantTagControllerTest extends TestCase
 {
-    /**
-     * A basic test example.
-     *
-     * @return void
-     */
-    public function testTrue() : void
-    {
-        $this->assertTrue(true);
-    }
-
     public function testCreateFromLabel(): void
     {
         $this->assertInstanceOf(

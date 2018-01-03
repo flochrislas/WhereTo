@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Cache;
 use App\Restaurant;
+use App\GeoUtils;
 use Excel;
 
 class RestaurantController extends Controller
@@ -27,7 +28,8 @@ class RestaurantController extends Controller
         // current position from client's GPS
         $position = '39,135';
 
-        $cacheKey = $op; // need to be made of all the used paramters
+        // key needs to be made of all the used paramters except coords
+        $cacheKey = $op .','. implode(',',$tags);
         $restaurants = Cache::rememberForever(md5($cacheKey), function() use ($tags, $op) {
               return $this->mainDB($tags, $op);
           });
@@ -45,7 +47,7 @@ class RestaurantController extends Controller
         $curLon = $curCoords[1];
         $map = array();
         foreach ($restaurants as $resto) {
-            $distance = GeoUtils::equirectangularApprox($curLat, $curLon, $resto->lat, $resto->lon);
+            $distance = GeoUtils::distance($curLat, $curLon, $resto->lat, $resto->lon);
             $resto->currentDistance = $distance;
             $map[$distance] = $resto;
         }
@@ -62,7 +64,7 @@ class RestaurantController extends Controller
         $curLat = $curCoords[0];
         $curLon = $curCoords[1];
         foreach ($restaurants as $resto) {
-            $distance = GeoUtils::equirectangularApprox($curLat, $curLon, $resto->lat, $resto->lon);
+            $distance = GeoUtils::distance($curLat, $curLon, $resto->lat, $resto->lon);
             $resto->currentDistance = $distance;
         }
     }

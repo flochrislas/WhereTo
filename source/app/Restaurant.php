@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Restaurant extends Model
 {
     public $currentDistance;
-    
+
     protected $fillable = [
         'name',
         'location',
@@ -69,7 +69,7 @@ class Restaurant extends Model
         $this->lon = $coord[1];
         $this->save();
       } catch (\ErrorException $e) {
-        Log::debug('Could not find coordinates from Google Maps link in restaurant id '.$this->id);
+        \Log::debug('Could not find coordinates from Google Maps link in restaurant id '.$this->id);
       }
 
     }
