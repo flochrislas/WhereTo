@@ -68,13 +68,29 @@
             <th>No</th>
             <th>Name</th>
             <th>Type</th>
+
+            <th>distance</th>
+            <th>lunch</th>
+            <th>food</th>
+            <th>place</th>
+            <th>price</th>
+            <th>date</th>
+
             <th>Details</th>
         </tr>
     @foreach ($restaurants as $restaurant)
     <tr>
         <td>{{ $restaurant->id }}</td>
-        <td>{{ $restaurant->name}}</td>
-        <td>{{ $restaurant->type}}</td>
+        <td>{{ $restaurant->name }}</td>
+        <td>{{ $restaurant->type }}</td>
+
+        <td>{{ number_format($restaurant->currentDistance, 2, '.', ',') }}</td>
+        <td>{{ $restaurant->score_lunch }}</td>
+        <td>{{ $restaurant->score_food }}</td>
+        <td>{{ $restaurant->score_place }}</td>
+        <td>{{ $restaurant->score_price }}</td>
+        <td>{{ $restaurant->score_date }}</td>
+
         <td>
             <a class="btn btn-info" href="{{ route('restaurants.details',$restaurant->id) }}">Show</a>
         </td>

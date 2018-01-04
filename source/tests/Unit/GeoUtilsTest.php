@@ -23,7 +23,7 @@ class GeoUtilsTest extends TestCase
     {
         $this->assertEquals(
           262.67779380543,
-          GeoUtils::geodatasourceDistance(32.9697, -96.80322, 29.46786, -98.53506, "M")
+          GeoUtils::distance(32.9697, -96.80322, 29.46786, -98.53506, "M")
         );
     }
 
@@ -31,7 +31,7 @@ class GeoUtilsTest extends TestCase
     {
         $this->assertEquals(
           228.10939614064,
-          GeoUtils::geodatasourceDistance(32.9697, -96.80322, 29.46786, -98.53506, "N")
+          GeoUtils::distance(32.9697, -96.80322, 29.46786, -98.53506, "N")
         );
     }
 
@@ -39,7 +39,7 @@ class GeoUtilsTest extends TestCase
     {
         $this->assertEquals(
           422.73893139401,
-          GeoUtils::geodatasourceDistance(32.9697, -96.80322, 29.46786, -98.53506, "K")
+          GeoUtils::distance(32.9697, -96.80322, 29.46786, -98.53506, "K")
         );
     }
 
@@ -63,7 +63,7 @@ class GeoUtilsTest extends TestCase
     {
         $this->assertEquals(
           0.27593804662795907,
-          GeoUtils::geodatasourceDistance(35.658285, 139.7004107, 35.6575683, 139.6974865, "K")
+          GeoUtils::distance(35.658285, 139.7004107, 35.6575683, 139.6974865, "K")
         );
     }
 
