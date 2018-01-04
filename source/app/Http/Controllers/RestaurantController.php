@@ -26,7 +26,7 @@ class RestaurantController extends Controller
         $tags = ['ramen', 'pizza'];
         $op = 'OR';
         // current position from client's GPS
-        $position = '39,135';
+        $position = '35.656113,139.699425';
 
         // key needs to be made of all the used paramters except coords
         $cacheKey = $op .','. implode(',',$tags);
@@ -47,9 +47,11 @@ class RestaurantController extends Controller
         $curLon = $curCoords[1];
         $map = array();
         foreach ($restaurants as $resto) {
+          if(!is_null($resto->lat)) {
             $distance = GeoUtils::distance($curLat, $curLon, $resto->lat, $resto->lon);
             $resto->currentDistance = $distance;
             $map[$distance] = $resto;
+          }
         }
         // Sort the map by key
         ksort($map);
