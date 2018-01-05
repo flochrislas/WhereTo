@@ -23,22 +23,64 @@ class RestaurantController extends Controller
     {
         Log::debug('Request tags: '.request('tags'));
         Log::debug('Request op: '.request('op'));
-        $tags = ['ramen', 'pizza'];
-        $op = 'OR';
+        // Operator for the Tags
+        $op = request('op');
+        // tags as a comma separated list
+        $tags = request('tags');
+        $this->formatTags($tags);
         // current position from client's GPS
         $position = '35.656113,139.699425';
 
-        // key needs to be made of all the used paramters except coords
-        $cacheKey = $op .','. implode(',',$tags);
-        $restaurants = Cache::rememberForever(md5($cacheKey), function() use ($tags, $op) {
+        // key needs to be made of all the used parameters except coords
+        $cacheKey = $this->cacheKey($op, $tags);
+
+
+        $restaurants = Cache::rememberForever($cacheKey, function() use ($tags, $op) {
               return $this->mainDB($tags, $op);
           });
 
+        //  $restaurants = $this->mainDB($tags, $op);
+
         $distanceSortedRestaurants = $this->sortByDistance($restaurants, $position);
 
+        // Keeps the input of the user interface
+        // https://laravel.com/docs/5.5/requests#old-input
+        $request->flash();
         return view('restaurants.main', compact('restaurants'));
     }
 
+    /**
+     * Generate the key to use for puting the main query into cache
+     * @return string
+     */
+    public function cacheKey($op, $tags) : string
+    {
+        if (empty($tags)) {
+            $cacheKey = 'all';
+        } else {
+            $cacheKey = md5($op .','. implode(',',$tags));
+        }
+        return $cacheKey;
+    }
+
+    /**
+     * Make the tags into an array, if it is not already the case
+     * The reference is passed in paramter, so the function directly modifies the tags
+     * @return void
+     */
+    public function formatTags(&$tags)
+    {
+        if (!($tags instanceof Traversable)) {
+            \Debugbar::debug('tags is being transformed from: '.$tags);
+            $tags = explode(',',str_replace(', ', ',', $tags));
+            \Debugbar::debug('to this: '.print_r($tags, true));
+        }
+    }
+
+    /**
+     * Return the restaurants sorted by distance from given position
+     * @return array
+     */
     public function sortByDistance($restaurants, $position)
     {
         // Map the restaurants with their current distance
@@ -59,6 +101,11 @@ class RestaurantController extends Controller
         return array_values($map);
     }
 
+    /**
+     * For all the given restaurants, compute the distance from the given position
+     * Each result is stored in the restaurant's model
+     * @return void
+     */
     public function generateCurrentDistances($restaurants, $position)
     {
         // Map the restaurants with their current distance
@@ -81,14 +128,25 @@ class RestaurantController extends Controller
     {
         Log::debug('Hitting the DB with mainDB with op '.$op);
         $query = (new Restaurant)->newQuery();
+
+        $this->whereTags($query, $tags, $op);
+
+        $restaurants = $query->orderBy('score_lunch', 'desc')
+                        ->orderBy('score_food', 'desc')
+                        ->orderBy('score_place', 'desc')
+                        ->get();
+
+        return $restaurants;
+    }
+
+    public function whereTags(&$query, $tags, $op = 'AND') : void
+    {
         if (isset($tags) && !empty($tags)) {
 
             if ($op == 'AND') {
                 $query->whereHas('tags', function ($query) use ($tags) {
-                    foreach ($tags as $tag) {
-                      $query->where('label', '=', $tag);
-                    }
-                });
+                      $query->whereIn('label', $tags);
+                }, '=', count($tags));
             }
 
             if ($op == 'OR') {
@@ -99,10 +157,8 @@ class RestaurantController extends Controller
 
             if ($op == 'ANDNOT') {
                 $query->whereDoesntHave('tags', function ($query) use ($tags) {
-                    foreach ($tags as $tag) {
-                      $query->where('label', '=', $tag);
-                    }
-                });
+                      $query->whereIn('label', $tags);
+                }, '=', count($tags));
             }
 
             if ($op == 'ORNOT') {
@@ -111,13 +167,40 @@ class RestaurantController extends Controller
                 });
             }
         }
-        $restaurants = $query->orderBy('score_lunch', 'desc')
-                        ->orderBy('score_food', 'desc')
-                        ->orderBy('score_place', 'desc')
+    }
 
-                        ->get();
+    public function whereTypes(&$query, $types, $op = 'AND') : void
+    {
+        if (isset($types) && !empty($types)) {
 
-        return $restaurants;
+            if ($op == 'AND') {
+                $query->whereHas('tags', function ($query) use ($types) {
+                    foreach ($types as $type) {
+                      $query->where('label', '=', $type);
+                    }
+                });
+            }
+
+            if ($op == 'OR') {
+                $query->whereHas('tags', function ($query) use ($types) {
+                      $query->whereIn('label', $types);
+                });
+            }
+
+            if ($op == 'ANDNOT') {
+                $query->whereDoesntHave('tags', function ($query) use ($types) {
+                    foreach ($types as $type) {
+                      $query->where('label', '=', $type);
+                    }
+                });
+            }
+
+            if ($op == 'ORNOT') {
+                $query->whereHas('tags', function ($query) use ($types) {
+                      $query->whereNotIn('label', $types);
+                });
+            }
+        }
     }
 
     /**

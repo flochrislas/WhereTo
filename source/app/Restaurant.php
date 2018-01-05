@@ -31,10 +31,23 @@ class Restaurant extends Model
 
     /**
      * The tags that belong to the restaurant.
+     * Read from the DB
      */
     public function tags()
     {
-        return $this->belongsToMany('App\RestaurantTag');
+        return $this->belongsToMany(RestaurantTag::class);
+    }
+
+    /**
+     * The tags that belong to the restaurant.
+     * Read from the cache
+     * https://ctf0.wordpress.com/2017/08/19/how-to-cache-models-relationships-in-laravel/
+     */
+    public function tagsCached()
+    {
+        return \Cache::rememberForever($this->id.'-tags', function () {
+            return $this->tags();
+        });
     }
 
     /**

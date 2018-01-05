@@ -76,6 +76,10 @@ class RestaurantTagsTableSeeder extends Seeder
         ));
 
         RestaurantTag::create(array(
+            'label'              => 'authentic'
+        ));
+
+        RestaurantTag::create(array(
             'label'              => 'vegetarian friendly'
         ));
 
@@ -137,6 +141,30 @@ class RestaurantTagsTableSeeder extends Seeder
 
         RestaurantTag::create(array(
             'label'              => 'sushi'
+        ));
+
+        RestaurantTag::create(array(
+            'label'              => 'gapao'
+        ));
+
+        RestaurantTag::create(array(
+            'label'              => 'omurice'
+        ));
+
+        RestaurantTag::create(array(
+            'label'              => 'tenpura'
+        ));
+
+        RestaurantTag::create(array(
+            'label'              => 'soba'
+        ));
+
+        RestaurantTag::create(array(
+            'label'              => 'yakiniku'
+        ));
+
+        RestaurantTag::create(array(
+            'label'              => 'okonomiyaki'
         ));
 
     }

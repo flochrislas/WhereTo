@@ -20,6 +20,8 @@ class AdminPanelController extends Controller
         else {
             $this->debugModeOff();
         }
+        // Redirect the user to where he was
+        return back()->withInput();
     }
 
     private function debugModeOn() : void

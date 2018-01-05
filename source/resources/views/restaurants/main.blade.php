@@ -6,7 +6,7 @@
     <div class="row">
         <div class="col-lg-12 margin-tb">
             <div class="pull-left">
-                <h2>Restaurants</h2>
+                <h2>{{ $restaurants->count() }} Restaurants</h2>
             </div>
         </div>
     </div>
@@ -51,9 +51,10 @@
     <!-- SEARCH http://justlaravel.com/search-functionality-laravel/ -->
     <form action="" method="GET" role="search">
         {{ csrf_field() }}
-
         <div class="input-group">
-            <input type="text" class="form-control" name="type" placeholder="Search type">
+            <input type="search" class="form-control"
+                    name="tags" value="{!! old('tags') !!}"
+                    placeholder="Search tags">
             <input type="hidden" name="op" value="AND">
             <span class="input-group-btn">
                 <button type="submit" class="btn btn-default">
@@ -69,7 +70,9 @@
             <th>Name</th>
             <th>Type</th>
 
-            <th>distance</th>
+            <th>Tags</th>
+
+            <th>distance (m)</th>
             <th>lunch</th>
             <th>food</th>
             <th>place</th>
@@ -83,6 +86,12 @@
         <td>{{ $restaurant->id }}</td>
         <td>{{ $restaurant->name }}</td>
         <td>{{ $restaurant->type }}</td>
+
+        <td>
+          @foreach ($restaurant->tags as $tag)
+            {{ $tag->label }} |
+          @endforeach
+        </td>
 
         <td>{{ number_format($restaurant->currentDistance, 2, '.', ',') }}</td>
         <td>{{ $restaurant->score_lunch }}</td>
