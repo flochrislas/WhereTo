@@ -6,7 +6,7 @@
     <div class="row">
         <div class="col-lg-12 margin-tb">
             <div class="pull-left">
-                <h2>Restaurants CRUDIX</h2>
+                <h2>Restaurants CRUDIX [ currently displaying {{ $restaurants->count() }} ]</h2>
             </div>
             <div class="pull-right">
                 <a class="btn btn-success" href="{{ route('restaurants.create') }}"> Create New restaurant</a>
@@ -27,27 +27,38 @@
             <th>Name</th>
             <th>Type</th>
 
-            <th>distance</th>
+            <th>Tags</th>
+
             <th>lunch</th>
             <th>food</th>
             <th>place</th>
             <th>price</th>
             <th>date</th>
+            <th>lat</th>
+            <th>lon</th>
 
             <th width="280px">Action</th>
         </tr>
     @foreach ($restaurants as $restaurant)
     <tr>
         <td>{{ $restaurant->id }}</td>
-        <td>{{ $restaurant->name}}</td>
-        <td>{{ $restaurant->type}}</td>
+        <td>{{ $restaurant->name }}</td>
+        <td>{{ $restaurant->type }}</td>
 
-        <td>{{ $restaurant->currentDistance}}</td>
-        <td>{{ $restaurant->score_lunch}}</td>
-        <td>{{ $restaurant->score_food}}</td>
-        <td>{{ $restaurant->score_place}}</td>
-        <td>{{ $restaurant->score_price}}</td>
-        <td>{{ $restaurant->score_date}}</td>
+        <td>
+          @foreach ($restaurant->tags as $tag)
+            {{ $tag->label }} |
+          @endforeach
+        </td>
+
+        <td>{{ $restaurant->score_lunch }}</td>
+        <td>{{ $restaurant->score_food }}</td>
+        <td>{{ $restaurant->score_place }}</td>
+        <td>{{ $restaurant->score_price }}</td>
+        <td>{{ $restaurant->score_date }}</td>
+
+        <td>{{ number_format($restaurant->lat, 4, '.', ',') }}</td>
+        <td>{{ number_format($restaurant->lon, 4, '.', ',') }}</td>
 
         <td>
             <a class="btn btn-info" href="{{ route('restaurants.show', $restaurant->id) }}">Show</a>
