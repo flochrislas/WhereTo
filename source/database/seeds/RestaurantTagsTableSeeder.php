@@ -167,5 +167,9 @@ class RestaurantTagsTableSeeder extends Seeder
             'label'              => 'okonomiyaki'
         ));
 
+        RestaurantTag::create(array(
+            'label'              => 'hamburg'
+        ));
+
     }
 }
