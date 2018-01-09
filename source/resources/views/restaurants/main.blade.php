@@ -48,14 +48,21 @@
     </script>
 
     <br>
+
+    <!-- Geolocalisation -->
+    <p id="demo"></p>
+    <br>
+
+
     <!-- SEARCH http://justlaravel.com/search-functionality-laravel/ -->
-    <form action="" method="GET" role="search">
+    <form action="" method="GET" role="search" name="mainSearch">
         {{ csrf_field() }}
         <div class="input-group">
             <input type="search" class="form-control"
                     name="tags" value="{!! old('tags') !!}"
                     placeholder="Search tags">
             <input type="hidden" name="op" value="AND">
+            <input type="hidden" name="position" id="position">
             <span class="input-group-btn">
                 <button type="submit" class="btn btn-default">
                     <span class="glyphicon glyphicon-search"></span>
@@ -73,6 +80,7 @@
             <th>Tags</th>
 
             <th>distance (m)</th>
+            <th>map</th>
             <th>lunch</th>
             <th>food</th>
             <th>place</th>
@@ -88,12 +96,17 @@
         <td>{{ $restaurant->type }}</td>
 
         <td>
-          @foreach ($restaurant->tags as $tag)
+          @foreach ($restaurant->tagsCached() as $tag)
             {{ $tag->label }} |
           @endforeach
         </td>
 
-        <td>{{ number_format($restaurant->currentDistance, 2, '.', ',') }}</td>
+        <td>{{ App\GeoUtils::formatDistance($restaurant->currentDistance) }}</td>
+        <td>
+          <a target="_blank"
+            href="{{ $restaurant->google_maps_link }}">
+            map</a>
+        </td>
         <td>{{ $restaurant->score_lunch }}</td>
         <td>{{ $restaurant->score_food }}</td>
         <td>{{ $restaurant->score_place }}</td>
@@ -106,5 +119,44 @@
     </tr>
     @endforeach
     </table>
+
+    <script>
+    var x = document.getElementById("demo");
+    var y = document.getElementById("position");
+    getLocation();
+
+    function getLocation() {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(showPosition, showError);
+            // it is also possible to get continuously updated coords from the method watchPosition()
+            // see https://www.w3schools.com/html/html5_geolocation.asp
+        } else {
+            x.innerHTML = "Geolocation is not supported by this browser.";
+        }
+    }
+
+    function showPosition(position) {
+        x.innerHTML = "Latitude: " + position.coords.latitude +
+        "<br>Longitude: " + position.coords.longitude;
+        y.value = position.coords.latitude + "," + position.coords.longitude;
+    }
+
+    function showError(error) {
+        switch(error.code) {
+            case error.PERMISSION_DENIED:
+                x.innerHTML = "User denied the request for Geolocation."
+                break;
+            case error.POSITION_UNAVAILABLE:
+                x.innerHTML = "Location information is unavailable."
+                break;
+            case error.TIMEOUT:
+                x.innerHTML = "The request to get user location timed out."
+                break;
+            case error.UNKNOWN_ERROR:
+                x.innerHTML = "An unknown error occurred."
+                break;
+        }
+    }
+    </script>
 
 @endsection

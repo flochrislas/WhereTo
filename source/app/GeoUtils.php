@@ -20,7 +20,19 @@ class GeoUtils
         return GeoUtils::equirectangularApprox($lat1, $lon1, $lat2, $lon2) * 1000;
     }
 
-    // faster distance calculation, in Km
+    public static function formatDistance($distance) : string
+    {
+        if (!empty($distance) && $distance > 0) {
+          return number_format($distance, 2, '.', ',');
+        }  else {
+          return 'N/A';
+        }
+    }
+
+    /**
+    * Fast distance calculation, in Km.
+    * Possibly wrong (to be checked).
+    */
     public static function flatDistance(float $lat1, float $lon1, float $lat2, float $lon2) : float
     {
         // The length of a degree of longitude
@@ -30,8 +42,10 @@ class GeoUtils
         return $deglen * sqrt($x*$x + $y*$y);
     }
 
-    // faster distance calculation, in Km, from 1 to 2
-    // lat lon must be in radians
+    /**
+    * Fast distance calculation, from 1 to 2, in Km.
+    * lat lon must be in radians.
+    */
     public static function equirectangularApprox(float $lat1, float $lon1, float $lat2, float $lon2) : float
     {
         $earthRadius = 6371; //km
@@ -53,13 +67,17 @@ class GeoUtils
         return 'pow(lat-'.$lat.', 2) + pow((lon-'.$lon.')*cos(radians('.$lat.')), 2) < pow('.$distance.'/110.25, 2)';
     }
 
-    // convert miles to km
+    /**
+    * Convert miles to km.
+    */
     public static function miles2km(float $miles) : float
     {
         return $miles * 1.609344;
     }
 
-    // convert km to miles
+    /**
+    * Convert km to miles.
+    */
     public static function km2miles(float $km) : float
     {
         return $km / 1.609344;
@@ -75,7 +93,21 @@ class GeoUtils
         return ceil($distance / $pace * 60);
     }
 
-    // convert google URL to coordinate
+    /**
+    * Convert position string to array
+    * Originally a simple explode from lat,lon to array(lat, lon)
+    */
+    public static function toPositionArray(string $positionString) : array
+    {
+        return explode(',',$positionString);
+    }
+
+    /**
+    * Convert google URL to coordinates.
+    * Those are the coordinate sto the center of the map,
+    * NOT the one of the actual place/marker
+    * See: https://stackoverflow.com/questions/29335870/i-need-to-extract-lat-long-data-from-a-google-maps-url-that-uses-msa-and-msid
+    */
     public static function google2coord(string $url) : array
     {
         Log::debug($url);

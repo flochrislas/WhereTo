@@ -39,14 +39,15 @@ class Restaurant extends Model
     }
 
     /**
-     * The tags that belong to the restaurant.
+     * Returns the tags that belong to the restaurant.
      * Read from the cache
      * https://ctf0.wordpress.com/2017/08/19/how-to-cache-models-relationships-in-laravel/
      */
     public function tagsCached()
     {
         return \Cache::rememberForever($this->id.'-tags', function () {
-            return $this->tags();
+            \Debugbar::debug('Caching tags from DB: '.($this->tags));
+            return  $this->tags;
         });
     }
 

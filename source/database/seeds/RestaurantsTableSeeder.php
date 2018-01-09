@@ -1188,8 +1188,27 @@ class RestaurantsTableSeeder extends Seeder
             'score_price'       => 1,
             'score_date'        => 1
         ));
-        $resto->attachTags(['pizza', 'pasta', 'italian']);     
-        
+        $resto->attachTags(['pizza', 'pasta', 'italian']);
+
+        $resto = Restaurant::create(array(
+            'name'              => 'Weekend Garage',
+            'location'          => 'Shibuya',
+            'type'              => 'Western',
+            'lunch_price'       => 1080,
+            'points'            => 'Nice and spacious place. Windows bay, high ceiling, with a large terrace as well. Enough space to go with a group. Menu has various western dishes such as burgers, hamburg, pasta, sals, deserts...',
+            'experience'        => 'I liked the spacious room, and the view on the giant chimney outside. The price was right to me, 1180 for a premium cheese burger with fries, salad, soup and drink. The food was not especially delicious, but definitely good.',
+            'visited'           => true,
+            'visit_date'        => '2018-01-09 13:00:00',
+            'google_maps_link'  => 'https://www.google.co.jp/maps/place/WGT+weekend+garage+tokyo/@35.6566471,139.6996475,17z/data=!4m5!3m4!1s0x60188b5b4d795555:0xc87a6fea4655753c!8m2!3d35.6527391!4d139.7057962',
+            'tabelog_link'      => '',
+            'official_website'  => '',
+            'score_lunch'       => 3,
+            'score_place'       => 2,
+            'score_food'        => 2,
+            'score_price'       => 1,
+            'score_date'        => 1
+        ));
+        $resto->attachTags(['western', 'burger', 'pasta', 'salad', 'hamburg']);
 
         // fill coordinates
         $this->fillNullCoordinatesFromGoogleMapsLink();

@@ -21,31 +21,41 @@ class RestaurantController extends Controller
      */
     public function main(Request $request)
     {
+        // Reads request parameters
         Log::debug('Request tags: '.request('tags'));
         Log::debug('Request op: '.request('op'));
+        Log::debug('Request position: '.request('position'));
         // Operator for the Tags
         $op = request('op');
         // tags as a comma separated list
         $tags = request('tags');
         $this->formatTags($tags);
         // current position from client's GPS
+        // Office from google maps: '35.656113,139.699425';
+        // Office from browser: 35.6617773,139.7040506
+        $position = request('position');
         $position = '35.656113,139.699425';
+        // flag to sort by distances
+        $closestFirst = true;
 
         // key needs to be made of all the used parameters except coords
         $cacheKey = $this->cacheKey($op, $tags);
-
 
         $restaurants = Cache::rememberForever($cacheKey, function() use ($tags, $op) {
               return $this->mainDB($tags, $op);
           });
 
-        //  $restaurants = $this->mainDB($tags, $op);
-
-        $distanceSortedRestaurants = $this->sortByDistance($restaurants, $position);
+        if (!empty($position)) {
+            $distanceSortedRestaurants = $this->sortByDistance($restaurants, $position);
+        }
+        if ($closestFirst) {
+            $restaurants = collect($distanceSortedRestaurants);
+        }
 
         // Keeps the input of the user interface
         // https://laravel.com/docs/5.5/requests#old-input
         $request->flash();
+
         return view('restaurants.main', compact('restaurants'));
     }
 
@@ -70,10 +80,12 @@ class RestaurantController extends Controller
      */
     public function formatTags(&$tags)
     {
-        if (!($tags instanceof Traversable)) {
-            \Debugbar::debug('tags is being transformed from: '.$tags);
+        if (empty($tags)) {
+            $tags = null;
+        } elseif (!($tags instanceof Traversable)) {
+            Log::debug('tags is being transformed from: '.$tags);
             $tags = explode(',',str_replace(', ', ',', $tags));
-            \Debugbar::debug('to this: '.print_r($tags, true));
+            Log::debug('to this: '.print_r($tags, true));
         }
     }
 
@@ -83,20 +95,24 @@ class RestaurantController extends Controller
      */
     public function sortByDistance($restaurants, $position)
     {
+        Log::debug('sortByDistance from  '.$position);
+        Log::debug('For restaurants '.print_r($restaurants, true));
         // Map the restaurants with their current distance
-        $curCoords = explode(',',$position);
+        $curCoords = GeoUtils::toPositionArray($position);
         $curLat = $curCoords[0];
         $curLon = $curCoords[1];
         $map = array();
         foreach ($restaurants as $resto) {
           if(!is_null($resto->lat)) {
             $distance = GeoUtils::distance($curLat, $curLon, $resto->lat, $resto->lon);
+            Log::debug('Distance found: '.$distance);
             $resto->currentDistance = $distance;
             $map[$distance] = $resto;
           }
         }
         // Sort the map by key
         ksort($map);
+        Log::debug('sortByDistance ksort the map '.print_r($map, true));
         // Return just the list of restaurants
         return array_values($map);
     }
@@ -108,13 +124,16 @@ class RestaurantController extends Controller
      */
     public function generateCurrentDistances($restaurants, $position)
     {
+        Log::debug('generateCurrentDistances from  '.$position);
         // Map the restaurants with their current distance
-        $curCoords = explode(',',$position);
+        $curCoords = GeoUtils::toPositionArray($position);
         $curLat = $curCoords[0];
         $curLon = $curCoords[1];
         foreach ($restaurants as $resto) {
+          if(!is_null($resto->lat)) {
             $distance = GeoUtils::distance($curLat, $curLon, $resto->lat, $resto->lon);
             $resto->currentDistance = $distance;
+          }
         }
     }
 
@@ -141,6 +160,7 @@ class RestaurantController extends Controller
 
     public function whereTags(&$query, $tags, $op = 'AND') : void
     {
+        Log::debug('whereTags: '.print_r($tags, true));
         if (isset($tags) && !empty($tags)) {
 
             if ($op == 'AND') {
