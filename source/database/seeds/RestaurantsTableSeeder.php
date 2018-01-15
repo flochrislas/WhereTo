@@ -1210,6 +1210,27 @@ class RestaurantsTableSeeder extends Seeder
         ));
         $resto->attachTags(['western', 'burger', 'pasta', 'salad', 'hamburg']);
 
+        $resto = Restaurant::create(array(
+            'name'              => 'Hacienda del Cielo',
+            'location'          => 'Daikanyama',
+            'type'              => 'Mexican',
+            'lunch_price'       => 1200,
+            'points'            => 'Nice and spacious place. Windows bay, high ceiling, with a large terrace, including a part that is covered as well. It\'s on the 9th floor, with a nice view (including Tokyo Tower). Variety of mexican food dishes from 1000 yen to more. Lunch menu includes a drink, a salad, and a small glass of sangria.',
+            'experience'        => 'I liked the spacious room. The price was right to me, the food was very good and in decent quantity.',
+            'visited'           => true,
+            'visit_date'        => '2018-01-10 13:00:00',
+            'google_maps_link'  => 'https://www.google.co.jp/maps/place/Hacienda+del+Cielo/@35.6532243,139.6965174,16z/data=!4m5!3m4!1s0x0:0x911db2c2dfc8b756!8m2!3d35.6505182!4d139.7026198',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130303/13122348/',
+            'official_website'  => 'http://modern-mexicano.jp/hacienda/',
+            'score_lunch'       => 3,
+            'score_place'       => 2,
+            'score_food'        => 2,
+            'score_price'       => 1,
+            'score_date'        => 2
+        ));
+        $resto->attachTags(['mexican']);
+        $resto->fillCoordinatesFromString('35.650481,139.702594');
+
         // fill coordinates
         $this->fillNullCoordinatesFromGoogleMapsLink();
         
@@ -1221,10 +1242,12 @@ class RestaurantsTableSeeder extends Seeder
     */
     private function fillNullCoordinatesFromGoogleMapsLink() : void
     {
-          $result = Restaurant::whereNull('lat')->get();
-          foreach ($result as $resto) {
-            $resto->autofillCoordFromGoogleLink();
-          }
+        $result = Restaurant::whereNull('lat')->get();
+        foreach ($result as $resto) {
+            if (!empty($resto->lat)) {
+                $resto->fillCoordinatesFromGoogleLink();
+            }            
+        }
     }
 
 }
