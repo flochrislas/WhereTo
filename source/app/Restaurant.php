@@ -73,19 +73,34 @@ class Restaurant extends Model
     }
 
     /**
-     * Try to fill lat and lon with the ones found in the Google Maps link
+     * Simply fill lat and lon fron a string with both
      */
-    public function autofillCoordFromGoogleLink() : void
+    public function fillCoordinatesFromString(string $coodriantes) : void
     {
-      try {
-        $coord = GeoUtils::google2coord($this->google_maps_link);
-        $this->lat = $coord[0];
-        $this->lon = $coord[1];
-        $this->save();
-      } catch (\ErrorException $e) {
-        \Log::debug('Could not find coordinates from Google Maps link in restaurant id '.$this->id);
-      }
+        try {
+          $coord = GeoUtils::toPositionArray($coodriantes);
+          $this->lat = $coord[0];
+          $this->lon = $coord[1];
+          $this->save();
+        } catch (\ErrorException $e) {
+          \Log::debug('Invalid coordinates for restaurant '.$this->id);
+        }
+    }
 
+    /**
+     * Try to fill lat and lon with the ones found in the Google Maps link
+     * NOTE: link's coordiantes are actually for the center of the map, NOT the location we want
+     */
+    public function fillCoordinatesFromGoogleLink() : void
+    {
+        try {
+          $coord = GeoUtils::google2coord($this->google_maps_link);
+          $this->lat = $coord[0];
+          $this->lon = $coord[1];
+          $this->save();
+        } catch (\ErrorException $e) {
+          \Log::debug('Could not find coordinates from Google Maps link in restaurant id '.$this->id);
+        }
     }
 
 }
