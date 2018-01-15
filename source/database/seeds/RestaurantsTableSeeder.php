@@ -49,6 +49,7 @@ class RestaurantsTableSeeder extends Seeder
             'score_date'        => 0
         ));
         $resto->attachTags(['ramen', 'miso']);
+        $resto->fillCoordinatesFromString('35.658545, 139.698468');
 
         $resto = Restaurant::create(array(
             'name'              => 'Kindenmaru',
@@ -69,6 +70,7 @@ class RestaurantsTableSeeder extends Seeder
             'score_date'        => 0
         ));
         $resto->attachTags(['ramen']);
+        $resto->fillCoordinatesFromString('35.659122, 139.698168');
 
         $resto = Restaurant::create(array(
             'name'              => 'Hikarihishio',
@@ -88,7 +90,8 @@ class RestaurantsTableSeeder extends Seeder
             'score_price'       => 1,
             'score_date'        => 0
         ));
-        $resto->attachTags([]);
+        $resto->attachTags(['ramen']);
+        $resto->fillCoordinatesFromString('35.658591, 139.698608');
 
         $resto = Restaurant::create(array(
             'name'              => 'Nanashi tonkotsuhen',
@@ -109,6 +112,7 @@ class RestaurantsTableSeeder extends Seeder
             'score_date'        => 1
         ));
         $resto->attachTags(['ramen']);
+        $resto->fillCoordinatesFromString('35.659177, 139.698102');
 
         $resto = Restaurant::create(array(
             'name'              => 'Denzo',
@@ -129,6 +133,7 @@ class RestaurantsTableSeeder extends Seeder
             'score_date'        => 0
         ));
         $resto->attachTags(['ramen']);
+        $resto->fillCoordinatesFromString('35.660566, 139.698425');
 
         $resto = Restaurant::create(array(
             'name'              => 'Ippudo',
@@ -149,6 +154,7 @@ class RestaurantsTableSeeder extends Seeder
             'score_date'        => 0
         ));
         $resto->attachTags(['ramen']);
+        $resto->fillCoordinatesFromString('35.660598, 139.699240');
 
         $resto = Restaurant::create(array(
             'name'              => 'Burger King',
@@ -169,6 +175,7 @@ class RestaurantsTableSeeder extends Seeder
             'score_date'        => 0
         ));
         $resto->attachTags(['burger', 'fast food']);
+        $resto->fillCoordinatesFromString('35.660876, 139.698979');
 
         $resto = Restaurant::create(array(
             'name'              => 'Wendy\'s first kitchen',
@@ -189,6 +196,7 @@ class RestaurantsTableSeeder extends Seeder
             'score_date'        => 0
         ));
         $resto->attachTags(['burger', 'fast food']);
+        $resto->fillCoordinatesFromString('35.660390, 139.699116');
 
         $resto = Restaurant::create(array(
             'name'              => 'Taco Bell',
@@ -209,6 +217,7 @@ class RestaurantsTableSeeder extends Seeder
             'score_date'        => 0
         ));
         $resto->attachTags(['mexican', 'fast food']);
+        $resto->fillCoordinatesFromString('35.660199, 139.697664');
 
         $resto = Restaurant::create(array(
             'name'              => 'Kebab Cafe',
@@ -229,6 +238,7 @@ class RestaurantsTableSeeder extends Seeder
             'score_date'        => 0
         ));
         $resto->attachTags(['turk']);
+        $resto->fillCoordinatesFromString('35.660339, 139.697128');
 
         $resto = Restaurant::create(array(
             'name'              => 'Coco Ichi',
@@ -249,6 +259,7 @@ class RestaurantsTableSeeder extends Seeder
             'score_date'        => 0
         ));
         $resto->attachTags(['japanese curry']);
+        $resto->fillCoordinatesFromString('35.657260, 139.700408');
 
         $resto = Restaurant::create(array(
             'name'              => 'Coco Ichi',
@@ -269,6 +280,7 @@ class RestaurantsTableSeeder extends Seeder
             'score_date'        => 0
         ));
         $resto->attachTags(['japanese curry']);
+        $resto->fillCoordinatesFromString('35.660804, 139.699485');
 
         $resto = Restaurant::create(array(
             'name'              => 'Jonathan\'s',
@@ -288,7 +300,8 @@ class RestaurantsTableSeeder extends Seeder
             'score_price'       => 1,
             'score_date'        => 1
         ));
-        $resto->attachTags([]);
+        $resto->attachTags(['western']);
+        $resto->fillCoordinatesFromString('35.655863, 139.700487');
 
         $resto = Restaurant::create(array(
             'name'              => 'Standing pizza bar Cona',
@@ -309,6 +322,7 @@ class RestaurantsTableSeeder extends Seeder
             'score_date'        => 0
         ));
         $resto->attachTags(['pizza']);
+        $resto->fillCoordinatesFromString('35.658785, 139.698675');
 
         $resto = Restaurant::create(array(
             'name'              => 'Something Terace',
@@ -327,55 +341,58 @@ class RestaurantsTableSeeder extends Seeder
             'score_price'       => 1,
             'score_date'        => 1
         ));
-        $resto->attachTags([]);
+        $resto->attachTags(['indonesian']);
+        $resto->fillCoordinatesFromString('35.655166, 139.700365');
 
         $resto = Restaurant::create(array(
-            'name'              => 'Entertainment and sports bar',
-            'location'          => 'next to samrat curry farther after the center gai',
-            'type'              => 'cheap pizza/pasta lunch',
+            'name'              => 'M-SPO cafe dining',
+            'location'          => 'Shibuya, Udagawacho',
+            'type'              => 'pasta',
             'lunch_price'       => 500,
             'points'            => 'super cheap pizza or pasta, wide and dark sports bar (no windows) with sports video playing on many walls.',
             'experience'        => 'I don\'t really like this dark, no windows bar atmosphere, playing cheesy music, and I don\'t enjoy watching sports on TV. The pizza marguerita was pretty much tasteless. Other than that service fast, table and room spacious, and super cheap...',
             'visited'           => true,
             'visit_date'        => '2017-09-05 13:00:00',
-            'google_maps_link'  => 'http://data',
+            'google_maps_link'  => 'https://www.google.co.jp/maps/place/M-SPO+cafe+dining/@35.6591098,139.6984993,17z/data=!4m5!3m4!1s0x60188ca910dcc451:0x66845d8439f43f38!8m2!3d35.6617719!4d139.6980353',
             'tabelog_link'      => 'http://data',
             'official_website'  => 'http://data',
             'score_lunch'       => 1,
             'score_place'       => 1,
             'score_food'        => 1,
             'score_price'       => 1,
-            'score_date'        => 1
+            'score_date'        => 0
         ));
         $resto->attachTags(['pizza', 'pasta']);
+        $resto->fillCoordinatesFromString('35.662026, 139.698027');
 
         $resto = Restaurant::create(array(
             'name'              => 'Go Go Curry',
-            'location'          => 'next to samrat curry farther after the center gai',
+            'location'          => 'Shibuya, Udagawacho',
             'type'              => 'japanese curry',
             'lunch_price'       => 850,
             'points'            => 'chain restaurant a bit similar to cocoichi. customizable japanese curry, counter and small tables, basement floor',
             'experience'        => 'Good alternative to cocoichi. Less customizable, less options, but less expensive as well. Not really spicy, but good japanese curry. I enjoyed my chiken katsu with cheese. Basement is not very glamorous, but for a lunch it\'s OK. Loyalty System: Point card. 5 times: free toping. 10 times: free curry.',
             'visited'           => true,
             'visit_date'        => '2017-09-05 13:00:00',
-            'google_maps_link'  => 'http://data',
+            'google_maps_link'  => 'https://www.google.co.jp/maps/place/Go+Go+Curry+Shibuya-Udagawach%C5%8D/@35.6591408,139.6988359,17.25z/data=!4m5!3m4!1s0x60188ca915cae327:0x1ff30025a0e03069!8m2!3d35.6618738!4d139.6977677',
             'tabelog_link'      => 'http://data',
             'official_website'  => 'http://data',
-            'score_lunch'       => 1,
+            'score_lunch'       => 2,
             'score_place'       => 1,
-            'score_food'        => 1,
+            'score_food'        => 2,
             'score_price'       => 1,
-            'score_date'        => 1
+            'score_date'        => 0
         ));
         $resto->attachTags(['japanese curry']);
+        $resto->fillCoordinatesFromString('35.662120, 139.697780');
 
         $resto = Restaurant::create(array(
             'name'              => 'Nice Pizza/Pasta restaurant',
-            'location'          => 'in front of samrat curry farther after the center gai',
+            'location'          => 'Shibuya, Udagawacho',
             'type'              => 'pizza/pasta/salad',
             'lunch_price'       => 1000,
-            'points'            => '9th floor with nice large bay windows, spacious room with large tables. Real pizza oven. 1000yen menu set with a drink, bowl of soup, large salad, and large pizza. music playing, boom boom type, a bit loud but OK.',
-            'experience'        => 'loved the room. fast service. taste was bland (marguerita).wtf: the deco is all fine except for taht reindeer head sprouting out of a column for no apparent reason',
+            'points'            => '9th floor with nice large bay windows, spacious room with large tables. Real pizza oven. 1000yen menu set with a drink, bowl of soup, large salad, and large pizza. music playing, boom boom type, a bit loud but OK if you are alone.',
+            'experience'        => 'loved the room. fast service. Taste was bland (marguerita). The deco is all fine except for that reindeer\'s head sprouting out of a column for no apparent reason',
             'visited'           => true,
             'visit_date'        => '2017-09-05 13:00:00',
             'google_maps_link'  => 'http://data',
@@ -388,6 +405,7 @@ class RestaurantsTableSeeder extends Seeder
             'score_date'        => 1
         ));
         $resto->attachTags(['pizza', 'pasta']);
+        $resto->fillCoordinatesFromString('35.661657, 139.697616');
 
         $resto = Restaurant::create(array(
             'name'              => 'Matsuya',
@@ -408,6 +426,7 @@ class RestaurantsTableSeeder extends Seeder
             'score_date'        => 1
         ));
         $resto->attachTags([]);
+        $resto->fillCoordinatesFromString('');
 
         $resto = Restaurant::create(array(
             'name'              => 'mazesoba shichi',
@@ -428,6 +447,7 @@ class RestaurantsTableSeeder extends Seeder
             'score_date'        => 0
         ));
         $resto->attachTags([]);
+        $resto->fillCoordinatesFromString('');
 
         $resto = Restaurant::create(array(
             'name'              => 'pizza bar Cona',
@@ -448,6 +468,7 @@ class RestaurantsTableSeeder extends Seeder
             'score_date'        => 1
         ));
         $resto->attachTags([]);
+        $resto->fillCoordinatesFromString('');
 
         $resto = Restaurant::create(array(
             'name'              => 'kin no kara',
@@ -468,6 +489,7 @@ class RestaurantsTableSeeder extends Seeder
             'score_date'        => 1
         ));
         $resto->attachTags([]);
+        $resto->fillCoordinatesFromString('');
 
         $resto = Restaurant::create(array(
             'name'              => 'mangako thai chicken rice',
@@ -488,6 +510,7 @@ class RestaurantsTableSeeder extends Seeder
             'score_date'        => 1
         ));
         $resto->attachTags([]);
+        $resto->fillCoordinatesFromString('');
 
         $resto = Restaurant::create(array(
             'name'              => 'Soul Kitchen Curry or something',
@@ -508,6 +531,7 @@ class RestaurantsTableSeeder extends Seeder
             'score_date'        => 1
         ));
         $resto->attachTags([]);
+        $resto->fillCoordinatesFromString('');
 
         $resto = Restaurant::create(array(
             'name'              => 'ramen and curry',
@@ -527,6 +551,7 @@ class RestaurantsTableSeeder extends Seeder
             'score_date'        => 1
         ));
         $resto->attachTags([]);
+        $resto->fillCoordinatesFromString('');
 
         /* Place closed - confirmed 2017-12-26
         $resto = Restaurant::create(array(
@@ -569,6 +594,7 @@ class RestaurantsTableSeeder extends Seeder
             'score_date'        => 1
         ));
         $resto->attachTags([]);
+        $resto->fillCoordinatesFromString('');
 
         $resto = Restaurant::create(array(
             'name'              => 'Meat Bank',
@@ -589,6 +615,7 @@ class RestaurantsTableSeeder extends Seeder
             'score_date'        => 1
         ));
         $resto->attachTags([]);
+        $resto->fillCoordinatesFromString('');
 
         $resto = Restaurant::create(array(
             'name'              => 'Asuka',
@@ -609,6 +636,7 @@ class RestaurantsTableSeeder extends Seeder
             'score_date'        => 0
         ));
         $resto->attachTags(['ramen']);
+        $resto->fillCoordinatesFromString('');
 
         $resto = Restaurant::create(array(
             'name'              => 'Samrat',
@@ -629,6 +657,7 @@ class RestaurantsTableSeeder extends Seeder
             'score_date'        => 0
         ));
         $resto->attachTags(['indian', 'curry']);
+        $resto->fillCoordinatesFromString('');
 
         $resto = Restaurant::create(array(
             'name'              => 'Moss Burger',
@@ -649,6 +678,7 @@ class RestaurantsTableSeeder extends Seeder
             'score_date'        => 1
         ));
         $resto->attachTags(['burger']);
+        $resto->fillCoordinatesFromString('');
 
         $resto = Restaurant::create(array(
             'name'              => 'Kura',
@@ -669,6 +699,7 @@ class RestaurantsTableSeeder extends Seeder
             'score_date'        => 1
         ));
         $resto->attachTags(['italian', 'pizza', 'pasta']);
+        $resto->fillCoordinatesFromString('');
 
         $resto = Restaurant::create(array(
             'name'              => 'thai restaurant towards omotesando',
@@ -689,6 +720,7 @@ class RestaurantsTableSeeder extends Seeder
             'score_date'        => 1
         ));
         $resto->attachTags(['thai', 'gapao']);
+        $resto->fillCoordinatesFromString('');
 
         $resto = Restaurant::create(array(
             'name'              => 'On the corner (No.8 Bear Pond)',
@@ -709,6 +741,7 @@ class RestaurantsTableSeeder extends Seeder
             'score_date'        => 1
         ));
         $resto->attachTags([]);
+        $resto->fillCoordinatesFromString('');
 
         $resto = Restaurant::create(array(
             'name'              => 'Fast soba katsudon in front of big bic camera',
@@ -729,46 +762,49 @@ class RestaurantsTableSeeder extends Seeder
             'score_date'        => 1
         ));
         $resto->attachTags([]);
+        $resto->fillCoordinatesFromString('');
 
         $resto = Restaurant::create(array(
             'name'              => 'Pizza Slice',
-            'location'          => 'towards daikanyama',
+            'location'          => 'Shibuya, Sarugakucho',
             'type'              => 'pizza',
             'lunch_price'       => 1000,
-            'points'            => 'big, heigh celing room with big windos bay. 500 yen american/newyork style pizza slices. Served fast. Just slices on a paper plate, no knife and fork. Free toppings include spicy stuff (but no oil), and oregan. Big tables avaialbe in addition of small and counter.',
-            'experience'        => 'Pizza were decent. I liked the free oregan herbs available as topping on the tables. A bit overpriced though. Room is cool. When I was there, there were 29 young girls for 3 guys.',
+            'points'            => 'big, heigh celing room with big windows bay. 500 yen american/newyork style pizza slices. Served fast. Just slices on a paper plate, no knife and fork. Free toppings include spicy stuff (but no oil), and oregan. Big tables avaialbe in addition of small and counter.',
+            'experience'        => 'Pizza were decent. I liked the free oregan herbs available as topping on the tables. A bit overpriced though. Room is cool. When I was there, there were 29 girls for 3 guys.',
             'visited'           => true,
             'visit_date'        => '2017-09-05 13:00:00',
-            'google_maps_link'  => 'http://data',
-            'tabelog_link'      => 'http://data',
-            'official_website'  => 'http://data',
-            'score_lunch'       => 1,
-            'score_place'       => 1,
+            'google_maps_link'  => 'https://www.google.co.jp/maps/place/Pizza+Slice/@35.6541438,139.6986611,16z/data=!4m8!1m2!2m1!1spizza+slice!3m4!1s0x60188b5b150ddc43:0x6774f31fd3f468c1!8m2!3d35.6535237!4d139.7051418',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130303/13164019/',
+            'official_website'  => 'http://www.pizzaslice.co/',
+            'score_lunch'       => 2,
+            'score_place'       => 2,
             'score_food'        => 1,
             'score_price'       => 1,
-            'score_date'        => 1
+            'score_date'        => 0
         ));
-        $resto->attachTags([]);
+        $resto->attachTags(['pizza']);
+        $resto->fillCoordinatesFromString('35.653555, 139.705145');
 
         $resto = Restaurant::create(array(
             'name'              => 'iBeer',
             'location'          => 'Hikarie building 7F',
-            'type'              => 'pizza, pasta, salad',
+            'type'              => 'italian',
             'lunch_price'       => 1000,
             'points'            => 'Open space restaurant in nice Hikarie 7F. Busy floor, but nice setting. A bit expensive, but one of the cheapest restaurant in the building.',
             'experience'        => '1162 yen Pasta Set with Salad + bread + organic tomatoe avocado pasta. Nice salad, hot bread, and very, very good pasta. I would go as far as to call the pasta "exquisite". I also liked the setting, tables and chairs.',
             'visited'           => true,
             'visit_date'        => '2017-09-05 13:00:00',
-            'google_maps_link'  => 'http://data',
-            'tabelog_link'      => 'http://data',
-            'official_website'  => 'http://data',
-            'score_lunch'       => 1,
-            'score_place'       => 1,
-            'score_food'        => 1,
-            'score_price'       => 1,
-            'score_date'        => 1
+            'google_maps_link'  => 'https://www.google.co.jp/maps/place/iBeer+Le+Sun+Palm/@35.659252,139.6999228,17z/data=!3m1!5s0x60188b58f894f891:0xa230d50aab3d69e4!4m8!1m2!2m1!1siBeer!3m4!1s0x0:0xe0dfc9c31b013e93!8m2!3d35.659052!4d139.7037091',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13169825/',
+            'official_website'  => '',
+            'score_lunch'       => 2,
+            'score_place'       => 2,
+            'score_food'        => 2,
+            'score_price'       => 0,
+            'score_date'        => 0
         ));
-        $resto->attachTags([]);
+        $resto->attachTags(['pasta','pasta','italian']);
+        $resto->fillCoordinatesFromString('35.659067, 139.703709');
 
         $resto = Restaurant::create(array(
             'name'              => 'Avatar',
@@ -779,16 +815,17 @@ class RestaurantsTableSeeder extends Seeder
             'experience'        => 'Enjoyed the place, but the chiken curry I ordered was bland, tasteless.',
             'visited'           => true,
             'visit_date'        => '2017-09-05 13:00:00',
-            'google_maps_link'  => 'http://data',
+            'google_maps_link'  => 'https://www.google.co.jp/maps/place/%E3%82%A2%E3%83%B4%E3%82%A1%E3%82%BF%E3%83%BC%E3%83%AB%EF%BC%88%EF%BC%A1%EF%BC%B6%EF%BC%A1%EF%BC%B4%EF%BC%A1%EF%BC%B2%EF%BC%89/@35.6583902,139.6980654,16.75z/data=!4m5!3m4!1s0x60188b5a14212195:0xaddbce0d1c82d4a7!8m2!3d35.654973!4d139.7023979',
             'tabelog_link'      => 'http://data',
             'official_website'  => 'http://data',
             'score_lunch'       => 1,
             'score_place'       => 1,
-            'score_food'        => 1,
+            'score_food'        => 0,
             'score_price'       => 1,
-            'score_date'        => 1
+            'score_date'        => 0
         ));
-        $resto->attachTags([]);
+        $resto->attachTags(['indian curry']);
+        $resto->fillCoordinatesFromString('35.655285, 139.702352');
 
         $resto = Restaurant::create(array(
             'name'              => 'Guzman y Gomez',
@@ -809,6 +846,7 @@ class RestaurantsTableSeeder extends Seeder
             'score_date'        => 0
         ));
         $resto->attachTags(['mexican']);
+        $resto->fillCoordinatesFromString('35.662400, 139.700988');
 
         $resto = Restaurant::create(array(
             'name'              => 'Il Fiume',
@@ -829,6 +867,7 @@ class RestaurantsTableSeeder extends Seeder
             'score_date'        => 2
         ));
         $resto->attachTags(['italian', 'salad buffet', 'pasta']);
+        $resto->fillCoordinatesFromString('35.655657, 139.706674');
 
         $resto = Restaurant::create(array(
             'name'              => 'Verde',
@@ -849,6 +888,7 @@ class RestaurantsTableSeeder extends Seeder
             'score_date'        => 1
         ));
         $resto->attachTags(['indian', 'curry', 'pizza']);
+        $resto->fillCoordinatesFromString('35.657515, 139.703662');
 
         $resto = Restaurant::create(array(
             'name'              => 'Gapao Shokudō',
@@ -869,6 +909,7 @@ class RestaurantsTableSeeder extends Seeder
             'score_date'        => 1
         ));
         $resto->attachTags(['thai']);
+        $resto->fillCoordinatesFromString('35.655802, 139.701326');
 
         $resto = Restaurant::create(array(
             'name'              => 'Blacows',
@@ -889,6 +930,7 @@ class RestaurantsTableSeeder extends Seeder
             'score_date'        => 1
         ));
         $resto->attachTags(['burger', 'western']);
+        $resto->fillCoordinatesFromString('35.649922, 139.707031');
 
         $resto = Restaurant::create(array(
             'name'              => 'Salasa',
@@ -909,6 +951,7 @@ class RestaurantsTableSeeder extends Seeder
             'score_date'        => 0
         ));
         $resto->attachTags(['japanese', 'izakaya']);
+        $resto->fillCoordinatesFromString('35.660837, 139.698107');
 
         $resto = Restaurant::create(array(
             'name'              => 'JS Burgers Cafe',
@@ -929,6 +972,7 @@ class RestaurantsTableSeeder extends Seeder
             'score_date'        => 1
         ));
         $resto->attachTags(['burger', 'salad buffet', 'western']);
+        $resto->fillCoordinatesFromString('35.662428, 139.699706');
 
         $resto = Restaurant::create(array(
             'name'              => 'Pizza Salvatore Cuomo',
@@ -949,6 +993,7 @@ class RestaurantsTableSeeder extends Seeder
             'score_date'        => 1
         ));
         $resto->attachTags(['italian', 'pizza']);
+        $resto->fillCoordinatesFromString('35.654004, 139.699252');
 
         $resto = Restaurant::create(array(
             'name'              => 'Uogashi Nihonichi',
@@ -969,6 +1014,7 @@ class RestaurantsTableSeeder extends Seeder
             'score_date'        => 0
         ));
         $resto->attachTags(['sushi']);
+        $resto->fillCoordinatesFromString('35.658972, 139.698201');
 
         $resto = Restaurant::create(array(
             'name'              => 'Lotteria',
@@ -989,6 +1035,7 @@ class RestaurantsTableSeeder extends Seeder
             'score_date'        => 0
         ));
         $resto->attachTags(['burger']);
+        $resto->fillCoordinatesFromString('35.659356, 139.698361');
 
         $resto = Restaurant::create(array(
             'name'              => 'TGIF',
@@ -1009,6 +1056,7 @@ class RestaurantsTableSeeder extends Seeder
             'score_date'        => 1
         ));
         $resto->attachTags(['western']);
+        $resto->fillCoordinatesFromString('35.662745, 139.700018');
 
         $resto = Restaurant::create(array(
             'name'              => 'Ankara',
@@ -1029,6 +1077,7 @@ class RestaurantsTableSeeder extends Seeder
             'score_date'        => 1
         ));
         $resto->attachTags(['turk']);
+        $resto->fillCoordinatesFromString('35.660031, 139.704625');
 
         $resto = Restaurant::create(array(
             'name'              => 'Ajigen',
@@ -1049,6 +1098,7 @@ class RestaurantsTableSeeder extends Seeder
             'score_date'        => 0
         ));
         $resto->attachTags(['ramen', 'miso']);
+        $resto->fillCoordinatesFromString('35.660128, 139.698765');
 
         $resto = Restaurant::create(array(
             'name'              => 'Pancho',
@@ -1069,6 +1119,7 @@ class RestaurantsTableSeeder extends Seeder
             'score_date'        => 0
         ));
         $resto->attachTags(['italian', 'pasta']);
+        $resto->fillCoordinatesFromString('35.659453, 139.699219');
 
         $resto = Restaurant::create(array(
             'name'              => 'Murugi',
@@ -1089,6 +1140,7 @@ class RestaurantsTableSeeder extends Seeder
             'score_date'        => 0
         ));
         $resto->attachTags(['japanese curry']);
+        $resto->fillCoordinatesFromString('35.659436, 139.696572');
 
         $resto = Restaurant::create(array(
             'name'              => 'Texmex Factory',
@@ -1109,6 +1161,7 @@ class RestaurantsTableSeeder extends Seeder
             'score_date'        => 1
         ));
         $resto->attachTags(['mexican', 'tacos', 'all you can eat']);
+        $resto->fillCoordinatesFromString('35.662736, 139.700080');
 
         $resto = Restaurant::create(array(
             'name'              => 'Paku Mori',
@@ -1129,6 +1182,7 @@ class RestaurantsTableSeeder extends Seeder
             'score_date'        => 0
         ));
         $resto->attachTags(['japanese curry']);
+        $resto->fillCoordinatesFromString('35.658418, 139.696488');
 
         $resto = Restaurant::create(array(
             'name'              => 'Shakey\'s',
@@ -1149,6 +1203,7 @@ class RestaurantsTableSeeder extends Seeder
             'score_date'        => 0
         ));
         $resto->attachTags(['all you can eat', 'pizza', 'pasta', 'japanese curry']);
+        $resto->fillCoordinatesFromString('35.661210, 139.697813');
 
         $resto = Restaurant::create(array(
             'name'              => 'Kevelos',
@@ -1169,6 +1224,7 @@ class RestaurantsTableSeeder extends Seeder
             'score_date'        => 1
         ));
         $resto->attachTags(['pizza']);
+        $resto->fillCoordinatesFromString('35.666659, 139.704900');
 
         $resto = Restaurant::create(array(
             'name'              => 'La Soffita',
@@ -1189,6 +1245,7 @@ class RestaurantsTableSeeder extends Seeder
             'score_date'        => 1
         ));
         $resto->attachTags(['pizza', 'pasta', 'italian']);
+        $resto->fillCoordinatesFromString('35.661357, 139.699022');
 
         $resto = Restaurant::create(array(
             'name'              => 'Weekend Garage',
@@ -1209,6 +1266,7 @@ class RestaurantsTableSeeder extends Seeder
             'score_date'        => 1
         ));
         $resto->attachTags(['western', 'burger', 'pasta', 'salad', 'hamburg']);
+        $resto->fillCoordinatesFromString('35.653051, 139.705849');
 
         $resto = Restaurant::create(array(
             'name'              => 'Hacienda del Cielo',
@@ -1244,9 +1302,7 @@ class RestaurantsTableSeeder extends Seeder
     {
         $result = Restaurant::whereNull('lat')->get();
         foreach ($result as $resto) {
-            if (!empty($resto->lat)) {
-                $resto->fillCoordinatesFromGoogleLink();
-            }            
+            $resto->fillCoordinatesFromGoogleLink();
         }
     }
 

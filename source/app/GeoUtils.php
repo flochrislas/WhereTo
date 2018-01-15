@@ -99,7 +99,7 @@ class GeoUtils
     */
     public static function toPositionArray(string $positionString) : array
     {
-        return explode(',',$positionString);
+        return explode(',',str_replace(' ', '', $positionString));
     }
 
     /**
