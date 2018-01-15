@@ -75,10 +75,10 @@ class Restaurant extends Model
     /**
      * Simply fill lat and lon fron a string with both
      */
-    public function fillCoordinatesFromString(string $coodriantes) : void
+    public function fillCoordinatesFromString(string $coordinates) : void
     {
         try {
-          $coord = GeoUtils::toPositionArray($coodriantes);
+          $coord = GeoUtils::toPositionArray($coordinates);
           $this->lat = $coord[0];
           $this->lon = $coord[1];
           $this->save();
