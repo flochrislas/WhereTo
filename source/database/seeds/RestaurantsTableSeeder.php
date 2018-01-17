@@ -292,7 +292,7 @@ class RestaurantsTableSeeder extends Seeder
             'visited'           => true,
             'visit_date'        => '2017-09-05 13:00:00',
             'google_maps_link'  => 'https://www.google.co.jp/maps/place/Jonathan\'s/@35.6555207,139.6999556,18.75z/data=!4m12!1m6!3m5!1s0x60188b5ba1d0dd99:0xdad1c25747467595!2sJonathan\'s!8m2!3d35.654701!4d139.705094!3m4!1s0x60188b5745d1a4dd:0xb23984f5a40be1ec!8m2!3d35.6557358!4d139.700456',
-            'tabelog_link'      => 'http://data',
+            'tabelog_link'      => '',
             'official_website'  => 'http://www.skylark.co.jp/jonathan/index.html',
             'score_lunch'       => 1,
             'score_place'       => 1,
@@ -313,7 +313,7 @@ class RestaurantsTableSeeder extends Seeder
             'visited'           => true,
             'visit_date'        => '2017-09-05 13:00:00',
             'google_maps_link'  => 'https://www.google.co.jp/maps/place/CONA+%E6%B8%8B%E8%B0%B7%E5%BA%97/@35.6589355,139.6984178,18z/data=!4m5!3m4!1s0x60188b562b7be10f:0x5deeb948e867ca8!8m2!3d35.6586609!4d139.6986567',
-            'tabelog_link'      => 'http://data',
+            'tabelog_link'      => '',
             'official_website'  => 'http://www.candy-box.jp/shop/cona/',
             'score_lunch'       => 1,
             'score_place'       => 0,
@@ -333,7 +333,7 @@ class RestaurantsTableSeeder extends Seeder
             'visited'           => true,
             'visit_date'        => '2017-09-05 13:00:00',
             'google_maps_link'  => 'https://www.google.co.jp/maps/place/Ayung+Teras/@35.6552693,139.7003887,19.75z/data=!4m5!3m4!1s0x60188b574c9611e9:0x46aa4f4ee0d6c8e1!8m2!3d35.6550962!4d139.7003701',
-            'tabelog_link'      => 'http://data',
+            'tabelog_link'      => '',
             'official_website'  => 'http://www.ayungteras.com/',
             'score_lunch'       => 2,
             'score_place'       => 2,
@@ -354,8 +354,8 @@ class RestaurantsTableSeeder extends Seeder
             'visited'           => true,
             'visit_date'        => '2017-09-05 13:00:00',
             'google_maps_link'  => 'https://www.google.co.jp/maps/place/M-SPO+cafe+dining/@35.6591098,139.6984993,17z/data=!4m5!3m4!1s0x60188ca910dcc451:0x66845d8439f43f38!8m2!3d35.6617719!4d139.6980353',
-            'tabelog_link'      => 'http://data',
-            'official_website'  => 'http://data',
+            'tabelog_link'      => '',
+            'official_website'  => '',
             'score_lunch'       => 1,
             'score_place'       => 1,
             'score_food'        => 1,
@@ -375,8 +375,8 @@ class RestaurantsTableSeeder extends Seeder
             'visited'           => true,
             'visit_date'        => '2017-09-05 13:00:00',
             'google_maps_link'  => 'https://www.google.co.jp/maps/place/Go+Go+Curry+Shibuya-Udagawach%C5%8D/@35.6591408,139.6988359,17.25z/data=!4m5!3m4!1s0x60188ca915cae327:0x1ff30025a0e03069!8m2!3d35.6618738!4d139.6977677',
-            'tabelog_link'      => 'http://data',
-            'official_website'  => 'http://data',
+            'tabelog_link'      => '',
+            'official_website'  => '',
             'score_lunch'       => 2,
             'score_place'       => 1,
             'score_food'        => 2,
@@ -395,9 +395,9 @@ class RestaurantsTableSeeder extends Seeder
             'experience'        => 'loved the room. fast service. Taste was bland (marguerita). The deco is all fine except for that reindeer\'s head sprouting out of a column for no apparent reason',
             'visited'           => true,
             'visit_date'        => '2017-09-05 13:00:00',
-            'google_maps_link'  => 'http://data',
-            'tabelog_link'      => 'http://data',
-            'official_website'  => 'http://data',
+            'google_maps_link'  => '',
+            'tabelog_link'      => '',
+            'official_website'  => '',
             'score_lunch'       => 1,
             'score_place'       => 1,
             'score_food'        => 1,
@@ -416,80 +416,80 @@ class RestaurantsTableSeeder extends Seeder
             'experience'        => 'I got a hamburger curry, it was really cheap and really good. Came fast toe. Perfect for a quick meal, but not very glamorous.',
             'visited'           => true,
             'visit_date'        => '2017-09-05 13:00:00',
-            'google_maps_link'  => 'http://data',
-            'tabelog_link'      => 'http://data',
-            'official_website'  => 'http://data',
-            'score_lunch'       => 1,
+            'google_maps_link'  => 'https://www.google.co.jp/maps/place/Matsuya/@35.6590574,139.6984172,17z/data=!4m5!3m4!1s0x60188b59d831819b:0x71cfd0feb05de6ba!8m2!3d35.6571851!4d139.7015798',
+            'tabelog_link'      => '',
+            'official_website'  => 'https://www.matsuyafoods.co.jp/',
+            'score_lunch'       => 2,
             'score_place'       => 1,
-            'score_food'        => 1,
-            'score_price'       => 1,
-            'score_date'        => 1
+            'score_food'        => 2,
+            'score_price'       => 2,
+            'score_date'        => 0
         ));
-        $resto->attachTags([]);
-        $resto->fillCoordinatesFromString('');
+        $resto->attachTags(['japanese', 'fast food', 'japanese curry']);
+        $resto->fillCoordinatesFromString('35.657202, 139.701579');
 
         $resto = Restaurant::create(array(
             'name'              => 'mazesoba shichi',
-            'location'          => 'down the street from the office',
-            'type'              => 'Ramen',
+            'location'          => 'Shibuya',
+            'type'              => 'Mazesoba',
             'lunch_price'       => 800,
             'points'            => 'Special ramen without soup.',
             'experience'        => 'Mind blowingly delicious. Meat is awesome, smokey taste, and in large quantity. The shoyu base sauce is delicious. Large counter. Japanese reggai music, not too loud. Extremely small stools. Avoid the ramen, way less delicious than the mazesoba. So you know that restaurant created by the gods in an expirement to feed mere mortals divine food? Shichi? Well it seems like, as in any gods stories, one of them was evil and planted a not-so-divine dish in the menu. I unveiled it and am here to warn you: if, for any unimaginable reasons, you still havent been there, when go, do NOT order the ramen. Stick with the mazu soba. And about the place itself, it is narrow, stools are uncomfortable, it is cold in winter... but it is all forgiven after tasting their food.',
             'visited'           => true,
             'visit_date'        => '2017-09-05 13:00:00',
-            'google_maps_link'  => 'http://data',
-            'tabelog_link'      => 'http://data',
-            'official_website'  => 'http://data',
+            'google_maps_link'  => 'https://www.google.co.jp/maps/place/%E3%81%BE%E3%81%9C%E3%81%9D%E3%81%B0%E4%B8%83/@35.6582661,139.6984915,17.5z/data=!4m5!3m4!1s0x60188b57612e0f6b:0x129cb60f35f3f7ca!8m2!3d35.6566223!4d139.7010507',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13169375/',
+            'official_website'  => 'https://twitter.com/men_daikokuya',
             'score_lunch'       => 4,
             'score_place'       => 0,
             'score_food'        => 3,
             'score_price'       => 2,
             'score_date'        => 0
         ));
-        $resto->attachTags([]);
-        $resto->fillCoordinatesFromString('');
+        $resto->attachTags(['maze soba', 'abura soba', 'ramen']);
+        $resto->fillCoordinatesFromString('35.656633, 139.701051');
 
         $resto = Restaurant::create(array(
             'name'              => 'pizza bar Cona',
             'location'          => 'down the street behind our office',
             'type'              => 'pizzeria',
             'lunch_price'       => 500,
-            'points'            => 'cheap and light pizza, counter or tables available. 500 for just the pizza, +300yen for salad bar and drink bar. pasta lunch also available.',
-            'experience'        => 'decent pizza 30cm, but light (very thin crust and topping), better not be hungry. Counter is small, not very confortable. When I went there it was also too cold.',
+            'points'            => 'Cheap and light pizza, counter or tables available. 500 for just the pizza, +300yen for salad bar and drink bar. pasta lunch also available.',
+            'experience'        => 'Decent pizza 30cm, but very light (very thin crust and topping), better not be hungry. Counter is small, not very confortable. When I went there it was also too cold.',
             'visited'           => true,
             'visit_date'        => '2017-09-05 13:00:00',
-            'google_maps_link'  => 'http://data',
-            'tabelog_link'      => 'http://data',
-            'official_website'  => 'http://data',
-            'score_lunch'       => 1,
-            'score_place'       => 1,
-            'score_food'        => 1,
+            'google_maps_link'  => 'https://www.google.co.jp/maps/place/CONA%E6%B8%8B%E8%B0%B7%E6%A1%9C%E3%83%B6%E4%B8%98%E5%BA%97/@35.6582228,139.6984793,17.5z/data=!4m5!3m4!1s0x60188b59e139125b:0x1ce5c308e856061b!8m2!3d35.6562354!4d139.7015805',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13133814/',
+            'official_website'  => 'https://twitter.com/conasakura',
+            'score_lunch'       => 2,
+            'score_place'       => 0,
+            'score_food'        => 2,
             'score_price'       => 1,
-            'score_date'        => 1
+            'score_date'        => 0
         ));
-        $resto->attachTags([]);
-        $resto->fillCoordinatesFromString('');
+        $resto->attachTags(['pizza']);
+        $resto->fillCoordinatesFromString('35.656251, 139.701582');
 
         $resto = Restaurant::create(array(
-            'name'              => 'kin no kara',
+            'name'              => 'kin no torikara',
             'location'          => 'next to ippudo, center gai',
             'type'              => 'fried chiken karahage take out only',
             'lunch_price'       => 400,
-            'points'            => 'cheap, fast, to have on the go. Fried chicken or fries in a paper bag. Various sauce availble (including lemon juice).',
+            'points'            => 'Outside and no tables. Cheap, fast, to have on the go. Fried chicken or fries in a paper bag. Various sauce availble (including lemon juice).',
             'experience'        => 'simple, good, I use it if I still need some more food if my lunch was too light. Nowhere to sit down around there, so have to walk around while eating or just stand there.',
             'visited'           => true,
             'visit_date'        => '2017-09-05 13:00:00',
-            'google_maps_link'  => 'http://data',
-            'tabelog_link'      => 'http://data',
-            'official_website'  => 'http://data',
-            'score_lunch'       => 1,
-            'score_place'       => 1,
+            'google_maps_link'  => 'https://www.google.co.jp/maps/place/Kin-No-Torikara/@35.6589156,139.699263,17.21z/data=!4m5!3m4!1s0x60188ca849e8e51b:0x43472eed3e78c550!8m2!3d35.6603157!4d139.6992248',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13129686/',
+            'official_website'  => 'http://www.kinnotorikara.jp/',
+            'score_lunch'       => 2,
+            'score_place'       => 0,
             'score_food'        => 1,
-            'score_price'       => 1,
-            'score_date'        => 1
+            'score_price'       => 2,
+            'score_date'        => 0
         ));
-        $resto->attachTags([]);
-        $resto->fillCoordinatesFromString('');
+        $resto->attachTags(['karaage']);
+        $resto->fillCoordinatesFromString('35.660329, 139.699224');
 
         $resto = Restaurant::create(array(
             'name'              => 'mangako thai chicken rice',
@@ -497,61 +497,62 @@ class RestaurantsTableSeeder extends Seeder
             'type'              => 'thai',
             'lunch_price'       => 800,
             'points'            => 'supposedly famous chicken rice',
-            'experience'        => 'My wife likes thai food quite a lot and has been in thailand a bunch of times. She told me there were a restaurant there serving chicken rice, and EVEN IN Thailand, there were a line. And the have a restaurant in Shibuya too. She\'s never been, but, if there is a line it HAS to be absolutely delicious, according to Japanese hyper standardized rules that can never been tricked (like say, some people paid to stay in line on day when the reporter is coming). So I went there, and arrived shortly in front a restaurant exposing dead chicken on its facade, a bit like youd expect in China. No line. I go inside, and its small and crappy, with shitty music on the top. I order the famous chicken rice, for a cost of f**ing 800yen. It comes quicklym with a soup (hot water) and some sauce (like sweet chinese shoyu with a touch of vinegar). The amount is ridiculously small (note that you could double it for 400yen). What\'s more, the chicken is actually half chicken, half chicken skin. I eat, nothing special at all. Rice is not really good. Chicken is nice and soft and tasteless, for the few bites I had on it. The sauce was good. Oh, and surprisingly enough, it also came with a mini-bucket full of pakuchi... this crap is usually expensive here. And that was it, EXTREMELY disapointed. The Singapour chicken rice we had (now closed) near Porters was 100 times better. I feel robbed. Of my money. My time. My hopes. And I\'m hungry.',
+            'experience'        => 'I\'ve been told there were a thai restaurant chain in Shibuya serving chicken rice, and EVEN in Thailand, there were a line. So I went there, and arrived shortly in front a restaurant exposing dead chicken on its facade. No line. I go inside, and its small and crappy, with shitty music on the top. I order the famous chicken rice, for an outstanding 800yen. It comes quickly, with a soup (hot water) and some sauce (like sweet chinese shoyu with a touch of vinegar). The amount is ridiculously small (note that you could double it for 400yen). What\'s more, the chicken is actually half chicken, half chicken skin. I eat, nothing special at all. Rice is not really good. Chicken is nice and soft and tasteless, for the few bites I had on it. The sauce was good. Oh, and surprisingly enough, it also came with a mini-bucket full of pakuchi... this stuff is usually expensive here. And that was it, EXTREMELY disapointed. I felt robbed. Of my money. My time. My hopes. And still hungry.',
             'visited'           => true,
             'visit_date'        => '2017-09-05 13:00:00',
-            'google_maps_link'  => 'http://data',
-            'tabelog_link'      => 'http://data',
-            'official_website'  => 'http://data',
-            'score_lunch'       => 1,
-            'score_place'       => 1,
+            'google_maps_link'  => 'https://www.google.co.jp/maps/place/%E0%B8%A3%E0%B9%89%E0%B8%B2%E0%B8%99%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B8%A1%E0%B8%B1%E0%B8%99%E0%B9%84%E0%B8%81%E0%B9%88/@35.6584854,139.6999814,17z/data=!4m5!3m4!1s0x60188b5b85ab031f:0x35b195078881d9ca!8m2!3d35.6558927!4d139.7055917',
+            'tabelog_link'      => '',
+            'official_website'  => '',
+            'score_lunch'       => 0,
+            'score_place'       => 0,
             'score_food'        => 1,
-            'score_price'       => 1,
-            'score_date'        => 1
+            'score_price'       => 0,
+            'score_date'        => 0
         ));
-        $resto->attachTags([]);
-        $resto->fillCoordinatesFromString('');
+        $resto->attachTags(['thai']);
+        $resto->fillCoordinatesFromString('35.655904, 139.705592');
 
         $resto = Restaurant::create(array(
-            'name'              => 'Soul Kitchen Curry or something',
-            'location'          => 'avenue behind the office',
+            'name'              => 'Tokumasa curry',
+            'location'          => 'Shibuya, 3Chome',
             'type'              => 'japanese curry',
             'lunch_price'       => 800,
-            'points'            => 'nice atmosphere. Elvis Presley music.',
-            'experience'        => 'well balanced curry',
+            'points'            => 'Nice atmosphere. Elvis Presley music.',
+            'experience'        => 'Well balanced curry.',
             'visited'           => true,
             'visit_date'        => '2017-09-05 13:00:00',
-            'google_maps_link'  => 'http://data',
-            'tabelog_link'      => 'http://data',
-            'official_website'  => 'http://data',
-            'score_lunch'       => 1,
-            'score_place'       => 1,
-            'score_food'        => 1,
+            'google_maps_link'  => 'https://www.google.co.jp/maps/place/%E4%B8%8A%E7%AD%89%E3%82%AB%E3%83%AC%E3%83%BC+%E6%B8%8B%E8%B0%B7%E6%9C%AC%E5%BA%97/@35.6590581,139.6985088,17z/data=!4m5!3m4!1s0x60188b599da6b5c3:0x89922071e4316be1!8m2!3d35.6571333!4d139.7038007',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13160341/',
+            'official_website'  => 'http://www.tokumasa.net/',
+            'score_lunch'       => 2,
+            'score_place'       => 2,
+            'score_food'        => 2,
             'score_price'       => 1,
-            'score_date'        => 1
+            'score_date'        => 0
         ));
-        $resto->attachTags([]);
-        $resto->fillCoordinatesFromString('');
+        $resto->attachTags(['japanese curry']);
+        $resto->fillCoordinatesFromString('35.657147, 139.703800');
 
         $resto = Restaurant::create(array(
-            'name'              => 'ramen and curry',
-            'location'          => 'right behing the office next to Shichi',
+            'name'              => 'Ramen and Tsukemen',
+            'location'          => 'Shibuya',
             'type'              => 'ramen',
             'lunch_price'       => 800,
-            'points'            => 'tonkostsu ramen, soupless ramen, curry, gyoza... and mini versions available. Tried the white miso ramne, and it was prety bland, not worth the 800yen. I liked the atmosphere, very local, kinda cossy, with the TV on and the grand mothers as the staff.',
+            'points'            => 'tonkostsu ramen, soupless ramen, curry, gyoza... and mini versions available.',
+            'experience'        => 'Tried the white miso ramne, and it was pretty bland, not worth the 800yen. I liked the atmosphere, very local, kinda cosy, with the TV on and the grand mothers as the staff.',
             'visited'           => true,
             'visit_date'        => '2017-09-05 13:00:00',
-            'google_maps_link'  => 'http://data',
-            'tabelog_link'      => 'http://data',
-            'official_website'  => 'http://data',
+            'google_maps_link'  => '',
+            'tabelog_link'      => '',
+            'official_website'  => '',
             'score_lunch'       => 1,
             'score_place'       => 1,
             'score_food'        => 1,
             'score_price'       => 1,
-            'score_date'        => 1
+            'score_date'        => 0
         ));
-        $resto->attachTags([]);
-        $resto->fillCoordinatesFromString('');
+        $resto->attachTags(['ramen']);
+        $resto->fillCoordinatesFromString('35.656451, 139.700907');
 
         /* Place closed - confirmed 2017-12-26
         $resto = Restaurant::create(array(
@@ -576,7 +577,7 @@ class RestaurantsTableSeeder extends Seeder
         */
 
         $resto = Restaurant::create(array(
-            'name'              => 'Mediterranean Pizzeria',
+            'name'              => 'Mediterranean Pizzeria Domani',
             'location'          => 'behind office along the JR tracks',
             'type'              => 'italian',
             'lunch_price'       => 900,
@@ -584,38 +585,38 @@ class RestaurantsTableSeeder extends Seeder
             'experience'        => 'The place is a bit dark, but feels cosy. It is not small and could receive small groups. The food is alright.',
             'visited'           => true,
             'visit_date'        => '2017-09-05 13:00:00',
-            'google_maps_link'  => 'http://data',
-            'tabelog_link'      => 'http://data',
-            'official_website'  => 'http://data',
+            'google_maps_link'  => 'https://www.google.co.jp/maps/place/%E5%9C%B0%E4%B8%AD%E6%B5%B7%E6%96%99%E7%90%86+1966+%E3%83%89%E3%83%9E%E3%83%BC%E3%83%8B/@35.6587138,139.6988096,17.25z/data=!4m5!3m4!1s0x60188b59edc647e5:0xf23c321cc6ca5496!8m2!3d35.6564774!4d139.7025501',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13007058/',
+            'official_website'  => '',
             'score_lunch'       => 2,
             'score_place'       => 1,
             'score_food'        => 1,
             'score_price'       => 1,
             'score_date'        => 1
         ));
-        $resto->attachTags([]);
-        $resto->fillCoordinatesFromString('');
+        $resto->attachTags(['pasta', 'pizza', 'italian']);
+        $resto->fillCoordinatesFromString('35.656491, 139.702546');
 
         $resto = Restaurant::create(array(
             'name'              => 'Meat Bank',
             'location'          => 'Shibuya',
-            'type'              => 'USA, burger, meat',
+            'type'              => 'burger',
             'lunch_price'       => 1200,
             'points'            => 'Nice interior, but lound music. Sofa and nice chairs. Wide windows bay. Nice staff. Premium burgers. Good. Lunch set 1200 yen avocado bacon cheese burger with drink and soup.',
             'experience'        => 'I liked the interior, and the comfort. But I found the music too loud. Not much of a problem when you are alone, but a bit tiring if you want to talk. The choice of burgers is good, and the burgers themselves quite delicious. Not cheap, but not so much overpriced compared with other premium burgers restaurants around there. I paid 1200 yen for a bacon avocado cheese burger with a soup and a drink. Id say, nice place if you want to eat burger in a comfy place.',
             'visited'           => true,
             'visit_date'        => '2017-09-05 13:00:00',
-            'google_maps_link'  => 'http://data',
-            'tabelog_link'      => 'http://data',
-            'official_website'  => 'http://data',
+            'google_maps_link'  => 'https://www.google.co.jp/maps/place/DORAEMON+MEAT+BANK/@35.6593003,139.6982389,17z/data=!4m12!1m6!3m5!1s0x60188ca9136921fb:0x5d7020b9461a5699!2sDORAEMON+MEAT+BANK!8m2!3d35.6616167!4d139.697614!3m4!1s0x60188ca9136921fb:0x5d7020b9461a5699!8m2!3d35.6616167!4d139.697614',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13207625/',
+            'official_website'  => 'http://www.draemon.net/groupshop/shop13.html',
             'score_lunch'       => 2,
             'score_place'       => 2,
             'score_food'        => 2,
             'score_price'       => 1,
             'score_date'        => 1
         ));
-        $resto->attachTags([]);
-        $resto->fillCoordinatesFromString('');
+        $resto->attachTags(['burger', 'grill', 'western']);
+        $resto->fillCoordinatesFromString('35.661641, 139.697613');
 
         $resto = Restaurant::create(array(
             'name'              => 'Asuka',
@@ -636,7 +637,7 @@ class RestaurantsTableSeeder extends Seeder
             'score_date'        => 0
         ));
         $resto->attachTags(['ramen']);
-        $resto->fillCoordinatesFromString('');
+        $resto->fillCoordinatesFromString('35.657230, 139.701387');
 
         $resto = Restaurant::create(array(
             'name'              => 'Samrat',
@@ -657,28 +658,28 @@ class RestaurantsTableSeeder extends Seeder
             'score_date'        => 0
         ));
         $resto->attachTags(['indian', 'curry']);
-        $resto->fillCoordinatesFromString('');
+        $resto->fillCoordinatesFromString('35.661795, 139.697803');
 
         $resto = Restaurant::create(array(
-            'name'              => 'Moss Burger',
-            'location'          => '',
+            'name'              => 'Mos Burger',
+            'location'          => 'Shibuya, Dogenzaka',
             'type'              => 'Burger',
             'lunch_price'       => 1000,
             'points'            => 'Japanese fast food burger.',
-            'experience'        => 'Slow service. Overpriced. Impossible to eat by hands. I eat it with fork and knife at hme, and taste is good. But possibly the worst burger chain in Japan.',
+            'experience'        => 'Slow service. Overpriced. Impossible to eat by hands. I eat it with fork and knife at home, and taste is good. But possibly the worst burger chain in Japan.',
             'visited'           => true,
             'visit_date'        => '2017-09-05 13:00:00',
-            'google_maps_link'  => 'http://data',
-            'tabelog_link'      => 'http://data',
-            'official_website'  => 'http://data',
+            'google_maps_link'  => 'https://www.google.co.jp/maps/place/MOS+Burger+Shibuya-D%C5%8Dgenzaka/@35.6587417,139.6984195,17.25z/data=!4m8!1m2!2m1!1sMOSS+burger!3m4!1s0x0:0xdca4d2aadd809f58!8m2!3d35.6592059!4d139.6978207',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13059877/',
+            'official_website'  => 'https://ssl.mos.jp/shop/detail/02144/',
             'score_lunch'       => 1,
             'score_place'       => 1,
             'score_food'        => 1,
-            'score_price'       => 1,
-            'score_date'        => 1
+            'score_price'       => 0,
+            'score_date'        => 0
         ));
-        $resto->attachTags(['burger']);
-        $resto->fillCoordinatesFromString('');
+        $resto->attachTags(['burger','fast food']);
+        $resto->fillCoordinatesFromString('35.659218, 139.697821');
 
         $resto = Restaurant::create(array(
             'name'              => 'Kura',
@@ -689,20 +690,20 @@ class RestaurantsTableSeeder extends Seeder
             'experience'        => 'Interior was alright, I liked the choice on the menu, and got a decent gorgonzola pizza. I did not make me full, for 1000 yen cost, though.',
             'visited'           => true,
             'visit_date'        => '2017-09-05 13:00:00',
-            'google_maps_link'  => 'http://data',
-            'tabelog_link'      => 'http://data',
-            'official_website'  => 'http://data',
-            'score_lunch'       => 1,
+            'google_maps_link'  => 'https://www.google.com/maps/place/KURA/@35.6586533,139.6988234,17.5z/data=!4m5!3m4!1s0x60188ca7f0a849d9:0x635d6250b7712dd7!8m2!3d35.6605941!4d139.7019922',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13040314/',
+            'official_website'  => 'http://www.kura-jp.com/',
+            'score_lunch'       => 2,
             'score_place'       => 1,
             'score_food'        => 1,
             'score_price'       => 1,
             'score_date'        => 1
         ));
         $resto->attachTags(['italian', 'pizza', 'pasta']);
-        $resto->fillCoordinatesFromString('');
+        $resto->fillCoordinatesFromString('35.660607, 139.701990');
 
         $resto = Restaurant::create(array(
-            'name'              => 'thai restaurant towards omotesando',
+            'name'              => 'Khao San',
             'location'          => 'towards omotesando, 2nd floor',
             'type'              => 'Thai',
             'lunch_price'       => 1000,
@@ -710,17 +711,17 @@ class RestaurantsTableSeeder extends Seeder
             'experience'        => 'Nice waitress, enjoyed the room and the set. Was good, but not especially delicious. Still well balanced set for a fair price.',
             'visited'           => true,
             'visit_date'        => '2017-09-05 13:00:00',
-            'google_maps_link'  => 'http://data',
-            'tabelog_link'      => 'http://data',
-            'official_website'  => 'http://data',
-            'score_lunch'       => 1,
+            'google_maps_link'  => 'https://www.google.com/maps/place/%E3%83%90%E3%83%B3%E3%82%B3%E3%82%AF%E5%B1%8B%E5%8F%B0+%E3%82%AB%E3%82%AA%E3%82%B5%E3%83%B3%E6%B8%8B%E8%B0%B7%E5%AE%AE%E7%9B%8A%E5%9D%82%E5%BA%97/@35.6589811,139.7005548,17.25z/data=!4m5!3m4!1s0x0:0xf9a71c346b83d71b!8m2!3d35.6602592!4d139.7055203',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13209312/',
+            'official_website'  => 'http://www.spiceroad.co.jp/Shop_ShibuyaMiyamasu.html',
+            'score_lunch'       => 2,
             'score_place'       => 1,
             'score_food'        => 1,
             'score_price'       => 1,
             'score_date'        => 1
         ));
         $resto->attachTags(['thai', 'gapao']);
-        $resto->fillCoordinatesFromString('');
+        $resto->fillCoordinatesFromString('35.660250, 139.705638');
 
         $resto = Restaurant::create(array(
             'name'              => 'On the corner (No.8 Bear Pond)',
@@ -740,8 +741,8 @@ class RestaurantsTableSeeder extends Seeder
             'score_price'       => 0,
             'score_date'        => 1
         ));
-        $resto->attachTags([]);
-        $resto->fillCoordinatesFromString('');
+        $resto->attachTags(['burger']);
+        $resto->fillCoordinatesFromString('35.661556, 139.703030');
 
         $resto = Restaurant::create(array(
             'name'              => 'Fast soba katsudon in front of big bic camera',
@@ -752,17 +753,17 @@ class RestaurantsTableSeeder extends Seeder
             'experience'        => 'Fast and cheap, and decent. I tried the zaru soba + katsudon for 750 yen. Made me full OK. Definitely not delicious, but decent.',
             'visited'           => true,
             'visit_date'        => '2017-09-05 13:00:00',
-            'google_maps_link'  => 'http://data',
-            'tabelog_link'      => 'http://data',
-            'official_website'  => 'http://data',
+            'google_maps_link'  => '',
+            'tabelog_link'      => '',
+            'official_website'  => '',
             'score_lunch'       => 1,
-            'score_place'       => 1,
+            'score_place'       => 0,
             'score_food'        => 1,
-            'score_price'       => 1,
-            'score_date'        => 1
+            'score_price'       => 2,
+            'score_date'        => 0
         ));
-        $resto->attachTags([]);
-        $resto->fillCoordinatesFromString('');
+        $resto->attachTags(['soba', 'katsudon', 'japanese', 'fast food']);
+        $resto->fillCoordinatesFromString('35.660197, 139.702519');
 
         $resto = Restaurant::create(array(
             'name'              => 'Pizza Slice',
@@ -816,8 +817,8 @@ class RestaurantsTableSeeder extends Seeder
             'visited'           => true,
             'visit_date'        => '2017-09-05 13:00:00',
             'google_maps_link'  => 'https://www.google.co.jp/maps/place/%E3%82%A2%E3%83%B4%E3%82%A1%E3%82%BF%E3%83%BC%E3%83%AB%EF%BC%88%EF%BC%A1%EF%BC%B6%EF%BC%A1%EF%BC%B4%EF%BC%A1%EF%BC%B2%EF%BC%89/@35.6583902,139.6980654,16.75z/data=!4m5!3m4!1s0x60188b5a14212195:0xaddbce0d1c82d4a7!8m2!3d35.654973!4d139.7023979',
-            'tabelog_link'      => 'http://data',
-            'official_website'  => 'http://data',
+            'tabelog_link'      => '',
+            'official_website'  => '',
             'score_lunch'       => 1,
             'score_place'       => 1,
             'score_food'        => 0,
@@ -837,7 +838,7 @@ class RestaurantsTableSeeder extends Seeder
             'visited'           => true,
             'visit_date'        => '2017-09-05 13:00:00',
             'google_maps_link'  => 'https://www.google.co.jp/maps/place/Guzman+y+Gomez+%E6%B8%8B%E8%B0%B7%E5%BA%97/@35.662334,139.7004488,19z/data=!4m12!1m6!3m5!1s0x60188ca88131ea95:0x111613650b9602bd!2zR3V6bWFuIHkgR29tZXog5riL6LC35bqX!8m2!3d35.662334!4d139.700996!3m4!1s0x60188ca88131ea95:0x111613650b9602bd!8m2!3d35.662334!4d139.700996',
-            'tabelog_link'      => 'http://data',
+            'tabelog_link'      => '',
             'official_website'  => 'http://gyg.jp/',
             'score_lunch'       => 2,
             'score_place'       => 0,
@@ -858,7 +859,7 @@ class RestaurantsTableSeeder extends Seeder
             'visited'           => true,
             'visit_date'        => '2017-09-05 13:00:00',
             'google_maps_link'  => 'https://www.google.co.jp/maps/place/%E3%82%A4%E3%83%AB%E3%83%95%E3%83%A5%E3%83%BC%E3%83%A1/@35.655656,139.70675,21z/data=!4m5!3m4!1s0x60188b5c7914049f:0xdda113f8492b26d9!8m2!3d35.6556367!4d139.7066753',
-            'tabelog_link'      => 'http://data',
+            'tabelog_link'      => '',
             'official_website'  => 'https://il-fiume.biz/',
             'score_lunch'       => 2,
             'score_place'       => 2,
@@ -879,8 +880,8 @@ class RestaurantsTableSeeder extends Seeder
             'visited'           => true,
             'visit_date'        => '2017-09-05 13:00:00',
             'google_maps_link'  => 'https://www.google.co.jp/maps/place/VERDE+%E3%83%B4%E3%82%A7%E3%83%AB%E3%83%87+%E6%B8%8B%E8%B0%B7%E5%BA%97/@35.6590104,139.6992206,17.25z/data=!4m5!3m4!1s0x60188b599e9b7543:0xf6253420bcfbe3f5!8m2!3d35.6572417!4d139.7036924',
-            'tabelog_link'      => 'http://data',
-            'official_website'  => 'http://data',
+            'tabelog_link'      => '',
+            'official_website'  => '',
             'score_lunch'       => 1,
             'score_place'       => 1,
             'score_food'        => 1,
@@ -900,7 +901,7 @@ class RestaurantsTableSeeder extends Seeder
             'visited'           => true,
             'visit_date'        => '2017-09-05 13:00:00',
             'google_maps_link'  => 'https://www.google.co.jp/maps/place/Gapao+Shokud%C5%8D/@35.6578467,139.6987192,17.25z/data=!4m5!3m4!1s0x0:0xfdfd8b7f19684676!8m2!3d35.6555029!4d139.701378',
-            'tabelog_link'      => 'http://data',
+            'tabelog_link'      => '',
             'official_website'  => 'https://shibuya-gapaoshokudo.owst.jp/',
             'score_lunch'       => 1,
             'score_place'       => 1,
@@ -1026,7 +1027,7 @@ class RestaurantsTableSeeder extends Seeder
             'visited'           => true,
             'visit_date'        => '2017-12-07 13:00:00',
             'google_maps_link'  => 'https://www.google.co.jp/maps/place/Lotteria+Shibuya+Dogenzaka+shop/@35.6585933,139.6982641,17.75z/data=!4m5!3m4!1s0x60188ca9d6e7a5ed:0xb00d1f2aa3db840a!8m2!3d35.6590528!4d139.6983417',
-            'tabelog_link'      => 'http://data',
+            'tabelog_link'      => '',
             'official_website'  => 'https://www.lotteria.jp/',
             'score_lunch'       => 2,
             'score_place'       => 1,
