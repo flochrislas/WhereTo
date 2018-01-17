@@ -171,5 +171,13 @@ class RestaurantTagsTableSeeder extends Seeder
             'label'              => 'hamburg'
         ));
 
+        RestaurantTag::create(array(
+            'label'              => 'grill'
+        ));
+
+        RestaurantTag::create(array(
+            'label'              => 'karaage'
+        ));
+
     }
 }
