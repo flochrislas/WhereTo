@@ -325,8 +325,8 @@ class RestaurantsTableSeeder extends Seeder
         $resto->fillCoordinatesFromString('35.658785, 139.698675');
 
         $resto = Restaurant::create(array(
-            'name'              => 'Something Terace',
-            'location'          => 'couple of streets behind the office',
+            'name'              => 'Ayung Teras',
+            'location'          => 'Shibuya',
             'type'              => 'Indonesian',
             'points'            => 'nice table, nie restaurant, decent food and drinks',
             'experience'        => 'decent. had a nice evening there dining with 4 people',
@@ -413,7 +413,7 @@ class RestaurantsTableSeeder extends Seeder
             'type'              => 'Japanese fast food',
             'lunch_price'       => 600,
             'points'            => 'Fast and good. Has counter and tables. Choice of curry or gyudon dishes.',
-            'experience'        => 'I got a hamburger curry, it was really cheap and really good. Came fast toe. Perfect for a quick meal, but not very glamorous.',
+            'experience'        => 'I got a hamburger curry, it was really cheap and really good. Came fast too. Perfect for a quick meal, but not very glamorous.',
             'visited'           => true,
             'visit_date'        => '2017-09-05 13:00:00',
             'google_maps_link'  => 'https://www.google.co.jp/maps/place/Matsuya/@35.6590574,139.6984172,17z/data=!4m5!3m4!1s0x60188b59d831819b:0x71cfd0feb05de6ba!8m2!3d35.6571851!4d139.7015798',
@@ -1289,6 +1289,48 @@ class RestaurantsTableSeeder extends Seeder
         ));
         $resto->attachTags(['mexican']);
         $resto->fillCoordinatesFromString('35.650481,139.702594');
+
+        $resto = Restaurant::create(array(
+            'name'              => 'Pomme No Ki',
+            'location'          => 'Shibuya',
+            'type'              => 'Omurice',
+            'lunch_price'       => 1000,
+            'points'            => 'Omurice restaurant. Nothing fancy, cheap interior, almost no windows, cheesy music. Decent choice of omurice.',
+            'experience'        => 'I did not like it much. But that place is alright if you want to eat an omurice. Lunch is about 1000 yen for one omurice with a small soup.',
+            'visited'           => true,
+            'visit_date'        => '2018-01-18 13:00:00',
+            'google_maps_link'  => 'https://www.google.co.jp/maps/place/%E3%83%9D%E3%83%A0%E3%81%AE%E6%A8%B9+%E6%B8%8B%E8%B0%B7%E3%82%B9%E3%83%9A%E3%82%A4%E3%83%B3%E5%9D%82%E5%BA%97/@35.6589659,139.6987752,18z/data=!4m12!1m6!3m5!1s0x60188ca9ab7ca623:0x8f04136488fd0772!2z44Od44Og44Gu5qi5IOa4i-iwt-OCueODmuOCpOODs-WdguW6lw!8m2!3d35.6609578!4d139.6986733!3m4!1s0x60188ca9ab7ca623:0x8f04136488fd0772!8m2!3d35.6609578!4d139.6986733',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13103027/',
+            'official_website'  => 'http://www.pomunoki.com/shop/kanto/tokyo/shop-0424.html',
+            'score_lunch'       => 1,
+            'score_place'       => 1,
+            'score_food'        => 1,
+            'score_price'       => 1,
+            'score_date'        => 0
+        ));
+        $resto->attachTags(['omurice']);
+        $resto->fillCoordinatesFromString('35.660971, 139.698678');
+
+        $resto = Restaurant::create(array(
+            'name'              => 'Thai food pub Conrow',
+            'location'          => 'Shibuya, Dogenzaka',
+            'type'              => 'Thai',
+            'lunch_price'       => 800,
+            'points'            => 'Underground, but cosy place. Food is good, and prices are decent.',
+            'experience'        => 'I was expecting worse from the entrance, but once inside I was pleasingly surprised with the atmosphere of the place. I had a really good grilled chicken with yellow curry for only 800 yen (coming with a small, but good, salad). The chicken was without fat, very tender, nicely grilled (with burnt skin), and in very satisfactory quantity.',
+            'visited'           => true,
+            'visit_date'        => '2018-01-19 14:00:00',
+            'google_maps_link'  => 'https://www.google.co.jp/maps/place/THAI+FOOD+PUB+CONROW/@35.6579282,139.6979337,18z/data=!4m12!1m6!3m5!1s0x60188ca9ab7ca623:0x8f04136488fd0772!2z44Od44Og44Gu5qi5IOa4i-iwt-OCueODmuOCpOODs-WdguW6lw!8m2!3d35.6609578!4d139.6986733!3m4!1s0x60188b55fb24e09f:0xbca949f57da95c3c!8m2!3d35.6572434!4d139.6958077',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13128650/',
+            'official_website'  => null,
+            'score_lunch'       => 2,
+            'score_place'       => 1,
+            'score_food'        => 2,
+            'score_price'       => 2,
+            'score_date'        => 0
+        ));
+        $resto->attachTags(['thai', 'gapao', 'green curry']);
+        $resto->fillCoordinatesFromString('35.657250, 139.695807');
 
         // fill coordinates
         $this->fillNullCoordinatesFromGoogleMapsLink();

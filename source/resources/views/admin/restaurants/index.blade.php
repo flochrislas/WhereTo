@@ -37,6 +37,10 @@
             <th>lat</th>
             <th>lon</th>
 
+            <th>map</th>
+            <th>tabelog</th>
+            <th>official</th>
+
             <th width="280px">Action</th>
         </tr>
     @foreach ($restaurants as $restaurant)
@@ -59,6 +63,22 @@
 
         <td>{{ number_format($restaurant->lat, 4, '.', ',') }}</td>
         <td>{{ number_format($restaurant->lon, 4, '.', ',') }}</td>
+
+        <td>
+          <a target="_blank"
+            href="{{ $restaurant->google_maps_link }}">
+            map</a>
+        </td>
+        <td>
+          <a target="_blank"
+            href="{{ $restaurant->tabelog_link }}">
+            link</a>
+        </td>
+        <td>
+          <a target="_blank"
+            href="{{ $restaurant->official_website }}">
+            site</a>
+        </td>
 
         <td>
             <a class="btn btn-info" href="{{ route('restaurants.show', $restaurant->id) }}">Show</a>

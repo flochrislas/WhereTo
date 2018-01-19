@@ -80,7 +80,10 @@
             <th>Tags</th>
 
             <th>distance (m)</th>
+            <th>time (mn)</th>
             <th>map</th>
+            <th>tabelog</th>
+            <th>official</th>
             <th>lunch</th>
             <th>food</th>
             <th>place</th>
@@ -102,10 +105,21 @@
         </td>
 
         <td>{{ App\GeoUtils::formatDistance($restaurant->currentDistance) }}</td>
+        <td>{{ App\GeoUtils::walkingTime($restaurant->currentDistance/1000) }}</td>
         <td>
           <a target="_blank"
             href="{{ $restaurant->google_maps_link }}">
             map</a>
+        </td>
+        <td>
+          <a target="_blank"
+            href="{{ $restaurant->tabelog_link }}">
+            link</a>
+        </td>
+        <td>
+          <a target="_blank"
+            href="{{ $restaurant->official_website }}">
+            site</a>
         </td>
         <td>{{ $restaurant->score_lunch }}</td>
         <td>{{ $restaurant->score_food }}</td>

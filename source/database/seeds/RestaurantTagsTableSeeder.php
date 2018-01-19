@@ -179,5 +179,9 @@ class RestaurantTagsTableSeeder extends Seeder
             'label'              => 'karaage'
         ));
 
+        RestaurantTag::create(array(
+            'label'              => 'green curry'
+        ));
+
     }
 }
