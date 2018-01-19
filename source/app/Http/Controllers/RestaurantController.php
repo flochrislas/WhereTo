@@ -31,10 +31,9 @@ class RestaurantController extends Controller
         $tags = request('tags');
         $this->formatTags($tags);
         // current position from client's GPS
-        // Office from google maps: '35.656113,139.699425';
-        // Office from browser: 35.6617773,139.7040506
+        // Office from google maps '35.656660, 139.699691'
         $position = request('position');
-        $position = '35.656113,139.699425';
+        $position = '35.656660, 139.699691';
         // flag to sort by distances
         $closestFirst = true;
 

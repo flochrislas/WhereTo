@@ -27,6 +27,7 @@ Run tests:
 
 CACHE
 php artisan cache:clear
+depending on cache type, if its file, must have permission, or use sudo
 
 http://laravel-recipes.com/recipes/104/clearing-the-application-cache
 
