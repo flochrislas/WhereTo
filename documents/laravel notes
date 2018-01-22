@@ -174,6 +174,10 @@ website2apk
 phonegap
 http://softeng.oicr.on.ca/brice_aminou/2017/03/07/Mobile-app-with-Laravel/
 
+Make views recognise the agent (mobile, desktop etc...)
+https://stackoverflow.com/questions/23779088/laravel-detect-mobile-tablet-and-load-correct-views
+https://github.com/jenssegers/agent
+
 HTML5 geolocalisation
 https://www.w3schools.com/html/html5_geolocation.asp
 https://developer.mozilla.org/en-US/docs/Web/API/Geolocation/Using_geolocation
