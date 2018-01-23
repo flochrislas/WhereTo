@@ -1332,6 +1332,27 @@ class RestaurantsTableSeeder extends Seeder
         $resto->attachTags(['thai', 'gapao', 'green curry']);
         $resto->fillCoordinatesFromString('35.657250, 139.695807');
 
+        $resto = Restaurant::create(array(
+            'name'              => 'Acceso',
+            'location'          => 'Shibuya',
+            'type'              => 'Italian',
+            'lunch_price'       => 990,
+            'points'            => 'Italian bar-restaurant. Not real Italian. Lunch is mainly pasta, with nice course for 990 yen (drink bar, salad, bread, pasta and dessert).',
+            'experience'        => 'The area with windows bay is for smoking allowed tables. The non-smoking area is in a big, but dark windowsless room. Large tables. Cheesy music. Vertical spot-lights on tables. The lunch set was surprisingly good for the price. Except maybe for the dessert, a tiramisu, which was absolutely tasteless, the pasta, salad and piece of bread were very fine.',
+            'visited'           => true,
+            'visit_date'        => '2018-01-23 14:00:00',
+            'google_maps_link'  => 'https://www.google.co.jp/maps/place/%E3%82%A2%E3%83%81%E3%82%A7%E3%83%BC%E3%82%BE/@35.6585457,139.7004673,18z/data=!4m5!3m4!1s0x60188b59019f5c19:0x28da56b90bf422c9!8m2!3d35.6586583!4d139.7039616',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13120958/',
+            'official_website'  => 'https://r.gnavi.co.jp/g851577/',
+            'score_lunch'       => 2,
+            'score_place'       => 1,
+            'score_food'        => 1,
+            'score_price'       => 1,
+            'score_date'        => 1
+        ));
+        $resto->attachTags(['pasta']);
+        $resto->fillCoordinatesFromString('35.658784, 139.704118');
+
         // fill coordinates
         $this->fillNullCoordinatesFromGoogleMapsLink();
         
