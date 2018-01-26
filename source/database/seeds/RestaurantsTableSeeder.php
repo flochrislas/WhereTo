@@ -1353,6 +1353,27 @@ class RestaurantsTableSeeder extends Seeder
         $resto->attachTags(['pasta']);
         $resto->fillCoordinatesFromString('35.658784, 139.704118');
 
+        $resto = Restaurant::create(array(
+            'name'              => 'Goo Italiano',
+            'location'          => 'Shibuya',
+            'type'              => 'Italian',
+            'lunch_price'       => 1200,
+            'points'            => 'Italian restaurant with a nice atmosphere. Pasta, lasagna, meat... variety of pretty good lunch sets.',
+            'experience'        => 'I really liked the place. It was quite busy at lunch time. There are some long tables, some counter tables, and some smaller tables as well. Variety of pasta and set with meat available. The food was very good. The price felt fine to me, given how I enjoyed the experience: 1200 yen for pasta + salad + bread + drink.',
+            'visited'           => true,
+            'visit_date'        => '2018-01-25 13:00:00',
+            'google_maps_link'  => 'https://www.google.co.jp/maps/place/goo+ITALIANO+%E3%82%B0%E3%83%BC%E3%82%A4%E3%82%BF%E3%83%AA%E3%82%A2%E3%83%BC%E3%83%8E+%E6%B8%8B%E8%B0%B7/@35.659092,139.7004154,18z/data=!4m5!3m4!1s0x0:0xfdfae9faaf21546a!8m2!3d35.660879!4d139.704723',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13133728/',
+            'official_website'  => 'http://www.take-5.co.jp/goo-italiano/shibuya/',
+            'score_lunch'       => 3,
+            'score_place'       => 2,
+            'score_food'        => 2,
+            'score_price'       => 1,
+            'score_date'        => 1
+        ));
+        $resto->attachTags(['italian', 'pasta']);
+        $resto->fillCoordinatesFromString('35.660891, 139.704722');
+
         // fill coordinates
         $this->fillNullCoordinatesFromGoogleMapsLink();
         
