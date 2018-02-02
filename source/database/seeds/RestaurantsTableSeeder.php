@@ -1374,6 +1374,113 @@ class RestaurantsTableSeeder extends Seeder
         $resto->attachTags(['italian', 'pasta']);
         $resto->fillCoordinatesFromString('35.660891, 139.704722');
 
+        $resto = Restaurant::create(array(
+            'name'              => 'Ramen center gai',
+            'location'          => 'Shibuya',
+            'type'              => 'Ramen',
+            'lunch_price'       => 900,
+            'points'            => '',
+            'experience'        => '',
+            'visited'           => true,
+            'visit_date'        => '2018-01-26 13:00:00',
+            'google_maps_link'  => '',
+            'tabelog_link'      => '',
+            'official_website'  => '',
+            'score_lunch'       => 2,
+            'score_place'       => 1,
+            'score_food'        => 1,
+            'score_price'       => 1,
+            'score_date'        => 0
+        ));
+        $resto->attachTags(['ramen']);
+        $resto->fillCoordinatesFromString('');
+
+        $resto = Restaurant::create(array(
+            'name'              => 'Hagare',
+            'location'          => 'Shibuya',
+            'type'              => 'Italian',
+            'lunch_price'       => 900,
+            'points'            => 'Nice room, nice music, nice food, decent prices. Italian food, but no pizza.',
+            'experience'        => 'The room and music is very nice, but for some reason they use very small stools instead of chairs... which make it like a not so good place for a date. I had some lasgna, quite good, and a salad, bread and coffee, fine as well, for 980yen.',
+            'visited'           => true,
+            'visit_date'        => '2018-01-29 13:00:00',
+            'google_maps_link'  => 'https://www.google.co.jp/maps/place/HAGARE%E6%B8%8B%E8%B0%B7%E5%BA%97/@35.6588789,139.7004375,18z/data=!4m5!3m4!1s0x60188b58045b55f1:0xafc420dda6788d31!8m2!3d35.66057!4d139.704088',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13209378/',
+            'official_website'  => 'https://www.kaldi.co.jp/sp/cafe/hagare_shibuya/',
+            'score_lunch'       => 2,
+            'score_place'       => 1,
+            'score_food'        => 1,
+            'score_price'       => 1,
+            'score_date'        => 1
+        ));
+        $resto->attachTags(['ramen']);
+        $resto->fillCoordinatesFromString('italian','pasta');
+
+        $resto = Restaurant::create(array(
+            'name'              => 'Concombre',
+            'location'          => 'Shibuya',
+            'type'              => 'French',
+            'lunch_price'       => 1300,
+            'points'            => 'A nice little French restaurant, bistro style. Lunches are between 1000 and 2000 yen and come as plate with bread, salad, soup, dessert, and free refilled coffee. Food is good. Restaurant is decent for dates because of the nice French food, but no so great because of room and the proximity with other tables.',
+            'experience'        => 'I enjoyed eating "tomate farcie", since it is quite rare to find. It was quite good. I paid 1300 yen for the lunch, which is above what I like to pay, but I think it was worth it. Seems like a lot of people going there between 12 and 13. Even after 13, it took quite a while for me to get served (about 20mn)',
+            'visited'           => true,
+            'visit_date'        => '2018-01-31 13:00:00',
+            'google_maps_link'  => '',
+            'tabelog_link'      => '',
+            'official_website'  => '',
+            'score_lunch'       => 2,
+            'score_place'       => 1,
+            'score_food'        => 2,
+            'score_price'       => 1,
+            'score_date'        => 1
+        ));
+        $resto->attachTags(['ramen']);
+        $resto->fillCoordinatesFromString('');
+
+        $resto = Restaurant::create(array(
+            'name'              => 'Italian restaurant behind office',
+            'location'          => 'Shibuya',
+            'type'              => 'Ramen',
+            'lunch_price'       => 1000,
+            'points'            => 'Nice little restaurant. Pasta lunch for 1000 yen coming with salad and coffee. Counter and tables.',
+            'experience'        => 'I enjoyed eating there. The waitress was very nice. The food was good. Price OK, but food amount not big.',
+            'visited'           => true,
+            'visit_date'        => '2018-02-02 13:00:00',
+            'google_maps_link'  => '',
+            'tabelog_link'      => '',
+            'official_website'  => '',
+            'score_lunch'       => 2,
+            'score_place'       => 1,
+            'score_food'        => 1,
+            'score_price'       => 1,
+            'score_date'        => 1
+        ));
+        $resto->attachTags(['italian', 'pasta']);
+        $resto->fillCoordinatesFromString('35.655867,139.698478');        
+
+        $resto = Restaurant::create(array(
+            'name'              => 'TBF',
+            'location'          => 'Shibuya',
+            'type'              => 'Ramen',
+            'lunch_price'       => 900,
+            'points'            => '',
+            'experience'        => '',
+            'visited'           => true,
+            'visit_date'        => '2018-01-26 13:00:00',
+            'google_maps_link'  => '',
+            'tabelog_link'      => '',
+            'official_website'  => '',
+            'score_lunch'       => 2,
+            'score_place'       => 1,
+            'score_food'        => 1,
+            'score_price'       => 1,
+            'score_date'        => 0
+        ));
+        $resto->attachTags(['ramen']);
+        $resto->fillCoordinatesFromString('');
+
+
+
         // fill coordinates
         $this->fillNullCoordinatesFromGoogleMapsLink();
         
