@@ -745,7 +745,7 @@ class RestaurantsTableSeeder extends Seeder
         $resto->fillCoordinatesFromString('35.661556, 139.703030');
 
         $resto = Restaurant::create(array(
-            'name'              => 'Fast soba katsudon in front of big bic camera',
+            'name'              => 'Fujisoba',
             'location'          => 'in front of big bic camera',
             'type'              => 'soba udon katsudon',
             'lunch_price'       => 750,
@@ -754,8 +754,8 @@ class RestaurantsTableSeeder extends Seeder
             'visited'           => true,
             'visit_date'        => '2017-09-05 13:00:00',
             'google_maps_link'  => '',
-            'tabelog_link'      => '',
-            'official_website'  => '',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13103625/dtlmap/',
+            'official_website'  => 'http://fujisoba.co.jp/',
             'score_lunch'       => 1,
             'score_place'       => 0,
             'score_food'        => 1,
@@ -1422,20 +1422,20 @@ class RestaurantsTableSeeder extends Seeder
             'type'              => 'French',
             'lunch_price'       => 1300,
             'points'            => 'A nice little French restaurant, bistro style. Lunches are between 1000 and 2000 yen and come as plate with bread, salad, soup, dessert, and free refilled coffee. Food is good. Restaurant is decent for dates because of the nice French food, but no so great because of room and the proximity with other tables.',
-            'experience'        => 'I enjoyed eating "tomate farcie", since it is quite rare to find. It was quite good. I paid 1300 yen for the lunch, which is above what I like to pay, but I think it was worth it. Seems like a lot of people going there between 12 and 13. Even after 13, it took quite a while for me to get served (about 20mn)',
+            'experience'        => 'I enjoyed eating "tomate farcie", since it is quite rare to find. It was quite good. I paid 1300 yen for the lunch, which is above what I like to pay, but I think it was worth it. Seems like a lot of people going there between 12 and 13. Even after 13, it took quite a while for me to get served (about 20mn). Interesting note: you canbring your own wine if you pay 500 yen fee per bottle.',
             'visited'           => true,
             'visit_date'        => '2018-01-31 13:00:00',
-            'google_maps_link'  => '',
-            'tabelog_link'      => '',
-            'official_website'  => '',
+            'google_maps_link'  => 'https://www.google.co.jp/maps/place/Concombre/@35.6590569,139.7008431,18z/data=!4m5!3m4!1s0x60188b586fce186d:0xfac0c76926a651a1!8m2!3d35.660071!4d139.7031221',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13004708/',
+            'official_website'  => 'http://www.lcn-g.com/concombre/',
             'score_lunch'       => 2,
             'score_place'       => 1,
             'score_food'        => 2,
             'score_price'       => 1,
             'score_date'        => 1
         ));
-        $resto->attachTags(['ramen']);
-        $resto->fillCoordinatesFromString('');
+        $resto->attachTags(['french']);
+        $resto->fillCoordinatesFromString('35.660079,139.703123');
 
         $resto = Restaurant::create(array(
             'name'              => 'Italian restaurant behind office',
@@ -1459,25 +1459,25 @@ class RestaurantsTableSeeder extends Seeder
         $resto->fillCoordinatesFromString('35.655867,139.698478');        
 
         $resto = Restaurant::create(array(
-            'name'              => 'TBF',
+            'name'              => 'Fujisoba',
             'location'          => 'Shibuya',
-            'type'              => 'Ramen',
-            'lunch_price'       => 900,
-            'points'            => '',
-            'experience'        => '',
+            'type'              => 'Soba',
+            'lunch_price'       => 750,
+            'points'            => 'Kinda of japanese fast food, serving katsudon and soba dishes and sets. Place is not so bad. Food is not so good. Prices are cheap. Service is fast.',
+            'experience'        => 'Place is better than some other establishments of the same chain. They have tables in addition of counter. Katsudon is decent, but soba and rice were below average in my opinion.',
             'visited'           => true,
             'visit_date'        => '2018-01-26 13:00:00',
-            'google_maps_link'  => '',
+            'google_maps_link'  => 'https://www.google.co.jp/maps/place/Fuji+Soba/@35.660332,139.6975356,17z/data=!4m5!3m4!1s0x60188ca967b100e3:0x683e6960657664e6!8m2!3d35.6614936!4d139.6967719',
             'tabelog_link'      => '',
-            'official_website'  => '',
-            'score_lunch'       => 2,
+            'official_website'  => 'http://fujisoba.co.jp/',
+            'score_lunch'       => 1,
             'score_place'       => 1,
             'score_food'        => 1,
-            'score_price'       => 1,
+            'score_price'       => 2,
             'score_date'        => 0
         ));
-        $resto->attachTags(['ramen']);
-        $resto->fillCoordinatesFromString('');
+        $resto->attachTags(['soba','katsudon']);
+        $resto->fillCoordinatesFromString('35.661508,139.696770');
 
 
 
