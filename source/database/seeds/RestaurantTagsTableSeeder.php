@@ -183,5 +183,21 @@ class RestaurantTagsTableSeeder extends Seeder
             'label'              => 'green curry'
         ));
 
+        RestaurantTag::create(array(
+            'label'              => 'crepe'
+        ));
+
+        RestaurantTag::create(array(
+            'label'              => 'galette'
+        ));
+
+        RestaurantTag::create(array(
+            'label'              => 'quiche'
+        ));
+
+        RestaurantTag::create(array(
+            'label'              => 'croque-monsieur'
+        ));
+
     }
 }
