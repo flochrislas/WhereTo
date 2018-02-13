@@ -1479,6 +1479,71 @@ class RestaurantsTableSeeder extends Seeder
         $resto->attachTags(['soba','katsudon']);
         $resto->fillCoordinatesFromString('35.661508,139.696770');
 
+        $resto = Restaurant::create(array(
+            'name'              => 'Ti Rolande',
+            'location'          => 'Shibuya, Seibu B2F',
+            'type'              => 'French',
+            'lunch_price'       => 1300,
+            'points'            => 'Delicious French galettes, quiches, and croque-monsieur. Quiet place (not a lot of people in Seibu B2F), comfortable. Food above my usual lunch budget, but worth it.',
+            'experience'        => 'Lunch set are around 1300 yen for a mini salad and soup plus a dish. I tried galette complette and quiche, and it was delicious. They use very good ingredients, such as ham and cheese, which is real nice.',
+            'visited'           => true,
+            'visit_date'        => '2018-02-07 13:00:00',
+            'google_maps_link'  => 'https://www.google.co.jp/maps/place/%E3%83%86%E3%82%A3%E3%83%BB%E3%83%AD%E3%83%A9%E3%83%B3%E3%83%89+%E3%82%AB%E3%83%95%E3%82%A7+%E8%A5%BF%E6%AD%A6%E6%B8%8B%E8%B0%B7%E5%BA%97/@35.6591348,139.6991112,18z/data=!3m1!5s0x60188ca8177055e1:0xf009a238452b6721!4m8!1m2!2m1!1sTi+Rolande!3m4!1s0x0:0x344364f4c78281ba!8m2!3d35.6603571!4d139.700345',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13148254/',
+            'official_website'  => 'http://ti-rolande.com/cafe/index.html',
+            'score_lunch'       => 3,
+            'score_place'       => 2,
+            'score_food'        => 2,
+            'score_price'       => 1,
+            'score_date'        => 1
+        ));
+        $resto->attachTags(['french','crepe','quiche','croque-monsieur','galette']);
+        $resto->fillCoordinatesFromString('35.660365,139.700346');
+        
+        $resto = Restaurant::create(array(
+            'name'              => 'Miami Patio',
+            'location'          => 'Shibuya',
+            'type'              => 'Italian',
+            'lunch_price'       => 1000,
+            'points'            => 'Decent pasta in a decent placve for a decent price.',
+            'experience'        => 'Lunch there is not expensive, mostly under 1000yen. I tried some pasta, and it was very decent. The place is OK I guess, but I was sitting nearby some kind of machine or ventialltion that was making a ridiculously loud noise...',
+            'visited'           => true,
+            'visit_date'        => '2018-02-08 13:00:00',
+            'google_maps_link'  => 'https://www.google.co.jp/maps/place/Miami+patio/@35.6584554,139.7011902,18z/data=!4m8!1m2!2m1!1smiami+patio+!3m4!1s0x60188b584d44a14b:0x37734e7aa0f3fccd!8m2!3d35.6585169!4d139.7032196',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13134099/',
+            'official_website'  => 'https://www.hotpepper.jp/strJ000707121/yoyaku/?vos=othpporgzzzzx00000001',
+            'score_lunch'       => 1,
+            'score_place'       => 1,
+            'score_food'        => 1,
+            'score_price'       => 1,
+            'score_date'        => 0
+        ));
+        $resto->attachTags(['italian','pasta']);
+        $resto->fillCoordinatesFromString('35.658462,139.703349');
+
+
+        $resto = Restaurant::create(array(
+            'name'              => 'Ichiban ramen (2minibaachan)',
+            'location'          => 'Shibuya',
+            'type'              => 'Ramen',
+            'lunch_price'       => 750,
+            'points'            => 'Cheap homely ramen restaurant, serving wide variety of dishes in addition of ramen.',
+            'experience'        => 'Grandma cooking. The food taste like in a japanese home. Not bad. Tables and counter available. Menu is in Japanese only.',
+            'visited'           => true,
+            'visit_date'        => '2018-02-13 13:00:00',
+            'google_maps_link'  => '',
+            'tabelog_link'      => '',
+            'official_website'  => '',
+            'score_lunch'       => 1,
+            'score_place'       => 1,
+            'score_food'        => 1,
+            'score_price'       => 1,
+            'score_date'        => 0
+        ));
+        $resto->attachTags(['ramen','miso']);
+        $resto->fillCoordinatesFromString('35.660452,139.704341');        
+
+
 
 
         // fill coordinates
