@@ -1541,8 +1541,28 @@ class RestaurantsTableSeeder extends Seeder
             'score_date'        => 0
         ));
         $resto->attachTags(['ramen','miso']);
-        $resto->fillCoordinatesFromString('35.660452,139.704341');        
+        $resto->fillCoordinatesFromString('35.660452,139.704341');
 
+        $resto = Restaurant::create(array(
+            'name'              => 'Adenia',
+            'location'          => 'Shibuya',
+            'type'              => 'Western',
+            'lunch_price'       => 1000,
+            'points'            => 'Very good.',
+            'experience'        => 'Very good.',
+            'visited'           => true,
+            'visit_date'        => '2018-02-15 13:00:00',
+            'google_maps_link'  => '',
+            'tabelog_link'      => '',
+            'official_website'  => '',
+            'score_lunch'       => 1,
+            'score_place'       => 1,
+            'score_food'        => 1,
+            'score_price'       => 1,
+            'score_date'        => 0
+        ));
+        $resto->attachTags(['western','burger']);
+        $resto->fillCoordinatesFromString('35.660452,139.704341');
 
 
 
