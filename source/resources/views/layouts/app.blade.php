@@ -12,15 +12,18 @@
 
     <!-- Styles -->
     <!-- includes bootstrap 3.3.7 -->
+    <!-- default laravel -->
+    <!-- <link href="/css/app.css" rel="stylesheet"> -->
 
-    <link href="/css/app.css" rel="stylesheet">
-  
+    <link href="/css/style-dark.css" rel="stylesheet">
 
     <!-- custom CSS -->
+    <!--
     <style>
         h1{font-size:23px;}
         .pull-left h2{margin-top:0;font-size:20px;}
     </style>
+    -->
 
     <!-- Scripts -->
     <script>
@@ -29,10 +32,9 @@
         ]); ?>
     </script>
 
-
-      <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
-      <script src="//code.jquery.com/jquery-1.10.2.js"></script>
-      <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+    <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 
 </head>
 <body>
