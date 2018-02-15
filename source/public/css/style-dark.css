@@ -1,5 +1,6 @@
-a,body {
- font-family:'Open Sans',sans-serif
+html,body {
+ font-family:'Open Sans',sans-serif;
+ background-color:black;
 }
 
 #header {
@@ -37,7 +38,7 @@ td {
 
 
 .button--basic {
-	
+
 	 display:inline-block;
 	 line-height:1;
 	 padding:.7em 1.15em;
@@ -52,7 +53,7 @@ td {
 	 transition-timing-function: ease;
 	 transition-duration: .4s;
 	 background-clip: padding-box;
-	
+
  color:#d6dfdf;
  background-color:rgba(230,84,37,.8);
  border:1px solid #e6542b
@@ -233,4 +234,3 @@ td {
  background-color:rgba(240,74,67,.7);
  border-color:#f04a43
 }
-
