@@ -1413,7 +1413,7 @@ class RestaurantsTableSeeder extends Seeder
             'score_price'       => 1,
             'score_date'        => 1
         ));
-        $resto->attachTags(['ramen']);
+        $resto->attachTags(['Italian']);
         $resto->fillCoordinatesFromString('italian','pasta');
 
         $resto = Restaurant::create(array(
@@ -1505,7 +1505,7 @@ class RestaurantsTableSeeder extends Seeder
             'location'          => 'Shibuya',
             'type'              => 'Italian',
             'lunch_price'       => 1000,
-            'points'            => 'Decent pasta in a decent placve for a decent price.',
+            'points'            => 'Decent pasta in a decent place for a decent price.',
             'experience'        => 'Lunch there is not expensive, mostly under 1000yen. I tried some pasta, and it was very decent. The place is OK I guess, but I was sitting nearby some kind of machine or ventialltion that was making a ridiculously loud noise...',
             'visited'           => true,
             'visit_date'        => '2018-02-08 13:00:00',
@@ -1552,19 +1552,38 @@ class RestaurantsTableSeeder extends Seeder
             'experience'        => 'Very good.',
             'visited'           => true,
             'visit_date'        => '2018-02-15 13:00:00',
-            'google_maps_link'  => '',
+            'google_maps_link'  => 'https://www.google.co.jp/maps/place/Brasserie+%E3%82%A2%E3%83%87%E3%83%8B%E3%82%A2/@35.6568269,139.6996218,17z/data=!4m5!3m4!1s0x60188b5120875043:0x5c8bb3d4b989d422!8m2!3d35.653414!4d139.6988064',
             'tabelog_link'      => '',
             'official_website'  => '',
-            'score_lunch'       => 1,
-            'score_place'       => 1,
-            'score_food'        => 1,
+            'score_lunch'       => 3,
+            'score_place'       => 2,
+            'score_food'        => 2,
             'score_price'       => 1,
-            'score_date'        => 0
+            'score_date'        => 1
         ));
         $resto->attachTags(['western','burger']);
-        $resto->fillCoordinatesFromString('35.660452,139.704341');
+        $resto->fillCoordinatesFromString('35.653435,139.698804');
 
-
+        $resto = Restaurant::create(array(
+            'name'              => 'Pota Pasta',
+            'location'          => 'Shibuya',
+            'type'              => 'Pasta',
+            'lunch_price'       => 1000,
+            'points'            => 'Decent pasta. Cheap price. Fast service. Narrow counter only.',
+            'experience'        => '600 for decent size pasta dish. Nice. Choice between thick or thin spagethi. The counter is really narrow but in front of a window. Pasta come fast. Unfortunately, my tomato mozzarella pasta kind of lacked taste. Still, decent, and a good deal.',
+            'visited'           => true,
+            'visit_date'        => '2018-02-20 13:00:00',
+            'google_maps_link'  => 'https://www.google.co.jp/maps/place/POTA+PASTA+%E6%B8%8B%E8%B0%B7%E5%BA%97/@35.6585489,139.6984537,18z/data=!4m5!3m4!1s0x60188b57d475e281:0x267d9086f80cb4dc!8m2!3d35.6587047!4d139.6989325',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13193965/',
+            'official_website'  => 'http://potapasta.com/',
+            'score_lunch'       => 2,
+            'score_place'       => 1,
+            'score_food'        => 1,
+            'score_price'       => 2,
+            'score_date'        => 0
+        ));
+        $resto->attachTags(['pasta']);
+        $resto->fillCoordinatesFromString('35.658718,139.698934');
 
         // fill coordinates
         $this->fillNullCoordinatesFromGoogleMapsLink();
