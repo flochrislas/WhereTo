@@ -1585,6 +1585,53 @@ class RestaurantsTableSeeder extends Seeder
         $resto->attachTags(['pasta']);
         $resto->fillCoordinatesFromString('35.658718,139.698934');
 
+        $resto = Restaurant::create(array(
+            'name'              => 'Curry House Chili Tiri',
+            'location'          => 'Shibuya',
+            'type'              => 'Curry',
+            'lunch_price'       => 950,
+            'points'            => 'Tasty spicy Japanese style curry, using indian spices. Small place with just one counter. Often has a line of people waiting. Very fast serving. "Take out" also possible',
+            'experience'        => 'I really really hate to wait in line outside... but once I did and did not regret it. I found the curry really delicious. And served very fast. I had the chicken massala for 950 yen, and it was quite spicy but not too much, and very tasty. Great balance. Also the pieces of chicken were very good. This is fast food style so better go alone.',
+            'visited'           => true,
+            'visit_date'        => '2018-02-21 13:00:00',
+            'google_maps_link'  => 'https://www.google.co.jp/maps/place/Curry+House+Chili+Chili/@35.656491,139.7041869,17z/data=!4m5!3m4!1s0x60188b5cb91448e9:0xe262216c91168a28!8m2!3d35.6541155!4d139.707545',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13002119/dtlrvwlst/B63241250/',
+            'official_website'  => 'http://xn--7cka6jb.com/',
+            'score_lunch'       => 3,
+            'score_place'       => 1,
+            'score_food'        => 3,
+            'score_price'       => 1,
+            'score_date'        => 0
+        ));
+        $resto->attachTags(['japanese curry']);
+        $resto->fillCoordinatesFromString('35.654137, 139.707527');
+
+        $resto = Restaurant::create(array(
+            'name'              => 'Tomboy',
+            'location'          => 'Shibuya',
+            'type'              => 'Curry',
+            'lunch_price'       => 950,
+            'points'            => 'Unexpensive and nice oriental food restaurant.',
+            'experience'        => 'I liked the space and decor inside. Quite big. There are tables, counters, and also a tatami section. Good variety of lunch sets, for a very good price. For 1000 yen I could get salad, drink, 3 different kinds of curry, tandori chicken, and nan! The food was not especially delicious, but decent. With the exception of the spicy mutton curry, that was really delicious.',
+            'visited'           => true,
+            'visit_date'        => '2018-02-22 13:00:00',
+            'google_maps_link'  => 'https://www.google.co.jp/maps/place/TOMBOY+%E6%B8%8B%E8%B0%B7%E9%81%93%E7%8E%84%E5%9D%82%E5%BA%97/@35.6586411,139.6980321,18z/data=!4m5!3m4!1s0x0:0xad6c1e648b6d070e!8m2!3d35.659088!4d139.69888',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13104579/',
+            'official_website'  => 'http://www.tomboy106.com/shibuya106/access.html',
+            'score_lunch'       => 3,
+            'score_place'       => 2,
+            'score_food'        => 2,
+            'score_price'       => 2,
+            'score_date'        => 1
+        ));
+        $resto->attachTags(['indian curry','gapao']);
+        $resto->fillCoordinatesFromString('35.659122, 139.698909');
+        
+
+
+        // Tomboy curry
+        // https://www.google.co.jp/maps/place/%E3%81%84%E3%82%93%E3%81%A7%E3%81%84%E3%82%89%E9%81%93%E7%8E%84%E5%9D%82%E5%BA%97/@35.6592668,139.6975702,19z/data=!4m8!1m2!2m1!1z44Kr44Os44O8!3m4!1s0x0:0x1b2e0202834ada1!8m2!3d35.6592609!4d139.6979151?hl=en
+
         // fill coordinates
         $this->fillNullCoordinatesFromGoogleMapsLink();
         
