@@ -1627,10 +1627,27 @@ class RestaurantsTableSeeder extends Seeder
         $resto->attachTags(['indian curry','gapao']);
         $resto->fillCoordinatesFromString('35.659122, 139.698909');
         
+        $resto = Restaurant::create(array(
+            'name'              => 'Chelsea Cafe',
+            'location'          => 'Shibuya, Mark City',
+            'type'              => 'Cafe',
+            'lunch_price'       => 1200,
+            'points'            => 'Unexpensive and nice oriental food restaurant.',
+            'experience'        => 'I liked the space and decor inside. Quite big. There are tables, counters, and also a tatami section. Good variety of lunch sets, for a very good price. For 1000 yen I could get salad, drink, 3 different kinds of curry, tandori chicken, and nan! The food was not especially delicious, but decent. With the exception of the spicy mutton curry, that was really delicious.',
+            'visited'           => true,
+            'visit_date'        => '2018-02-23 13:00:00',
+            'google_maps_link'  => 'https://www.google.co.jp/maps/place/Chelsea+Cafe+Shibuya+Mark+City/@35.656849,139.6985482,18z/data=!3m1!5s0x60188b5631f5f4af:0xf2c804907c6b11f9!4m5!3m4!1s0x0:0x2af5c93390ed06d0!8m2!3d35.657695!4d139.697082',
+            'tabelog_link'      => '',
+            'official_website'  => 'http://www.dreamcorp.co.jp/cc/index.html',
+            'score_lunch'       => 3,
+            'score_place'       => 2,
+            'score_food'        => 2,
+            'score_price'       => 2,
+            'score_date'        => 1
+        ));
+        $resto->attachTags(['cafe','burger','sandwich']);
+        $resto->fillCoordinatesFromString('35.657693, 139.697090');
 
-
-        // Tomboy curry
-        // https://www.google.co.jp/maps/place/%E3%81%84%E3%82%93%E3%81%A7%E3%81%84%E3%82%89%E9%81%93%E7%8E%84%E5%9D%82%E5%BA%97/@35.6592668,139.6975702,19z/data=!4m8!1m2!2m1!1z44Kr44Os44O8!3m4!1s0x0:0x1b2e0202834ada1!8m2!3d35.6592609!4d139.6979151?hl=en
 
         // fill coordinates
         $this->fillNullCoordinatesFromGoogleMapsLink();
