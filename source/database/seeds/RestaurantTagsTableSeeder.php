@@ -76,6 +76,10 @@ class RestaurantTagsTableSeeder extends Seeder
         ));
 
         RestaurantTag::create(array(
+            'label'              => 'cafe'
+        ));
+
+        RestaurantTag::create(array(
             'label'              => 'authentic'
         ));
 
@@ -197,6 +201,10 @@ class RestaurantTagsTableSeeder extends Seeder
 
         RestaurantTag::create(array(
             'label'              => 'croque-monsieur'
+        ));
+
+        RestaurantTag::create(array(
+            'label'              => 'sandwich'
         ));
 
     }
