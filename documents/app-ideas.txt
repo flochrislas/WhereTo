@@ -27,6 +27,7 @@ Sleep[anytime, without booking] -> (solo), (couple) -> (capsule hotels, internet
 Information center: archive info about tons of stuff
 on pages, link to related info from info center (how to call the staff, how to ask for an extension, how to ask for the check...)
 
+whereTo : lunch, diner, drink, dance, arcade, loveho, shopping, cafe, karaoke
 add links to
 https://www.yelp.com/biz/%E3%82%B9%E3%83%91%E3%82%B2%E3%83%83%E3%83%86%E3%82%A3%E3%81%AE%E3%83%91%E3%83%B3%E3%83%81%E3%83%A7-%E6%B8%8B%E8%B0%B7%E5%BA%97-%E6%B8%8B%E8%B0%B7%E5%8C%BA
 https://jp.openrice.com/en/tokyo/r-spaghetti-no-pancho-shibuya-store-shibuya-pasta-r551322/photos
@@ -87,6 +88,20 @@ Et au lieu de me donner la boite, et attendre que je me debrouille pour l'emport
 - filme plastique au cas ou il tomberai quelques goute (la meteo etait pas terrible se jour la), pour ne pas abimer le carton
 
 Voila, tout ca est normal, standard, dans tous les magasins, et je trouve ca cool ^^
+
+----------------------------
+
+tag g analytics for familleredares.ovh
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-114845220-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-114845220-1');
+</script>
 
 
 --------------+
