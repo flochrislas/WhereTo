@@ -1639,14 +1639,60 @@ class RestaurantsTableSeeder extends Seeder
             'google_maps_link'  => 'https://www.google.co.jp/maps/place/Chelsea+Cafe+Shibuya+Mark+City/@35.656849,139.6985482,18z/data=!3m1!5s0x60188b5631f5f4af:0xf2c804907c6b11f9!4m5!3m4!1s0x0:0x2af5c93390ed06d0!8m2!3d35.657695!4d139.697082',
             'tabelog_link'      => '',
             'official_website'  => 'http://www.dreamcorp.co.jp/cc/index.html',
-            'score_lunch'       => 3,
-            'score_place'       => 2,
-            'score_food'        => 2,
-            'score_price'       => 2,
+            'score_lunch'       => 2,
+            'score_place'       => 1,
+            'score_food'        => 1,
+            'score_price'       => 0,
             'score_date'        => 1
         ));
         $resto->attachTags(['cafe','burger','sandwich']);
         $resto->fillCoordinatesFromString('35.657693, 139.697090');
+
+        $resto = Restaurant::create(array(
+            'name'              => 'Napoli',
+            'location'          => 'Shibuya',
+            'type'              => 'Italian',
+            'lunch_price'       => 500,
+            'points'            => 'Super cheap (at lunch time) good italian restaurant, with a nice interior (tables and counter).',
+            'experience'        => 'The place is B1F but I liked it, nice ambiance, nice decoration. Pizza are 500 yen, made in a real oven in front of you. Not the greatest pizza arround, but the quality is very good for the price.',
+            'visited'           => true,
+            'visit_date'        => '2018-02-26 13:00:00',
+            'google_maps_link'  => 'https://www.google.co.jp/maps/place/PIZZERIA+BAR+NAPOLI+%E6%B8%8B%E8%B0%B7%E5%AE%AE%E7%9B%8A%E5%9D%82%E5%BA%97/@35.6599485,139.7035384,17z/data=!4m12!1m6!3m5!1s0x0:0x9e9b701b33f10831!2sTerra+burgers!8m2!3d35.660019!4d139.7065421!3m4!1s0x60188b557775a767:0x3b86406957ab553b!8m2!3d35.6610288!4d139.7060101',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13133770/',
+            'official_website'  => 'https://r.gnavi.co.jp/eg632n6g0000/',
+            'score_lunch'       => 3,
+            'score_place'       => 1,
+            'score_food'        => 2,
+            'score_price'       => 2,
+            'score_date'        => 1
+        ));
+        $resto->attachTags(['italian','pizza']);
+        $resto->fillCoordinatesFromString('35.661034, 139.706101');
+
+
+        $resto = Restaurant::create(array(
+            'name'              => 'Curry',
+            'location'          => 'Shibuya',
+            'type'              => 'Curry',
+            'lunch_price'       => 900,
+            'points'            => 'Good japanese curry. Narrow counter only.',
+            'experience'        => 'Small, narrow, but authetic place. Curry is good, filling, and cheap. Variety of toppings and customization available.',
+            'visited'           => true,
+            'visit_date'        => '2018-02-27 13:00:00',
+            'google_maps_link'  => 'https://www.google.co.jp/maps/place/%E3%82%AB%E3%83%AA%E3%83%BC+%E3%82%AB%E3%82%A4%E3%83%A9%E3%82%B9/@35.6571556,139.6964024,19z/data=!4m5!3m4!1s0x0:0xc721eae685dbb1db!8m2!3d35.6571872!4d139.6963139',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13003347/',
+            'official_website'  => 'http://www.shibuyadogenzaka.com/kairas/main.html',
+            'score_lunch'       => 3,
+            'score_place'       => 1,
+            'score_food'        => 2,
+            'score_price'       => 1,
+            'score_date'        => 0
+        ));
+        $resto->attachTags(['japanese curry']);
+        $resto->fillCoordinatesFromString('35.657186, 139.696305');
+
+        // https://www.youtube.com/watch?v=S-Xm7s9eGxU
+        // https://goo.gl/TbjN44
 
 
         // fill coordinates
