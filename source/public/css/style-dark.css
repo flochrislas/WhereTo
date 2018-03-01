@@ -1,7 +1,6 @@
 div {
-  border:52px;
-  border-color:yellow;
-  background-color:pink;
+  border: yellow solid;
+  border-width: 1px;
 }
 
 html,body {
@@ -10,12 +9,24 @@ html,body {
  color:#d0d0d2;
 }
 
+a {
+  color: rgb(249, 239, 193);
+}
+
 #header {
 	margin:20px;
 }
 
+#header div {
+  display: inline;
+}
+
 #footer {
 	margin:20px;
+}
+
+#footer div {
+  display: inline;
 }
 
 #content {
@@ -27,8 +38,8 @@ td {
 	background-color:rgba(20,146,135,.5);
 }
 
-.title {
-
+.copyright {
+   /*display: flex;*/
 }
 
 .inline {
@@ -47,8 +58,8 @@ td {
   color: #45c3ec;
 }
 
-.teal {
-  color: #20968b;
+.teal {border-width:2px;
+  color: #20968b;border-width:2px;
 }
 
 

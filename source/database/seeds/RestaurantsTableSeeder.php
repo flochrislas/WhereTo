@@ -1691,6 +1691,77 @@ class RestaurantsTableSeeder extends Seeder
         $resto->attachTags(['japanese curry']);
         $resto->fillCoordinatesFromString('35.657186, 139.696305');
 
+        ////////////////////////////// to complete below !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+        $resto = Restaurant::create(array(
+            'name'              => 'Whoopi Goldburger',
+            'location'          => '',
+            'type'              => '',
+            'lunch_price'       => 1200,
+            'points'            => 'Small and narrow counter. Unique and tasty home-made burgers.',
+            'experience'        => 'The garage punk atmosphere is cool. The burgers are a bit expensive, but they do come with a drink, more french fries than usual, and are truly unique. Most of the taste comes from the topping, spices they put on the patty. Delicious spices mix, but quite salty. Fresh vegetables are used. My personal disapointement came from the fact that the patty had some hard bits in it, a bit like in a tsukune, and I don\'t like this. ',
+            'visited'           => true,
+            'visit_date'        => '2018-02-28 13:00:00',
+            'google_maps_link'  => '',
+            'tabelog_link'      => '',
+            'official_website'  => '',
+            'score_lunch'       => 3,
+            'score_place'       => 1,
+            'score_food'        => 2,
+            'score_price'       => 1,
+            'score_date'        => 0
+        ));
+        $resto->attachTags(['']);
+        $resto->fillCoordinatesFromString('');
+
+        $resto = Restaurant::create(array(
+            'name'              => 'Aoyama Gapao Cafeteria',
+            'location'          => '',
+            'type'              => '',
+            'lunch_price'       => 950,
+            'points'            => 'Very good food with lunch set under 1000 yen. Great gapao. Nice and cosy interior. Also sells bentos.',
+            'experience'        => '',
+            'visited'           => true,
+            'visit_date'        => '2018-03-01 13:00:00',
+            'google_maps_link'  => 'https://www.google.co.jp/maps/place/Aoyama+Gapao+cafeteria/@35.6605176,139.7072851,20z/data=!4m5!3m4!1s0x60188b5f23844e4d:0xa1cb2866057c2e9e!8m2!3d35.6605892!4d139.707427',
+            'tabelog_link'      => '',
+            'official_website'  => '',
+            'score_lunch'       => 3,
+            'score_place'       => 2,
+            'score_food'        => 3,
+            'score_price'       => 2,
+            'score_date'        => 0
+        ));
+        $resto->attachTags(['']);
+        $resto->fillCoordinatesFromString('');
+
+/*
+        $resto = Restaurant::create(array(
+            'name'              => '',
+            'location'          => '',
+            'type'              => '',
+            'lunch_price'       => 950,
+            'points'            => '',
+            'experience'        => '',
+            'visited'           => true,
+            'visit_date'        => '2018-02-27 13:00:00',
+            'google_maps_link'  => '',
+            'tabelog_link'      => '',
+            'official_website'  => '',
+            'score_lunch'       => 3,
+            'score_place'       => 1,
+            'score_food'        => 2,
+            'score_price'       => 1,
+            'score_date'        => 0
+        ));
+        $resto->attachTags(['']);
+        $resto->fillCoordinatesFromString('');
+*/
+
+        // https://www.google.co.jp/maps/place/Aoyama+Gapao+cafeteria/@35.6605176,139.7072851,20z/data=!4m5!3m4!1s0x60188b5f23844e4d:0xa1cb2866057c2e9e!8m2!3d35.6605892!4d139.707427?hl=en
+
+
+
         // https://www.youtube.com/watch?v=S-Xm7s9eGxU
         // https://goo.gl/TbjN44
 
