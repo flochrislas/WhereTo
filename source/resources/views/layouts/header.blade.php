@@ -1,37 +1,35 @@
 <nav id="header">
-  <div class="title inline">
-      <!-- Branding Image -->
-      <a class="navbar-brand" href="{{ url('/') }}">
+  <!-- Branding Image -->
+  <div>
+      <a href="{{ url('/') }}">
           {{ config('app.name', 'WhereTo') }}
       </a>
   </div>
 
-  <div class="inline">
+  <div>
       <!-- Left Side Of Navbar -->
-      <ul class="nav navbar-nav">
-        @if (Auth::guest())
-          &nbsp;
-        @else
-          <li><a href="{{ route('admin.dashboard') }}"><strong>DASHBOARD</strong></a></li>
-          <li><a href="{{ route('restaurants.index') }}">Restos</a></li>
-          <li><a href="{{ route('test') }}"><strong>Test</strong></a></li>
-          <li><a href="{{ route('laravel') }}"><strong>Laravel</strong></a></li>
-        @endif
-      </ul>
+      @if (!Auth::guest())
+        <ul>
+            <li><a href="{{ route('admin.dashboard') }}"><strong>DASHBOARD</strong></a></li>
+            <li><a href="{{ route('restaurants.index') }}">Restos</a></li>
+            <li><a href="{{ route('test') }}"><strong>Test</strong></a></li>
+            <li><a href="{{ route('laravel') }}"><strong>Laravel</strong></a></li>
+        </ul>
+      @endif
 
       <!-- Right Side Of Navbar -->
-      <ul class="nav navbar-nav navbar-right">
+      <ul>
           <!-- Authentication Links -->
           @if (Auth::guest())
               <li><a href="{{ url('/login') }}">Login</a></li>
               <li><a href="{{ url('/register') }}">Register</a></li>
           @else
-              <li class="dropdown">
+              <li>
                   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                       {{ Auth::user()->name }} <span class="caret"></span>
                   </a>
 
-                  <ul class="dropdown-menu" role="menu">
+                  <ul role="menu">
                       <li>
                           <a href="{{ route('logout') }}"
                               onclick="event.preventDefault();
