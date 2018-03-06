@@ -1695,8 +1695,8 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create(array(
             'name'              => 'Whoopi Goldburger',
-            'location'          => '',
-            'type'              => '',
+            'location'          => 'Shibuya',
+            'type'              => 'Burger',
             'lunch_price'       => 1200,
             'points'            => 'Small and narrow counter. Unique and tasty home-made burgers.',
             'experience'        => 'The garage punk atmosphere is cool. The burgers are a bit expensive, but they do come with a drink, more french fries than usual, and are truly unique. Most of the taste comes from the topping, spices they put on the patty. Delicious spices mix, but quite salty. Fresh vegetables are used. My personal disapointement came from the fact that the patty had some hard bits in it, a bit like in a tsukune, and I don\'t like this. ',
@@ -1711,7 +1711,7 @@ class RestaurantsTableSeeder extends Seeder
             'score_price'       => 1,
             'score_date'        => 0
         ));
-        $resto->attachTags(['']);
+        $resto->attachTags(['burger']);
         $resto->fillCoordinatesFromString('');
 
         $resto = Restaurant::create(array(
@@ -1731,6 +1731,48 @@ class RestaurantsTableSeeder extends Seeder
             'score_food'        => 3,
             'score_price'       => 2,
             'score_date'        => 0
+        ));
+        $resto->attachTags(['thai','gapao']);
+        $resto->fillCoordinatesFromString('35.660584, 139.707431');
+
+        $resto = Restaurant::create(array(
+            'name'              => 'Napolimania',
+            'location'          => '',
+            'type'              => 'Italian',
+            'lunch_price'       => 1200,
+            'points'            => 'Nice place. Decent pizza, but felt a bit overpriced.',
+            'experience'        => '',
+            'visited'           => true,
+            'visit_date'        => '2018-03-02 13:00:00',
+            'google_maps_link'  => 'https://www.google.co.jp/maps/place/NAPOLIMANIA/@35.6597848,139.7115779,16z/data=!4m5!3m4!1s0x60188b5f21d207d7:0x2dc310dd7861f428!8m2!3d35.6604508!4d139.7076778',
+            'tabelog_link'      => '',
+            'official_website'  => 'http://www.napolimania.co.jp/',
+            'score_lunch'       => 2,
+            'score_place'       => 1,
+            'score_food'        => 1,
+            'score_price'       => 0,
+            'score_date'        => 1
+        ));
+        $resto->attachTags(['italian','pizza']);
+        $resto->fillCoordinatesFromString('35.660443, 139.707686');
+
+        $resto = Restaurant::create(array(
+            'name'              => 'Usagi',
+            'location'          => 'Shibuya',
+            'type'              => '',
+            'lunch_price'       => 950,
+            'points'            => 'Nice cosy place serving diffrent dishes every day. Japanese\'s western style food',
+            'experience'        => 'I had a avocado roastbeef on rice, coming with a soup and small salad, and it was very delicious. I also liked the interior, very cosy (despite no windows).',
+            'visited'           => true,
+            'visit_date'        => '2018-03-06 14:00:00',
+            'google_maps_link'  => '',
+            'tabelog_link'      => '',
+            'official_website'  => '',
+            'score_lunch'       => 3,
+            'score_place'       => 2,
+            'score_food'        => 2,
+            'score_price'       => 1,
+            'score_date'        => 1
         ));
         $resto->attachTags(['']);
         $resto->fillCoordinatesFromString('');
@@ -1760,7 +1802,7 @@ class RestaurantsTableSeeder extends Seeder
 
         // https://www.google.co.jp/maps/place/Aoyama+Gapao+cafeteria/@35.6605176,139.7072851,20z/data=!4m5!3m4!1s0x60188b5f23844e4d:0xa1cb2866057c2e9e!8m2!3d35.6605892!4d139.707427?hl=en
 
-
+// https://www.menya-cocoro.com/
 
         // https://www.youtube.com/watch?v=S-Xm7s9eGxU
         // https://goo.gl/TbjN44
