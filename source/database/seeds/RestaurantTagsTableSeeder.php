@@ -52,6 +52,10 @@ class RestaurantTagsTableSeeder extends Seeder
         ));
 
         RestaurantTag::create(array(
+            'label'              => 'chinese'
+        ));
+
+        RestaurantTag::create(array(
             'label'              => 'western'
         ));
 

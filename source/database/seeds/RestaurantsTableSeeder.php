@@ -1702,9 +1702,9 @@ class RestaurantsTableSeeder extends Seeder
             'experience'        => 'The garage punk atmosphere is cool. The burgers are a bit expensive, but they do come with a drink, more french fries than usual, and are truly unique. Most of the taste comes from the topping, spices they put on the patty. Delicious spices mix, but quite salty. Fresh vegetables are used. My personal disapointement came from the fact that the patty had some hard bits in it, a bit like in a tsukune, and I don\'t like this. ',
             'visited'           => true,
             'visit_date'        => '2018-02-28 13:00:00',
-            'google_maps_link'  => '',
-            'tabelog_link'      => '',
-            'official_website'  => '',
+            'google_maps_link'  => 'https://www.google.co.jp/maps/place/Whoopi+goldburger/@35.6595163,139.7029215,18z/data=!4m5!3m4!1s0x60188b588e8beb35:0x28bc4f730f3a2180!8m2!3d35.6604164!4d139.7043645',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13121586/',
+            'official_website'  => 'https://www.yelp.com/biz/%E3%82%A6%E3%83%BC%E3%83%94%E3%83%BC%E3%82%B4%E3%83%BC%E3%83%AB%E3%83%89%E3%83%90%E3%83%BC%E3%82%AC%E3%83%BC-%E6%B8%8B%E8%B0%B7%E5%8C%BA-2',
             'score_lunch'       => 3,
             'score_place'       => 1,
             'score_food'        => 2,
@@ -1712,20 +1712,20 @@ class RestaurantsTableSeeder extends Seeder
             'score_date'        => 0
         ));
         $resto->attachTags(['burger']);
-        $resto->fillCoordinatesFromString('');
+        $resto->fillCoordinatesFromString('35.6604551,139.6999866,16');
 
         $resto = Restaurant::create(array(
             'name'              => 'Aoyama Gapao Cafeteria',
-            'location'          => '',
-            'type'              => '',
+            'location'          => 'Shibuya',
+            'type'              => 'Thai',
             'lunch_price'       => 950,
             'points'            => 'Very good food with lunch set under 1000 yen. Great gapao. Nice and cosy interior. Also sells bentos.',
-            'experience'        => '',
+            'experience'        => 'I liked the place. Tables, isolated big tables, and counter available. I ordered a gapao, and it was delicious, coming with a very nice set (even including a Frisk candy).',
             'visited'           => true,
             'visit_date'        => '2018-03-01 13:00:00',
             'google_maps_link'  => 'https://www.google.co.jp/maps/place/Aoyama+Gapao+cafeteria/@35.6605176,139.7072851,20z/data=!4m5!3m4!1s0x60188b5f23844e4d:0xa1cb2866057c2e9e!8m2!3d35.6605892!4d139.707427',
-            'tabelog_link'      => '',
-            'official_website'  => '',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13041239/',
+            'official_website'  => 'http://www.gapao-shokudo.com/',
             'score_lunch'       => 3,
             'score_place'       => 2,
             'score_food'        => 3,
@@ -1737,15 +1737,15 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create(array(
             'name'              => 'Napolimania',
-            'location'          => '',
+            'location'          => 'Shibuya',
             'type'              => 'Italian',
             'lunch_price'       => 1200,
             'points'            => 'Nice place. Decent pizza, but felt a bit overpriced.',
-            'experience'        => '',
+            'experience'        => 'The place was nice and the music as well (rare thing). I had a marguerita pizza, and it was decent, but neither tasty nor big. For a price of 1200 yen, I was disapointed.',
             'visited'           => true,
             'visit_date'        => '2018-03-02 13:00:00',
             'google_maps_link'  => 'https://www.google.co.jp/maps/place/NAPOLIMANIA/@35.6597848,139.7115779,16z/data=!4m5!3m4!1s0x60188b5f21d207d7:0x2dc310dd7861f428!8m2!3d35.6604508!4d139.7076778',
-            'tabelog_link'      => '',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13125763/',
             'official_website'  => 'http://www.napolimania.co.jp/',
             'score_lunch'       => 2,
             'score_place'       => 1,
@@ -1759,14 +1759,14 @@ class RestaurantsTableSeeder extends Seeder
         $resto = Restaurant::create(array(
             'name'              => 'Usagi',
             'location'          => 'Shibuya',
-            'type'              => '',
+            'type'              => 'Western Japanese',
             'lunch_price'       => 950,
-            'points'            => 'Nice cosy place serving diffrent dishes every day. Japanese\'s western style food',
-            'experience'        => 'I had a avocado roastbeef on rice, coming with a soup and small salad, and it was very delicious. I also liked the interior, very cosy (despite no windows).',
+            'points'            => 'Nice cosy place serving diffrent dishes every day. Japanese\'s western style food.',
+            'experience'        => 'I had a avocado roastbeef on rice, coming with a soup and small salad, and it was very delicious. I also liked the interior, no windows, but very cosy.',
             'visited'           => true,
             'visit_date'        => '2018-03-06 14:00:00',
-            'google_maps_link'  => '',
-            'tabelog_link'      => '',
+            'google_maps_link'  => 'https://www.google.co.jp/maps/place/Usagi/@35.6599439,139.7052533,17z/data=!4m5!3m4!1s0x60188b5f4aaa6483:0xf826d8fa1bed3181!8m2!3d35.6609308!4d139.7064869',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13005386/',
             'official_website'  => '',
             'score_lunch'       => 3,
             'score_place'       => 2,
@@ -1774,8 +1774,50 @@ class RestaurantsTableSeeder extends Seeder
             'score_price'       => 1,
             'score_date'        => 1
         ));
-        $resto->attachTags(['']);
-        $resto->fillCoordinatesFromString('');
+        $resto->attachTags(['western']);
+        $resto->fillCoordinatesFromString('35.660917, 139.706510');
+
+        $resto = Restaurant::create(array(
+            'name'              => 'Moyan',
+            'location'          => 'Shibuya',
+            'type'              => 'Curry',
+            'lunch_price'       => 1080,
+            'points'            => 'All you can eat Japanese curry and salad buffet. Very good. 1080 yen. Very nice interior.',
+            'experience'        => 'I immediately liked the inside of this restaurant very much. The buffet offerd a wide variety of curry (regular or spicy), rice, potatoes, chicken, salads and vegetables. No time limit, for a rather cheap price. Tables and counters with mangas available.',
+            'visited'           => true,
+            'visit_date'        => '2018-03-07 13:00:00',
+            'google_maps_link'  => 'https://www.google.co.jp/maps/place/%E3%82%82%E3%81%86%E3%82%84%E3%82%93%E3%82%AB%E3%83%AC%E3%83%BC+246/@35.6607497,139.7074511,17z/data=!4m5!3m4!1s0x60188b58ca441c0b:0x70a4014716ce7539!8m2!3d35.6606752!4d139.7063233',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13090209/',
+            'official_website'  => 'http://www.moyan.jp/',
+            'score_lunch'       => 3,
+            'score_place'       => 2,
+            'score_food'        => 2,
+            'score_price'       => 2,
+            'score_date'        => 0
+        ));
+        $resto->attachTags(['japanese curry','all you can eat']);
+        $resto->fillCoordinatesFromString('35.6608075,139.7061413,21');
+
+        $resto = Restaurant::create(array(
+            'name'              => 'Yousyu Syonin',
+            'location'          => 'Shibuya',
+            'type'              => 'Chinese',
+            'lunch_price'       => 920,
+            'points'            => 'Good chinese restaurant with large choice of noodles and dumplings.',
+            'experience'        => 'The interior is nothing fancy but spacious enough. I liked the choice offered by the menu in term of noodles and dumplings. I had some "eggplants mabu ramen" for 920yen and it was delicious. But as it is the case most of the time with noodles/ramen, I was still feeling a bit hungry after that.',
+            'visited'           => true,
+            'visit_date'        => '2018-03-08 13:00:00',
+            'google_maps_link'  => 'https://www.google.co.jp/maps/place/Yousyu-Syonin/@35.6593334,139.6996758,18z/data=!4m5!3m4!1s0x60188ca9654e3b75:0xcc1c755c2ecff434!8m2!3d35.6610877!4d139.696838?hl=en',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13198283/',
+            'official_website'  => 'http://www.yousyusyonin.com/',
+            'score_lunch'       => 3,
+            'score_place'       => 1,
+            'score_food'        => 2,
+            'score_price'       => 1,
+            'score_date'        => 0
+        ));
+        $resto->attachTags(['chinese','ramen','gyoza','dumpling','noodle']);
+        $resto->fillCoordinatesFromString('35.661099, 139.696842');
 
 /*
         $resto = Restaurant::create(array(
@@ -1801,6 +1843,8 @@ class RestaurantsTableSeeder extends Seeder
 */
 
         // https://www.google.co.jp/maps/place/Aoyama+Gapao+cafeteria/@35.6605176,139.7072851,20z/data=!4m5!3m4!1s0x60188b5f23844e4d:0xa1cb2866057c2e9e!8m2!3d35.6605892!4d139.707427?hl=en
+
+        // https://www.google.co.jp/maps/place/Nataraj/@35.6637637,139.6992895,15z/data=!4m5!3m4!1s0x0:0x81f4524b4461190c!8m2!3d35.6611253!4d139.7010487?hl=en
 
 // https://www.menya-cocoro.com/
 
