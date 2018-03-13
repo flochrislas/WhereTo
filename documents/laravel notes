@@ -181,3 +181,6 @@ https://github.com/jenssegers/agent
 HTML5 geolocalisation
 https://www.w3schools.com/html/html5_geolocation.asp
 https://developer.mozilla.org/en-US/docs/Web/API/Geolocation/Using_geolocation
+
+Default route resource:
+https://stackoverflow.com/questions/23505875/laravel-routeresource-vs-routecontroller

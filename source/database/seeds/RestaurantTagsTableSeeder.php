@@ -211,5 +211,29 @@ class RestaurantTagsTableSeeder extends Seeder
             'label'              => 'sandwich'
         ));
 
+        RestaurantTag::create(array(
+            'label'              => 'noodles'
+        ));
+
+        RestaurantTag::create(array(
+            'label'              => 'gyoza'
+        ));
+
+        RestaurantTag::create(array(
+            'label'              => 'dumpling'
+        ));
+
+        RestaurantTag::create(array(
+            'label'              => 'smoking allowed'
+        ));
+
+        RestaurantTag::create(array(
+            'label'              => 'no smoking'
+        ));
+
+        RestaurantTag::create(array(
+            'label'              => 'smoking area'
+        ));
+
     }
 }
