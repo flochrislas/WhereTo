@@ -1819,6 +1819,27 @@ class RestaurantsTableSeeder extends Seeder
         $resto->attachTags(['chinese','ramen','gyoza','dumpling','noodle']);
         $resto->fillCoordinatesFromString('35.661099, 139.696842');
 
+        $resto = Restaurant::create(array(
+            'name'              => 'Kua \'Aina',
+            'location'          => 'Shibuya',
+            'type'              => 'Burger',
+            'lunch_price'       => 1500,
+            'points'            => 'Nice burger chain. Wide choice of customizable, big, delicious burgers, for a price. Counter and tables availablein a spacious room with windows.',
+            'experience'        => 'The inside is nice. Decor is nice, but it is organized as a fast food chain. However, the burgers are slow to come (like, 10 minutes). I paid about 1500 yen for a avocado mozarella burger set. Came with some good french fries and a drink. In conclusion, real good burger, but too expensive for me as a regular lunch.',
+            'visited'           => true,
+            'visit_date'        => '2018-03-09 13:00:00',
+            'google_maps_link'  => 'https://www.google.co.jp/maps/place/Kua+\'Aina,+%E3%83%A1%E3%82%BE%E3%83%B3%E3%83%BB%E3%83%89%E3%83%BB%E3%83%A6%E3%83%BC+1+Chome-10-4+Shibuya,+Shibuya-ku,+T%C5%8Dky%C5%8D-to+150-0002/@35.6590469,139.705265,18z/data=!4m2!3m1!1s0x60188b58be2d69f5:0xf3b420cd3cba980c',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13001358/',
+            'official_website'  => 'http://www.kua-aina.com/',
+            'score_lunch'       => 2,
+            'score_place'       => 1,
+            'score_food'        => 2,
+            'score_price'       => 0,
+            'score_date'        => 0
+        ));
+        $resto->attachTags(['burger','sandwich']);
+        $resto->fillCoordinatesFromString('35.6605744,139.7053451,22');
+
 /*
         $resto = Restaurant::create(array(
             'name'              => '',
