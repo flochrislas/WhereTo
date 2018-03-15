@@ -4,9 +4,6 @@
 
 @section('content')
 <div id="content">
-
-    <div id="position-report"></div>
-
     <h2>{{ $restaurants->count() }} Restaurants</h2>
 
     @if ($message = Session::get('success'))
@@ -16,16 +13,11 @@
     @endif
 
     <!-- Auto complete Experimental -->
-    <br>Filter:<br>
-    <input  type="search"
-            name="tag-input"
-            id="tag-input"
-            placeholder=""
-            data-action="{{ route('tags.autocomplete') }}" />
-    <br>
-    <input type="text" id="tag-selection"><br>
+    <br>Autocomplete tags (script1)<br>
+    <input type="search" name="term" id="q" data-action="{{ route('tags.autocomplete') }}">
+    <br><input type="text" id="qid"><br>
     <script type="text/javascript">
-      $('#tag-input').each(function() {
+      $('#q').each(function() {
           var $this = $(this);
           var src = $this.data('action');
 
@@ -34,31 +26,47 @@
               minLength: 2,
               select: function(event, ui) {
                   $this.val(ui.item.value);
-                  $('#tag-selection').val(ui.item.id);
-                  $('#tag-search').val(ui.item.value);
-              }lass="btn btn-info"
+                  $('#qid').val(ui.item.id);
+              }
           });
       });
     </script>
 
+    <BR>Autocomplete tags (script2)<BR>
+    <input id="searchString" type="search" name="term"
+      placeholder="Enter Search String" class="form-control" />
+    <script type="text/javascript">
+    $('#searchString').autocomplete({
+                source: '{!!URL::route('tags.autocomplete')!!}',
+                minLength: 2
+            } );
+    </script>
+
     <br>
+
+    <!-- Geolocalisation -->
+    <p id="demo"></p>
+    <br>
+
 
     <!-- SEARCH http://justlaravel.com/search-functionality-laravel/ -->
     <form action="" method="GET" role="search" name="mainSearch">
         {{ csrf_field() }}
-        <input  type="search"
-                name="tags"
-                id="tag-search"
-                value="{!! old('tags') !!}"
-                placeholder="Search tags">
-        <input type="hidden" name="op" value="AND">
-        <input type="hidden" name="position" id="position">
-        <button type="submit">
-          <!-- search icon -->
-        </button>
+        <div class="input-group">
+            <input type="search" class="form-control"
+                    name="tags" value="{!! old('tags') !!}"
+                    placeholder="Search tags">
+            <input type="hidden" name="op" value="AND">
+            <input type="hidden" name="position" id="position">
+            <span class="input-group-btn">
+                <button type="submit" class="btn btn-default">
+                    <span class="glyphicon glyphicon-search"></span>
+                </button>
+            </span>
+        </div>
     </form>
 
-    <table>
+    <table class="table table-bordered">
         <tr>
             <th>Name</th>
             <th>Type</th>
@@ -107,15 +115,14 @@
           <td>{{ $restaurant->score_price }}</td>
           <td>{{ $restaurant->score_date }}</td>
           <td>
-              <a href="{{ route('restaurants.details',$restaurant->id) }}">Show</a>
+              <a class="btn btn-info" href="{{ route('restaurants.details',$restaurant->id) }}">Show</a>
           </td>
       </tr>
     @endforeach
     </table>
 
-    <!-- Javascript for geolocaisation -->
     <script>
-    var x = document.getElementById("position-report");
+    var x = document.getElementById("demo");
     var y = document.getElementById("position");
     getLocation();
 
@@ -130,10 +137,8 @@
     }
 
     function showPosition(position) {
-        /*
         x.innerHTML = "Latitude: " + position.coords.latitude +
         "<br>Longitude: " + position.coords.longitude;
-        */
         y.value = position.coords.latitude + "," + position.coords.longitude;
     }
 
@@ -154,5 +159,5 @@
         }
     }
     </script>
-</div>
+
 @endsection

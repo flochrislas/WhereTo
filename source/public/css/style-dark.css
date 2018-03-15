@@ -1,12 +1,19 @@
-div {
+div, nav {
   border: yellow solid;
   border-width: 1px;
 }
 
 html, body {
- font-family: 'Open Sans',sans-serif;
- background-color: black;
- color: #d0d0d2;
+  background-color: black;
+  font-family: 'Open Sans',sans-serif;
+  font-size: 100%;
+  /*color: #d0d0d2;*/ /* grey */
+  color: #CAD0AF; /* grey 2 */
+}
+
+#app {
+  margin: 0;
+  padding: 0;
 }
 
 a {
@@ -18,9 +25,11 @@ h1, h2, h3 {
 }
 
 #header {
-	margin: 10px;
+	margin: .5em;
+  margin-bottom: 1em;
   display: flex;
   flex-direction: row;
+  align-items: center;
 }
 
 #header .left {
@@ -34,7 +43,8 @@ h1, h2, h3 {
   flex: 1;
   display: flex;
   flex-direction: row;
-  justify-content: space-around ;
+  justify-content: space-around;
+  align-items: center;
 }
 
 #header div {
@@ -42,7 +52,12 @@ h1, h2, h3 {
 }
 
 #footer {
-	margin: 10px;
+	margin: .5em;
+  margin-top: 2em;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
 }
 
 #footer div {
@@ -50,18 +65,20 @@ h1, h2, h3 {
 }
 
 #content {
-  margin: 10px;
-	background-color: #141422;
+  background-color: #141422; /* almost black */
+  margin: .5em;
 	color: #d0d0d2;
   display: flex;
   flex-direction: column;
 }
 
 td {
-	background-color: rgba(20,146,135,.5);
+	/*background-color: rgba(20,146,135,.5); // dark emerald */
+  background-color: #262633; /* light black */
 }
 
 .center {
+   justify-content: center;
    align-content: center;
    align-items: center;
    margin: auto;
@@ -88,6 +105,33 @@ td {
   color: #20968b;border-width:2px;
 }
 
+.tap {
+    background-color: #3BA0C3;
+    border-color: #45C3EC;
+    border-style:  solid;
+    border-width: .2em;
+    border-radius: 1em;
+    color: black;
+    text-align: center;
+    text-decoration: none;
+    padding: .7em 1.15em;
+    margin: 0;
+    white-space: nowrap;
+
+    /* Prevent background color leak outs */
+    -webkit-background-clip: padding-box;
+    -moz-background-clip:    padding;
+    background-clip:         padding-box;
+    overflow: hidden;
+}
+
+.title {
+  font-family: 'ITCAvantGardeStdBk', sans-serif;
+  color: #45C3EC;
+  font-size: 2em;
+  font-weight: 700;
+  text-decoration: none;
+}
 
 .button--basic {
 

@@ -1,14 +1,14 @@
 <nav id="header">
   <!-- Branding Image -->
   <div class="left">
-      <a href="{{ url('/') }}">
+      <a class="title" href="{{ url('/') }}">
           {{ config('app.name', 'WhereTo') }}
       </a>
   </div>
 
   <div class="right">
     @if (Auth::guest())
-      <a href="{{ route('about') }}"><strong>About</strong></a>
+      <a class="tap" href="{{ route('about') }}"><strong>About</strong></a>
       <a href="{{ url('/login') }}">Login</a>
       <a href="{{ url('/register') }}">Register</a>
     @else

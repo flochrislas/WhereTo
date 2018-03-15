@@ -38,14 +38,14 @@
 
 </head>
 <body>
-    <div id="app">
+    <!-- <div id="app"> -->
         <!-- HEADER -->
         @include('layouts.header')
         <!-- CONTENT -->
         @yield('content')
         <!-- FOOTER -->
         @include('layouts.footer')
-    </div>
+    <!-- </div> -->
 
 </body>
 </html>
