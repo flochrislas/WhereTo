@@ -33,7 +33,7 @@ class RestaurantsTableSeeder extends Seeder
         $resto = Restaurant::create(array(
             'name'              => 'Hakata Furyu',
             'location'          => 'Shibuya',
-            'type'              => 'ramen',
+            'type'              => 'Ramen',
             'lunch_price'       => 800,
             'points'            => 'Tonkostsu miso available, up to 2 free kaidama, choice soft/hard for the noodles',
             'experience'        => 'Very good ramen, strong taste, good price, not very confortable (narrow counter, crappy pop music...)',
@@ -48,15 +48,15 @@ class RestaurantsTableSeeder extends Seeder
             'score_price'       => 2,
             'score_date'        => 0
         ));
-        $resto->attachTags(['ramen', 'miso']);
+        $resto->attachTags(['ramen','noodles','miso']);
         $resto->fillCoordinatesFromString('35.658545, 139.698468');
 
         $resto = Restaurant::create(array(
             'name'              => 'Kindenmaru',
             'location'          => 'Shibuya',
-            'type'              => 'ramen',
+            'type'              => 'Ramen',
             'lunch_price'       => 900,
-            'points'            => '(dont remember)',
+            'points'            => 'A regular ramen restaurant. Good ramen, but nothing really noteworthy.',
             'experience'        => 'Good ramen, slightly more confortable than Hakata Furyu, but slightly less tasty',
             'visited'           => true,
             'visit_date'        => '2017-09-05 13:00:00',
@@ -69,13 +69,13 @@ class RestaurantsTableSeeder extends Seeder
             'score_price'       => 1,
             'score_date'        => 0
         ));
-        $resto->attachTags(['ramen']);
+        $resto->attachTags(['ramen','noodles']);
         $resto->fillCoordinatesFromString('35.659122, 139.698168');
 
         $resto = Restaurant::create(array(
             'name'              => 'Hikarihishio',
             'location'          => 'Shibuya',
-            'type'              => 'ramen',
+            'type'              => 'Ramen',
             'lunch_price'       => 900,
             'points'            => 'A regular ramen restaurant. Nothing noteworthy.',
             'experience'        => 'Decent ramen, I did not like much the meat which was thin and containing too much fat for my enjoyment.',
@@ -90,13 +90,13 @@ class RestaurantsTableSeeder extends Seeder
             'score_price'       => 1,
             'score_date'        => 0
         ));
-        $resto->attachTags(['ramen']);
+        $resto->attachTags(['ramen','noodles']);
         $resto->fillCoordinatesFromString('35.658591, 139.698608');
 
         $resto = Restaurant::create(array(
             'name'              => 'Nanashi tonkotsuhen',
             'location'          => 'Shibuya',
-            'type'              => 'ramen',
+            'type'              => 'Ramen',
             'lunch_price'       => 800,
             'points'            => 'Tonkotsu available, a bit more confortable than the average ramen restaurant (larger counter, quiet jazz music).',
             'experience'        => 'Decent ramen, but taste too light for me (I tried the awakoku aji tamago ramen).',
@@ -111,13 +111,13 @@ class RestaurantsTableSeeder extends Seeder
             'score_price'       => 1,
             'score_date'        => 1
         ));
-        $resto->attachTags(['ramen']);
+        $resto->attachTags(['ramen','noodles','tonkotsu']);
         $resto->fillCoordinatesFromString('35.659177, 139.698102');
 
         $resto = Restaurant::create(array(
             'name'              => 'Denzo',
             'location'          => 'Shibuya',
-            'type'              => 'ramen',
+            'type'              => 'Ramen',
             'lunch_price'       => 900,
             'points'            => 'Miso available (red, white and black), a bit more confortable than the average ramen restaurant (larger counter). Jazz music, but not so quiet. Some small tables are also available. No customization / question asked for the ramens.',
             'experience'        => 'Disapointing: maybe decent ramen, but taste way too light for me. Could not feel the miso, men were a bit thick and the yellow kind (not my favorite). Meat was good.',
@@ -132,16 +132,16 @@ class RestaurantsTableSeeder extends Seeder
             'score_price'       => 1,
             'score_date'        => 0
         ));
-        $resto->attachTags(['ramen']);
+        $resto->attachTags(['ramen','noodles']);
         $resto->fillCoordinatesFromString('35.660566, 139.698425');
 
         $resto = Restaurant::create(array(
             'name'              => 'Ippudo',
             'location'          => 'Shibuya, Udagawacho',
-            'type'              => 'ramen',
+            'type'              => 'Ramen',
             'lunch_price'       => 800,
-            'points'            => 'Fairly customizable ramen, one free kaidama available.',
-            'experience'        => 'Very good ramen.',
+            'points'            => 'Fairly customizable ramen, one free kaidama available. Feels "cleaner" that regular ramen places.',
+            'experience'        => 'Very good ramen. Good miso.',
             'visited'           => true,
             'visit_date'        => '2017-09-05 13:00:00',
             'google_maps_link'  => 'https://www.google.co.jp/maps/place/IPPUDO+SHIROMARU+BASE+%E6%B8%8B%E8%B0%B7%E5%BA%97/@35.6603496,139.6970402,17z/data=!4m12!1m6!3m5!1s0x60188ca849c5a249:0xaa481a46e532685c!2zSVBQVURPIFNISVJPTUFSVSBCQVNFIOa4i-iwt-W6lw!8m2!3d35.6603496!4d139.6992289!3m4!1s0x60188ca849c5a249:0xaa481a46e532685c!8m2!3d35.6603496!4d139.6992289',
@@ -153,7 +153,7 @@ class RestaurantsTableSeeder extends Seeder
             'score_price'       => 1,
             'score_date'        => 0
         ));
-        $resto->attachTags(['ramen']);
+        $resto->attachTags(['ramen','noodles','miso','tonkotsu']);
         $resto->fillCoordinatesFromString('35.660598, 139.699240');
 
         $resto = Restaurant::create(array(
@@ -180,10 +180,10 @@ class RestaurantsTableSeeder extends Seeder
         $resto = Restaurant::create(array(
             'name'              => 'Wendy\'s first kitchen',
             'location'          => 'Shibuya, Udagawacho',
-            'type'              => 'burger',
+            'type'              => 'Burger',
             'lunch_price'       => 1000,
-            'points'            => 'various stuff, but mostly famous for burgers. Interior slightly better than average similar chain (better than BK). Price slightly mor eexpensive.',
-            'experience'        => 'Good burgers. But no better than BK, for more money.',
+            'points'            => 'Various stuff, but mostly famous for burgers. Interior slightly better than average similar chain (better than BK). Price slightly more expensive.',
+            'experience'        => 'Good burgers. Other dishes also available. To me the burgers are similar to what you can find at Burger King, but more expensive. ',
             'visited'           => true,
             'visit_date'        => '2017-09-05 13:00:00',
             'google_maps_link'  => 'https://www.google.co.jp/maps/place/Wendy\'s+First+Kitchen+Shibuya+Centergai/@35.6601241,139.6969061,17z/data=!4m12!1m6!3m5!1s0x60188ca84a78fb55:0x538d580460ef2bb7!2sWendy\'s+First+Kitchen+Shibuya+Centergai!8m2!3d35.6601241!4d139.6990948!3m4!1s0x60188ca84a78fb55:0x538d580460ef2bb7!8m2!3d35.6601241!4d139.6990948',
@@ -201,7 +201,7 @@ class RestaurantsTableSeeder extends Seeder
         $resto = Restaurant::create(array(
             'name'              => 'Taco Bell',
             'location'          => 'Shibuya',
-            'type'              => 'tacos',
+            'type'              => 'Tacos',
             'lunch_price'       => 900,
             'points'            => 'Mexican style fast food, mostly buritos and tacos. Possibility to choose beef porc or chicken for the meat.',
             'experience'        => 'Quite good, but it could be cheaper.',
@@ -222,7 +222,7 @@ class RestaurantsTableSeeder extends Seeder
         $resto = Restaurant::create(array(
             'name'              => 'Kebab Cafe',
             'location'          => 'Shibuya',
-            'type'              => 'turk',
+            'type'              => 'Turk',
             'lunch_price'       => 900,
             'points'            => 'Popular turkish dishes such as kebab, possibility to eat inside on table. Dishes come on a plate, and with soup and tea.',
             'experience'        => 'Very good food in decent quantity, despite a rather cheap price. The place itself is not very confortable (narrow space).',
@@ -243,10 +243,10 @@ class RestaurantsTableSeeder extends Seeder
         $resto = Restaurant::create(array(
             'name'              => 'Coco Ichi',
             'location'          => 'Shibuya, Cerulean Tower',
-            'type'              => 'japanese curry',
+            'type'              => 'Japanese curry',
             'lunch_price'       => 900,
-            'points'            => 'Highly customizable japanese curry.',
-            'experience'        => 'Once you find the right combination for you, it can be really delicious. I personally have "chicken katsu (deepfried) curry + nasu (eggplants) + cheese, ichi-kara (spicy level 1)"',
+            'points'            => 'Highly customizable japanese curry. Very delicious. Counter only.',
+            'experience'        => 'Once you find the right combination for you, it can be really delicious. I personally have "chicken katsu (deepfried) curry + nasu (eggplants) + cheese, ichi-kara (spicy level 1)". English menu is available.',
             'visited'           => true,
             'visit_date'        => '2017-09-05 13:00:00',
             'google_maps_link'  => 'https://www.google.co.jp/maps/place/CoCo%E5%A3%B1%E7%95%AA%E5%B1%8B+%E6%B8%8B%E8%B0%B7%E5%8C%BA%E6%A1%9C%E4%B8%98%E7%94%BA%E5%BA%97/@35.6569245,139.6982403,17z/data=!4m12!1m6!3m5!1s0x60188b579e0464dd:0x5838a075cb9595d6!2zQ29Db-WjseeVquWxiyDmuIvosLfljLrmoZzkuJjnlLrlupc!8m2!3d35.6569245!4d139.700429!3m4!1s0x60188b579e0464dd:0x5838a075cb9595d6!8m2!3d35.6569245!4d139.700429',
@@ -263,11 +263,11 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create(array(
             'name'              => 'Coco Ichi',
-            'location'          => 'Shibuya',
-            'type'              => 'japanese curry',
+            'location'          => 'Shibuya, Udagawacho',
+            'type'              => 'Japanese curry',
             'lunch_price'       => 900,
-            'points'            => 'Highly customizable japanese curry.',
-            'experience'        => 'Very good.',
+            'points'            => 'Highly customizable japanese curry. Very delicious. Counter and tables.',
+            'experience'        => 'Once you find the right combination for you, it can be really delicious. I personally have "chicken katsu (deepfried) curry + nasu (eggplants) + cheese, ichi-kara (spicy level 1)". English menu is available.',
             'visited'           => true,
             'visit_date'        => '2017-09-05 13:00:00',
             'google_maps_link'  => 'https://www.google.co.jp/maps/place/Curry+House+CoCo+Ichibanya+Shibuya-ku+Udagawach%C5%8D/@35.6598584,139.6987342,17.75z/data=!4m12!1m6!3m5!1s0x60188ca847c5a6d3:0xf060181e5db80755!2sCurry+House+CoCo+Ichibanya+Shibuya-ku+Udagawach%C5%8D!8m2!3d35.6605355!4d139.6994646!3m4!1s0x0:0xf060181e5db80755!8m2!3d35.6605352!4d139.6994649',
@@ -306,10 +306,10 @@ class RestaurantsTableSeeder extends Seeder
         $resto = Restaurant::create(array(
             'name'              => 'Standing pizza bar Cona',
             'location'          => 'not far from ramen street',
-            'type'              => 'pizzeria',
+            'type'              => 'Pizzeria',
             'lunch_price'       => 500,
-            'points'            => 'super cheap, standing at the counter (no chairs)',
-            'experience'        => 'decent pizza for a super cheap 500 yen comes with a small salad and a drink. Pizza is a bit small so better be not too much hungry',
+            'points'            => 'Standing at the counter (no chairs). Very cheap, light pizza.',
+            'experience'        => 'Decent pizza for a super cheap 500 yen comes with a small salad and a drink. Pizza is a bit small so better be not too much hungry.',
             'visited'           => true,
             'visit_date'        => '2017-09-05 13:00:00',
             'google_maps_link'  => 'https://www.google.co.jp/maps/place/CONA+%E6%B8%8B%E8%B0%B7%E5%BA%97/@35.6589355,139.6984178,18z/data=!4m5!3m4!1s0x60188b562b7be10f:0x5deeb948e867ca8!8m2!3d35.6586609!4d139.6986567',
@@ -429,7 +429,7 @@ class RestaurantsTableSeeder extends Seeder
         $resto->fillCoordinatesFromString('35.657202, 139.701579');
 
         $resto = Restaurant::create(array(
-            'name'              => 'mazesoba shichi',
+            'name'              => 'Mazesoba Shichi',
             'location'          => 'Shibuya',
             'type'              => 'Mazesoba',
             'lunch_price'       => 800,
@@ -450,11 +450,11 @@ class RestaurantsTableSeeder extends Seeder
         $resto->fillCoordinatesFromString('35.656633, 139.701051');
 
         $resto = Restaurant::create(array(
-            'name'              => 'pizza bar Cona',
-            'location'          => 'down the street behind our office',
-            'type'              => 'pizzeria',
+            'name'              => 'Cona',
+            'location'          => 'Shibuya',
+            'type'              => 'Pizzeria',
             'lunch_price'       => 500,
-            'points'            => 'Cheap and light pizza, counter or tables available. 500 for just the pizza, +300yen for salad bar and drink bar. pasta lunch also available.',
+            'points'            => 'Cheap and light pizza, counter or tables available. 500 for just the pizza, +300yen for salad bar and drink bar. Pasta lunch also available.',
             'experience'        => 'Decent pizza 30cm, but very light (very thin crust and topping), better not be hungry. Counter is small, not very confortable. When I went there it was also too cold.',
             'visited'           => true,
             'visit_date'        => '2017-09-05 13:00:00',
@@ -471,12 +471,12 @@ class RestaurantsTableSeeder extends Seeder
         $resto->fillCoordinatesFromString('35.656251, 139.701582');
 
         $resto = Restaurant::create(array(
-            'name'              => 'kin no torikara',
-            'location'          => 'next to ippudo, center gai',
-            'type'              => 'fried chiken karahage take out only',
+            'name'              => 'Kin no torikara',
+            'location'          => 'Shibuya, Udagawacho',
+            'type'              => 'Fried chicken to go',
             'lunch_price'       => 400,
             'points'            => 'Outside and no tables. Cheap, fast, to have on the go. Fried chicken or fries in a paper bag. Various sauce availble (including lemon juice).',
-            'experience'        => 'simple, good, I use it if I still need some more food if my lunch was too light. Nowhere to sit down around there, so have to walk around while eating or just stand there.',
+            'experience'        => 'Simple, good, I use it if I still need some more food if my lunch was too light. Nowhere to sit down around there, so have to walk around while eating or just stand there.',
             'visited'           => true,
             'visit_date'        => '2017-09-05 13:00:00',
             'google_maps_link'  => 'https://www.google.co.jp/maps/place/Kin-No-Torikara/@35.6589156,139.699263,17.21z/data=!4m5!3m4!1s0x60188ca849e8e51b:0x43472eed3e78c550!8m2!3d35.6603157!4d139.6992248',
@@ -492,9 +492,9 @@ class RestaurantsTableSeeder extends Seeder
         $resto->fillCoordinatesFromString('35.660329, 139.699224');
 
         $resto = Restaurant::create(array(
-            'name'              => 'mangako thai chicken rice',
-            'location'          => 'alongside the river down the big street our side',
-            'type'              => 'thai',
+            'name'              => 'Mangako thai chicken rice',
+            'location'          => 'Shibuya',
+            'type'              => 'Thai',
             'lunch_price'       => 800,
             'points'            => 'supposedly famous chicken rice',
             'experience'        => 'I\'ve been told there were a thai restaurant chain in Shibuya serving chicken rice, and EVEN in Thailand, there were a line. So I went there, and arrived shortly in front a restaurant exposing dead chicken on its facade. No line. I go inside, and its small and crappy, with shitty music on the top. I order the famous chicken rice, for an outstanding 800yen. It comes quickly, with a soup (hot water) and some sauce (like sweet chinese shoyu with a touch of vinegar). The amount is ridiculously small (note that you could double it for 400yen). What\'s more, the chicken is actually half chicken, half chicken skin. I eat, nothing special at all. Rice is not really good. Chicken is nice and soft and tasteless, for the few bites I had on it. The sauce was good. Oh, and surprisingly enough, it also came with a mini-bucket full of pakuchi... this stuff is usually expensive here. And that was it, EXTREMELY disapointed. I felt robbed. Of my money. My time. My hopes. And still hungry.',
@@ -515,7 +515,7 @@ class RestaurantsTableSeeder extends Seeder
         $resto = Restaurant::create(array(
             'name'              => 'Tokumasa curry',
             'location'          => 'Shibuya, 3Chome',
-            'type'              => 'japanese curry',
+            'type'              => 'Japanese curry',
             'lunch_price'       => 800,
             'points'            => 'Nice atmosphere. Elvis Presley music.',
             'experience'        => 'Well balanced curry.',
@@ -536,7 +536,7 @@ class RestaurantsTableSeeder extends Seeder
         $resto = Restaurant::create(array(
             'name'              => 'Ramen and Tsukemen',
             'location'          => 'Shibuya',
-            'type'              => 'ramen',
+            'type'              => 'Ramen',
             'lunch_price'       => 800,
             'points'            => 'tonkostsu ramen, soupless ramen, curry, gyoza... and mini versions available.',
             'experience'        => 'Tried the white miso ramne, and it was pretty bland, not worth the 800yen. I liked the atmosphere, very local, kinda cosy, with the TV on and the grand mothers as the staff.',
@@ -578,7 +578,7 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create(array(
             'name'              => 'Mediterranean Pizzeria Domani',
-            'location'          => 'behind office along the JR tracks',
+            'location'          => 'Shibuyq',
             'type'              => 'italian',
             'lunch_price'       => 900,
             'points'            => 'Interior OK. Pizza OK but really nothing special... 900 yen for pizza + salad. The salad (some lattuce) is small but the dressing is delicious. Tables and counter, not small.',
@@ -683,7 +683,7 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create(array(
             'name'              => 'Kura',
-            'location'          => 'after bic camera annex shibuya',
+            'location'          => 'Shibuya',
             'type'              => 'Italian',
             'lunch_price'       => 1000,
             'points'            => 'Decent italian. They have decent gorgonzola pizza. Good choice of pasta, pizza and salad, decent interior.',
@@ -935,7 +935,7 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create(array(
             'name'              => 'Salasa',
-            'location'          => 'Shibuya - Center gai',
+            'location'          => 'Shibuya - Udagawacho',
             'type'              => 'izakaya',
             'lunch_price'       => 1050,
             'points'            => 'Various Japanese teishoku (lunch sets). Izakaya style. Small. Smallest tables ever. TV broadcasting news chanel. Slow service. Very good teishoku (lunch set)',
@@ -1082,7 +1082,7 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create(array(
             'name'              => 'Ajigen',
-            'location'          => 'Shibuya, in front of the Labi',
+            'location'          => 'Shibuya',
             'type'              => 'Ramen',
             'lunch_price'       => 850,
             'points'            => 'Decent miso ramen. Spicy "dragon" miso ramen available. Decent gyoza also available. No table, counter only. Staff very friendly to foreigners. English and Chinese menus available.',
@@ -1098,7 +1098,7 @@ class RestaurantsTableSeeder extends Seeder
             'score_price'       => 1,
             'score_date'        => 0
         ));
-        $resto->attachTags(['ramen', 'miso']);
+        $resto->attachTags(['ramen','noodles','miso']);
         $resto->fillCoordinatesFromString('35.660128, 139.698765');
 
         $resto = Restaurant::create(array(
@@ -1258,7 +1258,7 @@ class RestaurantsTableSeeder extends Seeder
             'visited'           => true,
             'visit_date'        => '2018-01-09 13:00:00',
             'google_maps_link'  => 'https://www.google.co.jp/maps/place/WGT+weekend+garage+tokyo/@35.6566471,139.6996475,17z/data=!4m5!3m4!1s0x60188b5b4d795555:0xc87a6fea4655753c!8m2!3d35.6527391!4d139.7057962',
-            'tabelog_link'      => '',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13158522/',
             'official_website'  => '',
             'score_lunch'       => 3,
             'score_place'       => 2,
@@ -1376,7 +1376,7 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create(array(
             'name'              => 'Ramen center gai',
-            'location'          => 'Shibuya',
+            'location'          => 'Shibuya, Udagawacho',
             'type'              => 'Ramen',
             'lunch_price'       => 900,
             'points'            => '',
@@ -1438,9 +1438,9 @@ class RestaurantsTableSeeder extends Seeder
         $resto->fillCoordinatesFromString('35.660079,139.703123');
 
         $resto = Restaurant::create(array(
-            'name'              => 'Italian restaurant behind office',
+            'name'              => 'Italian restaurant behind Cerulean Tower',
             'location'          => 'Shibuya',
-            'type'              => 'Ramen',
+            'type'              => 'Italian',
             'lunch_price'       => 1000,
             'points'            => 'Nice little restaurant. Pasta lunch for 1000 yen coming with salad and coffee. Counter and tables.',
             'experience'        => 'I enjoyed eating there. The waitress was very nice. The food was good. Price OK, but food amount not big.',
@@ -1485,7 +1485,7 @@ class RestaurantsTableSeeder extends Seeder
             'type'              => 'French',
             'lunch_price'       => 1300,
             'points'            => 'Delicious French galettes, quiches, and croque-monsieur. Quiet place (not a lot of people in Seibu B2F), comfortable. Food above my usual lunch budget, but worth it.',
-            'experience'        => 'Lunch set are around 1300 yen for a mini salad and soup plus a dish. I tried galette complette and quiche, and it was delicious. They use very good ingredients, such as ham and cheese, which is real nice.',
+            'experience'        => 'Lunch set are around 1300 yen for a mini salad and soup plus a dish. I tried galette complette and quiche, and it was delicious. They use very good ingredients, such as French ham and cheese, which is real nice.',
             'visited'           => true,
             'visit_date'        => '2018-02-07 13:00:00',
             'google_maps_link'  => 'https://www.google.co.jp/maps/place/%E3%83%86%E3%82%A3%E3%83%BB%E3%83%AD%E3%83%A9%E3%83%B3%E3%83%89+%E3%82%AB%E3%83%95%E3%82%A7+%E8%A5%BF%E6%AD%A6%E6%B8%8B%E8%B0%B7%E5%BA%97/@35.6591348,139.6991112,18z/data=!3m1!5s0x60188ca8177055e1:0xf009a238452b6721!4m8!1m2!2m1!1sTi+Rolande!3m4!1s0x0:0x344364f4c78281ba!8m2!3d35.6603571!4d139.700345',
@@ -1523,7 +1523,7 @@ class RestaurantsTableSeeder extends Seeder
 
 
         $resto = Restaurant::create(array(
-            'name'              => 'Ichiban ramen (2minibaachan)',
+            'name'              => 'Ichiban',
             'location'          => 'Shibuya',
             'type'              => 'Ramen',
             'lunch_price'       => 750,
@@ -1840,6 +1840,48 @@ class RestaurantsTableSeeder extends Seeder
         $resto->attachTags(['burger','sandwich']);
         $resto->fillCoordinatesFromString('35.6605744,139.7053451,22');
 
+        $resto = Restaurant::create(array(
+            'name'              => 'Ichiran',
+            'location'          => 'Shibuya, Spain-zaka',
+            'type'              => 'Ramen',
+            'lunch_price'       => 900,
+            'points'            => 'Very good and customizable ramen. Very popular, so expect wait time.',
+            'experience'        => 'Inside is like a windowless factory. you eat on a narrow counter with wooden panels on the side to isolate you from the persons next to you. Those panels can be folded if you are with friends. Ramen are easily customizable thanks to a paper available in multiple languages. If you know what you like, you can get very delicious ramen there. However, despite its 900 yen price, the base ramen is small and very few ingredients. Adding stuff makes the final price very expensive for a ramen.',
+            'visited'           => true,
+            'visit_date'        => '2018-03-16 13:00:00',
+            'google_maps_link'  => 'https://www.google.co.jp/maps/place/Ichiran/@35.6590403,139.7011174,17z/data=!4m5!3m4!1s0x60188ca9ab71057d:0x3cf8b41707c84c2b!8m2!3d35.6609782!4d139.6986629',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13166058/',
+            'official_website'  => 'https://en.ichiran.com/shop/tokyo/shibuya-spain/',
+            'score_lunch'       => 2,
+            'score_place'       => 1,
+            'score_food'        => 2,
+            'score_price'       => 0,
+            'score_date'        => 0
+        ));
+        $resto->attachTags(['ramen','noodles']);
+        $resto->fillCoordinatesFromString('35.6610036,139.6899592,15');
+
+        $resto = Restaurant::create(array(
+            'name'              => 'Hakata tenjin',
+            'location'          => 'Shibuya',
+            'type'              => 'Ramen',
+            'lunch_price'       => 750,
+            'points'            => 'Ramen restaurant opened on the street. Cheap prices, good ramen, and variety of free toppings. Counter and tables available.',
+            'experience'        => 'I like the fact that it is opened on the street. When it is cold, they have a plastic curtain to keep the inside warm. The ramen are really good for the price, and taste can easily be adjusted with available toppings. Speciality is tonkotsu but miso is also available. No machine, and English menu available.',
+            'visited'           => true,
+            'visit_date'        => '2018-03-19 13:00:00',
+            'google_maps_link'  => 'https://www.google.co.jp/maps/place/Hakata+tenjin+shibuya+minamiguchi/@35.6579276,139.6989165,19z/data=!3m1!4b1!4m5!3m4!1s0x60188b57b9d066b3:0xe8bbac7199ca83b!8m2!3d35.6579276!4d139.699465',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13004828/',
+            'official_website'  => '',
+            'score_lunch'       => 3,
+            'score_place'       => 1,
+            'score_food'        => 2,
+            'score_price'       => 2,
+            'score_date'        => 0
+        ));
+        $resto->attachTags(['ramen','noodles','tonkotsu','miso']);
+        $resto->fillCoordinatesFromString('35.657915, 139.699472');
+
 /*
         $resto = Restaurant::create(array(
             'name'              => '',
@@ -1868,6 +1910,10 @@ class RestaurantsTableSeeder extends Seeder
         // https://www.google.co.jp/maps/place/Nataraj/@35.6637637,139.6992895,15z/data=!4m5!3m4!1s0x0:0x81f4524b4461190c!8m2!3d35.6611253!4d139.7010487?hl=en
 
 // https://www.menya-cocoro.com/
+
+        // https://hubjapan.io/articles/10-best-ramen-restaurants-in-shibuya
+
+        // MOMOKO recommends ramen avec le cochon juste la, et aussi le thai restaurant rouge
 
         // https://www.youtube.com/watch?v=S-Xm7s9eGxU
         // https://goo.gl/TbjN44
