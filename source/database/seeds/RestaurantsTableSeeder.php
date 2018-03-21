@@ -1882,6 +1882,27 @@ class RestaurantsTableSeeder extends Seeder
         $resto->attachTags(['ramen','noodles','tonkotsu','miso']);
         $resto->fillCoordinatesFromString('35.657915, 139.699472');
 
+        $resto = Restaurant::create(array(
+            'name'              => 'Tinun',
+            'location'          => 'Shibuya',
+            'type'              => 'Thai',
+            'lunch_price'       => 800 ,
+            'points'            => 'Place is small, counter only, and not very comfortable. Food is very good and not expensive.',
+            'experience'        => 'When I got there after 1pm, they did not have gapao available anymore. But I could get a porc gapao (instead of chicken) for 200yen more. It was still below 1000yen for the dish, and it was tasty, very good.',
+            'visited'           => true,
+            'visit_date'        => '2018-03-20 13:00:00',
+            'google_maps_link'  => 'https://www.google.co.jp/maps/place/%E3%83%86%E3%82%A3%E3%83%BC%E3%83%8C%E3%83%B3%E3%83%BB%E3%83%80%E3%82%A4%E3%83%8B%E3%83%B3%E3%82%B0+%E6%B8%8B%E8%B0%B7%E9%81%93%E7%8E%84%E5%9D%82%E5%BA%97/@35.6580891,139.6983244,17.5z/data=!4m8!1m2!2m1!1z44OG44Kj44O844OM44Oz!3m4!1s0x0:0xd0db487936a61f3d!8m2!3d35.6579648!4d139.6993697',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13004646/',
+            'official_website'  => 'http://www.spiceroad.co.jp/Shop_FC_Shibuya.html',
+            'score_lunch'       => 2,
+            'score_place'       => 1,
+            'score_food'        => 2,
+            'score_price'       => 1,
+            'score_date'        => 0
+        ));
+        $resto->attachTags(['']);
+        $resto->fillCoordinatesFromString('');
+
 /*
         $resto = Restaurant::create(array(
             'name'              => '',
