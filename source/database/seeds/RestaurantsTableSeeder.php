@@ -1900,8 +1900,31 @@ class RestaurantsTableSeeder extends Seeder
             'score_price'       => 1,
             'score_date'        => 0
         ));
-        $resto->attachTags(['']);
-        $resto->fillCoordinatesFromString('');
+        $resto->attachTags(['thai','gapao']);
+        $resto->fillCoordinatesFromString('35.657993, 139.699343');
+
+
+        $resto = Restaurant::create(array(
+            'name'              => 'Hokkaido Ramen',
+            'location'          => 'Shibuya',
+            'type'              => 'Ramen',
+            'lunch_price'       => 900,
+            'points'            => 'Standard ramen restaurant with just a counter. Slightly more confortable, less narrow than usual. Hokkaido specialities. Decent taste. Not cheap. Friendly staff and Enlish menu available.',
+            'experience'        => 'The counter is slightly larger than usual. I tried some shoyu ginger ramen for 900 yen. Decent, but I felt like for this price I should have got something better.',
+            'visited'           => true,
+            'visit_date'        => '2018-03-22 13:00:00',
+            'google_maps_link'  => '',
+            'tabelog_link'      => '',
+            'official_website'  => '',
+            'score_lunch'       => 1,
+            'score_place'       => 1,
+            'score_food'        => 1,
+            'score_price'       => 1,
+            'score_date'        => 0
+        ));
+        $resto->attachTags(['ramen','noodles']);
+        $resto->fillCoordinatesFromString('35.658978, 139.696993');
+        
 
 /*
         $resto = Restaurant::create(array(
@@ -1934,11 +1957,10 @@ class RestaurantsTableSeeder extends Seeder
 
         // https://hubjapan.io/articles/10-best-ramen-restaurants-in-shibuya
 
-        // MOMOKO recommends ramen avec le cochon juste la, et aussi le thai restaurant rouge
-
         // https://www.youtube.com/watch?v=S-Xm7s9eGxU
         // https://goo.gl/TbjN44
 
+// nathan recommwend ramen place behind office behind mormons church
 
         // fill coordinates
         $this->fillNullCoordinatesFromGoogleMapsLink();
