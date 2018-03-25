@@ -9,6 +9,7 @@
               {{ session('status') }}
           </div>
       @endif
+      <a href="{{ route('restaurants.filter') }}">Lunch in Shibuya</a>
       <a href="{{ route('restaurants.main') }}">Voir les restos</a>
   </div>
 </div>

@@ -40,6 +40,10 @@ one touch display the tags instead of having to type any letters... diaply tags 
 global info
 Lunch time: most regular restaurants open between 11:30 and 3pm for lunch. Lots of big chain restaurants just stay opened all the time.
 
+FAIRE DEFILER les details a travers les resultats  upon swipe droite gauche
+
+afficher les filtres actif et tap remove et bouton filter pour en ajouter en retournant sur la pages des tags
+
 -----------
 
 Score lunch global:
@@ -70,13 +74,6 @@ Score for dates:
 0: Bad for dates
 1: Decent for dates
 2: Great for dates
-
-
-
-
-----
-
-Florent, have you heard of French metal band Mordiggan? metamorphose
 
 ----------------------------
 

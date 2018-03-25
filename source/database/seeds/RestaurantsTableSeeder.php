@@ -284,8 +284,8 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create(array(
             'name'              => 'Jonathan\'s',
-            'location'          => 'behind tower',
-            'type'              => 'family restaurant',
+            'location'          => 'Shibuya, Cerulean',
+            'type'              => 'Family restaurant',
             'lunch_price'       => 900,
             'points'            => 'wide choice of dishes, also deserts, comfortable',
             'experience'        => 'good',
@@ -1438,8 +1438,8 @@ class RestaurantsTableSeeder extends Seeder
         $resto->fillCoordinatesFromString('35.660079,139.703123');
 
         $resto = Restaurant::create(array(
-            'name'              => 'Italian restaurant behind Cerulean Tower',
-            'location'          => 'Shibuya',
+            'name'              => 'Italian',
+            'location'          => 'Shibuya, Cerulean',
             'type'              => 'Italian',
             'lunch_price'       => 1000,
             'points'            => 'Nice little restaurant. Pasta lunch for 1000 yen coming with salad and coffee. Counter and tables.',
@@ -1909,7 +1909,7 @@ class RestaurantsTableSeeder extends Seeder
             'location'          => 'Shibuya',
             'type'              => 'Ramen',
             'lunch_price'       => 900,
-            'points'            => 'Standard ramen restaurant with just a counter. Slightly more confortable, less narrow than usual. Hokkaido specialities. Decent taste. Not cheap. Friendly staff and Enlish menu available.',
+            'points'            => 'Standard ramen restaurant with just a counter. Slightly more confortable, less narrow than usual. Hokkaido specialities. Decent taste. Not cheap. Friendly staff and English menu available.',
             'experience'        => 'The counter is slightly larger than usual. I tried some shoyu ginger ramen for 900 yen. Decent, but I felt like for this price I should have got something better.',
             'visited'           => true,
             'visit_date'        => '2018-03-22 13:00:00',
