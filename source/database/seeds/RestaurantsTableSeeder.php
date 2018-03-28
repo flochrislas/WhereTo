@@ -1924,6 +1924,29 @@ class RestaurantsTableSeeder extends Seeder
         ));
         $resto->attachTags(['ramen','noodles']);
         $resto->fillCoordinatesFromString('35.658978, 139.696993');
+
+        $resto = Restaurant::create(array(
+            'name'              => 'Nataraj',
+            'location'          => 'Shibuya',
+            'type'              => 'Indian curry',
+            'lunch_price'       => 1080,
+            'points'            => 'Vegetarian indian curry. Spacious and clean room with large tables. Lunch on menu or all-you-can-eat 1080yen buffet with 4 types of curry, 2 types of nan, rice, salad, and dessert.',
+            'experience'        => 'I was very pleased with the place, bright, spacious, and clean. The buffet was good for the price. Not very spicy, which is not a problem to me, but not very tasty either, which is unfortunate.',
+            'visited'           => true,
+            'visit_date'        => '2018-03-26 13:00:00',
+            'google_maps_link'  => 'https://www.google.co.jp/maps/place/Nataraj/@35.6637637,139.6992895,15z/data=!4m5!3m4!1s0x0:0x81f4524b4461190c!8m2!3d35.6611253!4d139.7010487',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13187248/',
+            'official_website'  => 'http://nataraj2.sakura.ne.jp/cafe3/language.html',
+            'score_lunch'       => 2,
+            'score_place'       => 2,
+            'score_food'        => 1,
+            'score_price'       => 1,
+            'score_date'        => 1
+        ));
+        $resto->attachTags(['indian curry','all you can eat']);
+        $resto->fillCoordinatesFromString('35.661124, 139.701007');
+
+        
         
 
 /*
@@ -1950,8 +1973,6 @@ class RestaurantsTableSeeder extends Seeder
 */
 
         // https://www.google.co.jp/maps/place/Aoyama+Gapao+cafeteria/@35.6605176,139.7072851,20z/data=!4m5!3m4!1s0x60188b5f23844e4d:0xa1cb2866057c2e9e!8m2!3d35.6605892!4d139.707427?hl=en
-
-        // https://www.google.co.jp/maps/place/Nataraj/@35.6637637,139.6992895,15z/data=!4m5!3m4!1s0x0:0x81f4524b4461190c!8m2!3d35.6611253!4d139.7010487?hl=en
 
 // https://www.menya-cocoro.com/
 
