@@ -133,6 +133,14 @@ td {
   text-decoration: none;
 }
 
+#restaurantsFilter {
+
+}
+
+#restaurantsResults {
+  display: none;
+}
+
 #nameAndType a {
   font-family: 'ITCAvantGardeStdBk', sans-serif;
   color: #45C3EC;
