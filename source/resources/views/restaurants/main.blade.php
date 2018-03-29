@@ -1,91 +1,37 @@
 @extends('layouts.app')
 
-@section('title', 'Restaurant Index')
+@section('title', 'Restaurants')
 
 @section('content')
 <div id="content">
 
-    <div id="position-report"></div>
+  <div id="restaurantsFilter">
+    @include('restaurants.filter')
 
-    <div>Filtered {{ $restaurants->count() }} restaurants around Shibuya</div>
+    <button onclick="showResults()">Display Results</button>
 
-    <table>
-    @foreach ($restaurants as $restaurant)
-      <tr>
-          <td id="nameAndType">
-            <a href="{{ route('restaurants.details',$restaurant->id) }}">
-            <div class="restaurantName">{{ $restaurant->name }}</div>
-            <div class="restaurantType">{{ $restaurant->type }}</div>
-            </a>
-          </td>
-          <td class="center">
-            <a target="_blank"
-              href="{{ $restaurant->google_maps_link }}">
-              {{ App\GeoUtils::walkingTime($restaurant->currentDistance/1000) }}mn
-            </a>
-          </td>
-          <td>
-            <table class="center">
-              <tr>
-                <th>lunch</th>
-                <th>food</th>
-                <th>place</th>
-                <th>price</th>
-                <th>date</th>
-              </tr>
-              <tr>
-                <td>{{ $restaurant->score_lunch }}</td>
-                <td>{{ $restaurant->score_food }}</td>
-                <td>{{ $restaurant->score_place }}</td>
-                <td>{{ $restaurant->score_price }}</td>
-                <td>{{ $restaurant->score_date }}</td>
-              </tr>
-            </table>
-          </td>
-      </tr>
-    @endforeach
-    </table>
+  </div>
 
-    <!-- Javascript for geolocaisation -->
-    <script>
-    var x = document.getElementById("position-report");
-    var y = document.getElementById("position");
-    getLocation();
+  <div id="restaurantsResults">
+    @include('restaurants.results')
 
-    function getLocation() {
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(showPosition, showError);
-            // it is also possible to get continuously updated coords from the method watchPosition()
-            // see https://www.w3schools.com/html/html5_geolocation.asp
-        } else {
-            x.innerHTML = "Geolocation is not supported by this browser.";
-        }
-    }
+    <button onclick="showFilter()">Display Filter</button>
+  </div>
 
-    function showPosition(position) {
-        /*
-        x.innerHTML = "Latitude: " + position.coords.latitude +
-        "<br>Longitude: " + position.coords.longitude;
-        */
-        y.value = position.coords.latitude + "," + position.coords.longitude;
-    }
-
-    function showError(error) {
-        switch(error.code) {
-            case error.PERMISSION_DENIED:
-                x.innerHTML = "User denied the request for Geolocation."
-                break;
-            case error.POSITION_UNAVAILABLE:
-                x.innerHTML = "Location information is unavailable."
-                break;
-            case error.TIMEOUT:
-                x.innerHTML = "The request to get user location timed out."
-                break;
-            case error.UNKNOWN_ERROR:
-                x.innerHTML = "An unknown error occurred."
-                break;
-        }
-    }
-    </script>
 </div>
+
+<script>
+function showResults() {
+  var restaurantsFilter = document.getElementById("restaurantsFilter");
+  var restaurantsResults = document.getElementById("restaurantsResults");
+  restaurantsFilter.style.display = "none";
+  restaurantsResults.style.display = "block";
+}
+function showFilter() {
+  var restaurantsFilter = document.getElementById("restaurantsFilter");
+  var restaurantsResults = document.getElementById("restaurantsResults");
+  restaurantsFilter.style.display = "block";
+  restaurantsResults.style.display = "none";
+}
+</script>
 @endsection

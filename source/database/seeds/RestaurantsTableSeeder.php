@@ -1438,7 +1438,7 @@ class RestaurantsTableSeeder extends Seeder
         $resto->fillCoordinatesFromString('35.660079,139.703123');
 
         $resto = Restaurant::create(array(
-            'name'              => 'Italian',
+            'name'              => 'House Pinocchio',
             'location'          => 'Shibuya, Cerulean',
             'type'              => 'Italian',
             'lunch_price'       => 1000,
@@ -1446,9 +1446,9 @@ class RestaurantsTableSeeder extends Seeder
             'experience'        => 'I enjoyed eating there. The waitress was very nice. The food was good. Price OK, but food amount not big.',
             'visited'           => true,
             'visit_date'        => '2018-02-02 13:00:00',
-            'google_maps_link'  => '',
-            'tabelog_link'      => '',
-            'official_website'  => '',
+            'google_maps_link'  => 'https://www.google.com/maps/place/HOUSE+Pinocchio/@35.6573518,139.6999394,18z/data=!4m5!3m4!1s0x60188b56e4646293:0x73626089e8d76f06!8m2!3d35.655811!4d139.698432',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13213606/',
+            'official_website'  => 'https://www.facebook.com/pg/housepino/about/',
             'score_lunch'       => 2,
             'score_place'       => 1,
             'score_food'        => 1,
@@ -1650,11 +1650,11 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create(array(
             'name'              => 'Napoli',
-            'location'          => 'Shibuya',
+            'location'          => 'Shibuya, 1Chome',
             'type'              => 'Italian',
             'lunch_price'       => 500,
             'points'            => 'Super cheap (at lunch time) good italian restaurant, with a nice interior (tables and counter).',
-            'experience'        => 'The place is B1F but I liked it, nice ambiance, nice decoration. Pizza are 500 yen, made in a real oven in front of you. Not the greatest pizza arround, but the quality is very good for the price.',
+            'experience'        => 'The place is B1F but I liked it, nice ambiance, nice decoration. Pizza are 500 yen, made in a real oven in front of you. Maybe not the greatest pizza arround, but the quality is very good for the price (beats lots of most expensive restaurants). The lunch set also includes a small salad and soup.',
             'visited'           => true,
             'visit_date'        => '2018-02-26 13:00:00',
             'google_maps_link'  => 'https://www.google.co.jp/maps/place/PIZZERIA+BAR+NAPOLI+%E6%B8%8B%E8%B0%B7%E5%AE%AE%E7%9B%8A%E5%9D%82%E5%BA%97/@35.6599485,139.7035384,17z/data=!4m12!1m6!3m5!1s0x0:0x9e9b701b33f10831!2sTerra+burgers!8m2!3d35.660019!4d139.7065421!3m4!1s0x60188b557775a767:0x3b86406957ab553b!8m2!3d35.6610288!4d139.7060101',
@@ -1946,7 +1946,26 @@ class RestaurantsTableSeeder extends Seeder
         $resto->attachTags(['indian curry','all you can eat']);
         $resto->fillCoordinatesFromString('35.661124, 139.701007');
 
-        
+        $resto = Restaurant::create(array(
+            'name'              => 'Los barbados',
+            'location'          => 'Shibuya, Udagawacho',
+            'type'              => 'Exotic',
+            'lunch_price'       => 900,
+            'points'            => 'Very small cosy restaurant, with just a counter and maybe 7 seats. Cooks about 5 different dishes, mostly oriental curry and vegetarian.',
+            'experience'        => 'I liked the ambiance of the place. It is very small but not uncomfortable. The dishes are about 900 yen for a decent amount and a salad/appetizer. I really enjoyed my chicken with lemon and wine sauce (the only non-vegetarian dish), it was very good.',
+            'visited'           => true,
+            'visit_date'        => '2018-03-29 13:00:00',
+            'google_maps_link'  => 'https://www.google.co.jp/maps/place/Los+barbados/@35.6603113,139.7021973,17z/data=!4m5!3m4!1s0x60188cac120307a9:0xbdcff87b735db17a!8m2!3d35.6627575!4d139.6952733',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13111493/',
+            'official_website'  => 'http://www7b.biglobe.ne.jp/~los-barbados/',
+            'score_lunch'       => 2,
+            'score_place'       => 1,
+            'score_food'        => 2,
+            'score_price'       => 1,
+            'score_date'        => 0
+        ));
+        $resto->attachTags([''curry', 'vegetarian'']);
+        $resto->fillCoordinatesFromString('35.662753, 139.695291');
         
 
 /*
@@ -1971,8 +1990,6 @@ class RestaurantsTableSeeder extends Seeder
         $resto->attachTags(['']);
         $resto->fillCoordinatesFromString('');
 */
-
-        // https://www.google.co.jp/maps/place/Aoyama+Gapao+cafeteria/@35.6605176,139.7072851,20z/data=!4m5!3m4!1s0x60188b5f23844e4d:0xa1cb2866057c2e9e!8m2!3d35.6605892!4d139.707427?hl=en
 
 // https://www.menya-cocoro.com/
 
