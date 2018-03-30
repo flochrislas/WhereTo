@@ -42,5 +42,10 @@
     <input type="hidden" name="position" id="position">
     <button type="submit">
       <!-- search icon -->
+      SUBMIT
     </button>
 </form>
+
+<div id="tags">
+
+</div>

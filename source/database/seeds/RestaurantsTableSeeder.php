@@ -1966,6 +1966,27 @@ class RestaurantsTableSeeder extends Seeder
         ));
         $resto->attachTags([''curry', 'vegetarian'']);
         $resto->fillCoordinatesFromString('35.662753, 139.695291');
+
+        $resto = Restaurant::create(array(
+            'name'              => 'Thai Garden',
+            'location'          => 'Shibuya',
+            'type'              => 'Thai',
+            'lunch_price'       => 950,
+            'points'            => 'Very nice interior. Good lunch sets for a decent price.',
+            'experience'        => 'Inside is quite nice, with multiple sections, different tables sizes and counter, and feels clean too. For 950yen I got a good gapao (not the best ever, not very spicy, but still delicious), a nie soup and a small salad, and even a desert.',
+            'visited'           => true,
+            'visit_date'        => '2018-03-30 13:00:00',
+            'google_maps_link'  => 'https://www.google.co.jp/maps/place/%E6%B8%8B%E8%B0%B7+%E3%82%BF%E3%82%A4%E6%96%99%E7%90%86+%E5%80%8B%E5%AE%A4+%E9%A3%9F%E4%BA%8B+%E3%82%BF%E3%82%A4%E3%82%AC%E3%83%BC%E3%83%87%E3%83%B3/@35.6583444,139.7020995,17z/data=!4m5!3m4!1s0x0:0x4b86853a09b84b59!8m2!3d35.660515!4d139.699487',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13122178/',
+            'official_website'  => 'http://thaigardenspice.com/thai-garden-shibuya/',
+            'score_lunch'       => 3,
+            'score_place'       => 2,
+            'score_food'        => 2,
+            'score_price'       => 1,
+            'score_date'        => 1
+        ));
+        $resto->attachTags(['thai','gapao','green curry']);
+        $resto->fillCoordinatesFromString('35.660501, 139.699428');
         
 
 /*
