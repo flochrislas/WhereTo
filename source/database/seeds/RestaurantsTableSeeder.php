@@ -1671,7 +1671,7 @@ class RestaurantsTableSeeder extends Seeder
 
 
         $resto = Restaurant::create(array(
-            'name'              => 'Curry',
+            'name'              => 'Curry Kailas',
             'location'          => 'Shibuya',
             'type'              => 'Curry',
             'lunch_price'       => 900,
