@@ -1987,6 +1987,27 @@ class RestaurantsTableSeeder extends Seeder
         ));
         $resto->attachTags(['thai','gapao','green curry']);
         $resto->fillCoordinatesFromString('35.660501, 139.699428');
+
+        $resto = Restaurant::create(array(
+            'name'              => '',
+            'location'          => 'Shibuya',
+            'type'              => 'Vietnamese',
+            'lunch_price'       => 950,
+            'points'            => 'Good Vietnamese dishes, customizable sets, decent prices and decent place.',
+            'experience'        => 'There were a nice space with tables, but unfortunaltey single people are placed on a less nice area, on a counter. It is still confortable though, and I appreciated the meal, very good. For 950yen, I got to choose a combination of Pho, a side dish, and some jelly for dessert.',
+            'visited'           => true,
+            'visit_date'        => '2018-04-03 13:00:00',
+            'google_maps_link'  => '',
+            'tabelog_link'      => '',
+            'official_website'  => '',
+            'score_lunch'       => 2,
+            'score_place'       => 1,
+            'score_food'        => 2,
+            'score_price'       => 1,
+            'score_date'        => 0
+        ));
+        $resto->attachTags(['']);
+        $resto->fillCoordinatesFromString('');
         
 
 /*

@@ -184,3 +184,31 @@ https://developer.mozilla.org/en-US/docs/Web/API/Geolocation/Using_geolocation
 
 Default route resource:
 https://stackoverflow.com/questions/23505875/laravel-routeresource-vs-routecontroller
+
+
+Colors from Gitkraken:
+    --purechat-p-bg: #20968b;
+    --purechat-p-bg-d: #1c8177;
+    --purechat-p-bg-l: #24ab9e;
+    --purechat-p-fg: #ffffff;
+    --purechat-p-fg-l: #ffffff;
+    --purechat-s-bg: #f8f7f5;
+    --purechat-s-bg-d: #e8e5df;
+    --purechat-s-bg-l: #ffffff;
+    --purechat-s-fg: #676a6d;
+    --purechat-s-fg-l: #3b404c;
+    --purechat-s-fg-d: #3b404c;
+    --purechat-a-d: #c11e1f;
+    --purechat-a-d-bg: #c11e1f;
+    --purechat-a-d-fg: #ffffff;
+    --purechat-btn-bg: #20968b;
+    --purechat-btn-fg: #ffffff;
+    --purechat-btn-b: rgba(255,255,255,0.5);
+    --purechat-btn-b-h: rgba(255, 255, 255, 1);
+
+Bunch of usefull chrome plugins
+https://www.creativebloq.com/web-design/google-chrome-extensions-21410570/2
+
+AJAX without JQuery
+https://blog.garstasio.com/you-dont-need-jquery/ajax/
+https://stackoverflow.com/questions/8567114/how-to-make-an-ajax-call-without-jquery

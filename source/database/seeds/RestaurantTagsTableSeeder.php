@@ -235,5 +235,13 @@ class RestaurantTagsTableSeeder extends Seeder
             'label'              => 'smoking area'
         ));
 
+        RestaurantTag::create(array(
+            'label'              => 'visa'
+        ));
+
+        RestaurantTag::create(array(
+            'label'              => 'filling'
+        ));
+
     }
 }
