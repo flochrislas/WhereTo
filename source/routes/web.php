@@ -32,6 +32,7 @@ Route::get('test-html', array('as' => 'test', function() {
     return view('test-html');
 }));
 
+Route::get('demo', 'RestaurantController@demo')->name('restaurants.demo');
 // Public restaurants pages
 Route::get('restaurants', 'RestaurantController@main')->name('restaurants.main');
 Route::get('restaurants/filter', 'RestaurantController@filterView')->name('restaurants.filter');

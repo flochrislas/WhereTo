@@ -11,6 +11,14 @@ use Excel;
 
 class RestaurantController extends Controller
 {
+
+    public function demo(Request $request)
+    {
+      $test = "yes it works";
+      Log::debug('demo');
+      return view('restaurants.results-data', compact('test'));
+    }
+
     /**
      * Public
      * Search for the list to display.
@@ -224,7 +232,7 @@ class RestaurantController extends Controller
 
     /**
      * Public
-     * Display the the restqurqnts filter page
+     * Display the the restaurants filter page
      */
     public function filterView()
     {

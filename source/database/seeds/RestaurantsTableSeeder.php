@@ -1997,16 +1997,37 @@ class RestaurantsTableSeeder extends Seeder
             'experience'        => 'There were a nice space with tables, but unfortunaltey single people are placed on a less nice area, on a counter. It is still confortable though, and I appreciated the meal, very good. For 950yen, I got to choose a combination of Pho, a side dish, and some jelly for dessert.',
             'visited'           => true,
             'visit_date'        => '2018-04-03 13:00:00',
-            'google_maps_link'  => '',
+            'google_maps_link'  => 'https://www.google.com/maps/place/Hanoi+no+Hoi-san+%E3%83%8F%E3%83%8E%E3%82%A4%E3%81%AE%E3%83%9B%E3%82%A4%E3%81%95%E3%82%93/@35.6579689,139.7011462,18z/data=!4m5!3m4!1s0x60188b575cf41757:0x7eb6060afb8be20!8m2!3d35.6561919!4d139.7008321',
             'tabelog_link'      => '',
-            'official_website'  => '',
+            'official_website'  => 'http://www.hoi-san.com/',
             'score_lunch'       => 2,
             'score_place'       => 1,
             'score_food'        => 2,
             'score_price'       => 1,
             'score_date'        => 0
         ));
-        $resto->attachTags(['']);
+        $resto->attachTags(['vietnamese']);
+        $resto->fillCoordinatesFromString('35.656229, 139.700786');
+
+        $resto = Restaurant::create(array(
+            'name'              => 'C.C. Curry',
+            'location'          => 'Shibuya',
+            'type'              => 'Curry',
+            'lunch_price'       => 600,
+            'points'            => 'Fast, cheap customizable Japanese curry. Clean place. Tables and large counters.',
+            'experience'        => 'Inside was better than a Cocoichi. More spacious, less busy, clean, overall more confortable. Prices are cheap, you can get a decent amount of food for 600yen. Dishes are customizable in a way very similar to Cocoichi. Salads also available. Curry is served almost immediately, no wait time. However, the curry is not very tasty and not very spicy. Quite bland, and the amount of curry itself in the dish is little.',
+            'visited'           => true,
+            'visit_date'        => '2018-04-04 13:00:00',
+            'google_maps_link'  => '',
+            'tabelog_link'      => '',
+            'official_website'  => '',
+            'score_lunch'       => 2,
+            'score_place'       => 1,
+            'score_food'        => 1,
+            'score_price'       => 2,
+            'score_date'        => 0
+        ));
+        $resto->attachTags(['japanese curry', 'filling']);
         $resto->fillCoordinatesFromString('');
         
 
