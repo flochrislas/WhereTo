@@ -2029,6 +2029,27 @@ class RestaurantsTableSeeder extends Seeder
         ));
         $resto->attachTags(['japanese curry', 'filling']);
         $resto->fillCoordinatesFromString('');
+
+        $resto = Restaurant::create(array(
+            'name'              => 'Tokyo Ramen',
+            'location'          => 'Shibuya',
+            'type'              => 'Ramen',
+            'lunch_price'       => 950,
+            'points'            => 'A decent ramen place. Tonkotsu ramen. Counter and tables. English available.',
+            'experience'        => 'Inside was not any kind of cool, but confortable enough. For 980yen I got a delicious roasted pork ramen of a copious amount. I was surprised at the amount of meat I got, and I liked the soup and the egg and vegetables put there by default (no need to fiddles with toppings, it is all there). If you are really hungry you can order additional rice dishes (and white rice is free!).',
+            'visited'           => true,
+            'visit_date'        => '2018-04-05 13:00:00',
+            'google_maps_link'  => '',
+            'tabelog_link'      => '',
+            'official_website'  => '',
+            'score_lunch'       => 3,
+            'score_place'       => 1,
+            'score_food'        => 2,
+            'score_price'       => 1,
+            'score_date'        => 0
+        ));
+        $resto->attachTags(['japanese curry', 'filling']);
+        $resto->fillCoordinatesFromString('');
         
 
 /*
