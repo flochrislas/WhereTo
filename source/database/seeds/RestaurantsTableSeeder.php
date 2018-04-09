@@ -2010,7 +2010,7 @@ class RestaurantsTableSeeder extends Seeder
         $resto->fillCoordinatesFromString('35.656229, 139.700786');
 
         $resto = Restaurant::create(array(
-            'name'              => 'C.C. Curry',
+            'name'              => 'C.C. Curry Shop',
             'location'          => 'Shibuya',
             'type'              => 'Curry',
             'lunch_price'       => 600,
@@ -2018,9 +2018,9 @@ class RestaurantsTableSeeder extends Seeder
             'experience'        => 'Inside was better than a Cocoichi. More spacious, less busy, clean, overall more confortable. Prices are cheap, you can get a decent amount of food for 600yen. Dishes are customizable in a way very similar to Cocoichi. Salads also available. Curry is served almost immediately, no wait time. However, the curry is not very tasty and not very spicy. Quite bland, and the amount of curry itself in the dish is little.',
             'visited'           => true,
             'visit_date'        => '2018-04-04 13:00:00',
-            'google_maps_link'  => '',
-            'tabelog_link'      => '',
-            'official_website'  => '',
+            'google_maps_link'  => 'https://www.google.com/maps/place/%E3%82%AB%E3%83%AC%E3%83%BC+%E3%82%B7%E3%83%A7%E3%83%83%E3%83%97+%EF%BC%A3%26%EF%BC%A3+%E6%B8%8B%E8%B0%B7%E5%BA%97/@35.6580951,139.7004052,18z/data=!4m8!1m2!2m1!1sC.C.+curry+shop!3m4!1s0x0:0x253b72297e04c7b5!8m2!3d35.6586559!4d139.6990921',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13049762/',
+            'official_website'  => 'http://www.curry-cc.jp/',
             'score_lunch'       => 2,
             'score_place'       => 1,
             'score_food'        => 1,
@@ -2028,7 +2028,7 @@ class RestaurantsTableSeeder extends Seeder
             'score_date'        => 0
         ));
         $resto->attachTags(['japanese curry', 'filling']);
-        $resto->fillCoordinatesFromString('');
+        $resto->fillCoordinatesFromString('35.658675, 139.699079');
 
         $resto = Restaurant::create(array(
             'name'              => 'Tokyo Ramen',
@@ -2048,7 +2048,28 @@ class RestaurantsTableSeeder extends Seeder
             'score_price'       => 1,
             'score_date'        => 0
         ));
-        $resto->attachTags(['japanese curry', 'filling']);
+        $resto->attachTags(['ramen', 'filling']);
+        $resto->fillCoordinatesFromString('');
+
+        $resto = Restaurant::create(array(
+            'name'              => 'Tapas and Pasta',
+            'location'          => 'Shibuya',
+            'type'              => 'Italian',
+            'lunch_price'       => 1000,
+            'points'            => 'Decent pasta, decent place, smoking allowed. Not really a good deal, especially for non-smoker.',
+            'experience'        => 'Despite being in B1F, the place is relatively nice. The problem if you do not smoke, is that there is no real separation between smoking and non-smoking. The smoke is well vented, but still the smell is not great... Ohter than that, the staff was nice, I liked my pasta, but it was kind of overpriced in my eyes: 1000 yen for a decent-but-not-copious plate of pasta and free drink bar.',
+            'visited'           => true,
+            'visit_date'        => '2018-04-09 13:00:00',
+            'google_maps_link'  => '',
+            'tabelog_link'      => '',
+            'official_website'  => '',
+            'score_lunch'       => 1,
+            'score_place'       => 1,
+            'score_food'        => 2,
+            'score_price'       => 0,
+            'score_date'        => 0
+        ));
+        $resto->attachTags(['pasta', 'smoking allowed', 'visa']);
         $resto->fillCoordinatesFromString('');
         
 
