@@ -8,25 +8,18 @@
   <div id="restaurantsFilter">
     @include('restaurants.filter')
 
-    <button onclick="showResults()">Display Results</button>
+    <button onclick="getResults()">Display Results</button>
 
   </div>
 
   <div id="restaurantsResults">
-    @include('restaurants.results')
-
     <button onclick="showFilter()">Display Filter</button>
+
+    @include('restaurants.results')
   </div>
 
 </div>
 
-<BR><BR>
-<button onclick="getResults()">Ey JaXx</button>
-<BR><BR>
-
-<div id="demo">
-  demo
-</div>
 
 <script>
 
@@ -45,16 +38,17 @@ function showFilter() {
 }
 
 function getResults() {
+  showResults();
   var xhr = new XMLHttpRequest();
-  xhr.open('GET', 'demo');
+  xhr.open('GET', 'restaurants/results');
   xhr.onload = function() {
       if (xhr.status === 200) {
-          document.getElementById("demo").innerHTML = xhr.responseText;
+          document.getElementById("results").innerHTML = xhr.responseText;
       }
   };
   xhr.send();
 }
-
+/***************************phony**********************************/
 function updateResults() {
   var xhr = new XMLHttpRequest();
   xhr.open('PUT', 'restaurants');
@@ -72,4 +66,47 @@ function updateResults() {
 }
 
 </script>
+
+<!-- Javascript for geolocaisation -->
+<script>
+var x = document.getElementById("position-report");
+var y = document.getElementById("position");
+getLocation();
+
+function getLocation() {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(showPosition, showError);
+        // it is also possible to get continuously updated coords from the method watchPosition()
+        // see https://www.w3schools.com/html/html5_geolocation.asp
+    } else {
+        x.innerHTML = "Geolocation is not supported by this browser.";
+    }
+}
+
+function showPosition(position) {
+    /*
+    x.innerHTML = "Latitude: " + position.coords.latitude +
+    "<br>Longitude: " + position.coords.longitude;
+    */
+    y.value = position.coords.latitude + "," + position.coords.longitude;
+}
+
+function showError(error) {
+    switch(error.code) {
+        case error.PERMISSION_DENIED:
+            x.innerHTML = "User denied the request for Geolocation."
+            break;
+        case error.POSITION_UNAVAILABLE:
+            x.innerHTML = "Location information is unavailable."
+            break;
+        case error.TIMEOUT:
+            x.innerHTML = "The request to get user location timed out."
+            break;
+        case error.UNKNOWN_ERROR:
+            x.innerHTML = "An unknown error occurred."
+            break;
+    }
+}
+</script>
+
 @endsection

@@ -32,10 +32,10 @@ Route::get('test-html', array('as' => 'test', function() {
     return view('test-html');
 }));
 
-Route::get('demo', 'RestaurantController@demo')->name('restaurants.demo');
 // Public restaurants pages
 Route::get('restaurants', 'RestaurantController@main')->name('restaurants.main');
 Route::get('restaurants/filter', 'RestaurantController@filterView')->name('restaurants.filter');
+Route::get('restaurants/results', 'RestaurantController@results')->name('restaurants.results');
 Route::get('restaurants/details/{id}', 'RestaurantController@details')->name('restaurants.details');
 Route::get('tags/autocomplete', 'RestaurantTagController@autocomplete')->name('tags.autocomplete');
 

@@ -12,11 +12,9 @@ use Excel;
 class RestaurantController extends Controller
 {
 
-    public function demo(Request $request)
+    public function main(Request $request)
     {
-      $test = "yes it works";
-      Log::debug('demo');
-      return view('restaurants.results-data', compact('test'));
+      return view('restaurants.main');
     }
 
     /**
@@ -27,7 +25,7 @@ class RestaurantController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function main(Request $request)
+    public function results(Request $request)
     {
         // Reads request parameters
         Log::debug('Request tags: '.request('tags'));
@@ -63,7 +61,8 @@ class RestaurantController extends Controller
         // https://laravel.com/docs/5.5/requests#old-input
         $request->flash();
 
-        return view('restaurants.main', compact('restaurants'));
+        // return view('restaurants.main', compact('restaurants'));
+        return view('restaurants.results-data', compact('restaurants'));
     }
 
     /**
