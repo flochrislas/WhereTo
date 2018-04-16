@@ -46,6 +46,46 @@
     </button>
 </form>
 
-<div id="tags">
+<p>drag and drop the following to reorder</p>
+<div id="order1"></div>
+<div id="order2"></div>
+<div id="order3"></div>
+<p>nearest first</p>
+<p>best first</p>
+<p>cheapest first</p>
 
+<p>Selection</p>
+<div id="selectedTags">
 </div>
+
+<p>Showing</p>
+<div id="tags">
+@foreach ($restaurantTags as $restaurantTag)
+    <div class="tag"
+          tagId="{{$restaurantTag->id}}"
+          id="tagShow{{$restaurantTag->id}}"
+          onClick="testA(event)">
+      {{$restaurantTag->label}}
+    </div>
+@endforeach
+</div>
+
+<script>
+function testA(event) {
+    /*var wer = event.target.getAttribute("tagId");*/
+  /*  alert(wer);*/
+  if (event.target.parentNode.id == "selectedTags") {
+    document.getElementById("tags").appendChild(event.target);
+  } else {
+    document.getElementById("selectedTags").appendChild(event.target);
+  }
+  /* Run the search from the selectedTags immediately in the background */
+  refreshResults();
+}
+function refreshResults() {
+  /* read all the div under selectedTags */
+  /* make a list of all their ids to send as parameters */
+  /* read order parameters */
+  /* AJAX request to update the reuslts */
+}
+</script>

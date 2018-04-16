@@ -67,7 +67,7 @@ function updateResults() {
 
 </script>
 
-<!-- Javascript for geolocaisation -->
+<!-- Javascript for geolocalisation -->
 <script>
 var x = document.getElementById("position-report");
 var y = document.getElementById("position");

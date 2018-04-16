@@ -12,6 +12,16 @@ use Session;
 class RestaurantTagController extends Controller
 {
 
+  public function restaurantsFilter(Request $request)
+  {
+      //fetch all restaurantTags data
+      $restaurantTags = RestaurantTag::orderBy('created_at','desc')->get();
+      // TODO: cache the result
+      //pass restaurantTags data to view and load list view
+      return view('restaurants.main', ['restaurantTags' => $restaurantTags]);
+      // return view('restaurants.main', compact('restaurantTags'));
+  }
+
   /**
    * Method for the autocomplete.
    * Cache the results.

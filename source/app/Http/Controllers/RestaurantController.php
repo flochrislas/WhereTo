@@ -14,6 +14,7 @@ class RestaurantController extends Controller
 
     public function main(Request $request)
     {
+      // main became for filters, tags, not restaurants
       return view('restaurants.main');
     }
 
