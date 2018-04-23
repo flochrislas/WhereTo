@@ -64,16 +64,15 @@
     <div class="tag"
           tagId="{{$restaurantTag->id}}"
           id="tagShow{{$restaurantTag->id}}"
-          onClick="testA(event)">
+          onClick="moveTag(event)">
       {{$restaurantTag->label}}
     </div>
 @endforeach
 </div>
 
 <script>
-function testA(event) {
-    /*var wer = event.target.getAttribute("tagId");*/
-  /*  alert(wer);*/
+function moveTag(event) {
+  // Move the tag in the proper div
   if (event.target.parentNode.id == "selectedTags") {
     document.getElementById("tags").appendChild(event.target);
   } else {
@@ -84,6 +83,11 @@ function testA(event) {
 }
 function refreshResults() {
   /* read all the div under selectedTags */
+  var tags = document.getElementById("tags").children;
+  var tagsIds = [];
+  for (i = 0; i < tags.length; ++i) {
+    tagsIds.push(tags[i].getAttribute("tagId"));
+  }
   /* make a list of all their ids to send as parameters */
   /* read order parameters */
   /* AJAX request to update the reuslts */
