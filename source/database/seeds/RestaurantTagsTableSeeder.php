@@ -224,6 +224,10 @@ class RestaurantTagsTableSeeder extends Seeder
         ));
 
         RestaurantTag::create(array(
+            'label'              => 'buffet'
+        ));
+
+        RestaurantTag::create(array(
             'label'              => 'smoking allowed'
         ));
 
@@ -233,6 +237,10 @@ class RestaurantTagsTableSeeder extends Seeder
 
         RestaurantTag::create(array(
             'label'              => 'smoking area'
+        ));
+
+        RestaurantTag::create(array(
+            'label'              => 'open air space'
         ));
 
         RestaurantTag::create(array(
