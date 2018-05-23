@@ -2031,7 +2031,7 @@ class RestaurantsTableSeeder extends Seeder
         $resto->fillCoordinatesFromString('35.658675, 139.699079');
 
         $resto = Restaurant::create(array(
-            'name'              => 'Tokyo Ramen',
+            'name'              => 'Ramen Shibuhide',
             'location'          => 'Shibuya',
             'type'              => 'Ramen',
             'lunch_price'       => 950,
@@ -2039,9 +2039,9 @@ class RestaurantsTableSeeder extends Seeder
             'experience'        => 'Inside was not any kind of cool, but confortable enough. For 980yen I got a delicious roasted pork ramen of a copious amount. I was surprised at the amount of meat I got, and I liked the soup and the egg and vegetables put there by default (no need to fiddles with toppings, it is all there). If you are really hungry you can order additional rice dishes (and white rice is free!).',
             'visited'           => true,
             'visit_date'        => '2018-04-05 13:00:00',
-            'google_maps_link'  => '',
-            'tabelog_link'      => '',
-            'official_website'  => '',
+            'google_maps_link'  => 'https://www.google.com/maps/place/%E3%82%89%E3%81%82%E3%82%81%E3%82%93+%E6%B8%8B%E8%8B%B1/@35.6588138,139.7014914,18z/data=!4m5!3m4!1s0x60188b57da17d377:0xfb94787ddaad4bef!8m2!3d35.6589781!4d139.699479',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13073252/',
+            'official_website'  => 'http://www.shibuyaism.com/entry/2016/11/19/130000',
             'score_lunch'       => 3,
             'score_place'       => 1,
             'score_food'        => 2,
@@ -2049,20 +2049,20 @@ class RestaurantsTableSeeder extends Seeder
             'score_date'        => 0
         ));
         $resto->attachTags(['ramen', 'filling']);
-        $resto->fillCoordinatesFromString('');
+        $resto->fillCoordinatesFromString('35.658967, 139.699456');
 
         $resto = Restaurant::create(array(
-            'name'              => 'Tapas and Pasta',
-            'location'          => 'Shibuya',
+            'name'              => 'Tapas & Tapas',
+            'location'          => 'Shibuya, icchome',
             'type'              => 'Italian',
             'lunch_price'       => 1000,
             'points'            => 'Decent pasta, decent place, smoking allowed. Not really a good deal, especially for non-smoker.',
             'experience'        => 'Despite being in B1F, the place is relatively nice. The problem if you do not smoke, is that there is no real separation between smoking and non-smoking. The smoke is well vented, but still the smell is not great... Ohter than that, the staff was nice, I liked my pasta, but it was kind of overpriced in my eyes: 1000 yen for a decent-but-not-copious plate of pasta and free drink bar.',
             'visited'           => true,
             'visit_date'        => '2018-04-09 13:00:00',
-            'google_maps_link'  => '',
-            'tabelog_link'      => '',
-            'official_website'  => '',
+            'google_maps_link'  => 'https://www.google.com/maps/place/Tapas+%26+Tapas/@35.6584517,139.7023856,18z/data=!4m5!3m4!1s0x60188b586f4eb4d3:0x7228eafa6c2fdef4!8m2!3d35.659914!4d139.703201',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13013728/',
+            'official_website'  => 'http://www.tapas-tapas.com/',
             'score_lunch'       => 1,
             'score_place'       => 1,
             'score_food'        => 2,
@@ -2070,8 +2070,70 @@ class RestaurantsTableSeeder extends Seeder
             'score_date'        => 0
         ));
         $resto->attachTags(['pasta', 'smoking allowed', 'visa']);
-        $resto->fillCoordinatesFromString('');
+        $resto->fillCoordinatesFromString('35.659822, 139.703296');
+
+        $resto = Restaurant::create(array(
+            'name'              => 'Tharros',
+            'location'          => 'Shibuya',
+            'type'              => 'Italian',
+            'lunch_price'       => 1000,
+            'points'            => 'Nice and big interior. Great salad buffet during lunch time. Mediocre pasta dish.',
+            'experience'        => 'The interior is very nice, and quite spacious. I was pleased. The buffet was great, including carrots, lentils, eggs, fried potatoes, onions, bread, and a delicious baslsamic sauce dressing. I tried the mozarealla and tomato sauce spagethi dish, but it was quite mediocre, especially with regards to the tomato sauce. But, for 1000yen, it made me full and the buffet makes it worth it.',
+            'visited'           => true,
+            'visit_date'        => '2018-05-21 13:00:00',
+            'google_maps_link'  => 'https://www.google.com/maps/place/Tharros/@35.6577442,139.7007574,18z/data=!4m5!3m4!1s0x60188b57b83f1c37:0x895372195d90c946!8m2!3d35.6580471!4d139.6995289',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13046432/',
+            'official_website'  => 'http://www.tharros.jp/',
+            'score_lunch'       => 3,
+            'score_place'       => 2,
+            'score_food'        => 1,
+            'score_price'       => 1,
+            'score_date'        => 1
+        ));
+        $resto->attachTags(['italian','pasta','buffet']);
+        $resto->fillCoordinatesFromString('35.658051, 139.699532');
+
+        $resto = Restaurant::create(array(
+            'name'              => 'Sgrosso',
+            'location'          => 'Shibuya, Dogenzaka',
+            'type'              => 'Italian',
+            'lunch_price'       => 1000,
+            'points'            => 'Decent lunch menu of western food for a decent price. If the weather is good enough the place opens to open air, which is nice, especially since there is almost no car passing in this street. Table and counter available.',
+            'experience'        => 'I enjoyed sitting on a table outside for lunch in a nice sprint\'s day. For 1000yen, I got a plate with different salads/entry, a coffee, and a marguerita pizza. The entry plate was very good, then the pizza looked like a japanese frozen pizza with some additional cheeze on the top... but it was not bad and quite filling. Tables outside have stools for sitting, which is not very confortable, but the nice feeling you get from eating outisde in a peaceful street should outweight this minor inconvenience.',
+            'visited'           => true,
+            'visit_date'        => '2018-05-23 13:00:00',
+            'google_maps_link'  => 'https://www.google.com/maps/place/Trattoria+Sgrosso/@35.6571908,139.7011768,18z/data=!4m5!3m4!1s0x60188b57b4dc9449:0xf5146fd0f442e229!8m2!3d35.6576812!4d139.6988916',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13019705/',
+            'official_website'  => 'https://sgroa996300.gorp.jp/',
+            'score_lunch'       => 3,
+            'score_place'       => 2,
+            'score_food'        => 2,
+            'score_price'       => 1,
+            'score_date'        => 0
+        ));
+        $resto->attachTags(['italian','pasta','pizza','open air space','smoking allowed','visa']);
+        $resto->fillCoordinatesFromString('35.657738, 139.698912');
         
+        $resto = Restaurant::create(array(
+            'name'              => 'Fatburger',
+            'location'          => 'Shibuya, 109men',
+            'type'              => 'Burger',
+            'lunch_price'       => 1200,
+            'points'            => 'Decent burgers. A bit overpriced. American franchise. 7th floor of the 109men, above the Shibuya\'s crossing, no windows but nice interior. Seems not too crowded.',
+            'experience'        => 'Clean and nice place, and not too crowded. I got a cheese burger set for 1200 yen, drink bar and fries. The burger was good, but not very big. It felt a bit overpriced.',
+            'visited'           => true,
+            'visit_date'        => '2018-05-23 13:00:00',
+            'google_maps_link'  => 'https://www.google.com/maps/place/Fatburger/@35.6597313,139.7008906,18z/data=!4m12!1m6!3m5!1s0x60188b57fda41cc3:0x535ec43fca150b42!2sFatburger!8m2!3d35.6597313!4d139.7008906!3m4!1s0x60188b57fda41cc3:0x535ec43fca150b42!8m2!3d35.6597313!4d139.7008906',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13221401/',
+            'official_website'  => 'https://www.fatburger.tokyo/',
+            'score_lunch'       => 2,
+            'score_place'       => 2,
+            'score_food'        => 2,
+            'score_price'       => 0,
+            'score_date'        => 0
+        ));
+        $resto->attachTags(['burger']);
+        $resto->fillCoordinatesFromString('35.659714, 139.700917');
 
 /*
         $resto = Restaurant::create(array(
@@ -2082,7 +2144,7 @@ class RestaurantsTableSeeder extends Seeder
             'points'            => '',
             'experience'        => '',
             'visited'           => true,
-            'visit_date'        => '2018-02-27 13:00:00',
+            'visit_date'        => '2018-05-27 13:00:00',
             'google_maps_link'  => '',
             'tabelog_link'      => '',
             'official_website'  => '',
@@ -2095,6 +2157,10 @@ class RestaurantsTableSeeder extends Seeder
         $resto->attachTags(['']);
         $resto->fillCoordinatesFromString('');
 */
+
+// roppongi place with jorge and yamaguchi
+// https://www.google.com/maps/place/%E3%80%92106-0031+T%C5%8Dky%C5%8D-to,+Minato-ku,+Nishiazabu,+1+Chome%E2%88%928,+%EF%BC%A6%EF%BC%A5%EF%BC%B2%EF%BC%AD%EF%BD%89%EF%BC%AE%EF%BC%B4%EF%BC%B8%EF%BC%AF/@35.6598723,139.726296,18z/data=!4m5!3m4!1s0x60188b7a7ad6966d:0xc96057139678e33c!8m2!3d35.6608104!4d139.7248288
+
 
 // https://www.menya-cocoro.com/
 
