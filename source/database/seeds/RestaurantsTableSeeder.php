@@ -2135,6 +2135,28 @@ class RestaurantsTableSeeder extends Seeder
         $resto->attachTags(['burger']);
         $resto->fillCoordinatesFromString('35.659714, 139.700917');
 
+        $resto = Restaurant::create(array(
+            'name'              => 'Village Vanguard Diner',
+            'location'          => 'Harajuku',
+            'type'              => 'Burger',
+            'lunch_price'       => 2000,
+            'points'            => 'Delicious burgers. Expensive. Long wait. Nice interior that can open to outside with also a terrace.',
+            'experience'        => 'I liked the interior, quite nice and opened to outside, even on the second floor. Jazz music playing. I ordered a avocaado cheese burger, that was 1600yen, and a set potatoes + drink for an additional 400. Despite the restaurant not being busy, it took about 25 minutes sfor the burger to come, and an additional 5 minutes for the potatoes to join the feast. It was all delicious, even the coffee. I especially enjoyed the super thick patty, and the burnt onions.',
+            'visited'           => true,
+            'visit_date'        => '2018-05-27 13:00:00',
+            'google_maps_link'  => 'https://www.google.com/maps/place/VILLAGE+VANGUARD+DINER+Harajuku/@35.6623121,139.7067824,17z/data=!4m5!3m4!1s0x60188ca4217dba71:0x3c3f676a9f378948!8m2!3d35.6664394!4d139.7050229',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1306/A130601/13209290/',
+            'official_website'  => 'https://www.village-v.co.jp/shop/detail/706',
+            'score_lunch'       => 2,
+            'score_place'       => 2,
+            'score_food'        => 2,
+            'score_price'       => 0,
+            'score_date'        => 0
+        ));
+        $resto->attachTags(['burger','filling','open air space']);
+        $resto->fillCoordinatesFromString('35.666436, 139.705007');
+
+
 /*
         $resto = Restaurant::create(array(
             'name'              => '',
@@ -2161,6 +2183,8 @@ class RestaurantsTableSeeder extends Seeder
 // roppongi place with jorge and yamaguchi
 // https://www.google.com/maps/place/%E3%80%92106-0031+T%C5%8Dky%C5%8D-to,+Minato-ku,+Nishiazabu,+1+Chome%E2%88%928,+%EF%BC%A6%EF%BC%A5%EF%BC%B2%EF%BC%AD%EF%BD%89%EF%BC%AE%EF%BC%B4%EF%BC%B8%EF%BC%AF/@35.6598723,139.726296,18z/data=!4m5!3m4!1s0x60188b7a7ad6966d:0xc96057139678e33c!8m2!3d35.6608104!4d139.7248288
 
+
+// 
 
 // https://www.menya-cocoro.com/
 
