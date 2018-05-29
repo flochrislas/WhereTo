@@ -2156,6 +2156,27 @@ class RestaurantsTableSeeder extends Seeder
         $resto->attachTags(['burger','filling','open air space']);
         $resto->fillCoordinatesFromString('35.666436, 139.705007');
 
+        $resto = Restaurant::create(array(
+            'name'              => 'Lowline',
+            'location'          => 'Shibuya',
+            'type'              => 'Hamburg',
+            'lunch_price'       => 900,
+            'points'            => 'Peaceful underground place with confortable tables. A bit dark. Filling lunch sets, mostly hamburg and rice.',
+            'experience'        => 'I don\'t like basements much, but this one was clean, with soft guitar music and large tables. I took a hamburg with cheese and salad, rice and fries. Good, very filling, for just 900 yen. Smoking is allowed inside.',
+            'visited'           => true,
+            'visit_date'        => '2018-05-29 13:00:00',
+            'google_maps_link'  => 'https://www.google.com/maps/place/Lowline%EF%BC%88%E3%83%AD%E3%83%BC%E3%83%A9%E3%82%A4%E3%83%B3%EF%BC%89/@35.6565666,139.6957154,15z/data=!4m5!3m4!1s0x0:0x9e5818f94b0e5ec2!8m2!3d35.6565666!4d139.6957154',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13211084/',
+            'official_website'  => 'https://lowline.gorp.jp/',
+            'score_lunch'       => 2,
+            'score_place'       => 1,
+            'score_food'        => 1,
+            'score_price'       => 2,
+            'score_date'        => 0
+        ));
+        $resto->attachTags(['']);
+        $resto->fillCoordinatesFromString('');
+
 
 /*
         $resto = Restaurant::create(array(
