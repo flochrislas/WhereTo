@@ -645,7 +645,7 @@ class RestaurantsTableSeeder extends Seeder
             'type'              => 'Indian curry',
             'lunch_price'       => 900,
             'points'            => 'Sucked',
-            'experience'        => 'Worst indian curry ever. When I first discovered indian curry near my office in setagaya-daita, it blew my mind so hard I ate it almost everyday. I just could not imagine eating anythnig else. Then years passed, I realized not all restaurants were equals, but still indian curry was always rhytming with delicious, greatly enjoyable meal. Then I worked in aoyama icchome and realized that the world can be a cold and heartless place. The indian food there was bland. Bland AF. Then I finally escaped what I thought was the darkest pit of restaurant and companies\' hell. To Shibuya! Surely one of the most amazing place to stroll for restaurants, and other things... But like in any movies and relationships, after all looked so perfect, something ugly, something world breaking happens and it all goes to shit. I ended up to Samrat shibuya today, and it sucked like I never thought it could suck. New low for indian curry, which now just joined the rank of my depressed thoughts about the world. Everything was bad, the interior was horrid, the nan was horribly oily, and the curry was doubtlessly the worst I ever had (and i asked for an easy one, the keema). Next time please somebody reconcile me with curry cause I dont feel I have the courage to face another one by myself.',
+            'experience'        => 'Worst indian curry ever. When I first discovered indian curry near my office in setagaya-daita, it blew my mind so hard I ate it almost everyday. I just could not imagine eating anythnig else. Then years passed, I realized not all restaurants were equals, but still indian curry was always rhytming with delicious, greatly enjoyable meal. Then I worked in aoyama icchome and realized that the world can be a cold and heartless place. The indian food there was bland. Bland AF. Then I finally escaped what I thought was the darkest pit of restaurant and companies\' hell. To Shibuya! Surely one of the most amazing place to stroll for restaurants, and other things... But like in any movies and relationships, after all looked so perfect, something ugly, something world breaking happens and it all goes to shit. I ended up to Samrat shibuya today, and it sucked like I never thought it could suck. New low for indian curry, and a new addition to the collection of my most depressing experience in the world. Everything was bad, the interior was horrid, the nan was horribly oily, and the curry was doubtlessly the worst I ever had (and I asked for an easy one, the keema), the service, the atmosphere, the dirtiness... While eating I was just thinking at how fast I wanted to leave, and never come back.',
             'visited'           => true,
             'visit_date'        => '2017-09-05 13:00:00',
             'google_maps_link'  => 'https://www.google.co.jp/maps/place/SAMRAT/@35.6593532,139.6980944,17z/data=!4m8!1m2!2m1!1ssamrat!3m4!1s0x60188ca9130c3be3:0x3ab72d1dff12516c!8m2!3d35.6617765!4d139.6978047',
@@ -1611,8 +1611,8 @@ class RestaurantsTableSeeder extends Seeder
             'location'          => 'Shibuya',
             'type'              => 'Curry',
             'lunch_price'       => 950,
-            'points'            => 'Unexpensive and nice oriental food restaurant.',
-            'experience'        => 'I liked the space and decor inside. Quite big. There are tables, counters, and also a tatami section. Good variety of lunch sets, for a very good price. For 1000 yen I could get salad, drink, 3 different kinds of curry, tandori chicken, and nan! The food was not especially delicious, but decent. With the exception of the spicy mutton curry, that was really delicious.',
+            'points'            => 'Unexpensive and nice oriental food restaurant. Great lunch sets.',
+            'experience'        => 'I liked the space and decor inside. Quite big. There are tables, counters, and also a tatami section. Good variety of lunch sets, for a very good price. For 1000 yen I could get salad, drink, 3 different kinds of curry, tandori chicken, and nan! The food was not especially delicious, but decent. With the exception of the spicy mutton curry, that was really delicious. Asecond time I tried the Thai, gapao set. Very nice set with spring rolls, soup, dessert, and quite a good gapao, for 950yen.',
             'visited'           => true,
             'visit_date'        => '2018-02-22 13:00:00',
             'google_maps_link'  => 'https://www.google.co.jp/maps/place/TOMBOY+%E6%B8%8B%E8%B0%B7%E9%81%93%E7%8E%84%E5%9D%82%E5%BA%97/@35.6586411,139.6980321,18z/data=!4m5!3m4!1s0x0:0xad6c1e648b6d070e!8m2!3d35.659088!4d139.69888',
@@ -1624,7 +1624,7 @@ class RestaurantsTableSeeder extends Seeder
             'score_price'       => 2,
             'score_date'        => 1
         ));
-        $resto->attachTags(['indian curry','gapao']);
+        $resto->attachTags(['indian curry','gapao','thai','smoking area']);
         $resto->fillCoordinatesFromString('35.659122, 139.698909');
         
         $resto = Restaurant::create(array(
@@ -2120,7 +2120,7 @@ class RestaurantsTableSeeder extends Seeder
             'type'              => 'Burger',
             'lunch_price'       => 1200,
             'points'            => 'Decent burgers. A bit overpriced. American franchise. 7th floor of the 109men, above the Shibuya\'s crossing, no windows but nice interior. Seems not too crowded.',
-            'experience'        => 'Clean and nice place, and not too crowded. I got a cheese burger set for 1200 yen, drink bar and fries. The burger was good, but not very big. It felt a bit overpriced.',
+            'experience'        => 'Clean and nice place, and not too crowded. I got a cheese burger set for 1200 yen, drink bar and fries. The burger was good, but not very big. It felt a bit overpriced (they also have 800yen milkshakes...).',
             'visited'           => true,
             'visit_date'        => '2018-05-23 13:00:00',
             'google_maps_link'  => 'https://www.google.com/maps/place/Fatburger/@35.6597313,139.7008906,18z/data=!4m12!1m6!3m5!1s0x60188b57fda41cc3:0x535ec43fca150b42!2sFatburger!8m2!3d35.6597313!4d139.7008906!3m4!1s0x60188b57fda41cc3:0x535ec43fca150b42!8m2!3d35.6597313!4d139.7008906',
