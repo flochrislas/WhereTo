@@ -1964,7 +1964,7 @@ class RestaurantsTableSeeder extends Seeder
             'score_price'       => 1,
             'score_date'        => 0
         ));
-        $resto->attachTags([''curry', 'vegetarian'']);
+        $resto->attachTags(['curry', 'vegetarian']);
         $resto->fillCoordinatesFromString('35.662753, 139.695291');
 
         $resto = Restaurant::create(array(
