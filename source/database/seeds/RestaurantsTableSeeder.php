@@ -2174,8 +2174,50 @@ class RestaurantsTableSeeder extends Seeder
             'score_price'       => 2,
             'score_date'        => 0
         ));
-        $resto->attachTags(['']);
-        $resto->fillCoordinatesFromString('');
+        $resto->attachTags(['hamburg', 'filling']);
+        $resto->fillCoordinatesFromString('35.656526, 139.695628');
+
+        $resto = Restaurant::create(array(
+            'name'              => 'Cento Anni',
+            'location'          => 'Shibuya',
+            'type'              => 'Italian',
+            'lunch_price'       => 1080,
+            'points'            => 'Decent Japanese Italian restaurant.',
+            'experience'        => 'Room and tables big enough. Music is low but people talking all around might be noisy. Food is decent. 1080 gets you a lunch set with a nice salad and a dish from the daily menu. Service was fast.',
+            'visited'           => true,
+            'visit_date'        => '2018-05-30 13:00:00',
+            'google_maps_link'  => 'https://www.google.com/maps/place/CENTO+ANNI/@35.6564274,139.6982254,17z/data=!4m5!3m4!1s0x60188b56ef9ff36b:0xc74dc285a316e1ee!8m2!3d35.65573!4d139.698043',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13018952/',
+            'official_website'  => 'https://www.centoanni.jp/',
+            'score_lunch'       => 2,
+            'score_place'       => 1,
+            'score_food'        => 1,
+            'score_price'       => 1,
+            'score_date'        => 0
+        ));
+        $resto->attachTags(['italian']);
+        $resto->fillCoordinatesFromString('35.655749, 139.698027');
+
+        $resto = Restaurant::create(array(
+            'name'              => 'Katsu midori sushi',
+            'location'          => 'Shibuya',
+            'type'              => 'Sushi',
+            'lunch_price'       => 1000,
+            'points'            => 'Big and popular (read busy) sushi restaurant. Lot of choices (hundreds) with not only sushi, but meat and different dishes as well. Reasonably priced. Decent taste.',
+            'experience'        => 'There seems to be always a line of poeple sitting, waiting their turn to be able to enter the place. THe place is quite big, with tables and counters. You can grab items from the convey belt running everywhere, but there is a big menu with hundreds of choices and paper where you just have to put dish number and amount to place an order. You can get a dish of 2 sushi for as cheap as 100 yen. Tastes decent. There is also a fair amount of vegan sushi and dishes. I was surprised at how good the avocado tempura was, and quite filling for 250 yen. The amount of fish on each sushi is quite nice.',
+            'visited'           => true,
+            'visit_date'        => '2018-05-31 13:00:00',
+            'google_maps_link'  => 'https://www.google.co.jp/maps/place/Katsu+Midori+Seibu+Shibuya/@35.6578812,139.7035082,16z/data=!4m5!3m4!1s0x0:0xa9b1e2d5e31cd607!8m2!3d35.6602348!4d139.7005149',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13135066/',
+            'official_website'  => 'http://katumidori.co.jp/shibuya/',
+            'score_lunch'       => 2,
+            'score_place'       => 1,
+            'score_food'        => 1,
+            'score_price'       => 1,
+            'score_date'        => 0
+        ));
+        $resto->attachTags(['sushi', 'vegan friendly', 'vegetarian friendly']);
+        $resto->fillCoordinatesFromString('35.660271, 139.700488');
 
 
 /*
@@ -2187,7 +2229,7 @@ class RestaurantsTableSeeder extends Seeder
             'points'            => '',
             'experience'        => '',
             'visited'           => true,
-            'visit_date'        => '2018-05-27 13:00:00',
+            'visit_date'        => '2018-06-27 13:00:00',
             'google_maps_link'  => '',
             'tabelog_link'      => '',
             'official_website'  => '',
