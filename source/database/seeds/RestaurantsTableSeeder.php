@@ -2204,7 +2204,7 @@ class RestaurantsTableSeeder extends Seeder
             'type'              => 'Sushi',
             'lunch_price'       => 1000,
             'points'            => 'Big and popular (read busy) sushi restaurant. Lot of choices (hundreds) with not only sushi, but meat and different dishes as well. Reasonably priced. Decent taste.',
-            'experience'        => 'There seems to be always a line of poeple sitting, waiting their turn to be able to enter the place. THe place is quite big, with tables and counters. You can grab items from the convey belt running everywhere, but there is a big menu with hundreds of choices and paper where you just have to put dish number and amount to place an order. You can get a dish of 2 sushi for as cheap as 100 yen. Tastes decent. There is also a fair amount of vegan sushi and dishes. I was surprised at how good the avocado tempura was, and quite filling for 250 yen. The amount of fish on each sushi is quite nice.',
+            'experience'        => 'There seems to be always a line of people sitting, waiting their turn to be able to enter the place. THe place is quite big, with tables and counters. You can grab items from the convey belt running everywhere, but there is a big menu with hundreds of choices and paper where you just have to put dish number and amount to place an order. You can get a dish of 2 sushi for as cheap as 100 yen. Tastes decent. There is also a fair amount of vegan sushi and dishes. I was surprised at how good the avocado tempura was, and quite filling for 250 yen. The amount of fish on each sushi is quite nice.',
             'visited'           => true,
             'visit_date'        => '2018-05-31 13:00:00',
             'google_maps_link'  => 'https://www.google.co.jp/maps/place/Katsu+Midori+Seibu+Shibuya/@35.6578812,139.7035082,16z/data=!4m5!3m4!1s0x0:0xa9b1e2d5e31cd607!8m2!3d35.6602348!4d139.7005149',
@@ -2239,6 +2239,48 @@ class RestaurantsTableSeeder extends Seeder
         ));
         $resto->attachTags(['ramen','tsukemen']);
         $resto->fillCoordinatesFromString('35.657917, 139.704644');
+
+        $resto = Restaurant::create(array(
+            'name'              => 'Tomato',
+            'location'          => 'Shibuya',
+            'type'              => 'Ramen',
+            'lunch_price'       => 1000,
+            'points'            => 'Tomato base ramen',
+            'experience'        => 'Delicious',
+            'visited'           => true,
+            'visit_date'        => '2018-06-01 13:00:00',
+            'google_maps_link'  => '',
+            'tabelog_link'      => '',
+            'official_website'  => '',
+            'score_lunch'       => 3,
+            'score_place'       => 1,
+            'score_food'        => 2,
+            'score_price'       => 1,
+            'score_date'        => 0
+        ));
+        $resto->attachTags(['ramen']);
+        $resto->fillCoordinatesFromString('');
+
+        $resto = Restaurant::create(array(
+            'name'              => '',
+            'location'          => 'Shibuya',
+            'type'              => 'Teishoku',
+            'lunch_price'       => 850,
+            'points'            => '',
+            'experience'        => 'I had a avocado and mashed tuna on rice, with some shiso leaves and spices, it was absolutely delicious. So;e pickles and miso soup on the side.',
+            'visited'           => true,
+            'visit_date'        => '2018-06-27 13:00:00',
+            'google_maps_link'  => '',
+            'tabelog_link'      => '',
+            'official_website'  => '',
+            'score_lunch'       => 3,
+            'score_place'       => 1,
+            'score_food'        => 2,
+            'score_price'       => 1,
+            'score_date'        => 0
+        ));
+        $resto->attachTags(['teishoku']);
+        $resto->fillCoordinatesFromString('');
 
 
 /*
