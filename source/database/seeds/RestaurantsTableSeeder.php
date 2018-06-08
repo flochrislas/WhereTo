@@ -2219,6 +2219,27 @@ class RestaurantsTableSeeder extends Seeder
         $resto->attachTags(['sushi', 'vegan friendly', 'vegetarian friendly']);
         $resto->fillCoordinatesFromString('35.660271, 139.700488');
 
+        $resto = Restaurant::create(array(
+            'name'              => 'Nagi Ramen',
+            'location'          => 'Shibuya',
+            'type'              => 'Ramen',
+            'lunch_price'       => 870,
+            'points'            => 'Small ramen shop serving ANCHOVY based soup ramen and tsukemen.',
+            'experience'        => 'I purchased a ticket for tsukemen from outside, not knowing what I was getting. I could smell anchovy right after I opened the door. I really hate anchovy... but I took it upon myuself to try. The tsukemen came, and... ell, the quality of the soup was quite great. I could eat everything. If you don\'t hate anchovies, this ramen will most likely be great.',
+            'visited'           => true,
+            'visit_date'        => '2018-06-04 13:00:00',
+            'google_maps_link'  => 'https://www.google.com/maps/place/Ramen+Nagi+Shibuya-East+side/@35.6584537,139.70283,17z/data=!4m8!1m2!2m1!1snagi!3m4!1s0x0:0x22c79272cc719e9b!8m2!3d35.6579201!4d139.7046503',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13137167/',
+            'official_website'  => 'http://www.n-nagi.com/',
+            'score_lunch'       => 2,
+            'score_place'       => 1,
+            'score_food'        => 2,
+            'score_price'       => 1,
+            'score_date'        => 0
+        ));
+        $resto->attachTags(['ramen','tsukemen']);
+        $resto->fillCoordinatesFromString('35.657917, 139.704644');
+
 
 /*
         $resto = Restaurant::create(array(
