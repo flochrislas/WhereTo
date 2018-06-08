@@ -6,15 +6,12 @@
 <div id="content">
 
   <div id="restaurantsFilter">
-    @include('restaurants.filter')
-
     <button onclick="getResults()">Display Results</button>
-
+    @include('restaurants.filter')
   </div>
 
   <div id="restaurantsResults">
     <button onclick="showFilter()">Display Filter</button>
-
     @include('restaurants.results')
   </div>
 
@@ -39,15 +36,24 @@ function showFilter() {
 
 function getResults() {
   showResults();
-  var xhr = new XMLHttpRequest();
-  xhr.open('GET', 'restaurants/results');
-  xhr.onload = function() {
-      if (xhr.status === 200) {
-          document.getElementById("results").innerHTML = xhr.responseText;
-      }
-  };
-  xhr.send();
+  // Get all if no restaurants loaded
+  if (isResultEmpty()) {
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', 'restaurants/results');
+    xhr.onload = function() {
+        if (xhr.status === 200) {
+            document.getElementById("results").innerHTML = xhr.responseText;
+        }
+    };
+    xhr.send();
+  }
 }
+
+/** Check if there are restaurants in the results div */
+function isResultEmpty() {
+  return document.getElementById("results").innerHTML == 'empty';
+}
+
 /***************************phony**********************************/
 function updateResults() {
   var xhr = new XMLHttpRequest();

@@ -97,54 +97,6 @@ class RestaurantController extends Controller
     }
 
     /**
-     * Return the restaurants sorted by distance from given position
-     * @return array
-     */
-    public function sortByDistance($restaurants, $position)
-    {
-        Log::debug('sortByDistance from  '.$position);
-        Log::debug('For restaurants '.print_r($restaurants, true));
-        // Map the restaurants with their current distance
-        $curCoords = GeoUtils::toPositionArray($position);
-        $curLat = $curCoords[0];
-        $curLon = $curCoords[1];
-        $map = array();
-        foreach ($restaurants as $resto) {
-          if(!is_null($resto->lat)) {
-            $distance = GeoUtils::distance($curLat, $curLon, $resto->lat, $resto->lon);
-            Log::debug('Distance found: '.$distance);
-            $resto->currentDistance = $distance;
-            $map[$distance] = $resto;
-          }
-        }
-        // Sort the map by key
-        ksort($map);
-        Log::debug('sortByDistance ksort the map '.print_r($map, true));
-        // Return just the list of restaurants
-        return array_values($map);
-    }
-
-    /**
-     * For all the given restaurants, compute the distance from the given position
-     * Each result is stored in the restaurant's model
-     * @return void
-     */
-    public function generateCurrentDistances($restaurants, $position)
-    {
-        Log::debug('generateCurrentDistances from  '.$position);
-        // Map the restaurants with their current distance
-        $curCoords = GeoUtils::toPositionArray($position);
-        $curLat = $curCoords[0];
-        $curLon = $curCoords[1];
-        foreach ($restaurants as $resto) {
-          if(!is_null($resto->lat)) {
-            $distance = GeoUtils::distance($curLat, $curLon, $resto->lat, $resto->lon);
-            $resto->currentDistance = $distance;
-          }
-        }
-    }
-
-    /**
      * Search for the list to display.
      * No cache, just the DB.
      *
@@ -167,10 +119,10 @@ class RestaurantController extends Controller
 
     public function whereTags(&$query, $tags, $op = 'AND') : void
     {
-        Log::debug('whereTags: '.print_r($tags, true));
+        Log::debug('whereTags: '.print_r($tags, true).'('.$op.')');
         if (isset($tags) && !empty($tags)) {
-
             if ($op == 'AND') {
+              Log::debug('come one');
                 $query->whereHas('tags', function ($query) use ($tags) {
                       $query->whereIn('label', $tags);
                 }, '=', count($tags));
@@ -227,6 +179,54 @@ class RestaurantController extends Controller
                       $query->whereNotIn('label', $types);
                 });
             }
+        }
+    }
+
+    /**
+     * Return the restaurants sorted by distance from given position
+     * @return array
+     */
+    public function sortByDistance($restaurants, $position)
+    {
+        Log::debug('sortByDistance from  '.$position);
+        Log::debug('For restaurants '.print_r($restaurants, true));
+        // Map the restaurants with their current distance
+        $curCoords = GeoUtils::toPositionArray($position);
+        $curLat = $curCoords[0];
+        $curLon = $curCoords[1];
+        $map = array();
+        foreach ($restaurants as $resto) {
+          if(!is_null($resto->lat)) {
+            $distance = GeoUtils::distance($curLat, $curLon, $resto->lat, $resto->lon);
+            Log::debug('Distance found: '.$distance);
+            $resto->currentDistance = $distance;
+            $map[$distance] = $resto;
+          }
+        }
+        // Sort the map by key
+        ksort($map);
+        Log::debug('sortByDistance ksort the map '.print_r($map, true));
+        // Return just the list of restaurants
+        return array_values($map);
+    }
+
+    /**
+     * For all the given restaurants, compute the distance from the given position
+     * Each result is stored in the restaurant's model
+     * @return void
+     */
+    public function generateCurrentDistances($restaurants, $position)
+    {
+        Log::debug('generateCurrentDistances from  '.$position);
+        // Map the restaurants with their current distance
+        $curCoords = GeoUtils::toPositionArray($position);
+        $curLat = $curCoords[0];
+        $curLon = $curCoords[1];
+        foreach ($restaurants as $resto) {
+          if(!is_null($resto->lat)) {
+            $distance = GeoUtils::distance($curLat, $curLon, $resto->lat, $resto->lon);
+            $resto->currentDistance = $distance;
+          }
         }
     }
 
