@@ -1,3 +1,13 @@
+/**
+CSS for mobile dark interface
+
+CSS basics:
+Element's selection:
+(): HTML tag. ex: div{}
+(#): HTML tag's ID (only one ID per tag)
+(.): HTML tag's class (multiple classes per tag is OK)
+*/
+
 div, nav {
 /*  border: yellow solid;
   border-width: 1px;*/
@@ -162,7 +172,32 @@ td {
   font-weight: 50;
 }
 
+/*******************************************************/
+/** RESTAURANT TAGS */
+/** tag's container */
+#tags {}
+/** a restaurant tag */
+.tag {
+  /* block */
+  display: inline-block;
+  border-style: solid;
+  border-width: .2em;
+  border-color: #45C3EC;
+  background-color: #3BA0C3;
+  margin: .55em;
+  padding: .8em 1.15em;
+  /* text */
+  font-family: 'ITCAvantGardeStdBk', sans-serif;
+  color: #000000;
+  font-size: 1em;
+  font-weight: 500;
+  text-decoration: none;
+  text-align: center;
+  white-space: nowrap;
 
+}
+
+/*******************************************************/
 
 .button--basic {
 
@@ -181,9 +216,9 @@ td {
 	 transition-duration: .4s;
 	 background-clip: padding-box;
 
- color:#d6dfdf;
- background-color:rgba(230,84,37,.8);
- border:1px solid #e6542b
+   color:#d6dfdf;
+   background-color:rgba(230,84,37,.8);
+   border:1px solid #e6542b
 }
 .button--basic:active,.button--basic:focus,.button--basic:hover {
  color:#141422;

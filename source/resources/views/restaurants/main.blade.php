@@ -6,12 +6,12 @@
 <div id="content">
 
   <div id="restaurantsFilter">
-    <button onclick="getResults()">Display Results</button>
+    
     @include('restaurants.filter')
   </div>
 
   <div id="restaurantsResults">
-    <button onclick="showFilter()">Display Filter</button>
+    <button onclick="showFilter()">Show Filter</button>
     @include('restaurants.results')
   </div>
 

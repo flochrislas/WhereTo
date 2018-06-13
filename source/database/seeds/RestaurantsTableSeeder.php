@@ -657,7 +657,7 @@ class RestaurantsTableSeeder extends Seeder
             'score_price'       => 0,
             'score_date'        => 0
         ));
-        $resto->attachTags(['indian', 'curry']);
+        $resto->attachTags(['indian','curry']);
         $resto->fillCoordinatesFromString('35.661795, 139.697803');
 
         $resto = Restaurant::create(array(
@@ -825,7 +825,7 @@ class RestaurantsTableSeeder extends Seeder
             'score_price'       => 1,
             'score_date'        => 0
         ));
-        $resto->attachTags(['indian curry']);
+        $resto->attachTags(['indian','curry']);
         $resto->fillCoordinatesFromString('35.655285, 139.702352');
 
         $resto = Restaurant::create(array(
@@ -1624,7 +1624,7 @@ class RestaurantsTableSeeder extends Seeder
             'score_price'       => 2,
             'score_date'        => 1
         ));
-        $resto->attachTags(['indian curry','gapao','thai','smoking area']);
+        $resto->attachTags(['indian','curry','gapao','thai','smoking area']);
         $resto->fillCoordinatesFromString('35.659122, 139.698909');
         
         $resto = Restaurant::create(array(
@@ -1943,7 +1943,7 @@ class RestaurantsTableSeeder extends Seeder
             'score_price'       => 1,
             'score_date'        => 1
         ));
-        $resto->attachTags(['indian curry','all you can eat']);
+        $resto->attachTags(['indian','curry','all you can eat']);
         $resto->fillCoordinatesFromString('35.661124, 139.701007');
 
         $resto = Restaurant::create(array(
@@ -2262,17 +2262,17 @@ class RestaurantsTableSeeder extends Seeder
         $resto->fillCoordinatesFromString('');
 
         $resto = Restaurant::create(array(
-            'name'              => '',
+            'name'              => 'Mistu-Fuji Diner',
             'location'          => 'Shibuya',
             'type'              => 'Teishoku',
             'lunch_price'       => 850,
-            'points'            => '',
-            'experience'        => 'I had a avocado and mashed tuna on rice, with some shiso leaves and spices, it was absolutely delicious. So;e pickles and miso soup on the side.',
+            'points'            => 'Clean Japanese diner restaurant, casually opened for lunch.',
+            'experience'        => 'I had a avocado and mashed tuna on rice, with some shiso leaves and spices, it was absolutely delicious. Some pickles and miso soup on the side.',
             'visited'           => true,
             'visit_date'        => '2018-06-27 13:00:00',
-            'google_maps_link'  => '',
-            'tabelog_link'      => '',
-            'official_website'  => '',
+            'google_maps_link'  => 'https://www.google.co.jp/maps/place/%E3%83%9F%E3%83%84%E3%83%95%E3%82%B8%E3%83%80%E3%82%A4%E3%83%8B%E3%83%B3%E3%82%B0+%7C+%E6%B8%8B%E8%B0%B7%E9%A7%85+%E5%B1%85%E9%85%92%E5%B1%8B+%E5%92%8C%E9%A3%9F+%7C+%E3%81%97%E3%82%83%E3%81%B6%E3%81%97%E3%82%83%E3%81%B6+%E5%A5%B3%E5%AD%90%E4%BC%9A+%E5%AE%B4%E4%BC%9A+%E8%AA%95%E7%94%9F%E6%97%A5%E4%BC%9A+%E8%A5%BF%E5%8F%A3/@35.6581514,139.6991014,17z/data=!4m5!3m4!1s0x0:0xbb0d1f999517a9d6!8m2!3d35.6573233!4d139.697712',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13176101/',
+            'official_website'  => 'https://mitsufuji.owst.jp/',
             'score_lunch'       => 3,
             'score_place'       => 1,
             'score_food'        => 2,
@@ -2280,7 +2280,50 @@ class RestaurantsTableSeeder extends Seeder
             'score_date'        => 0
         ));
         $resto->attachTags(['teishoku']);
-        $resto->fillCoordinatesFromString('');
+        $resto->fillCoordinatesFromString('35.657355, 139.697687');
+
+        $resto = Restaurant::create(array(
+            'name'              => 'Belle Mare Cafe',
+            'location'          => 'Shibuya',
+            'type'              => 'Italian',
+            'lunch_price'       => 900,
+            'points'            => 'Confortable place to have an italian lunch for a decent price.',
+            'experience'        => 'The place was quite confortable. Italian pasta and pizza available, ranging from 850 to 1000 yen for a set including a soup and a drink. I tried some pasta. It was decent. Soup was good.',
+            'visited'           => true,
+            'visit_date'        => '2018-06-11 13:00:00',
+            'google_maps_link'  => 'https://www.google.com/maps/place/Belle+Mare+Cafe+Shibuya/@35.658043,139.7009337,17z/data=!4m5!3m4!1s0x60188b5735f711d1:0x54f167e7ea87968c!8m2!3d35.6558748!4d139.7001743',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13118461/',
+            'official_website'  => 'https://caffe.belmare.jp/',
+            'score_lunch'       => 2,
+            'score_place'       => 1,
+            'score_food'        => 1,
+            'score_price'       => 1,
+            'score_date'        => 1
+        ));
+        $resto->attachTags(['italian','pasta','pizza']);
+        $resto->fillCoordinatesFromString('35.655717, 139.700077');
+
+        $resto = Restaurant::create(array(
+            'name'              => 'Hayashi',
+            'location'          => 'Shibuya',
+            'type'              => 'Ramen',
+            'lunch_price'       => 1100,
+            'points'            => 'Very popular ramen, with a line of people waiting outside at all time.',
+            'experience'        => 'I finally tried it one day I saw the line was only of 3 people waiting. 1100 yen to get the full version of their ramen. Other choices are the same ramen with less meat, and no egg. One counter. Rather confortable. No customization possible for the one ramen you can order. I admit the quality is OK, and it is not a bad ramen, maybe well balanced, but I could not find anything special, and would not even call it delicious. Moreover, a downer for me, is that the soup has a fishy taste, which I don\'t appreciate much. Definitely not worth the wait time.',
+            'visited'           => true,
+            'visit_date'        => '2018-06-12 13:00:00',
+            'google_maps_link'  => 'https://www.google.co.jp/maps/place/Hayashi+Ramen/@35.6580377,139.6987824,17z/data=!4m5!3m4!1s0x0:0x2b49bf8aea2ce949!8m2!3d35.6572967!4d139.6980153',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13003367/',
+            'official_website'  => 'https://ramendb.supleks.jp/s/177.html',
+            'score_lunch'       => 1,
+            'score_place'       => 1,
+            'score_food'        => 1,
+            'score_price'       => 0,
+            'score_date'        => 0
+        ));
+        $resto->attachTags(['ramen']);
+        $resto->fillCoordinatesFromString('35.657297, 139.697979');
+
 
 
 /*
@@ -2310,7 +2353,7 @@ class RestaurantsTableSeeder extends Seeder
 // https://www.google.com/maps/place/%E3%80%92106-0031+T%C5%8Dky%C5%8D-to,+Minato-ku,+Nishiazabu,+1+Chome%E2%88%928,+%EF%BC%A6%EF%BC%A5%EF%BC%B2%EF%BC%AD%EF%BD%89%EF%BC%AE%EF%BC%B4%EF%BC%B8%EF%BC%AF/@35.6598723,139.726296,18z/data=!4m5!3m4!1s0x60188b7a7ad6966d:0xc96057139678e33c!8m2!3d35.6608104!4d139.7248288
 
 
-// 
+// good ramne up yoyogi koen west side : https://tabelog.com/tokyo/A1318/A131810/13004221/dtlmenu/
 
 // https://www.menya-cocoro.com/
 
