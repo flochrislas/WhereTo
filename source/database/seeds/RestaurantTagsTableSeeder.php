@@ -251,5 +251,9 @@ class RestaurantTagsTableSeeder extends Seeder
             'label'              => 'filling'
         ));
 
+        RestaurantTag::create(array(
+            'label'              => 'small servings'
+        ));
+
     }
 }

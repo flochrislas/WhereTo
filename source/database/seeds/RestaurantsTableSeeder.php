@@ -2324,6 +2324,69 @@ class RestaurantsTableSeeder extends Seeder
         $resto->attachTags(['ramen']);
         $resto->fillCoordinatesFromString('35.657297, 139.697979');
 
+        $resto = Restaurant::create(array(
+            'name'              => 'Mushi-sho tsutsumi gyoza',
+            'location'          => 'Shibuya',
+            'type'              => 'Chinese',
+            'lunch_price'       => 870,
+            'points'            => 'Quite good dumplings. Chinese fast food. Underground (B1F). Counter and tables. Mostly gyoza and chicken.',
+            'experience'        => 'For a decent price, you can quickly get some pretty good Chinese lunch sets. The gyoza were surprisingly good. My chicken eggplants with vinegar sauce was good. You can choose rice or noodles. All sets below 900 yen. Going underground there is not very welcoming, but once inside, it\'s pretty fine by this type of fast-food restaurants standards..',
+            'visited'           => true,
+            'visit_date'        => '2018-06-13 13:00:00',
+            'google_maps_link'  => 'https://www.google.co.jp/maps/place/%E3%82%80%E3%81%97%E7%84%BC+%E5%8C%85%E9%A4%83%E5%AD%90/@35.6584497,139.6997785,18z/data=!4m5!3m4!1s0x60188ca83b417dc5:0x2e7e5c9247ac10aa!8m2!3d35.6599774!4d139.6996927',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13171735/',
+            'official_website'  => 'https://r.gnavi.co.jp/4t0rbhp00000/',
+            'score_lunch'       => 2,
+            'score_place'       => 1,
+            'score_food'        => 1,
+            'score_price'       => 1,
+            'score_date'        => 0
+        ));
+        $resto->attachTags(['chinese','dumplings']);
+        $resto->fillCoordinatesFromString('35.659986, 139.699698');
+
+        $resto = Restaurant::create(array(1
+            'name'              => 'Sushi go round',
+            'location'          => 'Shibuya',
+            'type'              => 'Sushi',
+            'lunch_price'       => 1000,
+            'points'            => 'Modern sushi-go-round restaurant where you use an individual tablet to place sushi order. Counter only.',
+            'experience'        => 'Decent sushi. Saumon was not great, but tuna was better (and bigger pieces) for the same price (from 180yen for 2 sushi). Ordering on the tablet is very convenient and can be done in English. Your order will come in front of you on a train. A regular convey belt also can provide with random items you are free to pick.',
+            'visited'           => true,
+            'visit_date'        => '2018-06-14 13:00:00',
+            'google_maps_link'  => 'https://www.google.co.jp/maps/place/Kyodaru/@35.65751,139.6992125,18z/data=!4m8!1m2!2m1!1sKyodaru!3m4!1s0x0:0xe9af8173ad3afb74!8m2!3d35.6586245!4d139.6990317',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13199827/',
+            'official_website'  => 'https://www.kyotaru.co.jp/shopsearch/shop/17981.html',
+            'score_lunch'       => 2,
+            'score_place'       => 1,
+            'score_food'        => 1,
+            'score_price'       => 1,
+            'score_date'        => 0
+        ));
+        $resto->attachTags(['sushi']);
+        $resto->fillCoordinatesFromString('35.658616, 139.698996');
+
+        $resto = Restaurant::create(array(
+            'name'              => 'Segafredo Zanetti',
+            'location'          => 'Shibuya',
+            'type'              => 'Cafe',
+            'lunch_price'       => 1000,
+            'points'            => 'Large, kinda chilling, cafe. 3 floors, including one for smokers. Tables and counter in front of windows bay.',
+            'experience'        => 'You can have a nice view of the street in front of the Mega Donkey. Food is kind of over-priced, which is always the case in this sort of establishment. They have snadwiches, panini, pizza, cakes... It is Italian oriented. Most options feature some seafood. I tried a cheese ham panini for 450 yen, and it was decent, but far from great. Better not be too hungry...',
+            'visited'           => true,
+            'visit_date'        => '2018-06-14 13:00:00',
+            'google_maps_link'  => 'https://www.google.co.jp/maps/place/Segafredo+Zanetti/@35.6588205,139.6987653,18z/data=!4m8!1m2!2m1!1sSegafredo!3m4!1s0x0:0x3b179d38a9bcfa26!8m2!3d35.6601481!4d139.6974589',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13004656/',
+            'official_website'  => 'http://www.segafredo.jp/',
+            'score_lunch'       => 1,
+            'score_place'       => 1,
+            'score_food'        => 1,
+            'score_price'       => 1,
+            'score_date'        => 0
+        ));
+        $resto->attachTags(['cafe', 'small servings', 'italian','smoking area','open air space']);
+        $resto->fillCoordinatesFromString('35.660203, 139.697491');
+
 
 
 /*
@@ -2352,6 +2415,7 @@ class RestaurantsTableSeeder extends Seeder
 // roppongi place with jorge and yamaguchi
 // https://www.google.com/maps/place/%E3%80%92106-0031+T%C5%8Dky%C5%8D-to,+Minato-ku,+Nishiazabu,+1+Chome%E2%88%928,+%EF%BC%A6%EF%BC%A5%EF%BC%B2%EF%BC%AD%EF%BD%89%EF%BC%AE%EF%BC%B4%EF%BC%B8%EF%BC%AF/@35.6598723,139.726296,18z/data=!4m5!3m4!1s0x60188b7a7ad6966d:0xc96057139678e33c!8m2!3d35.6608104!4d139.7248288
 
+// best sushi place from inuisan : http://www.uogashizushi.co.jp/shop/o-shop/tokyoeki/
 
 // good ramne up yoyogi koen west side : https://tabelog.com/tokyo/A1318/A131810/13004221/dtlmenu/
 
