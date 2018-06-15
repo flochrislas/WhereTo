@@ -16,6 +16,7 @@
       <td>
         <table class="center">
           <tr>
+            <th>price</th>
             <th>lunch</th>
             <th>food</th>
             <th>place</th>
@@ -23,6 +24,7 @@
             <th>date</th>
           </tr>
           <tr>
+            <td>{{ $restaurant->lunch_price }}</td>
             <td>{{ $restaurant->score_lunch }}</td>
             <td>{{ $restaurant->score_food }}</td>
             <td>{{ $restaurant->score_place }}</td>

@@ -1,8 +1,9 @@
 <div id="position-report"></div>
 
-<h2>What kind of restaurant?</h2>
-
-<button onclick="getResults()">Show Results</button>
+<div id="filterHeader">
+<div id="filterHeaderTitle" class="orange title">What kind of restaurant?</div>
+<button id="filterHeaderButton" onclick="getResults()">Show Results</button>
+</div>
 
 <!-- selected tags for active search -->
 <div id="selectedTags">
