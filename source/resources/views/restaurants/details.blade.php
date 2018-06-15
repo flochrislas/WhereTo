@@ -3,16 +3,6 @@
 @section('title', 'Restaurant Show')
 
 @section('content')
-    <div class="row">
-        <div class="col-lg-12 margin-tb">
-            <div class="pull-left">
-                <h2> Show restaurant</h2>
-            </div>
-            <div class="pull-right">
-                <a class="btn btn-primary" href="{{ route('restaurants.main') }}"> Back</a>
-            </div>
-        </div>
-    </div>
 
     <div class="row">
         <div>
@@ -74,6 +64,24 @@
                 <strong>Google maps:</strong>
                 <a target="_blank"
                   href="{{ $restaurant->google_maps_link }}">
+                  map
+                </a>
+            </div>
+        </div>
+        <div>
+            <div>
+                <strong>Tabelog:</strong>
+                <a target="_blank"
+                  href="{{ $restaurant->tabelog_link }}">
+                  map
+                </a>
+            </div>
+        </div>
+        <div>
+            <div>
+                <strong>Website:</strong>
+                <a target="_blank"
+                  href="{{ $restaurant->official_website }}">
                   map
                 </a>
             </div>

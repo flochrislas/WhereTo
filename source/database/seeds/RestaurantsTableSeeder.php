@@ -159,7 +159,7 @@ class RestaurantsTableSeeder extends Seeder
         $resto = Restaurant::create(array(
             'name'              => 'Burger King',
             'location'          => 'Shibuya, Udagawacho',
-            'type'              => 'burger',
+            'type'              => 'Burger',
             'lunch_price'       => 900,
             'points'            => 'Fast-food. Good affordable burgers.',
             'experience'        => 'I think the burgers are very good for the price. I like to seat in front of the windows bay on the second floor, that gives a view on the main street.',
@@ -579,7 +579,7 @@ class RestaurantsTableSeeder extends Seeder
         $resto = Restaurant::create(array(
             'name'              => 'Mediterranean Pizzeria Domani',
             'location'          => 'Shibuyq',
-            'type'              => 'italian',
+            'type'              => 'Italian',
             'lunch_price'       => 900,
             'points'            => 'Interior OK. Pizza OK but really nothing special... 900 yen for pizza + salad. The salad (some lattuce) is small but the dressing is delicious. Tables and counter, not small.',
             'experience'        => 'The place is a bit dark, but feels cosy. It is not small and could receive small groups. The food is alright.',
@@ -600,7 +600,7 @@ class RestaurantsTableSeeder extends Seeder
         $resto = Restaurant::create(array(
             'name'              => 'Meat Bank',
             'location'          => 'Shibuya',
-            'type'              => 'burger',
+            'type'              => 'Burger',
             'lunch_price'       => 1200,
             'points'            => 'Nice interior, but lound music. Sofa and nice chairs. Wide windows bay. Nice staff. Premium burgers. Good. Lunch set 1200 yen avocado bacon cheese burger with drink and soup.',
             'experience'        => 'I liked the interior, and the comfort. But I found the music too loud. Not much of a problem when you are alone, but a bit tiring if you want to talk. The choice of burgers is good, and the burgers themselves quite delicious. Not cheap, but not so much overpriced compared with other premium burgers restaurants around there. I paid 1200 yen for a bacon avocado cheese burger with a soup and a drink. Id say, nice place if you want to eat burger in a comfy place.',
@@ -704,10 +704,10 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create(array(
             'name'              => 'Khao San',
-            'location'          => 'towards omotesando, 2nd floor',
+            'location'          => 'Shibuya, Miyamasuzaka',
             'type'              => 'Thai',
             'lunch_price'       => 1000,
-            'points'            => 'Decent thai. Nice room, with windows bay.They have a gapao + green curry set, with good soup and small salad, for 980yen. Music. Open drink bar with tea and detox water.',
+            'points'            => 'Decent thai. Nice room, with windows bay. They have a gapao + green curry set, with good soup and small salad, for 980yen. Music. Open drink bar with tea and detox water.',
             'experience'        => 'Nice waitress, enjoyed the room and the set. Was good, but not especially delicious. Still well balanced set for a fair price.',
             'visited'           => true,
             'visit_date'        => '2017-09-05 13:00:00',
@@ -725,8 +725,8 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create(array(
             'name'              => 'On the corner (No.8 Bear Pond)',
-            'location'          => 'symetrically opposite from Tower Record',
-            'type'              => 'Burgers and stuff',
+            'location'          => 'Shibuya',
+            'type'              => 'American',
             'lunch_price'       => 1000,
             'points'            => '1000 yen lunches and premium 1100+ yen home made burgers. Possible topping customization includes jalapegno and gorgonzola. Big room. Windows. American music a bit loud.',
             'experience'        => 'Room OK. I got the jalapegno burger for 1300 yen. Came with a drink, and a mini soup served in an expresso cup. The burger was quite good, but not worth 1300 yen, in my opinion.',
@@ -741,12 +741,12 @@ class RestaurantsTableSeeder extends Seeder
             'score_price'       => 0,
             'score_date'        => 1
         ));
-        $resto->attachTags(['burger']);
+        $resto->attachTags(['burger','western','american']);
         $resto->fillCoordinatesFromString('35.661556, 139.703030');
 
         $resto = Restaurant::create(array(
             'name'              => 'Fujisoba',
-            'location'          => 'in front of big bic camera',
+            'location'          => 'Shibuya, in front of big bic camera',
             'type'              => 'soba udon katsudon',
             'lunch_price'       => 750,
             'points'            => 'Decent sets. Fast food style. Narrow counter only. Buy at machine, get your set on a plate and find somewhere to sit.',
@@ -789,7 +789,7 @@ class RestaurantsTableSeeder extends Seeder
         $resto = Restaurant::create(array(
             'name'              => 'iBeer',
             'location'          => 'Hikarie building 7F',
-            'type'              => 'italian',
+            'type'              => 'Italian',
             'lunch_price'       => 1000,
             'points'            => 'Open space restaurant in nice Hikarie 7F. Busy floor, but nice setting. A bit expensive, but one of the cheapest restaurant in the building.',
             'experience'        => '1162 yen Pasta Set with Salad + bread + organic tomatoe avocado pasta. Nice salad, hot bread, and very, very good pasta. I would go as far as to call the pasta "exquisite". I also liked the setting, tables and chairs.',
@@ -810,7 +810,7 @@ class RestaurantsTableSeeder extends Seeder
         $resto = Restaurant::create(array(
             'name'              => 'Avatar',
             'location'          => 'D side in front of shibuya language shool',
-            'type'              => 'indian curry',
+            'type'              => 'Indian curry',
             'lunch_price'       => 850,
             'points'            => 'nice little indian restaurant. Not a chain. Relatively nice staff. No cheesy TV clips. Decent price curry sets. No keema. Free nan and rice.',
             'experience'        => 'Enjoyed the place, but the chiken curry I ordered was bland, tasteless.',
@@ -831,7 +831,7 @@ class RestaurantsTableSeeder extends Seeder
         $resto = Restaurant::create(array(
             'name'              => 'Guzman y Gomez',
             'location'          => 'past tower record',
-            'type'              => 'mexican',
+            'type'              => 'Mexican',
             'lunch_price'       => 1300,
             'points'            => 'Good mexican fastfood cuisine. American chain. Expensive.',
             'experience'        => 'First and foremost, this place is insanely overpriced. I got 3 kedasilla for 1070 yen. It felt like a small snack. Definitely insufficient for a lunch. I left hungry and had to go eat something cheaper elsewhere. Taste-wise, it was good, and I could choose the meat amongst 8 different choices, for each of my 3 small kedasilla. The interior, and ordering system, is like a cheap fastfood. When I ate there the doors were kept opened despite the cold and I had to keep my jacket on. The music was very cheesy.',
@@ -852,7 +852,7 @@ class RestaurantsTableSeeder extends Seeder
         $resto = Restaurant::create(array(
             'name'              => 'Il Fiume',
             'location'          => 'far',
-            'type'              => 'italian',
+            'type'              => 'Italian',
             'lunch_price'       => 980,
             'points'            => 'Nice place, nice interior, even has a terrace, in a calm street. Lunch has salad buffet, with decent variety of salads. Dish can be chosen from the menu. Japanese-italian style. No pizza.',
             'experience'        => 'Enjoyed the place. Salads were plenty, and good. I tried some pasta, 980yen, but it was... just decent. But it made me want to come back and try another dish.',
@@ -873,7 +873,7 @@ class RestaurantsTableSeeder extends Seeder
         $resto = Restaurant::create(array(
             'name'              => 'Verde',
             'location'          => 'Shibuya, 3Chome',
-            'type'              => 'curry+gapoa+pizza',
+            'type'              => 'Indian',
             'lunch_price'       => 980,
             'points'            => 'Dark place on a 4th floor. Menu offers mostly indian curry sets, but also thai and pizza. Place doesnt look busy and there is a good amount of tables, so might be easy for large groups.',
             'experience'        => 'I tried the pizza+salad for 980yen. They have a real pizza oven to the crust was tasty from the wood fire. But other than that, it was quite plain. A lot of cheese on it though, so it made me well full. Salad was like the salad you get in a curry restaurant. The drink as well. I did not like how dark was the place. And the price was not cheap. So I won\'t be back. Fun note: the elevator to get there is extremely slow.',
@@ -915,7 +915,7 @@ class RestaurantsTableSeeder extends Seeder
         $resto = Restaurant::create(array(
             'name'              => 'Blacows',
             'location'          => 'Ebisu',
-            'type'              => 'burger',
+            'type'              => 'Burger',
             'lunch_price'       => 2000,
             'points'            => 'expensive wagyu beef burgers, nice place',
             'experience'        => 'very good burger. Customizable. Expensive.',
@@ -936,7 +936,7 @@ class RestaurantsTableSeeder extends Seeder
         $resto = Restaurant::create(array(
             'name'              => 'Salasa',
             'location'          => 'Shibuya - Udagawacho',
-            'type'              => 'izakaya',
+            'type'              => 'Izakaya',
             'lunch_price'       => 1050,
             'points'            => 'Various Japanese teishoku (lunch sets). Izakaya style. Small. Smallest tables ever. TV broadcasting news chanel. Slow service. Very good teishoku (lunch set)',
             'experience'        => 'The chef cooks your lunch from scratch apparently, so it takes up to 20 minutes of wait time. I was surprised because, in Japan, the service is usually very fast. But it was worth the wait as it was quite delicious. I ordered the cheese/porc fried rolls for 1050yen, and it came with pickles, miso soup, rice, and cabage. It was very good and I was fully satisfied.',
@@ -957,7 +957,7 @@ class RestaurantsTableSeeder extends Seeder
         $resto = Restaurant::create(array(
             'name'              => 'JS Burgers Cafe',
             'location'          => 'Shibuya',
-            'type'              => 'burger',
+            'type'              => 'Burger',
             'lunch_price'       => 1500,
             'points'            => 'Very nice place (confortable, various tables, big windows bay, enjoyable music). Expensive. Premium burgers. Salad bar at lunch.',
             'experience'        => 'Very nice experience, nejoyed the place and the music. Loved the salad bar, with lots of choices, and good. Burger came fast. I tried the JS burger. The ingredient were undeniably good, but globally, it was lacking taste as there were almost no sauce. Still, I ended up full and satisfied.',
@@ -978,7 +978,7 @@ class RestaurantsTableSeeder extends Seeder
         $resto = Restaurant::create(array(
             'name'              => 'Pizza Salvatore Cuomo',
             'location'          => 'Daikanyama',
-            'type'              => 'italian',
+            'type'              => 'Italian',
             'lunch_price'       => 1280,
             'points'            => 'Usually for delivery, but also has a nice interior with tables and counter, as well as a terrace (with heaters). 100yen pasta lunch, or 1280 yen pizza lunch. Lunch set includes a salad, a mini soup, and a drink. Decent but overpriced.',
             'experience'        => 'I was suprized at how nice the interior was. Did not like the music though (some sort of modern hip-hop, kind of loud). I tried the gorgonzola+mozarealla pizza. It was decent, but a bit small. 1280 yen felt overpriced.',
@@ -1020,7 +1020,7 @@ class RestaurantsTableSeeder extends Seeder
         $resto = Restaurant::create(array(
             'name'              => 'Lotteria',
             'location'          => 'Shibuya, Dogenzaka',
-            'type'              => 'burger',
+            'type'              => 'Burger',
             'lunch_price'       => 900,
             'points'            => 'Good alternative to McDo. Fast, unexpensive, and decent burgers.',
             'experience'        => 'Good alternative to McDo. Similar quality and experience, similar price, with alternative choices and taste.',
@@ -1609,7 +1609,7 @@ class RestaurantsTableSeeder extends Seeder
         $resto = Restaurant::create(array(
             'name'              => 'Tomboy',
             'location'          => 'Shibuya',
-            'type'              => 'Curry',
+            'type'              => 'Indian',
             'lunch_price'       => 950,
             'points'            => 'Unexpensive and nice oriental food restaurant. Great lunch sets.',
             'experience'        => 'I liked the space and decor inside. Quite big. There are tables, counters, and also a tatami section. Good variety of lunch sets, for a very good price. For 1000 yen I could get salad, drink, 3 different kinds of curry, tandori chicken, and nan! The food was not especially delicious, but decent. With the exception of the spicy mutton curry, that was really delicious. Asecond time I tried the Thai, gapao set. Very nice set with spring rolls, soup, dessert, and quite a good gapao, for 950yen.',
@@ -1675,7 +1675,7 @@ class RestaurantsTableSeeder extends Seeder
             'location'          => 'Shibuya',
             'type'              => 'Curry',
             'lunch_price'       => 900,
-            'points'            => 'Good japanese curry. Narrow counter only.',
+            'points'            => 'Good Japanese curry. Narrow counter only.',
             'experience'        => 'Small, narrow, but authetic place. Curry is good, filling, and cheap. Variety of toppings and customization available.',
             'visited'           => true,
             'visit_date'        => '2018-02-27 13:00:00',
@@ -1691,15 +1691,13 @@ class RestaurantsTableSeeder extends Seeder
         $resto->attachTags(['japanese curry']);
         $resto->fillCoordinatesFromString('35.657186, 139.696305');
 
-        ////////////////////////////// to complete below !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
         $resto = Restaurant::create(array(
             'name'              => 'Whoopi Goldburger',
             'location'          => 'Shibuya',
             'type'              => 'Burger',
             'lunch_price'       => 1200,
             'points'            => 'Small and narrow counter. Unique and tasty home-made burgers.',
-            'experience'        => 'The garage punk atmosphere is cool. The burgers are a bit expensive, but they do come with a drink, more french fries than usual, and are truly unique. Most of the taste comes from the topping, spices they put on the patty. Delicious spices mix, but quite salty. Fresh vegetables are used. My personal disapointement came from the fact that the patty had some hard bits in it, a bit like in a tsukune, and I don\'t like this. ',
+            'experience'        => 'The garage punk atmosphere is cool. The burgers are a bit expensive, but they do come with a drink, more French fries than usual, and are truly unique. Most of the taste comes from the topping, spices they put on the patty. Delicious spices mix, but quite salty. Fresh vegetables are used. My personal disapointement came from the fact that the patty had some hard bits in it, a bit like in a tsukune, and I don\'t like this. ',
             'visited'           => true,
             'visit_date'        => '2018-02-28 13:00:00',
             'google_maps_link'  => 'https://www.google.co.jp/maps/place/Whoopi+goldburger/@35.6595163,139.7029215,18z/data=!4m5!3m4!1s0x60188b588e8beb35:0x28bc4f730f3a2180!8m2!3d35.6604164!4d139.7043645',
@@ -2345,7 +2343,7 @@ class RestaurantsTableSeeder extends Seeder
         $resto->attachTags(['chinese','dumplings']);
         $resto->fillCoordinatesFromString('35.659986, 139.699698');
 
-        $resto = Restaurant::create(array(1
+        $resto = Restaurant::create(array(
             'name'              => 'Sushi go round',
             'location'          => 'Shibuya',
             'type'              => 'Sushi',
