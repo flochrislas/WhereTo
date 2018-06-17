@@ -252,6 +252,10 @@ class RestaurantTagsTableSeeder extends Seeder
         ));
 
         RestaurantTag::create(array(
+            'label'              => 'teishoku'
+        ));
+
+        RestaurantTag::create(array(
             'label'              => 'small servings'
         ));
 
