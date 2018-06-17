@@ -11,18 +11,13 @@ use App\GeoUtils;
 /**
 * Tools on the Internet allow for some verifications:
 * http://boulter.com/gps/distance/?from=32.9697%2C-96.80322&to=29.46786%2C-98.53506&units=k
+*
+* PHPUnit has a nice manual
+* https://phpunit.de/manual/current/en/appendixes.assertions.html
 */
 class GeoUtilsTest extends TestCase
 {
-    /**
-     * A basic test example.
-     *
-     * @return void
-     */
-    public function testTrue() : void
-    {
-        $this->assertTrue(true);
-    }
+    const GMO_POSITION = '35.656113,139.699425';
 
     public function testMiles() : void
     {

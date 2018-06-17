@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+// use Barryvdh\Debugbar\Facade as Debugbar;
 use Illuminate\Support\Facades\Cache;
 use App\RestaurantTag;
 use Session;
@@ -11,8 +12,19 @@ use Session;
 class RestaurantTagController extends Controller
 {
 
+  public function restaurantsFilter(Request $request)
+  {
+      //fetch all restaurantTags data
+      $restaurantTags = RestaurantTag::orderBy('created_at','desc')->get();
+      // TODO: cache the result
+      //pass restaurantTags data to view and load list view
+      return view('restaurants.main', ['restaurantTags' => $restaurantTags]);
+      // return view('restaurants.main', compact('restaurantTags'));
+  }
+
   /**
    * Method for the autocomplete.
+   * Cache the results.
    *
    * @return \Illuminate\Http\Response
    */
@@ -23,20 +35,22 @@ class RestaurantTagController extends Controller
       $result = Cache::rememberForever($term, function() use ($term) {
             return $this->autocompleteDB($term);
         });
-      return $result;
+      return response()->json($result);
   }
 
   /**
-   * Method for the autocomplete query to DB
+   * Method for the autocomplete query to DB.
+   * No cache.
    *
-   * @return \Illuminate\Http\Response
+   * @return Illuminate\Database\Eloquent\Collection
    */
-  private function autocompleteDB(string $term)
+  public function autocompleteDB(string $term)
   {
       $result = RestaurantTag::where('label', 'LIKE', '%' . $term . '%')
                               ->get(['id', 'label as value']);
       Log::debug('autocomplete result from DB: '.$result);
-      return response()->json($result);
+      \Debugbar::info('Hitting DB from autocomplete with term: '.$result);
+      return $result;
   }
 
   /**
@@ -162,18 +176,6 @@ class RestaurantTagController extends Controller
       Session::flash('success_msg', 'Restaurant Tag deleted successfully!');
 
       return redirect()->route('restaurantTag.index');
-  }
-
-  /**
-   * Get all restaurants with null coordinates and
-   * try to fill them with the ones found in the Google Maps link
-   */
-  public function fillNullCoordinatesFromGoogleMapsLink() : void
-  {
-      $result = Restaurant::whereNull('lat')->get();
-      foreach ($result as $resto) {
-        $resto->autofillCoordFromGoogleLink();
-      }
   }
 
 }

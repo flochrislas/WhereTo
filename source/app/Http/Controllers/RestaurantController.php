@@ -3,29 +3,129 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Cache;
 use App\Restaurant;
+use App\GeoUtils;
 use Excel;
 
 class RestaurantController extends Controller
 {
+
+    public function main(Request $request)
+    {
+      // main became for filters, tags, not restaurants
+      return view('restaurants.main');
+    }
+
     /**
      * Public
-     * Display a listing of the resource.
+     * Search for the list to display.
+     * Cache.
+     * TODO: implement "see more" button
      *
      * @return \Illuminate\Http\Response
      */
-    public function main($tags = ['ramen', 'pizza'], $op = 'OR')
+    public function results(Request $request)
     {
-        // TODO: implement "see more" button
-        $query = (new Restaurant)->newQuery();
-        if (isset($tags) && !empty($tags)) {
+        // Reads request parameters
+        Log::debug('Request tags: '.request('tags'));
+        Log::debug('Request op: '.request('op'));
+        Log::debug('Request position: '.request('position'));
+        // Operator for the Tags
+        $op = request('op');
+        // tags as a comma separated list
+        $tags = request('tags');
+        $this->formatTags($tags);
+        // current position from client's GPS
+        // Office from google maps '35.656660, 139.699691'
+        $position = request('position');
+        $position = '35.656660, 139.699691';
+        // flag to sort by distances
+        $closestFirst = true;
 
+        // key needs to be made of all the used parameters except coords
+        $cacheKey = $this->cacheKey($op, $tags);
+
+        $restaurants = Cache::rememberForever($cacheKey, function() use ($tags, $op) {
+              return $this->mainDB($tags, $op);
+          });
+
+        if (!empty($position)) {
+            $distanceSortedRestaurants = $this->sortByDistance($restaurants, $position);
+        }
+        if ($closestFirst) {
+            $restaurants = collect($distanceSortedRestaurants);
+        }
+
+        // Keeps the input of the user interface
+        // https://laravel.com/docs/5.5/requests#old-input
+        $request->flash();
+
+        // return view('restaurants.main', compact('restaurants'));
+        return view('restaurants.results-data', compact('restaurants'));
+    }
+
+    /**
+     * Generate the key to use for puting the main query into cache
+     * @return string
+     */
+    public function cacheKey($op, $tags) : string
+    {
+        if (empty($tags)) {
+            $cacheKey = 'all';
+        } else {
+            $cacheKey = md5($op .','. implode(',',$tags));
+        }
+        return $cacheKey;
+    }
+
+    /**
+     * Make the tags into an array, if it is not already the case
+     * The reference is passed in paramter, so the function directly modifies the tags
+     * @return void
+     */
+    public function formatTags(&$tags)
+    {
+        if (empty($tags)) {
+            $tags = null;
+        } elseif (!($tags instanceof Traversable)) {
+            Log::debug('tags is being transformed from: '.$tags);
+            $tags = explode(',',str_replace(', ', ',', $tags));
+            Log::debug('to this: '.print_r($tags, true));
+        }
+    }
+
+    /**
+     * Search for the list to display.
+     * No cache, just the DB.
+     *
+     * @return Illuminate\Database\Eloquent\Collection
+     */
+    public function mainDB($tags, $op = 'AND')
+    {
+        Log::debug('Hitting the DB with mainDB with op '.$op);
+        $query = (new Restaurant)->newQuery();
+
+        $this->whereTags($query, $tags, $op);
+
+        $restaurants = $query->orderBy('score_lunch', 'desc')
+                        ->orderBy('score_food', 'desc')
+                        ->orderBy('score_place', 'desc')
+                        ->get();
+
+        return $restaurants;
+    }
+
+    public function whereTags(&$query, $tags, $op = 'AND') : void
+    {
+        Log::debug('whereTags: '.print_r($tags, true).'('.$op.')');
+        if (isset($tags) && !empty($tags)) {
             if ($op == 'AND') {
+              Log::debug('come one');
                 $query->whereHas('tags', function ($query) use ($tags) {
-                    foreach ($tags as $tag) {
-                      $query->where('label', '=', $tag);
-                    }
-                });
+                      $query->whereIn('label', $tags);
+                }, '=', count($tags));
             }
 
             if ($op == 'OR') {
@@ -36,10 +136,8 @@ class RestaurantController extends Controller
 
             if ($op == 'ANDNOT') {
                 $query->whereDoesntHave('tags', function ($query) use ($tags) {
-                    foreach ($tags as $tag) {
-                      $query->where('label', '=', $tag);
-                    }
-                });
+                      $query->whereIn('label', $tags);
+                }, '=', count($tags));
             }
 
             if ($op == 'ORNOT') {
@@ -48,11 +146,97 @@ class RestaurantController extends Controller
                 });
             }
         }
-        $restaurants = $query->orderBy('score_lunch', 'desc')
-                        ->orderBy('score_food', 'desc')
-                        ->orderBy('score_place', 'desc')
-                        ->get();
-        return view('restaurants.main', compact('restaurants'));
+    }
+
+    public function whereTypes(&$query, $types, $op = 'AND') : void
+    {
+        if (isset($types) && !empty($types)) {
+
+            if ($op == 'AND') {
+                $query->whereHas('tags', function ($query) use ($types) {
+                    foreach ($types as $type) {
+                      $query->where('label', '=', $type);
+                    }
+                });
+            }
+
+            if ($op == 'OR') {
+                $query->whereHas('tags', function ($query) use ($types) {
+                      $query->whereIn('label', $types);
+                });
+            }
+
+            if ($op == 'ANDNOT') {
+                $query->whereDoesntHave('tags', function ($query) use ($types) {
+                    foreach ($types as $type) {
+                      $query->where('label', '=', $type);
+                    }
+                });
+            }
+
+            if ($op == 'ORNOT') {
+                $query->whereHas('tags', function ($query) use ($types) {
+                      $query->whereNotIn('label', $types);
+                });
+            }
+        }
+    }
+
+    /**
+     * Return the restaurants sorted by distance from given position
+     * @return array
+     */
+    public function sortByDistance($restaurants, $position)
+    {
+        Log::debug('sortByDistance from  '.$position);
+        Log::debug('For restaurants '.print_r($restaurants, true));
+        // Map the restaurants with their current distance
+        $curCoords = GeoUtils::toPositionArray($position);
+        $curLat = $curCoords[0];
+        $curLon = $curCoords[1];
+        $map = array();
+        foreach ($restaurants as $resto) {
+          if(!is_null($resto->lat)) {
+            $distance = GeoUtils::distance($curLat, $curLon, $resto->lat, $resto->lon);
+            Log::debug('Distance found: '.$distance);
+            $resto->currentDistance = $distance;
+            $map[$distance] = $resto;
+          }
+        }
+        // Sort the map by key
+        ksort($map);
+        Log::debug('sortByDistance ksort the map '.print_r($map, true));
+        // Return just the list of restaurants
+        return array_values($map);
+    }
+
+    /**
+     * For all the given restaurants, compute the distance from the given position
+     * Each result is stored in the restaurant's model
+     * @return void
+     */
+    public function generateCurrentDistances($restaurants, $position)
+    {
+        Log::debug('generateCurrentDistances from  '.$position);
+        // Map the restaurants with their current distance
+        $curCoords = GeoUtils::toPositionArray($position);
+        $curLat = $curCoords[0];
+        $curLon = $curCoords[1];
+        foreach ($restaurants as $resto) {
+          if(!is_null($resto->lat)) {
+            $distance = GeoUtils::distance($curLat, $curLon, $resto->lat, $resto->lon);
+            $resto->currentDistance = $distance;
+          }
+        }
+    }
+
+    /**
+     * Public
+     * Display the the restaurants filter page
+     */
+    public function filterView()
+    {
+        return view('restaurants.filter');
     }
 
     /**
