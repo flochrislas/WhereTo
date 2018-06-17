@@ -52,6 +52,10 @@ class RestaurantTagsTableSeeder extends Seeder
         ));
 
         RestaurantTag::create(array(
+            'label'              => 'chinese'
+        ));
+
+        RestaurantTag::create(array(
             'label'              => 'western'
         ));
 
@@ -73,6 +77,14 @@ class RestaurantTagsTableSeeder extends Seeder
 
         RestaurantTag::create(array(
             'label'              => 'all you can drink'
+        ));
+
+        RestaurantTag::create(array(
+            'label'              => 'cafe'
+        ));
+
+        RestaurantTag::create(array(
+            'label'              => 'authentic'
         ));
 
         RestaurantTag::create(array(
@@ -137,6 +149,114 @@ class RestaurantTagsTableSeeder extends Seeder
 
         RestaurantTag::create(array(
             'label'              => 'sushi'
+        ));
+
+        RestaurantTag::create(array(
+            'label'              => 'gapao'
+        ));
+
+        RestaurantTag::create(array(
+            'label'              => 'omurice'
+        ));
+
+        RestaurantTag::create(array(
+            'label'              => 'tenpura'
+        ));
+
+        RestaurantTag::create(array(
+            'label'              => 'soba'
+        ));
+
+        RestaurantTag::create(array(
+            'label'              => 'yakiniku'
+        ));
+
+        RestaurantTag::create(array(
+            'label'              => 'okonomiyaki'
+        ));
+
+        RestaurantTag::create(array(
+            'label'              => 'hamburg'
+        ));
+
+        RestaurantTag::create(array(
+            'label'              => 'grill'
+        ));
+
+        RestaurantTag::create(array(
+            'label'              => 'karaage'
+        ));
+
+        RestaurantTag::create(array(
+            'label'              => 'green curry'
+        ));
+
+        RestaurantTag::create(array(
+            'label'              => 'crepe'
+        ));
+
+        RestaurantTag::create(array(
+            'label'              => 'galette'
+        ));
+
+        RestaurantTag::create(array(
+            'label'              => 'quiche'
+        ));
+
+        RestaurantTag::create(array(
+            'label'              => 'croque-monsieur'
+        ));
+
+        RestaurantTag::create(array(
+            'label'              => 'sandwich'
+        ));
+
+        RestaurantTag::create(array(
+            'label'              => 'noodles'
+        ));
+
+        RestaurantTag::create(array(
+            'label'              => 'gyoza'
+        ));
+
+        RestaurantTag::create(array(
+            'label'              => 'dumpling'
+        ));
+
+        RestaurantTag::create(array(
+            'label'              => 'buffet'
+        ));
+
+        RestaurantTag::create(array(
+            'label'              => 'smoking allowed'
+        ));
+
+        RestaurantTag::create(array(
+            'label'              => 'no smoking'
+        ));
+
+        RestaurantTag::create(array(
+            'label'              => 'smoking area'
+        ));
+
+        RestaurantTag::create(array(
+            'label'              => 'open air space'
+        ));
+
+        RestaurantTag::create(array(
+            'label'              => 'visa'
+        ));
+
+        RestaurantTag::create(array(
+            'label'              => 'filling'
+        ));
+
+        RestaurantTag::create(array(
+            'label'              => 'teishoku'
+        ));
+
+        RestaurantTag::create(array(
+            'label'              => 'small servings'
         ));
 
     }

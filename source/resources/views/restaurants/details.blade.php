@@ -3,70 +3,107 @@
 @section('title', 'Restaurant Show')
 
 @section('content')
-    <div class="row">
-        <div class="col-lg-12 margin-tb">
-            <div class="pull-left">
-                <h2> Show restaurant</h2>
-            </div>
-            <div class="pull-right">
-                <a class="btn btn-primary" href="{{ route('restaurants.main') }}"> Back</a>
-            </div>
-        </div>
-    </div>
 
     <div class="row">
-        <div class="col-xs-12 col-sm-12 col-md-12">
-            <div class="form-group">
+        <div>
+            <div>
                 <strong>Name:</strong>
                 {{ $restaurant->name}}
             </div>
         </div>
-        <div class="col-xs-12 col-sm-12 col-md-12">
-            <div class="form-group">
+        <div>
+            <div>
                 <strong>Location:</strong>
                 {{ $restaurant->location}}
             </div>
         </div>
-        <div class="col-xs-12 col-sm-12 col-md-12">
-            <div class="form-group">
+        <div>
+            <div>
                 <strong>Coordinates:</strong>
                 {{ $restaurant->coord}}
             </div>
         </div>
-        <div class="col-xs-12 col-sm-12 col-md-12">
-            <div class="form-group">
+        <div>
+            <div>
                 <strong>Type:</strong>
                 {{ $restaurant->type}}
             </div>
         </div>
-        <div class="col-xs-12 col-sm-12 col-md-12">
-            <div class="form-group">
+        <div>
+            <div>
                 <strong>Lunch price:</strong>
                 {{ $restaurant->lunch_price}}
             </div>
         </div>
-        <div class="col-xs-12 col-sm-12 col-md-12">
-            <div class="form-group">
+        <div>
+            <div>
                 <strong>Points:</strong>
                 {{ $restaurant->points}}
             </div>
         </div>
-        <div class="col-xs-12 col-sm-12 col-md-12">
-            <div class="form-group">
+        <div>
+            <div>
                 <strong>Personal experience:</strong>
                 {{ $restaurant->experience}}
             </div>
         </div>
-        <div class="col-xs-12 col-sm-12 col-md-12">
-            <div class="form-group">
+        <div>
+            <div>
                 <strong>Visited:</strong>
                 {{ $restaurant->visited}}
             </div>
         </div>
-        <div class="col-xs-12 col-sm-12 col-md-12">
-            <div class="form-group">
+        <div>
+            <div>
                 <strong>Visit date:</strong>
                 {{ $restaurant->visit_date}}
+            </div>
+        </div>
+        <div>
+            <div>
+                <strong>Google maps:</strong>
+                <a target="_blank"
+                  href="{{ $restaurant->google_maps_link }}">
+                  map
+                </a>
+            </div>
+        </div>
+        <div>
+            <div>
+                <strong>Tabelog:</strong>
+                <a target="_blank"
+                  href="{{ $restaurant->tabelog_link }}">
+                  map
+                </a>
+            </div>
+        </div>
+        <div>
+            <div>
+                <strong>Website:</strong>
+                <a target="_blank"
+                  href="{{ $restaurant->official_website }}">
+                  map
+                </a>
+            </div>
+        </div>
+        <div>
+            <div>
+                <strong>Visit date:</strong>
+                {{ $restaurant->visit_date}}
+            </div>
+        </div>
+        <div>
+            <div>
+                <strong>Visit date:</strong>
+                {{ $restaurant->visit_date}}
+            </div>
+        </div>
+        <div>
+            <div>
+                <strong>Tags:</strong>
+                @foreach ($restaurant->tagsCached() as $tag)
+                  {{ $tag->label }} |
+                @endforeach
             </div>
         </div>
     </div>
