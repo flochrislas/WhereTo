@@ -2407,7 +2407,7 @@ class RestaurantsTableSeeder extends Seeder
 
 
 
-/*
+        /*
         $resto = Restaurant::create(array(
             'name'              => '',
             'location'          => '',
@@ -2428,23 +2428,23 @@ class RestaurantsTableSeeder extends Seeder
         ));
         $resto->attachTags(['']);
         $resto->fillCoordinatesFromString('');
-*/
+        */
 
-// roppongi place with jorge and yamaguchi
-// https://www.google.com/maps/place/%E3%80%92106-0031+T%C5%8Dky%C5%8D-to,+Minato-ku,+Nishiazabu,+1+Chome%E2%88%928,+%EF%BC%A6%EF%BC%A5%EF%BC%B2%EF%BC%AD%EF%BD%89%EF%BC%AE%EF%BC%B4%EF%BC%B8%EF%BC%AF/@35.6598723,139.726296,18z/data=!4m5!3m4!1s0x60188b7a7ad6966d:0xc96057139678e33c!8m2!3d35.6608104!4d139.7248288
+        // roppongi place with jorge and yamaguchi
+        // https://www.google.com/maps/place/%E3%80%92106-0031+T%C5%8Dky%C5%8D-to,+Minato-ku,+Nishiazabu,+1+Chome%E2%88%928,+%EF%BC%A6%EF%BC%A5%EF%BC%B2%EF%BC%AD%EF%BD%89%EF%BC%AE%EF%BC%B4%EF%BC%B8%EF%BC%AF/@35.6598723,139.726296,18z/data=!4m5!3m4!1s0x60188b7a7ad6966d:0xc96057139678e33c!8m2!3d35.6608104!4d139.7248288
 
-// best sushi place from inuisan : http://www.uogashizushi.co.jp/shop/o-shop/tokyoeki/
+        // best sushi place from inuisan : http://www.uogashizushi.co.jp/shop/o-shop/tokyoeki/
 
-// good ramne up yoyogi koen west side : https://tabelog.com/tokyo/A1318/A131810/13004221/dtlmenu/
+        // good ramne up yoyogi koen west side : https://tabelog.com/tokyo/A1318/A131810/13004221/dtlmenu/
 
-// https://www.menya-cocoro.com/
+        // https://www.menya-cocoro.com/
 
         // https://hubjapan.io/articles/10-best-ramen-restaurants-in-shibuya
 
         // https://www.youtube.com/watch?v=S-Xm7s9eGxU
         // https://goo.gl/TbjN44
 
-// nathan recommwend ramen place behind office behind mormons church
+        // nathan recommwend ramen place behind office behind mormons church
 
         // fill coordinates
         $this->fillNullCoordinatesFromGoogleMapsLink();
