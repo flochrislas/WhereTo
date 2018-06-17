@@ -174,7 +174,10 @@ return [
         // To help with forms:
         // http://itsolutionstuff.com/post/laravel-55-crud-example-from-scratchexample.html
         Collective\Html\HtmlServiceProvider::class,
-        
+        // To use debug Barryvdh
+        // https://github.com/barryvdh/laravel-debugbar
+        Barryvdh\Debugbar\ServiceProvider::class,
+
         /*
          * Application Service Providers...
          */
@@ -198,7 +201,7 @@ return [
     */
 
     'aliases' => [
-
+        // Default
         'App' => Illuminate\Support\Facades\App::class,
         'Artisan' => Illuminate\Support\Facades\Artisan::class,
         'Auth' => Illuminate\Support\Facades\Auth::class,
@@ -233,7 +236,9 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
-        'Form' => Collective\Html\FormFacade::class,        
+        // Added
+        'Debugbar' => Barryvdh\Debugbar\Facade::class,
+        'Form' => Collective\Html\FormFacade::class,
         'Html' => Collective\Html\HtmlFacade::class,
 
     ],

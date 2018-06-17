@@ -1,25 +1,16 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
-    <div class="row">
-        <div class="col-md-8 col-md-offset-2">
-            <div class="panel panel-default">
-                <div class="panel-heading">Home</div>
-
-                <div class="panel-body">
-                    @if (session('status'))
-                        <div class="alert alert-success">
-                            {{ session('status') }}
-                        </div>
-                    @endif
-
-                    <br>
-                    <br>
-                    <a class="btn btn-info" href="{{ route('restaurants.main') }}">Voir les restos</a>
-                </div>
-            </div>
-        </div>
-    </div>
+<div id="content">
+  <div>Home</div>
+  <div>
+      @if (session('status'))
+          <div>
+              {{ session('status') }}
+          </div>
+      @endif
+      <a href="{{ route('restaurants.filter') }}">Lunch in Shibuya</a>
+      <a href="{{ route('restaurants.main') }}">Voir les restos</a>
+  </div>
 </div>
 @endsection

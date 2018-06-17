@@ -22,7 +22,20 @@ php artisan make:model -m -c -r Test
 
 TEST
 php artisan make:test RestaurantTagControllerTest --unit
+Run tests:
+./vendor/bin/phpunit
 
+CACHE
+php artisan cache:clear
+depending on cache type, if its file, must have permission, or use sudo
+
+http://laravel-recipes.com/recipes/104/clearing-the-application-cache
+
+You can call an Artisan command outside the CLI !!
+Route::get('/clear-cache', function() {
+    $exitCode = Artisan::call('cache:clear');
+    // return what you want
+});
 
 Laravel version check
 php artisan --version
@@ -30,6 +43,10 @@ php artisan --version
 
 Great post on Laravel permissions setting
 https://stackoverflow.com/questions/27674597/laravel-daily-log-created-with-wrong-permissions
+
+
+PHPUnit tetse with Laravel:
+https://semaphoreci.com/community/tutorials/getting-started-with-phpunit-in-laravel
 
 Import Export Excel and CSV files
 https://appdividend.com/2017/06/12/import-export-data-csv-excel-laravel-5-4/
@@ -138,3 +155,64 @@ http://www.ubergizmo.com/how-to/read-gps-coordinates/
 
 laravel geo distance query builder
 https://laravel.io/forum/04-23-2014-convert-this-geolocation-query-to-query-builder-for
+
+DEBUGING
+http://andreas.heiberg.io/blog/xdebug-debugging-and-profiling/
+
+debugbar:
+https://github.com/barryvdh/laravel-debugbar
+
+cache
+https://bosnadev.com/2014/12/27/laravel-caching-database-queries/
+
+nice receipe site!
+http://laravel-recipes.com/
+
+
+Making a phone app from laravel app
+website2apk
+phonegap
+http://softeng.oicr.on.ca/brice_aminou/2017/03/07/Mobile-app-with-Laravel/
+
+Make views recognise the agent (mobile, desktop etc...)
+https://stackoverflow.com/questions/23779088/laravel-detect-mobile-tablet-and-load-correct-views
+https://github.com/jenssegers/agent
+
+HTML5 geolocalisation
+https://www.w3schools.com/html/html5_geolocation.asp
+https://developer.mozilla.org/en-US/docs/Web/API/Geolocation/Using_geolocation
+
+Default route resource:
+https://stackoverflow.com/questions/23505875/laravel-routeresource-vs-routecontroller
+
+
+Colors from Gitkraken:
+    --purechat-p-bg: #20968b;
+    --purechat-p-bg-d: #1c8177;
+    --purechat-p-bg-l: #24ab9e;
+    --purechat-p-fg: #ffffff;
+    --purechat-p-fg-l: #ffffff;
+    --purechat-s-bg: #f8f7f5;
+    --purechat-s-bg-d: #e8e5df;
+    --purechat-s-bg-l: #ffffff;
+    --purechat-s-fg: #676a6d;
+    --purechat-s-fg-l: #3b404c;
+    --purechat-s-fg-d: #3b404c;
+    --purechat-a-d: #c11e1f;
+    --purechat-a-d-bg: #c11e1f;
+    --purechat-a-d-fg: #ffffff;
+    --purechat-btn-bg: #20968b;
+    --purechat-btn-fg: #ffffff;
+    --purechat-btn-b: rgba(255,255,255,0.5);
+    --purechat-btn-b-h: rgba(255, 255, 255, 1);
+
+Bunch of usefull chrome plugins
+https://www.creativebloq.com/web-design/google-chrome-extensions-21410570/2
+
+AJAX without JQuery
+https://blog.garstasio.com/you-dont-need-jquery/ajax/
+https://stackoverflow.com/questions/8567114/how-to-make-an-ajax-call-without-jquery
+
+Nodelist
+https://toddmotto.com/a-comprehensive-dive-into-nodelists-arrays-converting-nodelists-and-understanding-the-dom/
+
