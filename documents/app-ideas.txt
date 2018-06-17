@@ -1,7 +1,8 @@
+\tkyfs01\Administration\Public\社内催し写真\GS2018新年会写真
+
 NEXT UP
 
 CACHE
-Fill coords of al lseeds from google URL
 USE coordiantes to find closeest places
 USE TIME  : make function isLunchTime or getTiming returns lunch(lunch) evening(diner, bar, clubs) morning afternoon (shopping)
 use getMeteo
@@ -26,6 +27,7 @@ Sleep[anytime, without booking] -> (solo), (couple) -> (capsule hotels, internet
 Information center: archive info about tons of stuff
 on pages, link to related info from info center (how to call the staff, how to ask for an extension, how to ask for the check...)
 
+whereTo : lunch, diner, drink, dance, arcade, loveho, shopping, cafe, karaoke
 add links to
 https://www.yelp.com/biz/%E3%82%B9%E3%83%91%E3%82%B2%E3%83%83%E3%83%86%E3%82%A3%E3%81%AE%E3%83%91%E3%83%B3%E3%83%81%E3%83%A7-%E6%B8%8B%E8%B0%B7%E5%BA%97-%E6%B8%8B%E8%B0%B7%E5%8C%BA
 https://jp.openrice.com/en/tokyo/r-spaghetti-no-pancho-shibuya-store-shibuya-pasta-r551322/photos
@@ -37,6 +39,10 @@ one touch display the tags instead of having to type any letters... diaply tags 
 
 global info
 Lunch time: most regular restaurants open between 11:30 and 3pm for lunch. Lots of big chain restaurants just stay opened all the time.
+
+FAIRE DEFILER les details a travers les resultats  upon swipe droite gauche
+
+afficher les filtres actif et tap remove et bouton filter pour en ajouter en retournant sur la pages des tags
 
 -----------
 
@@ -68,3 +74,90 @@ Score for dates:
 0: Bad for dates
 1: Decent for dates
 2: Great for dates
+
+----------------------------
+
+tag g analytics for familleredares.ovh
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-114845220-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-114845220-1');
+</script>
+
+
+--------------+
+arcade
+
+the one front koban with VR floor
+1st crane
+2nd gamse
+3rd VR
+games: Yamanote train simulator, music games, racing, shoot, Tekken7, cards, gundam... old stuff, nothing interesting
+
+
+--------------------------------------------------------------------------------------------------------------
+
+In the code, filter blade page:
+- AUTO COMPLETE CODE
+- SEARCH BAR CODE
+- SORT ORDER IDEA
+
+<!-- Auto complete Experimental -->
+<br>Filter:<br>
+<input  type="search"
+        name="tag-input"
+        id="tag-input"
+        placeholder=""
+        data-action="{{ route('tags.autocomplete') }}" />
+<br>
+<input type="text" id="tag-selection"><br>
+<script type="text/javascript">
+  $('#tag-input').each(function() {
+      var $this = $(this);
+      var src = $this.data('action');
+
+      $this.autocomplete({
+          source: src,
+          minLength: 2,
+          select: function(event, ui) {
+              $this.val(ui.item.value);
+              $('#tag-selection').val(ui.item.id);
+              $('#tag-search').val(ui.item.value);
+          }
+      });
+  });
+</script>
+
+<br>
+
+<!-- SEARCH http://justlaravel.com/search-functionality-laravel/ -->
+<form action="" method="GET" role="search" name="mainSearch">
+    {{ csrf_field() }}
+    <input  type="search"
+            name="tags"
+            id="tag-search"
+            value="{!! old('tags') !!}"
+            placeholder="Search tags">
+    <input type="hidden" name="op" value="AND">
+    <input type="hidden" name="position" id="position">
+    <button type="submit">
+      <!-- search icon -->
+      SUBMIT
+    </button>
+</form>
+
+<!-- ideas to be implemented -->
+<p>drag and drop the following to reorder</p>
+<div id="order1"></div>
+<div id="order2"></div>
+<div id="order3"></div>
+<p>nearest first</p>
+<p>best first</p>
+<p>cheapest first</p>
+
+--------------------------------------------------------------------------------------------------------------

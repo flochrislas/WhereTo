@@ -1,85 +1,118 @@
 @extends('layouts.app')
 
-@section('title', 'Restaurant Index')
+@section('title', 'Restaurants')
 
 @section('content')
-    <div class="row">
-        <div class="col-lg-12 margin-tb">
-            <div class="pull-left">
-                <h2>Restaurants</h2>
-            </div>
-        </div>
-    </div>
+<div id="content">
 
-    @if ($message = Session::get('success'))
-        <div class="alert alert-success">
-            <p>{{ $message }}</p>
-        </div>
-    @endif
+  <div id="restaurantsFilter">
+    
+    @include('restaurants.filter')
+  </div>
 
-    <!-- Auto complete Experimental -->
-    <br>Autocomplete tags (script1)<br>
-    <input type="search" name="term" id="q" data-action="{{ route('tags.autocomplete') }}">
-    <br><input type="text" id="qid"><br>
-    <script type="text/javascript">
-      $('#q').each(function() {
-          var $this = $(this);
-          var src = $this.data('action');
+  <div id="restaurantsResults">
+    <button onclick="showFilter()">Show Filter</button>
+    @include('restaurants.results')
+  </div>
 
-          $this.autocomplete({
-              source: src,
-              minLength: 2,
-              select: function(event, ui) {
-                  $this.val(ui.item.value);
-                  $('#qid').val(ui.item.id);
-              }
-          });
-      });
-    </script>
+</div>
 
-    <BR>Autocomplete tags (script2)<BR>
-    <input id="searchString" type="search" name="term"
-      placeholder="Enter Search String" class="form-control" />
-    <script type="text/javascript">
-    $('#searchString').autocomplete({
-                source: '{!!URL::route('tags.autocomplete')!!}',
-                minLength: 2
-            } );
-    </script>
 
-    <br>
-    <!-- SEARCH http://justlaravel.com/search-functionality-laravel/ -->
-    <form action="/search" method="POST" role="search">
-        {{ csrf_field() }}
+<script>
 
-        <div class="input-group">
-            <input type="text" class="form-control" name="type"
-                    placeholder="Search type">
-            <span class="input-group-btn">
-                <button type="submit" class="btn btn-default">
-                    <span class="glyphicon glyphicon-search"></span>
-                </button>
-            </span>
-        </div>
-    </form>
+function showResults() {
+  var restaurantsFilter = document.getElementById("restaurantsFilter");
+  var restaurantsResults = document.getElementById("restaurantsResults");
+  restaurantsFilter.style.display = "none";
+  restaurantsResults.style.display = "block";
+}
 
-    <table class="table table-bordered">
-        <tr>
-            <th>No</th>
-            <th>Name</th>
-            <th>Type</th>
-            <th>Details</th>
-        </tr>
-    @foreach ($restaurants as $restaurant)
-    <tr>
-        <td>{{ $restaurant->id }}</td>
-        <td>{{ $restaurant->name}}</td>
-        <td>{{ $restaurant->type}}</td>
-        <td>
-            <a class="btn btn-info" href="{{ route('restaurants.details',$restaurant->id) }}">Show</a>
-        </td>
-    </tr>
-    @endforeach
-    </table>
+function showFilter() {
+  var restaurantsFilter = document.getElementById("restaurantsFilter");
+  var restaurantsResults = document.getElementById("restaurantsResults");
+  restaurantsFilter.style.display = "block";
+  restaurantsResults.style.display = "none";
+}
+
+function getResults() {
+  showResults();
+  // Get all if no restaurants loaded
+  if (isResultEmpty()) {
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', 'restaurants/results');
+    xhr.onload = function() {
+        if (xhr.status === 200) {
+            document.getElementById("results").innerHTML = xhr.responseText;
+        }
+    };
+    xhr.send();
+  }
+}
+
+/** Check if there are restaurants in the results div */
+function isResultEmpty() {
+  return document.getElementById("results").innerHTML == 'empty';
+}
+
+/***************************phony**********************************/
+function updateResults() {
+  var xhr = new XMLHttpRequest();
+  xhr.open('PUT', 'restaurants');
+  xhr.setRequestHeader('Content-Type', 'application/json');
+  xhr.onload = function() {
+      if (xhr.status === 200) {
+          var userInfo = JSON.parse(xhr.responseText);
+          document.getElementById("demo").innerHTML = xhr.responseText;
+      }
+  };
+  xhr.send(JSON.stringify({
+      name: 'John Smith',
+      age: 34
+  }));
+}
+
+</script>
+
+<!-- Javascript for geolocalisation -->
+<script>
+var x = document.getElementById("position-report");
+var y = document.getElementById("position");
+getLocation();
+
+function getLocation() {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(showPosition, showError);
+        // it is also possible to get continuously updated coords from the method watchPosition()
+        // see https://www.w3schools.com/html/html5_geolocation.asp
+    } else {
+        x.innerHTML = "Geolocation is not supported by this browser.";
+    }
+}
+
+function showPosition(position) {
+    /*
+    x.innerHTML = "Latitude: " + position.coords.latitude +
+    "<br>Longitude: " + position.coords.longitude;
+    */
+    y.value = position.coords.latitude + "," + position.coords.longitude;
+}
+
+function showError(error) {
+    switch(error.code) {
+        case error.PERMISSION_DENIED:
+            x.innerHTML = "User denied the request for Geolocation."
+            break;
+        case error.POSITION_UNAVAILABLE:
+            x.innerHTML = "Location information is unavailable."
+            break;
+        case error.TIMEOUT:
+            x.innerHTML = "The request to get user location timed out."
+            break;
+        case error.UNKNOWN_ERROR:
+            x.innerHTML = "An unknown error occurred."
+            break;
+    }
+}
+</script>
 
 @endsection

@@ -11,51 +11,28 @@ use Illuminate\Support\Facades\Log;
 */
 class GeoUtils
 {
-    /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
-    /*::                                                                         :*/
-    /*::  This routine calculates the distance between two points (given the     :*/
-    /*::  latitude/longitude of those points). It is being used to calculate     :*/
-    /*::  the distance between two locations using GeoDataSource(TM) Products    :*/
-    /*::                                                                         :*/
-    /*::  Definitions:                                                           :*/
-    /*::    South latitudes are negative, east longitudes are positive           :*/
-    /*::                                                                         :*/
-    /*::  Passed to function:                                                    :*/
-    /*::    lat1, lon1 = Latitude and Longitude of point 1 (in decimal degrees)  :*/
-    /*::    lat2, lon2 = Latitude and Longitude of point 2 (in decimal degrees)  :*/
-    /*::    unit = the unit you desire for results                               :*/
-    /*::           where: 'M' is statute miles (default)                         :*/
-    /*::                  'K' is kilometers                                      :*/
-    /*::                  'N' is nautical miles                                  :*/
-    /*::  Worldwide cities and other features databases with latitude longitude  :*/
-    /*::  are available at https://www.geodatasource.com                         :*/
-    /*::                                                                         :*/
-    /*::  For enquiries, please contact sales@geodatasource.com                  :*/
-    /*::                                                                         :*/
-    /*::  Official Web site: https://www.geodatasource.com                       :*/
-    /*::                                                                         :*/
-    /*::         GeoDataSource.com (C) All Rights Reserved 2017		   		         :*/
-    /*::                                                                         :*/
-    /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
-    public static function distance(float $lat1, float $lon1, float $lat2, float $lon2, string $unit) : float
+    /**
+    * The method used in the app for calculated the distance
+    */
+    public static function distance(float $lat1, float $lon1, float $lat2, float $lon2) : float
     {
-        $theta = $lon1 - $lon2;
-        $dist = sin(deg2rad($lat1)) * sin(deg2rad($lat2)) + cos(deg2rad($lat1)) * cos(deg2rad($lat2)) * cos(deg2rad($theta));
-        $dist = acos($dist);
-        $dist = rad2deg($dist);
-        $miles = $dist * 60 * 1.1515;
-        $unit = strtoupper($unit);
+        // returns meters
+        return GeoUtils::equirectangularApprox($lat1, $lon1, $lat2, $lon2) * 1000;
+    }
 
-        if ($unit == "K") {
-          return ($miles * 1.609344);
-        } else if ($unit == "N") {
-          return ($miles * 0.8684);
-        } else {
-          return $miles;
+    public static function formatDistance($distance) : string
+    {
+        if (!empty($distance) && $distance > 0) {
+          return number_format($distance, 2, '.', ',');
+        }  else {
+          return 'N/A';
         }
     }
 
-    // faster distance calculation, in Km
+    /**
+    * Fast distance calculation, in Km.
+    * Possibly wrong (to be checked).
+    */
     public static function flatDistance(float $lat1, float $lon1, float $lat2, float $lon2) : float
     {
         // The length of a degree of longitude
@@ -65,8 +42,10 @@ class GeoUtils
         return $deglen * sqrt($x*$x + $y*$y);
     }
 
-    // faster distance calculation, in Km, from 1 to 2
-    // lat lon must be in radians
+    /**
+    * Fast distance calculation, from 1 to 2, in Km.
+    * lat lon must be in radians.
+    */
     public static function equirectangularApprox(float $lat1, float $lon1, float $lat2, float $lon2) : float
     {
         $earthRadius = 6371; //km
@@ -85,18 +64,20 @@ class GeoUtils
     {
         // select lat, lon from points where
         // TODO: this formula doesnt seem very correct
-        return 'pow(lat-'.$lat.', 2)
-                + pow((lon-'.$lon.')*cos(radians('.$lat.')), 2)
-                < pow('.$distance.'/110.25, 2)';
+        return 'pow(lat-'.$lat.', 2) + pow((lon-'.$lon.')*cos(radians('.$lat.')), 2) < pow('.$distance.'/110.25, 2)';
     }
 
-    // convert miles to km
+    /**
+    * Convert miles to km.
+    */
     public static function miles2km(float $miles) : float
     {
         return $miles * 1.609344;
     }
 
-    // convert km to miles
+    /**
+    * Convert km to miles.
+    */
     public static function km2miles(float $km) : float
     {
         return $km / 1.609344;
@@ -112,7 +93,21 @@ class GeoUtils
         return ceil($distance / $pace * 60);
     }
 
-    // convert google URL to coordinate
+    /**
+    * Convert position string to array
+    * Originally a simple explode from lat,lon to array(lat, lon)
+    */
+    public static function toPositionArray(string $positionString) : array
+    {
+        return explode(',',str_replace(' ', '', $positionString));
+    }
+
+    /**
+    * Convert google URL to coordinates.
+    * Those are the coordinate sto the center of the map,
+    * NOT the one of the actual place/marker
+    * See: https://stackoverflow.com/questions/29335870/i-need-to-extract-lat-long-data-from-a-google-maps-url-that-uses-msa-and-msid
+    */
     public static function google2coord(string $url) : array
     {
         Log::debug($url);
@@ -142,6 +137,50 @@ class GeoUtils
         $response = file_get_contents($url);
         $json = json_decode($response,TRUE); //generate array object from the response from the web
         return ($json['results'][0]['geometry']['location']['lat'].",".$json['results'][0]['geometry']['location']['lng']);
+    }
+
+    /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+    /*::                                                                         :*/
+    /*::  This routine calculates the distance between two points (given the     :*/
+    /*::  latitude/longitude of those points). It is being used to calculate     :*/
+    /*::  the distance between two locations using GeoDataSource(TM) Products    :*/
+    /*::                                                                         :*/
+    /*::  Definitions:                                                           :*/
+    /*::    South latitudes are negative, east longitudes are positive           :*/
+    /*::                                                                         :*/
+    /*::  Passed to function:                                                    :*/
+    /*::    lat1, lon1 = Latitude and Longitude of point 1 (in decimal degrees)  :*/
+    /*::    lat2, lon2 = Latitude and Longitude of point 2 (in decimal degrees)  :*/
+    /*::    unit = the unit you desire for results                               :*/
+    /*::           where: 'M' is statute miles (default)                         :*/
+    /*::                  'K' is kilometers                                      :*/
+    /*::                  'N' is nautical miles                                  :*/
+    /*::  Worldwide cities and other features databases with latitude longitude  :*/
+    /*::  are available at https://www.geodatasource.com                         :*/
+    /*::                                                                         :*/
+    /*::  For enquiries, please contact sales@geodatasource.com                  :*/
+    /*::                                                                         :*/
+    /*::  Official Web site: https://www.geodatasource.com                       :*/
+    /*::                                                                         :*/
+    /*::         GeoDataSource.com (C) All Rights Reserved 2017		   		         :*/
+    /*::                                                                         :*/
+    /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+    public static function geodatasourceDistance(float $lat1, float $lon1, float $lat2, float $lon2, string $unit) : float
+    {
+        $theta = $lon1 - $lon2;
+        $dist = sin(deg2rad($lat1)) * sin(deg2rad($lat2)) + cos(deg2rad($lat1)) * cos(deg2rad($lat2)) * cos(deg2rad($theta));
+        $dist = acos($dist);
+        $dist = rad2deg($dist);
+        $miles = $dist * 60 * 1.1515;
+        $unit = strtoupper($unit);
+
+        if ($unit == "K") {
+          return ($miles * 1.609344);
+        } else if ($unit == "N") {
+          return ($miles * 0.8684);
+        } else {
+          return $miles;
+        }
     }
 
 }
