@@ -2405,7 +2405,26 @@ class RestaurantsTableSeeder extends Seeder
         $resto->attachTags(['cafe', 'small servings', 'italian','smoking area','open air space']);
         $resto->fillCoordinatesFromString('35.660203, 139.697491');
 
-
+        $resto = Restaurant::create(array(
+            'name'              => 'Katsuya',
+            'location'          => 'Shibuya',
+            'type'              => 'Katsu',
+            'lunch_price'       => 850,
+            'points'            => 'Cheap and fast katsudon and tonkatsu dishes. Japanese fast-food style. Counters and ticket machine with English available.',
+            'experience'        => 'Not especially delicious, but a decent for the price. Another good point: the meat used for the tonkatsu didn\'t have any big fat part.',
+            'visited'           => true,
+            'visit_date'        => '2018-06-18 13:00:00',
+            'google_maps_link'  => 'https://www.google.com/maps/place/Katsuya/@35.6579076,139.6995951,18z/data=!4m8!1m2!2m1!1z44GL44Gk44KE!3m4!1s0x0:0xb2096da56c69f1d3!8m2!3d35.6587629!4d139.6982981',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13030860/',
+            'official_website'  => 'http://www.arclandservice.co.jp/katsuya/shop/731.html',
+            'score_lunch'       => 2,
+            'score_place'       => 1,
+            'score_food'        => 1,
+            'score_price'       => 2,
+            'score_date'        => 0
+        ));
+        $resto->attachTags(['katsudon','tonkatsu','filling']);
+        $resto->fillCoordinatesFromString('35.658768, 139.698308');
 
         /*
         $resto = Restaurant::create(array(
