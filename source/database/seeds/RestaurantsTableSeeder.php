@@ -2239,17 +2239,17 @@ class RestaurantsTableSeeder extends Seeder
         $resto->fillCoordinatesFromString('35.657917, 139.704644');
 
         $resto = Restaurant::create(array(
-            'name'              => 'Tomato',
+            'name'              => 'Taiyou no tomato men',
             'location'          => 'Shibuya',
             'type'              => 'Ramen',
             'lunch_price'       => 1000,
-            'points'            => 'Tomato base ramen',
-            'experience'        => 'Delicious',
+            'points'            => 'Tomato base ramen.',
+            'experience'        => 'I got the tomato ramen with chicken and cheese, with some cheese yakigyoza on the side. Delicious. Nice interior.',
             'visited'           => true,
             'visit_date'        => '2018-06-01 13:00:00',
-            'google_maps_link'  => '',
-            'tabelog_link'      => '',
-            'official_website'  => '',
+            'google_maps_link'  => 'https://www.google.com/maps/place/%E5%A4%AA%E9%99%BD%E3%81%AE%E3%83%88%E3%83%9E%E3%83%88%E9%BA%BA+%E6%B8%8B%E8%B0%B7%E9%81%93%E7%8E%84%E5%9D%82%E5%BA%97/@35.6580421,139.6958017,17z/data=!4m5!3m4!1s0x60188ca9e5bbb441:0x5767b4819e27b97d!8m2!3d35.6587744!4d139.6970945',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13216348/',
+            'official_website'  => 'http://taiyo-tomato.com/',
             'score_lunch'       => 3,
             'score_place'       => 1,
             'score_food'        => 2,
@@ -2257,7 +2257,7 @@ class RestaurantsTableSeeder extends Seeder
             'score_date'        => 0
         ));
         $resto->attachTags(['ramen']);
-        $resto->fillCoordinatesFromString('');
+        $resto->fillCoordinatesFromString('35.658763, 139.697123');
 
         $resto = Restaurant::create(array(
             'name'              => 'Mistu-Fuji Diner',
@@ -2277,9 +2277,29 @@ class RestaurantsTableSeeder extends Seeder
             'score_price'       => 1,
             'score_date'        => 0
         ));
-        $resto->attachTags(['teishoku']);
-        $resto->fillCoordinatesFromString('35.657355, 139.697687');
+        $resto->attachTags(['teishoku','japanese']);
+        $resto->fillCoordinatesFromString('35.657316, 139.697756');
 
+        $resto = Restaurant::create(array(
+            'name'              => 'Gusto',
+            'location'          => 'Shibuya, Dogenzaka',
+            'type'              => 'Family',
+            'lunch_price'       => 850,
+            'points'            => 'Chain of family restaurant with wide choice of dishes, sides and desserts. Reasonably priced.',
+            'experience'        => 'The place has a smoking area, and a non smoking area. Tables and counters in front of windows bay. Not especially good, but decent for the price.',
+            'visited'           => true,
+            'visit_date'        => '2018-06-09 13:00:00',
+            'google_maps_link'  => 'https://www.google.com/maps/place/Gusto+Shibuya+Dogenzaka/@35.6574217,139.6963248,17z/data=!4m8!1m2!2m1!1sgasto!3m4!1s0x0:0xce74765a3efb9ab2!8m2!3d35.6576678!4d139.6959901',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13115272/',
+            'official_website'  => 'https://www.skylark.co.jp/gusto/index.html',
+            'score_lunch'       => 1,
+            'score_place'       => 1,
+            'score_food'        => 1,
+            'score_price'       => 1,
+            'score_date'        => 0
+        ));
+        $resto->attachTags(['teishoku','western','menu with calories','all you can drink','smoking area']);
+        $resto->fillCoordinatesFromString('35.657678, 139.696085');
         $resto = Restaurant::create(array(
             'name'              => 'Belle Mare Cafe',
             'location'          => 'Shibuya',
@@ -2387,7 +2407,7 @@ class RestaurantsTableSeeder extends Seeder
 
 
 
-/*
+        /*
         $resto = Restaurant::create(array(
             'name'              => '',
             'location'          => '',
@@ -2408,23 +2428,23 @@ class RestaurantsTableSeeder extends Seeder
         ));
         $resto->attachTags(['']);
         $resto->fillCoordinatesFromString('');
-*/
+        */
 
-// roppongi place with jorge and yamaguchi
-// https://www.google.com/maps/place/%E3%80%92106-0031+T%C5%8Dky%C5%8D-to,+Minato-ku,+Nishiazabu,+1+Chome%E2%88%928,+%EF%BC%A6%EF%BC%A5%EF%BC%B2%EF%BC%AD%EF%BD%89%EF%BC%AE%EF%BC%B4%EF%BC%B8%EF%BC%AF/@35.6598723,139.726296,18z/data=!4m5!3m4!1s0x60188b7a7ad6966d:0xc96057139678e33c!8m2!3d35.6608104!4d139.7248288
+        // roppongi place with jorge and yamaguchi
+        // https://www.google.com/maps/place/%E3%80%92106-0031+T%C5%8Dky%C5%8D-to,+Minato-ku,+Nishiazabu,+1+Chome%E2%88%928,+%EF%BC%A6%EF%BC%A5%EF%BC%B2%EF%BC%AD%EF%BD%89%EF%BC%AE%EF%BC%B4%EF%BC%B8%EF%BC%AF/@35.6598723,139.726296,18z/data=!4m5!3m4!1s0x60188b7a7ad6966d:0xc96057139678e33c!8m2!3d35.6608104!4d139.7248288
 
-// best sushi place from inuisan : http://www.uogashizushi.co.jp/shop/o-shop/tokyoeki/
+        // best sushi place from inuisan : http://www.uogashizushi.co.jp/shop/o-shop/tokyoeki/
 
-// good ramne up yoyogi koen west side : https://tabelog.com/tokyo/A1318/A131810/13004221/dtlmenu/
+        // good ramne up yoyogi koen west side : https://tabelog.com/tokyo/A1318/A131810/13004221/dtlmenu/
 
-// https://www.menya-cocoro.com/
+        // https://www.menya-cocoro.com/
 
         // https://hubjapan.io/articles/10-best-ramen-restaurants-in-shibuya
 
         // https://www.youtube.com/watch?v=S-Xm7s9eGxU
         // https://goo.gl/TbjN44
 
-// nathan recommwend ramen place behind office behind mormons church
+        // nathan recommwend ramen place behind office behind mormons church
 
         // fill coordinates
         $this->fillNullCoordinatesFromGoogleMapsLink();
