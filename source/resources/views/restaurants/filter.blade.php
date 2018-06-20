@@ -1,7 +1,7 @@
 <div id="position-report"></div>
 
 <div id="filterHeader">
-<div id="filterHeaderTitle" class="orange title">What kind of restaurant?</div>
+<div id="filterHeaderTitle" class="orange title">What kind of place?</div>
 <button id="filterHeaderButton" onclick="getResults()">Show Results</button>
 </div>
 

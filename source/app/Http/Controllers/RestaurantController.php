@@ -232,15 +232,6 @@ class RestaurantController extends Controller
 
     /**
      * Public
-     * Display the the restaurants filter page
-     */
-    public function filterView()
-    {
-        return view('restaurants.filter');
-    }
-
-    /**
-     * Public
      * Display the specified resource.
      *
      * @param  int  $id

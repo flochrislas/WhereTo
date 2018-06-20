@@ -2,15 +2,13 @@
 
 @section('content')
 <div id="content">
-  <div>Home</div>
-  <div>
-      @if (session('status'))
-          <div>
-              {{ session('status') }}
-          </div>
-      @endif
-      <a href="{{ route('restaurants.filter') }}">Lunch in Shibuya</a>
-      <a href="{{ route('restaurants.main') }}">Voir les restos</a>
-  </div>
+  @if (session('status'))
+      <div>
+          {{ session('status') }}
+      </div>
+  @endif
+
+  <a class="giantButton" href="{{ route('restaurants.main') }}">Lunch in<br/>Shibuya</a>
+
 </div>
 @endsection
