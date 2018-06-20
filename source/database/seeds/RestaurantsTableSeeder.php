@@ -2426,6 +2426,28 @@ class RestaurantsTableSeeder extends Seeder
         $resto->attachTags(['katsudon','tonkatsu','filling']);
         $resto->fillCoordinatesFromString('35.658768, 139.698308');
 
+        $resto = Restaurant::create(array(
+            'name'              => 'Toridon (?)',
+            'location'          => 'Shibuya, 3Chome',
+            'type'              => 'Katsu',
+            'lunch_price'       => 850,
+            'points'            => 'Nice katsudon set. Not especially delicious, but big.',
+            'experience'        => 'For 980 yen I got a huge bowl with 2 big tonkatsu, lots of rice (omori) and a scrambled eggs, with miso soup and pickles on the side. Not especially yasty, but decent, and you can add variety of toppings as there are several available on the counter. Small counter and few tables, but not too bad.',
+            'visited'           => true,
+            'visit_date'        => '2018-06-19 13:00:00',
+            'google_maps_link'  => '',
+            'tabelog_link'      => '',
+            'official_website'  => '',
+            'score_lunch'       => 2,
+            'score_place'       => 1,
+            'score_food'        => 1,
+            'score_price'       => 1,
+            'score_date'        => 0
+        ));
+        $resto->attachTags(['katsudon','tonkatsu','filling']);
+        $resto->fillCoordinatesFromString('35.657251, 139.703753');
+
+
         /*
         $resto = Restaurant::create(array(
             'name'              => '',
