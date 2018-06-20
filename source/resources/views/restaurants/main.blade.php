@@ -6,11 +6,14 @@
 <div id="content">
 
   <div id="restaurantsFilter">
-    
+
     @include('restaurants.filter')
   </div>
 
   <div id="restaurantsResults">
+    <button onclick="">Best<br>first</button>
+    <button onclick="">Cheapest<br>first</button>
+    <button onclick="">Nearest<br>first</button>
     <button onclick="showFilter()">Show Filter</button>
     @include('restaurants.results')
   </div>
