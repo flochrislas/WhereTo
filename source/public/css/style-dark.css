@@ -231,6 +231,7 @@ td {
 }
 
 #filterHeaderTitle {
+  flex: initial;
   margin: .5em;
   color: #45C3EC;
   font-size: .942666666666667rem;
@@ -241,7 +242,7 @@ td {
 
 #filterHeaderButton {
   flex: auto;
-  margin: .5em;
+  margin: .6em;
 }
 /*********************************************/
 /** RESTAURANT TAGS */
