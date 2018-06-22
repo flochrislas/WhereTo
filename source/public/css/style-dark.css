@@ -6,6 +6,8 @@ Element selection:
 (): HTML tag. ex: div{}
 (#): HTML tag's ID (only one ID per tag)
 (.): HTML tag's class (multiple classes per tag is OK)
+em: size against the current/parent elemt
+rem: size against the root element (html, or else browser setting)
 */
 
 /*********************************************/
@@ -100,7 +102,7 @@ td {
 .title {
   font-family: 'ITCAvantGardeStdBk', sans-serif;
   color: #45C3EC;
-  font-size: 2rem;
+  font-size: 1.5rem;
   font-weight: 700;
   text-decoration: none;
 }
@@ -111,7 +113,7 @@ td {
 
 #footer {
 	margin: .1rem;
-  margin-top: 2rem;
+  margin-top: .8rem;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -183,9 +185,9 @@ td {
   border-width: .37rem;
   border-radius: 1rem;
   padding: 3rem 2rem;
-  margin: 0.8rem 1.2rem;
+  margin: .8rem 1rem;
   color: black;
-  font-size: 2.5rem;
+  font-size: 2rem;
   font-weight: 600;
   text-align: center;
   text-decoration: none;
@@ -257,7 +259,7 @@ td {
   border-width: .2rem;
   border-color: #45C3EC;
   background-color: #3BA0C3;
-  margin: .55rem;
+  margin: .44rem .2rem;
   padding: .8rem 1.15rem;
   /* text */
   font-family: 'ITCAvantGardeStdBk', sans-serif;
