@@ -15,7 +15,7 @@ Element selection:
 html, body {
   background-color: black;
   font-family: 'Open Sans',sans-serif;
-  font-size: 80%;
+  /* font-size: 80%; */
   /*color: #d0d0d2;*/ /* grey */
   color: #CAD0AF; /* grey 2 */
 }
@@ -52,8 +52,8 @@ td {
 /*********************************************/
 
 #header {
-	margin: .1em;
-  margin-bottom: 1em;
+	margin: .1rem;
+  margin-bottom: 1rem;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -75,19 +75,19 @@ td {
 }
 
 #header a {
-  margin: 0 .35em;
+  margin: 0 .35rem;
 }
 
 .tap {
   background-color: #3BA0C3;
   border-color: #45C3EC;
   border-style:  solid;
-  border-width: .2em;
-  border-radius: 1em;
+  border-width: .2rem;
+  border-radius: 1rem;
   color: black;
   text-align: center;
   text-decoration: none;
-  padding: .7em 1.15em;
+  padding: .7rem 1.15rem;
   white-space: nowrap;
 
   /* Prevent background color leak outs */
@@ -100,7 +100,7 @@ td {
 .title {
   font-family: 'ITCAvantGardeStdBk', sans-serif;
   color: #45C3EC;
-  font-size: 2em;
+  font-size: 2rem;
   font-weight: 700;
   text-decoration: none;
 }
@@ -110,8 +110,8 @@ td {
 /*********************************************/
 
 #footer {
-	margin: .1em;
-  margin-top: 2em;
+	margin: .1rem;
+  margin-top: 2rem;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -128,7 +128,7 @@ td {
 
 #content {
   background-color: #141422; /* almost black */
-  margin: .1em;
+  margin: .1rem;
 	color: #d0d0d2;
 
   display: flex;
@@ -180,12 +180,12 @@ td {
   background-color: #3BA0C3;
   border-color: #45C3EC;
   border-style:  solid;
-  border-width: .37em;
-  border-radius: 1em;
-  padding: 3em 2em;
-  margin: 0.8em 1.2em;
+  border-width: .37rem;
+  border-radius: 1rem;
+  padding: 3rem 2rem;
+  margin: 0.8rem 1.2rem;
   color: black;
-  font-size: 2.5em;
+  font-size: 2.5rem;
   font-weight: 600;
   text-align: center;
   text-decoration: none;
@@ -212,7 +212,7 @@ td {
 .restaurantName {
   font-family: 'ITCAvantGardeStdBk', sans-serif;
   color: #69e2b3;
-  font-size: 1em;
+  font-size: 1rem;
   font-weight: 100;
   text-decoration: none;
 }
@@ -220,7 +220,7 @@ td {
 .restaurantType {
   font-family: 'ITCAvantGardeStdBk', sans-serif;
   color: #45C3EC;
-  font-size: 1em;
+  font-size: 1rem;
   font-weight: 50;
 }
 
@@ -232,7 +232,7 @@ td {
 
 #filterHeaderTitle {
   flex: initial;
-  margin: .5em;
+  margin: .5rem;
   color: #45C3EC;
   font-size: .942666666666667rem;
   font-weight: 700;
@@ -242,7 +242,7 @@ td {
 
 #filterHeaderButton {
   flex: auto;
-  margin: .6em;
+  margin: .6rem;
 }
 /*********************************************/
 /** RESTAURANT TAGS */
@@ -254,15 +254,15 @@ td {
   display: inline-block;
   cursor: pointer;
   border-style: solid;
-  border-width: .2em;
+  border-width: .2rem;
   border-color: #45C3EC;
   background-color: #3BA0C3;
-  margin: .55em;
-  padding: .8em 1.15em;
+  margin: .55rem;
+  padding: .8rem 1.15rem;
   /* text */
   font-family: 'ITCAvantGardeStdBk', sans-serif;
   color: #000000;
-  font-size: 1em;
+  font-size: 1rem;
   font-weight: 500;
   text-decoration: none;
   text-align: center;
@@ -278,7 +278,7 @@ td {
 
 	 display:inline-block;
 	 line-height:1;
-	 padding:.7em 1.15em;
+	 padding:.7rem 1.15rem;
 	 text-align:center;
 	 font-weight:700;
 	 text-decoration:none;
@@ -312,7 +312,7 @@ td {
  display:inline-block;
  font-size:.942666666666667rem;
  line-height:1;
- padding:.7em 1.15em;
+ padding:.7rem 1.15rem;
  text-align:center;
  font-weight:700;
  text-decoration:none;
@@ -361,7 +361,7 @@ td {
  display:block;
  font-size:60%;
  text-align:center;
- padding-top:1em;
+ padding-top:1rem;
  text-transform:uppercase
 }
 .button--full-width {

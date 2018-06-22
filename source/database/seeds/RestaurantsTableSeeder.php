@@ -2468,6 +2468,27 @@ class RestaurantsTableSeeder extends Seeder
         $resto->attachTags(['']);
         $resto->fillCoordinatesFromString('');
 
+        $resto = Restaurant::create(array(
+            'name'              => 'Roccoman',
+            'location'          => 'Shibuya, Dogenzaka',
+            'type'              => 'Gyoza',
+            'lunch_price'       => 680,
+            'points'            => 'Decent gyoza lunch. Light lunch 680yen. Bigger lunch 980yen.',
+            'experience'        => 'I liked the room with 2 big windows bays. Unfortunately, it is quite noisy: the TV is on with the sound, and the room\'s speakers also blast some music, and of course, other customers talking all around (it is an open space without separations). Food was decent but nothing exceptional.',
+            'visited'           => true,
+            'visit_date'        => '2018-06-22 13:00:00',
+            'google_maps_link'  => 'https://www.google.co.jp/maps/place/ROCCOMAN%E6%B8%8B%E8%B0%B7%E9%81%93%E7%8E%84%E5%9D%82%E5%BA%97/@35.6570053,139.6988651,18z/data=!4m5!3m4!1s0x0:0x488b65e43f2b1f56!8m2!3d35.6582562!4d139.6962446',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13216233/',
+            'official_website'  => 'http://roccoman-japanese-izakaya-restaurant.business.site/',
+            'score_lunch'       => 2,
+            'score_place'       => 1,
+            'score_food'        => 1,
+            'score_price'       => 1,
+            'score_date'        => 0
+        ));
+        $resto->attachTags(['gyoza']);
+        $resto->fillCoordinatesFromString('35.658131, 139.696500');
+
         /*
         $resto = Restaurant::create(array(
             'name'              => '',
