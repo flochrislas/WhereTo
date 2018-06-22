@@ -2447,6 +2447,26 @@ class RestaurantsTableSeeder extends Seeder
         $resto->attachTags(['katsudon','tonkatsu','filling']);
         $resto->fillCoordinatesFromString('35.657251, 139.703753');
 
+        $resto = Restaurant::create(array(
+            'name'              => 'Spain',
+            'location'          => 'Shibuya',
+            'type'              => 'Spanish',
+            'lunch_price'       => 950,
+            'points'            => 'Spanish-like food (does not really feel authentic), such as paela, porc and, choriso and raw ham... counter and tables available.',
+            'experience'        => '2 TV were on inside, showing some video, but without the sound. Some american country music were playing. I ordered a raw ham sandwich with some salad and fried potatoes, for 790yen. Lunch came with a drink as well. The price was kind of decent, but I was left very unimpressed by the food. The place opens to outside when weather is OK.',
+            'visited'           => true,
+            'visit_date'        => '2018-06-27 13:00:00',
+            'google_maps_link'  => '',
+            'tabelog_link'      => '',
+            'official_website'  => '',
+            'score_lunch'       => 1,
+            'score_place'       => 1,
+            'score_food'        => 1,
+            'score_price'       => 1,
+            'score_date'        => 0
+        ));
+        $resto->attachTags(['']);
+        $resto->fillCoordinatesFromString('');
 
         /*
         $resto = Restaurant::create(array(
