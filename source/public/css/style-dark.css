@@ -304,7 +304,26 @@ td {
   text-decoration: none;
   text-align: center;
   white-space: nowrap;
+}
 
+.tagType100 {
+  border-color: #45C3EC;
+  background-color: #3BA0C3;
+}
+
+.tagType80 {
+  border-color: #45C311;
+  background-color: #3BA011;
+}
+
+.tagType60 {
+  border-color: #4511EC;
+  background-color: #3B11C3;
+}
+
+.tagType40 {
+  border-color: #11C3EC;
+  background-color: #11A0C3;
 }
 
 /*******************************************************/
