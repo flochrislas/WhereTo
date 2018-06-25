@@ -13,7 +13,7 @@
 <p>Available options</p>
 <div id="tags">
 @foreach ($restaurantTags as $restaurantTag)
-    <div class="tag"
+    <div class="tag tagType{{$restaurantTag->type}}"
           tagId="{{$restaurantTag->id}}"
           id="tagShow{{$restaurantTag->id}}"
           onClick="moveTag(event)">
