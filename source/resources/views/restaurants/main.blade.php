@@ -52,23 +52,6 @@ function isResultEmpty() {
   return document.getElementById("results").innerHTML == 'empty';
 }
 
-/***************************phony**********************************/
-function updateResults() {
-  var xhr = new XMLHttpRequest();
-  xhr.open('PUT', 'restaurants');
-  xhr.setRequestHeader('Content-Type', 'application/json');
-  xhr.onload = function() {
-      if (xhr.status === 200) {
-          var userInfo = JSON.parse(xhr.responseText);
-          document.getElementById("demo").innerHTML = xhr.responseText;
-      }
-  };
-  xhr.send(JSON.stringify({
-      name: 'John Smith',
-      age: 34
-  }));
-}
-
 </script>
 
 <!-- Javascript for geolocalisation -->
