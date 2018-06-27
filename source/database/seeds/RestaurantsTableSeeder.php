@@ -2510,6 +2510,48 @@ class RestaurantsTableSeeder extends Seeder
         $resto->attachTags(['ramen','noodles','miso']);
         $resto->fillCoordinatesFromString('35.660200, 139.699393');
 
+        $resto = Restaurant::create(array(
+            'name'              => 'Sushi Zanmai',
+            'location'          => 'Shibuya',
+            'type'              => 'Sushi',
+            'lunch_price'       => 1200,
+            'points'            => 'Quite good sushi chain restaurant. Counters and tables available. No conveyor belt. Menu sets and a la carte. English OK.',
+            'experience'        => 'Rather spacious sushi restaurant, with sushi prices starting as low as 98yen. Despite that rather low price and the cheap sushi not looking so great, there are, in fact, quite delicious. I could eat their 98yen saumon and their 158yen red tuna all day. Better than the suhi-go-round places I have tried so far.',
+            'visited'           => true,
+            'visit_date'        => '2018-06-27 13:00:00',
+            'google_maps_link'  => 'https://www.google.com/maps/place/Sushi+Zanmai/@35.6596218,139.6988228,18z/data=!4m8!1m2!2m1!1sSushi+Zanmai!3m4!1s0x0:0xa33efc1bafc81a32!8m2!3d35.661116!4d139.6965721',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13123962/',
+            'official_website'  => 'http://www.kiyomura.co.jp/shops/detail/79',
+            'score_lunch'       => 3,
+            'score_place'       => 1,
+            'score_food'        => 2,
+            'score_price'       => 1,
+            'score_date'        => 0
+        ));
+        $resto->attachTags(['sushi']);
+        $resto->fillCoordinatesFromString('35.661094, 139.696603');
+
+        $resto = Restaurant::create(array(
+            'name'              => 'Brasserie Viron',
+            'location'          => 'Shibuya',
+            'type'              => 'French',
+            'lunch_price'       => 1200,
+            'points'            => 'French bakery and cafe (brasserie). Decent for a price.',
+            'experience'        => 'Prices feel a bit expensive. Quality is not that great. I had a croque-monsieur once for lunch in their 2nd floor\'s brasserie, the interior was not great and neither was the food. I could feel the cheese was decent for Japan, but bread and ham were kind of disapointing. The bakery seems decent though, and it is not like there are many competitor in the neighbourhood or even Tokyo anyway.',
+            'visited'           => true,
+            'visit_date'        => '2018-06-27 13:00:00',
+            'google_maps_link'  => 'https://www.google.com/maps/place/Brasserie+VIRON/@35.6576443,139.7017993,17z/data=!4m5!3m4!1s0x60188ca970aa2465:0x1aa8c50c49653ca!8m2!3d35.6608958!4d139.6968211',
+            'tabelog_link'      => '',
+            'official_website'  => '',
+            'score_lunch'       => 2,
+            'score_place'       => 1,
+            'score_food'        => 1,
+            'score_price'       => 0,
+            'score_date'        => 0
+        ));
+        $resto->attachTags(['french','cafe']);
+        $resto->fillCoordinatesFromString('35.660864, 139.696779');
+
         /*
         $resto = Restaurant::create(array(
             'name'              => '',
