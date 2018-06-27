@@ -17,6 +17,10 @@ rem: size against the root element (html, or else browser setting)
 html, body {
   background-color: black;
   font-family: 'Open Sans',sans-serif;
+  /* or try :
+  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+   font-weight: 300;
+   */
   /* font-size: 80%; */
   /*color: #d0d0d2;*/ /* grey */
   color: #CAD0AF; /* grey 2 */

@@ -2489,6 +2489,27 @@ class RestaurantsTableSeeder extends Seeder
         $resto->attachTags(['gyoza']);
         $resto->fillCoordinatesFromString('35.658131, 139.696500');
 
+        $resto = Restaurant::create(array(
+            'name'              => 'Kindenmaru Ramen',
+            'location'          => 'Shibuya, Center Gai',
+            'type'              => 'Ramen',
+            'lunch_price'       => 900,
+            'points'            => 'Very decent ramen and cold soupless ramen in summer.',
+            'experience'        => 'I went at the end of June, and they had cold dish options. I tried a cold soupless ramen (900yen) and it was delicious (2 kind of meat, both very good, sesami based sauce very good as well, good mix of spices, and an boiled egg). Like in most ramen restaurant, you can also order some cheap yaki gyoza on the side. The place is small with a counter and a couple of tables. Miso ramen available.',
+            'visited'           => true,
+            'visit_date'        => '2018-06-26 13:00:00',
+            'google_maps_link'  => 'https://www.google.com/maps/place/Ramen+Kindenmaru+Shibuya+Honten/@35.6588502,139.7002597,18z/data=!4m8!1m2!2m1!1z6YeR5Lyd5Li4!3m4!1s0x0:0x3908e6679571286b!8m2!3d35.6602372!4d139.6994072',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13020600/',
+            'official_website'  => 'https://www.hotpepper.jp/strJ000104478/',
+            'score_lunch'       => 3,
+            'score_place'       => 1,
+            'score_food'        => 2,
+            'score_price'       => 1,
+            'score_date'        => 0
+        ));
+        $resto->attachTags(['ramen','noodles','miso']);
+        $resto->fillCoordinatesFromString('35.660200, 139.699393');
+
         /*
         $resto = Restaurant::create(array(
             'name'              => '',
