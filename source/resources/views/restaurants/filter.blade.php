@@ -37,16 +37,26 @@ function moveTag(event) {
 }
 
 /** Refreshes the list of results */
-function refreshResults(orderBy="distance") {
+function refreshResults(orderBy) {
   // Default parameter doc: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Default_parameters
   /* read all the div under selectedTags */
   var tags = document.getElementById("selectedTags").children;
   /* make a list of all their ids or labels to send as parameters */
   var tagsLabels = getTagsLabels(tags);
   /* check for orderBy choice */
-  var storeOrderBy = readStore("orderBy");
-  if (variable == null) {
-    orderBy = storeOrderBy;
+  if (orderBy != null) {
+    // priority to the current parameter
+    store("orderBy", orderBy);
+  } else {
+    // if no param then try read store
+    var storeOrderBy = readStore("orderBy");
+    if (storeOrderBy != null) {
+      orderBy = storeOrderBy;
+    } else {
+      // if nothing in param or store use default value
+      orderBy = "distance";
+      store("orderBy", orderBy);
+    }
   }
   /* read order/operand/options parameters */
   // We will implement that later
@@ -58,7 +68,9 @@ function refreshResults(orderBy="distance") {
 /** Actually send the request to the server */
 function ajaxResults(op, tags, orderBy) {
   var xhr = new XMLHttpRequest();
-  var url = 'restaurants/results?op=' + op + '&tags=' + tags + '&orderBy=' + orderBy;
+  var url = 'restaurants/results?op=' + op
+          + '&tags=' + tags
+          + '&orderBy=' + orderBy;
   xhr.open('GET', url);
   xhr.onload = function() {
       if (xhr.status === 200) {
@@ -92,7 +104,7 @@ function store(key, value) {
   // Look up for different options, chose the best
   if (typeof(Storage) !== "undefined") {
     // Code for localStorage/sessionStorage.
-    localStorage.setItem(key value);
+    localStorage.setItem(key, value);
     // sessionStorage.setItem(key value);
   } else {
       // Sorry! No Web Storage support..
