@@ -75,7 +75,8 @@ function showPosition(position) {
     x.innerHTML = "Latitude: " + position.coords.latitude +
     "<br>Longitude: " + position.coords.longitude;
     */
-    y.value = position.coords.latitude + "," + position.coords.longitude;
+    // Was y !!
+    x.value = position.coords.latitude + "," + position.coords.longitude;
 }
 
 function showError(error) {

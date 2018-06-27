@@ -32,30 +32,38 @@ class RestaurantController extends Controller
         Log::debug('Request tags: '.request('tags'));
         Log::debug('Request op: '.request('op'));
         Log::debug('Request position: '.request('position'));
+        Log::debug('Request orderBy: '.request('orderBy'));
         // Operator for the Tags
         $op = request('op');
         // tags as a comma separated list
         $tags = request('tags');
         $this->formatTags($tags);
-        // current position from client's GPS
+        // Current position from client's GPS
         // Office from google maps '35.656660, 139.699691'
         $position = request('position');
         $position = '35.656660, 139.699691';
-        // flag to sort by distances
-        $closestFirst = true;
+
+        $orderBy = request('orderBy');
 
         // key needs to be made of all the used parameters except coords
-        $cacheKey = $this->cacheKey($op, $tags);
+        $cacheKey = $this->cacheKey($op, $tags, $orderBy);
 
-        $restaurants = Cache::rememberForever($cacheKey, function() use ($tags, $op) {
-              return $this->mainDB($tags, $op);
+        $restaurants = Cache::rememberForever($cacheKey, function() use ($tags, $op, $orderBy) {
+              return $this->mainDB($tags, $op, $orderBy);
           });
 
-        if (!empty($position)) {
-            $distanceSortedRestaurants = $this->sortByDistance($restaurants, $position);
+        if ($orderBy == 'distance')
+        {
+          if (!empty($position)) {
+              $distanceSortedRestaurants = $this->sortByDistance($restaurants, $position);
+          }
+          $restaurants = collect($distanceSortedRestaurants);
         }
-        if ($closestFirst) {
-            $restaurants = collect($distanceSortedRestaurants);
+        else // we still need to fill the current distance data for each restaurant we show
+        {
+          if (!empty($position)) {
+              $distanceSortedRestaurants = $this->generateCurrentDistances($restaurants, $position);
+          }
         }
 
         // Keeps the input of the user interface
@@ -70,12 +78,17 @@ class RestaurantController extends Controller
      * Generate the key to use for puting the main query into cache
      * @return string
      */
-    public function cacheKey($op, $tags) : string
+    public function cacheKey($op, $tags, $orderBy) : string
     {
         if (empty($tags)) {
             $cacheKey = 'all';
         } else {
             $cacheKey = md5($op .','. implode(',',$tags));
+        }
+        // The logic below is a bit dangerous, but currently
+        // only orderBy costs influence the cached results
+        if ($orderBy == 'cost') {
+            $cacheKey = $orderBy.$cacheKey;
         }
         return $cacheKey;
     }
@@ -102,19 +115,38 @@ class RestaurantController extends Controller
      *
      * @return Illuminate\Database\Eloquent\Collection
      */
-    public function mainDB($tags, $op = 'AND')
+    public function mainDB($tags, $op = 'AND', $orderBy = 'distance')
     {
-        Log::debug('Hitting the DB with mainDB with op '.$op);
+        Log::debug('Hitting the DB with mainDB with op '.$op.' orderBy '.$orderBy);
         $query = (new Restaurant)->newQuery();
 
         $this->whereTags($query, $tags, $op);
+        $this->orderBy($query, $orderBy);
 
-        $restaurants = $query->orderBy('score_lunch', 'desc')
-                        ->orderBy('score_food', 'desc')
-                        ->orderBy('score_place', 'desc')
-                        ->get();
+        $restaurants = $query->get();
 
         return $restaurants;
+    }
+
+    public function orderBy(&$query, $orderBy = 'distance') : void
+    {
+        Log::debug('orderBy: '.$orderBy);
+
+        if ($orderBy == 'distance' || $orderBy == 'ratings') {
+            // Sorting by distance will happens outside the query
+            // We still try to put best places on top (rating)
+            $query->orderBy('score_lunch', 'desc')
+                  ->orderBy('score_food', 'desc')
+                  ->orderBy('score_place', 'desc');
+        }
+
+        if ($orderBy == 'cost') {
+            // Price first, but we still try to put best places on top
+            $query->orderBy('lunch_price', 'asc')
+                  ->orderBy('score_lunch', 'desc')
+                  ->orderBy('score_food', 'desc')
+                  ->orderBy('score_place', 'desc');
+        }
     }
 
     public function whereTags(&$query, $tags, $op = 'AND') : void
@@ -122,7 +154,6 @@ class RestaurantController extends Controller
         Log::debug('whereTags: '.print_r($tags, true).'('.$op.')');
         if (isset($tags) && !empty($tags)) {
             if ($op == 'AND') {
-              Log::debug('come one');
                 $query->whereHas('tags', function ($query) use ($tags) {
                       $query->whereIn('label', $tags);
                 }, '=', count($tags));
