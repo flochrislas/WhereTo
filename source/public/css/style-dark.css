@@ -52,7 +52,7 @@ td {
   /* 0 auto makes the div centered on screen */
   margin: 0 auto;
   padding: 0;
-  max-width: 50rem;
+  max-width: 40rem;
 }
 
 /*********************************************/
