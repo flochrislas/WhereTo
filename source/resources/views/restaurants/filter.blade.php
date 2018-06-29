@@ -2,7 +2,7 @@
 
 <div id="filterHeader">
 <div id="filterHeaderTitle" class="orange title">What kind of place?</div>
-<button id="filterHeaderButton" onclick="getResults()">Show Results</button>
+<button id="filterHeaderButton" onclick="getResults()">Show All</button>
 </div>
 
 <!-- selected tags for active search -->
@@ -74,7 +74,10 @@ function ajaxResults(op, tags, orderBy) {
   xhr.open('GET', url);
   xhr.onload = function() {
       if (xhr.status === 200) {
+          /* write results */
           document.getElementById("results").innerHTML = xhr.responseText;
+          /* update the show result button with the number of results */
+          refreshShowResultsButton();
       }
   };
   xhr.send();
@@ -97,6 +100,14 @@ function getTagsIdArray(op, tags) {
     tagsIds.push(tags[i].getAttribute("tagId"));
   }
   return tagsIds;
+}
+
+function refreshShowResultsButton() {
+  /* get number of results */
+  // var nbResults = document.getElementById("results").children.count();
+  var nbResults = document.getElementById('resultsTable').rows.length;
+  /* Change button label/text */
+  document.getElementById("filterHeaderButton").innerHTML = "Show " + nbResults + " results";
 }
 
 /* TO MOVE IN A SUPERIOR CLASS */

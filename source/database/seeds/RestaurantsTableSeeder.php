@@ -2552,6 +2552,48 @@ class RestaurantsTableSeeder extends Seeder
         $resto->attachTags(['french','cafe']);
         $resto->fillCoordinatesFromString('35.660864, 139.696779');
 
+        $resto = Restaurant::create(array(
+            'name'              => 'Ringer Hut',
+            'location'          => 'Shibuya, Dogenzaka',
+            'type'              => 'Noodles',
+            'lunch_price'       => 1200,
+            'points'            => 'Healthy fast food serving mostly noodles based dishes (cold and hot) for a cheap price.',
+            'experience'        => 'Food was good and cheap. I ordered soupless noodles with lots of vegetables and 5 yaki gyoza for 780yen. Place was Japanese fast-food style, with a machine to place your order at the entrance, and a big counter with no tables. Confortable enough, I enjoyed my lunch there. I also liked the yuzu kosho (green spicy citrus paste) they give with the gyoza.',
+            'visited'           => true,
+            'visit_date'        => '2018-06-28 13:00:00',
+            'google_maps_link'  => 'https://www.google.com/maps/place/Ringer+Hut+Shibuya+Dogenzaka/@35.6582075,139.7004023,17z/data=!4m5!3m4!1s0x60188ca9fc10a2d1:0xfc55b1b8b4eb0545!8m2!3d35.6584124!4d139.6967009',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13121214/',
+            'official_website'  => 'https://www.ringerhut.jp/',
+            'score_lunch'       => 3,
+            'score_place'       => 1,
+            'score_food'        => 1,
+            'score_price'       => 2,
+            'score_date'        => 0
+        ));
+        $resto->attachTags(['noodles','fast food','gyoza']);
+        $resto->fillCoordinatesFromString('35.658397, 139.696745');
+
+        $resto = Restaurant::create(array(
+            'name'              => 'Smokehouse',
+            'location'          => 'Harajuku',
+            'type'              => 'Meat',
+            'lunch_price'       => 1800,
+            'points'            => 'BBQ Meat. Nice place. Bar counter and tables. Outside tables available as well on 2nd floor terrace.',
+            'experience'        => 'Decent. Places where you can eat western style BBQ meat are quite rare, so this place is noteworthy. It is not especially delicious nor cheap though. I had a Bama Burger for 1800yen. It came with a fair amount of fries, good patty, very good bacon, but kind of disapointing cheese, sauce and veggie. Good, but overall lacking in taste.',
+            'visited'           => true,
+            'visit_date'        => '2018-06-29 13:00:00',
+            'google_maps_link'  => 'https://www.google.co.jp/maps/place/SMOKEHOUSE/@35.6606598,139.7076495,16z/data=!4m5!3m4!1s0x0:0x22f2979e65ea0099!8m2!3d35.6655325!4d139.7048171',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13161143/',
+            'official_website'  => 'https://www.tysons.jp/smokehouse/',
+            'score_lunch'       => 2,
+            'score_place'       => 1,
+            'score_food'        => 1,
+            'score_price'       => 0,
+            'score_date'        => 1
+        ));
+        $resto->attachTags(['grill','burger']);
+        $resto->fillCoordinatesFromString('35.665622, 139.704725');
+
         /*
         $resto = Restaurant::create(array(
             'name'              => '',

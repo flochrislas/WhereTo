@@ -1,4 +1,4 @@
-<table>
+<table id="resultsTable">
 @foreach ($restaurants as $restaurant)
   <tr>
       <td id="nameAndType">
@@ -36,3 +36,4 @@
   </tr>
 @endforeach
 </table>
+<div>End of {{ $restaurants->count() }} amazing results</div>

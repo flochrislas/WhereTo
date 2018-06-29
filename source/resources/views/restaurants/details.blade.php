@@ -1,8 +1,23 @@
 @extends('layouts.app')
 
-@section('title', 'Restaurant Show')
+@section('title', 'Restaurant details')
 
 @section('content')
+<div id="content">
+
+  <div id="resultsControl">
+    <button class="sortButton"
+      onclick="window.open('{{ $restaurant->google_maps_link }}', '_blank')">
+      Google<br>maps</button>
+    <button class="sortButton"
+      onclick="window.open('{{ $restaurant->tabelog_link }}', '_blank')">
+      Tabelog</button>
+    <button class="sortButton"
+      onclick="window.open('{{ $restaurant->official_website }}', '_blank')">
+      Website</button>
+    <button class="navButton" onclick="history.back(-1)">BACK</button>
+  </div>
+
 
     <div class="row">
         <div>
@@ -55,56 +70,19 @@
         </div>
         <div>
             <div>
-                <strong>Visit date:</strong>
-                {{ $restaurant->visit_date}}
-            </div>
-        </div>
-        <div>
-            <div>
-                <strong>Google maps:</strong>
-                <a target="_blank"
-                  href="{{ $restaurant->google_maps_link }}">
-                  map
-                </a>
-            </div>
-        </div>
-        <div>
-            <div>
-                <strong>Tabelog:</strong>
-                <a target="_blank"
-                  href="{{ $restaurant->tabelog_link }}">
-                  map
-                </a>
-            </div>
-        </div>
-        <div>
-            <div>
-                <strong>Website:</strong>
-                <a target="_blank"
-                  href="{{ $restaurant->official_website }}">
-                  map
-                </a>
-            </div>
-        </div>
-        <div>
-            <div>
-                <strong>Visit date:</strong>
-                {{ $restaurant->visit_date}}
-            </div>
-        </div>
-        <div>
-            <div>
-                <strong>Visit date:</strong>
-                {{ $restaurant->visit_date}}
-            </div>
-        </div>
-        <div>
-            <div>
                 <strong>Tags:</strong>
-                @foreach ($restaurant->tagsCached() as $tag)
-                  {{ $tag->label }} |
+                <div id="tags">
+                @foreach ($restaurant->tagsCached() as $restaurantTag)
+                    <div class="tag tagType{{$restaurantTag->type}}"
+                          tagId="{{$restaurantTag->id}}"
+                          id="tagShow{{$restaurantTag->id}}"
+                          onClick="moveTag(event)">
+                      {{$restaurantTag->label}}
+                    </div>
                 @endforeach
+                </div>
             </div>
         </div>
     </div>
+</div>
 @endsection
