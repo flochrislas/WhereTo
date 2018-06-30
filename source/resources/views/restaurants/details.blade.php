@@ -18,64 +18,43 @@
     <button class="navButton" onclick="history.back(-1)">BACK</button>
   </div>
 
-  <div id="detailTitle">
-      <div id="detailName">{{ $restaurant->name}}</div>
-      <div id="detailType">{{ $restaurant->type}}</div>
+  <div id="detailTitle" class="detailRow">
+      <div id="detailName" class="detail">{{ $restaurant->name}}</div>
+      <div id="detailType" class="detail">{{ $restaurant->type}}</div>
+      <div class="detail">{{ $restaurant->location}}</div>
   </div>
 
+  <div class="detailRow">
+      <div class="detail">{{ $restaurant->lunch_price}}&yen;</div>
+      <div class="detail">Lunch {{ $restaurant->score_lunch}}/4</div>
+      <div class="detail">Food {{ $restaurant->score_food}}/3</div>
+      <div class="detail">Place{{ $restaurant->score_place}}/3</div>
+      <div class="detail">Cost {{ $restaurant->score_price}}/2</div>
+      <div class="detail">Date {{ $restaurant->score_date}}/2</div>
+  </div>
 
-    <div class="row">
-        <div>
-            <div>
-                <strong>Location:</strong>
-                {{ $restaurant->location}}
-            </div>
-        </div>
-        <div>
-            <div>
-                <strong>Coordinates:</strong>
-                {{ $restaurant->coord}}
-            </div>
-        </div>
-        <div>
-            <div>
-                <strong>Lunch price:</strong>
-                {{ $restaurant->lunch_price}}
-            </div>
-        </div>
-        <div>
-            <div>
-                <strong>Points:</strong>
-                {{ $restaurant->points}}
-            </div>
-        </div>
-        <div>
-            <div>
-                <strong>Personal experience:</strong>
-                {{ $restaurant->experience}}
-            </div>
-        </div>
-        <div>
-            <div>
-                <strong>Visited:</strong>
-                {{ $restaurant->visited}}
-            </div>
-        </div>
-        <div>
-            <div>
-                <strong>Tags:</strong>
-                <div id="tags">
-                @foreach ($restaurant->tagsCached() as $restaurantTag)
-                    <div class="tag tagType{{$restaurantTag->type}}"
-                          tagId="{{$restaurantTag->id}}"
-                          id="tagShow{{$restaurantTag->id}}"
-                          onClick="moveTag(event)">
-                      {{$restaurantTag->label}}
-                    </div>
-                @endforeach
-                </div>
-            </div>
-        </div>
-    </div>
+  <div class="detailRow">
+      <div class="detail">{{ $restaurant->points}}</div>
+  </div>
+
+  <div class="detailRow">
+      <div class="detail">{{ $restaurant->experience}}</div>
+  </div>
+
+  <div class="detail">
+  @foreach ($restaurant->tagsCached() as $restaurantTag)
+      <div class="tag tagType{{$restaurantTag->type}}"
+            tagId="{{$restaurantTag->id}}"
+            id="tagShow{{$restaurantTag->id}}"
+            onClick="moveTag(event)">
+        {{$restaurantTag->label}}
+      </div>
+  @endforeach
+  </div>
+<div class="mysteryDot"> . </div>
+  @if ($restaurant->visited != 1)
+    <div class="mysteryDot"> . </div>
+  @endif
+
 </div>
 @endsection
