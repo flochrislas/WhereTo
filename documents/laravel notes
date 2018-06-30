@@ -43,6 +43,13 @@ php artisan --version
 
 Great post on Laravel permissions setting
 https://stackoverflow.com/questions/27674597/laravel-daily-log-created-with-wrong-permissions
+Also, from https://stackoverflow.com/questions/30639174/file-permissions-for-laravel-5-and-others
+sudo chown -R florent:apache /home/florent/git/whereto/source;
+sudo find /home/florent/git/whereto/source -type f -exec chmod 664 {} \;    
+sudo find /home/florent/git/whereto/source -type d -exec chmod 775 {} \;
+sudo chgrp -R apache storage bootstrap/cache;
+sudo chmod -R ug+rwx storage bootstrap/cache;
+
 
 
 PHPUnit tetse with Laravel:
