@@ -18,14 +18,13 @@
     <button class="navButton" onclick="history.back(-1)">BACK</button>
   </div>
 
+  <div id="detailTitle">
+      <div id="detailName">{{ $restaurant->name}}</div>
+      <div id="detailType">{{ $restaurant->type}}</div>
+  </div>
+
 
     <div class="row">
-        <div>
-            <div>
-                <strong>Name:</strong>
-                {{ $restaurant->name}}
-            </div>
-        </div>
         <div>
             <div>
                 <strong>Location:</strong>
@@ -36,12 +35,6 @@
             <div>
                 <strong>Coordinates:</strong>
                 {{ $restaurant->coord}}
-            </div>
-        </div>
-        <div>
-            <div>
-                <strong>Type:</strong>
-                {{ $restaurant->type}}
             </div>
         </div>
         <div>
