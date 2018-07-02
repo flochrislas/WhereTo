@@ -216,56 +216,6 @@ td {
 
 /*********************************************/
 
-#resultsControl {
-  display: flex;
-  flex-direction: row;
-  align-items: stretch;
-  justify-content: flex-start;
-  text-decoration: none;
-  margin: .3rem .05rem;
-}
-
-.sortButton {
-  flex: initial;
-  font-size: .7rem;
-  font-weight: 600;
-  line-height: 1.37;
-  padding: .59rem .44rem;
-  margin: 0 .25rem;
-}
-
-.navButton {
-  flex: auto;
-  margin: 0 .25rem;
-}
-
-#results {
-  margin-top: .8rem;
-  margin-bottom: .3rem;
-}
-
-#nameAndType a {
-  font-family: 'ITCAvantGardeStdBk', sans-serif;
-  font-size: .8rem;
-  color: #45C3EC;
-  text-decoration: none;
-}
-
-.restaurantName {
-  font-size: .8rem;
-  font-weight: 100;
-  color: #69e2b3;
-  text-decoration: none;
-}
-
-.restaurantType {
-  font-size: .8rem;
-  font-weight: 50;
-  color: #45C3EC;
-}
-
-/*********************************************/
-
 #filterHeader {
   display: flex;
   flex-direction: row;
@@ -314,23 +264,88 @@ td {
 }
 
 .tagType100 {
-  border-color: #45C3EC;
-  background-color: #3BA0C3;
+  /* blue 1 */
+  border-color: #8ED1E7;
+  background-color: #5EB7D4;
 }
 
 .tagType80 {
-  border-color: #45C311;
-  background-color: #3BA011;
+  /* green */
+  border-color: #5FE18B;
+  background-color: #3AD46E;
+  /* background-color: #3BA011; */
 }
 
 .tagType60 {
-  border-color: #4511EC;
-  background-color: #3B11C3;
+  /* purpule */
+  border-color: #98A7EA;
+  background-color: #6C80DB;
 }
 
 .tagType40 {
-  border-color: #11C3EC;
-  background-color: #11A0C3;
+  /* blue 2 */
+  border-color: #5EB7D4;
+  background-color: #3BA1C3;
+}
+
+/* Palette picker */
+/* http://www.paletton.com/#uid=53p0u0knbGWcNSPiwMKr+Bny4to */
+
+/*********************************************/
+/*            RESTAURANTS RESULTS            */
+/*********************************************/
+
+#resultsControl {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  justify-content: flex-start;
+  text-decoration: none;
+  margin: .3rem .05rem;
+}
+
+.sortButton {
+  flex: initial;
+  font-size: .7rem;
+  font-weight: 600;
+  line-height: 1.37;
+  padding: .59rem .44rem;
+  margin: 0 .25rem;
+}
+
+.navButton {
+  flex: auto;
+  margin: 0 .25rem;
+}
+
+#results {
+  margin-top: .8rem;
+  margin-bottom: .3rem;
+}
+
+#nameAndType a {
+  font-family: 'ITCAvantGardeStdBk', sans-serif;
+  font-size: .8rem;
+  color: #45C3EC;
+  text-decoration: none;
+}
+
+.restaurantName {
+  font-size: .8rem;
+  font-weight: 100;
+  color: #69e2b3;
+  text-decoration: none;
+}
+
+.restaurantType {
+  font-size: .8rem;
+  font-weight: 50;
+  color: #45C3EC;
+}
+
+#resultsEnd {
+  margin-top: .55rem;
+  margin-bottom: .1rem;
 }
 
 /*********************************************/
@@ -353,6 +368,7 @@ td {
   padding: .4rem .5rem;
   /*background-color: #69e2b3;*/
   border-color: #69e2b3;
+  border-width: .2rem;
   text-decoration: none;
 }
 
@@ -363,6 +379,7 @@ td {
   padding: .4rem .5rem;
   /*background-color: #20968b;*/
   border-color: #20968b;
+  border-width: .18rem;
   text-decoration: none;
 }
 
@@ -388,6 +405,16 @@ td {
   text-decoration: none;
   white-space: normal;
   overflow: auto;
+}
+
+.detail p {
+  font-size: .7rem;
+  margin: .01rem;
+}
+
+.justified {
+  text-align: justify;
+  text-justify: auto;
 }
 
 .mysteryDot {
