@@ -355,7 +355,7 @@ td {
 #detailTitle {
   display: flex;
   flex-direction: row;
-  align-items: center;
+  align-items: stretch;
   justify-content: flex-start;
   margin: .3rem .05rem;
   font-size: 1rem;
@@ -383,6 +383,15 @@ td {
   text-decoration: none;
 }
 
+#detailLocation {
+  flex: initial;
+  margin: 0 .38rem;
+  padding: .4rem .5rem;
+  border-color: #20968b;
+  border-width: .18rem;
+  text-decoration: none;
+}
+
 .detailRow {
   display: flex;
   flex-direction: row;
@@ -404,7 +413,11 @@ td {
   border-style:solid;
   text-decoration: none;
   white-space: normal;
-  overflow: auto;
+  overflow: visible;
+}
+
+.centered {
+  text-align: center;
 }
 
 .detail p {
