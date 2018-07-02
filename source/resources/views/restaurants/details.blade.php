@@ -19,18 +19,18 @@
   </div>
 
   <div id="detailTitle" class="detailRow">
-      <div id="detailName" class="detail">{{ $restaurant->name}}</div>
-      <div id="detailType" class="detail">{{ $restaurant->type}}</div>
-      <div class="detail">{{ $restaurant->location}}</div>
+      <div id="detailName" class="detail">{{ $restaurant->name }}</div>
+      <div id="detailType" class="detail">{{ $restaurant->type }}</div>
+      <div id="detailLocation" class="detail">{{ $restaurant->location }}</div>
   </div>
 
   <div class="detailRow">
-      <div class="detail">{{ $restaurant->lunch_price}}&yen;</div>
-      <div class="detail"><p>Lunch</p>{{ $restaurant->score_lunch}}/4</div>
-      <div class="detail"><p>Food</p>{{ $restaurant->score_food}}/3</div>
-      <div class="detail"><p>Place</p>{{ $restaurant->score_place}}/3</div>
-      <div class="detail"><p>Cost</p>{{ $restaurant->score_price}}/2</div>
-      <div class="detail"><p>Date</p>{{ $restaurant->score_date}}/2</div>
+      <div class="detail centered">{{ $restaurant->lunch_price }}&yen;</div>
+      <div class="detail centered"><p>Lunch</p>{{ $restaurant->score_lunch }}/4</div>
+      <div class="detail centered"><p>Food</p>{{ $restaurant->score_food }}/3</div>
+      <div class="detail centered"><p>Place</p>{{ $restaurant->score_place }}/3</div>
+      <div class="detail centered"><p>Cost</p>{{ $restaurant->score_price }}/2</div>
+      <div class="detail centered"><p>Date</p>{{ $restaurant->score_date }}/2</div>
   </div>
 
   <div class="detailRow">
