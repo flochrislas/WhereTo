@@ -1375,27 +1375,6 @@ class RestaurantsTableSeeder extends Seeder
         $resto->fillCoordinatesFromString('35.660891, 139.704722');
 
         $resto = Restaurant::create(array(
-            'name'              => 'Ramen center gai',
-            'location'          => 'Shibuya, Udagawacho',
-            'type'              => 'Ramen',
-            'lunch_price'       => 900,
-            'points'            => '',
-            'experience'        => '',
-            'visited'           => true,
-            'visit_date'        => '2018-01-26 13:00:00',
-            'google_maps_link'  => '',
-            'tabelog_link'      => '',
-            'official_website'  => '',
-            'score_lunch'       => 2,
-            'score_place'       => 1,
-            'score_food'        => 1,
-            'score_price'       => 1,
-            'score_date'        => 0
-        ));
-        $resto->attachTags(['ramen']);
-        $resto->fillCoordinatesFromString('');
-
-        $resto = Restaurant::create(array(
             'name'              => 'Hagare',
             'location'          => 'Shibuya',
             'type'              => 'Italian',
@@ -2277,7 +2256,7 @@ class RestaurantsTableSeeder extends Seeder
             'score_price'       => 1,
             'score_date'        => 0
         ));
-        $resto->attachTags(['teishoku','japanese']);
+        $resto->attachTags(['teishoku','japanese','izakaya']);
         $resto->fillCoordinatesFromString('35.657316, 139.697756');
 
         $resto = Restaurant::create(array(
@@ -2300,6 +2279,7 @@ class RestaurantsTableSeeder extends Seeder
         ));
         $resto->attachTags(['teishoku','western','menu with calories','all you can drink','smoking area']);
         $resto->fillCoordinatesFromString('35.657678, 139.696085');
+
         $resto = Restaurant::create(array(
             'name'              => 'Belle Mare Cafe',
             'location'          => 'Shibuya',
@@ -2448,25 +2428,25 @@ class RestaurantsTableSeeder extends Seeder
         $resto->fillCoordinatesFromString('35.657251, 139.703753');
 
         $resto = Restaurant::create(array(
-            'name'              => 'Spain',
+            'name'              => 'Madrid',
             'location'          => 'Shibuya',
             'type'              => 'Spanish',
             'lunch_price'       => 950,
-            'points'            => 'Spanish-like food (does not really feel authentic), such as paela, porc and, choriso and raw ham... counter and tables available.',
+            'points'            => 'Spanish-like food (does not really feel authentic), such as paela, porc, choriso and raw ham... counter and tables available.',
             'experience'        => '2 TV were on inside, showing some video, but without the sound. Some american country music were playing. I ordered a raw ham sandwich with some salad and fried potatoes, for 790yen. Lunch came with a drink as well. The price was kind of decent, but I was left very unimpressed by the food. The place opens to outside when weather is OK.',
             'visited'           => true,
             'visit_date'        => '2018-06-27 13:00:00',
-            'google_maps_link'  => '',
-            'tabelog_link'      => '',
-            'official_website'  => '',
+            'google_maps_link'  => 'https://www.google.com/maps/place/%E3%83%9E%E3%83%89%E3%83%AA%E3%83%BC%E3%83%89/@35.6576975,139.697818,18z/data=!3m1!4b1!4m5!3m4!1s0x60188b57b4efcf87:0xf605f14ef5ecd0dd!8m2!3d35.6576953!4d139.6989123',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13021158/',
+            'official_website'  => 'http://www.madrid-tokyo.jp/',
             'score_lunch'       => 1,
             'score_place'       => 1,
             'score_food'        => 1,
             'score_price'       => 1,
             'score_date'        => 0
         ));
-        $resto->attachTags(['']);
-        $resto->fillCoordinatesFromString('');
+        $resto->attachTags(['spanish']);
+        $resto->fillCoordinatesFromString('35.657700, 139.698925');
 
         $resto = Restaurant::create(array(
             'name'              => 'Roccoman',
@@ -2593,6 +2573,27 @@ class RestaurantsTableSeeder extends Seeder
         ));
         $resto->attachTags(['grill','burger']);
         $resto->fillCoordinatesFromString('35.665622, 139.704725');
+
+        $resto = Restaurant::create(array(
+            'name'              => 'Excelsior Cafe',
+            'location'          => 'Shibuya, Mark City',
+            'type'              => 'Cafe',
+            'lunch_price'       => 800,
+            'points'            => 'Decent cafe with decent price and good croissant, sandwiches etc...',
+            'experience'        => 'Kind of big room, with a well separated smoking area. Prices are not expensive when compared to other similar cafe. Food can be quite good. Decent choice of small sandwiches.',
+            'visited'           => true,
+            'visit_date'        => '2018-06-27 13:00:00',
+            'google_maps_link'  => 'https://www.google.com/maps/place/Excelsior+Caff%C3%A9/@35.6580707,139.6969034,18z/data=!3m1!5s0x60188b5631f5f4af:0xf2c804907c6b11f9!4m8!1m2!2m1!1sExcelsior+mark+city!3m4!1s0x60188b560f5d27e3:0x966996575c83f0c8!8m2!3d35.6581487!4d139.6979397',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13049311/',
+            'official_website'  => 'http://www.excelsiorcaffe.com/',
+            'score_lunch'       => 2,
+            'score_place'       => 1,
+            'score_food'        => 1,
+            'score_price'       => 1,
+            'score_date'        => 0
+        ));
+        $resto->attachTags(['cafe','sandwich']);
+        $resto->fillCoordinatesFromString('35.658116, 139.698004');
 
         /*
         $resto = Restaurant::create(array(

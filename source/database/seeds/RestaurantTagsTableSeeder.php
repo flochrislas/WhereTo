@@ -27,53 +27,46 @@ class RestaurantTagsTableSeeder extends Seeder
         /*             COUNTRIES                  */
         /******************************************/
         RestaurantTag::create(array(
-            'label'              => 'italian',
+            'label'              => 'japanese',
             'type'               => '80',
-            'weight'             => '100'
+            'weight'             => '300'
         ));
 
+        RestaurantTag::create(array(
+            'label'              => 'western',
+            'type'               => '80',
+            'weight'             => '300'
+        ));
+
+        RestaurantTag::create(array(
+            'label'              => 'italian',
+            'type'               => '80',
+            'weight'             => '300'
+        ));
+
+        RestaurantTag::create(array(
+            'label'              => 'indian',
+            'type'               => '80',
+            'weight'             => '300'
+        ));
+
+        RestaurantTag::create(array(
+            'label'              => 'thai',
+            'type'               => '80',
+            'weight'             => '300'
+        ));
+
+        RestaurantTag::create(array(
+            'label'              => 'chinese',
+            'type'               => '80',
+            'weight'             => '300'
+        ));   
 
         RestaurantTag::create(array(
             'label'              => 'french',
             'type'               => '80',
             'weight'             => '100'
-        ));
-
-
-        RestaurantTag::create(array(
-            'label'              => 'mexican',
-            'type'               => '80',
-            'weight'             => '100'
-        ));
-
-
-        RestaurantTag::create(array(
-            'label'              => 'indian',
-            'type'               => '80',
-            'weight'             => '100'
-        ));
-
-
-        RestaurantTag::create(array(
-            'label'              => 'vietnamese',
-            'type'               => '80',
-            'weight'             => '100'
-        ));
-
-
-        RestaurantTag::create(array(
-            'label'              => 'turk',
-            'type'               => '80',
-            'weight'             => '100'
-        ));
-
-
-        RestaurantTag::create(array(
-            'label'              => 'indonesian',
-            'type'               => '80',
-            'weight'             => '100'
-        ));
-
+        ));        
 
         RestaurantTag::create(array(
             'label'              => 'american',
@@ -81,30 +74,31 @@ class RestaurantTagsTableSeeder extends Seeder
             'weight'             => '100'
         ));
 
-
         RestaurantTag::create(array(
-            'label'              => 'japanese',
+            'label'              => 'turk',
             'type'               => '80',
             'weight'             => '100'
         ));
 
-
         RestaurantTag::create(array(
-            'label'              => 'chinese',
+            'label'              => 'mexican',
             'type'               => '80',
             'weight'             => '100'
         ));
 
-
         RestaurantTag::create(array(
-            'label'              => 'western',
+            'label'              => 'spanish',
+            'type'               => '80',
+            'weight'             => '100'
+        ));
+        RestaurantTag::create(array(
+            'label'              => 'vietnamese',
             'type'               => '80',
             'weight'             => '100'
         ));
 
-
         RestaurantTag::create(array(
-            'label'              => 'thai',
+            'label'              => 'indonesian',
             'type'               => '80',
             'weight'             => '100'
         ));
@@ -112,13 +106,6 @@ class RestaurantTagsTableSeeder extends Seeder
         /******************************************/
         /*             TYPE                       */
         /******************************************/
-        RestaurantTag::create(array(
-            'label'              => 'izakaya',
-            'type'               => '40',
-            'weight'             => '100'
-        ));
-
-
         RestaurantTag::create(array(
             'label'              => 'fast food',
             'type'               => '40',
@@ -137,15 +124,37 @@ class RestaurantTagsTableSeeder extends Seeder
             'weight'             => '100'
         ));
 
+        RestaurantTag::create(array(
+            'label'              => 'izakaya',
+            'type'               => '40',
+            'weight'             => '100'
+        ));
+
         /******************************************/
         /*             FEATURES                   */
         /******************************************/        
+        RestaurantTag::create(array(
+            'label'              => 'filling',
+            'type'               => '60',
+            'weight'             => '100'
+        ));
+
+        RestaurantTag::create(array(
+            'label'              => 'small servings',
+            'type'               => '60',
+            'weight'             => '100'
+        ));
+
+        RestaurantTag::create(array(
+            'label'              => 'visa',
+            'type'               => '60',
+            'weight'             => '100'
+        ));
         RestaurantTag::create(array(
             'label'              => 'all you can eat',
             'type'               => '60',
             'weight'             => '100'
         ));
-
 
         RestaurantTag::create(array(
             'label'              => 'all you can drink',
@@ -159,13 +168,11 @@ class RestaurantTagsTableSeeder extends Seeder
             'weight'             => '100'
         ));
 
-
         RestaurantTag::create(array(
             'label'              => 'vegetarian friendly',
             'type'               => '60',
             'weight'             => '100'
         ));
-
 
         RestaurantTag::create(array(
             'label'              => 'vegan friendly',
@@ -173,20 +180,17 @@ class RestaurantTagsTableSeeder extends Seeder
             'weight'             => '100'
         ));
 
-
         RestaurantTag::create(array(
             'label'              => 'menu with calories',
             'type'               => '60',
             'weight'             => '100'
         ));
 
-
         RestaurantTag::create(array(
             'label'              => 'menu with allergies',
             'type'               => '60',
             'weight'             => '100'
         ));
-
 
         RestaurantTag::create(array(
             'label'              => 'customisable dishes',
@@ -200,13 +204,11 @@ class RestaurantTagsTableSeeder extends Seeder
             'weight'             => '100'
         ));
 
-
         RestaurantTag::create(array(
             'label'              => 'smoking allowed',
             'type'               => '60',
             'weight'             => '100'
         ));
-
 
         RestaurantTag::create(array(
             'label'              => 'no smoking',
@@ -214,35 +216,14 @@ class RestaurantTagsTableSeeder extends Seeder
             'weight'             => '100'
         ));
 
-
         RestaurantTag::create(array(
             'label'              => 'smoking area',
             'type'               => '60',
             'weight'             => '100'
         ));
 
-
         RestaurantTag::create(array(
             'label'              => 'open air space',
-            'type'               => '60',
-            'weight'             => '100'
-        ));
-
-
-        RestaurantTag::create(array(
-            'label'              => 'visa',
-            'type'               => '60',
-            'weight'             => '100'
-        ));
-
-        RestaurantTag::create(array(
-            'label'              => 'filling',
-            'type'               => '60',
-            'weight'             => '100'
-        ));
-
-        RestaurantTag::create(array(
-            'label'              => 'small servings',
             'type'               => '60',
             'weight'             => '100'
         ));
@@ -256,13 +237,11 @@ class RestaurantTagsTableSeeder extends Seeder
             'weight'             => '100'
         ));
 
-
         RestaurantTag::create(array(
             'label'              => 'ramen',
             'type'               => '100',
             'weight'             => '100'
         ));
-
 
         RestaurantTag::create(array(
             'label'              => 'tonkotsu',
@@ -270,13 +249,11 @@ class RestaurantTagsTableSeeder extends Seeder
             'weight'             => '100'
         ));
 
-
         RestaurantTag::create(array(
             'label'              => 'miso',
             'type'               => '100',
             'weight'             => '100'
         ));
-
 
         RestaurantTag::create(array(
             'label'              => 'sukiyaki',
@@ -284,13 +261,11 @@ class RestaurantTagsTableSeeder extends Seeder
             'weight'             => '100'
         ));
 
-
         RestaurantTag::create(array(
             'label'              => 'shabushabu',
             'type'               => '100',
             'weight'             => '100'
         ));
-
 
         RestaurantTag::create(array(
             'label'              => 'burger',
@@ -298,13 +273,11 @@ class RestaurantTagsTableSeeder extends Seeder
             'weight'             => '100'
         ));
 
-
         RestaurantTag::create(array(
             'label'              => 'pizza',
             'type'               => '100',
             'weight'             => '100'
         ));
-
 
         RestaurantTag::create(array(
             'label'              => 'pasta',
@@ -312,13 +285,11 @@ class RestaurantTagsTableSeeder extends Seeder
             'weight'             => '100'
         ));
 
-
         RestaurantTag::create(array(
             'label'              => 'curry',
             'type'               => '100',
             'weight'             => '100'
         ));
-
 
         RestaurantTag::create(array(
             'label'              => 'sushi',
@@ -326,13 +297,11 @@ class RestaurantTagsTableSeeder extends Seeder
             'weight'             => '100'
         ));
 
-
         RestaurantTag::create(array(
             'label'              => 'gapao',
             'type'               => '100',
             'weight'             => '100'
         ));
-
 
         RestaurantTag::create(array(
             'label'              => 'omurice',
@@ -340,13 +309,11 @@ class RestaurantTagsTableSeeder extends Seeder
             'weight'             => '100'
         ));
 
-
         RestaurantTag::create(array(
             'label'              => 'tenpura',
             'type'               => '100',
             'weight'             => '100'
         ));
-
 
         RestaurantTag::create(array(
             'label'              => 'soba',
@@ -354,13 +321,11 @@ class RestaurantTagsTableSeeder extends Seeder
             'weight'             => '100'
         ));
 
-
         RestaurantTag::create(array(
             'label'              => 'yakiniku',
             'type'               => '100',
             'weight'             => '100'
         ));
-
 
         RestaurantTag::create(array(
             'label'              => 'okonomiyaki',
@@ -368,13 +333,11 @@ class RestaurantTagsTableSeeder extends Seeder
             'weight'             => '100'
         ));
 
-
         RestaurantTag::create(array(
             'label'              => 'hamburg',
             'type'               => '100',
             'weight'             => '100'
         ));
-
 
         RestaurantTag::create(array(
             'label'              => 'grill',
@@ -382,13 +345,11 @@ class RestaurantTagsTableSeeder extends Seeder
             'weight'             => '100'
         ));
 
-
         RestaurantTag::create(array(
             'label'              => 'karaage',
             'type'               => '100',
             'weight'             => '100'
         ));
-
 
         RestaurantTag::create(array(
             'label'              => 'green curry',
@@ -396,13 +357,11 @@ class RestaurantTagsTableSeeder extends Seeder
             'weight'             => '100'
         ));
 
-
         RestaurantTag::create(array(
             'label'              => 'crepe',
             'type'               => '100',
             'weight'             => '100'
         ));
-
 
         RestaurantTag::create(array(
             'label'              => 'galette',
@@ -410,13 +369,11 @@ class RestaurantTagsTableSeeder extends Seeder
             'weight'             => '100'
         ));
 
-
         RestaurantTag::create(array(
             'label'              => 'quiche',
             'type'               => '100',
             'weight'             => '100'
         ));
-
 
         RestaurantTag::create(array(
             'label'              => 'croque-monsieur',
@@ -424,13 +381,11 @@ class RestaurantTagsTableSeeder extends Seeder
             'weight'             => '100'
         ));
 
-
         RestaurantTag::create(array(
             'label'              => 'sandwich',
             'type'               => '100',
             'weight'             => '100'
         ));
-
 
         RestaurantTag::create(array(
             'label'              => 'noodles',
@@ -438,13 +393,11 @@ class RestaurantTagsTableSeeder extends Seeder
             'weight'             => '100'
         ));
 
-
         RestaurantTag::create(array(
             'label'              => 'gyoza',
             'type'               => '100',
             'weight'             => '100'
         ));
-
 
         RestaurantTag::create(array(
             'label'              => 'dumpling',

@@ -36,4 +36,4 @@
   </tr>
 @endforeach
 </table>
-<div>End of {{ $restaurants->count() }} amazing results</div>
+<div id="resultsEnd">End of <strong>{{ $restaurants->count() }}</strong> amazing results</div>
