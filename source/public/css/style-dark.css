@@ -147,42 +147,6 @@ td {
 }
 
 /*********************************************/
-/*            GENERAL CLASSES                */
-/*********************************************/
-
-.center {
-   justify-content: center;
-   align-content: center;
-   align-items: center;
-   margin: auto;
-   text-align: center;
-}
-
-.inline {
-  display: inline;
-}
-
-/*********************************************/
-/*            COLORS                         */
-/*********************************************/
-
-.orange {
-	color:rgb(224, 205, 97);
-}
-
-.green {
-  color: #69e2b3;
-}
-
-.blue {
-  color: #45c3ec;
-}
-
-.teal {
-  color: #20968b;
-}
-
-/*********************************************/
 /*            First screen                   */
 /*********************************************/
 .giantButton {
@@ -364,23 +328,20 @@ td {
 
 #detailName {
   flex: auto;
-  /*color: #45C3EC;*/
   padding: .4rem .5rem;
-  /*background-color: #69e2b3;*/
   border-color: #69e2b3;
   border-width: .2rem;
-  text-decoration: none;
 }
 
 #detailType {
   flex: initial;
   margin: 0 .38rem;
-  /*color: #45C3EC;*/
   padding: .4rem .5rem;
-  /*background-color: #20968b;*/
   border-color: #20968b;
   border-width: .18rem;
-  text-decoration: none;
+  /* To center the content vertically */
+  display: flex;
+  align-items: center;
 }
 
 #detailLocation {
@@ -389,7 +350,6 @@ td {
   padding: .4rem .5rem;
   border-color: #20968b;
   border-width: .18rem;
-  text-decoration: none;
 }
 
 .detailRow {
@@ -405,9 +365,7 @@ td {
 .detail {
   flex: 1 1 auto;
   margin: 0 .25rem;
-  /*color: #45C3EC;*/
   padding: .4rem .5rem;
-  /*background-color: #20968b;*/
   border-color: #20968b;
   border-width:.1rem;
   border-style:solid;
@@ -423,6 +381,7 @@ td {
 .detail p {
   font-size: .7rem;
   margin: .01rem;
+  display: block;
 }
 
 .justified {
@@ -434,6 +393,42 @@ td {
   color: red;
   font-weight: 600;
   margin: .1rem auto;
+}
+
+/*********************************************/
+/*            GENERAL CLASSES                */
+/*********************************************/
+
+.center {
+   justify-content: center;
+   align-content: center;
+   align-items: center;
+   margin: auto;
+   text-align: center;
+}
+
+.inline {
+  display: inline;
+}
+
+/*********************************************/
+/*            COLORS                         */
+/*********************************************/
+
+.orange {
+	color:rgb(224, 205, 97);
+}
+
+.green {
+  color: #69e2b3;
+}
+
+.blue {
+  color: #45c3ec;
+}
+
+.teal {
+  color: #20968b;
 }
 
 /*******************************************************/
