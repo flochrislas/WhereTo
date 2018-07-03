@@ -20,7 +20,7 @@
 
   <div id="detailTitle" class="detailRow">
       <div id="detailName" class="detail">{{ $restaurant->name }}</div>
-      <div id="detailType" class="detail">{{ $restaurant->type }}</div>
+      <div id="detailType" class="detail"><div class="middle">{{ $restaurant->type }}</div></div>
       <div id="detailLocation" class="detail">{{ $restaurant->location }}</div>
   </div>
 

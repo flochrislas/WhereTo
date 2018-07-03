@@ -230,7 +230,7 @@ class RestaurantsTableSeeder extends Seeder
             'visit_date'        => '2017-09-05 13:00:00',
             'google_maps_link'  => 'https://www.google.co.jp/maps/place/Kebab+Cafe/@35.660247,139.6970756,21z/data=!4m5!3m4!1s0x60188ca99be93651:0x461c229b06865bd9!8m2!3d35.6603228!4d139.6971273',
             'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13120406/',
-            'official_website'  => null,
+            'official_website'  => 'https://kebabcafe.jimdo.com/',
             'score_lunch'       => 3,
             'score_place'       => 1,
             'score_food'        => 2,
@@ -250,7 +250,7 @@ class RestaurantsTableSeeder extends Seeder
             'visited'           => true,
             'visit_date'        => '2017-09-05 13:00:00',
             'google_maps_link'  => 'https://www.google.co.jp/maps/place/CoCo%E5%A3%B1%E7%95%AA%E5%B1%8B+%E6%B8%8B%E8%B0%B7%E5%8C%BA%E6%A1%9C%E4%B8%98%E7%94%BA%E5%BA%97/@35.6569245,139.6982403,17z/data=!4m12!1m6!3m5!1s0x60188b579e0464dd:0x5838a075cb9595d6!2zQ29Db-WjseeVquWxiyDmuIvosLfljLrmoZzkuJjnlLrlupc!8m2!3d35.6569245!4d139.700429!3m4!1s0x60188b579e0464dd:0x5838a075cb9595d6!8m2!3d35.6569245!4d139.700429',
-            'tabelog_link'      => null,
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13161408/',
             'official_website'  => 'http://tenpo.ichibanya.co.jp/search/shop/pc/detail.php?SCODE=2678',
             'score_lunch'       => 4,
             'score_place'       => 1,
@@ -292,7 +292,7 @@ class RestaurantsTableSeeder extends Seeder
             'visited'           => true,
             'visit_date'        => '2017-09-05 13:00:00',
             'google_maps_link'  => 'https://www.google.co.jp/maps/place/Jonathan\'s/@35.6555207,139.6999556,18.75z/data=!4m12!1m6!3m5!1s0x60188b5ba1d0dd99:0xdad1c25747467595!2sJonathan\'s!8m2!3d35.654701!4d139.705094!3m4!1s0x60188b5745d1a4dd:0xb23984f5a40be1ec!8m2!3d35.6557358!4d139.700456',
-            'tabelog_link'      => '',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13097970/',
             'official_website'  => 'http://www.skylark.co.jp/jonathan/index.html',
             'score_lunch'       => 1,
             'score_place'       => 1,
@@ -313,7 +313,7 @@ class RestaurantsTableSeeder extends Seeder
             'visited'           => true,
             'visit_date'        => '2017-09-05 13:00:00',
             'google_maps_link'  => 'https://www.google.co.jp/maps/place/CONA+%E6%B8%8B%E8%B0%B7%E5%BA%97/@35.6589355,139.6984178,18z/data=!4m5!3m4!1s0x60188b562b7be10f:0x5deeb948e867ca8!8m2!3d35.6586609!4d139.6986567',
-            'tabelog_link'      => '',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13059175/',
             'official_website'  => 'http://www.candy-box.jp/shop/cona/',
             'score_lunch'       => 1,
             'score_place'       => 0,
@@ -2594,6 +2594,29 @@ class RestaurantsTableSeeder extends Seeder
         ));
         $resto->attachTags(['cafe','sandwich']);
         $resto->fillCoordinatesFromString('35.658116, 139.698004');
+
+        $resto = Restaurant::create(array(
+            'name'              => 'Tsukemen Tetsu',
+            'location'          => 'Shibuya, Dogenzaka',
+            'type'              => 'Ramen',
+            'lunch_price'       => 800,
+            'points'            => 'Hakata tonkotsu ramen with a speciality in tsukemen. Good ramen restaurant.',
+            'experience'        => 'More spacious than a regular ramen restaurant, there are counters and tables. They serve tsukemen, ramen, mazesoba, and, in summer cold noodles dishes (cold mazesoba or tsukemen). Soup is mostly tonkotsu, Hakata style. It is possible to order extra meat. I had a good lunch there. I tried the summer dish which was very unique, mazesoba with tofu.',
+            'visited'           => true,
+            'visit_date'        => '2018-07-03 13:00:00',
+            'google_maps_link'  => 'https://www.google.com/maps/place/Tsukemen+TETSU+Shibuya/@35.6584637,139.6986022,18z/data=!4m8!1m2!2m1!1sTsukemen+TETSU!3m4!1s0x60188ca9b85587d5:0xd34260f7c2bb4f06!8m2!3d35.6594969!4d139.6977895',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13173206/',
+            'official_website'  => 'http://www.tetsu102.com/',
+            'score_lunch'       => 3,
+            'score_place'       => 1,
+            'score_food'        => 2,
+            'score_price'       => 1,
+            'score_date'        => 0
+        ));
+        $resto->attachTags(['tsukemen','ramen','noodles']);
+        $resto->fillCoordinatesFromString('35.659501, 139.697777');
+
+        
 
         /*
         $resto = Restaurant::create(array(
