@@ -19,18 +19,33 @@
   </div>
 
   <div id="detailTitle" class="detailRow">
-      <div id="detailName" class="detail">{{ $restaurant->name }}</div>
-      <div id="detailType" class="detail"><div class="middle">{{ $restaurant->type }}</div></div>
-      <div id="detailLocation" class="detail">{{ $restaurant->location }}</div>
+      <div id="detailName" class="detail"><div>{{ $restaurant->name }}</div></div>
+      <div id="detailType" class="detail"><div>{{ $restaurant->type }}</div></div>
+      <div id="detailLocation" class="detail"><div>{{ $restaurant->location }}</div></div>
   </div>
 
   <div class="detailRow">
-      <div class="detail centered">{{ $restaurant->lunch_price }}&yen;</div>
-      <div class="detail centered"><p>Lunch</p>{{ $restaurant->score_lunch }}/4</div>
-      <div class="detail centered"><p>Food</p>{{ $restaurant->score_food }}/3</div>
-      <div class="detail centered"><p>Place</p>{{ $restaurant->score_place }}/3</div>
-      <div class="detail centered"><p>Cost</p>{{ $restaurant->score_price }}/2</div>
-      <div class="detail centered"><p>Date</p>{{ $restaurant->score_date }}/2</div>
+      <div class="detail price"><div>{{ $restaurant->lunch_price }}&yen;</div></div>
+      <div class="detail score">
+        <div class="label">Lunch</div>
+        <div class="grade">{{ $restaurant->score_lunch }}/4</div>
+      </div>
+      <div class="detail score">
+        <div class="label">Food</div>
+        <div class="grade">{{ $restaurant->score_food }}/3</div>
+      </div>
+      <div class="detail score">
+        <div class="label">Place</div>
+        <div class="grade">{{ $restaurant->score_place }}/3</div>
+      </div>
+      <div class="detail score">
+        <div class="label">Cost</div>
+        <div class="grade">{{ $restaurant->score_price }}/2</div>
+      </div>
+      <div class="detail score">
+        <div class="label">Date</div>
+        <div class="grade">{{ $restaurant->score_date }}/2</div>
+      </div>
   </div>
 
   <div class="detailRow">
@@ -41,15 +56,17 @@
       <div class="detail">{{ $restaurant->experience}}</div>
   </div>
 
-  <div class="detail">
-  @foreach ($restaurant->tagsCached() as $restaurantTag)
-      <div class="tag tagType{{$restaurantTag->type}}"
-            tagId="{{$restaurantTag->id}}"
-            id="tagShow{{$restaurantTag->id}}"
-            onClick="moveTag(event)">
-        {{$restaurantTag->label}}
-      </div>
-  @endforeach
+  <div class="detailRow">
+    <div class="detail">
+    @foreach ($restaurant->tagsCached() as $restaurantTag)
+        <div class="tag tagType{{$restaurantTag->type}}"
+              tagId="{{$restaurantTag->id}}"
+              id="tagShow{{$restaurantTag->id}}"
+              onClick="moveTag(event)">
+          {{$restaurantTag->label}}
+        </div>
+    @endforeach
+    </div>
   </div>
 
   @if ($restaurant->visited != 1)
