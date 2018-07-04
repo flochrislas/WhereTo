@@ -1545,11 +1545,11 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create(array(
             'name'              => 'Pota Pasta',
-            'location'          => 'Shibuya',
+            'location'          => 'Shibuya, Dogenzaka',
             'type'              => 'Pasta',
-            'lunch_price'       => 1000,
+            'lunch_price'       => 600,
             'points'            => 'Decent pasta. Cheap price. Fast service. Narrow counter only.',
-            'experience'        => '600 for decent size pasta dish. Nice. Choice between thick or thin spagethi. The counter is really narrow but in front of a window. Pasta come fast. Unfortunately, my tomato mozzarella pasta kind of lacked taste. Still, decent, and a good deal.',
+            'experience'        => '600yen for decent size pasta dish. Nice. Choice between thick or thin spagethi. The counter is really narrow but in front of a window. Food comes fast. Unfortunately, my tomato mozzarella pasta kind of lacked taste. Still, decent, and a good deal. Another time I got small serving of arabiata for 480yen, and it was quite good.',
             'visited'           => true,
             'visit_date'        => '2018-02-20 13:00:00',
             'google_maps_link'  => 'https://www.google.co.jp/maps/place/POTA+PASTA+%E6%B8%8B%E8%B0%B7%E5%BA%97/@35.6585489,139.6984537,18z/data=!4m5!3m4!1s0x60188b57d475e281:0x267d9086f80cb4dc!8m2!3d35.6587047!4d139.6989325',

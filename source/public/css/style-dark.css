@@ -394,6 +394,7 @@ td {
   /* To center the content vertically */
   display: flex;
   align-items: center;
+  justify-content: center;
 }
 
 .detailRow .score {
