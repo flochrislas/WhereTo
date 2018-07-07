@@ -391,6 +391,7 @@ td {
 }
 
 .detailRow .price {
+  border-width: .2rem;
   /* To center the content vertically */
   display: flex;
   align-items: center;
@@ -403,6 +404,14 @@ td {
   align-items: center;
 }
 
+.border20 {
+  border-width: .2rem;
+}
+
+.border15 {
+  border-width: .15rem;
+}
+
 .score .label {
   font-size: .7rem;
   margin: .01rem;
@@ -410,6 +419,11 @@ td {
 
 .score .grade {
 
+}
+
+.score .grade::first-letter {
+  font-weight: 600;
+  font-size: 1rem;
 }
 
 .centered {

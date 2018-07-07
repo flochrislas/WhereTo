@@ -26,11 +26,11 @@
 
   <div class="detailRow">
       <div class="detail price"><div>{{ $restaurant->lunch_price }}&yen;</div></div>
-      <div class="detail score">
+      <div class="detail score border20">
         <div class="label">Lunch</div>
         <div class="grade">{{ $restaurant->score_lunch }}/4</div>
       </div>
-      <div class="detail score">
+      <div class="detail score border15">
         <div class="label">Food</div>
         <div class="grade">{{ $restaurant->score_food }}/3</div>
       </div>
@@ -49,10 +49,10 @@
   </div>
 
   <div class="detailRow">
-      <div class="detail">{{ $restaurant->points}}</div>
+      <div class="detail border15">{{ $restaurant->points}}</div>
   </div>
 
-  <div class="detailRow justified">
+  <div class="detailRow">
       <div class="detail">{{ $restaurant->experience}}</div>
   </div>
 
