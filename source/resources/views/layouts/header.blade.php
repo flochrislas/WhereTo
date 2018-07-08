@@ -6,7 +6,8 @@
       </a>
   </div>
 
-  <div class="right">
+  <!-- Decide what to do with those -->
+  <div class="right" style="display: none">
     @if (Auth::guest())
       <a class="tap" href="{{ route('about') }}"><strong>About</strong></a>
       <a href="{{ url('/login') }}">Login</a>

@@ -206,6 +206,10 @@ td {
 /*********************************************/
 /** tag's container */
 #tags {}
+
+#tags p {
+  margin: .4rem;
+}
 /** a restaurant tag */
 .tag {
   /* block */

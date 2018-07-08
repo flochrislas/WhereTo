@@ -10,16 +10,16 @@
 </div>
 
 <!-- showing available tags -->
-<p>Available options</p>
 <div id="tags">
-@foreach ($restaurantTags as $restaurantTag)
-    <div class="tag tagType{{$restaurantTag->type}}"
-          tagId="{{$restaurantTag->id}}"
-          id="tagShow{{$restaurantTag->id}}"
-          onClick="moveTag(event)">
-      {{$restaurantTag->label}}
-    </div>
-@endforeach
+  <p>Available options</p>
+  @foreach ($restaurantTags as $restaurantTag)
+      <div class="tag tagType{{$restaurantTag->type}}"
+            tagId="{{$restaurantTag->id}}"
+            id="tagShow{{$restaurantTag->id}}"
+            onClick="moveTag(event)">
+        {{$restaurantTag->label}}
+      </div>
+  @endforeach
 </div>
 
 <!-- The Javascript to operate this filter -->

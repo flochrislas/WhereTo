@@ -746,11 +746,11 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create(array(
             'name'              => 'Fujisoba',
-            'location'          => 'Shibuya, in front of big bic camera',
+            'location'          => 'Shibuya',
             'type'              => 'soba udon katsudon',
             'lunch_price'       => 750,
             'points'            => 'Decent sets. Fast food style. Narrow counter only. Buy at machine, get your set on a plate and find somewhere to sit.',
-            'experience'        => 'Fast and cheap, and decent. I tried the zaru soba + katsudon for 750 yen. Made me full OK. Definitely not delicious, but decent.',
+            'experience'        => 'Fast and cheap, and decent. I tried the zaru soba + katsudon for 750 yen. Made me full OK. Definitely not delicious, but decent. There are many Fujisoba joints, this one was the one in front of the big Bic Camera on the Hikarie\'s side of Shibuya.',
             'visited'           => true,
             'visit_date'        => '2017-09-05 13:00:00',
             'google_maps_link'  => '',
@@ -2239,7 +2239,7 @@ class RestaurantsTableSeeder extends Seeder
         $resto->fillCoordinatesFromString('35.658763, 139.697123');
 
         $resto = Restaurant::create(array(
-            'name'              => 'Mistu-Fuji Diner',
+            'name'              => 'Mistu-Fuji Dining',
             'location'          => 'Shibuya',
             'type'              => 'Teishoku',
             'lunch_price'       => 850,
