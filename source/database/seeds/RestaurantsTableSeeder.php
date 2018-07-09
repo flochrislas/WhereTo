@@ -2616,7 +2616,27 @@ class RestaurantsTableSeeder extends Seeder
         $resto->attachTags(['tsukemen','ramen','noodles']);
         $resto->fillCoordinatesFromString('35.659501, 139.697777');
 
-        
+        $resto = Restaurant::create(array(
+            'name'              => 'Shinbu Sakiya',
+            'location'          => 'Shibuya, Dogenzaka',
+            'type'              => 'Ramen',
+            'lunch_price'       => 950,
+            'points'            => 'Delicious miso ramen.',
+            'experience'        => 'I usually always add some toppings on my ramen to make iot tasty enough for me (pepper, spice, etc...), but here I did not have to. Not even a little bit. The miso soup was just delicious. The meat was OK but far from great, the egg was good, noodles as well, and one big surprise I had with with the bamboo shoot. That is right, the bamboo shoot you almost always find in ramen and most likely don\'t pay any attention to. Well her those were huge pieces, and tasty! A first for me. The size of the serving is rather small for the price but worth it. The interior has nothing special: 2 floors, counter and tables.',
+            'visited'           => true,
+            'visit_date'        => '2018-07-06 13:00:00',
+            'google_maps_link'  => 'https://www.google.com/maps/place/%E7%9C%9F%E6%AD%A6%E5%92%B2%E5%BC%A5+%E6%B8%8B%E8%B0%B7%E5%BA%97/@35.6576872,139.6983625,18z/data=!4m5!3m4!1s0x60188b5604786a35:0x98e575d2a803fca7!8m2!3d35.6578594!4d139.6966083',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13109578/',
+            'official_website'  => 'http://samurai-noodle.jp/',
+            'score_lunch'       => 3,
+            'score_place'       => 1,
+            'score_food'        => 2,
+            'score_price'       => 1,
+            'score_date'        => 0
+        ));
+        $resto->attachTags(['ramen','noodles','miso']);
+        $resto->fillCoordinatesFromString('35.657856, 139.696602');
+ 
 
         /*
         $resto = Restaurant::create(array(
