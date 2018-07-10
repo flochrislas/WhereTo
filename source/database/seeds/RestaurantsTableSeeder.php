@@ -2636,7 +2636,28 @@ class RestaurantsTableSeeder extends Seeder
         ));
         $resto->attachTags(['ramen','noodles','miso']);
         $resto->fillCoordinatesFromString('35.657856, 139.696602');
- 
+
+        $resto = Restaurant::create(array(
+            'name'              => 'Tengu Sakaba',
+            'location'          => 'Shibuya, Center Gai',
+            'type'              => 'Izakaya',
+            'lunch_price'       => 550,
+            'points'            => 'Very cheap teishoku (japanese lunch set). Smoking allowed and not very well compartimented. Cheap izakaya underground.',
+            'experience'        => 'Underground room. Smoking is allowed and not well compartimented, which is a pretty bad point. Lunch are very cheap and very decent (curry, noodles etc... with free rice and soup). Counters and tables.',
+            'visited'           => true,
+            'visit_date'        => '2018-07-10 13:00:00',
+            'google_maps_link'  => 'https://www.google.co.jp/maps/place/Tengu+Sakaba/@35.6591511,139.6975042,15z/data=!4m5!3m4!1s0x0:0x100ac0c736aa3f02!8m2!3d35.6591511!4d139.6975042',
+            'tabelog_link'      => '',
+            'official_website'  => '',
+            'score_lunch'       => 2,
+            'score_place'       => 1,
+            'score_food'        => 1,
+            'score_price'       => 2,
+            'score_date'        => 0
+        ));
+        $resto->attachTags(['']);
+        $resto->fillCoordinatesFromString('');
+
 
         /*
         $resto = Restaurant::create(array(

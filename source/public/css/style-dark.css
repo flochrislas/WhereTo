@@ -15,6 +15,7 @@ rem: size against the root element (html, or else browser setting)
 /*********************************************/
 
 html, body {
+  height: 100%; /* needed for proper layout (?) */
   background-color: black;
   font-family: 'Open Sans',sans-serif;
   /* or try :
@@ -24,6 +25,11 @@ html, body {
   /* font-size: 80%; */
   /*color: #d0d0d2;*/ /* grey */
   color: #CAD0AF; /* grey 2 */
+}
+
+body {
+  /* Allows for fixed header and footer (no scroll) */
+  overflow: hidden;
 }
 
 div, nav {
@@ -53,6 +59,10 @@ td {
   margin: 0 auto;
   padding: 0;
   max-width: 40rem;
+  height: 100%; /* needed for proper layout (?) */
+  /* Flex container properties to organize content */
+  display: flex;
+  flex-direction: column;
 }
 
 /*********************************************/
@@ -61,7 +71,10 @@ td {
 
 #header {
 	margin: .1rem;
-  margin-bottom: 1rem;
+  margin-bottom: .6rem;
+  /* Flex properties for fixed header */
+  flex: 0 0 auto;
+  /* Flex container properties */
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -93,7 +106,7 @@ td {
   border-width: .2rem;
   border-radius: 1rem;
   color: black;
-  font-size: .87rem;
+  font-size: .87rem;flex: 0 0 auto;
   text-align: center;
   text-decoration: none;
   padding: .4rem .6rem;
@@ -119,13 +132,16 @@ td {
 /*********************************************/
 
 #footer {
-	margin: .1rem;
-  margin-top: .8rem;
+  margin: .7rem;
+  margin-top: .185rem;
+  font-size: .65rem;
+  /* Flex properties for fixed footer */
+  flex: 0 0 auto;
+  /* Flex container properties */
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  font-size: .75rem;
 }
 
 #footer div {
@@ -140,7 +156,11 @@ td {
   background-color: #141422; /* almost black */
   margin: .1rem;
 	color: #d0d0d2;
-
+  /* Flex properties to work with fixed header and footer */
+  flex: 1 1 auto;
+  position: relative; /* need this to position inner content */
+  overflow-y: auto;
+  /* Flex container properties */
   display: flex;
   flex-direction: column;
 
@@ -170,7 +190,12 @@ td {
 /*            RESTAURANTS FILTER             */
 /*********************************************/
 #restaurantsFilter {
-
+  /* Allows for fixed element*/
+  overflow: hidden;
+  height: 100%; /* needed for proper layout (?) */
+  /* Flex container properties to organize content */
+  display: flex;
+  flex-direction: column;
 }
 
 #restaurantsResults {
@@ -179,6 +204,17 @@ td {
 }
 
 /*********************************************/
+
+#tagsTop {
+  /* Flex properties to be fixed */
+  flex: 0 0 auto;
+}
+
+#tagsTop p {
+  margin: .4rem;
+  margin-top: .12rem;
+  font-size: .8rem;
+}
 
 #filterHeader {
   display: flex;
@@ -205,11 +241,13 @@ td {
 /*            RESTAURANTS TAGS               */
 /*********************************************/
 /** tag's container */
-#tags {}
-
-#tags p {
-  margin: .4rem;
+#tags {
+  /* Flex properties to work with fixed header */
+  flex: 1 1 auto;
+  position: relative; /* need this to position inner content */
+  overflow-y: auto;
 }
+
 /** a restaurant tag */
 .tag {
   /* block */

@@ -219,8 +219,8 @@ class RestaurantController extends Controller
      */
     public function sortByDistance($restaurants, $position)
     {
-        Log::debug('sortByDistance from  '.$position);
-        Log::debug('For restaurants '.print_r($restaurants, true));
+        Log::debug('sortByDistance from  '.$position.' for '.count($restaurants).' restaurants' );
+        // Log::debug('For restaurants '.print_r($restaurants, true));
         // Map the restaurants with their current distance
         $curCoords = GeoUtils::toPositionArray($position);
         $curLat = $curCoords[0];
@@ -229,14 +229,30 @@ class RestaurantController extends Controller
         foreach ($restaurants as $resto) {
           if(!is_null($resto->lat)) {
             $distance = GeoUtils::distance($curLat, $curLon, $resto->lat, $resto->lon);
-            Log::debug('Distance found: '.$distance);
+            // Log::debug('Distance found: '.$distance);
             $resto->currentDistance = $distance;
-            $map[$distance] = $resto;
+            /*
+            if (array_key_exists((string)$distance, $map)) {
+                Log::debug('UH OH, this distance is already there '.$distance.', byebye '.$map[$distance]);
+            }
+            if (isset($map[$distance]))
+            {
+              Log::debug('OOOOOOH, this distance is already there '.$distance.', byebye '.$map[$distance]);
+            }
+            */
+            // We must use a string or else the number will be truncated
+            // and easily collide with previous keys
+            $distanceAsString = (string)$distance;
+            $map[$distanceAsString] = $resto;
+          }
+          else {
+            Log::debug('The following restaurant does NOT have coordinates: '.$resto->name);
           }
         }
         // Sort the map by key
         ksort($map);
-        Log::debug('sortByDistance ksort the map '.print_r($map, true));
+        // Log::debug('sortByDistance ksort the map '.print_r($map, true));
+        Log::debug('sortByDistance AFTER ksort the map with '.count($map).' elements');
         // Return just the list of restaurants
         return array_values($map);
     }
