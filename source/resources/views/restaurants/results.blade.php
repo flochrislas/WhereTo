@@ -10,6 +10,4 @@
   <button class="navButton" onclick="showFilter()">Show Filters</button>
 </div>
 
-<div id="results">
-  empty
-</div>
+<div id="results">empty</div>

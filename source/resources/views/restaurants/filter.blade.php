@@ -1,17 +1,20 @@
-<div id="position-report"></div>
+<div id="tagsTop">
+  <div id="position-report"></div>
 
-<div id="filterHeader">
-<div id="filterHeaderTitle" class="orange title">What kind of place?</div>
-<button id="filterHeaderButton" onclick="getResults()">Show All</button>
-</div>
+  <div id="filterHeader">
+    <div id="filterHeaderTitle" class="orange title">What kind of place?</div>
+    <button id="filterHeaderButton" onclick="getResults()">Show All</button>
+  </div>
 
-<!-- selected tags for active search -->
-<div id="selectedTags">
+  <!-- selected tags for active search -->
+  <div id="selectedTags">
+  </div>
+
+  <p>Available options</p>
 </div>
 
 <!-- showing available tags -->
 <div id="tags">
-  <p>Available options</p>
   @foreach ($restaurantTags as $restaurantTag)
       <div class="tag tagType{{$restaurantTag->type}}"
             tagId="{{$restaurantTag->id}}"
