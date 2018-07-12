@@ -2646,17 +2646,59 @@ class RestaurantsTableSeeder extends Seeder
             'experience'        => 'Underground room. Smoking is allowed and not well compartimented, which is a pretty bad point. Lunch are very cheap and very decent (curry, noodles etc... with free rice and soup). Counters and tables.',
             'visited'           => true,
             'visit_date'        => '2018-07-10 13:00:00',
-            'google_maps_link'  => 'https://www.google.co.jp/maps/place/Tengu+Sakaba/@35.6591511,139.6975042,15z/data=!4m5!3m4!1s0x0:0x100ac0c736aa3f02!8m2!3d35.6591511!4d139.6975042',
-            'tabelog_link'      => '',
-            'official_website'  => '',
+            'google_maps_link'  => 'https://www.google.co.jp/maps/place/Tengu/@35.6589598,139.6991177,18z/data=!4m8!1m2!2m1!1sTengu!3m4!1s0x60188ca84143d6e5:0xa9f6c7a32dda8899!8m2!3d35.6602794!4d139.6992027',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13102355/',
+            'official_website'  => 'https://www.teng.co.jp/',
             'score_lunch'       => 2,
             'score_place'       => 1,
             'score_food'        => 1,
             'score_price'       => 2,
             'score_date'        => 0
         ));
-        $resto->attachTags(['']);
-        $resto->fillCoordinatesFromString('');
+        $resto->attachTags(['izakaya','japanese','teishoku','japanese curry']);
+        $resto->fillCoordinatesFromString('35.660303, 139.699212');
+
+        $resto = Restaurant::create(array(
+            'name'              => 'Usagi',
+            'location'          => 'Shibuya',
+            'type'              => 'Ramen',
+            'lunch_price'       => 950,
+            'points'            => 'Good ramen restaurant.',
+            'experience'        => 'One big counter. Foreigner friendly (friendly staff and English menus). Decent choice of ramen, tsukemen, tantanmen, and hiyashi ramen in summer. I tried shoyu tsukemen with egg, large portion for 950, and it was very good. THe piece of meat was kinda smoked, quite delicious. One thing I would reproach them though is that when I went in mid-July, their door stayed opened and it was too hot inside.',
+            'visited'           => true,
+            'visit_date'        => '2018-07-11 13:00:00',
+            'google_maps_link'  => 'https://www.google.com/maps/place/Usagi/@35.6570234,139.6973772,17z/data=!4m5!3m4!1s0x60188b550b2d38ff:0x1c8f91e37a97e72c!8m2!3d35.6557027!4d139.6934934',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13041115/',
+            'official_website'  => 'https://ramen-restaurant-786.business.site/',
+            'score_lunch'       => 2,
+            'score_place'       => 1,
+            'score_food'        => 2,
+            'score_price'       => 1,
+            'score_date'        => 0
+        ));
+        $resto->attachTags(['ramen','tsukemen','noodles','tantanmen']);
+        $resto->fillCoordinatesFromString('35.655730, 139.693535');
+
+        $resto = Restaurant::create(array(
+            'name'              => 'Moriva Coffee',
+            'location'          => 'Shibuya',
+            'type'              => 'Cafe',
+            'lunch_price'       => 650,
+            'points'            => 'A western style Japanese cafe with decent menus but not the greatest interior.',
+            'experience'        => 'I had a avocado chicken sandwich for 450 yen and it was good. Inside is lighted with spotlights (not good) and with very small tables and counters. A smoking area is isolated from the rest.',
+            'visited'           => true,
+            'visit_date'        => '2018-07-11 13:00:00',
+            'google_maps_link'  => 'https://www.google.com/maps/place/Moriva+Coffee/@35.6568561,139.6982953,17z/data=!4m5!3m4!1s0x60188b55bc6bfb63:0xe39fbae7a5da3266!8m2!3d35.6558885!4d139.6945402',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13116477/',
+            'official_website'  => 'http://www.morivacoffee.com/',
+            'score_lunch'       => 1,
+            'score_place'       => 1,
+            'score_food'        => 1,
+            'score_price'       => 1,
+            'score_date'        => 0
+        ));
+        $resto->attachTags(['cafe','sandwich','small portion','smoking area']);
+        $resto->fillCoordinatesFromString('35.655810, 139.694601');
 
 
         /*

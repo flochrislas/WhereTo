@@ -406,5 +406,17 @@ class RestaurantTagsTableSeeder extends Seeder
             'weight'             => '100'
         ));
 
+        RestaurantTag::create(array(
+            'label'              => 'tsukemen',
+            'type'               => '100',
+            'weight'             => '100'
+        ));
+
+        RestaurantTag::create(array(
+            'label'              => 'tantanmen',
+            'type'               => '100',
+            'weight'             => '100'
+        ));
+
     }
 }
