@@ -2700,6 +2700,26 @@ class RestaurantsTableSeeder extends Seeder
         $resto->attachTags(['cafe','sandwich','small portion','smoking area']);
         $resto->fillCoordinatesFromString('35.655810, 139.694601');
 
+        $resto = Restaurant::create(array(
+            'name'              => 'Manmosu',
+            'location'          => 'Shibuya',
+            'type'              => 'Ramen',
+            'lunch_price'       => 900,
+            'points'            => 'Small ramen restaurant with narrow counters. Very decent tsukemen with "original" noodles. ',
+            'experience'        => 'Small ramen shop offering tsukemen and ramen. 2 types of noodles, classic or original. My tsukemen was good, depite the soup being very slightly fishy (I do not like fishy taste). Thick and tasty soup, decent meat and egg, and original noodles were thick but good. Counter is quite narrow but somehow OK. Tsukemen can take 10mn to get ready, which is a bit long by Japanese standards.',
+            'visited'           => true,
+            'visit_date'        => '2018-07-12 13:00:00',
+            'google_maps_link'  => 'https://www.google.com/maps/place/%E9%81%93%E7%8E%84%E5%9D%82%E3%83%9E%E3%83%B3%E3%83%A2%E3%82%B9/@35.6576175,139.6974783,18z/data=!4m5!3m4!1s0x60188b560699c71d:0x72a0db46aaddecd5!8m2!3d35.6577081!4d139.6965118',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13122700/',
+            'official_website'  => 'http://www.shibuyaism.com/entry/8017699',
+            'score_lunch'       => 2,
+            'score_place'       => 1,
+            'score_food'        => 1,
+            'score_price'       => 1,
+            'score_date'        => 0
+        ));
+        $resto->attachTags(['ramen','tsukemen','noodles']);
+        $resto->fillCoordinatesFromString('35.657712, 139.696492');
 
         /*
         $resto = Restaurant::create(array(
