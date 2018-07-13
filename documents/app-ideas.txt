@@ -177,3 +177,262 @@ In the code, filter blade page:
 free fonts
 https://www.fontsquirrel.com/
 
+
+------
+Awesome tooltip trick using CSS only
+https://codepen.io/team/css-tricks/pen/RPmpYa
+https://stackoverflow.com/questions/22559756/changing-hover-to-touch-click-for-mobile-devices
+cool style
+https://codepen.io/cristina-silva/pen/XXOpga
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+++++++++++++++
+UNRELATED AMAZON STUFF
+
+
+
+
+
+
+ssh -i "webserver-02.pem" root@ec2-52-204-215-189.compute-1.amazonaws.com
+
+
+^CConnection to ec2-52-200-249-158.compute-1.amazonaws.com closed.
+[florent@localhost Downloads]$ 
+[florent@localhost Downloads]$ 
+[florent@localhost Downloads]$ ssh -i "webserver-02.pem" centos@ec2-52-200-249-158.compute-1.amazonaws.com
+[centos@ip-172-31-19-158 ~]$ 
+[centos@ip-172-31-19-158 ~]$ 
+[centos@ip-172-31-19-158 ~]$ 
+[centos@ip-172-31-19-158 ~]$ 
+[centos@ip-172-31-19-158 ~]$ 
+[centos@ip-172-31-19-158 ~]$ 
+[centos@ip-172-31-19-158 ~]$ 
+[centos@ip-172-31-19-158 ~]$ fdisk -l
+[centos@ip-172-31-19-158 ~]$ ll /s
+sbin/ srv/  sys/  
+[centos@ip-172-31-19-158 ~]$ ll /s
+sbin/ srv/  sys/  
+[centos@ip-172-31-19-158 ~]$ ll /s
+sbin/ srv/  sys/  
+[centos@ip-172-31-19-158 ~]$ cat /proc/partitions 
+major minor  #blocks  name
+
+ 202        0    8388608 xvda
+ 202        1    8387584 xvda1
+ 202       96   12582912 xvdg
+ 202       80    8388608 xvdf
+ 202       81    8387584 xvdf1
+[centos@ip-172-31-19-158 ~]$ mount
+sysfs on /sys type sysfs (rw,nosuid,nodev,noexec,relatime,seclabel)
+proc on /proc type proc (rw,nosuid,nodev,noexec,relatime)
+devtmpfs on /dev type devtmpfs (rw,nosuid,seclabel,size=487880k,nr_inodes=121970,mode=755)
+securityfs on /sys/kernel/security type securityfs (rw,nosuid,nodev,noexec,relatime)
+tmpfs on /dev/shm type tmpfs (rw,nosuid,nodev,seclabel)
+devpts on /dev/pts type devpts (rw,nosuid,noexec,relatime,seclabel,gid=5,mode=620,ptmxmode=000)
+tmpfs on /run type tmpfs (rw,nosuid,nodev,seclabel,mode=755)
+tmpfs on /sys/fs/cgroup type tmpfs (ro,nosuid,nodev,noexec,seclabel,mode=755)
+cgroup on /sys/fs/cgroup/systemd type cgroup (rw,nosuid,nodev,noexec,relatime,xattr,release_agent=/usr/lib/systemd/systemd-cgroups-agent,name=systemd)
+pstore on /sys/fs/pstore type pstore (rw,nosuid,nodev,noexec,relatime)
+cgroup on /sys/fs/cgroup/devices type cgroup (rw,nosuid,nodev,noexec,relatime,devices)
+cgroup on /sys/fs/cgroup/blkio type cgroup (rw,nosuid,nodev,noexec,relatime,blkio)
+cgroup on /sys/fs/cgroup/hugetlb type cgroup (rw,nosuid,nodev,noexec,relatime,hugetlb)
+cgroup on /sys/fs/cgroup/memory type cgroup (rw,nosuid,nodev,noexec,relatime,memory)
+cgroup on /sys/fs/cgroup/freezer type cgroup (rw,nosuid,nodev,noexec,relatime,freezer)
+cgroup on /sys/fs/cgroup/cpuset type cgroup (rw,nosuid,nodev,noexec,relatime,cpuset)
+cgroup on /sys/fs/cgroup/pids type cgroup (rw,nosuid,nodev,noexec,relatime,pids)
+cgroup on /sys/fs/cgroup/net_cls,net_prio type cgroup (rw,nosuid,nodev,noexec,relatime,net_prio,net_cls)
+cgroup on /sys/fs/cgroup/perf_event type cgroup (rw,nosuid,nodev,noexec,relatime,perf_event)
+cgroup on /sys/fs/cgroup/cpu,cpuacct type cgroup (rw,nosuid,nodev,noexec,relatime,cpuacct,cpu)
+configfs on /sys/kernel/config type configfs (rw,relatime)
+/dev/xvda1 on / type xfs (rw,relatime,seclabel,attr2,inode64,noquota)
+rpc_pipefs on /var/lib/nfs/rpc_pipefs type rpc_pipefs (rw,relatime)
+selinuxfs on /sys/fs/selinux type selinuxfs (rw,relatime)
+hugetlbfs on /dev/hugepages type hugetlbfs (rw,relatime,seclabel)
+mqueue on /dev/mqueue type mqueue (rw,relatime,seclabel)
+debugfs on /sys/kernel/debug type debugfs (rw,relatime)
+nfsd on /proc/fs/nfsd type nfsd (rw,relatime)
+systemd-1 on /proc/sys/fs/binfmt_misc type autofs (rw,relatime,fd=32,pgrp=1,timeout=300,minproto=5,maxproto=5,direct)
+tmpfs on /run/user/1000 type tmpfs (rw,nosuid,nodev,relatime,seclabel,size=101460k,mode=700,uid=1000,gid=1000)
+[centos@ip-172-31-19-158 ~]$ ls
+[centos@ip-172-31-19-158 ~]$ mkdir mounttmp
+[centos@ip-172-31-19-158 ~]$ mount /dev/xvd
+xvda   xvda1  xvdf   xvdf1  xvdg   
+[centos@ip-172-31-19-158 ~]$ sudo mount /dev/xvdf1 mounttmp/
+mount: wrong fs type, bad option, bad superblock on /dev/xvdf1,
+       missing codepage or helper program, or other error
+
+       In some cases useful info is found in syslog - try
+       dmesg | tail or so.
+[centos@ip-172-31-19-158 ~]$ dmesg|tail
+[    5.793448] intel_rapl: DRAM domain energy unit 15300pj
+[    5.819061] [drm] Initialized cirrus 1.0.0 20110418 for 0000:00:02.0 on minor 0
+[    5.854396] type=1305 audit(1531461434.785:4): audit_pid=451 old=0 auid=4294967295 ses=4294967295 subj=system_u:system_r:auditd_t:s0 res=1
+[    7.432460] ISOFS: Unable to identify CD-ROM format.
+[    7.468583] ISOFS: Unable to identify CD-ROM format.
+[    7.507500] ISOFS: Unable to identify CD-ROM format.
+[   10.942193] ISOFS: Unable to identify CD-ROM format.
+[   11.002383] ISOFS: Unable to identify CD-ROM format.
+[   11.115173] ISOFS: Unable to identify CD-ROM format.
+[ 4189.639098] XFS (xvdf1): Filesystem has duplicate UUID 29342a0b-e20f-4676-9ecf-dfdf02ef6683 - can't mount
+[centos@ip-172-31-19-158 ~]$ cd /var/
+adm/      crash/    empty/    gopher/   lib/      lock/     mail/     opt/      run/      tmp/      yp/       
+cache/    db/       games/    kerberos/ local/    log/      nis/      preserve/ spool/    .updated  
+[centos@ip-172-31-19-158 ~]$ cd /var/
+adm/      crash/    empty/    gopher/   lib/      lock/     mail/     opt/      run/      tmp/      yp/       
+cache/    db/       games/    kerberos/ local/    log/      nis/      preserve/ spool/    .updated  
+[centos@ip-172-31-19-158 ~]$ ll
+total 0
+drwxrwxr-x. 2 centos centos 6 Jul 13 07:06 mounttmp
+[centos@ip-172-31-19-158 ~]$ ll ~
+total 0
+drwxrwxr-x. 2 centos centos 6 Jul 13 07:06 mounttmp
+[centos@ip-172-31-19-158 ~]$ php --version
+-bash: php: command not found
+[centos@ip-172-31-19-158 ~]$ mount /dev/xvdg mounttmp/
+mount: only root can do that
+[centos@ip-172-31-19-158 ~]$ sudo mount /dev/xvdg mounttmp/
+mount: /dev/xvdg is write-protected, mounting read-only
+mount: unknown filesystem type '(null)'
+[centos@ip-172-31-19-158 ~]$ ls mounttmp/
+[centos@ip-172-31-19-158 ~]$ dmesg|tail
+[    5.793448] intel_rapl: DRAM domain energy unit 15300pj
+[    5.819061] [drm] Initialized cirrus 1.0.0 20110418 for 0000:00:02.0 on minor 0
+[    5.854396] type=1305 audit(1531461434.785:4): audit_pid=451 old=0 auid=4294967295 ses=4294967295 subj=system_u:system_r:auditd_t:s0 res=1
+[    7.432460] ISOFS: Unable to identify CD-ROM format.
+[    7.468583] ISOFS: Unable to identify CD-ROM format.
+[    7.507500] ISOFS: Unable to identify CD-ROM format.
+[   10.942193] ISOFS: Unable to identify CD-ROM format.
+[   11.002383] ISOFS: Unable to identify CD-ROM format.
+[   11.115173] ISOFS: Unable to identify CD-ROM format.
+[ 4189.639098] XFS (xvdf1): Filesystem has duplicate UUID 29342a0b-e20f-4676-9ecf-dfdf02ef6683 - can't mount
+[centos@ip-172-31-19-158 ~]$ fdisk /dev/xvdg
+fdisk: cannot open /dev/xvdg: Permission denied
+[centos@ip-172-31-19-158 ~]$ sudo fdisk /dev/xvdg
+Welcome to fdisk (util-linux 2.23.2).
+
+Changes will remain in memory only, until you decide to write them.
+Be careful before using the write command.
+
+Device does not contain a recognized partition table
+Building a new DOS disklabel with disk identifier 0xe72b41da.
+
+Command (m for help): p
+
+Disk /dev/xvdg: 12.9 GB, 12884901888 bytes, 25165824 sectors
+Units = sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+Disk label type: dos
+Disk identifier: 0xe72b41da
+
+    Device Boot      Start         End      Blocks   Id  System
+
+Command (m for help): q
+
+[centos@ip-172-31-19-158 ~]$ cat /proc/partitions 
+major minor  #blocks  name
+
+ 202        0    8388608 xvda
+ 202        1    8387584 xvda1
+ 202       96   12582912 xvdg
+ 202       80    8388608 xvdf
+ 202       81    8387584 xvdf1
+[centos@ip-172-31-19-158 ~]$ Connection to ec2-52-200-249-158.compute-1.amazonaws.com closed by remote host.
+Connection to ec2-52-200-249-158.compute-1.amazonaws.com closed.
+[florent@localhost Downloads]$ 
+
+
+
+++++++
+
+
+Remarque : Des noyaux Linux récents peuvent renommer vos périphériques de /dev/xvdf à /dev/xvdp en interne, même si le nom du périphérique entré ici (et affiché dans les détails) est /dev/sdf à /dev/sdp.
+
+
+
+[centos@ip-172-31-23-118 ~]$ cat /boot/grub/grub.conf 
+default=0
+timeout=0
+
+
+title CentOS Linux 7 (3.10.0-862.3.2.el7.x86_64)
+	root (hd0)
+	kernel /boot/vmlinuz-3.10.0-862.3.2.el7.x86_64 ro root=UUID=8c1540fa-e2b4-407d-bcd1-59848a73e463 console=hvc0 LANG=en_US.UTF-8
+	initrd /boot/initramfs-3.10.0-862.3.2.el7.x86_64.img
+[centos@ip-172-31-23-118 ~]$ 
+[centos@ip-172-31-23-118 ~]$ 
+[centos@ip-172-31-23-118 ~]$ mkdir mounttmp
+mkdir: cannot create directory ‘mounttmp’: File exists
+[centos@ip-172-31-23-118 ~]$ sudo mount /dev/xvdf1 mounttmp/
+[centos@ip-172-31-23-118 ~]$ cat mounttmp/boot/
+config-3.10.0-514.26.2.el7.x86_64                        symvers-3.10.0-862.6.3.el7.x86_64.gz
+config-3.10.0-693.11.1.el7.x86_64                        System.map-3.10.0-514.26.2.el7.x86_64
+config-3.10.0-693.11.6.el7.x86_64                        System.map-3.10.0-693.11.1.el7.x86_64
+config-3.10.0-862.2.3.el7.x86_64                         System.map-3.10.0-693.11.6.el7.x86_64
+config-3.10.0-862.3.2.el7.x86_64                         System.map-3.10.0-862.2.3.el7.x86_64
+config-3.10.0-862.6.3.el7.x86_64                         System.map-3.10.0-862.3.2.el7.x86_64
+efi/                                                     System.map-3.10.0-862.6.3.el7.x86_64
+grub/                                                    vmlinuz-0-rescue-8bd05758fdfc1903174c9fcaf82b71ca
+grub2/                                                   vmlinuz-3.10.0-514.26.2.el7.x86_64
+initramfs-0-rescue-8bd05758fdfc1903174c9fcaf82b71ca.img  .vmlinuz-3.10.0-514.26.2.el7.x86_64.hmac
+initramfs-3.10.0-514.26.2.el7.x86_64.img                 vmlinuz-3.10.0-693.11.1.el7.x86_64
+initramfs-3.10.0-514.26.2.el7.x86_64kdump.img            .vmlinuz-3.10.0-693.11.1.el7.x86_64.hmac
+initramfs-3.10.0-693.11.1.el7.x86_64.img                 vmlinuz-3.10.0-693.11.6.el7.x86_64
+initramfs-3.10.0-693.11.6.el7.x86_64.img                 .vmlinuz-3.10.0-693.11.6.el7.x86_64.hmac
+initramfs-3.10.0-862.2.3.el7.x86_64.img                  vmlinuz-3.10.0-862.2.3.el7.x86_64
+initramfs-3.10.0-862.3.2.el7.x86_64.img                  .vmlinuz-3.10.0-862.2.3.el7.x86_64.hmac
+symvers-3.10.0-514.26.2.el7.x86_64.gz                    vmlinuz-3.10.0-862.3.2.el7.x86_64
+symvers-3.10.0-693.11.1.el7.x86_64.gz                    .vmlinuz-3.10.0-862.3.2.el7.x86_64.hmac
+symvers-3.10.0-693.11.6.el7.x86_64.gz                    vmlinuz-3.10.0-862.6.3.el7.x86_64
+symvers-3.10.0-862.2.3.el7.x86_64.gz                     .vmlinuz-3.10.0-862.6.3.el7.x86_64.hmac
+symvers-3.10.0-862.3.2.el7.x86_64.gz                     
+[centos@ip-172-31-23-118 ~]$ cat mounttmp/boot/grub/
+grub.conf      menu.lst       splash.xpm.gz  
+[centos@ip-172-31-23-118 ~]$ cat mounttmp/boot/grub/grub.conf 
+default=1
+timeout=0
+
+
+title CentOS Linux (3.10.0-862.6.3.el7.x86_64) 7 (Core)
+	root (hd0)
+	kernel /boot/vmlinuz-3.10.0-862.6.3.el7.x86_64 ro root=UUID=29342a0b-e20f-4676-9ecf-dfdf02ef6683 console=hvc0 LANG=en_US.UTF-8
+title CentOS Linux (3.10.0-862.3.2.el7.x86_64) 7 (Core)
+	root (hd0)
+	kernel /boot/vmlinuz-3.10.0-862.3.2.el7.x86_64 ro root=UUID=29342a0b-e20f-4676-9ecf-dfdf02ef6683 console=hvc0 LANG=en_US.UTF-8
+	initrd /boot/initramfs-3.10.0-862.3.2.el7.x86_64.img
+title CentOS Linux (3.10.0-862.2.3.el7.x86_64) 7 (Core)
+	root (hd0)
+	kernel /boot/vmlinuz-3.10.0-862.2.3.el7.x86_64 ro root=UUID=29342a0b-e20f-4676-9ecf-dfdf02ef6683 console=hvc0 LANG=en_US.UTF-8
+	initrd /boot/initramfs-3.10.0-862.2.3.el7.x86_64.img
+title CentOS Linux (3.10.0-693.11.6.el7.x86_64) 7 (Core)
+	root (hd0)
+	kernel /boot/vmlinuz-3.10.0-693.11.6.el7.x86_64 ro root=UUID=29342a0b-e20f-4676-9ecf-dfdf02ef6683 console=hvc0 LANG=en_US.UTF-8
+	initrd /boot/initramfs-3.10.0-693.11.6.el7.x86_64.img
+title CentOS Linux (3.10.0-693.11.1.el7.x86_64) 7 (Core)
+	root (hd0)
+	kernel /boot/vmlinuz-3.10.0-693.11.1.el7.x86_64 ro root=UUID=29342a0b-e20f-4676-9ecf-dfdf02ef6683 console=hvc0 LANG=en_US.UTF-8
+	initrd /boot/initramfs-3.10.0-693.11.1.el7.x86_64.img
+title CentOS Linux (3.10.0-514.26.2.el7.x86_64) 7 (Core)
+	root (hd0)
+	kernel /boot/vmlinuz-3.10.0-514.26.2.el7.x86_64 ro root=UUID=29342a0b-e20f-4676-9ecf-dfdf02ef6683 console=hvc0 LANG=en_US.UTF-8
+	initrd /boot/initramfs-3.10.0-514.26.2.el7.x86_64.img
+
+	
+	
