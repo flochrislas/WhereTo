@@ -418,5 +418,11 @@ class RestaurantTagsTableSeeder extends Seeder
             'weight'             => '100'
         ));
 
+        RestaurantTag::create(array(
+            'label'              => 'wantanmen',
+            'type'               => '100',
+            'weight'             => '100'
+        ));
+
     }
 }

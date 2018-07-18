@@ -25,35 +25,48 @@
   </div>
 
   <div class="detailRow">
-      <div class="detail price"><div>{{ $restaurant->lunch_price }}&yen;</div></div>
-      <div class="detail score border20">
+      <div class="detail price"
+           absolute-tooltip="Estimated price for a lunch">
+        <div>{{ $restaurant->lunch_price }}&yen;</div>
+      </div>
+      <div class="detail score border20"
+           absolute-tooltip="Global score for enjoying the lunch">
         <div class="label">Lunch</div>
         <div class="grade">{{ $restaurant->score_lunch }}/4</div>
       </div>
-      <div class="detail score border15">
+      <div class="detail score border15"
+           absolute-tooltip="How good is the food">
         <div class="label">Food</div>
         <div class="grade">{{ $restaurant->score_food }}/3</div>
       </div>
-      <div class="detail score">
+      <div class="detail score"
+           absolute-tooltip="How nice is the place">
         <div class="label">Place</div>
         <div class="grade">{{ $restaurant->score_place }}/3</div>
       </div>
-      <div class="detail score">
+      <div class="detail score"
+           absolute-tooltip="How appropriate feels the price">
         <div class="label">Cost</div>
         <div class="grade">{{ $restaurant->score_price }}/2</div>
       </div>
-      <div class="detail score">
+      <div class="detail score"
+           absolute-tooltip="How appropriate is it for a date">
         <div class="label">Date</div>
         <div class="grade">{{ $restaurant->score_date }}/2</div>
       </div>
   </div>
 
   <div class="detailRow">
-      <div class="detail border15">{{ $restaurant->points}}</div>
+      <div class="detail border15"
+           overlay="Main point">
+      {{ $restaurant->points }}</div>
   </div>
 
   <div class="detailRow">
-      <div class="detail">{{ $restaurant->experience}}</div>
+      <div class="detail"
+           overlay="Personal experience">
+        {{ $restaurant->experience }}
+      </div>
   </div>
 
   <div class="detailRow">

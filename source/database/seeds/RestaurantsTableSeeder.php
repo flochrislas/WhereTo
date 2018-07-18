@@ -2721,6 +2721,27 @@ class RestaurantsTableSeeder extends Seeder
         $resto->attachTags(['ramen','tsukemen','noodles']);
         $resto->fillCoordinatesFromString('35.657712, 139.696492');
 
+        $resto = Restaurant::create(array(
+            'name'              => 'Ramen kokuu',
+            'location'          => 'Shibuya',
+            'type'              => 'Ramen',
+            'lunch_price'       => 950,
+            'points'            => 'Good, light taste shoyu  wantanmen (ramen with Chinese dumplings). More confortable than average ramen place.',
+            'experience'        => 'The place has a single, but large, counter, which is more confortable that the usual ramen place. I tried the shoyu ramen with Chinese dumpling and extra meat. Soup was light, taste OK, the meat was above average, salty, but still with a bit too much fat for me, and dumplings, 5 pieces, were very good. For 1200yen, that was the most expensive dish on the menu. I would have liked more noodles. This was good but felt a bit overpriced.',
+            'visited'           => true,
+            'visit_date'        => '2018-07-18 13:00:00',
+            'google_maps_link'  => 'https://www.google.com/maps/place/Ramen+Kokuu/@35.6566129,139.6989133,17z/data=!4m5!3m4!1s0x60188b572fb6f3df:0x90e19dcc4e740613!8m2!3d35.6550656!4d139.6993425',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13149719/',
+            'official_website'  => 'https://ramendb.supleks.jp/s/62837.html',
+            'score_lunch'       => 2,
+            'score_place'       => 1,
+            'score_food'        => 1,
+            'score_price'       => 0,
+            'score_date'        => 0
+        ));
+        $resto->attachTags(['noodles','ramen','wantanmen']);
+        $resto->fillCoordinatesFromString('35.655086, 139.699391');
+
         /*
         $resto = Restaurant::create(array(
             'name'              => '',
@@ -2758,7 +2779,7 @@ class RestaurantsTableSeeder extends Seeder
         // https://www.youtube.com/watch?v=S-Xm7s9eGxU
         // https://goo.gl/TbjN44
 
-        // nathan recommwend ramen place behind office behind mormons church
+        // king of spices , or spice king, towards ebisu or somethin
 
         // fill coordinates
         $this->fillNullCoordinatesFromGoogleMapsLink();
