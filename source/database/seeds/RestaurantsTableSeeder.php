@@ -409,7 +409,7 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create(array(
             'name'              => 'Matsuya',
-            'location'          => 'down the street from the office , with music shop, amp and drums, Floor: 1F, Windows: yes',
+            'location'          => 'Shibuya, Sakuragaokacho',
             'type'              => 'Japanese fast food',
             'lunch_price'       => 600,
             'points'            => 'Fast and good. Has counter and tables. Choice of curry or gyudon dishes.',
@@ -417,7 +417,7 @@ class RestaurantsTableSeeder extends Seeder
             'visited'           => true,
             'visit_date'        => '2017-09-05 13:00:00',
             'google_maps_link'  => 'https://www.google.co.jp/maps/place/Matsuya/@35.6590574,139.6984172,17z/data=!4m5!3m4!1s0x60188b59d831819b:0x71cfd0feb05de6ba!8m2!3d35.6571851!4d139.7015798',
-            'tabelog_link'      => '',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13125238/',
             'official_website'  => 'https://www.matsuyafoods.co.jp/',
             'score_lunch'       => 2,
             'score_place'       => 1,
@@ -496,7 +496,7 @@ class RestaurantsTableSeeder extends Seeder
             'location'          => 'Shibuya',
             'type'              => 'Thai',
             'lunch_price'       => 800,
-            'points'            => 'supposedly famous chicken rice',
+            'points'            => 'Supposedly famous chicken rice',
             'experience'        => 'I\'ve been told there were a thai restaurant chain in Shibuya serving chicken rice, and EVEN in Thailand, there were a line. So I went there, and arrived shortly in front a restaurant exposing dead chicken on its facade. No line. I go inside, and its small and crappy, with shitty music on the top. I order the famous chicken rice, for an outstanding 800yen. It comes quickly, with a soup (hot water) and some sauce (like sweet chinese shoyu with a touch of vinegar). The amount is ridiculously small (note that you could double it for 400yen). What\'s more, the chicken is actually half chicken, half chicken skin. I eat, nothing special at all. Rice is not really good. Chicken is nice and soft and tasteless, for the few bites I had on it. The sauce was good. Oh, and surprisingly enough, it also came with a mini-bucket full of pakuchi... this stuff is usually expensive here. And that was it, EXTREMELY disapointed. I felt robbed. Of my money. My time. My hopes. And still hungry.',
             'visited'           => true,
             'visit_date'        => '2017-09-05 13:00:00',
@@ -2109,7 +2109,7 @@ class RestaurantsTableSeeder extends Seeder
             'score_price'       => 0,
             'score_date'        => 0
         ));
-        $resto->attachTags(['burger']);
+        $resto->attachTags(['burger', 'american']);
         $resto->fillCoordinatesFromString('35.659714, 139.700917');
 
         $resto = Restaurant::create(array(
@@ -2741,6 +2741,27 @@ class RestaurantsTableSeeder extends Seeder
         ));
         $resto->attachTags(['noodles','ramen','wantanmen']);
         $resto->fillCoordinatesFromString('35.655086, 139.699391');
+
+        $resto = Restaurant::create(array(
+            'name'              => 'Hooters',
+            'location'          => 'Shibuya',
+            'type'              => 'Western',
+            'lunch_price'       => 2000,
+            'points'            => 'Western (american and mexican) overpriced food served by sexy waitresses.',
+            'experience'        => 'Situated on the 4th floor above the Uniclo store, the place is quite big, but no windows, and poorly lighted by spotlights. Tables and counters, musics, TV playing soundless in every corners. Of course the main attraction are the sexy waitresses. As for the food, I tried the burger, that cost me a whoping 2000 yen for jsut a patty and a slice of cheese, with no drinks. Took a long time to come, and was not great. By far the most overpriced burger I ever had. The menu also offers some mexican stuff and some meat.',
+            'visited'           => true,
+            'visit_date'        => '2018-07-19 13:00:00',
+            'google_maps_link'  => 'https://www.google.co.jp/maps/place/HOOTERS+SHIBUYA/@35.658202,139.6998254,17z/data=!4m5!3m4!1s0x0:0x21cd103482770807!8m2!3d35.659527!4d139.698318',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13167506/',
+            'official_website'  => 'http://www.hooters.co.jp/shop/shibuya/',
+            'score_lunch'       => 1,
+            'score_place'       => 1,
+            'score_food'        => 1,
+            'score_price'       => 0,
+            'score_date'        => 0
+        ));
+        $resto->attachTags(['western','american','burger','mexican']);
+        $resto->fillCoordinatesFromString('35.659407, 139.698295');
 
         /*
         $resto = Restaurant::create(array(

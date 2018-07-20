@@ -181,6 +181,12 @@ class RestaurantTagsTableSeeder extends Seeder
         ));
 
         RestaurantTag::create(array(
+            'label'              => 'English menu',
+            'type'               => '60',
+            'weight'             => '100'
+        ));
+
+        RestaurantTag::create(array(
             'label'              => 'menu with calories',
             'type'               => '60',
             'weight'             => '100'
