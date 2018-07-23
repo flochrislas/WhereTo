@@ -2763,6 +2763,27 @@ class RestaurantsTableSeeder extends Seeder
         $resto->attachTags(['western','american','burger','mexican']);
         $resto->fillCoordinatesFromString('35.659407, 139.698295');
 
+        $resto = Restaurant::create(array(
+            'name'              => 'Mandala',
+            'location'          => 'Shibuya',
+            'type'              => 'Indian',
+            'lunch_price'       => 850,
+            'points'            => 'Indian restaurant serving curry, but also gapao.',
+            'experience'        => 'Interior kind of mediocre, but somehow I liked the music (instrumental wind bells of some kind). I tried the chicken curry with nan for 850yen, the cheapest dish. It was decent for Shibuya\'s low standards (when it comes to Indian curry), mostly because the nan was nice. But I would not recommend it.',
+            'visited'           => true,
+            'visit_date'        => '2018-07-23 13:00:00',
+            'google_maps_link'  => 'https://www.google.com/maps/place/Grill%26Dining+Bar+Mandala+%E3%83%9E%E3%83%B3%E3%83%80%E3%83%A9%E6%B8%8B%E8%B0%B7%E5%BA%97/@35.6579949,139.6978242,16.75z/data=!4m5!3m4!1s0x60188b576738a74d:0xd2561a1948685da9!8m2!3d35.6564863!4d139.7009733',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13007278/',
+            'official_website'  => 'https://www.hotpepper.jp/strJ000001223/',
+            'score_lunch'       => 1,
+            'score_place'       => 1,
+            'score_food'        => 1,
+            'score_price'       => 1,
+            'score_date'        => 0
+        ));
+        $resto->attachTags(['indian','curry','gapao']);
+        $resto->fillCoordinatesFromString('35.656507, 139.700950');
+
         /*
         $resto = Restaurant::create(array(
             'name'              => '',
