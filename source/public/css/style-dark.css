@@ -15,13 +15,30 @@ https://autoprefixer.github.io/
 */
 
 /*********************************************/
+/*            FONTS 		                 */
+/*********************************************/
+
+/* open-sans-regular - latin */
+@font-face {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Open Sans Regular'), local('OpenSans-Regular'),
+       url('../fonts/open-sans-v15-latin-regular.woff2') format('woff2'), /* Super Modern Browsers */
+       url('../fonts/open-sans-v15-latin-regular.woff') format('woff'), /* Modern Browsers */
+       url('../fonts/open-sans-v15-latin-regular.ttf') format('truetype'), /* Safari, Android, iOS */
+       url('../fonts/open-sans-v15-latin-regular.svg#OpenSans') format('svg'); /* Legacy iOS */
+}
+
+
+/*********************************************/
 /*            GLOBAL STUFF                   */
 /*********************************************/
 
 html, body {
   height: 100%; /* needed for proper layout (?) */
   background-color: black;
-  font-family: 'Open Sans',sans-serif;
+  font-family: 'Open Sans', sans-serif;
   /* or try :
   font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
    font-weight: 300;
@@ -50,7 +67,7 @@ h1, h2, h3 {
 }
 
 td {
-	/*background-color: rgba(20,146,135,.5); // dark emerald */
+  /*background-color: rgba(20,146,135,.5); // dark emerald */
   background-color: #262633; /* light black */
 }
 
@@ -334,7 +351,6 @@ td {
 }
 
 #nameAndType a {
-  font-family: 'ITCAvantGardeStdBk', sans-serif;
   font-size: .8rem;
   color: #45C3EC;
   text-decoration: none;
