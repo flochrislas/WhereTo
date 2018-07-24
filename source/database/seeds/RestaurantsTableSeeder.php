@@ -2784,6 +2784,27 @@ class RestaurantsTableSeeder extends Seeder
         $resto->attachTags(['indian','curry','gapao']);
         $resto->fillCoordinatesFromString('35.656507, 139.700950');
 
+        $resto = Restaurant::create(array(
+            'name'              => 'Ramen Hou',
+            'location'          => 'Shibuya',
+            'type'              => '',
+            'lunch_price'       => 950,
+            'points'            => '',
+            'experience'        => '',
+            'visited'           => true,
+            'visit_date'        => '2018-06-27 13:00:00',
+            'google_maps_link'  => '',
+            'tabelog_link'      => '',
+            'official_website'  => '',
+            'score_lunch'       => 3,
+            'score_place'       => 1,
+            'score_food'        => 2,
+            'score_price'       => 1,
+            'score_date'        => 0
+        ));
+        $resto->attachTags(['']);
+        $resto->fillCoordinatesFromString('');
+
         /*
         $resto = Restaurant::create(array(
             'name'              => '',
