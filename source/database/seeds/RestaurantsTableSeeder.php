@@ -2243,8 +2243,8 @@ class RestaurantsTableSeeder extends Seeder
             'location'          => 'Shibuya',
             'type'              => 'Teishoku',
             'lunch_price'       => 850,
-            'points'            => 'Clean Japanese diner restaurant, casually opened for lunch.',
-            'experience'        => 'I had a avocado and mashed tuna on rice, with some shiso leaves and spices, it was absolutely delicious. Some pickles and miso soup on the side.',
+            'points'            => 'Clean Japanese restaurant, casually opened for lunch. 100 yen discount on everything after 13:30.',
+            'experience'        => 'Tables. Some music playing, a TV is on as well. Free refill for rice. I had a avocado and mashed tuna on rice, with some shiso leaves and spices, it was absolutely delicious. Some pickles and miso soup on the side. I had this after 13:30 so it cost me only 750yen, which is awesome.',
             'visited'           => true,
             'visit_date'        => '2018-06-27 13:00:00',
             'google_maps_link'  => 'https://www.google.co.jp/maps/place/%E3%83%9F%E3%83%84%E3%83%95%E3%82%B8%E3%83%80%E3%82%A4%E3%83%8B%E3%83%B3%E3%82%B0+%7C+%E6%B8%8B%E8%B0%B7%E9%A7%85+%E5%B1%85%E9%85%92%E5%B1%8B+%E5%92%8C%E9%A3%9F+%7C+%E3%81%97%E3%82%83%E3%81%B6%E3%81%97%E3%82%83%E3%81%B6+%E5%A5%B3%E5%AD%90%E4%BC%9A+%E5%AE%B4%E4%BC%9A+%E8%AA%95%E7%94%9F%E6%97%A5%E4%BC%9A+%E8%A5%BF%E5%8F%A3/@35.6581514,139.6991014,17z/data=!4m5!3m4!1s0x0:0xbb0d1f999517a9d6!8m2!3d35.6573233!4d139.697712',
@@ -2256,7 +2256,7 @@ class RestaurantsTableSeeder extends Seeder
             'score_price'       => 1,
             'score_date'        => 0
         ));
-        $resto->attachTags(['teishoku','japanese','izakaya']);
+        $resto->attachTags(['teishoku','japanese','izakaya','no smoking']);
         $resto->fillCoordinatesFromString('35.657316, 139.697756');
 
         $resto = Restaurant::create(array(
@@ -2785,25 +2785,25 @@ class RestaurantsTableSeeder extends Seeder
         $resto->fillCoordinatesFromString('35.656507, 139.700950');
 
         $resto = Restaurant::create(array(
-            'name'              => 'Ramen Hou',
+            'name'              => 'Ramen King',
             'location'          => 'Shibuya',
-            'type'              => '',
-            'lunch_price'       => 950,
-            'points'            => '',
-            'experience'        => '',
+            'type'              => 'Ramen',
+            'lunch_price'       => 700,
+            'points'            => 'Cheap and noisy but decent ramen restaurant.',
+            'experience'        => 'The place is white bright and kind of noisy (workers make noise cooking). I tried the hiyashi-chuka set, cold noodles dish available in summer. For 850 yen it came with a bowl of rice, 3 yaki gyoza (dumplings), and the main dish. Portions are big, which make for a good ratio quantity/cost. Taste and quality very decent. Gyoza were very good. But the competition for ramen is very fierce in Shibuya, and I would not recommend this place over some others with more tasty dishes (unless you are on a tight budget, because this one is amongst the cheapest option, with decent ramen starting at 700 yen).',
             'visited'           => true,
-            'visit_date'        => '2018-06-27 13:00:00',
-            'google_maps_link'  => '',
-            'tabelog_link'      => '',
+            'visit_date'        => '2018-07-24 13:00:00',
+            'google_maps_link'  => 'https://www.google.com/maps/place/Ramen+King+Koraku+Honpo/@35.6581915,139.6993192,18z/data=!4m8!1m2!2m1!1z44Op44O844Oh44Oz546L!3m4!1s0x0:0x5b48247ed1d2f05d!8m2!3d35.658663!4d139.698564',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13022566/',
             'official_website'  => '',
-            'score_lunch'       => 3,
+            'score_lunch'       => 1,
             'score_place'       => 1,
-            'score_food'        => 2,
-            'score_price'       => 1,
+            'score_food'        => 1,
+            'score_price'       => 2,
             'score_date'        => 0
         ));
-        $resto->attachTags(['']);
-        $resto->fillCoordinatesFromString('');
+        $resto->attachTags(['ramen','noodles','gyoza']);
+        $resto->fillCoordinatesFromString('35.658670, 139.698520');
 
         /*
         $resto = Restaurant::create(array(

@@ -45,6 +45,10 @@ FAIRE DEFILER les details a travers les resultats  upon swipe droite gauche
 
 afficher les filtres actif et tap remove et bouton filter pour en ajouter en retournant sur la pages des tags
 
+DB extension: similar to restaurants, but for shopping, karaoke, bars, clubs, hotels, studio, loto, money exchange, atm
+WhatsNext extension: gives user amazing ideas he can do next (from the place he is visiting, given his history, the time, info he gave in his profile etc...)
+Ashigo Extension: 
+
 -----------
 
 Score lunch global:
@@ -184,3 +188,6 @@ https://codepen.io/team/css-tricks/pen/RPmpYa
 https://stackoverflow.com/questions/22559756/changing-hover-to-touch-click-for-mobile-devices
 cool style
 https://codepen.io/cristina-silva/pen/XXOpga
+
+new
+https://inspirationalpixels.com/tooltips-in-pure-htmlcss/
