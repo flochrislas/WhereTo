@@ -188,23 +188,40 @@ td {
 }
 
 /*********************************************/
-/*            First screen                   */
+/*            Home screen                   */
 /*********************************************/
+.grid {
+  flex: 0 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+}
+.grid>* {
+  /*flex: 1 1 auto;*/
+  min-width: 6rem;
+  max-width: 6rem;
+  min-height: 6.6rem;
+  max-height: 6.6rem;
+  padding: 1.8rem 1rem;
+  margin: .5rem .5rem;  
+  font-size: 1.2rem;
+}
 .giantButton {
-  flex: 1 1 auto;
-  background-color: #3BA0C3;
-  border-color: #45C3EC;
-  border-style:  solid;
-  border-width: .37rem;
-  border-radius: 1rem;
-  padding: 3rem 2rem;
-  margin: .8rem 1rem;
   color: black;
-  font-size: 2rem;
   font-weight: 600;
   text-align: center;
+  background-color: #3BA0C3;
+  border-color: #45C3EC;
+  border-style: solid;
+  border-width: .37rem;
+  border-radius: 1rem;
   text-decoration: none;
-  white-space: nowrap;
+  white-space: wrap;
+}
+.locked {
+  background-color: #7e7e7e;
+  border-color: #545454; /* a01453 */
+  border-style: dashed;
 }
 
 /*********************************************/
@@ -560,7 +577,7 @@ div[absolute-tooltip]:after {
   left:.2rem;
   height:4.1rem;
   width:91%;
-  /* rounded edges */  
+  /* rounded edges */
   border-radius: 2px;
   -webkit-border-radius: 2px;
   -moz-border-radius: 2px;
@@ -719,6 +736,12 @@ div[overlay]:active:before {
 /*********************************************/
 /*            GENERAL CLASSES                */
 /*********************************************/
+
+.centerContent {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
 .center {
    justify-content: center;
