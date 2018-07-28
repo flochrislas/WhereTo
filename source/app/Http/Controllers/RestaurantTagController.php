@@ -14,9 +14,14 @@ class RestaurantTagController extends Controller
 
   public function restaurantsFilter(Request $request)
   {
-      //fetch all restaurantTags data
-      $restaurantTags = RestaurantTag::orderBy('created_at','desc')->get();
-      // TODO: cache the result
+      // Fetch all restaurantTags data
+      // $restaurantTags = RestaurantTag::orderBy('created_at','desc')->get();
+      // Use cache
+      $cacheKey = "all_restaurants_tags";
+      $restaurantTags = Cache::rememberForever($cacheKey, function() {
+            return RestaurantTag::orderBy('created_at','desc')->get();
+      });
+
       //pass restaurantTags data to view and load list view
       return view('restaurants.main', ['restaurantTags' => $restaurantTags]);
       // return view('restaurants.main', compact('restaurantTags'));

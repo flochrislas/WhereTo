@@ -9,27 +9,30 @@
       </td>
       <td class="center">
         <a target="_blank"
-          href="{{ $restaurant->google_maps_link }}">
-          {{ App\GeoUtils::walkingTime($restaurant->currentDistance/1000) }}mn
+           href="{{ $restaurant->google_maps_link }}">
+          <div class="oneDigit inline">
+          {{ App\GeoUtils::walkingTime($restaurant->currentDistance/1000) }}
+        </div>
+          <br /><div class="minute inline">min</div>
         </a>
       </td>
       <td>
         <table class="center">
           <tr>
-            <th>price</th>
-            <th>lunch</th>
-            <th>food</th>
-            <th>place</th>
-            <th>price</th>
-            <th>date</th>
+            <th class="label">price</th>
+            <th class="label">lunch</th>
+            <th class="label">food</th>
+            <th class="label">place</th>
+            <th class="label">price</th>
+            <th class="label">date</th>
           </tr>
           <tr>
-            <td>{{ $restaurant->lunch_price }}</td>
-            <td>{{ $restaurant->score_lunch }}</td>
-            <td>{{ $restaurant->score_food }}</td>
-            <td>{{ $restaurant->score_place }}</td>
-            <td>{{ $restaurant->score_price }}</td>
-            <td>{{ $restaurant->score_date }}</td>
+            <td class="oneDigit">{{ $restaurant->lunch_price }}</td>
+            <td class="oneDigit">{{ $restaurant->score_lunch }}</td>
+            <td class="oneDigit">{{ $restaurant->score_food }}</td>
+            <td class="oneDigit">{{ $restaurant->score_place }}</td>
+            <td class="oneDigit">{{ $restaurant->score_price }}</td>
+            <td class="oneDigit">{{ $restaurant->score_date }}</td>
           </tr>
         </table>
       </td>
