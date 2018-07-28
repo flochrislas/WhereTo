@@ -174,7 +174,7 @@ class RestaurantsTableSeeder extends Seeder
             'score_price'       => 2,
             'score_date'        => 0
         ));
-        $resto->attachTags(['burger', 'fast food']);
+        $resto->attachTags(['burger','fast food','to-go','visa']);
         $resto->fillCoordinatesFromString('35.660876, 139.698979');
 
         $resto = Restaurant::create(array(
@@ -195,16 +195,16 @@ class RestaurantsTableSeeder extends Seeder
             'score_price'       => 0,
             'score_date'        => 0
         ));
-        $resto->attachTags(['burger', 'fast food']);
+        $resto->attachTags(['burger','fast food','to-go','visa']);
         $resto->fillCoordinatesFromString('35.660390, 139.699116');
 
         $resto = Restaurant::create(array(
             'name'              => 'Taco Bell',
-            'location'          => 'Shibuya',
-            'type'              => 'Tacos',
+            'location'          => 'Shibuya, Dogenzaka',
+            'type'              => 'Mexican',
             'lunch_price'       => 900,
             'points'            => 'Mexican style fast food, mostly buritos and tacos. Possibility to choose beef porc or chicken for the meat.',
-            'experience'        => 'Quite good, but it could be cheaper.',
+            'experience'        => 'Quite good, but it could be cheaper. Interior is just decent for a fast-food, but music is quite shitty.',
             'visited'           => true,
             'visit_date'        => '2017-09-05 13:00:00',
             'google_maps_link'  => 'https://www.google.co.jp/maps/place/Taco+Bell+Shibuya+Dogenzaka/@35.6599248,139.6954865,17z/data=!4m12!1m6!3m5!1s0x60188ca9be0b957f:0xa34dd8d7530b5518!2sTaco+Bell+Shibuya+Dogenzaka!8m2!3d35.6599248!4d139.6976752!3m4!1s0x60188ca9be0b957f:0xa34dd8d7530b5518!8m2!3d35.6599248!4d139.6976752',
@@ -216,7 +216,7 @@ class RestaurantsTableSeeder extends Seeder
             'score_price'       => 1,
             'score_date'        => 0
         ));
-        $resto->attachTags(['mexican', 'fast food']);
+        $resto->attachTags(['mexican','fast food','to-go','visa']);
         $resto->fillCoordinatesFromString('35.660199, 139.697664');
 
         $resto = Restaurant::create(array(
@@ -245,7 +245,7 @@ class RestaurantsTableSeeder extends Seeder
             'location'          => 'Shibuya, Cerulean Tower',
             'type'              => 'Japanese curry',
             'lunch_price'       => 900,
-            'points'            => 'Highly customizable japanese curry. Very delicious. Counter only.',
+            'points'            => 'Highly customizable Japanese curry. Very delicious. Counter only.',
             'experience'        => 'Once you find the right combination for you, it can be really delicious. I personally have "chicken katsu (deepfried) curry + nasu (eggplants) + cheese, ichi-kara (spicy level 1)". English menu is available.',
             'visited'           => true,
             'visit_date'        => '2017-09-05 13:00:00',
@@ -258,7 +258,7 @@ class RestaurantsTableSeeder extends Seeder
             'score_price'       => 1,
             'score_date'        => 0
         ));
-        $resto->attachTags(['japanese curry']);
+        $resto->attachTags(['japanese curry','to-go','visa','English menu','customisable dishes','no smoking']);
         $resto->fillCoordinatesFromString('35.657260, 139.700408');
 
         $resto = Restaurant::create(array(
@@ -266,7 +266,7 @@ class RestaurantsTableSeeder extends Seeder
             'location'          => 'Shibuya, Udagawacho',
             'type'              => 'Japanese curry',
             'lunch_price'       => 900,
-            'points'            => 'Highly customizable japanese curry. Very delicious. Counter and tables.',
+            'points'            => 'Highly customizable Japanese curry. Very delicious. Counter and tables.',
             'experience'        => 'Once you find the right combination for you, it can be really delicious. I personally have "chicken katsu (deepfried) curry + nasu (eggplants) + cheese, ichi-kara (spicy level 1)". English menu is available.',
             'visited'           => true,
             'visit_date'        => '2017-09-05 13:00:00',
@@ -279,28 +279,28 @@ class RestaurantsTableSeeder extends Seeder
             'score_price'       => 1,
             'score_date'        => 0
         ));
-        $resto->attachTags(['japanese curry']);
+        $resto->attachTags(['japanese curry','to-go','visa','English menu','customisable dishes','no smoking']);
         $resto->fillCoordinatesFromString('35.660804, 139.699485');
 
         $resto = Restaurant::create(array(
             'name'              => 'Jonathan\'s',
-            'location'          => 'Shibuya, Cerulean',
+            'location'          => 'Shibuya',
             'type'              => 'Family restaurant',
             'lunch_price'       => 900,
-            'points'            => 'wide choice of dishes, also deserts, comfortable',
-            'experience'        => 'good',
+            'points'            => 'Family restaurant with a wide choice of dishes, Japanese and western styles, also deserts.',
+            'experience'        => 'Quite comfortable place. Food is very decent. Drink bar (unlimited soft drinks) available for cheap. Kids menu available.',
             'visited'           => true,
             'visit_date'        => '2017-09-05 13:00:00',
             'google_maps_link'  => 'https://www.google.co.jp/maps/place/Jonathan\'s/@35.6555207,139.6999556,18.75z/data=!4m12!1m6!3m5!1s0x60188b5ba1d0dd99:0xdad1c25747467595!2sJonathan\'s!8m2!3d35.654701!4d139.705094!3m4!1s0x60188b5745d1a4dd:0xb23984f5a40be1ec!8m2!3d35.6557358!4d139.700456',
             'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13097970/',
             'official_website'  => 'http://www.skylark.co.jp/jonathan/index.html',
-            'score_lunch'       => 1,
+            'score_lunch'       => 2,
             'score_place'       => 1,
             'score_food'        => 1,
             'score_price'       => 1,
-            'score_date'        => 1
+            'score_date'        => 0
         ));
-        $resto->attachTags(['western']);
+        $resto->attachTags(['western','visa']);
         $resto->fillCoordinatesFromString('35.655863, 139.700487');
 
         $resto = Restaurant::create(array(
@@ -328,8 +328,8 @@ class RestaurantsTableSeeder extends Seeder
             'name'              => 'Ayung Teras',
             'location'          => 'Shibuya',
             'type'              => 'Indonesian',
-            'points'            => 'nice table, nie restaurant, decent food and drinks',
-            'experience'        => 'decent. had a nice evening there dining with 4 people',
+            'points'            => 'Nice table, nie restaurant, decent food and drinks',
+            'experience'        => 'Decent. I had a nice evening there dining with 4 people',
             'visited'           => true,
             'visit_date'        => '2017-09-05 13:00:00',
             'google_maps_link'  => 'https://www.google.co.jp/maps/place/Ayung+Teras/@35.6552693,139.7003887,19.75z/data=!4m5!3m4!1s0x60188b574c9611e9:0x46aa4f4ee0d6c8e1!8m2!3d35.6550962!4d139.7003701',
@@ -347,7 +347,7 @@ class RestaurantsTableSeeder extends Seeder
         $resto = Restaurant::create(array(
             'name'              => 'M-SPO cafe dining',
             'location'          => 'Shibuya, Udagawacho',
-            'type'              => 'pasta',
+            'type'              => 'Pasta',
             'lunch_price'       => 500,
             'points'            => 'super cheap pizza or pasta, wide and dark sports bar (no windows) with sports video playing on many walls.',
             'experience'        => 'I don\'t really like this dark, no windows bar atmosphere, playing cheesy music, and I don\'t enjoy watching sports on TV. The pizza marguerita was pretty much tasteless. Other than that service fast, table and room spacious, and super cheap...',
@@ -368,7 +368,7 @@ class RestaurantsTableSeeder extends Seeder
         $resto = Restaurant::create(array(
             'name'              => 'Go Go Curry',
             'location'          => 'Shibuya, Udagawacho',
-            'type'              => 'japanese curry',
+            'type'              => 'Japanese curry',
             'lunch_price'       => 850,
             'points'            => 'chain restaurant a bit similar to cocoichi. customizable japanese curry, counter and small tables, basement floor',
             'experience'        => 'Good alternative to cocoichi. Less customizable, less options, but less expensive as well. Not really spicy, but good japanese curry. I enjoyed my chiken katsu with cheese. Basement is not very glamorous, but for a lunch it\'s OK. Loyalty System: Point card. 5 times: free toping. 10 times: free curry.',
@@ -389,10 +389,10 @@ class RestaurantsTableSeeder extends Seeder
         $resto = Restaurant::create(array(
             'name'              => 'Nice Pizza/Pasta restaurant',
             'location'          => 'Shibuya, Udagawacho',
-            'type'              => 'pizza/pasta/salad',
+            'type'              => 'Italian',
             'lunch_price'       => 1000,
             'points'            => '9th floor with nice large bay windows, spacious room with large tables. Real pizza oven. 1000yen menu set with a drink, bowl of soup, large salad, and large pizza. music playing, boom boom type, a bit loud but OK if you are alone.',
-            'experience'        => 'loved the room. fast service. Taste was bland (marguerita). The deco is all fine except for that reindeer\'s head sprouting out of a column for no apparent reason',
+            'experience'        => 'loved the room. fast service. Taste was bland (marguerita). The deco is all fine except for that reindeer\'s head sprouting out of a column for no apparent reasons.',
             'visited'           => true,
             'visit_date'        => '2017-09-05 13:00:00',
             'google_maps_link'  => '',
@@ -410,7 +410,7 @@ class RestaurantsTableSeeder extends Seeder
         $resto = Restaurant::create(array(
             'name'              => 'Matsuya',
             'location'          => 'Shibuya, Sakuragaokacho',
-            'type'              => 'Japanese fast food',
+            'type'              => 'Japanese fast-food',
             'lunch_price'       => 600,
             'points'            => 'Fast and good. Has counter and tables. Choice of curry or gyudon dishes.',
             'experience'        => 'I got a hamburger curry, it was really cheap and really good. Came fast too. Perfect for a quick meal, but not very glamorous.',
@@ -433,8 +433,8 @@ class RestaurantsTableSeeder extends Seeder
             'location'          => 'Shibuya',
             'type'              => 'Mazesoba',
             'lunch_price'       => 800,
-            'points'            => 'Special ramen without soup.',
-            'experience'        => 'Mind blowingly delicious. Meat is awesome, smokey taste, and in large quantity. The shoyu base sauce is delicious. Large counter. Japanese reggai music, not too loud. Extremely small stools. Avoid the ramen, way less delicious than the mazesoba. So you know that restaurant created by the gods in an expirement to feed mere mortals divine food? Shichi? Well it seems like, as in any gods stories, one of them was evil and planted a not-so-divine dish in the menu. I unveiled it and am here to warn you: if, for any unimaginable reasons, you still havent been there, when go, do NOT order the ramen. Stick with the mazu soba. And about the place itself, it is narrow, stools are uncomfortable, it is cold in winter... but it is all forgiven after tasting their food.',
+            'points'            => 'Divine mazesoba/aburasoba (soupless ramen).',
+            'experience'        => 'Mind blowingly delicious. Meat is awesome, smokey taste, and in large quantity. The shoyu base sauce is delicious. Large counter. Japanese reggai music, not too loud. Extremely small stools. Inside is cold in winter. Avoid the ramen, way less delicious than the mazesoba. That restaurant has most likely been created by the gods in an expirement to feed mere mortals divine food.',
             'visited'           => true,
             'visit_date'        => '2017-09-05 13:00:00',
             'google_maps_link'  => 'https://www.google.co.jp/maps/place/%E3%81%BE%E3%81%9C%E3%81%9D%E3%81%B0%E4%B8%83/@35.6582661,139.6984915,17.5z/data=!4m5!3m4!1s0x60188b57612e0f6b:0x129cb60f35f3f7ca!8m2!3d35.6566223!4d139.7010507',
@@ -446,7 +446,7 @@ class RestaurantsTableSeeder extends Seeder
             'score_price'       => 2,
             'score_date'        => 0
         ));
-        $resto->attachTags(['maze soba', 'abura soba', 'ramen']);
+        $resto->attachTags(['maze soba', 'abura soba', 'ramen','noodles']);
         $resto->fillCoordinatesFromString('35.656633, 139.701051');
 
         $resto = Restaurant::create(array(
@@ -488,21 +488,21 @@ class RestaurantsTableSeeder extends Seeder
             'score_price'       => 2,
             'score_date'        => 0
         ));
-        $resto->attachTags(['karaage']);
+        $resto->attachTags(['karaage','to-go']);
         $resto->fillCoordinatesFromString('35.660329, 139.699224');
 
         $resto = Restaurant::create(array(
-            'name'              => 'Mangako thai chicken rice',
+            'name'              => 'Khao Man Gai',
             'location'          => 'Shibuya',
             'type'              => 'Thai',
             'lunch_price'       => 800,
             'points'            => 'Supposedly famous chicken rice',
-            'experience'        => 'I\'ve been told there were a thai restaurant chain in Shibuya serving chicken rice, and EVEN in Thailand, there were a line. So I went there, and arrived shortly in front a restaurant exposing dead chicken on its facade. No line. I go inside, and its small and crappy, with shitty music on the top. I order the famous chicken rice, for an outstanding 800yen. It comes quickly, with a soup (hot water) and some sauce (like sweet chinese shoyu with a touch of vinegar). The amount is ridiculously small (note that you could double it for 400yen). What\'s more, the chicken is actually half chicken, half chicken skin. I eat, nothing special at all. Rice is not really good. Chicken is nice and soft and tasteless, for the few bites I had on it. The sauce was good. Oh, and surprisingly enough, it also came with a mini-bucket full of pakuchi... this stuff is usually expensive here. And that was it, EXTREMELY disapointed. I felt robbed. Of my money. My time. My hopes. And still hungry.',
+            'experience'        => 'I\'ve been told there were a thai restaurant in Shibuya serving chicken rice, and that it was a popular chain from Thailand or something. So I went there, and arrived shortly in front a restaurant exposing dead chicken on its facade. No line. I go inside, and its small and crappy, with shitty music on the top. I order the famous chicken rice, for an outstanding 800yen. It comes quickly, with a soup (hot water) and some sauce (like sweet chinese shoyu with a touch of vinegar). The amount is ridiculously small (note that you could double it for 400yen). What\'s more, the chicken is actually half chicken, half chicken skin. I eat, nothing special at all. Rice is not really good. Chicken is nice and soft and tasteless, for the few bites I had on it. The sauce was good. Oh, and surprisingly enough, it also came with a mini-bucket full of pakuchi... this stuff is usually expensive here. And that was it, EXTREMELY disapointed. I felt robbed. Of my money. My time. My hopes. And still hungry.',
             'visited'           => true,
             'visit_date'        => '2017-09-05 13:00:00',
             'google_maps_link'  => 'https://www.google.co.jp/maps/place/%E0%B8%A3%E0%B9%89%E0%B8%B2%E0%B8%99%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B8%A1%E0%B8%B1%E0%B8%99%E0%B9%84%E0%B8%81%E0%B9%88/@35.6584854,139.6999814,17z/data=!4m5!3m4!1s0x60188b5b85ab031f:0x35b195078881d9ca!8m2!3d35.6558927!4d139.7055917',
-            'tabelog_link'      => '',
-            'official_website'  => '',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13168980/',
+            'official_website'  => 'http://raan-kaithong-pratunam.jp/',
             'score_lunch'       => 0,
             'score_place'       => 0,
             'score_food'        => 1,
@@ -644,8 +644,8 @@ class RestaurantsTableSeeder extends Seeder
             'location'          => 'Shibuya',
             'type'              => 'Indian curry',
             'lunch_price'       => 900,
-            'points'            => 'Sucked',
-            'experience'        => 'Worst indian curry ever. When I first discovered indian curry near my office in setagaya-daita, it blew my mind so hard I ate it almost everyday. I just could not imagine eating anythnig else. Then years passed, I realized not all restaurants were equals, but still indian curry was always rhytming with delicious, greatly enjoyable meal. Then I worked in aoyama icchome and realized that the world can be a cold and heartless place. The indian food there was bland. Bland AF. Then I finally escaped what I thought was the darkest pit of restaurant and companies\' hell. To Shibuya! Surely one of the most amazing place to stroll for restaurants, and other things... But like in any movies and relationships, after all looked so perfect, something ugly, something world breaking happens and it all goes to shit. I ended up to Samrat shibuya today, and it sucked like I never thought it could suck. New low for indian curry, and a new addition to the collection of my most depressing experience in the world. Everything was bad, the interior was horrid, the nan was horribly oily, and the curry was doubtlessly the worst I ever had (and I asked for an easy one, the keema), the service, the atmosphere, the dirtiness... While eating I was just thinking at how fast I wanted to leave, and never come back.',
+            'points'            => 'Do not go there.',
+            'experience'        => 'Worst indian curry in existence. When I first discovered indian curry, around shimokitazawa, it blew my mind so hard I ate it almost everyday. I just could not imagine eating anything else. Then years passed, I realized not all restaurants were equals, but still indian curry was always rhytming with delicious, greatly enjoyable meal. Then I went around aoyama and realized that the world can be a cold and heartless place. The indian food there was bland. Bland AF. Then I moved on to leave what I thought was the darkest pit of restaurant\'s hell. To Shibuya! Surely one of the most amazing place to stroll for restaurants, and other things... But like in any movies and relationships, after all looked so perfect, something ugly, something world breaking happens and it all goes to shit. I ended up in Samrat shibuya today, and it sucked like I never thought it could suck. New low for indian curry, and a new addition to the collection of my most depressing experience in the world. Everything was bad, the interior was horrid, the nan was horribly oily, and the curry was doubtlessly the worst I ever had (and I asked for an easy one, the keema), the service, the atmosphere, the dirtiness... While eating I was just thinking at how fast I wanted to leave, and never come back. Ever.',
             'visited'           => true,
             'visit_date'        => '2017-09-05 13:00:00',
             'google_maps_link'  => 'https://www.google.co.jp/maps/place/SAMRAT/@35.6593532,139.6980944,17z/data=!4m8!1m2!2m1!1ssamrat!3m4!1s0x60188ca9130c3be3:0x3ab72d1dff12516c!8m2!3d35.6617765!4d139.6978047',
@@ -678,7 +678,7 @@ class RestaurantsTableSeeder extends Seeder
             'score_price'       => 0,
             'score_date'        => 0
         ));
-        $resto->attachTags(['burger','fast food']);
+        $resto->attachTags(['burger','fast food','to-go','visa']);
         $resto->fillCoordinatesFromString('35.659218, 139.697821');
 
         $resto = Restaurant::create(array(
@@ -747,13 +747,13 @@ class RestaurantsTableSeeder extends Seeder
         $resto = Restaurant::create(array(
             'name'              => 'Fujisoba',
             'location'          => 'Shibuya',
-            'type'              => 'soba udon katsudon',
+            'type'              => 'Japanese fast-food',
             'lunch_price'       => 750,
             'points'            => 'Decent sets. Fast food style. Narrow counter only. Buy at machine, get your set on a plate and find somewhere to sit.',
             'experience'        => 'Fast and cheap, and decent. I tried the zaru soba + katsudon for 750 yen. Made me full OK. Definitely not delicious, but decent. There are many Fujisoba joints, this one was the one in front of the big Bic Camera on the Hikarie\'s side of Shibuya.',
             'visited'           => true,
             'visit_date'        => '2017-09-05 13:00:00',
-            'google_maps_link'  => '',
+            'google_maps_link'  => 'https://www.google.co.jp/maps/place/Fuji+Soba/@35.6601748,139.7003162,17z/data=!3m1!4b1!4m5!3m4!1s0x60188b580c9bf44f:0xf0aaf9378e534638!8m2!3d35.6601748!4d139.7025102',
             'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13103625/dtlmap/',
             'official_website'  => 'http://fujisoba.co.jp/',
             'score_lunch'       => 1,
@@ -788,16 +788,16 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create(array(
             'name'              => 'iBeer',
-            'location'          => 'Hikarie building 7F',
+            'location'          => 'Shibuya, Hikarie 7F',
             'type'              => 'Italian',
             'lunch_price'       => 1000,
             'points'            => 'Open space restaurant in nice Hikarie 7F. Busy floor, but nice setting. A bit expensive, but one of the cheapest restaurant in the building.',
-            'experience'        => '1162 yen Pasta Set with Salad + bread + organic tomatoe avocado pasta. Nice salad, hot bread, and very, very good pasta. I would go as far as to call the pasta "exquisite". I also liked the setting, tables and chairs.',
+            'experience'        => '1162 yen Pasta Set with Salad + bread + organic tomato avocado pasta. Nice salad, hot bread, and very, very good pasta. I would go as far as to call the pasta "exquisite". I also liked the setting, tables and chairs.',
             'visited'           => true,
             'visit_date'        => '2017-09-05 13:00:00',
             'google_maps_link'  => 'https://www.google.co.jp/maps/place/iBeer+Le+Sun+Palm/@35.659252,139.6999228,17z/data=!3m1!5s0x60188b58f894f891:0xa230d50aab3d69e4!4m8!1m2!2m1!1siBeer!3m4!1s0x0:0xe0dfc9c31b013e93!8m2!3d35.659052!4d139.7037091',
             'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13169825/',
-            'official_website'  => '',
+            'official_website'  => 'https://www.facebook.com/%E3%82%A2%E3%82%A4%E3%83%93%E3%82%A2%E3%83%BC%E3%83%AB%E3%82%B5%E3%83%B3%E3%83%91%E3%83%BC%E3%83%A0-588128561304666/',
             'score_lunch'       => 2,
             'score_place'       => 2,
             'score_food'        => 2,
@@ -838,7 +838,7 @@ class RestaurantsTableSeeder extends Seeder
             'visited'           => true,
             'visit_date'        => '2017-09-05 13:00:00',
             'google_maps_link'  => 'https://www.google.co.jp/maps/place/Guzman+y+Gomez+%E6%B8%8B%E8%B0%B7%E5%BA%97/@35.662334,139.7004488,19z/data=!4m12!1m6!3m5!1s0x60188ca88131ea95:0x111613650b9602bd!2zR3V6bWFuIHkgR29tZXog5riL6LC35bqX!8m2!3d35.662334!4d139.700996!3m4!1s0x60188ca88131ea95:0x111613650b9602bd!8m2!3d35.662334!4d139.700996',
-            'tabelog_link'      => '',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13213810/',
             'official_website'  => 'http://gyg.jp/',
             'score_lunch'       => 2,
             'score_place'       => 0,
@@ -846,7 +846,7 @@ class RestaurantsTableSeeder extends Seeder
             'score_price'       => 0,
             'score_date'        => 0
         ));
-        $resto->attachTags(['mexican']);
+        $resto->attachTags(['mexican','to-go','visa']);
         $resto->fillCoordinatesFromString('35.662400, 139.700988');
 
         $resto = Restaurant::create(array(
@@ -1035,7 +1035,7 @@ class RestaurantsTableSeeder extends Seeder
             'score_price'       => 1,
             'score_date'        => 0
         ));
-        $resto->attachTags(['burger']);
+        $resto->attachTags(['burger','to-go','visa']);
         $resto->fillCoordinatesFromString('35.659356, 139.698361');
 
         $resto = Restaurant::create(array(
@@ -1056,7 +1056,7 @@ class RestaurantsTableSeeder extends Seeder
             'score_price'       => 1,
             'score_date'        => 1
         ));
-        $resto->attachTags(['western']);
+        $resto->attachTags(['western','american','mexican']);
         $resto->fillCoordinatesFromString('35.662745, 139.700018');
 
         $resto = Restaurant::create(array(
@@ -1440,14 +1440,14 @@ class RestaurantsTableSeeder extends Seeder
         $resto = Restaurant::create(array(
             'name'              => 'Fujisoba',
             'location'          => 'Shibuya',
-            'type'              => 'Soba',
+            'type'              => 'Japanese fast-food',
             'lunch_price'       => 750,
-            'points'            => 'Kinda of japanese fast food, serving katsudon and soba dishes and sets. Place is not so bad. Food is not so good. Prices are cheap. Service is fast.',
+            'points'            => 'Kinda of japanese fast-food, serving katsudon and soba dishes and sets. Place is not so bad. Food is not so good. Prices are cheap. Service is fast.',
             'experience'        => 'Place is better than some other establishments of the same chain. They have tables in addition of counter. Katsudon is decent, but soba and rice were below average in my opinion.',
             'visited'           => true,
             'visit_date'        => '2018-01-26 13:00:00',
             'google_maps_link'  => 'https://www.google.co.jp/maps/place/Fuji+Soba/@35.660332,139.6975356,17z/data=!4m5!3m4!1s0x60188ca967b100e3:0x683e6960657664e6!8m2!3d35.6614936!4d139.6967719',
-            'tabelog_link'      => '',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13060781/',
             'official_website'  => 'http://fujisoba.co.jp/',
             'score_lunch'       => 1,
             'score_place'       => 1,
@@ -1814,7 +1814,7 @@ class RestaurantsTableSeeder extends Seeder
             'score_price'       => 0,
             'score_date'        => 0
         ));
-        $resto->attachTags(['burger','sandwich']);
+        $resto->attachTags(['burger','sandwich','to-go','visa']);
         $resto->fillCoordinatesFromString('35.6605744,139.7053451,22');
 
         $resto = Restaurant::create(array(
@@ -1966,8 +1966,8 @@ class RestaurantsTableSeeder extends Seeder
         $resto->fillCoordinatesFromString('35.660501, 139.699428');
 
         $resto = Restaurant::create(array(
-            'name'              => '',
-            'location'          => 'Shibuya',
+            'name'              => 'Hanoi no Hoi San',
+            'location'          => 'Shibuya, Sakuragaokacho',
             'type'              => 'Vietnamese',
             'lunch_price'       => 950,
             'points'            => 'Good Vietnamese dishes, customizable sets, decent prices and decent place.',
@@ -1975,7 +1975,7 @@ class RestaurantsTableSeeder extends Seeder
             'visited'           => true,
             'visit_date'        => '2018-04-03 13:00:00',
             'google_maps_link'  => 'https://www.google.com/maps/place/Hanoi+no+Hoi-san+%E3%83%8F%E3%83%8E%E3%82%A4%E3%81%AE%E3%83%9B%E3%82%A4%E3%81%95%E3%82%93/@35.6579689,139.7011462,18z/data=!4m5!3m4!1s0x60188b575cf41757:0x7eb6060afb8be20!8m2!3d35.6561919!4d139.7008321',
-            'tabelog_link'      => '',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13126583/',
             'official_website'  => 'http://www.hoi-san.com/',
             'score_lunch'       => 2,
             'score_place'       => 1,
@@ -2109,7 +2109,7 @@ class RestaurantsTableSeeder extends Seeder
             'score_price'       => 0,
             'score_date'        => 0
         ));
-        $resto->attachTags(['burger', 'american']);
+        $resto->attachTags(['burger','american','to-go','visa']);
         $resto->fillCoordinatesFromString('35.659714, 139.700917');
 
         $resto = Restaurant::create(array(
@@ -2241,9 +2241,9 @@ class RestaurantsTableSeeder extends Seeder
         $resto = Restaurant::create(array(
             'name'              => 'Mistu-Fuji Dining',
             'location'          => 'Shibuya',
-            'type'              => 'Teishoku',
+            'type'              => 'Izakaya',
             'lunch_price'       => 850,
-            'points'            => 'Clean Japanese restaurant, casually opened for lunch. 100 yen discount on everything after 13:30.',
+            'points'            => 'Clean Japanese isakaya restaurant, casually opened for lunch. 100 yen discount on everything after 13:30.',
             'experience'        => 'Tables. Some music playing, a TV is on as well. Free refill for rice. I had a avocado and mashed tuna on rice, with some shiso leaves and spices, it was absolutely delicious. Some pickles and miso soup on the side. I had this after 13:30 so it cost me only 750yen, which is awesome.',
             'visited'           => true,
             'visit_date'        => '2018-06-27 13:00:00',
@@ -2277,7 +2277,7 @@ class RestaurantsTableSeeder extends Seeder
             'score_price'       => 1,
             'score_date'        => 0
         ));
-        $resto->attachTags(['teishoku','western','menu with calories','all you can drink','smoking area']);
+        $resto->attachTags(['teishoku','western','menu with calories','all you can drink','smoking area','visa']);
         $resto->fillCoordinatesFromString('35.657678, 139.696085');
 
         $resto = Restaurant::create(array(
@@ -2747,7 +2747,7 @@ class RestaurantsTableSeeder extends Seeder
             'location'          => 'Shibuya',
             'type'              => 'Western',
             'lunch_price'       => 2000,
-            'points'            => 'Western (american and mexican) overpriced food served by sexy waitresses.',
+            'points'            => 'American and Mexican overpriced food served by sexy waitresses.',
             'experience'        => 'Situated on the 4th floor above the Uniclo store, the place is quite big, but no windows, and poorly lighted by spotlights. Tables and counters, musics, TV playing soundless in every corners. Of course the main attraction are the sexy waitresses. As for the food, I tried the burger, that cost me a whoping 2000 yen for jsut a patty and a slice of cheese, with no drinks. Took a long time to come, and was not great. By far the most overpriced burger I ever had. The menu also offers some mexican stuff and some meat.',
             'visited'           => true,
             'visit_date'        => '2018-07-19 13:00:00',

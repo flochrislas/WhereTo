@@ -91,8 +91,8 @@ td {
 /*********************************************/
 
 #header {
-	margin: .1rem;
-  margin-bottom: .6rem;
+  margin: .1rem;
+  margin-bottom: .4rem;
   /* Flex properties for fixed header */
   flex: 0 0 auto;
   /* Flex container properties */
@@ -132,7 +132,6 @@ td {
   text-decoration: none;
   padding: .4rem .6rem;
   white-space: nowrap;
-
   /* Prevent background color leak outs */
   -webkit-background-clip: padding-box;
   -moz-background-clip:    padding;
@@ -141,9 +140,8 @@ td {
 }
 
 .title {
-  font-family: 'ITCAvantGardeStdBk', sans-serif;
   color: #45C3EC;
-  font-size: 1.5rem;
+  font-size: 1.52rem;
   font-weight: 700;
   text-decoration: none;
 }
@@ -203,7 +201,7 @@ td {
   min-height: 6.6rem;
   max-height: 6.6rem;
   padding: 1.8rem 1rem;
-  margin: .5rem .5rem;  
+  margin: .5rem .5rem;
   font-size: 1.2rem;
 }
 .giantButton {
@@ -391,6 +389,24 @@ td {
   margin-bottom: .1rem;
 }
 
+.label {
+	font-size: .72rem;
+	font-weight: 100;
+}
+
+.oneDigit {
+	font-weight: 600;
+}
+
+.inline {
+	display: inline;
+}
+
+.minute {
+	margin-left: .2rem;
+	margin-right: .2rem;
+}
+
 /*********************************************/
 /*            RESTAURANTS DETAILS            */
 /*********************************************/
@@ -552,7 +568,6 @@ div[tooltip]:active:before {
 	opacity: 1;
 }
 
-
 /*********************************************/
 /*           Absolute Tooltip                 /
 /*********************************************/
@@ -567,7 +582,7 @@ div[absolute-tooltip]:after {
   z-index: 9;
   visibility: visible;
   /* colors */
-  background: #ffcb66;
+  background: #20968b; /* nice orange #ffcb66; */
   color: black;
   padding: .4rem .75rem;
   opacity: 0;
@@ -599,7 +614,7 @@ div[absolute-tooltip]:before {
   /* triangle pointer */
   position: absolute;
   top: 9rem;
-  border-top: 1rem solid #ffcb66;
+  border-top: 1rem solid #20968b; /* nice orange #ffcb66; */
   border-left: 1rem solid transparent;
   border-right: 1rem solid transparent;
   /* triangle transition */

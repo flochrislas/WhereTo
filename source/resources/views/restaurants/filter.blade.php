@@ -2,7 +2,7 @@
   <div id="position-report"></div>
 
   <div id="filterHeader">
-    <div id="filterHeaderTitle" class="orange title">What kind of place?</div>
+    <div id="filterHeaderTitle">What kind of place?</div>
     <button id="filterHeaderButton" onclick="getResults()">Show All</button>
   </div>
 
@@ -110,7 +110,15 @@ function refreshShowResultsButton() {
   // var nbResults = document.getElementById("results").children.count();
   var nbResults = document.getElementById('resultsTable').rows.length;
   /* Change button label/text */
-  document.getElementById("filterHeaderButton").innerHTML = "Show " + nbResults + " results";
+  if (nbResults == 0) {
+    document.getElementById("filterHeaderButton").innerHTML = "No result";
+    document.getElementById("filterHeaderButton").disabled = true;
+  }
+  else {
+      document.getElementById("filterHeaderButton").disabled = false;
+      document.getElementById("filterHeaderButton").innerHTML = "Show " + nbResults + " results";
+  }
+
 }
 
 /* TO MOVE IN A SUPERIOR CLASS */
