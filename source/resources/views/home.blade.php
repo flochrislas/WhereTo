@@ -14,26 +14,48 @@
 
     <a class="giantButton locked" href="{{ route('restaurants.main') }}">
       Shopping
-      <br/>in<br/>Shibuya</a>
+      <br/>in<br/>Shibuya
+      <div class="price">50</div>
+    </a>
     <a class="giantButton locked" href="{{ route('restaurants.main') }}">
       Dating
-      <br/>in<br/>Shibuya</a>
+      <br/>in<br/>Shibuya
+      <div class="price">50</div>
+    </a>
 
     <a class="giantButton locked" href="{{ route('restaurants.main') }}">
-      WhatsNext<br/>Extension<br/>(locked)</a>
+      WhatsNext<br/>Extension
+      <div class="price">120</div>
+    </a>
     <a class="giantButton locked" href="{{ route('restaurants.main') }}">
-      Hashigo<br/>Extension<br/>(locked)</a>
+      Hashigo<br/>Extension<br/>
+      <div class="price">120</div>
+    </a>
 
     <a class="giantButton locked" href="{{ route('restaurants.main') }}">
-      Clubbing in<br/>Shibuya</a>
+      Clubbing in<br/>Shibuya
+      <div class="price">50</div>
+    </a>
     <a class="giantButton locked" href="{{ route('restaurants.main') }}">
-      Drinking in<br/>Shibuya</a>
+      Drinking in<br/>Shibuya
+      <div class="price">50</div>
+    </a>
     <a class="giantButton locked" href="{{ route('restaurants.main') }}">
       Karaoke
-      <br/>in<br/>Shibuya</a>
+      <br/>in<br/>Shibuya
+      <div class="price">50</div>
+    </a>
     <a class="giantButton locked" href="{{ route('restaurants.main') }}">
       Hair Salon
-      <br/>in<br/>Shibuya</a>
+      <br/>in<br/>Shibuya
+      <div class="price">50</div>
+    </a>
+
+    <a class="giantButton locked" href="{{ route('restaurants.main') }}">
+      Shibuya's Secrets
+      <br/>MEGAPACK
+      <div class="price">500</div>
+    </a>
   </div>
 </div>
 @endsection

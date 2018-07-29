@@ -174,7 +174,7 @@ td {
 #content {
   background-color: #141422; /* almost black */
   margin: .1rem;
-	color: #d0d0d2;
+  color: #d0d0d2;
   /* Flex properties to work with fixed header and footer */
   flex: 1 1 auto;
   position: relative; /* need this to position inner content */
@@ -220,6 +220,15 @@ td {
   background-color: #7e7e7e;
   border-color: #545454; /* a01453 */
   border-style: dashed;
+}
+.price {
+	font-style: italic;
+	font-size: 1rem;
+	color: #545454;
+	margin-top: .46rem;
+}
+.price::after {
+	content: '\00a5';
 }
 
 /*********************************************/
@@ -336,7 +345,6 @@ td {
 /*********************************************/
 /*            RESTAURANTS RESULTS            */
 /*********************************************/
-
 #resultsControl {
   display: flex;
   flex-direction: row;
@@ -348,7 +356,7 @@ td {
 
 .sortButton {
   flex: initial;
-  font-size: .7rem;
+  font-size: .82rem;
   font-weight: 600;
   line-height: 1.37;
   padding: .59rem .44rem;
@@ -365,21 +373,23 @@ td {
   margin-bottom: .3rem;
 }
 
+#resultsTable {
+  /* width: 100%; */
+  font-size: .82rem;
+}
+
 #nameAndType a {
-  font-size: .8rem;
   color: #45C3EC;
   text-decoration: none;
 }
 
 .restaurantName {
-  font-size: .8rem;
   font-weight: 100;
   color: #69e2b3;
   text-decoration: none;
 }
 
 .restaurantType {
-  font-size: .8rem;
   font-weight: 50;
   color: #45C3EC;
 }
@@ -403,8 +413,8 @@ td {
 }
 
 .minute {
-	margin-left: .2rem;
-	margin-right: .2rem;
+	margin-left: .25rem;
+	margin-right: .25rem;
 }
 
 /*********************************************/
@@ -485,7 +495,7 @@ td {
   font-size: .75rem;
 }
 
-.detailRow .price {
+.detail.cost {
   border-width: .2rem;
   /* To center the content vertically */
   display: flex;

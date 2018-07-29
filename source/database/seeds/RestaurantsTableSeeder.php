@@ -875,18 +875,18 @@ class RestaurantsTableSeeder extends Seeder
             'location'          => 'Shibuya, 3Chome',
             'type'              => 'Indian',
             'lunch_price'       => 980,
-            'points'            => 'Dark place on a 4th floor. Menu offers mostly indian curry sets, but also thai and pizza. Place doesnt look busy and there is a good amount of tables, so might be easy for large groups.',
-            'experience'        => 'I tried the pizza+salad for 980yen. They have a real pizza oven to the crust was tasty from the wood fire. But other than that, it was quite plain. A lot of cheese on it though, so it made me well full. Salad was like the salad you get in a curry restaurant. The drink as well. I did not like how dark was the place. And the price was not cheap. So I won\'t be back. Fun note: the elevator to get there is extremely slow.',
+            'points'            => 'Dark place on a 4th floor. Menu offers mostly indian curry sets, but also thai and pizza. The place does not look busy and there is a good amount of tables, so might be easy for large groups.',
+            'experience'        => 'I tried the pizza+salad for 980yen. They have a real pizza oven to the crust was tasty from the wood fire. But other than that, it was quite plain. A lot of cheese on it though, so it made me well full. Salad was like the salad you get in a curry restaurant. The drink as well. I did not like how dark was the place. And the price was not cheap. So I won\'t be back. Fun note: the elevator to get there is really extremely slow.',
             'visited'           => true,
             'visit_date'        => '2017-09-05 13:00:00',
             'google_maps_link'  => 'https://www.google.co.jp/maps/place/VERDE+%E3%83%B4%E3%82%A7%E3%83%AB%E3%83%87+%E6%B8%8B%E8%B0%B7%E5%BA%97/@35.6590104,139.6992206,17.25z/data=!4m5!3m4!1s0x60188b599e9b7543:0xf6253420bcfbe3f5!8m2!3d35.6572417!4d139.7036924',
-            'tabelog_link'      => '',
-            'official_website'  => '',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13144985/',
+            'official_website'  => 'https://www.hotpepper.jp/strJ001044855/',
             'score_lunch'       => 1,
             'score_place'       => 1,
             'score_food'        => 1,
             'score_price'       => 1,
-            'score_date'        => 1
+            'score_date'        => 0
         ));
         $resto->attachTags(['indian', 'curry', 'pizza']);
         $resto->fillCoordinatesFromString('35.657515, 139.703662');
@@ -896,18 +896,18 @@ class RestaurantsTableSeeder extends Seeder
             'location'          => 'Shibuya, Sakuragaokacho',
             'type'              => 'Thai',
             'lunch_price'       => 980,
-            'points'            => 'gapao',
-            'experience'        => 'very small tables, for most of them. Gapao was OK, came with good soup and small salad, from 980yen.',
+            'points'            => 'Decent Thai restaurant.',
+            'experience'        => 'Very small tables, for most of them. Gapao was OK, came with good soup and small salad, from 980yen (which is not a really good deal).',
             'visited'           => true,
             'visit_date'        => '2017-09-05 13:00:00',
             'google_maps_link'  => 'https://www.google.co.jp/maps/place/Gapao+Shokud%C5%8D/@35.6578467,139.6987192,17.25z/data=!4m5!3m4!1s0x0:0xfdfd8b7f19684676!8m2!3d35.6555029!4d139.701378',
-            'tabelog_link'      => '',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13174303/',
             'official_website'  => 'https://shibuya-gapaoshokudo.owst.jp/',
-            'score_lunch'       => 1,
+            'score_lunch'       => 2,
             'score_place'       => 1,
             'score_food'        => 1,
             'score_price'       => 1,
-            'score_date'        => 1
+            'score_date'        => 0
         ));
         $resto->attachTags(['thai']);
         $resto->fillCoordinatesFromString('35.655802, 139.701326');
@@ -917,20 +917,20 @@ class RestaurantsTableSeeder extends Seeder
             'location'          => 'Ebisu',
             'type'              => 'Burger',
             'lunch_price'       => 2000,
-            'points'            => 'expensive wagyu beef burgers, nice place',
-            'experience'        => 'very good burger. Customizable. Expensive.',
+            'points'            => 'Expensive wagyu beef burgers, nice place.',
+            'experience'        => 'Very good burgers. Customizable. Expensive. The interior is cool and eating there is a nice experience.',
             'visited'           => true,
             'visit_date'        => '2017-09-05 13:00:00',
             'google_maps_link'  => 'https://www.google.co.jp/maps/place/BLACOWS/@35.652128,139.7005291,16z/data=!4m12!1m6!3m5!1s0x60188b43edf2af03:0xd017aeed6fd54147!2sBLACOWS!8m2!3d35.649399!4d139.7070914!3m4!1s0x60188b43edf2af03:0xd017aeed6fd54147!8m2!3d35.649399!4d139.7070914',
             'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130302/13096437/',
             'official_website'  => 'http://www.kuroge-wagyu.com/bc/',
-            'score_lunch'       => 1,
-            'score_place'       => 1,
-            'score_food'        => 1,
-            'score_price'       => 1,
+            'score_lunch'       => 2,
+            'score_place'       => 2,
+            'score_food'        => 2,
+            'score_price'       => 0,
             'score_date'        => 1
         ));
-        $resto->attachTags(['burger', 'western']);
+        $resto->attachTags(['burger', 'western', 'customisable dishes']);
         $resto->fillCoordinatesFromString('35.649922, 139.707031');
 
         $resto = Restaurant::create(array(
