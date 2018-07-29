@@ -25,7 +25,7 @@
   </div>
 
   <div class="detailRow">
-      <div class="detail price"
+      <div class="detail cost"
            absolute-tooltip="Estimated price for a lunch">
         <div>{{ $restaurant->lunch_price }}&yen;</div>
       </div>
