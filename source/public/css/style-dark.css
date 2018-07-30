@@ -374,7 +374,7 @@ td {
 }
 
 #resultsTable {
-  /* width: 100%; */
+  width: 100%; /* TBC */
   font-size: .82rem;
 }
 
@@ -402,10 +402,12 @@ td {
 .label {
 	font-size: .72rem;
 	font-weight: 100;
+  text-align: center;
 }
 
 .oneDigit {
 	font-weight: 600;
+  text-align: center;
 }
 
 .inline {
@@ -416,6 +418,55 @@ td {
 	margin-left: .25rem;
 	margin-right: .25rem;
 }
+
+
+.nameAndType {
+  flex: 3;
+  color: #45C3EC;
+  text-decoration: none;
+}
+
+/*************************/
+/* RESULT SECOND COMING */
+
+/* Variables
+================================== */
+@bw: 3px;
+
+/* Tables
+================================== */
+.Rtable {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0 0 0 0;
+  padding: 0;
+}
+.Rtable-cell {
+  /* https://css-tricks.com/box-sizing/ */
+  box-sizing: border-box;
+  flex-grow: 1;
+  width: 100%; /* Default to full width */
+  padding: 0em 0em;
+  overflow: hidden; /* Or flex might break */
+  list-style: none;
+  border: solid @bw white;
+  background: fade(slategrey,20%);
+  background-color: #262633;
+  > h1, > h2, > h3, > h4, > h5, > h6 { margin: 0; }
+}
+
+/* Table column sizing
+================================== */
+
+.Rtable--2cols > .Rtable-cell  { width: 50%; }
+.Rtable--3cols > .Rtable-cell  { width: 33.3%; }
+.Rtable--4cols > .Rtable-cell  { width: 25%; }
+.Rtable--5cols > .Rtable-cell  { width: 20%; }
+.Rtable--6cols > .Rtable-cell  { width: 16.6%; }
+.Rtable--7cols > .Rtable-cell  { width: 14.3%; }
+.Rtable--8cols > .Rtable-cell  { width: 12.5%; }
+
+
 
 /*********************************************/
 /*            RESTAURANTS DETAILS            */

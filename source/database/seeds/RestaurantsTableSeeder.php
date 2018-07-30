@@ -2805,6 +2805,27 @@ class RestaurantsTableSeeder extends Seeder
         $resto->attachTags(['ramen','noodles','gyoza']);
         $resto->fillCoordinatesFromString('35.658670, 139.698520');
 
+        $resto = Restaurant::create(array(
+            'name'              => 'Demode Queen',
+            'location'          => 'Shibubya, Udagawamachi',
+            'type'              => 'Grill',
+            'lunch_price'       => 1300,
+            'points'            => 'Nice place. Meat and burgers. Sofa avaiable next to large windows. Decent prices (cheaper than competitors).',
+            'experience'        => 'Inside had chill peacefull music, large windowsand some nice deco... liked it. I tried the avocado cheese burger for 1280yen, and it was big and good. In summer they also have a beer garden (food and drinks in open air) on their rooftop (4F).',
+            'visited'           => true,
+            'visit_date'        => '2018-07-30 13:00:00',
+            'google_maps_link'  => 'https://www.google.com/maps/place/Demode+Queen+Udagawa+Machiten/@35.6600688,139.6977111,17z/data=!4m12!1m6!3m5!1s0x60188ca96097f991:0xb1ca20672648b7f7!2sDemode+Queen+Udagawa+Machiten!8m2!3d35.661457!4d139.69648!3m4!1s0x60188ca96097f991:0xb1ca20672648b7f7!8m2!3d35.661457!4d139.69648',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13173808/',
+            'official_website'  => 'https://kiwa-group.co.jp/demodeqeen/',
+            'score_lunch'       => 2,
+            'score_place'       => 2,
+            'score_food'        => 2,
+            'score_price'       => 1,
+            'score_date'        => 1
+        ));
+        $resto->attachTags(['western','grill','filling','burger','English menu','smoking area']);
+        $resto->fillCoordinatesFromString('35.661514, 139.696473');
+
         /*
         $resto = Restaurant::create(array(
             'name'              => '',
@@ -2814,7 +2835,7 @@ class RestaurantsTableSeeder extends Seeder
             'points'            => '',
             'experience'        => '',
             'visited'           => true,
-            'visit_date'        => '2018-06-27 13:00:00',
+            'visit_date'        => '2018-08-07 13:00:00',
             'google_maps_link'  => '',
             'tabelog_link'      => '',
             'official_website'  => '',

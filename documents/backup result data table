@@ -1,0 +1,79 @@
+<table id="resultsTable">
+@foreach ($restaurants as $restaurant)
+  <tr>
+      <td id="nameAndType">
+        <a href="{{ route('restaurants.details',$restaurant->id) }}">
+        <div class="restaurantName">{{ $restaurant->name }}</div>
+        <div class="restaurantType">{{ $restaurant->type }}</div>
+        </a>
+      </td>
+      <td class="center">
+        <a target="_blank"
+           href="{{ $restaurant->google_maps_link }}">
+          <div class="oneDigit inline">
+          {{ App\GeoUtils::walkingTime($restaurant->currentDistance/1000) }}
+        </div>
+          <br /><div class="minute inline">min</div>
+        </a>
+      </td>
+      <td>
+        <table class="center">
+          <tr>
+            <th class="label">price</th>
+            <th class="label">lunch</th>
+            <th class="label">food</th>
+            <th class="label">place</th>
+            <th class="label">price</th>
+            <th class="label">date</th>
+          </tr>
+          <tr>
+            <td class="oneDigit">{{ $restaurant->lunch_price }}</td>
+            <td class="oneDigit">{{ $restaurant->score_lunch }}</td>
+            <td class="oneDigit">{{ $restaurant->score_food }}</td>
+            <td class="oneDigit">{{ $restaurant->score_place }}</td>
+            <td class="oneDigit">{{ $restaurant->score_price }}</td>
+            <td class="oneDigit">{{ $restaurant->score_date }}</td>
+          </tr>
+        </table>
+      </td>
+  </tr>
+@endforeach
+</table>
+<div id="resultsEnd">End of <strong>{{ $restaurants->count() }}</strong> amazing results</div>
+
+///////////////////////
+
+
+/* Variables
+================================== */
+@bw: 3px;
+
+/* Tables
+================================== */
+.Rtable {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0 0 3em 0;
+  padding: 0;
+}
+.Rtable-cell {
+  box-sizing: border-box;
+  flex-grow: 1;
+  width: 100%; /* Default to full width */
+  padding: 0.8em 1.2em;
+  overflow: hidden; /* Or flex might break */
+  list-style: none;
+  border: solid @bw white;
+  background: fade(slategrey,20%);
+  background-color: #262633;
+  > h1, > h2, > h3, > h4, > h5, > h6 { margin: 0; }
+}
+
+/* Table column sizing
+================================== */
+
+.Rtable--2cols > .Rtable-cell  { width: 50%; }
+.Rtable--3cols > .Rtable-cell  { width: 33.3%; }
+.Rtable--4cols > .Rtable-cell  { width: 25%; }
+.Rtable--5cols > .Rtable-cell  { width: 20%; }
+.Rtable--6cols > .Rtable-cell  { width: 16.6%; }
