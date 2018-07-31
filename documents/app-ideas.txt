@@ -191,3 +191,5 @@ https://codepen.io/cristina-silva/pen/XXOpga
 
 new
 https://inspirationalpixels.com/tooltips-in-pure-htmlcss/
+
+LMIT tags selection to 5
