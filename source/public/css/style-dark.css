@@ -419,11 +419,45 @@ td {
 	margin-right: .25rem;
 }
 
+/*************************/
+/* RESULT THIRD COMING */
 
-.nameAndType {
-  flex: 3;
-  color: #45C3EC;
+.resultTable {
+  display: flex;
+  flex-direction: column;
+}
+.resultRow {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  justify-content: flex-start;
+  margin-bottom: .15rem;
+}
+.resultCell {
+  flex: 1;
+  background-color: #262633;
+  text-align: center;
+  padding: .15rem;
+}
+.resultCell.nameAndType {
+  flex: 4;
+  text-align: left;
+  margin-right: .1rem;
+}
+.resultCell.nameAndType a {
   text-decoration: none;
+}
+.resultCell.distance {
+  margin-right: .1rem;
+}
+.resultCell .score {
+
+}
+.resultCell .score .label {
+	font-size: .72rem;
+	font-weight: 100;
+  padding-bottom: .3rem;
 }
 
 /*************************/

@@ -109,6 +109,68 @@
 
 <!-- --- -- -- ---- -- -- --- --- -- -->
 <BR><BR><BR><BR>
+<div class="resultTable">
+@foreach ($restaurants as $restaurant)
+  <div class="resultRow">
+    <div class="resultCell nameAndType">
+      <a href="{{ route('restaurants.details',$restaurant->id) }}">
+      <div class="restaurantName">{{ $restaurant->name }}</div>
+      <div class="restaurantType">{{ $restaurant->type }}</div>
+      </a>
+    </div>
+    <div class="resultCell distance centerContent">
+      <a target="_blank"
+         href="{{ $restaurant->google_maps_link }}">
+        <div class="oneDigit inline">
+        {{ App\GeoUtils::walkingTime($restaurant->currentDistance/1000) }}
+      </div>
+        <br /><div class="minute inline">min</div>
+      </a>
+    </div>
+    <div class="resultCell centerContent">
+      <div class="score">
+        <div class="label">price</div>
+        <div class="oneDigit">{{ $restaurant->lunch_price }}</div>
+      </div>
+    </div>
+    <div class="resultCell centerContent">
+      <div class="score">
+        <div class="label">lunch</div>
+        <div class="oneDigit">{{ $restaurant->score_lunch }}</div>
+      </div>
+    </div>
+    <div class="resultCell centerContent">
+      <div class="score">
+        <div class="label">food</div>
+        <div class="oneDigit">{{ $restaurant->score_food }}</div>
+      </div>
+    </div>
+    <div class="resultCell centerContent">
+      <div class="score">
+        <div class="label">place</div>
+        <div class="oneDigit">{{ $restaurant->score_place }}</div>
+      </div>
+    </div>
+    <div class="resultCell centerContent">
+      <div class="score">
+        <div class="label">price</div>
+        <div class="oneDigit">{{ $restaurant->score_price }}</div>
+      </div>
+    </div>
+    <div class="resultCell centerContent">
+      <div class="score">
+        <div class="label">date</div>
+        <div class="oneDigit">{{ $restaurant->score_date }}</div>
+      </div>
+    </div>
+  </div>
+@endforeach
+</div>
+<div id="resultsEnd">End of <strong>{{ $restaurants->count() }}</strong> amazing results</div>
+
+
+<!-- --- -- -- ---- -- -- --- --- -- -->
+<BR><BR><BR><BR>
 <div class="Rtable Rtable--3cols">
 @foreach ($restaurants as $restaurant)
   <div class="Rtable-cell nameAndType">
