@@ -108,7 +108,8 @@ function getTagsIdArray(op, tags) {
 function refreshShowResultsButton() {
   /* get number of results */
   // var nbResults = document.getElementById("results").children.count();
-  var nbResults = document.getElementById('resultsTable').rows.length;
+  // var nbResults = document.getElementById('resultsTable').rows.length;
+  var nbResults = document.getElementsByClassName("resultsCounter").length;
   /* Change button label/text */
   if (nbResults == 0) {
     document.getElementById("filterHeaderButton").innerHTML = "No result";
