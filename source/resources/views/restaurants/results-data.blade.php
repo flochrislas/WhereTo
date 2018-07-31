@@ -1,42 +1,32 @@
 <div class="resultTable">
 
   <!-- fixed labels -->
-  <div class="resultRow">
+  <div class="resultRow header">
     <div class="resultCell nameAndType">
-      Name
+      <div class="label inline" style="color: var(--color-name);">Name</div>
+      <div class="label inline" style="color: var(--color-txt-default);">&</div>
+      <div class="label inline" style="color: var(--color-type);">Type</div>
     </div>
     <div class="resultCell distance centerContent">
-      dst.
+      <div class="label distanceAdjust" style="color: var(--color-dst);">dst.</div>
     </div>
     <div class="resultCell centerContent">
-      <div class="score">
-        <div class="label">cost</div>
-      </div>
+      <div class="label fourDigitsAdjust" style="color: var(--color-cost);">cost</div>
     </div>
     <div class="resultCell centerContent">
-      <div class="score">
-        <div class="label">lunch</div>
-      </div>
+      <div class="label" style="color: var(--color-lunch);">lunch</div>
     </div>
     <div class="resultCell centerContent">
-      <div class="score">
-        <div class="label">food</div>
-      </div>
+      <div class="label" style="color: var(--color-food);">food</div>
     </div>
     <div class="resultCell centerContent">
-      <div class="score">
-        <div class="label">place</div>
-      </div>
+      <div class="label" style="color: var(--color-place);">place</div>
     </div>
     <div class="resultCell centerContent">
-      <div class="score">
-        <div class="label">price</div>
-      </div>
+      <div class="label" style="color: var(--color-price);">price</div>
     </div>
     <div class="resultCell centerContent">
-      <div class="score">
-        <div class="label">date</div>
-      </div>
+      <div class="label" style="color: var(--color-date);">date</div>
     </div>
   </div>
 
@@ -60,32 +50,32 @@
       </a>
     </div>
     <div class="resultCell centerContent">
-      <div class="score">
+      <div class="score" style="color: var(--color-cost);">
         <div class="fourDigits">{{ $restaurant->lunch_price }}</div>
       </div>
     </div>
     <div class="resultCell centerContent">
-      <div class="score">
+      <div class="score" style="color: var(--color-lunch);">
         <div class="oneDigit">{{ $restaurant->score_lunch }}</div>
       </div>
     </div>
     <div class="resultCell centerContent">
-      <div class="score">
+      <div class="score" style="color: var(--color-food);">
         <div class="oneDigit">{{ $restaurant->score_food }}</div>
       </div>
     </div>
     <div class="resultCell centerContent">
-      <div class="score">
+      <div class="score" style="color: var(--color-place);">
         <div class="oneDigit">{{ $restaurant->score_place }}</div>
       </div>
     </div>
     <div class="resultCell centerContent">
-      <div class="score">
+      <div class="score" style="color: var(--color-price);">
         <div class="oneDigit">{{ $restaurant->score_price }}</div>
       </div>
     </div>
     <div class="resultCell centerContent">
-      <div class="score">
+      <div class="score" style="color: var(--color-date);">
         <div class="oneDigit">{{ $restaurant->score_date }}</div>
       </div>
     </div>
