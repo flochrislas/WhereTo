@@ -2805,6 +2805,69 @@ class RestaurantsTableSeeder extends Seeder
         $resto->attachTags(['ramen','noodles','gyoza']);
         $resto->fillCoordinatesFromString('35.658670, 139.698520');
 
+        $resto = Restaurant::create(array(
+            'name'              => 'Demode Queen',
+            'location'          => 'Shibubya, Udagawamachi',
+            'type'              => 'Grill',
+            'lunch_price'       => 1300,
+            'points'            => 'Nice place. Meat and burgers. Sofa avaiable next to large windows. Decent prices (cheaper than competitors).',
+            'experience'        => 'Inside had chill peacefull music, large windowsand some nice deco... liked it. I tried the avocado cheese burger for 1280yen, and it was big and good. In summer they also have a beer garden (food and drinks in open air) on their rooftop (4F).',
+            'visited'           => true,
+            'visit_date'        => '2018-07-30 13:00:00',
+            'google_maps_link'  => 'https://www.google.com/maps/place/Demode+Queen+Udagawa+Machiten/@35.6600688,139.6977111,17z/data=!4m12!1m6!3m5!1s0x60188ca96097f991:0xb1ca20672648b7f7!2sDemode+Queen+Udagawa+Machiten!8m2!3d35.661457!4d139.69648!3m4!1s0x60188ca96097f991:0xb1ca20672648b7f7!8m2!3d35.661457!4d139.69648',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13173808/',
+            'official_website'  => 'https://kiwa-group.co.jp/demodeqeen/',
+            'score_lunch'       => 2,
+            'score_place'       => 2,
+            'score_food'        => 2,
+            'score_price'       => 1,
+            'score_date'        => 1
+        ));
+        $resto->attachTags(['western','grill','filling','burger','English menu','smoking area']);
+        $resto->fillCoordinatesFromString('35.661514, 139.696473');
+
+        $resto = Restaurant::create(array(
+            'name'              => 'Sushi Zanmai',
+            'location'          => 'Shibuya, Dogenzaka',
+            'type'              => 'Sushi',
+            'lunch_price'       => 1400,
+            'points'            => 'Good sushi restaurant.',
+            'experience'        => 'Big chain that is famous for offering good sushi. Not as cheap as the suhi-go-round you can find a bit everywhere, but not as pricey as the more elite places. This one as slightly less choice than the one situated at the end of center gai, but the interior is nice and provide with a good experience (and they have the stuff I like anyway, salmon and tuna).',
+            'visited'           => true,
+            'visit_date'        => '2018-07-31 13:00:00',
+            'google_maps_link'  => 'https://www.google.com/maps/place/%E3%80%8A%E3%81%99%E3%81%97%E3%81%96%E3%82%93%E3%81%BE%E3%81%84+%E6%B8%8B%E8%B0%B7%E9%81%93%E7%8E%84%E5%9D%82%E3%82%BB%E3%83%B3%E3%82%BF%E3%83%BC%E3%83%93%E3%83%AB%E5%BA%97%E3%80%8B%E6%B8%8B%E8%B0%B7+%E4%BA%BA%E6%B0%97+%E3%81%8A%E3%81%99%E3%81%99%E3%82%81%E5%AF%BF%E5%8F%B8%E5%BA%97/@35.658474,139.6970407,18z/data=!4m8!1m2!2m1!1sSushi+Zanmai!3m4!1s0x0:0xeaf569ce81b2beff!8m2!3d35.6592587!4d139.69793',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13213452/',
+            'official_website'  => 'http://www.kiyomura.co.jp/shops/detail/79',
+            'score_lunch'       => 3,
+            'score_place'       => 2,
+            'score_food'        => 2,
+            'score_price'       => 1,
+            'score_date'        => 0
+        ));
+        $resto->attachTags(['sushi']);
+        $resto->fillCoordinatesFromString('35.659256, 139.697918');
+
+        $resto = Restaurant::create(array(
+            'name'              => 'Choco Cro',
+            'location'          => 'Shibuya, Dogenzaka',
+            'type'              => 'Cafe',
+            'lunch_price'       => 680,
+            'points'            => 'Big chain. Cafe with a isolated smoking area. Offers good sandwiches and chocolate croissants, along with a variety of others things (ice creams, pancakes, cakes...)',
+            'experience'        => 'Interior was decently confortable (but kinda dark, most light come from spotlights. I like their chocolate croissants (200yen) and their ham cheese sandwich (400yen). You can get a lunch set with sandwich + croissant + drink for 680 yen.',
+            'visited'           => true,
+            'visit_date'        => '2018-07-31 13:00:00',
+            'google_maps_link'  => 'https://www.google.com/maps/place/Saint+Marc+Cafe+Shibuya+Dogenzaka+shop/@35.6586484,139.6984354,18z/data=!4m5!3m4!1s0x60188ca9c4bf68f1:0xdead5af68ae1e923!8m2!3d35.6592608!4d139.6979151',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13168224/',
+            'official_website'  => 'http://www.saint-marc-hd.com/saintmarccafe/',
+            'score_lunch'       => 2,
+            'score_place'       => 1,
+            'score_food'        => 1,
+            'score_price'       => 1,
+            'score_date'        => 0
+        ));
+        $resto->attachTags(['cafe','sandwich','small servings','smoking area','to-go','English menu','visa']);
+        $resto->fillCoordinatesFromString('35.659256, 139.697918');
+
         /*
         $resto = Restaurant::create(array(
             'name'              => '',
@@ -2814,7 +2877,7 @@ class RestaurantsTableSeeder extends Seeder
             'points'            => '',
             'experience'        => '',
             'visited'           => true,
-            'visit_date'        => '2018-06-27 13:00:00',
+            'visit_date'        => '2018-08-07 13:00:00',
             'google_maps_link'  => '',
             'tabelog_link'      => '',
             'official_website'  => '',

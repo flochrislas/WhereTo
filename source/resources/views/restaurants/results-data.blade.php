@@ -1,42 +1,95 @@
-<table id="resultsTable">
+<div class="resultTable">
+
+  <!-- fixed labels -->
+  <div class="resultRow">
+    <div class="resultCell nameAndType">
+      Name
+    </div>
+    <div class="resultCell distance centerContent">
+      dst.
+    </div>
+    <div class="resultCell centerContent">
+      <div class="score">
+        <div class="label">cost</div>
+      </div>
+    </div>
+    <div class="resultCell centerContent">
+      <div class="score">
+        <div class="label">lunch</div>
+      </div>
+    </div>
+    <div class="resultCell centerContent">
+      <div class="score">
+        <div class="label">food</div>
+      </div>
+    </div>
+    <div class="resultCell centerContent">
+      <div class="score">
+        <div class="label">place</div>
+      </div>
+    </div>
+    <div class="resultCell centerContent">
+      <div class="score">
+        <div class="label">price</div>
+      </div>
+    </div>
+    <div class="resultCell centerContent">
+      <div class="score">
+        <div class="label">date</div>
+      </div>
+    </div>
+  </div>
+
+<!-- WE NEED A COUNTER HERE TO DISPLAY THE NUMBER OF RESULTS -->
 @foreach ($restaurants as $restaurant)
-  <tr>
-      <td id="nameAndType">
-        <a href="{{ route('restaurants.details',$restaurant->id) }}">
-        <div class="restaurantName">{{ $restaurant->name }}</div>
-        <div class="restaurantType">{{ $restaurant->type }}</div>
-        </a>
-      </td>
-      <td class="center">
-        <a target="_blank"
-           href="{{ $restaurant->google_maps_link }}">
-          <div class="oneDigit inline">
-          {{ App\GeoUtils::walkingTime($restaurant->currentDistance/1000) }}
-        </div>
-          <br /><div class="minute inline">min</div>
-        </a>
-      </td>
-      <td>
-        <table class="center">
-          <tr>
-            <th class="label">price</th>
-            <th class="label">lunch</th>
-            <th class="label">food</th>
-            <th class="label">place</th>
-            <th class="label">price</th>
-            <th class="label">date</th>
-          </tr>
-          <tr>
-            <td class="oneDigit">{{ $restaurant->lunch_price }}</td>
-            <td class="oneDigit">{{ $restaurant->score_lunch }}</td>
-            <td class="oneDigit">{{ $restaurant->score_food }}</td>
-            <td class="oneDigit">{{ $restaurant->score_place }}</td>
-            <td class="oneDigit">{{ $restaurant->score_price }}</td>
-            <td class="oneDigit">{{ $restaurant->score_date }}</td>
-          </tr>
-        </table>
-      </td>
-  </tr>
+  <div class="resultsCounter"></div>
+  <div class="resultRow">
+    <div class="resultCell nameAndType">
+      <a href="{{ route('restaurants.details',$restaurant->id) }}">
+      <div class="restaurantName">{{ $restaurant->name }}</div>
+      <div class="restaurantType">{{ $restaurant->type }}</div>
+      </a>
+    </div>
+    <div class="resultCell distance centerContent">
+      <a target="_blank"
+         href="{{ $restaurant->google_maps_link }}">
+        <div class="oneDigit inline">
+        {{ App\GeoUtils::walkingTime($restaurant->currentDistance/1000) }}
+      </div>
+        <br /><div class="minute inline">min</div>
+      </a>
+    </div>
+    <div class="resultCell centerContent">
+      <div class="score">
+        <div class="fourDigits">{{ $restaurant->lunch_price }}</div>
+      </div>
+    </div>
+    <div class="resultCell centerContent">
+      <div class="score">
+        <div class="oneDigit">{{ $restaurant->score_lunch }}</div>
+      </div>
+    </div>
+    <div class="resultCell centerContent">
+      <div class="score">
+        <div class="oneDigit">{{ $restaurant->score_food }}</div>
+      </div>
+    </div>
+    <div class="resultCell centerContent">
+      <div class="score">
+        <div class="oneDigit">{{ $restaurant->score_place }}</div>
+      </div>
+    </div>
+    <div class="resultCell centerContent">
+      <div class="score">
+        <div class="oneDigit">{{ $restaurant->score_price }}</div>
+      </div>
+    </div>
+    <div class="resultCell centerContent">
+      <div class="score">
+        <div class="oneDigit">{{ $restaurant->score_date }}</div>
+      </div>
+    </div>
+  </div>
 @endforeach
-</table>
+</div>
 <div id="resultsEnd">End of <strong>{{ $restaurants->count() }}</strong> amazing results</div>
