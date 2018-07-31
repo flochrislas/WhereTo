@@ -35,6 +35,22 @@ https://autoprefixer.github.io/
 /*            GLOBAL STUFF                   */
 /*********************************************/
 
+:root {
+    --bg-color-outter: black;
+    --bg-color-inner: black; 
+    --bg-color-cell: black;
+    --color-txt-default: #CAD0AF; /* grey 2 */
+    --color-name: #69e2b3; /* green */
+    --color-type: #45C3EC; /* blue */
+    --color-dst: rgb(249, 239, 193); /* yellow */
+    --color-cost: #5FE18B; /* lighter green */
+    --color-lunch: #3AD46E; /* green */
+    --color-food: #3BA1C3; /* blue2 */
+    --color-place: #5EB7D4; /* lighter blue2 */
+    --color-price: #6C80DB; /* purple */
+    --color-date: #98A7EA; /* lighter purple */
+}
+
 html, body {
   height: 100%; /* needed for proper layout (?) */
   background-color: black;
@@ -389,14 +405,8 @@ td {
   margin-bottom: .1rem;
 }
 
-.label {
-	font-size: .72rem;
-	font-weight: 100;
-  text-align: center;
-}
-
 .oneDigit {
-	font-weight: 600;
+  font-weight: 600;
   text-align: center;
 }
 
@@ -407,14 +417,21 @@ td {
   text-align: right;
 }
 
+.fourDigitsAdjust {
+}
+
+.distanceAdjust {
+  min-width: 2rem;
+}
+
 .inline {
 	display: inline;
 }
 
 .minute {
   font-size: .8rem;
-	margin-left: .25rem;
-	margin-right: .25rem;
+  margin-left: .25rem;
+  margin-right: .25rem;
 }
 
 /*************************/
@@ -431,6 +448,9 @@ td {
   align-items: stretch;
   justify-content: flex-start;
   margin-bottom: .2rem;
+}
+.resultRow.header {
+  /*max-height: 3rem;*/
 }
 .resultCell {
   flex: 1;
@@ -452,10 +472,10 @@ td {
 .resultCell .score {
   font-size: .85rem;
 }
-.resultCell .score .label {
-	font-size: .72rem;
-	font-weight: 100;
-  padding-bottom: .3rem;
+.resultTable .label {
+  font-weight: 100;
+  font-size: .76rem;;
+  font-size: calc(1.5vw + 1vh);
 }
 
 .resultsCounter {
