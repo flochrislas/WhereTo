@@ -114,6 +114,8 @@ OTHER idea to make little monery:
 print tshit
 	bible theme "dont drown the swines/no drowning swines, swines protection league", "no cursing on fig trees (even if hungry)- organization for the protection of fig trees"
 	"where is sataoshi - i am not satoshi"
+print stickers for headphones: "Jesus? I don't hear <i>Him</i> coming."
+
 
 upload photos on photo repo website
 --------------------------------------------------------------------------------------------------------------

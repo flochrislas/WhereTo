@@ -373,16 +373,6 @@ td {
   margin-bottom: .3rem;
 }
 
-#resultsTable {
-  /* width: 100%; */
-  font-size: .82rem;
-}
-
-#nameAndType a {
-  color: #45C3EC;
-  text-decoration: none;
-}
-
 .restaurantName {
   font-weight: 100;
   color: #69e2b3;
@@ -402,10 +392,19 @@ td {
 .label {
 	font-size: .72rem;
 	font-weight: 100;
+  text-align: center;
 }
 
 .oneDigit {
 	font-weight: 600;
+  text-align: center;
+}
+
+.fourDigits {
+  min-width: 2.2rem;
+  min-width: 4.4ch;
+  font-weight: 600;
+  text-align: right;
 }
 
 .inline {
@@ -413,8 +412,54 @@ td {
 }
 
 .minute {
+  font-size: .8rem;
 	margin-left: .25rem;
 	margin-right: .25rem;
+}
+
+/*************************/
+/* RESULT THIRD COMING */
+
+.resultTable {
+  display: flex;
+  flex-direction: column;
+}
+.resultRow {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  justify-content: flex-start;
+  margin-bottom: .2rem;
+}
+.resultCell {
+  flex: 1;
+  background-color: #262633;
+  text-align: center;
+  padding: .2rem .15rem;;
+}
+.resultCell.nameAndType {
+  flex: 4;
+  text-align: left;
+  margin-right: .1rem;
+}
+.resultCell.nameAndType a {
+  text-decoration: none;
+}
+.resultCell.distance {
+  margin-right: .1rem;
+}
+.resultCell .score {
+  font-size: .85rem;
+}
+.resultCell .score .label {
+	font-size: .72rem;
+	font-weight: 100;
+  padding-bottom: .3rem;
+}
+
+.resultsCounter {
+  display: none;
 }
 
 /*********************************************/
@@ -811,7 +856,7 @@ div[overlay]:active:before {
 	 text-align:center;
 	 font-weight:700;
 	 text-decoration:none;
-	 white-space:nowrap;
+	 /* white-space:nowrap; */
 	 border-radius:3px;
 	 cursor:pointer;
 	 border-width:2px;
@@ -843,7 +888,7 @@ div[overlay]:active:before {
  text-align:center;
  font-weight:700;
  text-decoration:none;
- white-space:nowrap;
+ /* white-space:nowrap; */
  border-radius:3px;
  cursor:pointer;
  border-width:2px;
