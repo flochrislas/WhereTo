@@ -373,16 +373,6 @@ td {
   margin-bottom: .3rem;
 }
 
-#resultsTable {
-  width: 100%; /* TBC */
-  font-size: .82rem;
-}
-
-#nameAndType a {
-  color: #45C3EC;
-  text-decoration: none;
-}
-
 .restaurantName {
   font-weight: 100;
   color: #69e2b3;
@@ -410,11 +400,19 @@ td {
   text-align: center;
 }
 
+.fourDigits {
+  min-width: 2.2rem;
+  min-width: 4.4ch;
+  font-weight: 600;
+  text-align: right;
+}
+
 .inline {
 	display: inline;
 }
 
 .minute {
+  font-size: .8rem;
 	margin-left: .25rem;
 	margin-right: .25rem;
 }
@@ -432,13 +430,13 @@ td {
   flex-direction: row;
   align-items: stretch;
   justify-content: flex-start;
-  margin-bottom: .15rem;
+  margin-bottom: .2rem;
 }
 .resultCell {
   flex: 1;
   background-color: #262633;
   text-align: center;
-  padding: .15rem;
+  padding: .2rem .15rem;;
 }
 .resultCell.nameAndType {
   flex: 4;
@@ -452,7 +450,7 @@ td {
   margin-right: .1rem;
 }
 .resultCell .score {
-
+  font-size: .85rem;
 }
 .resultCell .score .label {
 	font-size: .72rem;
@@ -460,47 +458,9 @@ td {
   padding-bottom: .3rem;
 }
 
-/*************************/
-/* RESULT SECOND COMING */
-
-/* Variables
-================================== */
-@bw: 3px;
-
-/* Tables
-================================== */
-.Rtable {
-  display: flex;
-  flex-wrap: wrap;
-  margin: 0 0 0 0;
-  padding: 0;
+.resultsCounter {
+  display: none;
 }
-.Rtable-cell {
-  /* https://css-tricks.com/box-sizing/ */
-  box-sizing: border-box;
-  flex-grow: 1;
-  width: 100%; /* Default to full width */
-  padding: 0em 0em;
-  overflow: hidden; /* Or flex might break */
-  list-style: none;
-  border: solid @bw white;
-  background: fade(slategrey,20%);
-  background-color: #262633;
-  > h1, > h2, > h3, > h4, > h5, > h6 { margin: 0; }
-}
-
-/* Table column sizing
-================================== */
-
-.Rtable--2cols > .Rtable-cell  { width: 50%; }
-.Rtable--3cols > .Rtable-cell  { width: 33.3%; }
-.Rtable--4cols > .Rtable-cell  { width: 25%; }
-.Rtable--5cols > .Rtable-cell  { width: 20%; }
-.Rtable--6cols > .Rtable-cell  { width: 16.6%; }
-.Rtable--7cols > .Rtable-cell  { width: 14.3%; }
-.Rtable--8cols > .Rtable-cell  { width: 12.5%; }
-
-
 
 /*********************************************/
 /*            RESTAURANTS DETAILS            */
@@ -896,7 +856,7 @@ div[overlay]:active:before {
 	 text-align:center;
 	 font-weight:700;
 	 text-decoration:none;
-	 white-space:nowrap;
+	 /* white-space:nowrap; */
 	 border-radius:3px;
 	 cursor:pointer;
 	 border-width:2px;
@@ -928,7 +888,7 @@ div[overlay]:active:before {
  text-align:center;
  font-weight:700;
  text-decoration:none;
- white-space:nowrap;
+ /* white-space:nowrap; */
  border-radius:3px;
  cursor:pointer;
  border-width:2px;
