@@ -349,13 +349,13 @@ class RestaurantsTableSeeder extends Seeder
             'location'          => 'Shibuya, Udagawacho',
             'type'              => 'Pasta',
             'lunch_price'       => 500,
-            'points'            => 'super cheap pizza or pasta, wide and dark sports bar (no windows) with sports video playing on many walls.',
+            'points'            => 'Super cheap pizza or pasta, wide and dark sports bar (no windows) with sports video playing on many walls.',
             'experience'        => 'I don\'t really like this dark, no windows bar atmosphere, playing cheesy music, and I don\'t enjoy watching sports on TV. The pizza marguerita was pretty much tasteless. Other than that service fast, table and room spacious, and super cheap...',
             'visited'           => true,
             'visit_date'        => '2017-09-05 13:00:00',
             'google_maps_link'  => 'https://www.google.co.jp/maps/place/M-SPO+cafe+dining/@35.6591098,139.6984993,17z/data=!4m5!3m4!1s0x60188ca910dcc451:0x66845d8439f43f38!8m2!3d35.6617719!4d139.6980353',
-            'tabelog_link'      => '',
-            'official_website'  => '',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13039686/',
+            'official_website'  => 'https://m-spo.jp/',
             'score_lunch'       => 1,
             'score_place'       => 1,
             'score_food'        => 1,
@@ -1527,13 +1527,13 @@ class RestaurantsTableSeeder extends Seeder
             'location'          => 'Shibuya',
             'type'              => 'Western',
             'lunch_price'       => 1000,
-            'points'            => 'Very good.',
-            'experience'        => 'Very good.',
+            'points'            => 'Nice restaurant with various European style food (and home made burgers).',
+            'experience'        => 'Interior is nice and makes for a comfortable lunch. Tables only, 2 floors. They have quite fancy, and good burgers. Each time you go they give you one special coin (one per person). With 2 coins you can get a free coffee and desert.',
             'visited'           => true,
             'visit_date'        => '2018-02-15 13:00:00',
             'google_maps_link'  => 'https://www.google.co.jp/maps/place/Brasserie+%E3%82%A2%E3%83%87%E3%83%8B%E3%82%A2/@35.6568269,139.6996218,17z/data=!4m5!3m4!1s0x60188b5120875043:0x5c8bb3d4b989d422!8m2!3d35.653414!4d139.6988064',
-            'tabelog_link'      => '',
-            'official_website'  => '',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13139147/',
+            'official_website'  => 'http://www.adenia.jp/',
             'score_lunch'       => 3,
             'score_place'       => 2,
             'score_food'        => 2,
@@ -2592,7 +2592,7 @@ class RestaurantsTableSeeder extends Seeder
             'score_price'       => 1,
             'score_date'        => 0
         ));
-        $resto->attachTags(['cafe','sandwich']);
+        $resto->attachTags(['cafe','sandwich','to-go']);
         $resto->fillCoordinatesFromString('35.658116, 139.698004');
 
         $resto = Restaurant::create(array(
@@ -2697,7 +2697,7 @@ class RestaurantsTableSeeder extends Seeder
             'score_price'       => 1,
             'score_date'        => 0
         ));
-        $resto->attachTags(['cafe','sandwich','small portion','smoking area']);
+        $resto->attachTags(['cafe','sandwich','small servings','smoking area','to-go']);
         $resto->fillCoordinatesFromString('35.655810, 139.694601');
 
         $resto = Restaurant::create(array(
@@ -2811,7 +2811,7 @@ class RestaurantsTableSeeder extends Seeder
             'type'              => 'Grill',
             'lunch_price'       => 1300,
             'points'            => 'Nice place. Meat and burgers. Sofa avaiable next to large windows. Decent prices (cheaper than competitors).',
-            'experience'        => 'Inside had chill peacefull music, large windowsand some nice deco... liked it. I tried the avocado cheese burger for 1280yen, and it was big and good. In summer they also have a beer garden (food and drinks in open air) on their rooftop (4F).',
+            'experience'        => 'Inside had chill peacefull music, large windows and some nice deco... liked it. I tried the avocado cheese burger for 1280yen, and it was big and good. In summer they also have a beer garden (food and drinks in open air) on their rooftop (4F).',
             'visited'           => true,
             'visit_date'        => '2018-07-30 13:00:00',
             'google_maps_link'  => 'https://www.google.com/maps/place/Demode+Queen+Udagawa+Machiten/@35.6600688,139.6977111,17z/data=!4m12!1m6!3m5!1s0x60188ca96097f991:0xb1ca20672648b7f7!2sDemode+Queen+Udagawa+Machiten!8m2!3d35.661457!4d139.69648!3m4!1s0x60188ca96097f991:0xb1ca20672648b7f7!8m2!3d35.661457!4d139.69648',

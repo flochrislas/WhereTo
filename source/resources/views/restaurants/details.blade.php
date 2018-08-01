@@ -29,27 +29,27 @@
            absolute-tooltip="Estimated price for a lunch">
         <div>{{ $restaurant->lunch_price }}&yen;</div>
       </div>
-      <div class="detail score border20"
+      <div class="detail score lunch"
            absolute-tooltip="Global score for enjoying the lunch &#xa;0: horrible, 1: whatever, 2: good, 3: great, &#xa;4: excellent">
         <div class="label">Lunch</div>
         <div class="grade">{{ $restaurant->score_lunch }}/4</div>
       </div>
-      <div class="detail score border15"
+      <div class="detail score food"
            absolute-tooltip="How good is the food &#xa;0: poor, 1: good, 2: delicious, 3: divine">
         <div class="label">Food</div>
         <div class="grade">{{ $restaurant->score_food }}/3</div>
       </div>
-      <div class="detail score"
+      <div class="detail score place"
            absolute-tooltip="How nice is the place &#xa;0: horrid, 1: decent, 2: very nice, &#xa;3: fantastic">
         <div class="label">Place</div>
         <div class="grade">{{ $restaurant->score_place }}/3</div>
       </div>
-      <div class="detail score"
+      <div class="detail score price"
            absolute-tooltip="How appropriate feels the price &#xa;0: overpriced, 1: correct, 2: great deal">
         <div class="label">Cost</div>
         <div class="grade">{{ $restaurant->score_price }}/2</div>
       </div>
-      <div class="detail score"
+      <div class="detail score date"
            absolute-tooltip="How appropriate is it for a date &#xa;0: bad, 1: decent, 2: great">
         <div class="label">Date</div>
         <div class="grade">{{ $restaurant->score_date }}/2</div>
