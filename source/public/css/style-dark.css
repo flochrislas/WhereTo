@@ -35,10 +35,13 @@ https://autoprefixer.github.io/
 /*            GLOBAL STUFF                   */
 /*********************************************/
 
+/* CSS parameters */
+/* values can be call with "var(--varName)" */
+/* needs double dashes */
 :root {
     --bg-color-outter: black;
-    --bg-color-inner: black;
-    --bg-color-cell: black;
+    --bg-color-inner: #141422; /* almost black */
+    --bg-color-cell: #262633; /* light black */
     --color-txt-default: #CAD0AF; /* grey 2 */
     --color-name: #69e2b3; /* green */
     --color-type: #45C3EC; /* blue */
@@ -55,12 +58,6 @@ html, body {
   height: 100%; /* needed for proper layout (?) */
   background-color: black;
   font-family: 'Open Sans', sans-serif;
-  /* or try :
-  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
-   font-weight: 300;
-   */
-  /* font-size: 80%; */
-  /*color: #d0d0d2;*/ /* grey */
   color: #CAD0AF; /* grey 2 */
 }
 
@@ -210,6 +207,7 @@ td {
   flex-wrap: wrap;
   justify-content: space-evenly;
 }
+/* all the children of the grid */
 .grid>* {
   /*flex: 1 1 auto;*/
   min-width: 6rem;
@@ -401,12 +399,7 @@ td {
   flex: auto;
   margin: 0 .25rem;
 }
-/*
-#results {
-  margin-top: .8rem;
-  margin-bottom: .3rem;
-}
-*/
+
 .restaurantName {
   font-weight: 100;
   color: #69e2b3;
@@ -452,8 +445,8 @@ td {
   margin-right: .25rem;
 }
 
-/*************************/
-/* RESULT THIRD COMING */
+/***************************/
+/*  Flexible Results List  */
 
 .resultTable {
   display: flex;
@@ -499,6 +492,7 @@ td {
 }
 
 .resultsCounter {
+  /* invisible markup used for counting */
   display: none;
 }
 
@@ -595,14 +589,6 @@ td {
   align-items: center;
 }
 
-.border20 {
-  border-width: .2rem;
-}
-
-.border15 {
-  border-width: .15rem;
-}
-
 .score .label {
   font-size: .7rem;
   margin: .01rem;
@@ -654,268 +640,14 @@ td {
     border-color: var(--color-date);
 }
 
-
 /*********************************************/
-/*            Tooltip                        */
+/*                TOOLTIPS                    /
 /*********************************************/
 /*
+* Main inspiration: https://codepen.io/team/css-tricks/pen/RPmpYa;
 * NEW LINE: content: "line1 \A line2", or
 * content: attr(attrName) needs to use &#xa; in its text
 */
-div[tooltip] {
-	display: inline-block;/*bug fix*/
-	position: relative;
-	text-decoration: none;
-}
-div[tooltip]:after {
-  /* read from html attribute */
-	content: attr(tooltip);
-  /* enable new lines in content */
-  white-space: pre;
-  /* ensure tooltip visible above other elements */
-  z-index: 2;
-  visibility: visible;
-  /* colors */
-  background: #ffcb66;
-  color: black;
-	padding: 5px 15px;
-  opacity: 0;
-  /* positioning */
-  position: absolute;
-  left: 20%;
-	bottom: 130%;
-  /* rounded edges */
-  border-radius: 10px;
-	-webkit-border-radius: 10px;
-	-moz-border-radius: 10px;
-	-ms-border-radius: 10px;
-	-o-border-radius: 10px;
-  /* transition */
-	transition: all 0.5s ease;
-	-webkit-transition: all 0.5s ease;
-	-moz-transition: all 0.5s ease;
-	-ms-transition: all 0.5s ease;
-	-o-transition: all 0.5s ease;
-}
-div[tooltip]:before {
-  /* hide tooltip */
-	content: "";
-	width: 0;
-	height: 0;
-  opacity: 0;
-  position: absolute;
-	left: 30%;
-	bottom: 90%;
-	border-top: 1rem solid #ffcb66;
-	border-left: 1rem solid transparent;
-	border-right: 1rem solid transparent;
-  transition: all 0.5s ease;
-	-webkit-transition: all 0.5s ease;
-	-moz-transition: all 0.5s ease;
-	-ms-transition: all 0.5s ease;
-	-o-transition: all 0.5s ease;
-}
-div[tooltip]:hover:after,
-div[tooltip]:active:after {
-	bottom: 100%;
-}
-div[tooltip]:hover:before,
-div[tooltip]:active:before  {
-	bottom: 70%;
-}
-div[tooltip]:hover:after,
-div[tooltip]:active:after,
-div[tooltip]:hover:before,
-div[tooltip]:active:before {
-	opacity: 1;
-}
-
-/*********************************************/
-/*           Absolute Tooltip                 /
-/*********************************************/
-div[absolute-tooltip] {
-}
-div[absolute-tooltip]:after {
-  /* read from html attribute */
-  content: attr(absolute-tooltip);
-  /* enable new lines in content */
-  white-space: pre;
-  /* ensure absolute-tooltip visible above other elements */
-  z-index: 9;
-  visibility: visible;
-  /* colors */
-  background: #20968b; /* nice orange #ffcb66; */
-  color: black;
-  padding: .4rem .75rem;
-  opacity: 0;
-  /* positioning */
-  position: absolute;
-  top: 4.1rem;
-  left:.2rem;
-  height:4.1rem;
-  width:91%;
-  /* rounded edges */
-  border-radius: 2px;
-  -webkit-border-radius: 2px;
-  -moz-border-radius: 2px;
-  -ms-border-radius: 2px;
-  -o-border-radius: 2px;
-  /* transition */
-  transition: all 0.5s ease;
-  -webkit-transition: all 0.5s ease;
-  -moz-transition: all 0.5s ease;
-  -ms-transition: all 0.5s ease;
-  -o-transition: all 0.5s ease;
-}
-div[absolute-tooltip]:before {
-  /* hide absolute-tooltip */
-  content: "";
-  width: 0;
-  height: 0;
-  opacity: 0;
-  /* triangle pointer */
-  position: absolute;
-  top: 9rem;
-  border-top: 1rem solid #20968b; /* nice orange #ffcb66; */
-  border-left: 1rem solid transparent;
-  border-right: 1rem solid transparent;
-  /* triangle transition */
-  transition: all 0.5s ease;
-  -webkit-transition: all 0.5s ease;
-  -moz-transition: all 0.5s ease;
-  -ms-transition: all 0.5s ease;
-  -o-transition: all 0.5s ease;
-}
-div[absolute-tooltip]:hover:after,
-div[absolute-tooltip]:active:after {
-  bottom: 100%;
-}
-div[absolute-tooltip]:hover:before,
-div[absolute-tooltip]:active:before  {
-  bottom: 70%;
-}
-div[absolute-tooltip]:hover:after,
-div[absolute-tooltip]:active:after,
-div[absolute-tooltip]:hover:before,
-div[absolute-tooltip]:active:before {
-  opacity: 0.95;
-}
-
-/*********************************************/
-/*            Tooltip overlay                */
-/*********************************************/
-
-div[overlay] {
-	display: inline-block;/*bug fix*/
-	position: relative;
-	text-decoration: none;
-}
-div[overlay]:after {
-  /* read from html attribute */
-  content: attr(overlay);
-  /* enable new lines in content */
-  white-space: pre;
-  /* ensure overlay visible above other elements */
-  z-index: 2;
-  visibility: visible;
-  /* colors */
-  background: #20968b;
-  color: black;
-  padding: 5px 15px;
-  opacity: 0;
-  /* positioning */
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  /* transition */
-  transition: all 0.5s ease;
-  -webkit-transition: all 0.5s ease;
-  -moz-transition: all 0.5s ease;
-  -ms-transition: all 0.5s ease;
-  -o-transition: all 0.5s ease;
-}
-div[overlay]:before {
-  /* hide overlay */
-  content: "";
-  width: 0;
-  height: 0;
-  opacity: 0;
-  posit
-/*********************************************/
-/*            Tooltip                        */
-/*********************************************/
-/*
-* NEW LINE: content: "line1 \A line2", or
-* content: attr(attrName) needs to use &#xa; in its text
-*/
-div[tooltip] {
-	display: inline-block;/*bug fix*/
-	position: relative;
-	text-decoration: none;
-}
-div[tooltip]:after {
-  /* read from html attribute */
-	content: attr(tooltip);
-  /* enable new lines in content */
-  white-space: pre;
-  /* ensure tooltip visible above other elements */
-  z-index: 2;
-  visibility: visible;
-  /* colors */
-  background: #ffcb66;
-  color: black;
-	padding: 5px 15px;
-  opacity: 0;
-  /* positioning */
-  position: absolute;
-  left: 20%;
-	bottom: 130%;
-  /* rounded edges */
-  border-radius: 10px;
-	-webkit-border-radius: 10px;
-	-moz-border-radius: 10px;
-	-ms-border-radius: 10px;
-	-o-border-radius: 10px;
-  /* transition */
-	transition: all 0.5s ease;
-	-webkit-transition: all 0.5s ease;
-	-moz-transition: all 0.5s ease;
-	-ms-transition: all 0.5s ease;
-	-o-transition: all 0.5s ease;
-}
-div[tooltip]:before {
-  /* hide tooltip */
-	content: "";
-	width: 0;
-	height: 0;
-  opacity: 0;
-  position: absolute;
-	left: 30%;
-	bottom: 90%;
-	border-top: 1rem solid #ffcb66;
-	border-left: 1rem solid transparent;
-	border-right: 1rem solid transparent;
-  transition: all 0.5s ease;
-	-webkit-transition: all 0.5s ease;
-	-moz-transition: all 0.5s ease;
-	-ms-transition: all 0.5s ease;
-	-o-transition: all 0.5s ease;
-}
-div[tooltip]:hover:after,
-div[tooltip]:active:after {
-	bottom: 100%;
-}
-div[tooltip]:hover:before,
-div[tooltip]:active:before  {
-	bottom: 70%;
-}
-div[tooltip]:hover:after,
-div[tooltip]:active:after,
-div[tooltip]:hover:before,
-div[tooltip]:active:before {
-	opacity: 1;
-}
-
 /*********************************************/
 /*           Absolute Tooltip                 /
 /*********************************************/
@@ -1048,35 +780,6 @@ div[overlay]:hover:before,
 div[overlay]:active:before {
 	opacity: 0.94;
 }
-
-/*******************************************************/
-/*******************************************************/
-/*******************************************************/ion: absolute;
-  left: 0%;
-  bottom: 0%;
-}
-div[overlay]:hover:after,
-div[overlay]:active:after {
-	top: 0;
-	bottom:0;
-	right: 0;
-	left:0;
-	opacity:0;
-}
-div[overlay]:hover:before,
-div[overlay]:active:before  {
-	bottom: 0%;
-}
-div[overlay]:hover:after,
-div[overlay]:active:after,
-div[overlay]:hover:before,
-div[overlay]:active:before {
-	opacity: 0.94;
-}
-
-/*******************************************************/
-/*******************************************************/
-/*******************************************************/
 
 /*********************************************/
 /*            GENERAL CLASSES                */
@@ -1086,14 +789,6 @@ div[overlay]:active:before {
   display: flex;
   justify-content: center;
   align-items: center;
-}
-
-.center {
-   justify-content: center;
-   align-content: center;
-   align-items: center;
-   margin: auto;
-   text-align: center;
 }
 
 .inline {
