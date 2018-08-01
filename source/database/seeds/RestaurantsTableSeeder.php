@@ -242,7 +242,7 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create(array(
             'name'              => 'Coco Ichi',
-            'location'          => 'Shibuya, Cerulean Tower',
+            'location'          => 'Shibuya, Sakuragaokacho',
             'type'              => 'Japanese curry',
             'lunch_price'       => 900,
             'points'            => 'Highly customizable Japanese curry. Very delicious. Counter only.',
