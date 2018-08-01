@@ -22,13 +22,13 @@ function showResults() {
   var restaurantsFilter = document.getElementById("restaurantsFilter");
   var restaurantsResults = document.getElementById("restaurantsResults");
   restaurantsFilter.style.display = "none";
-  restaurantsResults.style.display = "block";
+  restaurantsResults.style.display = "flex"; // was block
 }
 
 function showFilter() {
   var restaurantsFilter = document.getElementById("restaurantsFilter");
   var restaurantsResults = document.getElementById("restaurantsResults");
-  restaurantsFilter.style.display = "block";
+  restaurantsFilter.style.display = "flex"; // was block
   restaurantsResults.style.display = "none";
 }
 
