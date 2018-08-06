@@ -203,4 +203,7 @@ https://codepen.io/cristina-silva/pen/XXOpga
 new
 https://inspirationalpixels.com/tooltips-in-pure-htmlcss/
 
-LMIT tags selection to 5
+LIMIT tags selection to 5
+
+GEOSPATIAL laravel 5.6 neighborhood, maybe useful for WhatsNext?
+https://medium.com/@brice_hartmann/getting-started-with-geospatial-data-in-laravel-94502dc74d55
