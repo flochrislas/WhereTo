@@ -38,6 +38,7 @@ https://autoprefixer.github.io/
 /* CSS parameters */
 /* values can be call with "var(--varName)" */
 /* needs double dashes */
+/* How to set / get from JS: https://stackoverflow.com/questions/41370741/how-do-i-edit-a-css-variable-using-js */
 :root {
     --bg-color-outter: black;
     --bg-color-inner: #141422; /* almost black */
