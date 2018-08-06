@@ -2868,6 +2868,48 @@ class RestaurantsTableSeeder extends Seeder
         $resto->attachTags(['cafe','sandwich','small servings','smoking area','to-go','English menu','visa']);
         $resto->fillCoordinatesFromString('35.659256, 139.697918');
 
+        $resto = Restaurant::create(array(
+            'name'              => 'Habana Cafe',
+            'location'          => 'Shibuya',
+            'type'              => 'Cuban',
+            'lunch_price'       => 900,
+            'points'            => 'Cuban style. Nice restaurant and bar. Advertising an Havana style. Very good food.',
+            'experience'        => 'I first went in thinking it was an overpriced serving some kind of glorified panini. I was wrong. The serving are very decent and what they call a half-size is actually enough for one person. They serve cuban sandwiches, tacos and buritos. Cuban sandwiches ressemble big panini. I tried the summer special "avocado cheese habano", and I was really surprised at how good it was. It was brilliant. For 900yen you can get a half sandwich (which is good for one person) and a drink. For 1600 yen you can get the full size, and save some money if you are with someone else. Nice place, nice service, good food. Recommendable.',
+            'visited'           => true,
+            'visit_date'        => '2018-08-02 13:00:00',
+            'google_maps_link'  => 'https://www.google.com/maps/place/Cafe+Habana+TOKYO/@35.6564029,139.700515,16z/data=!4m5!3m4!1s0x60188b5b18195555:0x62ba3026ced0ac79!8m2!3d35.6533025!4d139.7045202',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130303/13196354/',
+            'official_website'  => 'http://cafehabana.jp/',
+            'score_lunch'       => 3,
+            'score_place'       => 2,
+            'score_food'        => 3,
+            'score_price'       => 1,
+            'score_date'        => 1
+        ));
+        $resto->attachTags(['mexican','sandwiches','to-go','no smoking','English menu','cafe']);
+        $resto->fillCoordinatesFromString('35.653342, 139.704487');
+
+        $resto = Restaurant::create(array(
+            'name'              => 'Asian Spice King',
+            'location'          => 'Shibuya, Sarugakucho',
+            'type'              => 'Indian Curry',
+            'lunch_price'       => 950,
+            'points'            => 'Decent indian curry restaurant with above-than-average interior, but, beware: smoking is allowed.',
+            'experience'        => 'Looking at the menu, it was a bit weird, as the price of the lunch set changes depending on what curry you choose (vegetables, chicken, keeema, mutton...). If you want keema, make sure to ask for the B set... and you will get a bowl of curry, a small salad, and a big piece of nan for 950 yen. It is not cheap, but the portion of curry was one of the biggest I have ever got, and quality/taste was very decent. Another good surprise was that the interior was quite nice. Large and confortable counter as well as different tables. Good enough for date. Could not escape the shitty Indian pop music selection though. So, I was quite happy with my lunch, until toward the end, when I started smelling some cigarette smoke... then I realized that the place allows smoking... which is kind of a deal breaker for me. If you are unlucky, you could end up next to someone who smokes and ruins you lunch, and I don\'t like to take such risk. For 700 yen you can get a bento.',
+            'visited'           => true,
+            'visit_date'        => '2018-08-07 13:00:00',
+            'google_maps_link'  => 'https://www.google.com/maps/place/Asian+Spice+King+%E6%B8%8B%E8%B0%B7%E3%83%BB%E4%BB%A3%E5%AE%98%E5%B1%B1/@35.6578217,139.6995226,16z/data=!4m12!1m6!3m5!1s0x60188b5b3d9f92cf:0x5944d1ca4d80a6a5!2zQXNpYW4gU3BpY2UgS2luZyDmuIvosLfjg7vku6PlrpjlsbE!8m2!3d35.6532537!4d139.7047046!3m4!1s0x60188b5b3d9f92cf:0x5944d1ca4d80a6a5!8m2!3d35.6532537!4d139.7047046',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13159709/',
+            'official_website'  => 'http://masalahut.net/asian.html',
+            'score_lunch'       => 2,
+            'score_place'       => 2,
+            'score_food'        => 2,
+            'score_price'       => 1,
+            'score_date'        => 1
+        ));
+        $resto->attachTags(['indian','curry','smoking allowed','to-go','English menu','vegetarian friendly']);
+        $resto->fillCoordinatesFromString('35.653319, 139.704687');
+
         /*
         $resto = Restaurant::create(array(
             'name'              => '',

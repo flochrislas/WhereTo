@@ -225,3 +225,12 @@ https://toddmotto.com/a-comprehensive-dive-into-nodelists-arrays-converting-node
 
 AWESOME FLEXIBLE TABLES!
 https://css-tricks.com/accessible-simple-responsive-tables/
+
+LARAVEL APP deploy on prod:
+Shared hosting:
+https://medium.com/laravel-news/the-simple-guide-to-deploy-laravel-5-application-on-shared-hosting-1a8d0aee923e
+https://www.5balloons.info/hosting-laravel-5-5-project-on-shared-hosting-hostgator/
+AWS (via cloudaway)
+https://www.cloudways.com/blog/install-laravel-on-aws/
+Official AWS Elastic BEANSTALK
+https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/php-laravel-tutorial.html
