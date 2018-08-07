@@ -2910,6 +2910,27 @@ class RestaurantsTableSeeder extends Seeder
         $resto->attachTags(['indian','curry','smoking allowed','to-go','English menu','vegetarian friendly']);
         $resto->fillCoordinatesFromString('35.653319, 139.704687');
 
+        $resto = Restaurant::create(array(
+            'name'              => 'Port of Call',
+            'location'          => 'Shibuya',
+            'type'              => 'Western',
+            'lunch_price'       => 1000,
+            'points'            => 'The casual cafe atmosphere is great. The food is great. The price is very reasonable.',
+            'experience'        => 'The cafe/restaurant is situated behind a cloth store, but they have a sign outside. Go in to see a nice space with a large windows bay directly in front of the JR railway (the ground shake a bit when a train passes by). Inside is very relaxing and confortable. For 1000 yen or less you can get a lunch set (burger, quesadilla, curry... and/or nice desserts) that comes with soup, salad, and drink. I tried their weekly burger, that was sweet mustard chicken burger, and it was, kind of surprinsingly, absolutely delicious. Brilliant. I had a great lunch experience, but just avoid going there if you are in a hurry, as the food can take a while to be ready.',
+            'visited'           => true,
+            'visit_date'        => '2018-08-07 13:00:00',
+            'google_maps_link'  => 'https://www.google.com/maps/place/Cafe%26Store+PORT+OF+CALL+DAIKANYAMA/@35.6564679,139.699952,17z/data=!4m8!1m2!2m1!1sport+of+call!3m4!1s0x0:0x881c208777d428e6!8m2!3d35.6538136!4d139.7048025',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13165417/',
+            'official_website'  => 'https://www.instagram.com/port_of_call_daikanyama/',
+            'score_lunch'       => 4,
+            'score_place'       => 2,
+            'score_food'        => 3,
+            'score_price'       => 1,
+            'score_date'        => 1
+        ));
+        $resto->attachTags(['burger','curry','cafe','western');
+        $resto->fillCoordinatesFromString('35.653809, 139.704789');
+
         /*
         $resto = Restaurant::create(array(
             'name'              => '',
