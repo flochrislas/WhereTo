@@ -2931,6 +2931,28 @@ class RestaurantsTableSeeder extends Seeder
         $resto->attachTags(['burger','curry','cafe','western');
         $resto->fillCoordinatesFromString('35.653809, 139.704789');
 
+        $resto = Restaurant::create(array(
+            'name'              => 'Plaloma',
+            'location'          => 'Shibuya',
+            'type'              => 'Thai',
+            'lunch_price'       => 1000,
+            'points'            => 'Nice Thai restaurant with quite diverse menu even for lunch.',
+            'experience'        => 'The interior is nice and confortable. The menu offers more different dishes for lunch than usual Thai restaurants. I got the gapao, and it was very decent. It came with a good soup, a small salad, a small dessert, and a drink, for 1000 yen. It all came fast, nice service. Recommendable place.',
+            'visited'           => true,
+            'visit_date'        => '2018-08-08 13:00:00',
+            'google_maps_link'  => 'https://www.google.com/maps/place/%E3%82%BF%E3%82%A4%E3%83%80%E3%82%A4%E3%83%8B%E3%83%B3%E3%82%B0+%E3%83%97%E3%83%A9%E3%83%BC%E3%83%AD%E3%83%BC%E3%83%9E%E3%83%BC/@35.6579362,139.7003489,17z/data=!4m5!3m4!1s0x60188b56ee4506ff:0x6ed7b8b394f04f37!8m2!3d35.6557042!4d139.6979642',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13219402/',
+            'official_website'  => 'http://plaloma.sub.jp/',
+            'score_lunch'       => 3,
+            'score_place'       => 2,
+            'score_food'        => 1,
+            'score_price'       => 1,
+            'score_date'        => 1
+        ));
+        $resto->attachTags(['thai','green curry','gapao']);
+        $resto->fillCoordinatesFromString('35.655726, 139.697950');
+
+
         /*
         $resto = Restaurant::create(array(
             'name'              => '',
