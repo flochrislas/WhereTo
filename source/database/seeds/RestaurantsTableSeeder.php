@@ -2952,6 +2952,29 @@ class RestaurantsTableSeeder extends Seeder
         $resto->attachTags(['thai','green curry','gapao']);
         $resto->fillCoordinatesFromString('35.655726, 139.697950');
 
+$resto = Restaurant::create(array(
+            'name'              => 'Shibuya Parlor',
+            'location'          => 'Shibuya crossing',
+            'type'              => 'Cafe',
+            'lunch_price'       => 1200,
+            'points'            => 'Counter with great view on Shibuya\'s crossing. Nice cafe serving pasta and deserts with fresh fruits.',
+            'experience'        => '7th floor right in front of the crossing. THe view is very nice> The pasta were actually delicious. For lunch, you can add +400yen to your 1200yen pasta dish inn order to get a mini fresh fruits parfait. The food comes rather slowly, but it is easy to be patient while enjoying the view. Each time I went the place was rather empty, which is another good point. The mini parfait I had was not especially great, lacking sweetness to my westerner taste.',
+            'visited'           => true,
+            'visit_date'        => '2018-08-09 13:00:00',
+            'google_maps_link'  => 'https://www.google.com/maps/place/SHIBUYA+PARLOR/@35.6597365,139.6986217,17z/data=!3m1!4b1!4m5!3m4!1s0x60188b6d7d3f546f:0x922824b7ce3b34ef!8m2!3d35.6597322!4d139.7008104',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13220995/',
+            'official_website'  => 'https://www.shibuya109.jp/shop/SPL/',
+            'score_lunch'       => 3,
+            'score_place'       => 2,
+            'score_food'        => 2,
+            'score_price'       => 1,
+            'score_date'        => 1
+        ));
+        $resto->attachTags(['cafe','pasta','desert']);
+        $resto->fillCoordinatesFromString('35.659735, 139.700788');
+
+
+
 
         /*
         $resto = Restaurant::create(array(
