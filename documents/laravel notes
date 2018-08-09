@@ -177,7 +177,7 @@ http://laravel-recipes.com/
 
 
 Making a phone app from laravel app
-website2apk
+website2apk // not recommended
 phonegap
 http://softeng.oicr.on.ca/brice_aminou/2017/03/07/Mobile-app-with-Laravel/
 
@@ -237,3 +237,7 @@ https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/php-laravel-tutorial.html
 more
 https://medium.com/@idelara/step-by-step-guide-manually-deploying-a-laravel-app-running-on-lemp-to-an-aws-ec2-lightsail-d4792fd5c920
 https://medium.com/sk-geek/deploy-laravel-app-to-elastic-beanstalk-amazon-ec2-6cdff6689347
+
+
+Make an app (full screen web browser technique)
+https://softeng.oicr.on.ca/brice_aminou/2017/03/07/Mobile-app-with-Laravel/

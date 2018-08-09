@@ -45,7 +45,7 @@ https://autoprefixer.github.io/
     --bg-color-cell: #262633; /* light black */
     --color-txt-default: #CAD0AF; /* grey 2 */
     --color-name: #69e2b3; /* green */
-    --color-type: #45C3EC; /* blue */
+    --color-type: #45C3EC; /* blue */ 
     --color-dst: rgb(249, 239, 193); /* yellow */
     --color-cost: #5FE18B; /* lighter green */
     --color-lunch: #3AD46E; /* green */
@@ -59,7 +59,7 @@ html, body {
   height: 100%; /* needed for proper layout (?) */
   background-color: black;
   font-family: 'Open Sans', sans-serif;
-  color: #CAD0AF; /* grey 2 */
+  color: var(--color-txt-default); /* grey 2 */
 }
 
 body {
@@ -73,7 +73,7 @@ div, nav {
 }
 
 a {
-  color: rgb(249, 239, 193);
+  color: var(--color-dst);
 }
 
 h1, h2, h3 {
@@ -82,7 +82,7 @@ h1, h2, h3 {
 
 td {
   /*background-color: rgba(20,146,135,.5); // dark emerald */
-  background-color: #262633; /* light black */
+  background-color: var(--bg-color-cell); /* light black */
 }
 
 /*********************************************/
@@ -136,7 +136,7 @@ td {
 
 .tap {
   background-color: #3BA0C3;
-  border-color: #45C3EC;
+  border-color: var(--color-type);
   border-style:  solid;
   border-width: .2rem;
   border-radius: 1rem;
@@ -154,7 +154,7 @@ td {
 }
 
 .title {
-  color: #45C3EC;
+  color: var(--color-type);
   font-size: 1.52rem;
   font-weight: 700;
   text-decoration: none;
@@ -186,7 +186,7 @@ td {
 /*********************************************/
 
 #content {
-  background-color: #141422; /* almost black */
+  background-color:  var(--bg-color-inner) ; /* almost black */
   margin: .1rem;
   color: #d0d0d2;
   /* Flex properties to work with fixed header and footer */
@@ -224,7 +224,7 @@ td {
   font-weight: 600;
   text-align: center;
   background-color: #3BA0C3;
-  border-color: #45C3EC;
+  border-color: var(--color-type);
   border-style: solid;
   border-width: .37rem;
   border-radius: 1rem;
@@ -291,7 +291,7 @@ td {
 #filterHeaderTitle {
   flex: initial;
   margin: .5rem .38rem;
-  color: #45C3EC;
+  color: var(--color-type);
   font-size: .94rem;
   font-weight: 700;
   text-decoration: none;
@@ -320,7 +320,7 @@ td {
   cursor: pointer;
   border-style: solid;
   border-width: .2rem;
-  border-color: #45C3EC;
+  border-color: var(--color-type);
   background-color: #3BA0C3;
   margin: .4rem .15rem;
   padding: .8rem 1.15rem;
@@ -337,26 +337,26 @@ td {
 .tagType100 {
   /* blue 1 */
   border-color: #8ED1E7;
-  background-color: #5EB7D4;
+  background-color: var(--color-place);
 }
 
 .tagType80 {
   /* green */
-  border-color: #5FE18B;
-  background-color: #3AD46E;
+  border-color: var(--color-cost);
+  background-color: var(--color-lunch);
   /* background-color: #3BA011; */
 }
 
 .tagType60 {
   /* purpule */
-  border-color: #98A7EA;
-  background-color: #6C80DB;
+  border-color: var(--color-date);
+  background-color: var(--color-price);
 }
 
 .tagType40 {
   /* blue 2 */
-  border-color: #5EB7D4;
-  background-color: #3BA1C3;
+  border-color: var(--color-place);
+  background-color: var(--color-food);
 }
 
 /* Palette picker */
@@ -403,13 +403,13 @@ td {
 
 .restaurantName {
   font-weight: 100;
-  color: #69e2b3;
+  color: var(--color-name);
   text-decoration: none;
 }
 
 .restaurantType {
   font-weight: 50;
-  color: #45C3EC;
+  color: var(--color-type);
 }
 
 #resultsEnd {
@@ -468,7 +468,7 @@ td {
 }
 .resultCell {
   flex: 1;
-  background-color: #262633;
+  background-color: var(--bg-color-cell);
   text-align: center;
   padding: .2rem .15rem;;
 }
@@ -518,7 +518,7 @@ td {
   display: flex;
   align-items: center;
   padding: .4rem .5rem;
-  border-color: #69e2b3;
+  border-color: var(--color-name);
   border-width: .2rem;
 }
 
@@ -805,11 +805,11 @@ div[overlay]:active:before {
 }
 
 .green {
-  color: #69e2b3;
+  color: var(--color-name);
 }
 
 .blue {
-  color: #45c3ec;
+  color: var(--color-type);
 }
 
 .teal {
@@ -841,7 +841,7 @@ div[overlay]:active:before {
    border:1px solid #e6542b
 }
 .button--basic:active,.button--basic:focus,.button--basic:hover {
- color:#141422;
+ color: var(--bg-color-inner) ;
  background-color:#e65425;
  border:1px solid #e6542b
 }
