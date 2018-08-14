@@ -2973,7 +2973,26 @@ $resto = Restaurant::create(array(
         $resto->attachTags(['cafe','pasta','desert']);
         $resto->fillCoordinatesFromString('35.659735, 139.700788');
 
-
+        $resto = Restaurant::create(array(
+            'name'              => 'Mud',
+            'location'          => 'Shibuya',
+            'type'              => 'Cafe',
+            'lunch_price'       => 980,
+            'points'            => 'Dark and peaceful, "american style" cafe',
+            'experience'        => 'Terrace at the front with tables where you can smoke. Inside is quite dark, with tables and sofas. Menu consists of 980yen plates such as hotdog, sandwich or rice, with different options. Overall it was decent, but I found that 980yen was expensive for a hotdog, even a large one with some salad and fries. You can drink free water, but to get something else, it is an additional 300yen (!).',
+            'visited'           => true,
+            'visit_date'        => '2018-08-07 13:00:00',
+            'google_maps_link'  => 'https://www.google.com/maps/place/MUD+SPOT+Shibuya+1/@35.6576928,139.7010057,17z/data=!4m12!1m6!3m5!1s0x60188b59c29de9a9:0xe66787f0217e3dd6!2sMUD+SPOT+Shibuya+1!8m2!3d35.656893!4d139.7021631!3m4!1s0x60188b59c29de9a9:0xe66787f0217e3dd6!8m2!3d35.656893!4d139.7021631',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13137346/',
+            'official_website'  => 'http://www.mudcoffee.jp/',
+            'score_lunch'       => 2,
+            'score_place'       => 1,
+            'score_food'        => 1,
+            'score_price'       => 0,
+            'score_date'        => 0
+        ));
+        $resto->attachTags(['cafe','sandwich','hotdog','open air space','smoking area']);
+        $resto->fillCoordinatesFromString('35.656930, 139.702169');
 
 
         /*
