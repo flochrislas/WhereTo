@@ -2994,6 +2994,27 @@ $resto = Restaurant::create(array(
         $resto->attachTags(['cafe','sandwich','hotdog','open air space','smoking area']);
         $resto->fillCoordinatesFromString('35.656930, 139.702169');
 
+        $resto = Restaurant::create(array(
+            'name'              => 'Sathaban Wijai Ahan Thai',
+            'location'          => 'Shibuya, Sakuragaokacho',
+            'type'              => 'Thai',
+            'lunch_price'       => 1080,
+            'points'            => 'Very nice, small Thai restaurant. Food and service above average. Narrow counter and small tables.',
+            'experience'        => 'So the place is small, and easily packed, but somehow the experience eating there is still very good. Clean, bright, with nice and fast service. Wide range of options for lunch, but I went with the gapao, a classic, in order to be able to compare with other Thai easily. For 1080yen, I got my gapao with very good and spicy soup, a very nice spring roll, and a pitcher of cold tea. Quality was very good, above average I would say. I also appreciated they somehow got the ambient temperature right (it was August abd inside was not too cold nor too warm).',
+            'visited'           => true,
+            'visit_date'        => '2018-08-15 13:00:00',
+            'google_maps_link'  => 'https://www.google.com/maps/place/Sathaban+Wijai+Ahan+Thai/@35.657509,139.7005488,18z/data=!4m5!3m4!1s0x60188b5742498edb:0x85a7c326245fe97!8m2!3d35.6561766!4d139.7005042',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13180281/',
+            'official_website'  => 'http://www.sscy.co.jp/research/',
+            'score_lunch'       => 3,
+            'score_place'       => 1,
+            'score_food'        => 2,
+            'score_price'       => 1,
+            'score_date'        => 0
+        ));
+        $resto->attachTags(['thai','gapao','green curry','no smoking']);
+        $resto->fillCoordinatesFromString('35.656122, 139.700537');
+
 
         /*
         $resto = Restaurant::create(array(
