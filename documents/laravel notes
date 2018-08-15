@@ -17,7 +17,7 @@ php artisan db:seed
 php artisan db:seed --class=UserTableSeeder
 php artisan migrate:refresh --seed
 
-SUPER MAKE
+SUPER MAKE Model, Controller and Migration 
 php artisan make:model -m -c -r Test
 
 TEST
