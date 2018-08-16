@@ -6,12 +6,10 @@
 <div id="content">
 
   <div id="restaurantsFilter">
-    
     @include('restaurants.filter')
   </div>
 
   <div id="restaurantsResults">
-    <button onclick="showFilter()">Show Filter</button>
     @include('restaurants.results')
   </div>
 
@@ -24,13 +22,13 @@ function showResults() {
   var restaurantsFilter = document.getElementById("restaurantsFilter");
   var restaurantsResults = document.getElementById("restaurantsResults");
   restaurantsFilter.style.display = "none";
-  restaurantsResults.style.display = "block";
+  restaurantsResults.style.display = "flex"; // was block
 }
 
 function showFilter() {
   var restaurantsFilter = document.getElementById("restaurantsFilter");
   var restaurantsResults = document.getElementById("restaurantsResults");
-  restaurantsFilter.style.display = "block";
+  restaurantsFilter.style.display = "flex"; // was block
   restaurantsResults.style.display = "none";
 }
 
@@ -52,23 +50,6 @@ function getResults() {
 /** Check if there are restaurants in the results div */
 function isResultEmpty() {
   return document.getElementById("results").innerHTML == 'empty';
-}
-
-/***************************phony**********************************/
-function updateResults() {
-  var xhr = new XMLHttpRequest();
-  xhr.open('PUT', 'restaurants');
-  xhr.setRequestHeader('Content-Type', 'application/json');
-  xhr.onload = function() {
-      if (xhr.status === 200) {
-          var userInfo = JSON.parse(xhr.responseText);
-          document.getElementById("demo").innerHTML = xhr.responseText;
-      }
-  };
-  xhr.send(JSON.stringify({
-      name: 'John Smith',
-      age: 34
-  }));
 }
 
 </script>
@@ -94,7 +75,8 @@ function showPosition(position) {
     x.innerHTML = "Latitude: " + position.coords.latitude +
     "<br>Longitude: " + position.coords.longitude;
     */
-    y.value = position.coords.latitude + "," + position.coords.longitude;
+    // Was y !!
+    x.value = position.coords.latitude + "," + position.coords.longitude;
 }
 
 function showError(error) {

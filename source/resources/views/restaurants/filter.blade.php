@@ -1,25 +1,28 @@
-<div id="position-report"></div>
+<div id="tagsTop">
+  <div id="position-report"></div>
 
-<div id="filterHeader">
-<div id="filterHeaderTitle" class="orange title">What kind of restaurant?</div>
-<button id="filterHeaderButton" onclick="getResults()">Show Results</button>
-</div>
+  <div id="filterHeader">
+    <div id="filterHeaderTitle">What kind of place?</div>
+    <button id="filterHeaderButton" onclick="getResults()">Show All</button>
+  </div>
 
-<!-- selected tags for active search -->
-<div id="selectedTags">
+  <!-- selected tags for active search -->
+  <div id="selectedTags">
+  </div>
+
+  <p>Available options</p>
 </div>
 
 <!-- showing available tags -->
-<p>Available options</p>
 <div id="tags">
-@foreach ($restaurantTags as $restaurantTag)
-    <div class="tag"
-          tagId="{{$restaurantTag->id}}"
-          id="tagShow{{$restaurantTag->id}}"
-          onClick="moveTag(event)">
-      {{$restaurantTag->label}}
-    </div>
-@endforeach
+  @foreach ($restaurantTags as $restaurantTag)
+      <div class="tag tagType{{$restaurantTag->type}}"
+            tagId="{{$restaurantTag->id}}"
+            id="tagShow{{$restaurantTag->id}}"
+            onClick="moveTag(event)">
+        {{$restaurantTag->label}}
+      </div>
+  @endforeach
 </div>
 
 <!-- The Javascript to operate this filter -->
@@ -35,26 +38,49 @@ function moveTag(event) {
   /* Run the search from the selectedTags immediately in the background */
   refreshResults();
 }
+
 /** Refreshes the list of results */
-function refreshResults() {
+function refreshResults(orderBy) {
+  // Default parameter doc: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Default_parameters
   /* read all the div under selectedTags */
   var tags = document.getElementById("selectedTags").children;
   /* make a list of all their ids or labels to send as parameters */
   var tagsLabels = getTagsLabels(tags);
+  /* check for orderBy choice */
+  if (orderBy != null) {
+    // priority to the current parameter
+    store("orderBy", orderBy);
+  } else {
+    // if no param then try read store
+    var storeOrderBy = readStore("orderBy");
+    if (storeOrderBy != null) {
+      orderBy = storeOrderBy;
+    } else {
+      // if nothing in param or store use default value
+      orderBy = "distance";
+      store("orderBy", orderBy);
+    }
+  }
   /* read order/operand/options parameters */
   // We will implement that later
   var op = 'AND';
   /* AJAX request to update the results */
-  ajaxResults(op, tagsLabels);
+  ajaxResults(op, tagsLabels, orderBy);
 }
 
-function ajaxResults(op, tags) {
+/** Actually send the request to the server */
+function ajaxResults(op, tags, orderBy) {
   var xhr = new XMLHttpRequest();
-  var url = 'restaurants/results?op=' + op + '&tags=' + tags;
+  var url = 'restaurants/results?op=' + op
+          + '&tags=' + tags
+          + '&orderBy=' + orderBy;
   xhr.open('GET', url);
   xhr.onload = function() {
       if (xhr.status === 200) {
+          /* write results */
           document.getElementById("results").innerHTML = xhr.responseText;
+          /* update the show result button with the number of results */
+          refreshShowResultsButton();
       }
   };
   xhr.send();
@@ -77,6 +103,39 @@ function getTagsIdArray(op, tags) {
     tagsIds.push(tags[i].getAttribute("tagId"));
   }
   return tagsIds;
+}
+
+function refreshShowResultsButton() {
+  /* get number of results */
+  // var nbResults = document.getElementById("results").children.count();
+  // var nbResults = document.getElementById('resultsTable').rows.length;
+  var nbResults = document.getElementsByClassName("resultsCounter").length;
+  /* Change button label/text */
+  if (nbResults == 0) {
+    document.getElementById("filterHeaderButton").innerHTML = "No result";
+    document.getElementById("filterHeaderButton").disabled = true;
+  }
+  else {
+      document.getElementById("filterHeaderButton").disabled = false;
+      document.getElementById("filterHeaderButton").innerHTML = "Show " + nbResults + " results";
+  }
+
+}
+
+/* TO MOVE IN A SUPERIOR CLASS */
+function store(key, value) {
+  // Look up for different options, chose the best
+  if (typeof(Storage) !== "undefined") {
+    // Code for localStorage/sessionStorage.
+    localStorage.setItem(key, value);
+    // sessionStorage.setItem(key value);
+  } else {
+      // Sorry! No Web Storage support..
+  }
+}
+
+function readStore(key) {
+    localStorage.getItem(key);
 }
 
 </script>

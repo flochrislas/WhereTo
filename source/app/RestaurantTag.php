@@ -6,7 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class RestaurantTag extends Model
 {
-    protected $fillable = ['label'];
+    protected $fillable = [
+      'label',
+      'type',
+      'weight'
+    ];
 
     /**
      * The restaurants that belong to the tag.
