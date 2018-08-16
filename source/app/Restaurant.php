@@ -6,9 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Restaurant extends Model
 {
-    public $currentDistance;
+    // Uses a trait to get localisation related stuff
+    use Traits\Location;
 
-    protected $fillable = [
+    // Accessible fields for mass update/create
+    /* protected $fillable = [
         'name',
         'location',
         'lat',
@@ -27,7 +29,7 @@ class Restaurant extends Model
         'score_food',
         'score_price',
         'score_date'
-    ];
+    ]; */
 
     /**
      * The tags that belong to the restaurant.
@@ -58,49 +60,20 @@ class Restaurant extends Model
     {
         if (!empty($labels))
         {
+            // Get tags from the DB
             $query = (new RestaurantTag)->newQuery();
             foreach ($labels as $label)
             {
                 $query->orWhere('label', '=', $label);
             }
             $tags = $query->get();
+            // Attach them
             $this->tags()->attach($tags);
         }
         // Note:
         // attach just associate existing records: http://laraveldaily.com/pivot-tables-and-many-to-many-relationships/
         // otherwise use save or saveMany
         // awesome https://m.dotdev.co/writing-advanced-eloquent-search-query-filters-de8b6c2598db
-    }
-
-    /**
-     * Simply fill lat and lon fron a string with both
-     */
-    public function fillCoordinatesFromString(string $coordinates) : void
-    {
-        try {
-          $coord = GeoUtils::toPositionArray($coordinates);
-          $this->lat = $coord[0];
-          $this->lon = $coord[1];
-          $this->save();
-        } catch (\ErrorException $e) {
-          \Log::debug('Invalid coordinates for restaurant '.$this->id);
-        }
-    }
-
-    /**
-     * Try to fill lat and lon with the ones found in the Google Maps link
-     * NOTE: link's coordiantes are actually for the center of the map, NOT the location we want
-     */
-    public function fillCoordinatesFromGoogleLink() : void
-    {
-        try {
-          $coord = GeoUtils::google2coord($this->google_maps_link);
-          $this->lat = $coord[0];
-          $this->lon = $coord[1];
-          $this->save();
-        } catch (\ErrorException $e) {
-          \Log::debug('Could not find coordinates from Google Maps link in restaurant id '.$this->id);
-        }
     }
 
 }

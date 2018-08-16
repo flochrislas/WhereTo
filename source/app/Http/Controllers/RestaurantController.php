@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Cache;
 use App\Restaurant;
-use App\GeoUtils;
+use App\Tools\GeoUtils;
 use Excel;
 
 class RestaurantController extends Controller

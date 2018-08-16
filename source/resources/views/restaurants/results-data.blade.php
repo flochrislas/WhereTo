@@ -13,7 +13,7 @@
       <a target="_blank"
          href="{{ $restaurant->google_maps_link }}">
         <div class="oneDigit inline">
-        {{ App\GeoUtils::walkingTime($restaurant->currentDistance/1000) }}
+        {{ App\Tools\GeoUtils::walkingTime($restaurant->currentDistance/1000) }}
       </div>
         <br /><div class="minute inline">min</div>
       </a>

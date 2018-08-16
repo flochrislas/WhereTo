@@ -2,7 +2,6 @@
 
 use Illuminate\Database\Seeder;
 use App\Restaurant;
-use App\RestaurantTag;
 
 /**
  * Seeds restaurants.
@@ -1435,7 +1434,7 @@ class RestaurantsTableSeeder extends Seeder
             'score_date'        => 1
         ));
         $resto->attachTags(['italian', 'pasta']);
-        $resto->fillCoordinatesFromString('35.655867,139.698478');        
+        $resto->fillCoordinatesFromString('35.655867,139.698478');
 
         $resto = Restaurant::create(array(
             'name'              => 'Fujisoba',
@@ -1478,7 +1477,7 @@ class RestaurantsTableSeeder extends Seeder
         ));
         $resto->attachTags(['french','crepe','quiche','croque-monsieur','galette']);
         $resto->fillCoordinatesFromString('35.660365,139.700346');
-        
+
         $resto = Restaurant::create(array(
             'name'              => 'Miami Patio',
             'location'          => 'Shibuya',
@@ -1605,7 +1604,7 @@ class RestaurantsTableSeeder extends Seeder
         ));
         $resto->attachTags(['indian','curry','gapao','thai','smoking area']);
         $resto->fillCoordinatesFromString('35.659122, 139.698909');
-        
+
         $resto = Restaurant::create(array(
             'name'              => 'Chelsea Cafe',
             'location'          => 'Shibuya, Mark City',
@@ -2090,7 +2089,7 @@ class RestaurantsTableSeeder extends Seeder
         ));
         $resto->attachTags(['italian','pasta','pizza','open air space','smoking allowed','visa']);
         $resto->fillCoordinatesFromString('35.657738, 139.698912');
-        
+
         $resto = Restaurant::create(array(
             'name'              => 'Fatburger',
             'location'          => 'Shibuya, 109men',
@@ -2928,7 +2927,7 @@ class RestaurantsTableSeeder extends Seeder
             'score_price'       => 1,
             'score_date'        => 1
         ));
-        $resto->attachTags(['burger','curry','cafe','western');
+        $resto->attachTags(['burger','curry','cafe','western']);
         $resto->fillCoordinatesFromString('35.653809, 139.704789');
 
         $resto = Restaurant::create(array(
@@ -2952,7 +2951,7 @@ class RestaurantsTableSeeder extends Seeder
         $resto->attachTags(['thai','green curry','gapao']);
         $resto->fillCoordinatesFromString('35.655726, 139.697950');
 
-$resto = Restaurant::create(array(
+        $resto = Restaurant::create(array(
             'name'              => 'Shibuya Parlor',
             'location'          => 'Shibuya crossing',
             'type'              => 'Cafe',
@@ -3015,6 +3014,27 @@ $resto = Restaurant::create(array(
         $resto->attachTags(['thai','gapao','green curry','no smoking']);
         $resto->fillCoordinatesFromString('35.656122, 139.700537');
 
+        $resto = Restaurant::create(array(
+            'name'              => 'Fields',
+            'location'          => 'Shibuya, Sakuragaokacho',
+            'type'              => 'Bar restaurant',
+            'lunch_price'       => 830,
+            'points'            => 'Bar restaurant with a windows bay above the Sakuragaokacho\'s crossing. Unexpensive good lunch plates. Smoking allowed.',
+            'experience'        => 'I went there late and it was almost empty, so nobody was smoking. Otherwise that could have been a big problem... I sat at the counter in front of the windows bay, it was very nice. Some music was playing, and some TV were on with a soccer game. I ordred a katsu curry plate, and it was really very good. The katsu was great, the curry was tasty, the rice was in abundance and some lettuce and tomatoes were on the side. Plus a fried egg on the rice. For 830 yen (it was the most expensive dish there). I enjoyed it much. Other items on the menu includes popular Japanese style taco-rice, napolitan pasta, and othjer combinations, starting 500 yen. Add 100yen for a salad or a drink.',
+            'visited'           => true,
+            'visit_date'        => '2018-08-16 14:00:00',
+            'google_maps_link'  => 'https://www.google.com/maps/place/Fields/@35.6571737,139.7014883,17z/data=!4m5!3m4!1s0x60188b59e1618d81:0x4734f154b5bf8f44!8m2!3d35.656485!4d139.701617',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13031693/',
+            'official_website'  => 'http://www.e-fields.jp/',
+            'score_lunch'       => 2,
+            'score_place'       => 1,
+            'score_food'        => 2,
+            'score_price'       => 2,
+            'score_date'        => 0
+        ));
+        $resto->attachTags(['pasta','katsu','japanese curry','smoking allowed']);
+        $resto->fillCoordinatesFromString('35.656122, 139.700537');
+
 
         /*
         $resto = Restaurant::create(array(
@@ -3057,7 +3077,7 @@ $resto = Restaurant::create(array(
 
         // fill coordinates
         $this->fillNullCoordinatesFromGoogleMapsLink();
-        
+
     }
 
     /**
