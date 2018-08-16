@@ -6,18 +6,20 @@ use Illuminate\Database\Eloquent\Model;
 
 class Store extends Model
 {
-  public $currentDistance;
+    // Uses a trait to get localisation related stuff
+    use Traits\Location;
 
-  protected $fillable = [
-      'name',
-      'location',
-      'lat',
-      'lon',
-      'type',
-      'points',
-      'experience',
-      'google_maps_link',
-      'official_website',
-      'score'
-  ];
+    // Accessible fields for mass update/create
+    /* protected $fillable = [
+        'name',
+        'location',
+        'lat',
+        'lon',
+        'type',
+        'points',
+        'experience',
+        'google_maps_link',
+        'official_website',
+        'score'
+    ]; */
 }
