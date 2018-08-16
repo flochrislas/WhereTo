@@ -4,6 +4,11 @@ use Illuminate\Database\Seeder;
 
 use App\RestaurantTag;
 
+/**
+* Type column is mostly for color in the UI, showing tags about countries or features in different colors.
+* The higher the number, the most important that category/type might be for the users (can be used in ORDER BY)
+* The weight  column is to be able to give more importance to some tags (can be used in ORDER BY)
+*/
 class RestaurantTagsTableSeeder extends Seeder
 {
     /**
@@ -13,250 +18,426 @@ class RestaurantTagsTableSeeder extends Seeder
      */
     public function run()
     {
+        // Clear
         DB::table('restaurant_tags')->delete();
 
+        // Fill
+
+        /******************************************/
+        /*             COUNTRIES                  */
+        /******************************************/
         RestaurantTag::create(array(
-            'label'              => 'italian'
+            'label'              => 'japanese',
+            'type'               => '80',
+            'weight'             => '300'
         ));
 
         RestaurantTag::create(array(
-            'label'              => 'french'
+            'label'              => 'western',
+            'type'               => '80',
+            'weight'             => '300'
         ));
 
         RestaurantTag::create(array(
-            'label'              => 'mexican'
+            'label'              => 'italian',
+            'type'               => '80',
+            'weight'             => '250'
         ));
 
         RestaurantTag::create(array(
-            'label'              => 'indian'
+            'label'              => 'indian',
+            'type'               => '80',
+            'weight'             => '250'
         ));
 
         RestaurantTag::create(array(
-            'label'              => 'vietnamese'
+            'label'              => 'thai',
+            'type'               => '80',
+            'weight'             => '250'
         ));
 
         RestaurantTag::create(array(
-            'label'              => 'turk'
-        ));
+            'label'              => 'chinese',
+            'type'               => '80',
+            'weight'             => '250'
+        ));   
 
         RestaurantTag::create(array(
-            'label'              => 'indonesian'
-        ));
-
-        RestaurantTag::create(array(
-            'label'              => 'american'
-        ));
-
-        RestaurantTag::create(array(
-            'label'              => 'japanese'
-        ));
-
-        RestaurantTag::create(array(
-            'label'              => 'chinese'
-        ));
-
-        RestaurantTag::create(array(
-            'label'              => 'western'
-        ));
-
-        RestaurantTag::create(array(
-            'label'              => 'thai'
+            'label'              => 'french',
+            'type'               => '80',
+            'weight'             => '100'
         ));        
 
         RestaurantTag::create(array(
-            'label'              => 'izakaya'
+            'label'              => 'american',
+            'type'               => '80',
+            'weight'             => '100'
         ));
 
         RestaurantTag::create(array(
-            'label'              => 'fast food'
+            'label'              => 'turk',
+            'type'               => '80',
+            'weight'             => '80'
         ));
 
         RestaurantTag::create(array(
-            'label'              => 'all you can eat'
+            'label'              => 'mexican',
+            'type'               => '80',
+            'weight'             => '100'
         ));
 
         RestaurantTag::create(array(
-            'label'              => 'all you can drink'
+            'label'              => 'spanish',
+            'type'               => '80',
+            'weight'             => '80'
+        ));
+        RestaurantTag::create(array(
+            'label'              => 'vietnamese',
+            'type'               => '80',
+            'weight'             => '50'
         ));
 
         RestaurantTag::create(array(
-            'label'              => 'cafe'
+            'label'              => 'indonesian',
+            'type'               => '80',
+            'weight'             => '50'
+        ));
+        
+        /******************************************/
+        /*             TYPE                       */
+        /******************************************/
+        RestaurantTag::create(array(
+            'label'              => 'fast food',
+            'type'               => '40',
+            'weight'             => '100'
         ));
 
         RestaurantTag::create(array(
-            'label'              => 'authentic'
+            'label'              => 'cafe',
+            'type'               => '40',
+            'weight'             => '100'
         ));
 
         RestaurantTag::create(array(
-            'label'              => 'vegetarian friendly'
+            'label'              => 'teishoku',
+            'type'               => '40',
+            'weight'             => '100'
         ));
 
         RestaurantTag::create(array(
-            'label'              => 'vegan friendly'
+            'label'              => 'izakaya',
+            'type'               => '40',
+            'weight'             => '100'
+        ));
+
+        /******************************************/
+        /*             FEATURES                   */
+        /******************************************/        
+        RestaurantTag::create(array(
+            'label'              => 'filling',
+            'type'               => '60',
+            'weight'             => '100'
         ));
 
         RestaurantTag::create(array(
-            'label'              => 'menu with calories'
+            'label'              => 'small servings',
+            'type'               => '60',
+            'weight'             => '100'
         ));
 
         RestaurantTag::create(array(
-            'label'              => 'menu with allergies'
+            'label'              => 'visa',
+            'type'               => '60',
+            'weight'             => '100'
+        ));
+        RestaurantTag::create(array(
+            'label'              => 'to-go',
+            'type'               => '60',
+            'weight'             => '100'
+        ));
+        RestaurantTag::create(array(
+            'label'              => 'all you can eat',
+            'type'               => '60',
+            'weight'             => '80'
         ));
 
         RestaurantTag::create(array(
-            'label'              => 'customisable dishes'
+            'label'              => 'all you can drink',
+            'type'               => '60',
+            'weight'             => '80'
         ));
 
         RestaurantTag::create(array(
-            'label'              => 'japanese curry'
+            'label'              => 'authentic',
+            'type'               => '60',
+            'weight'             => '80'
         ));
 
         RestaurantTag::create(array(
-            'label'              => 'ramen'
+            'label'              => 'vegetarian friendly',
+            'type'               => '60',
+            'weight'             => '80'
         ));
 
         RestaurantTag::create(array(
-            'label'              => 'tonkotsu'
+            'label'              => 'vegan friendly',
+            'type'               => '60',
+            'weight'             => '80'
         ));
 
         RestaurantTag::create(array(
-            'label'              => 'miso'
+            'label'              => 'menu with calories',
+            'type'               => '60',
+            'weight'             => '80'
         ));
 
         RestaurantTag::create(array(
-            'label'              => 'sukiyaki'
+            'label'              => 'menu with allergies',
+            'type'               => '60',
+            'weight'             => '80'
         ));
 
         RestaurantTag::create(array(
-            'label'              => 'shabushabu'
+            'label'              => 'English menu',
+            'type'               => '60',
+            'weight'             => '90'
         ));
 
         RestaurantTag::create(array(
-            'label'              => 'burger'
+            'label'              => 'customisable dishes',
+            'type'               => '60',
+            'weight'             => '15'
         ));
 
         RestaurantTag::create(array(
-            'label'              => 'pizza'
+            'label'              => 'buffet',
+            'type'               => '60',
+            'weight'             => '20'
         ));
 
         RestaurantTag::create(array(
-            'label'              => 'pasta'
+            'label'              => 'smoking allowed',
+            'type'               => '60',
+            'weight'             => '50'
         ));
 
         RestaurantTag::create(array(
-            'label'              => 'curry'
+            'label'              => 'no smoking',
+            'type'               => '60',
+            'weight'             => '50'
         ));
 
         RestaurantTag::create(array(
-            'label'              => 'sushi'
+            'label'              => 'smoking area',
+            'type'               => '60',
+            'weight'             => '50'
         ));
 
         RestaurantTag::create(array(
-            'label'              => 'gapao'
+            'label'              => 'open air space',
+            'type'               => '60',
+            'weight'             => '50'
+        ));
+
+        /******************************************/
+        /*             DISHES                     */
+        /******************************************/ 
+        RestaurantTag::create(array(
+            'label'              => 'japanese curry',
+            'type'               => '100',
+            'weight'             => '100'
         ));
 
         RestaurantTag::create(array(
-            'label'              => 'omurice'
+            'label'              => 'ramen',
+            'type'               => '100',
+            'weight'             => '100'
         ));
 
         RestaurantTag::create(array(
-            'label'              => 'tenpura'
+            'label'              => 'burger',
+            'type'               => '100',
+            'weight'             => '100'
         ));
 
         RestaurantTag::create(array(
-            'label'              => 'soba'
+            'label'              => 'pizza',
+            'type'               => '100',
+            'weight'             => '100'
         ));
 
         RestaurantTag::create(array(
-            'label'              => 'yakiniku'
+            'label'              => 'pasta',
+            'type'               => '100',
+            'weight'             => '100'
         ));
 
         RestaurantTag::create(array(
-            'label'              => 'okonomiyaki'
+            'label'              => 'curry',
+            'type'               => '100',
+            'weight'             => '100'
         ));
 
         RestaurantTag::create(array(
-            'label'              => 'hamburg'
+            'label'              => 'sushi',
+            'type'               => '100',
+            'weight'             => '100'
         ));
 
         RestaurantTag::create(array(
-            'label'              => 'grill'
+            'label'              => 'gapao',
+            'type'               => '100',
+            'weight'             => '50'
         ));
 
         RestaurantTag::create(array(
-            'label'              => 'karaage'
+            'label'              => 'omurice',
+            'type'               => '100',
+            'weight'             => '45'
         ));
 
         RestaurantTag::create(array(
-            'label'              => 'green curry'
+            'label'              => 'tenpura',
+            'type'               => '100',
+            'weight'             => '45'
         ));
 
         RestaurantTag::create(array(
-            'label'              => 'crepe'
+            'label'              => 'soba',
+            'type'               => '100',
+            'weight'             => '40'
+        ));
+        
+        RestaurantTag::create(array(
+            'label'              => 'noodles',
+            'type'               => '100',
+            'weight'             => '40'
         ));
 
         RestaurantTag::create(array(
-            'label'              => 'galette'
+            'label'              => 'okonomiyaki',
+            'type'               => '100',
+            'weight'             => '30'
         ));
 
         RestaurantTag::create(array(
-            'label'              => 'quiche'
+            'label'              => 'hamburg',
+            'type'               => '100',
+            'weight'             => '30'
         ));
 
         RestaurantTag::create(array(
-            'label'              => 'croque-monsieur'
+            'label'              => 'grill',
+            'type'               => '100',
+            'weight'             => '22'
         ));
 
         RestaurantTag::create(array(
-            'label'              => 'sandwich'
+            'label'              => 'karaage',
+            'type'               => '100',
+            'weight'             => '30'
         ));
 
         RestaurantTag::create(array(
-            'label'              => 'noodles'
+            'label'              => 'green curry',
+            'type'               => '100',
+            'weight'             => '30'
         ));
 
         RestaurantTag::create(array(
-            'label'              => 'gyoza'
+            'label'              => 'crepe',
+            'type'               => '100',
+            'weight'             => '30'
         ));
 
         RestaurantTag::create(array(
-            'label'              => 'dumpling'
+            'label'              => 'galette',
+            'type'               => '100',
+            'weight'             => '30'
         ));
 
         RestaurantTag::create(array(
-            'label'              => 'buffet'
+            'label'              => 'quiche',
+            'type'               => '100',
+            'weight'             => '30'
         ));
 
         RestaurantTag::create(array(
-            'label'              => 'smoking allowed'
+            'label'              => 'croque-monsieur',
+            'type'               => '100',
+            'weight'             => '20'
         ));
 
         RestaurantTag::create(array(
-            'label'              => 'no smoking'
+            'label'              => 'sandwich',
+            'type'               => '100',
+            'weight'             => '30'
         ));
 
         RestaurantTag::create(array(
-            'label'              => 'smoking area'
+            'label'              => 'gyoza',
+            'type'               => '100',
+            'weight'             => '20'
         ));
 
         RestaurantTag::create(array(
-            'label'              => 'open air space'
+            'label'              => 'dumpling',
+            'type'               => '100',
+            'weight'             => '20'
         ));
 
         RestaurantTag::create(array(
-            'label'              => 'visa'
+            'label'              => 'yakitori',
+            'type'               => '100',
+            'weight'             => '11'
         ));
 
         RestaurantTag::create(array(
-            'label'              => 'filling'
+            'label'              => 'kushiage',
+            'type'               => '100',
+            'weight'             => '8'
         ));
 
         RestaurantTag::create(array(
-            'label'              => 'teishoku'
+            'label'              => 'yakiniku',
+            'type'               => '100',
+            'weight'             => '6'
         ));
 
         RestaurantTag::create(array(
-            'label'              => 'small servings'
+            'label'              => 'sukiyaki',
+            'type'               => '100',
+            'weight'             => '5'
+        ));
+
+        RestaurantTag::create(array(
+            'label'              => 'shabushabu',
+            'type'               => '100',
+            'weight'             => '5'
+        ));
+
+        RestaurantTag::create(array(
+            'label'              => 'desert',
+            'type'               => '100',
+            'weight'             => '4'
+        ));
+
+        RestaurantTag::create(array(
+            'label'              => 'hotdog',
+            'type'               => '100',
+            'weight'             => '4'
+        ));
+
+        RestaurantTag::create(array(
+            'label'              => 'tonkotsu',
+            'type'               => '100',
+            'weight'             => '0'
+        ));
+
+        RestaurantTag::create(array(
+            'label'              => 'miso',
+            'type'               => '100',
+            'weight'             => '0'
         ));
 
     }

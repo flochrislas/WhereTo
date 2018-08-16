@@ -17,7 +17,7 @@ php artisan db:seed
 php artisan db:seed --class=UserTableSeeder
 php artisan migrate:refresh --seed
 
-SUPER MAKE
+SUPER MAKE Model, Controller and Migration 
 php artisan make:model -m -c -r Test
 
 TEST
@@ -43,6 +43,13 @@ php artisan --version
 
 Great post on Laravel permissions setting
 https://stackoverflow.com/questions/27674597/laravel-daily-log-created-with-wrong-permissions
+Also, from https://stackoverflow.com/questions/30639174/file-permissions-for-laravel-5-and-others
+sudo chown -R florent:apache /home/florent/git/whereto/source;
+sudo find /home/florent/git/whereto/source -type f -exec chmod 664 {} \;    
+sudo find /home/florent/git/whereto/source -type d -exec chmod 775 {} \;
+sudo chgrp -R apache storage bootstrap/cache;
+sudo chmod -R ug+rwx storage bootstrap/cache;
+
 
 
 PHPUnit tetse with Laravel:
@@ -170,7 +177,7 @@ http://laravel-recipes.com/
 
 
 Making a phone app from laravel app
-website2apk
+website2apk // not recommended
 phonegap
 http://softeng.oicr.on.ca/brice_aminou/2017/03/07/Mobile-app-with-Laravel/
 
@@ -216,3 +223,21 @@ https://stackoverflow.com/questions/8567114/how-to-make-an-ajax-call-without-jqu
 Nodelist
 https://toddmotto.com/a-comprehensive-dive-into-nodelists-arrays-converting-nodelists-and-understanding-the-dom/
 
+AWESOME FLEXIBLE TABLES!
+https://css-tricks.com/accessible-simple-responsive-tables/
+
+LARAVEL APP deploy on prod:
+Shared hosting:
+https://medium.com/laravel-news/the-simple-guide-to-deploy-laravel-5-application-on-shared-hosting-1a8d0aee923e
+https://www.5balloons.info/hosting-laravel-5-5-project-on-shared-hosting-hostgator/
+AWS (via cloudaway)
+https://www.cloudways.com/blog/install-laravel-on-aws/
+Official AWS Elastic BEANSTALK
+https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/php-laravel-tutorial.html
+more
+https://medium.com/@idelara/step-by-step-guide-manually-deploying-a-laravel-app-running-on-lemp-to-an-aws-ec2-lightsail-d4792fd5c920
+https://medium.com/sk-geek/deploy-laravel-app-to-elastic-beanstalk-amazon-ec2-6cdff6689347
+
+
+Make an app (full screen web browser technique)
+https://softeng.oicr.on.ca/brice_aminou/2017/03/07/Mobile-app-with-Laravel/

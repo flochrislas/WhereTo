@@ -2,11 +2,21 @@
 
 NEXT UP
 
-CACHE
-USE coordiantes to find closeest places
+Architecture:
+- Analytics: Google Analytics
+- Enhancement: register domainname in CloudFlare OR Fastly
+
+Administration: Get a fre Virtual Private Server somewhere (or at first it could be jsut some local html files in my VM and phone) and setup dashboard: link to googl eanalitics, cloudflare, OVH, AWS, other tools and monitoring, suc has ping, speed, new relic, nagios, is it up etc... also adds tab for all my hosted services, old google blog, free arda website .. and drives  dropbox, mega uplaod ... 
+
+Note: VPS used by sam and nathan : https://www.vultr.com/pricing/
+For website hosting: dreamhost (nathan)
+FOR SSL CERT:  let's encrypt
+or get a free one from GS
+
 USE TIME  : make function isLunchTime or getTiming returns lunch(lunch) evening(diner, bar, clubs) morning afternoon (shopping)
 use getMeteo
 
+Models for dark interface: Gitkraken, Steam, files app on my android
 -----
 App
 Name whereTo, lunchTime
@@ -43,6 +53,10 @@ Lunch time: most regular restaurants open between 11:30 and 3pm for lunch. Lots 
 FAIRE DEFILER les details a travers les resultats  upon swipe droite gauche
 
 afficher les filtres actif et tap remove et bouton filter pour en ajouter en retournant sur la pages des tags
+
+DB extension: similar to restaurants, but for shopping, karaoke, bars, clubs, hotels, studio, loto, money exchange, atm
+WhatsNext extension: gives user amazing ideas he can do next (from the place he is visiting, given his history, the time, info he gave in his profile etc...)
+Ashigo Extension: 
 
 -----------
 
@@ -99,7 +113,20 @@ the one front koban with VR floor
 3rd VR
 games: Yamanote train simulator, music games, racing, shoot, Tekken7, cards, gundam... old stuff, nothing interesting
 
+electronics shopping
 
+cloth shopping men / women
+
+
+OTHER idea to make little monery:
+
+print tshit
+	bible theme "dont drown the swines/no drowning swines, swines protection league", "no cursing on fig trees (even if hungry)- organization for the protection of fig trees"
+	"where is sataoshi - i am not satoshi"
+print stickers for headphones: "Jesus? I don't hear <i>Him</i> coming."
+
+
+upload photos on photo repo website
 --------------------------------------------------------------------------------------------------------------
 
 In the code, filter blade page:
@@ -161,3 +188,22 @@ In the code, filter blade page:
 <p>cheapest first</p>
 
 --------------------------------------------------------------------------------------------------------------
+
+free fonts
+https://www.fontsquirrel.com/
+
+
+------
+Awesome tooltip trick using CSS only
+https://codepen.io/team/css-tricks/pen/RPmpYa
+https://stackoverflow.com/questions/22559756/changing-hover-to-touch-click-for-mobile-devices
+cool style
+https://codepen.io/cristina-silva/pen/XXOpga
+
+new
+https://inspirationalpixels.com/tooltips-in-pure-htmlcss/
+
+LIMIT tags selection to 5
+
+GEOSPATIAL laravel 5.6 neighborhood, maybe useful for WhatsNext?
+https://medium.com/@brice_hartmann/getting-started-with-geospatial-data-in-laravel-94502dc74d55

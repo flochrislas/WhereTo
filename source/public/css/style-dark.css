@@ -6,18 +6,65 @@ Element selection:
 (): HTML tag. ex: div{}
 (#): HTML tag's ID (only one ID per tag)
 (.): HTML tag's class (multiple classes per tag is OK)
+em: size against the current/parent elemt
+rem: size against the root element (html, or else browser setting)
+
+CSS properties browser prefixes:
+https://autoprefixer.github.io/
+
 */
+
+/*********************************************/
+/*            FONTS 		                 */
+/*********************************************/
+
+/* open-sans-regular - latin */
+@font-face {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Open Sans Regular'), local('OpenSans-Regular'),
+       url('../fonts/open-sans-v15-latin-regular.woff2') format('woff2'), /* Super Modern Browsers */
+       url('../fonts/open-sans-v15-latin-regular.woff') format('woff'), /* Modern Browsers */
+       url('../fonts/open-sans-v15-latin-regular.ttf') format('truetype'), /* Safari, Android, iOS */
+       url('../fonts/open-sans-v15-latin-regular.svg#OpenSans') format('svg'); /* Legacy iOS */
+}
+
 
 /*********************************************/
 /*            GLOBAL STUFF                   */
 /*********************************************/
 
+/* CSS parameters */
+/* values can be call with "var(--varName)" */
+/* needs double dashes */
+/* How to set / get from JS: https://stackoverflow.com/questions/41370741/how-do-i-edit-a-css-variable-using-js */
+:root {
+    --bg-color-outter: black;
+    --bg-color-inner: #141422; /* almost black */
+    --bg-color-cell: #262633; /* light black */
+    --color-txt-default: #CAD0AF; /* grey 2 */
+    --color-name: #69e2b3; /* green */
+    --color-type: #45C3EC; /* blue */ 
+    --color-dst: rgb(249, 239, 193); /* yellow */
+    --color-cost: #5FE18B; /* lighter green */
+    --color-lunch: #3AD46E; /* green */
+    --color-food: #3BA1C3; /* blue2 */
+    --color-place: #5EB7D4; /* lighter blue2 */
+    --color-price: #6C80DB; /* purple */
+    --color-date: #98A7EA; /* lighter purple */
+}
+
 html, body {
+  height: 100%; /* needed for proper layout (?) */
   background-color: black;
-  font-family: 'Open Sans',sans-serif;
-  font-size: 80%;
-  /*color: #d0d0d2;*/ /* grey */
-  color: #CAD0AF; /* grey 2 */
+  font-family: 'Open Sans', sans-serif;
+  color: var(--color-txt-default); /* grey 2 */
+}
+
+body {
+  /* Allows for fixed header and footer (no scroll) */
+  overflow: hidden;
 }
 
 div, nav {
@@ -26,7 +73,7 @@ div, nav {
 }
 
 a {
-  color: rgb(249, 239, 193);
+  color: var(--color-dst);
 }
 
 h1, h2, h3 {
@@ -34,8 +81,8 @@ h1, h2, h3 {
 }
 
 td {
-	/*background-color: rgba(20,146,135,.5); // dark emerald */
-  background-color: #262633; /* light black */
+  /*background-color: rgba(20,146,135,.5); // dark emerald */
+  background-color: var(--bg-color-cell); /* light black */
 }
 
 /*********************************************/
@@ -43,13 +90,26 @@ td {
 /*********************************************/
 
 #app {
-  margin: 0;
+  /* 0 auto makes the div centered on screen */
+  margin: 0 auto;
   padding: 0;
+  max-width: 40rem;
+  height: 100%; /* needed for proper layout (?) */
+  /* Flex container properties to organize content */
+  display: flex;
+  flex-direction: column;
 }
 
+/*********************************************/
+/*            header                         */
+/*********************************************/
+
 #header {
-	margin: .1em;
-  margin-bottom: 1em;
+  margin: .1rem;
+  margin-bottom: .4rem;
+  /* Flex properties for fixed header */
+  flex: 0 0 auto;
+  /* Flex container properties */
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -63,23 +123,54 @@ td {
 }
 
 #header .right {
-  flex: 1;div, nav {
-/*  border: yellow solid;
-  border-width: 1px;*/
-}
+  flex: 1;
   display: flex;
   flex-direction: row;
   justify-content: space-around;
   align-items: center;
 }
 
-#header div {
-  flex: 1;
+#header a {
+  margin: 0 .35rem;
 }
 
+.tap {
+  background-color: #3BA0C3;
+  border-color: var(--color-type);
+  border-style:  solid;
+  border-width: .2rem;
+  border-radius: 1rem;
+  color: black;
+  font-size: .87rem;flex: 0 0 auto;
+  text-align: center;
+  text-decoration: none;
+  padding: .4rem .6rem;
+  white-space: nowrap;
+  /* Prevent background color leak outs */
+  -webkit-background-clip: padding-box;
+  -moz-background-clip:    padding;
+  background-clip:         padding-box;
+  overflow: hidden;
+}
+
+.title {
+  color: var(--color-type);
+  font-size: 1.52rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+/*********************************************/
+/*            footer                         */
+/*********************************************/
+
 #footer {
-	margin: .1em;
-  margin-top: 2em;
+  margin: .7rem;
+  margin-top: .185rem;
+  font-size: .65rem;
+  /* Flex properties for fixed footer */
+  flex: 0 0 auto;
+  /* Flex container properties */
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -90,24 +181,615 @@ td {
   display: inline;
 }
 
+/*********************************************/
+/*            content                        */
+/*********************************************/
+
 #content {
-  background-color: #141422; /* almost black */
-  margin: .1em;
-	color: #d0d0d2;
+  background-color:  var(--bg-color-inner) ; /* almost black */
+  margin: .1rem;
+  color: #d0d0d2;
+  /* Flex properties to work with fixed header and footer */
+  flex: 1 1 auto;
+  position: relative; /* need this to position inner content */
+  overflow-y: auto;
+  /* Flex container properties */
   display: flex;
   flex-direction: column;
+
+}
+
+/*********************************************/
+/*            Home screen                   */
+/*********************************************/
+.grid {
+  flex: 0 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+}
+/* all the children of the grid */
+.grid>* {
+  /*flex: 1 1 auto;*/
+  min-width: 6rem;
+  max-width: 6rem;
+  min-height: 6.6rem;
+  max-height: 6.6rem;
+  padding: 1.8rem 1rem;
+  margin: .5rem .5rem;
+  font-size: 1.2rem;
+}
+.giantButton {
+  color: black;
+  font-weight: 600;
+  text-align: center;
+  background-color: #3BA0C3;
+  border-color: var(--color-type);
+  border-style: solid;
+  border-width: .37rem;
+  border-radius: 1rem;
+  text-decoration: none;
+  white-space: wrap;
+}
+.locked {
+  background-color: #7e7e7e;
+  border-color: #545454; /* a01453 */
+  border-style: dashed;
+}
+.purchasePrice {
+	font-style: italic;
+	font-size: 1rem;
+	color: #545454;
+	margin-top: .46rem;
+}
+.purchasePrice::after {
+	content: '\00a5';
+}
+
+/*********************************************/
+/*            RESTAURANTS FILTER             */
+/*********************************************/
+#restaurantsFilter {
+  /* Allows for fixed element*/
+  overflow: hidden;
+  height: 100%; /* needed for proper layout (?) */
+  /* Flex container properties to organize content */
+  display: flex;
+  flex-direction: column;
+}
+
+#restaurantsResults {
+  /* hide by default, flex for display */
+  display: none;
+  font-size: .8rem;
+  /* Allows for fixed element*/
+  overflow: hidden;
+  height: 100%; /* needed for proper layout (?) */
+  flex-direction: column;
+}
+
+/*********************************************/
+
+#tagsTop {
+  /* Flex properties to be fixed */
+  flex: 0 0 auto;
+}
+
+#tagsTop p {
+  margin: .4rem;
+  margin-top: .12rem;
+  font-size: .8rem;
+}
+
+#filterHeader {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+#filterHeaderTitle {
+  flex: initial;
+  margin: .5rem .38rem;
+  color: var(--color-type);
+  font-size: .94rem;
+  font-weight: 700;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+#filterHeaderButton {
+  flex: auto;
+  margin: .6rem;
+}
+/*********************************************/
+/*            RESTAURANTS TAGS               */
+/*********************************************/
+/** tag's container */
+#tags {
+  /* Flex properties to work with fixed header */
+  flex: 1 1 auto;
+  position: relative; /* need this to position inner content */
+  overflow-y: auto;
+}
+
+/** a restaurant tag */
+.tag {
+  /* block */
+  display: inline-block;
+  cursor: pointer;
+  border-style: solid;
+  border-width: .2rem;
+  border-color: var(--color-type);
+  background-color: #3BA0C3;
+  margin: .4rem .15rem;
+  padding: .8rem 1.15rem;
+  /* text */
+  font-family: 'ITCAvantGardeStdBk', sans-serif;
+  color: #000000;
+  font-size: .8rem;
+  font-weight: 500;
+  text-decoration: none;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.tagType100 {
+  /* blue 1 */
+  border-color: #8ED1E7;
+  background-color: var(--color-place);
+}
+
+.tagType80 {
+  /* green */
+  border-color: var(--color-cost);
+  background-color: var(--color-lunch);
+  /* background-color: #3BA011; */
+}
+
+.tagType60 {
+  /* purpule */
+  border-color: var(--color-date);
+  background-color: var(--color-price);
+}
+
+.tagType40 {
+  /* blue 2 */
+  border-color: var(--color-place);
+  background-color: var(--color-food);
+}
+
+/* Palette picker */
+/* http://www.paletton.com/#uid=53p0u0knbGWcNSPiwMKr+Bny4to */
+
+/*********************************************/
+/*            RESTAURANTS RESULTS            */
+/*********************************************/
+
+#resultsTop {
+  /* Flex properties to be fixed */
+  flex: 0 0 auto;
+}
+
+#results {
+  /* Flex properties to work with fixed header */
+  flex: 1 1 auto;
+  position: relative; /* need this to position inner content */
+  overflow-y: auto;
+}
+
+#resultsControl {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  justify-content: flex-start;
+  text-decoration: none;
+  margin: .3rem .05rem;
+}
+
+.sortButton {
+  flex: initial;
+  font-size: .82rem;
+  font-weight: 600;
+  line-height: 1.37;
+  padding: .59rem .44rem;
+  margin: 0 .25rem;
+}
+
+.navButton {
+  flex: auto;
+  margin: 0 .25rem;
+}
+
+.restaurantName {
+  font-weight: 100;
+  color: var(--color-name);
+  text-decoration: none;
+}
+
+.restaurantType {
+  font-weight: 50;
+  color: var(--color-type);
+}
+
+#resultsEnd {
+  margin-top: .55rem;
+  margin-bottom: .1rem;
+}
+
+.oneDigit {
+  font-weight: 600;
+  text-align: center;
+}
+
+.fourDigits {
+  min-width: 2.2rem;
+  min-width: 4.4ch;
+  font-weight: 600;
+  text-align: right;
+}
+
+.fourDigitsAdjust {
+}
+
+.distanceAdjust {
+  min-width: 2rem;
+}
+
+.inline {
+	display: inline;
+}
+
+.minute {
+  font-size: .8rem;
+  margin-left: .25rem;
+  margin-right: .25rem;
+}
+
+/***************************/
+/*  Flexible Results List  */
+
+.resultTable {
+  display: flex;
+  flex-direction: column;
+}
+.resultRow {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  justify-content: flex-start;
+  margin-bottom: .2rem;
+}
+.resultRow.header {
+  /*max-height: 3rem;*/
+  margin-top: .5rem;
+  margin-bottom: .3rem;
+}
+.resultCell {
+  flex: 1;
+  background-color: var(--bg-color-cell);
+  text-align: center;
+  padding: .2rem .15rem;;
+}
+.resultCell.nameAndType {
+  flex: 4;
+  text-align: left;
+  margin-right: .1rem;
+}
+.resultCell.nameAndType a {
+  text-decoration: none;
+}
+.resultCell.distance {
+  margin-right: .1rem;
+}
+.resultCell .score {
+  font-size: .85rem;
+}
+.resultTable .label {
+  font-weight: 100;
+  font-size: .76rem;;
+  font-size: calc(1.5vw + 1vh);
+}
+
+.resultsCounter {
+  /* invisible markup used for counting */
+  display: none;
+}
+
+/*********************************************/
+/*            RESTAURANTS DETAILS            */
+/*********************************************/
+
+#detailTitle {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  justify-content: flex-start;
+  margin: .3rem .05rem;
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+#detailName {
+  /* occupies largest space in the row */
+  flex: auto;
+  /* To center the content vertically */
+  display: flex;
+  align-items: center;
+  padding: .4rem .5rem;
+  border-color: var(--color-name);
+  border-width: .2rem;
+}
+
+#detailType {
+  /* occupies smallest space in the row */
+  flex: 0;
+  /* To center the content vertically */
+  display: flex;
+  align-items: center;
+  margin: 0 .35rem;
+  padding: .4rem .5rem;
+  border-color: #20968b;
+  border-width: .18rem;
+}
+
+#detailLocation {
+  /* occupies smallest space in the row */
+  flex: 0;
+  /* To center the content vertically */
+  display: flex;
+  align-items: center;
+  padding: .4rem .5rem;
+  border-color: #20968b;
+  border-width: .12rem;
+  font-weight: 500;
+  font-size: .8rem;
+}
+
+.detailRow {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  justify-content: flex-start;
+  margin: .3rem .05rem;
+  font-size: 1rem;
+  font-weight: 400;
+}
+
+.detail {
+  flex: 1 1 auto;
+  margin: 0 .2rem;
+  padding: .4rem .5rem;
+  border-color: #20968b;
+  border-width:.1rem;
+  border-style:solid;
+  text-decoration: none;
+  white-space: normal;
+  overflow: visible;
+}
+
+.detail .tag {
+  margin: .18rem .15rem;
+  padding: .65rem .67rem;
+  font-size: .75rem;
+}
+
+.detail.cost {
+  border-width: .2rem;
+  border-color: var(--color-cost);
+  /* To center the content vertically */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.detailRow .score {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.score .label {
+  font-size: .7rem;
+  margin: .01rem;
+}
+
+.score .grade {
+
+}
+
+.score .grade::first-letter {
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.centered {
+  text-align: center;
+}
+
+.justified {
+  text-align: justify;
+  text-justify: auto;
+}
+
+.mysteryDot {
+  color: red;
+  font-weight: 600;
+  margin: .1rem auto;
+}
+
+.detail.score.lunch {
+    border-color: var(--color-lunch);
+    border-width: .2rem;
+}
+
+.detail.score.food {
+    border-color: var(--color-food);
+    border-width: .15rem;
+}
+
+.detail.score.place {
+    border-color: var(--color-place);
+}
+
+.detail.score.price {
+    border-color: var(--color-price);
+}
+
+.detail.score.date {
+    border-color: var(--color-date);
+}
+
+/*********************************************/
+/*                TOOLTIPS                    /
+/*********************************************/
+/*
+* Main inspiration: https://codepen.io/team/css-tricks/pen/RPmpYa;
+* NEW LINE: content: "line1 \A line2", or
+* content: attr(attrName) needs to use &#xa; in its text
+*/
+/*********************************************/
+/*           Absolute Tooltip                 /
+/*********************************************/
+div[absolute-tooltip] {
+}
+div[absolute-tooltip]:after {
+  /* read from html attribute */
+  content: attr(absolute-tooltip);
+  /* enable new lines in content */
+  white-space: pre;
+  /* ensure absolute-tooltip visible above other elements */
+  z-index: 9;
+  visibility: visible;
+  /* colors */
+  background: #20968b; /* nice orange #ffcb66; */
+  color: black;
+  padding: .4rem .75rem;
+  opacity: 0;
+  /* positioning */
+  position: absolute;
+  top: 4.1rem;
+  left:.2rem;
+  height:4.1rem;
+  width:91%;
+  /* rounded edges */
+  border-radius: 2px;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  -ms-border-radius: 2px;
+  -o-border-radius: 2px;
+  /* transition */
+  transition: all 0.5s ease;
+  -webkit-transition: all 0.5s ease;
+  -moz-transition: all 0.5s ease;
+  -ms-transition: all 0.5s ease;
+  -o-transition: all 0.5s ease;
+}
+div[absolute-tooltip]:before {
+  /* hide absolute-tooltip */
+  content: "";
+  width: 0;
+  height: 0;
+  opacity: 0;
+  /* triangle pointer */
+  position: absolute;
+  top: 9rem;
+  border-top: 1rem solid #20968b; /* nice orange #ffcb66; */
+  border-left: 1rem solid transparent;
+  border-right: 1rem solid transparent;
+  /* triangle transition */
+  transition: all 0.5s ease;
+  -webkit-transition: all 0.5s ease;
+  -moz-transition: all 0.5s ease;
+  -ms-transition: all 0.5s ease;
+  -o-transition: all 0.5s ease;
+}
+div[absolute-tooltip]:hover:after,
+div[absolute-tooltip]:active:after {
+  bottom: 100%;
+}
+div[absolute-tooltip]:hover:before,
+div[absolute-tooltip]:active:before  {
+  bottom: 70%;
+}
+div[absolute-tooltip]:hover:after,
+div[absolute-tooltip]:active:after,
+div[absolute-tooltip]:hover:before,
+div[absolute-tooltip]:active:before {
+  opacity: 0.95;
+}
+
+/*********************************************/
+/*            Tooltip overlay                */
+/*********************************************/
+
+div[overlay] {
+	display: inline-block;/*bug fix*/
+	position: relative;
+	text-decoration: none;
+}
+div[overlay]:after {
+  /* read from html attribute */
+  content: attr(overlay);
+  /* enable new lines in content */
+  white-space: pre;
+  /* ensure overlay visible above other elements */
+  z-index: 2;
+  visibility: visible;
+  /* colors */
+  background: #20968b;
+  color: black;
+  padding: 5px 15px;
+  opacity: 0;
+  /* positioning */
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  /* transition */
+  transition: all 0.5s ease;
+  -webkit-transition: all 0.5s ease;
+  -moz-transition: all 0.5s ease;
+  -ms-transition: all 0.5s ease;
+  -o-transition: all 0.5s ease;
+}
+div[overlay]:before {
+  /* hide overlay */
+  content: "";
+  width: 0;
+  height: 0;
+  opacity: 0;
+  position: absolute;
+  left: 0%;
+  bottom: 0%;
+}
+div[overlay]:hover:after,
+div[overlay]:active:after {
+	top: 0;
+	bottom:0;
+	right: 0;
+	left:0;
+	opacity:0;
+}
+div[overlay]:hover:before,
+div[overlay]:active:before  {
+	bottom: 0%;
+}
+div[overlay]:hover:after,
+div[overlay]:active:after,
+div[overlay]:hover:before,
+div[overlay]:active:before {
+	opacity: 0.94;
 }
 
 /*********************************************/
 /*            GENERAL CLASSES                */
 /*********************************************/
 
-.center {
-   justify-content: center;
-   align-content: center;
-   align-items: center;
-   margin: auto;
-   text-align: center;
+.centerContent {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .inline {
@@ -123,125 +805,15 @@ td {
 }
 
 .green {
-  color: #69e2b3;
+  color: var(--color-name);
 }
 
 .blue {
-  color: #45c3ec;
+  color: var(--color-type);
 }
 
-.teal {border-width:2px;
-  color: #20968b;border-width:2px;
-}
-
-/*********************************************/
-/*            TITLE BAR                      */
-/*********************************************/
-
-.tap {
-    background-color: #3BA0C3;
-    border-color: #45C3EC;
-    border-style:  solid;
-    border-width: .2em;
-    border-radius: 1em;
-    color: black;
-    text-align: center;
-    text-decoration: none;
-    padding: .7em 1.15em;
-    margin: 0;
-    white-space: nowrap;
-
-    /* Prevent background color leak outs */
-    -webkit-background-clip: padding-box;
-    -moz-background-clip:    padding;
-    background-clip:         padding-box;
-    overflow: hidden;
-}
-
-.title {
-  font-family: 'ITCAvantGardeStdBk', sans-serif;
-  color: #45C3EC;
-  font-size: 2em;
-  font-weight: 700;
-  text-decoration: none;
-}
-
-/*********************************************/
-/*            RESTAURANTS FILTER             */
-/*********************************************/
-#restaurantsFilter {
-
-}
-
-#restaurantsResults {
-  display: none;
-}
-
-#nameAndType a {
-  font-family: 'ITCAvantGardeStdBk', sans-serif;
-  color: #45C3EC;
-  text-decoration: none;
-}
-
-.restaurantName {
-  font-family: 'ITCAvantGardeStdBk', sans-serif;
-  color: #69e2b3;
-  font-size: 1em;
-  font-weight: 100;
-  text-decoration: none;
-}
-
-.restaurantType {
-  font-family: 'ITCAvantGardeStdBk', sans-serif;
-  color: #45C3EC;
-  font-size: 1em;
-  font-weight: 50;
-}
-
-#filterHeader {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-}
-
-#filterHeaderTitle {
-  margin: .5em;
-  color: #45C3EC;
-  text-decoration: none;
-  font-size: .942666666666667rem;
-  padding: .7em 1.15em;
-  font-weight: 700;
-  white-space: nowrap;
-  cursor: pointer;
-}
-
-#filterHeaderButton {
-  margin: .5em;
-}
-/*********************************************/
-/** RESTAURANT TAGS */
-/** tag's container */
-#tags {}
-/** a restaurant tag */
-.tag {
-  /* block */
-  display: inline-block;
-  cursor: pointer;
-  border-style: solid;
-  border-width: .2em;
-  border-color: #45C3EC;
-  background-color: #3BA0C3;
-  margin: .55em;
-  padding: .8em 1.15em;
-  /* text */
-  font-family: 'ITCAvantGardeStdBk', sans-serif;
-  color: #000000;
-  font-size: 1em;
-  font-weight: 500;
-  text-decoration: none;
-  text-align: center;
-  white-space: nowrap;
-
+.teal {
+  color: #20968b;
 }
 
 /*******************************************************/
@@ -249,14 +821,13 @@ td {
 /*******************************************************/
 
 .button--basic {
-
 	 display:inline-block;
-	 line-height:1;
-	 padding:.7em 1.15em;
+	 /*line-height:1;*/
+	 padding:.7rem 1.15rem;
 	 text-align:center;
 	 font-weight:700;
 	 text-decoration:none;
-	 white-space:nowrap;
+	 /* white-space:nowrap; */
 	 border-radius:3px;
 	 cursor:pointer;
 	 border-width:2px;
@@ -270,7 +841,7 @@ td {
    border:1px solid #e6542b
 }
 .button--basic:active,.button--basic:focus,.button--basic:hover {
- color:#141422;
+ color: var(--bg-color-inner) ;
  background-color:#e65425;
  border:1px solid #e6542b
 }
@@ -280,17 +851,15 @@ td {
  border:1px solid #e6542b
 }
 
-
-
 .button,button {
  display:inline-block;
- font-size:.942666666666667rem;
- line-height:1;
- padding:.7em 1.15em;
+ font-size:.86rem;
+ /*line-height:1;*/
+ padding: .62rem .8rem;
  text-align:center;
  font-weight:700;
  text-decoration:none;
- white-space:nowrap;
+ /* white-space:nowrap; */
  border-radius:3px;
  cursor:pointer;
  border-width:2px;
@@ -324,124 +893,4 @@ td {
  opacity:.5;
  -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
  filter:alpha(opacity=50)
-}
-.button--small {
- font-size:.75rem
-}
-.button--large {
- font-size:1.414rem
-}
-.button__subtext {
- display:block;
- font-size:60%;
- text-align:center;
- padding-top:1em;
- text-transform:uppercase
-}
-.button--full-width {
- display:block;
- width:100%;
- padding-left:0;
- padding-right:0
-}
-.button--basic:focus.disabled:focus,.button--basic:focus:focus,.button--basic:focus[disabled]:focus,.button--basic:hover.disabled:focus,.button--basic:hover:focus,.button--basic:hover[disabled]:focus {
- color:#141422
-}
-.button--basic:focus.disabled,.button--basic:focus[disabled],.button--basic:hover.disabled,.button--basic:hover[disabled] {
- color:#141422;
- background-color:rgba(216,193,58,.7);
- border-color:#d8c13a
-}
-.button--neutral {
- color:#141422;
- background-color:rgba(132,132,139,.7);
- border-color:#84848b
-}
-.button--neutral:focus.disabled:focus,.button--neutral:focus:focus,.button--neutral:focus[disabled]:focus,.button--neutral:hover.disabled:focus,.button--neutral:hover:focus,.button--neutral:hover[disabled]:focus {
- color:#141422
-}
-.button--neutral:focus,.button--neutral:hover {
- color:#141422;
- background-color:#84848b;
- border-color:#84848b
-}
-.button--neutral:focus.disabled,.button--neutral:focus[disabled],.button--neutral:hover.disabled,.button--neutral:hover[disabled] {
- color:#141422;
- background-color:rgba(132,132,139,.7);
- border-color:#84848b
-}
-.button--subdued {
- color:#d8c13a;
- background-color:transparent;
- border-color:#262633
-}
-.button--subdued:focus.disabled:focus,.button--subdued:focus[disabled]:focus,.button--subdued:hover.disabled:focus,.button--subdued:hover[disabled]:focus {
- color:#d8c13a
-}
-.button--subdued:focus,.button--subdued:hover {
- color:#e0cd61;
- background-color:#262633;
- border-color:#262633
-}
-.button--subdued:focus:focus,.button--subdued:hover:focus {
- color:#e0cd61
-}
-.button--subdued:focus.disabled,.button--subdued:focus[disabled],.button--subdued:hover.disabled,.button--subdued:hover[disabled] {
- color:#d8c13a;
- background-color:transparent;
- border-color:#262633
-}
-.button--primary {
- color:#141422;
- background-color:rgba(69,195,236,.8);
- border-color:#45c3ec
-}
-.button--primary:focus.disabled:focus,.button--primary:focus:focus,.button--primary:focus[disabled]:focus,.button--primary:hover.disabled:focus,.button--primary:hover:focus,.button--primary:hover[disabled]:focus {
- color:#141422
-}
-.button--primary:focus,.button--primary:hover {
- color:#141422;
- background-color:#45c3ec;
- border-color:#45c3ec
-}
-.button--primary:focus.disabled,.button--primary:focus[disabled],.button--primary:hover.disabled,.button--primary:hover[disabled] {
- color:#141422;
- background-color:rgba(69,195,236,.8);
- border-color:#45c3ec
-}
-.button--success {
- color:#141422;
- background-color:rgba(90,168,75,.7);
- border-color:#5aa84b
-}
-.button--success:focus.disabled:focus,.button--success:focus:focus,.button--success:focus[disabled]:focus,.button--success:hover.disabled:focus,.button--success:hover:focus,.button--success:hover[disabled]:focus {
- color:#141422
-}
-.button--success:focus,.button--success:hover {
- color:#141422;
- background-color:#5aa84b;
- border-color:#5aa84b
-}
-.button--success:focus.disabled,.button--success:focus[disabled],.button--success:hover.disabled,.button--success:hover[disabled] {
- color:#141422;
- background-color:rgba(90,168,75,.7);
- border-color:#5aa84b
-}
-.button--danger {
- color:#141422;
- background-color:rgba(240,74,67,.7);
- border-color:#f04a43
-}
-.button--danger:focus.disabled:focus,.button--danger:focus:focus,.button--danger:focus[disabled]:focus,.button--danger:hover.disabled:focus,.button--danger:hover:focus,.button--danger:hover[disabled]:focus {
- color:#141422
-}
-.button--danger:focus,.button--danger:hover {
- color:#141422;
- background-color:#f04a43;
- border-color:#f04a43
-}
-.button--danger:focus.disabled,.button--danger:focus[disabled],.button--danger:hover.disabled,.button--danger:hover[disabled] {
- color:#141422;
- background-color:rgba(240,74,67,.7);
- border-color:#f04a43
 }

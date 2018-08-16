@@ -174,7 +174,7 @@ class RestaurantsTableSeeder extends Seeder
             'score_price'       => 2,
             'score_date'        => 0
         ));
-        $resto->attachTags(['burger', 'fast food']);
+        $resto->attachTags(['burger','fast food','to-go','visa']);
         $resto->fillCoordinatesFromString('35.660876, 139.698979');
 
         $resto = Restaurant::create(array(
@@ -195,16 +195,16 @@ class RestaurantsTableSeeder extends Seeder
             'score_price'       => 0,
             'score_date'        => 0
         ));
-        $resto->attachTags(['burger', 'fast food']);
+        $resto->attachTags(['burger','fast food','to-go','visa']);
         $resto->fillCoordinatesFromString('35.660390, 139.699116');
 
         $resto = Restaurant::create(array(
             'name'              => 'Taco Bell',
-            'location'          => 'Shibuya',
-            'type'              => 'Tacos',
+            'location'          => 'Shibuya, Dogenzaka',
+            'type'              => 'Mexican',
             'lunch_price'       => 900,
             'points'            => 'Mexican style fast food, mostly buritos and tacos. Possibility to choose beef porc or chicken for the meat.',
-            'experience'        => 'Quite good, but it could be cheaper.',
+            'experience'        => 'Quite good, but it could be cheaper. Interior is just decent for a fast-food, but music is quite shitty.',
             'visited'           => true,
             'visit_date'        => '2017-09-05 13:00:00',
             'google_maps_link'  => 'https://www.google.co.jp/maps/place/Taco+Bell+Shibuya+Dogenzaka/@35.6599248,139.6954865,17z/data=!4m12!1m6!3m5!1s0x60188ca9be0b957f:0xa34dd8d7530b5518!2sTaco+Bell+Shibuya+Dogenzaka!8m2!3d35.6599248!4d139.6976752!3m4!1s0x60188ca9be0b957f:0xa34dd8d7530b5518!8m2!3d35.6599248!4d139.6976752',
@@ -216,7 +216,7 @@ class RestaurantsTableSeeder extends Seeder
             'score_price'       => 1,
             'score_date'        => 0
         ));
-        $resto->attachTags(['mexican', 'fast food']);
+        $resto->attachTags(['mexican','fast food','to-go','visa']);
         $resto->fillCoordinatesFromString('35.660199, 139.697664');
 
         $resto = Restaurant::create(array(
@@ -230,7 +230,7 @@ class RestaurantsTableSeeder extends Seeder
             'visit_date'        => '2017-09-05 13:00:00',
             'google_maps_link'  => 'https://www.google.co.jp/maps/place/Kebab+Cafe/@35.660247,139.6970756,21z/data=!4m5!3m4!1s0x60188ca99be93651:0x461c229b06865bd9!8m2!3d35.6603228!4d139.6971273',
             'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13120406/',
-            'official_website'  => null,
+            'official_website'  => 'https://kebabcafe.jimdo.com/',
             'score_lunch'       => 3,
             'score_place'       => 1,
             'score_food'        => 2,
@@ -242,15 +242,15 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create(array(
             'name'              => 'Coco Ichi',
-            'location'          => 'Shibuya, Cerulean Tower',
+            'location'          => 'Shibuya, Sakuragaokacho',
             'type'              => 'Japanese curry',
             'lunch_price'       => 900,
-            'points'            => 'Highly customizable japanese curry. Very delicious. Counter only.',
+            'points'            => 'Highly customizable Japanese curry. Very delicious. Counter only.',
             'experience'        => 'Once you find the right combination for you, it can be really delicious. I personally have "chicken katsu (deepfried) curry + nasu (eggplants) + cheese, ichi-kara (spicy level 1)". English menu is available.',
             'visited'           => true,
             'visit_date'        => '2017-09-05 13:00:00',
             'google_maps_link'  => 'https://www.google.co.jp/maps/place/CoCo%E5%A3%B1%E7%95%AA%E5%B1%8B+%E6%B8%8B%E8%B0%B7%E5%8C%BA%E6%A1%9C%E4%B8%98%E7%94%BA%E5%BA%97/@35.6569245,139.6982403,17z/data=!4m12!1m6!3m5!1s0x60188b579e0464dd:0x5838a075cb9595d6!2zQ29Db-WjseeVquWxiyDmuIvosLfljLrmoZzkuJjnlLrlupc!8m2!3d35.6569245!4d139.700429!3m4!1s0x60188b579e0464dd:0x5838a075cb9595d6!8m2!3d35.6569245!4d139.700429',
-            'tabelog_link'      => null,
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13161408/',
             'official_website'  => 'http://tenpo.ichibanya.co.jp/search/shop/pc/detail.php?SCODE=2678',
             'score_lunch'       => 4,
             'score_place'       => 1,
@@ -258,7 +258,7 @@ class RestaurantsTableSeeder extends Seeder
             'score_price'       => 1,
             'score_date'        => 0
         ));
-        $resto->attachTags(['japanese curry']);
+        $resto->attachTags(['japanese curry','to-go','visa','English menu','customisable dishes','no smoking']);
         $resto->fillCoordinatesFromString('35.657260, 139.700408');
 
         $resto = Restaurant::create(array(
@@ -266,7 +266,7 @@ class RestaurantsTableSeeder extends Seeder
             'location'          => 'Shibuya, Udagawacho',
             'type'              => 'Japanese curry',
             'lunch_price'       => 900,
-            'points'            => 'Highly customizable japanese curry. Very delicious. Counter and tables.',
+            'points'            => 'Highly customizable Japanese curry. Very delicious. Counter and tables.',
             'experience'        => 'Once you find the right combination for you, it can be really delicious. I personally have "chicken katsu (deepfried) curry + nasu (eggplants) + cheese, ichi-kara (spicy level 1)". English menu is available.',
             'visited'           => true,
             'visit_date'        => '2017-09-05 13:00:00',
@@ -279,28 +279,28 @@ class RestaurantsTableSeeder extends Seeder
             'score_price'       => 1,
             'score_date'        => 0
         ));
-        $resto->attachTags(['japanese curry']);
+        $resto->attachTags(['japanese curry','to-go','visa','English menu','customisable dishes','no smoking']);
         $resto->fillCoordinatesFromString('35.660804, 139.699485');
 
         $resto = Restaurant::create(array(
             'name'              => 'Jonathan\'s',
-            'location'          => 'Shibuya, Cerulean',
+            'location'          => 'Shibuya',
             'type'              => 'Family restaurant',
             'lunch_price'       => 900,
-            'points'            => 'wide choice of dishes, also deserts, comfortable',
-            'experience'        => 'good',
+            'points'            => 'Family restaurant with a wide choice of dishes, Japanese and western styles, also deserts.',
+            'experience'        => 'Quite comfortable place. Food is very decent. Drink bar (unlimited soft drinks) available for cheap. Kids menu available.',
             'visited'           => true,
             'visit_date'        => '2017-09-05 13:00:00',
             'google_maps_link'  => 'https://www.google.co.jp/maps/place/Jonathan\'s/@35.6555207,139.6999556,18.75z/data=!4m12!1m6!3m5!1s0x60188b5ba1d0dd99:0xdad1c25747467595!2sJonathan\'s!8m2!3d35.654701!4d139.705094!3m4!1s0x60188b5745d1a4dd:0xb23984f5a40be1ec!8m2!3d35.6557358!4d139.700456',
-            'tabelog_link'      => '',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13097970/',
             'official_website'  => 'http://www.skylark.co.jp/jonathan/index.html',
-            'score_lunch'       => 1,
+            'score_lunch'       => 2,
             'score_place'       => 1,
             'score_food'        => 1,
             'score_price'       => 1,
-            'score_date'        => 1
+            'score_date'        => 0
         ));
-        $resto->attachTags(['western']);
+        $resto->attachTags(['western','visa']);
         $resto->fillCoordinatesFromString('35.655863, 139.700487');
 
         $resto = Restaurant::create(array(
@@ -313,7 +313,7 @@ class RestaurantsTableSeeder extends Seeder
             'visited'           => true,
             'visit_date'        => '2017-09-05 13:00:00',
             'google_maps_link'  => 'https://www.google.co.jp/maps/place/CONA+%E6%B8%8B%E8%B0%B7%E5%BA%97/@35.6589355,139.6984178,18z/data=!4m5!3m4!1s0x60188b562b7be10f:0x5deeb948e867ca8!8m2!3d35.6586609!4d139.6986567',
-            'tabelog_link'      => '',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13059175/',
             'official_website'  => 'http://www.candy-box.jp/shop/cona/',
             'score_lunch'       => 1,
             'score_place'       => 0,
@@ -328,8 +328,8 @@ class RestaurantsTableSeeder extends Seeder
             'name'              => 'Ayung Teras',
             'location'          => 'Shibuya',
             'type'              => 'Indonesian',
-            'points'            => 'nice table, nie restaurant, decent food and drinks',
-            'experience'        => 'decent. had a nice evening there dining with 4 people',
+            'points'            => 'Nice table, nie restaurant, decent food and drinks',
+            'experience'        => 'Decent. I had a nice evening there dining with 4 people',
             'visited'           => true,
             'visit_date'        => '2017-09-05 13:00:00',
             'google_maps_link'  => 'https://www.google.co.jp/maps/place/Ayung+Teras/@35.6552693,139.7003887,19.75z/data=!4m5!3m4!1s0x60188b574c9611e9:0x46aa4f4ee0d6c8e1!8m2!3d35.6550962!4d139.7003701',
@@ -347,15 +347,15 @@ class RestaurantsTableSeeder extends Seeder
         $resto = Restaurant::create(array(
             'name'              => 'M-SPO cafe dining',
             'location'          => 'Shibuya, Udagawacho',
-            'type'              => 'pasta',
+            'type'              => 'Pasta',
             'lunch_price'       => 500,
-            'points'            => 'super cheap pizza or pasta, wide and dark sports bar (no windows) with sports video playing on many walls.',
+            'points'            => 'Super cheap pizza or pasta, wide and dark sports bar (no windows) with sports video playing on many walls.',
             'experience'        => 'I don\'t really like this dark, no windows bar atmosphere, playing cheesy music, and I don\'t enjoy watching sports on TV. The pizza marguerita was pretty much tasteless. Other than that service fast, table and room spacious, and super cheap...',
             'visited'           => true,
             'visit_date'        => '2017-09-05 13:00:00',
             'google_maps_link'  => 'https://www.google.co.jp/maps/place/M-SPO+cafe+dining/@35.6591098,139.6984993,17z/data=!4m5!3m4!1s0x60188ca910dcc451:0x66845d8439f43f38!8m2!3d35.6617719!4d139.6980353',
-            'tabelog_link'      => '',
-            'official_website'  => '',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13039686/',
+            'official_website'  => 'https://m-spo.jp/',
             'score_lunch'       => 1,
             'score_place'       => 1,
             'score_food'        => 1,
@@ -368,7 +368,7 @@ class RestaurantsTableSeeder extends Seeder
         $resto = Restaurant::create(array(
             'name'              => 'Go Go Curry',
             'location'          => 'Shibuya, Udagawacho',
-            'type'              => 'japanese curry',
+            'type'              => 'Japanese curry',
             'lunch_price'       => 850,
             'points'            => 'chain restaurant a bit similar to cocoichi. customizable japanese curry, counter and small tables, basement floor',
             'experience'        => 'Good alternative to cocoichi. Less customizable, less options, but less expensive as well. Not really spicy, but good japanese curry. I enjoyed my chiken katsu with cheese. Basement is not very glamorous, but for a lunch it\'s OK. Loyalty System: Point card. 5 times: free toping. 10 times: free curry.',
@@ -389,10 +389,10 @@ class RestaurantsTableSeeder extends Seeder
         $resto = Restaurant::create(array(
             'name'              => 'Nice Pizza/Pasta restaurant',
             'location'          => 'Shibuya, Udagawacho',
-            'type'              => 'pizza/pasta/salad',
+            'type'              => 'Italian',
             'lunch_price'       => 1000,
             'points'            => '9th floor with nice large bay windows, spacious room with large tables. Real pizza oven. 1000yen menu set with a drink, bowl of soup, large salad, and large pizza. music playing, boom boom type, a bit loud but OK if you are alone.',
-            'experience'        => 'loved the room. fast service. Taste was bland (marguerita). The deco is all fine except for that reindeer\'s head sprouting out of a column for no apparent reason',
+            'experience'        => 'loved the room. fast service. Taste was bland (marguerita). The deco is all fine except for that reindeer\'s head sprouting out of a column for no apparent reasons.',
             'visited'           => true,
             'visit_date'        => '2017-09-05 13:00:00',
             'google_maps_link'  => '',
@@ -409,15 +409,15 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create(array(
             'name'              => 'Matsuya',
-            'location'          => 'down the street from the office , with music shop, amp and drums, Floor: 1F, Windows: yes',
-            'type'              => 'Japanese fast food',
+            'location'          => 'Shibuya, Sakuragaokacho',
+            'type'              => 'Japanese fast-food',
             'lunch_price'       => 600,
             'points'            => 'Fast and good. Has counter and tables. Choice of curry or gyudon dishes.',
             'experience'        => 'I got a hamburger curry, it was really cheap and really good. Came fast too. Perfect for a quick meal, but not very glamorous.',
             'visited'           => true,
             'visit_date'        => '2017-09-05 13:00:00',
             'google_maps_link'  => 'https://www.google.co.jp/maps/place/Matsuya/@35.6590574,139.6984172,17z/data=!4m5!3m4!1s0x60188b59d831819b:0x71cfd0feb05de6ba!8m2!3d35.6571851!4d139.7015798',
-            'tabelog_link'      => '',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13125238/',
             'official_website'  => 'https://www.matsuyafoods.co.jp/',
             'score_lunch'       => 2,
             'score_place'       => 1,
@@ -433,8 +433,8 @@ class RestaurantsTableSeeder extends Seeder
             'location'          => 'Shibuya',
             'type'              => 'Mazesoba',
             'lunch_price'       => 800,
-            'points'            => 'Special ramen without soup.',
-            'experience'        => 'Mind blowingly delicious. Meat is awesome, smokey taste, and in large quantity. The shoyu base sauce is delicious. Large counter. Japanese reggai music, not too loud. Extremely small stools. Avoid the ramen, way less delicious than the mazesoba. So you know that restaurant created by the gods in an expirement to feed mere mortals divine food? Shichi? Well it seems like, as in any gods stories, one of them was evil and planted a not-so-divine dish in the menu. I unveiled it and am here to warn you: if, for any unimaginable reasons, you still havent been there, when go, do NOT order the ramen. Stick with the mazu soba. And about the place itself, it is narrow, stools are uncomfortable, it is cold in winter... but it is all forgiven after tasting their food.',
+            'points'            => 'Divine mazesoba/aburasoba (soupless ramen).',
+            'experience'        => 'Mind blowingly delicious. Meat is awesome, smokey taste, and in large quantity. The shoyu base sauce is delicious. Large counter. Japanese reggai music, not too loud. Extremely small stools. Inside is cold in winter. Avoid the ramen, way less delicious than the mazesoba. That restaurant has most likely been created by the gods in an expirement to feed mere mortals divine food.',
             'visited'           => true,
             'visit_date'        => '2017-09-05 13:00:00',
             'google_maps_link'  => 'https://www.google.co.jp/maps/place/%E3%81%BE%E3%81%9C%E3%81%9D%E3%81%B0%E4%B8%83/@35.6582661,139.6984915,17.5z/data=!4m5!3m4!1s0x60188b57612e0f6b:0x129cb60f35f3f7ca!8m2!3d35.6566223!4d139.7010507',
@@ -446,7 +446,7 @@ class RestaurantsTableSeeder extends Seeder
             'score_price'       => 2,
             'score_date'        => 0
         ));
-        $resto->attachTags(['maze soba', 'abura soba', 'ramen']);
+        $resto->attachTags(['maze soba', 'abura soba', 'ramen','noodles']);
         $resto->fillCoordinatesFromString('35.656633, 139.701051');
 
         $resto = Restaurant::create(array(
@@ -488,21 +488,21 @@ class RestaurantsTableSeeder extends Seeder
             'score_price'       => 2,
             'score_date'        => 0
         ));
-        $resto->attachTags(['karaage']);
+        $resto->attachTags(['karaage','to-go']);
         $resto->fillCoordinatesFromString('35.660329, 139.699224');
 
         $resto = Restaurant::create(array(
-            'name'              => 'Mangako thai chicken rice',
+            'name'              => 'Khao Man Gai',
             'location'          => 'Shibuya',
             'type'              => 'Thai',
             'lunch_price'       => 800,
-            'points'            => 'supposedly famous chicken rice',
-            'experience'        => 'I\'ve been told there were a thai restaurant chain in Shibuya serving chicken rice, and EVEN in Thailand, there were a line. So I went there, and arrived shortly in front a restaurant exposing dead chicken on its facade. No line. I go inside, and its small and crappy, with shitty music on the top. I order the famous chicken rice, for an outstanding 800yen. It comes quickly, with a soup (hot water) and some sauce (like sweet chinese shoyu with a touch of vinegar). The amount is ridiculously small (note that you could double it for 400yen). What\'s more, the chicken is actually half chicken, half chicken skin. I eat, nothing special at all. Rice is not really good. Chicken is nice and soft and tasteless, for the few bites I had on it. The sauce was good. Oh, and surprisingly enough, it also came with a mini-bucket full of pakuchi... this stuff is usually expensive here. And that was it, EXTREMELY disapointed. I felt robbed. Of my money. My time. My hopes. And still hungry.',
+            'points'            => 'Supposedly famous chicken rice',
+            'experience'        => 'I\'ve been told there were a thai restaurant in Shibuya serving chicken rice, and that it was a popular chain from Thailand or something. So I went there, and arrived shortly in front a restaurant exposing dead chicken on its facade. No line. I go inside, and its small and crappy, with shitty music on the top. I order the famous chicken rice, for an outstanding 800yen. It comes quickly, with a soup (hot water) and some sauce (like sweet chinese shoyu with a touch of vinegar). The amount is ridiculously small (note that you could double it for 400yen). What\'s more, the chicken is actually half chicken, half chicken skin. I eat, nothing special at all. Rice is not really good. Chicken is nice and soft and tasteless, for the few bites I had on it. The sauce was good. Oh, and surprisingly enough, it also came with a mini-bucket full of pakuchi... this stuff is usually expensive here. And that was it, EXTREMELY disapointed. I felt robbed. Of my money. My time. My hopes. And still hungry.',
             'visited'           => true,
             'visit_date'        => '2017-09-05 13:00:00',
             'google_maps_link'  => 'https://www.google.co.jp/maps/place/%E0%B8%A3%E0%B9%89%E0%B8%B2%E0%B8%99%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B8%A1%E0%B8%B1%E0%B8%99%E0%B9%84%E0%B8%81%E0%B9%88/@35.6584854,139.6999814,17z/data=!4m5!3m4!1s0x60188b5b85ab031f:0x35b195078881d9ca!8m2!3d35.6558927!4d139.7055917',
-            'tabelog_link'      => '',
-            'official_website'  => '',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13168980/',
+            'official_website'  => 'http://raan-kaithong-pratunam.jp/',
             'score_lunch'       => 0,
             'score_place'       => 0,
             'score_food'        => 1,
@@ -644,8 +644,8 @@ class RestaurantsTableSeeder extends Seeder
             'location'          => 'Shibuya',
             'type'              => 'Indian curry',
             'lunch_price'       => 900,
-            'points'            => 'Sucked',
-            'experience'        => 'Worst indian curry ever. When I first discovered indian curry near my office in setagaya-daita, it blew my mind so hard I ate it almost everyday. I just could not imagine eating anythnig else. Then years passed, I realized not all restaurants were equals, but still indian curry was always rhytming with delicious, greatly enjoyable meal. Then I worked in aoyama icchome and realized that the world can be a cold and heartless place. The indian food there was bland. Bland AF. Then I finally escaped what I thought was the darkest pit of restaurant and companies\' hell. To Shibuya! Surely one of the most amazing place to stroll for restaurants, and other things... But like in any movies and relationships, after all looked so perfect, something ugly, something world breaking happens and it all goes to shit. I ended up to Samrat shibuya today, and it sucked like I never thought it could suck. New low for indian curry, and a new addition to the collection of my most depressing experience in the world. Everything was bad, the interior was horrid, the nan was horribly oily, and the curry was doubtlessly the worst I ever had (and I asked for an easy one, the keema), the service, the atmosphere, the dirtiness... While eating I was just thinking at how fast I wanted to leave, and never come back.',
+            'points'            => 'Do not go there.',
+            'experience'        => 'Worst indian curry in existence. When I first discovered indian curry, around shimokitazawa, it blew my mind so hard I ate it almost everyday. I just could not imagine eating anything else. Then years passed, I realized not all restaurants were equals, but still indian curry was always rhytming with delicious, greatly enjoyable meal. Then I went around aoyama and realized that the world can be a cold and heartless place. The indian food there was bland. Bland AF. Then I moved on to leave what I thought was the darkest pit of restaurant\'s hell. To Shibuya! Surely one of the most amazing place to stroll for restaurants, and other things... But like in any movies and relationships, after all looked so perfect, something ugly, something world breaking happens and it all goes to shit. I ended up in Samrat shibuya today, and it sucked like I never thought it could suck. New low for indian curry, and a new addition to the collection of my most depressing experience in the world. Everything was bad, the interior was horrid, the nan was horribly oily, and the curry was doubtlessly the worst I ever had (and I asked for an easy one, the keema), the service, the atmosphere, the dirtiness... While eating I was just thinking at how fast I wanted to leave, and never come back. Ever.',
             'visited'           => true,
             'visit_date'        => '2017-09-05 13:00:00',
             'google_maps_link'  => 'https://www.google.co.jp/maps/place/SAMRAT/@35.6593532,139.6980944,17z/data=!4m8!1m2!2m1!1ssamrat!3m4!1s0x60188ca9130c3be3:0x3ab72d1dff12516c!8m2!3d35.6617765!4d139.6978047',
@@ -678,7 +678,7 @@ class RestaurantsTableSeeder extends Seeder
             'score_price'       => 0,
             'score_date'        => 0
         ));
-        $resto->attachTags(['burger','fast food']);
+        $resto->attachTags(['burger','fast food','to-go','visa']);
         $resto->fillCoordinatesFromString('35.659218, 139.697821');
 
         $resto = Restaurant::create(array(
@@ -746,14 +746,14 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create(array(
             'name'              => 'Fujisoba',
-            'location'          => 'Shibuya, in front of big bic camera',
-            'type'              => 'soba udon katsudon',
+            'location'          => 'Shibuya',
+            'type'              => 'Japanese fast-food',
             'lunch_price'       => 750,
             'points'            => 'Decent sets. Fast food style. Narrow counter only. Buy at machine, get your set on a plate and find somewhere to sit.',
-            'experience'        => 'Fast and cheap, and decent. I tried the zaru soba + katsudon for 750 yen. Made me full OK. Definitely not delicious, but decent.',
+            'experience'        => 'Fast and cheap, and decent. I tried the zaru soba + katsudon for 750 yen. Made me full OK. Definitely not delicious, but decent. There are many Fujisoba joints, this one was the one in front of the big Bic Camera on the Hikarie\'s side of Shibuya.',
             'visited'           => true,
             'visit_date'        => '2017-09-05 13:00:00',
-            'google_maps_link'  => '',
+            'google_maps_link'  => 'https://www.google.co.jp/maps/place/Fuji+Soba/@35.6601748,139.7003162,17z/data=!3m1!4b1!4m5!3m4!1s0x60188b580c9bf44f:0xf0aaf9378e534638!8m2!3d35.6601748!4d139.7025102',
             'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13103625/dtlmap/',
             'official_website'  => 'http://fujisoba.co.jp/',
             'score_lunch'       => 1,
@@ -788,16 +788,16 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create(array(
             'name'              => 'iBeer',
-            'location'          => 'Hikarie building 7F',
+            'location'          => 'Shibuya, Hikarie 7F',
             'type'              => 'Italian',
             'lunch_price'       => 1000,
             'points'            => 'Open space restaurant in nice Hikarie 7F. Busy floor, but nice setting. A bit expensive, but one of the cheapest restaurant in the building.',
-            'experience'        => '1162 yen Pasta Set with Salad + bread + organic tomatoe avocado pasta. Nice salad, hot bread, and very, very good pasta. I would go as far as to call the pasta "exquisite". I also liked the setting, tables and chairs.',
+            'experience'        => '1162 yen Pasta Set with Salad + bread + organic tomato avocado pasta. Nice salad, hot bread, and very, very good pasta. I would go as far as to call the pasta "exquisite". I also liked the setting, tables and chairs.',
             'visited'           => true,
             'visit_date'        => '2017-09-05 13:00:00',
             'google_maps_link'  => 'https://www.google.co.jp/maps/place/iBeer+Le+Sun+Palm/@35.659252,139.6999228,17z/data=!3m1!5s0x60188b58f894f891:0xa230d50aab3d69e4!4m8!1m2!2m1!1siBeer!3m4!1s0x0:0xe0dfc9c31b013e93!8m2!3d35.659052!4d139.7037091',
             'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13169825/',
-            'official_website'  => '',
+            'official_website'  => 'https://www.facebook.com/%E3%82%A2%E3%82%A4%E3%83%93%E3%82%A2%E3%83%BC%E3%83%AB%E3%82%B5%E3%83%B3%E3%83%91%E3%83%BC%E3%83%A0-588128561304666/',
             'score_lunch'       => 2,
             'score_place'       => 2,
             'score_food'        => 2,
@@ -838,7 +838,7 @@ class RestaurantsTableSeeder extends Seeder
             'visited'           => true,
             'visit_date'        => '2017-09-05 13:00:00',
             'google_maps_link'  => 'https://www.google.co.jp/maps/place/Guzman+y+Gomez+%E6%B8%8B%E8%B0%B7%E5%BA%97/@35.662334,139.7004488,19z/data=!4m12!1m6!3m5!1s0x60188ca88131ea95:0x111613650b9602bd!2zR3V6bWFuIHkgR29tZXog5riL6LC35bqX!8m2!3d35.662334!4d139.700996!3m4!1s0x60188ca88131ea95:0x111613650b9602bd!8m2!3d35.662334!4d139.700996',
-            'tabelog_link'      => '',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13213810/',
             'official_website'  => 'http://gyg.jp/',
             'score_lunch'       => 2,
             'score_place'       => 0,
@@ -846,7 +846,7 @@ class RestaurantsTableSeeder extends Seeder
             'score_price'       => 0,
             'score_date'        => 0
         ));
-        $resto->attachTags(['mexican']);
+        $resto->attachTags(['mexican','to-go','visa']);
         $resto->fillCoordinatesFromString('35.662400, 139.700988');
 
         $resto = Restaurant::create(array(
@@ -875,18 +875,18 @@ class RestaurantsTableSeeder extends Seeder
             'location'          => 'Shibuya, 3Chome',
             'type'              => 'Indian',
             'lunch_price'       => 980,
-            'points'            => 'Dark place on a 4th floor. Menu offers mostly indian curry sets, but also thai and pizza. Place doesnt look busy and there is a good amount of tables, so might be easy for large groups.',
-            'experience'        => 'I tried the pizza+salad for 980yen. They have a real pizza oven to the crust was tasty from the wood fire. But other than that, it was quite plain. A lot of cheese on it though, so it made me well full. Salad was like the salad you get in a curry restaurant. The drink as well. I did not like how dark was the place. And the price was not cheap. So I won\'t be back. Fun note: the elevator to get there is extremely slow.',
+            'points'            => 'Dark place on a 4th floor. Menu offers mostly indian curry sets, but also thai and pizza. The place does not look busy and there is a good amount of tables, so might be easy for large groups.',
+            'experience'        => 'I tried the pizza+salad for 980yen. They have a real pizza oven to the crust was tasty from the wood fire. But other than that, it was quite plain. A lot of cheese on it though, so it made me well full. Salad was like the salad you get in a curry restaurant. The drink as well. I did not like how dark was the place. And the price was not cheap. So I won\'t be back. Fun note: the elevator to get there is really extremely slow.',
             'visited'           => true,
             'visit_date'        => '2017-09-05 13:00:00',
             'google_maps_link'  => 'https://www.google.co.jp/maps/place/VERDE+%E3%83%B4%E3%82%A7%E3%83%AB%E3%83%87+%E6%B8%8B%E8%B0%B7%E5%BA%97/@35.6590104,139.6992206,17.25z/data=!4m5!3m4!1s0x60188b599e9b7543:0xf6253420bcfbe3f5!8m2!3d35.6572417!4d139.7036924',
-            'tabelog_link'      => '',
-            'official_website'  => '',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13144985/',
+            'official_website'  => 'https://www.hotpepper.jp/strJ001044855/',
             'score_lunch'       => 1,
             'score_place'       => 1,
             'score_food'        => 1,
             'score_price'       => 1,
-            'score_date'        => 1
+            'score_date'        => 0
         ));
         $resto->attachTags(['indian', 'curry', 'pizza']);
         $resto->fillCoordinatesFromString('35.657515, 139.703662');
@@ -896,18 +896,18 @@ class RestaurantsTableSeeder extends Seeder
             'location'          => 'Shibuya, Sakuragaokacho',
             'type'              => 'Thai',
             'lunch_price'       => 980,
-            'points'            => 'gapao',
-            'experience'        => 'very small tables, for most of them. Gapao was OK, came with good soup and small salad, from 980yen.',
+            'points'            => 'Decent Thai restaurant.',
+            'experience'        => 'Very small tables, for most of them. Gapao was OK, came with good soup and small salad, from 980yen (which is not a really good deal).',
             'visited'           => true,
             'visit_date'        => '2017-09-05 13:00:00',
             'google_maps_link'  => 'https://www.google.co.jp/maps/place/Gapao+Shokud%C5%8D/@35.6578467,139.6987192,17.25z/data=!4m5!3m4!1s0x0:0xfdfd8b7f19684676!8m2!3d35.6555029!4d139.701378',
-            'tabelog_link'      => '',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13174303/',
             'official_website'  => 'https://shibuya-gapaoshokudo.owst.jp/',
-            'score_lunch'       => 1,
+            'score_lunch'       => 2,
             'score_place'       => 1,
             'score_food'        => 1,
             'score_price'       => 1,
-            'score_date'        => 1
+            'score_date'        => 0
         ));
         $resto->attachTags(['thai']);
         $resto->fillCoordinatesFromString('35.655802, 139.701326');
@@ -917,20 +917,20 @@ class RestaurantsTableSeeder extends Seeder
             'location'          => 'Ebisu',
             'type'              => 'Burger',
             'lunch_price'       => 2000,
-            'points'            => 'expensive wagyu beef burgers, nice place',
-            'experience'        => 'very good burger. Customizable. Expensive.',
+            'points'            => 'Expensive wagyu beef burgers, nice place.',
+            'experience'        => 'Very good burgers. Customizable. Expensive. The interior is cool and eating there is a nice experience.',
             'visited'           => true,
             'visit_date'        => '2017-09-05 13:00:00',
             'google_maps_link'  => 'https://www.google.co.jp/maps/place/BLACOWS/@35.652128,139.7005291,16z/data=!4m12!1m6!3m5!1s0x60188b43edf2af03:0xd017aeed6fd54147!2sBLACOWS!8m2!3d35.649399!4d139.7070914!3m4!1s0x60188b43edf2af03:0xd017aeed6fd54147!8m2!3d35.649399!4d139.7070914',
             'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130302/13096437/',
             'official_website'  => 'http://www.kuroge-wagyu.com/bc/',
-            'score_lunch'       => 1,
-            'score_place'       => 1,
-            'score_food'        => 1,
-            'score_price'       => 1,
+            'score_lunch'       => 2,
+            'score_place'       => 2,
+            'score_food'        => 2,
+            'score_price'       => 0,
             'score_date'        => 1
         ));
-        $resto->attachTags(['burger', 'western']);
+        $resto->attachTags(['burger', 'western', 'customisable dishes']);
         $resto->fillCoordinatesFromString('35.649922, 139.707031');
 
         $resto = Restaurant::create(array(
@@ -1035,7 +1035,7 @@ class RestaurantsTableSeeder extends Seeder
             'score_price'       => 1,
             'score_date'        => 0
         ));
-        $resto->attachTags(['burger']);
+        $resto->attachTags(['burger','to-go','visa']);
         $resto->fillCoordinatesFromString('35.659356, 139.698361');
 
         $resto = Restaurant::create(array(
@@ -1056,7 +1056,7 @@ class RestaurantsTableSeeder extends Seeder
             'score_price'       => 1,
             'score_date'        => 1
         ));
-        $resto->attachTags(['western']);
+        $resto->attachTags(['western','american','mexican']);
         $resto->fillCoordinatesFromString('35.662745, 139.700018');
 
         $resto = Restaurant::create(array(
@@ -1375,27 +1375,6 @@ class RestaurantsTableSeeder extends Seeder
         $resto->fillCoordinatesFromString('35.660891, 139.704722');
 
         $resto = Restaurant::create(array(
-            'name'              => 'Ramen center gai',
-            'location'          => 'Shibuya, Udagawacho',
-            'type'              => 'Ramen',
-            'lunch_price'       => 900,
-            'points'            => '',
-            'experience'        => '',
-            'visited'           => true,
-            'visit_date'        => '2018-01-26 13:00:00',
-            'google_maps_link'  => '',
-            'tabelog_link'      => '',
-            'official_website'  => '',
-            'score_lunch'       => 2,
-            'score_place'       => 1,
-            'score_food'        => 1,
-            'score_price'       => 1,
-            'score_date'        => 0
-        ));
-        $resto->attachTags(['ramen']);
-        $resto->fillCoordinatesFromString('');
-
-        $resto = Restaurant::create(array(
             'name'              => 'Hagare',
             'location'          => 'Shibuya',
             'type'              => 'Italian',
@@ -1461,14 +1440,14 @@ class RestaurantsTableSeeder extends Seeder
         $resto = Restaurant::create(array(
             'name'              => 'Fujisoba',
             'location'          => 'Shibuya',
-            'type'              => 'Soba',
+            'type'              => 'Japanese fast-food',
             'lunch_price'       => 750,
-            'points'            => 'Kinda of japanese fast food, serving katsudon and soba dishes and sets. Place is not so bad. Food is not so good. Prices are cheap. Service is fast.',
+            'points'            => 'Kinda of japanese fast-food, serving katsudon and soba dishes and sets. Place is not so bad. Food is not so good. Prices are cheap. Service is fast.',
             'experience'        => 'Place is better than some other establishments of the same chain. They have tables in addition of counter. Katsudon is decent, but soba and rice were below average in my opinion.',
             'visited'           => true,
             'visit_date'        => '2018-01-26 13:00:00',
             'google_maps_link'  => 'https://www.google.co.jp/maps/place/Fuji+Soba/@35.660332,139.6975356,17z/data=!4m5!3m4!1s0x60188ca967b100e3:0x683e6960657664e6!8m2!3d35.6614936!4d139.6967719',
-            'tabelog_link'      => '',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13060781/',
             'official_website'  => 'http://fujisoba.co.jp/',
             'score_lunch'       => 1,
             'score_place'       => 1,
@@ -1548,13 +1527,13 @@ class RestaurantsTableSeeder extends Seeder
             'location'          => 'Shibuya',
             'type'              => 'Western',
             'lunch_price'       => 1000,
-            'points'            => 'Very good.',
-            'experience'        => 'Very good.',
+            'points'            => 'Nice restaurant with various European style food (and home made burgers).',
+            'experience'        => 'Interior is nice and makes for a comfortable lunch. Tables only, 2 floors. They have quite fancy, and good burgers. Each time you go they give you one special coin (one per person). With 2 coins you can get a free coffee and desert.',
             'visited'           => true,
             'visit_date'        => '2018-02-15 13:00:00',
             'google_maps_link'  => 'https://www.google.co.jp/maps/place/Brasserie+%E3%82%A2%E3%83%87%E3%83%8B%E3%82%A2/@35.6568269,139.6996218,17z/data=!4m5!3m4!1s0x60188b5120875043:0x5c8bb3d4b989d422!8m2!3d35.653414!4d139.6988064',
-            'tabelog_link'      => '',
-            'official_website'  => '',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13139147/',
+            'official_website'  => 'http://www.adenia.jp/',
             'score_lunch'       => 3,
             'score_place'       => 2,
             'score_food'        => 2,
@@ -1566,11 +1545,11 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create(array(
             'name'              => 'Pota Pasta',
-            'location'          => 'Shibuya',
+            'location'          => 'Shibuya, Dogenzaka',
             'type'              => 'Pasta',
-            'lunch_price'       => 1000,
+            'lunch_price'       => 600,
             'points'            => 'Decent pasta. Cheap price. Fast service. Narrow counter only.',
-            'experience'        => '600 for decent size pasta dish. Nice. Choice between thick or thin spagethi. The counter is really narrow but in front of a window. Pasta come fast. Unfortunately, my tomato mozzarella pasta kind of lacked taste. Still, decent, and a good deal.',
+            'experience'        => '600yen for decent size pasta dish. Nice. Choice between thick or thin spagethi. The counter is really narrow but in front of a window. Food comes fast. Unfortunately, my tomato mozzarella pasta kind of lacked taste. Still, decent, and a good deal. Another time I got small serving of arabiata for 480yen, and it was quite good.',
             'visited'           => true,
             'visit_date'        => '2018-02-20 13:00:00',
             'google_maps_link'  => 'https://www.google.co.jp/maps/place/POTA+PASTA+%E6%B8%8B%E8%B0%B7%E5%BA%97/@35.6585489,139.6984537,18z/data=!4m5!3m4!1s0x60188b57d475e281:0x267d9086f80cb4dc!8m2!3d35.6587047!4d139.6989325',
@@ -1835,7 +1814,7 @@ class RestaurantsTableSeeder extends Seeder
             'score_price'       => 0,
             'score_date'        => 0
         ));
-        $resto->attachTags(['burger','sandwich']);
+        $resto->attachTags(['burger','sandwich','to-go','visa']);
         $resto->fillCoordinatesFromString('35.6605744,139.7053451,22');
 
         $resto = Restaurant::create(array(
@@ -1987,8 +1966,8 @@ class RestaurantsTableSeeder extends Seeder
         $resto->fillCoordinatesFromString('35.660501, 139.699428');
 
         $resto = Restaurant::create(array(
-            'name'              => '',
-            'location'          => 'Shibuya',
+            'name'              => 'Hanoi no Hoi San',
+            'location'          => 'Shibuya, Sakuragaokacho',
             'type'              => 'Vietnamese',
             'lunch_price'       => 950,
             'points'            => 'Good Vietnamese dishes, customizable sets, decent prices and decent place.',
@@ -1996,7 +1975,7 @@ class RestaurantsTableSeeder extends Seeder
             'visited'           => true,
             'visit_date'        => '2018-04-03 13:00:00',
             'google_maps_link'  => 'https://www.google.com/maps/place/Hanoi+no+Hoi-san+%E3%83%8F%E3%83%8E%E3%82%A4%E3%81%AE%E3%83%9B%E3%82%A4%E3%81%95%E3%82%93/@35.6579689,139.7011462,18z/data=!4m5!3m4!1s0x60188b575cf41757:0x7eb6060afb8be20!8m2!3d35.6561919!4d139.7008321',
-            'tabelog_link'      => '',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13126583/',
             'official_website'  => 'http://www.hoi-san.com/',
             'score_lunch'       => 2,
             'score_place'       => 1,
@@ -2130,7 +2109,7 @@ class RestaurantsTableSeeder extends Seeder
             'score_price'       => 0,
             'score_date'        => 0
         ));
-        $resto->attachTags(['burger']);
+        $resto->attachTags(['burger','american','to-go','visa']);
         $resto->fillCoordinatesFromString('35.659714, 139.700917');
 
         $resto = Restaurant::create(array(
@@ -2260,12 +2239,12 @@ class RestaurantsTableSeeder extends Seeder
         $resto->fillCoordinatesFromString('35.658763, 139.697123');
 
         $resto = Restaurant::create(array(
-            'name'              => 'Mistu-Fuji Diner',
+            'name'              => 'Mistu-Fuji Dining',
             'location'          => 'Shibuya',
-            'type'              => 'Teishoku',
+            'type'              => 'Izakaya',
             'lunch_price'       => 850,
-            'points'            => 'Clean Japanese diner restaurant, casually opened for lunch.',
-            'experience'        => 'I had a avocado and mashed tuna on rice, with some shiso leaves and spices, it was absolutely delicious. Some pickles and miso soup on the side.',
+            'points'            => 'Clean Japanese isakaya restaurant, casually opened for lunch. 100 yen discount on everything after 13:30.',
+            'experience'        => 'Tables. Some music playing, a TV is on as well. Free refill for rice. I had a avocado and mashed tuna on rice, with some shiso leaves and spices, it was absolutely delicious. Some pickles and miso soup on the side. I had this after 13:30 so it cost me only 750yen, which is awesome.',
             'visited'           => true,
             'visit_date'        => '2018-06-27 13:00:00',
             'google_maps_link'  => 'https://www.google.co.jp/maps/place/%E3%83%9F%E3%83%84%E3%83%95%E3%82%B8%E3%83%80%E3%82%A4%E3%83%8B%E3%83%B3%E3%82%B0+%7C+%E6%B8%8B%E8%B0%B7%E9%A7%85+%E5%B1%85%E9%85%92%E5%B1%8B+%E5%92%8C%E9%A3%9F+%7C+%E3%81%97%E3%82%83%E3%81%B6%E3%81%97%E3%82%83%E3%81%B6+%E5%A5%B3%E5%AD%90%E4%BC%9A+%E5%AE%B4%E4%BC%9A+%E8%AA%95%E7%94%9F%E6%97%A5%E4%BC%9A+%E8%A5%BF%E5%8F%A3/@35.6581514,139.6991014,17z/data=!4m5!3m4!1s0x0:0xbb0d1f999517a9d6!8m2!3d35.6573233!4d139.697712',
@@ -2277,7 +2256,7 @@ class RestaurantsTableSeeder extends Seeder
             'score_price'       => 1,
             'score_date'        => 0
         ));
-        $resto->attachTags(['teishoku','japanese']);
+        $resto->attachTags(['teishoku','japanese','izakaya','no smoking']);
         $resto->fillCoordinatesFromString('35.657316, 139.697756');
 
         $resto = Restaurant::create(array(
@@ -2298,8 +2277,9 @@ class RestaurantsTableSeeder extends Seeder
             'score_price'       => 1,
             'score_date'        => 0
         ));
-        $resto->attachTags(['teishoku','western','menu with calories','all you can drink','smoking area']);
+        $resto->attachTags(['teishoku','western','menu with calories','all you can drink','smoking area','visa']);
         $resto->fillCoordinatesFromString('35.657678, 139.696085');
+
         $resto = Restaurant::create(array(
             'name'              => 'Belle Mare Cafe',
             'location'          => 'Shibuya',
@@ -2405,9 +2385,638 @@ class RestaurantsTableSeeder extends Seeder
         $resto->attachTags(['cafe', 'small servings', 'italian','smoking area','open air space']);
         $resto->fillCoordinatesFromString('35.660203, 139.697491');
 
+        $resto = Restaurant::create(array(
+            'name'              => 'Katsuya',
+            'location'          => 'Shibuya',
+            'type'              => 'Katsu',
+            'lunch_price'       => 850,
+            'points'            => 'Cheap and fast katsudon and tonkatsu dishes. Japanese fast-food style. Counters and ticket machine with English available.',
+            'experience'        => 'Not especially delicious, but a decent for the price. Another good point: the meat used for the tonkatsu didn\'t have any big fat part.',
+            'visited'           => true,
+            'visit_date'        => '2018-06-18 13:00:00',
+            'google_maps_link'  => 'https://www.google.com/maps/place/Katsuya/@35.6579076,139.6995951,18z/data=!4m8!1m2!2m1!1z44GL44Gk44KE!3m4!1s0x0:0xb2096da56c69f1d3!8m2!3d35.6587629!4d139.6982981',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13030860/',
+            'official_website'  => 'http://www.arclandservice.co.jp/katsuya/shop/731.html',
+            'score_lunch'       => 2,
+            'score_place'       => 1,
+            'score_food'        => 1,
+            'score_price'       => 2,
+            'score_date'        => 0
+        ));
+        $resto->attachTags(['katsudon','tonkatsu','filling']);
+        $resto->fillCoordinatesFromString('35.658768, 139.698308');
+
+        $resto = Restaurant::create(array(
+            'name'              => 'Toridon (?)',
+            'location'          => 'Shibuya, 3Chome',
+            'type'              => 'Katsu',
+            'lunch_price'       => 850,
+            'points'            => 'Nice katsudon set. Not especially delicious, but big.',
+            'experience'        => 'For 980 yen I got a huge bowl with 2 big tonkatsu, lots of rice (omori) and a scrambled eggs, with miso soup and pickles on the side. Not especially yasty, but decent, and you can add variety of toppings as there are several available on the counter. Small counter and few tables, but not too bad.',
+            'visited'           => true,
+            'visit_date'        => '2018-06-19 13:00:00',
+            'google_maps_link'  => '',
+            'tabelog_link'      => '',
+            'official_website'  => '',
+            'score_lunch'       => 2,
+            'score_place'       => 1,
+            'score_food'        => 1,
+            'score_price'       => 1,
+            'score_date'        => 0
+        ));
+        $resto->attachTags(['katsudon','tonkatsu','filling']);
+        $resto->fillCoordinatesFromString('35.657251, 139.703753');
+
+        $resto = Restaurant::create(array(
+            'name'              => 'Madrid',
+            'location'          => 'Shibuya',
+            'type'              => 'Spanish',
+            'lunch_price'       => 950,
+            'points'            => 'Spanish-like food (does not really feel authentic), such as paela, porc, choriso and raw ham... counter and tables available.',
+            'experience'        => '2 TV were on inside, showing some video, but without the sound. Some american country music were playing. I ordered a raw ham sandwich with some salad and fried potatoes, for 790yen. Lunch came with a drink as well. The price was kind of decent, but I was left very unimpressed by the food. The place opens to outside when weather is OK.',
+            'visited'           => true,
+            'visit_date'        => '2018-06-27 13:00:00',
+            'google_maps_link'  => 'https://www.google.com/maps/place/%E3%83%9E%E3%83%89%E3%83%AA%E3%83%BC%E3%83%89/@35.6576975,139.697818,18z/data=!3m1!4b1!4m5!3m4!1s0x60188b57b4efcf87:0xf605f14ef5ecd0dd!8m2!3d35.6576953!4d139.6989123',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13021158/',
+            'official_website'  => 'http://www.madrid-tokyo.jp/',
+            'score_lunch'       => 1,
+            'score_place'       => 1,
+            'score_food'        => 1,
+            'score_price'       => 1,
+            'score_date'        => 0
+        ));
+        $resto->attachTags(['spanish']);
+        $resto->fillCoordinatesFromString('35.657700, 139.698925');
+
+        $resto = Restaurant::create(array(
+            'name'              => 'Roccoman',
+            'location'          => 'Shibuya, Dogenzaka',
+            'type'              => 'Gyoza',
+            'lunch_price'       => 680,
+            'points'            => 'Decent gyoza lunch. Light lunch 680yen. Bigger lunch 980yen.',
+            'experience'        => 'I liked the room with 2 big windows bays. Unfortunately, it is quite noisy: the TV is on with the sound, and the room\'s speakers also blast some music, and of course, other customers talking all around (it is an open space without separations). Food was decent but nothing exceptional.',
+            'visited'           => true,
+            'visit_date'        => '2018-06-22 13:00:00',
+            'google_maps_link'  => 'https://www.google.co.jp/maps/place/ROCCOMAN%E6%B8%8B%E8%B0%B7%E9%81%93%E7%8E%84%E5%9D%82%E5%BA%97/@35.6570053,139.6988651,18z/data=!4m5!3m4!1s0x0:0x488b65e43f2b1f56!8m2!3d35.6582562!4d139.6962446',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13216233/',
+            'official_website'  => 'http://roccoman-japanese-izakaya-restaurant.business.site/',
+            'score_lunch'       => 2,
+            'score_place'       => 1,
+            'score_food'        => 1,
+            'score_price'       => 1,
+            'score_date'        => 0
+        ));
+        $resto->attachTags(['gyoza']);
+        $resto->fillCoordinatesFromString('35.658131, 139.696500');
+
+        $resto = Restaurant::create(array(
+            'name'              => 'Kindenmaru Ramen',
+            'location'          => 'Shibuya, Center Gai',
+            'type'              => 'Ramen',
+            'lunch_price'       => 900,
+            'points'            => 'Very decent ramen and cold soupless ramen in summer.',
+            'experience'        => 'I went at the end of June, and they had cold dish options. I tried a cold soupless ramen (900yen) and it was delicious (2 kind of meat, both very good, sesami based sauce very good as well, good mix of spices, and an boiled egg). Like in most ramen restaurant, you can also order some cheap yaki gyoza on the side. The place is small with a counter and a couple of tables. Miso ramen available.',
+            'visited'           => true,
+            'visit_date'        => '2018-06-26 13:00:00',
+            'google_maps_link'  => 'https://www.google.com/maps/place/Ramen+Kindenmaru+Shibuya+Honten/@35.6588502,139.7002597,18z/data=!4m8!1m2!2m1!1z6YeR5Lyd5Li4!3m4!1s0x0:0x3908e6679571286b!8m2!3d35.6602372!4d139.6994072',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13020600/',
+            'official_website'  => 'https://www.hotpepper.jp/strJ000104478/',
+            'score_lunch'       => 3,
+            'score_place'       => 1,
+            'score_food'        => 2,
+            'score_price'       => 1,
+            'score_date'        => 0
+        ));
+        $resto->attachTags(['ramen','noodles','miso']);
+        $resto->fillCoordinatesFromString('35.660200, 139.699393');
+
+        $resto = Restaurant::create(array(
+            'name'              => 'Sushi Zanmai',
+            'location'          => 'Shibuya',
+            'type'              => 'Sushi',
+            'lunch_price'       => 1200,
+            'points'            => 'Quite good sushi chain restaurant. Counters and tables available. No conveyor belt. Menu sets and a la carte. English OK.',
+            'experience'        => 'Rather spacious sushi restaurant, with sushi prices starting as low as 98yen. Despite that rather low price and the cheap sushi not looking so great, there are, in fact, quite delicious. I could eat their 98yen saumon and their 158yen red tuna all day. Better than the suhi-go-round places I have tried so far.',
+            'visited'           => true,
+            'visit_date'        => '2018-06-27 13:00:00',
+            'google_maps_link'  => 'https://www.google.com/maps/place/Sushi+Zanmai/@35.6596218,139.6988228,18z/data=!4m8!1m2!2m1!1sSushi+Zanmai!3m4!1s0x0:0xa33efc1bafc81a32!8m2!3d35.661116!4d139.6965721',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13123962/',
+            'official_website'  => 'http://www.kiyomura.co.jp/shops/detail/79',
+            'score_lunch'       => 3,
+            'score_place'       => 1,
+            'score_food'        => 2,
+            'score_price'       => 1,
+            'score_date'        => 0
+        ));
+        $resto->attachTags(['sushi']);
+        $resto->fillCoordinatesFromString('35.661094, 139.696603');
+
+        $resto = Restaurant::create(array(
+            'name'              => 'Brasserie Viron',
+            'location'          => 'Shibuya',
+            'type'              => 'French',
+            'lunch_price'       => 1200,
+            'points'            => 'French bakery and cafe (brasserie). Decent for a price.',
+            'experience'        => 'Prices feel a bit expensive. Quality is not that great. I had a croque-monsieur once for lunch in their 2nd floor\'s brasserie, the interior was not great and neither was the food. I could feel the cheese was decent for Japan, but bread and ham were kind of disapointing. The bakery seems decent though, and it is not like there are many competitor in the neighbourhood or even Tokyo anyway.',
+            'visited'           => true,
+            'visit_date'        => '2018-06-27 13:00:00',
+            'google_maps_link'  => 'https://www.google.com/maps/place/Brasserie+VIRON/@35.6576443,139.7017993,17z/data=!4m5!3m4!1s0x60188ca970aa2465:0x1aa8c50c49653ca!8m2!3d35.6608958!4d139.6968211',
+            'tabelog_link'      => '',
+            'official_website'  => '',
+            'score_lunch'       => 2,
+            'score_place'       => 1,
+            'score_food'        => 1,
+            'score_price'       => 0,
+            'score_date'        => 0
+        ));
+        $resto->attachTags(['french','cafe']);
+        $resto->fillCoordinatesFromString('35.660864, 139.696779');
+
+        $resto = Restaurant::create(array(
+            'name'              => 'Ringer Hut',
+            'location'          => 'Shibuya, Dogenzaka',
+            'type'              => 'Noodles',
+            'lunch_price'       => 1200,
+            'points'            => 'Healthy fast food serving mostly noodles based dishes (cold and hot) for a cheap price.',
+            'experience'        => 'Food was good and cheap. I ordered soupless noodles with lots of vegetables and 5 yaki gyoza for 780yen. Place was Japanese fast-food style, with a machine to place your order at the entrance, and a big counter with no tables. Confortable enough, I enjoyed my lunch there. I also liked the yuzu kosho (green spicy citrus paste) they give with the gyoza.',
+            'visited'           => true,
+            'visit_date'        => '2018-06-28 13:00:00',
+            'google_maps_link'  => 'https://www.google.com/maps/place/Ringer+Hut+Shibuya+Dogenzaka/@35.6582075,139.7004023,17z/data=!4m5!3m4!1s0x60188ca9fc10a2d1:0xfc55b1b8b4eb0545!8m2!3d35.6584124!4d139.6967009',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13121214/',
+            'official_website'  => 'https://www.ringerhut.jp/',
+            'score_lunch'       => 3,
+            'score_place'       => 1,
+            'score_food'        => 1,
+            'score_price'       => 2,
+            'score_date'        => 0
+        ));
+        $resto->attachTags(['noodles','fast food','gyoza']);
+        $resto->fillCoordinatesFromString('35.658397, 139.696745');
+
+        $resto = Restaurant::create(array(
+            'name'              => 'Smokehouse',
+            'location'          => 'Harajuku',
+            'type'              => 'Meat',
+            'lunch_price'       => 1800,
+            'points'            => 'BBQ Meat. Nice place. Bar counter and tables. Outside tables available as well on 2nd floor terrace.',
+            'experience'        => 'Decent. Places where you can eat western style BBQ meat are quite rare, so this place is noteworthy. It is not especially delicious nor cheap though. I had a Bama Burger for 1800yen. It came with a fair amount of fries, good patty, very good bacon, but kind of disapointing cheese, sauce and veggie. Good, but overall lacking in taste.',
+            'visited'           => true,
+            'visit_date'        => '2018-06-29 13:00:00',
+            'google_maps_link'  => 'https://www.google.co.jp/maps/place/SMOKEHOUSE/@35.6606598,139.7076495,16z/data=!4m5!3m4!1s0x0:0x22f2979e65ea0099!8m2!3d35.6655325!4d139.7048171',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13161143/',
+            'official_website'  => 'https://www.tysons.jp/smokehouse/',
+            'score_lunch'       => 2,
+            'score_place'       => 1,
+            'score_food'        => 1,
+            'score_price'       => 0,
+            'score_date'        => 1
+        ));
+        $resto->attachTags(['grill','burger']);
+        $resto->fillCoordinatesFromString('35.665622, 139.704725');
+
+        $resto = Restaurant::create(array(
+            'name'              => 'Excelsior Cafe',
+            'location'          => 'Shibuya, Mark City',
+            'type'              => 'Cafe',
+            'lunch_price'       => 800,
+            'points'            => 'Decent cafe with decent price and good croissant, sandwiches etc...',
+            'experience'        => 'Kind of big room, with a well separated smoking area. Prices are not expensive when compared to other similar cafe. Food can be quite good. Decent choice of small sandwiches.',
+            'visited'           => true,
+            'visit_date'        => '2018-06-27 13:00:00',
+            'google_maps_link'  => 'https://www.google.com/maps/place/Excelsior+Caff%C3%A9/@35.6580707,139.6969034,18z/data=!3m1!5s0x60188b5631f5f4af:0xf2c804907c6b11f9!4m8!1m2!2m1!1sExcelsior+mark+city!3m4!1s0x60188b560f5d27e3:0x966996575c83f0c8!8m2!3d35.6581487!4d139.6979397',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13049311/',
+            'official_website'  => 'http://www.excelsiorcaffe.com/',
+            'score_lunch'       => 2,
+            'score_place'       => 1,
+            'score_food'        => 1,
+            'score_price'       => 1,
+            'score_date'        => 0
+        ));
+        $resto->attachTags(['cafe','sandwich','to-go']);
+        $resto->fillCoordinatesFromString('35.658116, 139.698004');
+
+        $resto = Restaurant::create(array(
+            'name'              => 'Tsukemen Tetsu',
+            'location'          => 'Shibuya, Dogenzaka',
+            'type'              => 'Ramen',
+            'lunch_price'       => 800,
+            'points'            => 'Hakata tonkotsu ramen with a speciality in tsukemen. Good ramen restaurant.',
+            'experience'        => 'More spacious than a regular ramen restaurant, there are counters and tables. They serve tsukemen, ramen, mazesoba, and, in summer cold noodles dishes (cold mazesoba or tsukemen). Soup is mostly tonkotsu, Hakata style. It is possible to order extra meat. I had a good lunch there. I tried the summer dish which was very unique, mazesoba with tofu.',
+            'visited'           => true,
+            'visit_date'        => '2018-07-03 13:00:00',
+            'google_maps_link'  => 'https://www.google.com/maps/place/Tsukemen+TETSU+Shibuya/@35.6584637,139.6986022,18z/data=!4m8!1m2!2m1!1sTsukemen+TETSU!3m4!1s0x60188ca9b85587d5:0xd34260f7c2bb4f06!8m2!3d35.6594969!4d139.6977895',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13173206/',
+            'official_website'  => 'http://www.tetsu102.com/',
+            'score_lunch'       => 3,
+            'score_place'       => 1,
+            'score_food'        => 2,
+            'score_price'       => 1,
+            'score_date'        => 0
+        ));
+        $resto->attachTags(['tsukemen','ramen','noodles']);
+        $resto->fillCoordinatesFromString('35.659501, 139.697777');
+
+        $resto = Restaurant::create(array(
+            'name'              => 'Shinbu Sakiya',
+            'location'          => 'Shibuya, Dogenzaka',
+            'type'              => 'Ramen',
+            'lunch_price'       => 950,
+            'points'            => 'Delicious miso ramen.',
+            'experience'        => 'I usually always add some toppings on my ramen to make iot tasty enough for me (pepper, spice, etc...), but here I did not have to. Not even a little bit. The miso soup was just delicious. The meat was OK but far from great, the egg was good, noodles as well, and one big surprise I had with with the bamboo shoot. That is right, the bamboo shoot you almost always find in ramen and most likely don\'t pay any attention to. Well her those were huge pieces, and tasty! A first for me. The size of the serving is rather small for the price but worth it. The interior has nothing special: 2 floors, counter and tables.',
+            'visited'           => true,
+            'visit_date'        => '2018-07-06 13:00:00',
+            'google_maps_link'  => 'https://www.google.com/maps/place/%E7%9C%9F%E6%AD%A6%E5%92%B2%E5%BC%A5+%E6%B8%8B%E8%B0%B7%E5%BA%97/@35.6576872,139.6983625,18z/data=!4m5!3m4!1s0x60188b5604786a35:0x98e575d2a803fca7!8m2!3d35.6578594!4d139.6966083',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13109578/',
+            'official_website'  => 'http://samurai-noodle.jp/',
+            'score_lunch'       => 3,
+            'score_place'       => 1,
+            'score_food'        => 2,
+            'score_price'       => 1,
+            'score_date'        => 0
+        ));
+        $resto->attachTags(['ramen','noodles','miso']);
+        $resto->fillCoordinatesFromString('35.657856, 139.696602');
+
+        $resto = Restaurant::create(array(
+            'name'              => 'Tengu Sakaba',
+            'location'          => 'Shibuya, Center Gai',
+            'type'              => 'Izakaya',
+            'lunch_price'       => 550,
+            'points'            => 'Very cheap teishoku (japanese lunch set). Smoking allowed and not very well compartimented. Cheap izakaya underground.',
+            'experience'        => 'Underground room. Smoking is allowed and not well compartimented, which is a pretty bad point. Lunch are very cheap and very decent (curry, noodles etc... with free rice and soup). Counters and tables.',
+            'visited'           => true,
+            'visit_date'        => '2018-07-10 13:00:00',
+            'google_maps_link'  => 'https://www.google.co.jp/maps/place/Tengu/@35.6589598,139.6991177,18z/data=!4m8!1m2!2m1!1sTengu!3m4!1s0x60188ca84143d6e5:0xa9f6c7a32dda8899!8m2!3d35.6602794!4d139.6992027',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13102355/',
+            'official_website'  => 'https://www.teng.co.jp/',
+            'score_lunch'       => 2,
+            'score_place'       => 1,
+            'score_food'        => 1,
+            'score_price'       => 2,
+            'score_date'        => 0
+        ));
+        $resto->attachTags(['izakaya','japanese','teishoku','japanese curry']);
+        $resto->fillCoordinatesFromString('35.660303, 139.699212');
+
+        $resto = Restaurant::create(array(
+            'name'              => 'Usagi',
+            'location'          => 'Shibuya',
+            'type'              => 'Ramen',
+            'lunch_price'       => 950,
+            'points'            => 'Good ramen restaurant.',
+            'experience'        => 'One big counter. Foreigner friendly (friendly staff and English menus). Decent choice of ramen, tsukemen, tantanmen, and hiyashi ramen in summer. I tried shoyu tsukemen with egg, large portion for 950, and it was very good. THe piece of meat was kinda smoked, quite delicious. One thing I would reproach them though is that when I went in mid-July, their door stayed opened and it was too hot inside.',
+            'visited'           => true,
+            'visit_date'        => '2018-07-11 13:00:00',
+            'google_maps_link'  => 'https://www.google.com/maps/place/Usagi/@35.6570234,139.6973772,17z/data=!4m5!3m4!1s0x60188b550b2d38ff:0x1c8f91e37a97e72c!8m2!3d35.6557027!4d139.6934934',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13041115/',
+            'official_website'  => 'https://ramen-restaurant-786.business.site/',
+            'score_lunch'       => 2,
+            'score_place'       => 1,
+            'score_food'        => 2,
+            'score_price'       => 1,
+            'score_date'        => 0
+        ));
+        $resto->attachTags(['ramen','tsukemen','noodles','tantanmen']);
+        $resto->fillCoordinatesFromString('35.655730, 139.693535');
+
+        $resto = Restaurant::create(array(
+            'name'              => 'Moriva Coffee',
+            'location'          => 'Shibuya',
+            'type'              => 'Cafe',
+            'lunch_price'       => 650,
+            'points'            => 'A western style Japanese cafe with decent menus but not the greatest interior.',
+            'experience'        => 'I had a avocado chicken sandwich for 450 yen and it was good. Inside is lighted with spotlights (not good) and with very small tables and counters. A smoking area is isolated from the rest.',
+            'visited'           => true,
+            'visit_date'        => '2018-07-11 13:00:00',
+            'google_maps_link'  => 'https://www.google.com/maps/place/Moriva+Coffee/@35.6568561,139.6982953,17z/data=!4m5!3m4!1s0x60188b55bc6bfb63:0xe39fbae7a5da3266!8m2!3d35.6558885!4d139.6945402',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13116477/',
+            'official_website'  => 'http://www.morivacoffee.com/',
+            'score_lunch'       => 1,
+            'score_place'       => 1,
+            'score_food'        => 1,
+            'score_price'       => 1,
+            'score_date'        => 0
+        ));
+        $resto->attachTags(['cafe','sandwich','small servings','smoking area','to-go']);
+        $resto->fillCoordinatesFromString('35.655810, 139.694601');
+
+        $resto = Restaurant::create(array(
+            'name'              => 'Manmosu',
+            'location'          => 'Shibuya',
+            'type'              => 'Ramen',
+            'lunch_price'       => 900,
+            'points'            => 'Small ramen restaurant with narrow counters. Very decent tsukemen with "original" noodles. ',
+            'experience'        => 'Small ramen shop offering tsukemen and ramen. 2 types of noodles, classic or original. My tsukemen was good, depite the soup being very slightly fishy (I do not like fishy taste). Thick and tasty soup, decent meat and egg, and original noodles were thick but good. Counter is quite narrow but somehow OK. Tsukemen can take 10mn to get ready, which is a bit long by Japanese standards.',
+            'visited'           => true,
+            'visit_date'        => '2018-07-12 13:00:00',
+            'google_maps_link'  => 'https://www.google.com/maps/place/%E9%81%93%E7%8E%84%E5%9D%82%E3%83%9E%E3%83%B3%E3%83%A2%E3%82%B9/@35.6576175,139.6974783,18z/data=!4m5!3m4!1s0x60188b560699c71d:0x72a0db46aaddecd5!8m2!3d35.6577081!4d139.6965118',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13122700/',
+            'official_website'  => 'http://www.shibuyaism.com/entry/8017699',
+            'score_lunch'       => 2,
+            'score_place'       => 1,
+            'score_food'        => 1,
+            'score_price'       => 1,
+            'score_date'        => 0
+        ));
+        $resto->attachTags(['ramen','tsukemen','noodles']);
+        $resto->fillCoordinatesFromString('35.657712, 139.696492');
+
+        $resto = Restaurant::create(array(
+            'name'              => 'Ramen kokuu',
+            'location'          => 'Shibuya',
+            'type'              => 'Ramen',
+            'lunch_price'       => 950,
+            'points'            => 'Good, light taste shoyu  wantanmen (ramen with Chinese dumplings). More confortable than average ramen place.',
+            'experience'        => 'The place has a single, but large, counter, which is more confortable that the usual ramen place. I tried the shoyu ramen with Chinese dumpling and extra meat. Soup was light, taste OK, the meat was above average, salty, but still with a bit too much fat for me, and dumplings, 5 pieces, were very good. For 1200yen, that was the most expensive dish on the menu. I would have liked more noodles. This was good but felt a bit overpriced.',
+            'visited'           => true,
+            'visit_date'        => '2018-07-18 13:00:00',
+            'google_maps_link'  => 'https://www.google.com/maps/place/Ramen+Kokuu/@35.6566129,139.6989133,17z/data=!4m5!3m4!1s0x60188b572fb6f3df:0x90e19dcc4e740613!8m2!3d35.6550656!4d139.6993425',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13149719/',
+            'official_website'  => 'https://ramendb.supleks.jp/s/62837.html',
+            'score_lunch'       => 2,
+            'score_place'       => 1,
+            'score_food'        => 1,
+            'score_price'       => 0,
+            'score_date'        => 0
+        ));
+        $resto->attachTags(['noodles','ramen','wantanmen']);
+        $resto->fillCoordinatesFromString('35.655086, 139.699391');
+
+        $resto = Restaurant::create(array(
+            'name'              => 'Hooters',
+            'location'          => 'Shibuya',
+            'type'              => 'Western',
+            'lunch_price'       => 2000,
+            'points'            => 'American and Mexican overpriced food served by sexy waitresses.',
+            'experience'        => 'Situated on the 4th floor above the Uniclo store, the place is quite big, but no windows, and poorly lighted by spotlights. Tables and counters, musics, TV playing soundless in every corners. Of course the main attraction are the sexy waitresses. As for the food, I tried the burger, that cost me a whoping 2000 yen for jsut a patty and a slice of cheese, with no drinks. Took a long time to come, and was not great. By far the most overpriced burger I ever had. The menu also offers some mexican stuff and some meat.',
+            'visited'           => true,
+            'visit_date'        => '2018-07-19 13:00:00',
+            'google_maps_link'  => 'https://www.google.co.jp/maps/place/HOOTERS+SHIBUYA/@35.658202,139.6998254,17z/data=!4m5!3m4!1s0x0:0x21cd103482770807!8m2!3d35.659527!4d139.698318',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13167506/',
+            'official_website'  => 'http://www.hooters.co.jp/shop/shibuya/',
+            'score_lunch'       => 1,
+            'score_place'       => 1,
+            'score_food'        => 1,
+            'score_price'       => 0,
+            'score_date'        => 0
+        ));
+        $resto->attachTags(['western','american','burger','mexican']);
+        $resto->fillCoordinatesFromString('35.659407, 139.698295');
+
+        $resto = Restaurant::create(array(
+            'name'              => 'Mandala',
+            'location'          => 'Shibuya',
+            'type'              => 'Indian',
+            'lunch_price'       => 850,
+            'points'            => 'Indian restaurant serving curry, but also gapao.',
+            'experience'        => 'Interior kind of mediocre, but somehow I liked the music (instrumental wind bells of some kind). I tried the chicken curry with nan for 850yen, the cheapest dish. It was decent for Shibuya\'s low standards (when it comes to Indian curry), mostly because the nan was nice. But I would not recommend it.',
+            'visited'           => true,
+            'visit_date'        => '2018-07-23 13:00:00',
+            'google_maps_link'  => 'https://www.google.com/maps/place/Grill%26Dining+Bar+Mandala+%E3%83%9E%E3%83%B3%E3%83%80%E3%83%A9%E6%B8%8B%E8%B0%B7%E5%BA%97/@35.6579949,139.6978242,16.75z/data=!4m5!3m4!1s0x60188b576738a74d:0xd2561a1948685da9!8m2!3d35.6564863!4d139.7009733',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13007278/',
+            'official_website'  => 'https://www.hotpepper.jp/strJ000001223/',
+            'score_lunch'       => 1,
+            'score_place'       => 1,
+            'score_food'        => 1,
+            'score_price'       => 1,
+            'score_date'        => 0
+        ));
+        $resto->attachTags(['indian','curry','gapao']);
+        $resto->fillCoordinatesFromString('35.656507, 139.700950');
+
+        $resto = Restaurant::create(array(
+            'name'              => 'Ramen King',
+            'location'          => 'Shibuya',
+            'type'              => 'Ramen',
+            'lunch_price'       => 700,
+            'points'            => 'Cheap and noisy but decent ramen restaurant.',
+            'experience'        => 'The place is white bright and kind of noisy (workers make noise cooking). I tried the hiyashi-chuka set, cold noodles dish available in summer. For 850 yen it came with a bowl of rice, 3 yaki gyoza (dumplings), and the main dish. Portions are big, which make for a good ratio quantity/cost. Taste and quality very decent. Gyoza were very good. But the competition for ramen is very fierce in Shibuya, and I would not recommend this place over some others with more tasty dishes (unless you are on a tight budget, because this one is amongst the cheapest option, with decent ramen starting at 700 yen).',
+            'visited'           => true,
+            'visit_date'        => '2018-07-24 13:00:00',
+            'google_maps_link'  => 'https://www.google.com/maps/place/Ramen+King+Koraku+Honpo/@35.6581915,139.6993192,18z/data=!4m8!1m2!2m1!1z44Op44O844Oh44Oz546L!3m4!1s0x0:0x5b48247ed1d2f05d!8m2!3d35.658663!4d139.698564',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13022566/',
+            'official_website'  => '',
+            'score_lunch'       => 1,
+            'score_place'       => 1,
+            'score_food'        => 1,
+            'score_price'       => 2,
+            'score_date'        => 0
+        ));
+        $resto->attachTags(['ramen','noodles','gyoza']);
+        $resto->fillCoordinatesFromString('35.658670, 139.698520');
+
+        $resto = Restaurant::create(array(
+            'name'              => 'Demode Queen',
+            'location'          => 'Shibubya, Udagawamachi',
+            'type'              => 'Grill',
+            'lunch_price'       => 1300,
+            'points'            => 'Nice place. Meat and burgers. Sofa avaiable next to large windows. Decent prices (cheaper than competitors).',
+            'experience'        => 'Inside had chill peacefull music, large windows and some nice deco... liked it. I tried the avocado cheese burger for 1280yen, and it was big and good. In summer they also have a beer garden (food and drinks in open air) on their rooftop (4F).',
+            'visited'           => true,
+            'visit_date'        => '2018-07-30 13:00:00',
+            'google_maps_link'  => 'https://www.google.com/maps/place/Demode+Queen+Udagawa+Machiten/@35.6600688,139.6977111,17z/data=!4m12!1m6!3m5!1s0x60188ca96097f991:0xb1ca20672648b7f7!2sDemode+Queen+Udagawa+Machiten!8m2!3d35.661457!4d139.69648!3m4!1s0x60188ca96097f991:0xb1ca20672648b7f7!8m2!3d35.661457!4d139.69648',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13173808/',
+            'official_website'  => 'https://kiwa-group.co.jp/demodeqeen/',
+            'score_lunch'       => 2,
+            'score_place'       => 2,
+            'score_food'        => 2,
+            'score_price'       => 1,
+            'score_date'        => 1
+        ));
+        $resto->attachTags(['western','grill','filling','burger','English menu','smoking area']);
+        $resto->fillCoordinatesFromString('35.661514, 139.696473');
+
+        $resto = Restaurant::create(array(
+            'name'              => 'Sushi Zanmai',
+            'location'          => 'Shibuya, Dogenzaka',
+            'type'              => 'Sushi',
+            'lunch_price'       => 1400,
+            'points'            => 'Good sushi restaurant.',
+            'experience'        => 'Big chain that is famous for offering good sushi. Not as cheap as the suhi-go-round you can find a bit everywhere, but not as pricey as the more elite places. This one as slightly less choice than the one situated at the end of center gai, but the interior is nice and provide with a good experience (and they have the stuff I like anyway, salmon and tuna).',
+            'visited'           => true,
+            'visit_date'        => '2018-07-31 13:00:00',
+            'google_maps_link'  => 'https://www.google.com/maps/place/%E3%80%8A%E3%81%99%E3%81%97%E3%81%96%E3%82%93%E3%81%BE%E3%81%84+%E6%B8%8B%E8%B0%B7%E9%81%93%E7%8E%84%E5%9D%82%E3%82%BB%E3%83%B3%E3%82%BF%E3%83%BC%E3%83%93%E3%83%AB%E5%BA%97%E3%80%8B%E6%B8%8B%E8%B0%B7+%E4%BA%BA%E6%B0%97+%E3%81%8A%E3%81%99%E3%81%99%E3%82%81%E5%AF%BF%E5%8F%B8%E5%BA%97/@35.658474,139.6970407,18z/data=!4m8!1m2!2m1!1sSushi+Zanmai!3m4!1s0x0:0xeaf569ce81b2beff!8m2!3d35.6592587!4d139.69793',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13213452/',
+            'official_website'  => 'http://www.kiyomura.co.jp/shops/detail/79',
+            'score_lunch'       => 3,
+            'score_place'       => 2,
+            'score_food'        => 2,
+            'score_price'       => 1,
+            'score_date'        => 0
+        ));
+        $resto->attachTags(['sushi']);
+        $resto->fillCoordinatesFromString('35.659256, 139.697918');
+
+        $resto = Restaurant::create(array(
+            'name'              => 'Choco Cro',
+            'location'          => 'Shibuya, Dogenzaka',
+            'type'              => 'Cafe',
+            'lunch_price'       => 680,
+            'points'            => 'Big chain. Cafe with a isolated smoking area. Offers good sandwiches and chocolate croissants, along with a variety of others things (ice creams, pancakes, cakes...)',
+            'experience'        => 'Interior was decently confortable (but kinda dark, most light come from spotlights. I like their chocolate croissants (200yen) and their ham cheese sandwich (400yen). You can get a lunch set with sandwich + croissant + drink for 680 yen.',
+            'visited'           => true,
+            'visit_date'        => '2018-07-31 13:00:00',
+            'google_maps_link'  => 'https://www.google.com/maps/place/Saint+Marc+Cafe+Shibuya+Dogenzaka+shop/@35.6586484,139.6984354,18z/data=!4m5!3m4!1s0x60188ca9c4bf68f1:0xdead5af68ae1e923!8m2!3d35.6592608!4d139.6979151',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13168224/',
+            'official_website'  => 'http://www.saint-marc-hd.com/saintmarccafe/',
+            'score_lunch'       => 2,
+            'score_place'       => 1,
+            'score_food'        => 1,
+            'score_price'       => 1,
+            'score_date'        => 0
+        ));
+        $resto->attachTags(['cafe','sandwich','small servings','smoking area','to-go','English menu','visa']);
+        $resto->fillCoordinatesFromString('35.659256, 139.697918');
+
+        $resto = Restaurant::create(array(
+            'name'              => 'Habana Cafe',
+            'location'          => 'Shibuya',
+            'type'              => 'Cuban',
+            'lunch_price'       => 900,
+            'points'            => 'Cuban style. Nice restaurant and bar. Advertising an Havana style. Very good food.',
+            'experience'        => 'I first went in thinking it was an overpriced serving some kind of glorified panini. I was wrong. The serving are very decent and what they call a half-size is actually enough for one person. They serve cuban sandwiches, tacos and buritos. Cuban sandwiches ressemble big panini. I tried the summer special "avocado cheese habano", and I was really surprised at how good it was. It was brilliant. For 900yen you can get a half sandwich (which is good for one person) and a drink. For 1600 yen you can get the full size, and save some money if you are with someone else. Nice place, nice service, good food. Recommendable.',
+            'visited'           => true,
+            'visit_date'        => '2018-08-02 13:00:00',
+            'google_maps_link'  => 'https://www.google.com/maps/place/Cafe+Habana+TOKYO/@35.6564029,139.700515,16z/data=!4m5!3m4!1s0x60188b5b18195555:0x62ba3026ced0ac79!8m2!3d35.6533025!4d139.7045202',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130303/13196354/',
+            'official_website'  => 'http://cafehabana.jp/',
+            'score_lunch'       => 3,
+            'score_place'       => 2,
+            'score_food'        => 3,
+            'score_price'       => 1,
+            'score_date'        => 1
+        ));
+        $resto->attachTags(['mexican','sandwiches','to-go','no smoking','English menu','cafe']);
+        $resto->fillCoordinatesFromString('35.653342, 139.704487');
+
+        $resto = Restaurant::create(array(
+            'name'              => 'Asian Spice King',
+            'location'          => 'Shibuya, Sarugakucho',
+            'type'              => 'Indian Curry',
+            'lunch_price'       => 950,
+            'points'            => 'Decent indian curry restaurant with above-than-average interior, but, beware: smoking is allowed.',
+            'experience'        => 'Looking at the menu, it was a bit weird, as the price of the lunch set changes depending on what curry you choose (vegetables, chicken, keeema, mutton...). If you want keema, make sure to ask for the B set... and you will get a bowl of curry, a small salad, and a big piece of nan for 950 yen. It is not cheap, but the portion of curry was one of the biggest I have ever got, and quality/taste was very decent. Another good surprise was that the interior was quite nice. Large and confortable counter as well as different tables. Good enough for date. Could not escape the shitty Indian pop music selection though. So, I was quite happy with my lunch, until toward the end, when I started smelling some cigarette smoke... then I realized that the place allows smoking... which is kind of a deal breaker for me. If you are unlucky, you could end up next to someone who smokes and ruins you lunch, and I don\'t like to take such risk. For 700 yen you can get a bento.',
+            'visited'           => true,
+            'visit_date'        => '2018-08-07 13:00:00',
+            'google_maps_link'  => 'https://www.google.com/maps/place/Asian+Spice+King+%E6%B8%8B%E8%B0%B7%E3%83%BB%E4%BB%A3%E5%AE%98%E5%B1%B1/@35.6578217,139.6995226,16z/data=!4m12!1m6!3m5!1s0x60188b5b3d9f92cf:0x5944d1ca4d80a6a5!2zQXNpYW4gU3BpY2UgS2luZyDmuIvosLfjg7vku6PlrpjlsbE!8m2!3d35.6532537!4d139.7047046!3m4!1s0x60188b5b3d9f92cf:0x5944d1ca4d80a6a5!8m2!3d35.6532537!4d139.7047046',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13159709/',
+            'official_website'  => 'http://masalahut.net/asian.html',
+            'score_lunch'       => 2,
+            'score_place'       => 2,
+            'score_food'        => 2,
+            'score_price'       => 1,
+            'score_date'        => 1
+        ));
+        $resto->attachTags(['indian','curry','smoking allowed','to-go','English menu','vegetarian friendly']);
+        $resto->fillCoordinatesFromString('35.653319, 139.704687');
+
+        $resto = Restaurant::create(array(
+            'name'              => 'Port of Call',
+            'location'          => 'Shibuya',
+            'type'              => 'Western',
+            'lunch_price'       => 1000,
+            'points'            => 'The casual cafe atmosphere is great. The food is great. The price is very reasonable.',
+            'experience'        => 'The cafe/restaurant is situated behind a cloth store, but they have a sign outside. Go in to see a nice space with a large windows bay directly in front of the JR railway (the ground shake a bit when a train passes by). Inside is very relaxing and confortable. For 1000 yen or less you can get a lunch set (burger, quesadilla, curry... and/or nice desserts) that comes with soup, salad, and drink. I tried their weekly burger, that was sweet mustard chicken burger, and it was, kind of surprinsingly, absolutely delicious. Brilliant. I had a great lunch experience, but just avoid going there if you are in a hurry, as the food can take a while to be ready.',
+            'visited'           => true,
+            'visit_date'        => '2018-08-07 13:00:00',
+            'google_maps_link'  => 'https://www.google.com/maps/place/Cafe%26Store+PORT+OF+CALL+DAIKANYAMA/@35.6564679,139.699952,17z/data=!4m8!1m2!2m1!1sport+of+call!3m4!1s0x0:0x881c208777d428e6!8m2!3d35.6538136!4d139.7048025',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13165417/',
+            'official_website'  => 'https://www.instagram.com/port_of_call_daikanyama/',
+            'score_lunch'       => 4,
+            'score_place'       => 2,
+            'score_food'        => 3,
+            'score_price'       => 1,
+            'score_date'        => 1
+        ));
+        $resto->attachTags(['burger','curry','cafe','western');
+        $resto->fillCoordinatesFromString('35.653809, 139.704789');
+
+        $resto = Restaurant::create(array(
+            'name'              => 'Plaloma',
+            'location'          => 'Shibuya',
+            'type'              => 'Thai',
+            'lunch_price'       => 1000,
+            'points'            => 'Nice Thai restaurant with quite diverse menu even for lunch.',
+            'experience'        => 'The interior is nice and confortable. The menu offers more different dishes for lunch than usual Thai restaurants. I got the gapao, and it was very decent. It came with a good soup, a small salad, a small dessert, and a drink, for 1000 yen. It all came fast, nice service. Recommendable place.',
+            'visited'           => true,
+            'visit_date'        => '2018-08-08 13:00:00',
+            'google_maps_link'  => 'https://www.google.com/maps/place/%E3%82%BF%E3%82%A4%E3%83%80%E3%82%A4%E3%83%8B%E3%83%B3%E3%82%B0+%E3%83%97%E3%83%A9%E3%83%BC%E3%83%AD%E3%83%BC%E3%83%9E%E3%83%BC/@35.6579362,139.7003489,17z/data=!4m5!3m4!1s0x60188b56ee4506ff:0x6ed7b8b394f04f37!8m2!3d35.6557042!4d139.6979642',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13219402/',
+            'official_website'  => 'http://plaloma.sub.jp/',
+            'score_lunch'       => 3,
+            'score_place'       => 2,
+            'score_food'        => 1,
+            'score_price'       => 1,
+            'score_date'        => 1
+        ));
+        $resto->attachTags(['thai','green curry','gapao']);
+        $resto->fillCoordinatesFromString('35.655726, 139.697950');
+
+$resto = Restaurant::create(array(
+            'name'              => 'Shibuya Parlor',
+            'location'          => 'Shibuya crossing',
+            'type'              => 'Cafe',
+            'lunch_price'       => 1200,
+            'points'            => 'Counter with great view on Shibuya\'s crossing. Nice cafe serving pasta and deserts with fresh fruits.',
+            'experience'        => '7th floor right in front of the crossing. THe view is very nice> The pasta were actually delicious. For lunch, you can add +400yen to your 1200yen pasta dish inn order to get a mini fresh fruits parfait. The food comes rather slowly, but it is easy to be patient while enjoying the view. Each time I went the place was rather empty, which is another good point. The mini parfait I had was not especially great, lacking sweetness to my westerner taste.',
+            'visited'           => true,
+            'visit_date'        => '2018-08-09 13:00:00',
+            'google_maps_link'  => 'https://www.google.com/maps/place/SHIBUYA+PARLOR/@35.6597365,139.6986217,17z/data=!3m1!4b1!4m5!3m4!1s0x60188b6d7d3f546f:0x922824b7ce3b34ef!8m2!3d35.6597322!4d139.7008104',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13220995/',
+            'official_website'  => 'https://www.shibuya109.jp/shop/SPL/',
+            'score_lunch'       => 3,
+            'score_place'       => 2,
+            'score_food'        => 2,
+            'score_price'       => 1,
+            'score_date'        => 1
+        ));
+        $resto->attachTags(['cafe','pasta','desert']);
+        $resto->fillCoordinatesFromString('35.659735, 139.700788');
+
+        $resto = Restaurant::create(array(
+            'name'              => 'Mud',
+            'location'          => 'Shibuya',
+            'type'              => 'Cafe',
+            'lunch_price'       => 980,
+            'points'            => 'Dark and peaceful, "american style" cafe',
+            'experience'        => 'Terrace at the front with tables where you can smoke. Inside is quite dark, with tables and sofas. Menu consists of 980yen plates such as hotdog, sandwich or rice, with different options. Overall it was decent, but I found that 980yen was expensive for a hotdog, even a large one with some salad and fries. You can drink free water, but to get something else, it is an additional 300yen (!).',
+            'visited'           => true,
+            'visit_date'        => '2018-08-07 13:00:00',
+            'google_maps_link'  => 'https://www.google.com/maps/place/MUD+SPOT+Shibuya+1/@35.6576928,139.7010057,17z/data=!4m12!1m6!3m5!1s0x60188b59c29de9a9:0xe66787f0217e3dd6!2sMUD+SPOT+Shibuya+1!8m2!3d35.656893!4d139.7021631!3m4!1s0x60188b59c29de9a9:0xe66787f0217e3dd6!8m2!3d35.656893!4d139.7021631',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13137346/',
+            'official_website'  => 'http://www.mudcoffee.jp/',
+            'score_lunch'       => 2,
+            'score_place'       => 1,
+            'score_food'        => 1,
+            'score_price'       => 0,
+            'score_date'        => 0
+        ));
+        $resto->attachTags(['cafe','sandwich','hotdog','open air space','smoking area']);
+        $resto->fillCoordinatesFromString('35.656930, 139.702169');
+
+        $resto = Restaurant::create(array(
+            'name'              => 'Sathaban Wijai Ahan Thai',
+            'location'          => 'Shibuya, Sakuragaokacho',
+            'type'              => 'Thai',
+            'lunch_price'       => 1080,
+            'points'            => 'Very nice, small Thai restaurant. Food and service above average. Narrow counter and small tables.',
+            'experience'        => 'So the place is small, and easily packed, but somehow the experience eating there is still very good. Clean, bright, with nice and fast service. Wide range of options for lunch, but I went with the gapao, a classic, in order to be able to compare with other Thai easily. For 1080yen, I got my gapao with very good and spicy soup, a very nice spring roll, and a pitcher of cold tea. Quality was very good, above average I would say. I also appreciated they somehow got the ambient temperature right (it was August abd inside was not too cold nor too warm).',
+            'visited'           => true,
+            'visit_date'        => '2018-08-15 13:00:00',
+            'google_maps_link'  => 'https://www.google.com/maps/place/Sathaban+Wijai+Ahan+Thai/@35.657509,139.7005488,18z/data=!4m5!3m4!1s0x60188b5742498edb:0x85a7c326245fe97!8m2!3d35.6561766!4d139.7005042',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13180281/',
+            'official_website'  => 'http://www.sscy.co.jp/research/',
+            'score_lunch'       => 3,
+            'score_place'       => 1,
+            'score_food'        => 2,
+            'score_price'       => 1,
+            'score_date'        => 0
+        ));
+        $resto->attachTags(['thai','gapao','green curry','no smoking']);
+        $resto->fillCoordinatesFromString('35.656122, 139.700537');
 
 
-/*
+        /*
         $resto = Restaurant::create(array(
             'name'              => '',
             'location'          => '',
@@ -2416,7 +3025,7 @@ class RestaurantsTableSeeder extends Seeder
             'points'            => '',
             'experience'        => '',
             'visited'           => true,
-            'visit_date'        => '2018-06-27 13:00:00',
+            'visit_date'        => '2018-08-07 13:00:00',
             'google_maps_link'  => '',
             'tabelog_link'      => '',
             'official_website'  => '',
@@ -2428,23 +3037,23 @@ class RestaurantsTableSeeder extends Seeder
         ));
         $resto->attachTags(['']);
         $resto->fillCoordinatesFromString('');
-*/
+        */
 
-// roppongi place with jorge and yamaguchi
-// https://www.google.com/maps/place/%E3%80%92106-0031+T%C5%8Dky%C5%8D-to,+Minato-ku,+Nishiazabu,+1+Chome%E2%88%928,+%EF%BC%A6%EF%BC%A5%EF%BC%B2%EF%BC%AD%EF%BD%89%EF%BC%AE%EF%BC%B4%EF%BC%B8%EF%BC%AF/@35.6598723,139.726296,18z/data=!4m5!3m4!1s0x60188b7a7ad6966d:0xc96057139678e33c!8m2!3d35.6608104!4d139.7248288
+        // roppongi place with jorge and yamaguchi
+        // https://www.google.com/maps/place/%E3%80%92106-0031+T%C5%8Dky%C5%8D-to,+Minato-ku,+Nishiazabu,+1+Chome%E2%88%928,+%EF%BC%A6%EF%BC%A5%EF%BC%B2%EF%BC%AD%EF%BD%89%EF%BC%AE%EF%BC%B4%EF%BC%B8%EF%BC%AF/@35.6598723,139.726296,18z/data=!4m5!3m4!1s0x60188b7a7ad6966d:0xc96057139678e33c!8m2!3d35.6608104!4d139.7248288
 
-// best sushi place from inuisan : http://www.uogashizushi.co.jp/shop/o-shop/tokyoeki/
+        // best sushi place from inuisan : http://www.uogashizushi.co.jp/shop/o-shop/tokyoeki/
 
-// good ramne up yoyogi koen west side : https://tabelog.com/tokyo/A1318/A131810/13004221/dtlmenu/
+        // good ramne up yoyogi koen west side : https://tabelog.com/tokyo/A1318/A131810/13004221/dtlmenu/
 
-// https://www.menya-cocoro.com/
+        // https://www.menya-cocoro.com/
 
         // https://hubjapan.io/articles/10-best-ramen-restaurants-in-shibuya
 
         // https://www.youtube.com/watch?v=S-Xm7s9eGxU
         // https://goo.gl/TbjN44
 
-// nathan recommwend ramen place behind office behind mormons church
+        // king of spices , or spice king, towards ebisu or somethin
 
         // fill coordinates
         $this->fillNullCoordinatesFromGoogleMapsLink();
