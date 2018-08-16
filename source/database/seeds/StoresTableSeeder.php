@@ -20,7 +20,7 @@ class StoresTableSeeder extends Seeder
 
         // Fill
 
-        Store::create(array(
+        $store = Store::create(array(
           'name'              => 'Hakata Furyu',
           'location'          => 'Shibuya',
           'type'              => 'Ramen',
@@ -30,5 +30,8 @@ class StoresTableSeeder extends Seeder
           'official_website'  => 'https://fu-ryu.net/',
           'score'             => 3
         ));
+        $store->attachTags(['ramen','noodles','miso']);
+        $store->fillCoordinatesFromString('35.658545, 139.698468');
+
     }
 }

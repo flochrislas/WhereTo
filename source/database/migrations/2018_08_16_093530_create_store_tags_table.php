@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateRestaurantTagsTable extends Migration
+class CreateStoreTagsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateRestaurantTagsTable extends Migration
      */
     public function up()
     {
-        Schema::create('restaurant_tags', function (Blueprint $table) {
+        Schema::create('store_tags', function (Blueprint $table) {
             $table->increments('id');
             $table->timestamps();
             $table->string('label');
@@ -29,6 +29,6 @@ class CreateRestaurantTagsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('restaurant_tags');
+        Schema::dropIfExists('store_tags');
     }
 }
