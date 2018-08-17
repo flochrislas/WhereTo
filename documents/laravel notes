@@ -51,8 +51,13 @@ sudo chgrp -R apache storage bootstrap/cache;
 sudo chmod -R ug+rwx storage bootstrap/cache;
 
 
+Many to Many relationship with eloquent. Pivot table.
+https://appdividend.com/2018/05/17/laravel-many-to-many-relationship-example/#Step_2_Create_a_model_and_migration
+* Pivot table
+* http://www.easylaravelbook.com/blog/2016/04/06/introducing-laravel-many-to-many-relations/
+* http://laraveldaily.com/pivot-tables-and-many-to-many-relationships/
 
-PHPUnit tetse with Laravel:
+PHPUnit tests with Laravel:
 https://semaphoreci.com/community/tutorials/getting-started-with-phpunit-in-laravel
 
 Import Export Excel and CSV files

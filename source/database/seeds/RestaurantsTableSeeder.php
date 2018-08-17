@@ -1105,8 +1105,8 @@ class RestaurantsTableSeeder extends Seeder
             'location'          => 'Shibuya, Dogenzaka',
             'type'              => 'Pasta',
             'lunch_price'       => 780,
-            'points'            => 'Totally decent pasta. Spagethi with 2 bases: meat sauce or napolitan, starting 780yen and customisable. Basement. Fast service. Tables. Big quantity.',
-            'experience'        => 'I was happy with the quality for the price! And you can order up to 500g of pasta, with no additional charge. This is huge. Quick service. Several toppings on the tables, like free parmesan cheese. Interior is basment and poorly lighted, but decent. Tables are confortable enough.',
+            'points'            => 'Good pasta. Spaghetti with 2 bases: meat sauce or napolitan, starting 780yen and (very) customisable. Basement. Fast service. Tables and counter. Small, average, or large servings available.',
+            'experience'        => 'I was happy with the quality for the price! And you can order up to 500g of pasta, with no additional charge. This is huge. Quick service. Several toppings on the tables, like free parmesan cheese. Interior is basment, might feel a tad gloomy, but decent. Staff is nice. Tables are confortable enough. In summer, the air conditioning there can be quite strong (cold).',
             'visited'           => true,
             'visit_date'        => '2017-12-15 13:00:00',
             'google_maps_link'  => 'https://www.google.co.jp/maps/place/Pancho+Shibuya/@35.6591649,139.6969986,17z/data=!3m1!4b1!4m5!3m4!1s0x60188b57d6416803:0xce5bf0b8015be959!8m2!3d35.6591606!4d139.6991873',
@@ -1118,7 +1118,7 @@ class RestaurantsTableSeeder extends Seeder
             'score_price'       => 2,
             'score_date'        => 0
         ));
-        $resto->attachTags(['italian', 'pasta']);
+        $resto->attachTags(['pasta','filling','no smoking']);
         $resto->fillCoordinatesFromString('35.659453, 139.699219');
 
         $resto = Restaurant::create(array(
@@ -3034,6 +3034,27 @@ class RestaurantsTableSeeder extends Seeder
         ));
         $resto->attachTags(['pasta','katsu','japanese curry','smoking allowed']);
         $resto->fillCoordinatesFromString('35.656122, 139.700537');
+
+        $resto = Restaurant::create(array(
+            'name'              => 'Pancho',
+            'location'          => 'Shibuya, 3Chome',
+            'type'              => 'Pasta',
+            'lunch_price'       => 780,
+            'points'            => 'Good pasta. Spaghetti with 2 bases: meat sauce or napolitan, starting 780yen and (very) customisable. Basement. Fast service. Tables and counter. Small, average, or large servings available.',
+            'experience'        => 'I was happy with the quality for the price! And you can order up to 500g of pasta, with no additional charge. This is huge. Quick service. Several toppings on the tables, like free parmesan cheese. Interior is basment, might feel a tad gloomy, but decent. Staff is nice. Tables are confortable enough. In summer, the air conditioning there can be quite strong (cold).',
+            'visited'           => true,
+            'visit_date'        => '2018-08-17 13:00:00',
+            'google_maps_link'  => 'https://www.google.com/maps/place/Pancho+Shibuya+South/@35.6571943,139.7015754,17z/data=!3m1!4b1!4m5!3m4!1s0x60188b599dbb0af9:0x3c9573aaa5fbc04e!8m2!3d35.65719!4d139.7037641',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13206176/',
+            'official_website'  => 'http://naporitanpancho.com/',
+            'score_lunch'       => 2,
+            'score_place'       => 1,
+            'score_food'        => 2,
+            'score_price'       => 2,
+            'score_date'        => 0
+        ));
+        $resto->attachTags(['pasta','filling','no smoking']);
+        $resto->fillCoordinatesFromString('35.657222, 139.703782');
 
 
         /*

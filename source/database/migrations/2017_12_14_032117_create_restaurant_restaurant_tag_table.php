@@ -19,17 +19,16 @@ class CreateRestaurantRestaurantTagTable extends Migration
     public function up()
     {
         Schema::create('restaurant_restaurant_tag', function (Blueprint $table) {
-            // $table->increments('id');
+          // We use on cascade deelte so if any entry is deleted,
+          // its relationships qwill as well, and we dont need to manually detach from code
 
-            $table->integer('restaurant_id')->unsigned()->nullable();
-            $table->foreign('restaurant_id')->references('id')
-                  ->on('restaurants')->onDelete('cascade');
+          $table->integer('restaurant_id')->unsigned()->nullable();
+          $table->foreign('restaurant_id')->references('id')
+                ->on('restaurants')->onDelete('cascade');
 
-            $table->integer('restaurant_tag_id')->unsigned()->nullable();
-            $table->foreign('restaurant_tag_id')->references('id')
-                  ->on('restaurant_tags')->onDelete('cascade');
-
-            //$table->timestamps();
+          $table->integer('restaurant_tag_id')->unsigned()->nullable();
+          $table->foreign('restaurant_tag_id')->references('id')
+                ->on('restaurant_tags')->onDelete('cascade');
         });
     }
 
