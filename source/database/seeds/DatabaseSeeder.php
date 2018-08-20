@@ -20,6 +20,8 @@ class DatabaseSeeder extends Seeder
         $this->call(RestaurantsTableSeeder::class);
         $this->call(StoreTagsTableSeeder::class);
         $this->call(StoresTableSeeder::class);
+        $this->call(BarTagsTableSeeder::class);
+        $this->call(BarsTableSeeder::class);
         // Clear the cache
         \Cache::flush();
     }

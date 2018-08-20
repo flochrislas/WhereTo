@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateStoreStoreTagTable extends Migration
+class CreateBarBarTagTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,17 +13,17 @@ class CreateStoreStoreTagTable extends Migration
      */
     public function up()
     {
-        Schema::create('store_store_tag', function (Blueprint $table) {
+        Schema::create('bar_bar_tag', function (Blueprint $table) {
           // We use on cascade deelte so if any entry is deleted,
           // its relationships will as well, and we dont need to manually detach from code
 
-          $table->integer('store_id')->unsigned()->nullable();
-          $table->foreign('store_id')->references('id')
-                ->on('stores')->onDelete('cascade');
+          $table->integer('bar_id')->unsigned()->nullable();
+          $table->foreign('bar_id')->references('id')
+                ->on('bars')->onDelete('cascade');
 
-          $table->integer('store_tag_id')->unsigned()->nullable();
-          $table->foreign('store_tag_id')->references('id')
-                ->on('store_tags')->onDelete('cascade');
+          $table->integer('bar_tag_id')->unsigned()->nullable();
+          $table->foreign('bar_tag_id')->references('id')
+                ->on('bar_tags')->onDelete('cascade');
         });
     }
 
@@ -34,6 +34,6 @@ class CreateStoreStoreTagTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('store_store_tag');
+        Schema::dropIfExists('bar_bar_tag');
     }
 }
