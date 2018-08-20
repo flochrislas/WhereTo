@@ -56,6 +56,14 @@ https://appdividend.com/2018/05/17/laravel-many-to-many-relationship-example/#St
 * Pivot table
 * http://www.easylaravelbook.com/blog/2016/04/06/introducing-laravel-many-to-many-relations/
 * http://laraveldaily.com/pivot-tables-and-many-to-many-relationships/
+::
+php artisan make:model -m -c -r Bar;
+php artisan make:seeder BarsTableSeeder;
+php artisan make:model -m -c -r BarTag;
+php artisan make:seeder BarTagsTableSeeder;
+php artisan make:migration create_bar_bar_tag_table --create=bar_bar_tag;
+::
+
 
 PHPUnit tests with Laravel:
 https://semaphoreci.com/community/tutorials/getting-started-with-phpunit-in-laravel
