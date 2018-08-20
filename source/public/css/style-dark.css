@@ -44,6 +44,7 @@ https://autoprefixer.github.io/
     --bg-color-inner: #141422; /* almost black */
     --bg-color-cell: #262633; /* light black */
     --color-txt-default: #CAD0AF; /* grey 2 */
+    --color-txt-tag: #000000; /* white */
     --color-name: #69e2b3; /* green */
     --color-type: #45C3EC; /* blue */ 
     --color-dst: rgb(249, 239, 193); /* yellow */
@@ -326,7 +327,7 @@ td {
   padding: .8rem 1.15rem;
   /* text */
   font-family: 'ITCAvantGardeStdBk', sans-serif;
-  color: #000000;
+  color: var(--color-txt-tag);
   font-size: .8rem;
   font-weight: 500;
   text-decoration: none;

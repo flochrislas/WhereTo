@@ -495,7 +495,7 @@ class RestaurantsTableSeeder extends Seeder
             'location'          => 'Shibuya',
             'type'              => 'Thai',
             'lunch_price'       => 800,
-            'points'            => 'Supposedly famous chicken rice',
+            'points'            => 'Supposedly famous (Thai) chicken rice',
             'experience'        => 'I\'ve been told there were a thai restaurant in Shibuya serving chicken rice, and that it was a popular chain from Thailand or something. So I went there, and arrived shortly in front a restaurant exposing dead chicken on its facade. No line. I go inside, and its small and crappy, with shitty music on the top. I order the famous chicken rice, for an outstanding 800yen. It comes quickly, with a soup (hot water) and some sauce (like sweet chinese shoyu with a touch of vinegar). The amount is ridiculously small (note that you could double it for 400yen). What\'s more, the chicken is actually half chicken, half chicken skin. I eat, nothing special at all. Rice is not really good. Chicken is nice and soft and tasteless, for the few bites I had on it. The sauce was good. Oh, and surprisingly enough, it also came with a mini-bucket full of pakuchi... this stuff is usually expensive here. And that was it, EXTREMELY disapointed. I felt robbed. Of my money. My time. My hopes. And still hungry.',
             'visited'           => true,
             'visit_date'        => '2017-09-05 13:00:00',
@@ -3055,6 +3055,27 @@ class RestaurantsTableSeeder extends Seeder
         ));
         $resto->attachTags(['pasta','filling','no smoking']);
         $resto->fillCoordinatesFromString('35.657222, 139.703782');
+
+        $resto = Restaurant::create(array(
+            'name'              => 'Daylight Kitchen',
+            'location'          => 'Shibuya, Sakuragaokacho',
+            'type'              => 'Organic',
+            'lunch_price'       => 1500,
+            'points'            => 'Healthy and quite exquisite lunch sets.',
+            'experience'        => 'Inside is spacious and nice, and there is also a large terrace with some green trees to cut you from the road. Very nice. 2 main lunch sets: meat or vegetables. I tried the ratatouille, it was served with salad, rice, soup, and few other small things, all very, very good. 1500 yen did not feel overpriced for this kind of lunch in Shibuya. I had a very pleasant experience.',
+            'visited'           => true,
+            'visit_date'        => '2018-08-20 13:00:00',
+            'google_maps_link'  => 'https://www.google.com/maps/place/Daylight+Kitchen/@35.6577381,139.6991146,17z/data=!4m5!3m4!1s0x60188b573fb4e74b:0x9f37c90b12a546cd!8m2!3d35.6558944!4d139.6998334',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13113772/',
+            'official_website'  => 'http://www.daylightkitchen.jp/',
+            'score_lunch'       => 2,
+            'score_place'       => 2,
+            'score_food'        => 2,
+            'score_price'       => 1,
+            'score_date'        => 1
+        ));
+        $resto->attachTags(['open air space','no smoking','cafe','vegan friendly']);
+        $resto->fillCoordinatesFromString('35.655948, 139.699819');
 
 
         /*
