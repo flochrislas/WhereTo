@@ -5,8 +5,8 @@
   <div class="resultRow">
     <div class="resultCell nameAndType">
       <a href="{{ route('restaurants.details',$restaurant->id) }}">
-      <div class="restaurantName">{{ $restaurant->name }}</div>
-      <div class="restaurantType">{{ $restaurant->type }}</div>
+      <div class="rowName">{{ $restaurant->name }}</div>
+      <div class="rowType">{{ $restaurant->type }}</div>
       </a>
     </div>
     <div class="resultCell distance centerContent">
