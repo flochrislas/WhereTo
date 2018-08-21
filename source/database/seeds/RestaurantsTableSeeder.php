@@ -3077,6 +3077,27 @@ class RestaurantsTableSeeder extends Seeder
         $resto->attachTags(['open air space','no smoking','cafe','vegan friendly']);
         $resto->fillCoordinatesFromString('35.655948, 139.699819');
 
+        $resto = Restaurant::create(array(
+            'name'              => 'Bel Mare',
+            'location'          => 'Shibuya, Sakuragaokacho',
+            'type'              => 'Italian',
+            'lunch_price'       => 1000,
+            'points'            => 'Nice small Italian restaurant.',
+            'experience'        => 'Small but confortable, with decent size tables. White tableclothes and classical music playing in the background. Mostly pasta in the menu for lunch. I tried some tomato based salami pasta, and it was absolutely delicious. 1000 yen for the set with a drink and a salad. You can add 100 yen to make the portion bigger (it becomes quite big, be sure to be very hungry).',
+            'visited'           => true,
+            'visit_date'        => '2018-08-21 13:00:00',
+            'google_maps_link'  => 'https://www.google.com/maps/place/bel+mare/@35.6567873,139.6985703,17z/data=!3m1!4b1!4m5!3m4!1s0x60188b576570fcd1:0xe2fc27305983b3fc!8m2!3d35.656783!4d139.700759',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13010645/',
+            'official_website'  => 'https://belmare.jp/',
+            'score_lunch'       => 2,
+            'score_place'       => 2,
+            'score_food'        => 2,
+            'score_price'       => 1,
+            'score_date'        => 1
+        ));
+        $resto->attachTags(['italian','pasta']);
+        $resto->fillCoordinatesFromString('35.656787, 139.700843');
+
 
         /*
         $resto = Restaurant::create(array(
