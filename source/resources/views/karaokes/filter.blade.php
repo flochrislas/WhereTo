@@ -15,12 +15,12 @@
 
 <!-- showing available tags -->
 <div id="tags">
-  @foreach ($restaurantTags as $restaurantTag)
-      <div class="tag tagType{{$restaurantTag->type}}"
-            tagId="{{$restaurantTag->id}}"
-            id="tagShow{{$restaurantTag->id}}"
+  @foreach ($tags as $tag)
+      <div class="tag tagType{{$tag->type}}"
+            tagId="{{$tag->id}}"
+            id="tagShow{{$tag->id}}"
             onClick="moveTag(event)">
-        {{$restaurantTag->label}}
+        {{$tag->label}}
       </div>
   @endforeach
 </div>
