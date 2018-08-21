@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\KaraokeTag;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 
 class KaraokeTagController extends Controller
 {
