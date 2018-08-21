@@ -23,6 +23,14 @@ Route::get('/', array('as' => 'home', function() {
     return View::make('home');
 }));
 
+Route::get('info/main', array('as' => 'info', function() {
+    return view('info.main');
+}));
+
+Route::get('vip/main', array('as' => 'vip', function() {
+    return view('vip.main');
+}));
+
 // about page (resources/views/about.blade.php)
 Route::get('about', array('as' => 'about', function() {
     return View::make('about');
