@@ -254,3 +254,25 @@ https://medium.com/sk-geek/deploy-laravel-app-to-elastic-beanstalk-amazon-ec2-6c
 
 Make an app (full screen web browser technique)
 https://softeng.oicr.on.ca/brice_aminou/2017/03/07/Mobile-app-with-Laravel/
+
+$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+PAYMENTS
+
+Paypal API
+https://medium.com/justlaravel/how-to-integrate-paypal-payment-gateway-in-laravel-695063599449
+https://laravelcode.com/post/how-to-integrate-paypal-payment-gateway-in-laravel-54
+
+Other options info
+https://stackoverflow.com/questions/32900917/how-to-integrate-paypal-payment-gateway-in-laravel
+
+Omnipay
+https://omnipay.thephpleague.com/gateways/community/
+https://github.com/thephpleague/omnipay
+Omnipay 3 apypal + laravel
+https://sujipthapa.co/blog/paypal-integration-omnipay-paypal-php-library-v30-with-laravel
+Laravel + omnipay github
+https://github.com/barryvdh/laravel-omnipay
+
+
+
+$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
