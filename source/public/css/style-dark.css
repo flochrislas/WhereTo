@@ -46,7 +46,7 @@ https://autoprefixer.github.io/
     --color-txt-default: #CAD0AF; /* grey 2 */
     --color-txt-tag: #000000; /* white */
     --color-name: #69e2b3; /* green */
-    --color-type: #45C3EC; /* blue */ 
+    --color-type: #45C3EC; /* blue */
     --color-dst: rgb(249, 239, 193); /* yellow */
     --color-cost: #5FE18B; /* lighter green */
     --color-lunch: #3AD46E; /* green */
@@ -250,7 +250,7 @@ td {
 /*********************************************/
 /*            RESTAURANTS FILTER             */
 /*********************************************/
-#restaurantsFilter {
+#mainFilter {
   /* Allows for fixed element*/
   overflow: hidden;
   height: 100%; /* needed for proper layout (?) */
@@ -259,7 +259,7 @@ td {
   flex-direction: column;
 }
 
-#restaurantsResults {
+#mainResults {
   /* hide by default, flex for display */
   display: none;
   font-size: .8rem;
@@ -402,13 +402,13 @@ td {
   margin: 0 .25rem;
 }
 
-.restaurantName {
+.rowName {
   font-weight: 100;
   color: var(--color-name);
   text-decoration: none;
 }
 
-.restaurantType {
+.rowType {
   font-weight: 50;
   color: var(--color-type);
 }
