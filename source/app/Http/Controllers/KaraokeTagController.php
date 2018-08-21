@@ -7,79 +7,23 @@ use Illuminate\Http\Request;
 
 class KaraokeTagController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    * Get all the karaoke tags.
+    * Using cache.
+    */
+    public function viewAllTags(Request $request)
     {
-        //
+        $cacheKey = "all_karaokes_tags";
+        $tags = Cache::rememberForever($cacheKey, function() {
+              return KaraokeTag::orderBy('type','desc')
+                                ->orderBy('weight','desc')
+                                ->orderBy('created_at','desc')
+                                ->get();
+        });
+        //pass tags data to view and load list view
+        return view('karaokes.main', ['tags' => $tags]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\KaraokeTag  $karaokeTag
-     * @return \Illuminate\Http\Response
-     */
-    public function show(KaraokeTag $karaokeTag)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\KaraokeTag  $karaokeTag
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(KaraokeTag $karaokeTag)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\KaraokeTag  $karaokeTag
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, KaraokeTag $karaokeTag)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\KaraokeTag  $karaokeTag
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(KaraokeTag $karaokeTag)
-    {
-        //
-    }
+      // If ever in need of all the default functions, jsut copy paste from restaurant tags controller.
 }
