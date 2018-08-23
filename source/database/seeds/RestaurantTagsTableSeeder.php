@@ -423,6 +423,12 @@ class RestaurantTagsTableSeeder extends Seeder
         ));
 
         RestaurantTag::create(array(
+            'label'              => 'taco rice',
+            'type'               => '100',
+            'weight'             => '5'
+        ));
+
+        RestaurantTag::create(array(
             'label'              => 'desert',
             'type'               => '100',
             'weight'             => '4'

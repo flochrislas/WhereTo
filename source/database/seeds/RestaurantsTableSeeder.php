@@ -1610,12 +1610,12 @@ class RestaurantsTableSeeder extends Seeder
             'location'          => 'Shibuya, Mark City',
             'type'              => 'Cafe',
             'lunch_price'       => 1200,
-            'points'            => 'Unexpensive and nice oriental food restaurant.',
-            'experience'        => 'I liked the space and decor inside. Quite big. There are tables, counters, and also a tatami section. Good variety of lunch sets, for a very good price. For 1000 yen I could get salad, drink, 3 different kinds of curry, tandori chicken, and nan! The food was not especially delicious, but decent. With the exception of the spicy mutton curry, that was really delicious.',
+            'points'            => 'Nice cafe with large windows bay and terrace.',
+            'experience'        => 'The place looks nice but it can feels a bit cramped since it\'s not very spacious. I tried the main burger. I was decent but felt overpriced.',
             'visited'           => true,
             'visit_date'        => '2018-02-23 13:00:00',
             'google_maps_link'  => 'https://www.google.co.jp/maps/place/Chelsea+Cafe+Shibuya+Mark+City/@35.656849,139.6985482,18z/data=!3m1!5s0x60188b5631f5f4af:0xf2c804907c6b11f9!4m5!3m4!1s0x0:0x2af5c93390ed06d0!8m2!3d35.657695!4d139.697082',
-            'tabelog_link'      => '',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13161333/',
             'official_website'  => 'http://www.dreamcorp.co.jp/cc/index.html',
             'score_lunch'       => 2,
             'score_place'       => 1,
@@ -3095,9 +3095,75 @@ class RestaurantsTableSeeder extends Seeder
             'score_price'       => 1,
             'score_date'        => 1
         ));
-        $resto->attachTags(['italian','pasta']);
+        $resto->attachTags(['italian','pasta','no smoking']);
         $resto->fillCoordinatesFromString('35.656787, 139.700843');
 
+        $resto = Restaurant::create(array(
+            'name'              => 'Bel Mare',
+            'location'          => 'Shibuya, Sakuragaokacho',
+            'type'              => 'Italian',
+            'lunch_price'       => 1000,
+            'points'            => 'Nice small Italian restaurant.',
+            'experience'        => 'Small but confortable, with decent size tables. White tableclothes and classical music playing in the background. Mostly pasta in the menu for lunch. I tried some tomato based salami pasta, and it was absolutely delicious. 1000 yen for the set with a drink and a salad. You can add 100 yen to make the portion bigger (it becomes quite big, be sure to be very hungry).',
+            'visited'           => true,
+            'visit_date'        => '2018-08-21 13:00:00',
+            'google_maps_link'  => 'https://www.google.com/maps/place/bel+mare/@35.6567873,139.6985703,17z/data=!3m1!4b1!4m5!3m4!1s0x60188b576570fcd1:0xe2fc27305983b3fc!8m2!3d35.656783!4d139.700759',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13010645/',
+            'official_website'  => 'https://belmare.jp/',
+            'score_lunch'       => 2,
+            'score_place'       => 2,
+            'score_food'        => 2,
+            'score_price'       => 1,
+            'score_date'        => 1
+        ));
+        $resto->attachTags(['italian','pasta','no smoking']);
+        $resto->fillCoordinatesFromString('35.656787, 139.700843');
+
+        $resto = Restaurant::create(array(
+            'name'              => 'La cocorico',
+            'location'          => 'Shibuya',
+            'type'              => 'Italian',
+            'lunch_price'       => 1000,
+            'points'            => 'Nice and spacious Italian restaurant.',
+            'experience'        => 'The place, on the 5th floor of "the gems" building, was nice and spacious. Wooden interior. Lunch menu sets are about 1000 yen. A bit more if you order a larger portion. For 1000 yen, I got a very nice small salad with some roast beef and smoked saumon, a mini soup, a drink, a small dessert, and the main dish was a 18cm pizza marguerita. 28cm size was available for an additionnal 500 yen, but I got satisfied with the smaller one, given the other items coming with the set. The pizza itself was actually quite good, above the average in Shibuya.',
+            'visited'           => true,
+            'visit_date'        => '2018-08-22 13:00:00',
+            'google_maps_link'  => 'https://www.google.com/maps/place/La+Cocorico/@35.6549871,139.7019954,16z/data=!4m5!3m4!1s0x60188b5bc716543f:0xd8b70bfaabe81b24!8m2!3d35.6557281!4d139.7045167',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13147320/',
+            'official_website'  => 'http://www.la-cocorico.jp/shibuya',
+            'score_lunch'       => 3,
+            'score_place'       => 2,
+            'score_food'        => 2,
+            'score_price'       => 1,
+            'score_date'        => 1
+        ));
+        $resto->attachTags(['italian','pizza','pasta','no smoking']);
+        $resto->fillCoordinatesFromString('35.655713, 139.704509');
+
+        $resto = Restaurant::create(array(
+            'name'              => 'Tora uma',
+            'location'          => 'Shibuya, Sakuragaokacho',
+            'type'              => 'Izakaya',
+            'lunch_price'       => 800,
+            'points'            => 'Small izakaya. Clean place. Offers some Japanese dishes for lunch.',
+            'experience'        => 'Inside is small but nice. A counter and a few tables. Some music and a TV on. I enjoyed the peaceful atmosphere. Two men are taking care of preparing the food and they cook pretty well. The karaage were freshly made on demand and looked very good. I ordred the taco rice. It came with a miso soup, some Japanese pickles, and a salad. For 800 yen. It was very good. Menu is all in Japanese, no English. Lunch is limited to 4 or 5 choices of food. Nobody were smoking during the time I had my lunch, but ash trays on the tables indicates that might be allowed.',
+            'visited'           => true,
+            'visit_date'        => '2018-08-23 13:00:00',
+            'google_maps_link'  => 'https://www.google.com/maps/place/%E8%99%8E%E3%81%86%E3%81%BE/@35.6575261,139.6993365,17z/data=!4m5!3m4!1s0x60188b575c34987d:0xe2ff1b8bc763cb1c!8m2!3d35.6562359!4d139.7011389',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13173914/',
+            'official_website'  => 'https://www.facebook.com/%E8%99%8E%E3%81%86%E3%81%BE-1595613027332000/',
+            'score_lunch'       => 3,
+            'score_place'       => 1,
+            'score_food'        => 2,
+            'score_price'       => 2,
+            'score_date'        => 0
+        ));
+        $resto->attachTags(['izakaya','teishoku','karaage','taco rice']);
+        $resto->fillCoordinatesFromString('35.656264, 139.701139');
+
+        // https://www.google.com/maps/place/SARAY/@35.6582947,139.6996006,17z/data=!4m5!3m4!1s0x60188b57b190ffaf:0xacbf832dc03a859!8m2!3d35.6575082!4d139.6991652
+        // https://tabelog.com/tokyo/A1303/A130301/13004608/
+        // http://www.saray.jp/
 
         /*
         $resto = Restaurant::create(array(
