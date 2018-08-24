@@ -223,7 +223,7 @@ class RestaurantsTableSeeder extends Seeder
             'location'          => 'Shibuya',
             'type'              => 'Turk',
             'lunch_price'       => 900,
-            'points'            => 'Popular turkish dishes such as kebab, possibility to eat inside on table. Dishes come on a plate, and with soup and tea.',
+            'points'            => 'Popular Turkish dishes such as kebab, possibility to eat inside on table. Dishes come on a plate, and with soup and tea.',
             'experience'        => 'Very good food in decent quantity, despite a rather cheap price. The place itself is not very confortable (narrow space).',
             'visited'           => true,
             'visit_date'        => '2017-09-05 13:00:00',
@@ -1063,7 +1063,7 @@ class RestaurantsTableSeeder extends Seeder
             'location'          => 'Shibuya',
             'type'              => 'Turk',
             'lunch_price'       => 1000,
-            'points'            => 'Decent Turk restaurant. B1F, quite dark place, but decent interior. Big enough to allow groups.',
+            'points'            => 'Decent Turkish restaurant. B1F, quite dark place, but decent interior. Big enough to allow groups.',
             'experience'        => 'Lunch set was dish + bread/nan + salad + soup + tea, all decent. Not as good as Kebab Cafe though (but more more confortable).',
             'visited'           => true,
             'visit_date'        => '2017-12-13 13:00:00',
@@ -3160,6 +3160,27 @@ class RestaurantsTableSeeder extends Seeder
         ));
         $resto->attachTags(['izakaya','teishoku','karaage','taco rice']);
         $resto->fillCoordinatesFromString('35.656264, 139.701139');
+
+        $resto = Restaurant::create(array(
+            'name'              => 'Saray',
+            'location'          => 'Shibuya',
+            'type'              => 'Turk',
+            'lunch_price'       => 1000,
+            'points'            => 'Small, cosy Turkish restaurant.',
+            'experience'        => 'The plae cwas empty when I went afer 1pm. Staff was friendly. Room was cosy. For 1000 yen I picked the mixed kebab plate, that came with a soup and a drink. The soup was quite very good, the main dish was good without being great.',
+            'visited'           => true,
+            'visit_date'        => '2018-08-24 13:00:00',
+            'google_maps_link'  => 'https://www.google.com/maps/place/SARAY/@35.6582947,139.6996006,17z/data=!4m5!3m4!1s0x60188b57b190ffaf:0xacbf832dc03a859!8m2!3d35.6575082!4d139.6991652',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13004608/',
+            'official_website'  => 'http://www.saray.jp/',
+            'score_lunch'       => 2,
+            'score_place'       => 1,
+            'score_food'        => 1,
+            'score_price'       => 1,
+            'score_date'        => 1
+        ));
+        $resto->attachTags(['turk']);
+        $resto->fillCoordinatesFromString('35.657500, 139.699144');
 
         // https://www.google.com/maps/place/SARAY/@35.6582947,139.6996006,17z/data=!4m5!3m4!1s0x60188b57b190ffaf:0xacbf832dc03a859!8m2!3d35.6575082!4d139.6991652
         // https://tabelog.com/tokyo/A1303/A130301/13004608/

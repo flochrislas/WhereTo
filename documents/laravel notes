@@ -63,6 +63,11 @@ php artisan make:model -m -c -r BarTag;
 php artisan make:seeder BarTagsTableSeeder;
 php artisan make:migration create_bar_bar_tag_table --create=bar_bar_tag;
 ::
+php artisan make:model -m -c -r Karaoke;
+php artisan make:seeder KaraokesTableSeeder;
+php artisan make:model -m -c -r KaraokeTag;
+php artisan make:seeder KaraokeTagsTableSeeder;
+php artisan make:migration create_karaoke_karaoke_tag_table --create=karaoke_karaoke_tag;
 
 
 PHPUnit tests with Laravel:
