@@ -37,14 +37,14 @@ class StoresTableSeeder extends Seeder
           'name'              => 'Asics Flagship',
           'location'          => 'Harajuku',
           'type'              => 'Sports',
-          'points'            => 'Japanese brand of sports wear. Specialized in sneakers using gel technology.',
+          'points'            => 'Japanese sports wear. Specialized in sneakers using gel technology.',
           'experience'        => 'Spacious store, comfortable shopping. Great Japanese sneakers.',
           'google_maps_link'  => 'https://www.google.com/maps/place/ASICS+Harajuku+Flagship+Store/@35.6699328,139.7036335,17z/data=!4m8!1m2!2m1!1sAsics!3m4!1s0x60188ca4fac54abd:0xdac77910b1a5d314!8m2!3d35.6703773!4d139.7066161',
           'official_website'  => 'https://www.asics.com/jp/ja-jp/store/AJP-A09014A/%E3%82%A2%E3%82%B7%E3%83%83%E3%82%AF%E3%82%B9%E5%8E%9F%E5%AE%BF%E3%83%95%E3%83%A9%E3%83%83%E3%82%B0%E3%82%B7%E3%83%83%E3%83%97',
           'score'             => 3
         ));
         $store->attachTags(['sports','shoes','sneakers']);
-        $store->fillCoordinatesFromString('35.658545, 139.698468');
+        $store->fillCoordinatesFromString('35.670367, 139.706605');
 
          // https://www.google.com/maps/place/ASICS+Harajuku+Flagship+Store/@35.6699328,139.7036335,17z/data=!4m8!1m2!2m1!1sAsics!3m4!1s0x60188ca4fac54abd:0xdac77910b1a5d314!8m2!3d35.6703773!4d139.7066161
 
