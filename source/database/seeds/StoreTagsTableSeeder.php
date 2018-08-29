@@ -40,6 +40,24 @@ class StoreTagsTableSeeder extends Seeder
         ));
 
         StoreTag::create(array(
+            'label'              => 'men',
+            'type'               => '80',
+            'weight'             => '300'
+        ));
+
+        StoreTag::create(array(
+            'label'              => 'women',
+            'type'               => '80',
+            'weight'             => '300'
+        ));
+
+        StoreTag::create(array(
+            'label'              => 'shoes',
+            'type'               => '80',
+            'weight'             => '300'
+        ));
+
+        StoreTag::create(array(
             'label'              => 'CD/DVD',
             'type'               => '80',
             'weight'             => '300'
@@ -68,6 +86,20 @@ class StoreTagsTableSeeder extends Seeder
             'type'               => '80',
             'weight'             => '300'
         ));
+
+        StoreTag::create(array(
+            'label'              => 'luxury',
+            'type'               => '80',
+            'weight'             => '300'
+        ));
+
+        StoreTag::create(array(
+            'label'              => 'mall',
+            'type'               => '80',
+            'weight'             => '300'
+        ));
+
+        // check meaning of mall vs dept store
 
       }
 }

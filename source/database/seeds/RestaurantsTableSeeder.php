@@ -2180,7 +2180,7 @@ class RestaurantsTableSeeder extends Seeder
             'type'              => 'Sushi',
             'lunch_price'       => 1000,
             'points'            => 'Big and popular (read busy) sushi restaurant. Lot of choices (hundreds) with not only sushi, but meat and different dishes as well. Reasonably priced. Decent taste.',
-            'experience'        => 'There seems to be always a line of people sitting, waiting their turn to be able to enter the place. THe place is quite big, with tables and counters. You can grab items from the convey belt running everywhere, but there is a big menu with hundreds of choices and paper where you just have to put dish number and amount to place an order. You can get a dish of 2 sushi for as cheap as 100 yen. Tastes decent. There is also a fair amount of vegan sushi and dishes. I was surprised at how good the avocado tempura was, and quite filling for 250 yen. The amount of fish on each sushi is quite nice.',
+            'experience'        => 'There seems to be always a line of people sitting, waiting their turn to be able to enter the place. THe place is quite big, with tables and counters. You can grab items from the convey belt running everywhere, but there is a big menu with hundreds of choices and paper where you just have to put dish number and amount to place an order. You can get a dish of 2 sushi for as cheap as 100 yen. Tastes decent. There is also a fair amount of vegan sushi and dishes. I was surprised at how good the avocado tenpura was, and quite filling for 250 yen. The amount of fish on each sushi is quite nice.',
             'visited'           => true,
             'visit_date'        => '2018-05-31 13:00:00',
             'google_maps_link'  => 'https://www.google.co.jp/maps/place/Katsu+Midori+Seibu+Shibuya/@35.6578812,139.7035082,16z/data=!4m5!3m4!1s0x0:0xa9b1e2d5e31cd607!8m2!3d35.6602348!4d139.7005149',
@@ -3074,7 +3074,7 @@ class RestaurantsTableSeeder extends Seeder
             'score_price'       => 1,
             'score_date'        => 1
         ));
-        $resto->attachTags(['open air space','no smoking','cafe','vegan friendly']);
+        $resto->attachTags(['open air space','no smoking','cafe','vegan friendly','organic']);
         $resto->fillCoordinatesFromString('35.655948, 139.699819');
 
         $resto = Restaurant::create(array(
@@ -3182,9 +3182,47 @@ class RestaurantsTableSeeder extends Seeder
         $resto->attachTags(['turk']);
         $resto->fillCoordinatesFromString('35.657500, 139.699144');
 
-        // https://www.google.com/maps/place/SARAY/@35.6582947,139.6996006,17z/data=!4m5!3m4!1s0x60188b57b190ffaf:0xacbf832dc03a859!8m2!3d35.6575082!4d139.6991652
-        // https://tabelog.com/tokyo/A1303/A130301/13004608/
-        // http://www.saray.jp/
+        $resto = Restaurant::create(array(
+            'name'              => 'Gochiso soba sora',
+            'location'          => 'Shibuya, 109men',
+            'type'              => 'Soba',
+            'lunch_price'       => 1000,
+            'points'            => 'Small tenpura and soba restaurant in 109men\'s 7th floor'.,
+            'experience'        => 'This place is kind of hidden behind a big gyoza restaurant on the 7th floor. Small but empty, the place is bright and look clean, but somehow the floor was very sticky. You order from a choice of soba and/or tenpura dishes at the machine (English available). I chose the most expensive, soba + tenpura, for 1380 yen. The food was very decent (way better than cheap chains such as fuji soba), good fresh soba and nice tenpura. But somehow the experience is not that great, maybe due to the fact that the place lacks personality, and has no windows, no view.',
+            'visited'           => true,
+            'visit_date'        => '2018-08-07 13:00:00',
+            'google_maps_link'  => 'https://www.google.com/maps/place/Magnet+by+Shibuya+109/@35.659286,139.6999489,18z/data=!3m1!5s0x60188ca8027011b9:0xaf0e3821734cad50!4m13!1m7!3m6!1s0x60188b57fd9f7bb3:0xa314cb9bc59b96a7!2s7F,+1+Chome-23-10+Jinnan,+Shibuya-ku,+T%C5%8Dky%C5%8D-to+150-0041,+Japan!3b1!8m2!3d35.6597275!4d139.7009065!3m4!1s0x60188b57fda0b3bb:0x6c103e05d0fa17a7!8m2!3d35.6597801!4d139.7009394?hl=en',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13221831/',
+            'official_website'  => 'https://www.shibuya109.jp/shop/GSS/?msnId=MAGNET',
+            'score_lunch'       => 2,
+            'score_place'       => 1,
+            'score_food'        => 1,
+            'score_price'       => 1,
+            'score_date'        => 0
+        ));
+        $resto->attachTags(['soba','tenpura','no smoking']);
+        $resto->fillCoordinatesFromString('35.659702, 139.700843');
+
+        $resto = Restaurant::create(array(
+            'name'              => 'Cinagro',
+            'location'          => 'Shibuya, Seibu',
+            'type'              => 'Organic',
+            'lunch_price'       => 1480,
+            'points'            => 'Really great all-you-can-eat salad buffet, and wide choice of dishes.',
+            'experience'        => 'While it is not especially exciting going to the second basement of the Seibu mall, the restaurants there are nice and clean and stand by Seibu\'s relatively nice  standards. Sept Anges is located in the middle of the floor, and has an all-you-can-eat salad buffet opened at lunch time. Lots of different things, including deepfried eggplants and potatoes, bread, raw vegetables, and many different oils, vinegars and spices you can uses. All was surpringly very tasty. Inluding in the lunch price is a choice of main dish. Many are available (A to K, English menu available). I picked some ariabata spaghetti, it was relatively small in amount, but delicious.',
+            'visited'           => true,
+            'visit_date'        => '2018-08-29 13:00:00',
+            'google_maps_link'  => 'https://www.google.com/maps/place/Cinagro+Shibuya/@35.6590155,139.699435,18z/data=!3m1!5s0x60188ca8177055e1:0xf009a238452b6721!4m5!3m4!1s0x60188ca81772ab83:0x59c10e0dfc85cb41!8m2!3d35.6602337!4d139.7002987',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13150447/',
+            'official_website'  => 'https://www.cinagro.jp/shop-list/#shibuya',
+            'score_lunch'       => 3,
+            'score_place'       => 1,
+            'score_food'        => 2,
+            'score_price'       => 1,
+            'score_date'        => 1
+        ));
+        $resto->attachTags(['all-you-can-eat','pasta','pizza','italian','vegan friendly','organic','cafe','no smoking','english menu']);
+        $resto->fillCoordinatesFromString('35.660236, 139.700387');
 
         /*
         $resto = Restaurant::create(array(

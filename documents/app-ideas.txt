@@ -1,5 +1,26 @@
 \tkyfs01\Administration\Public\社内催し写真\GS2018新年会写真
 
+Domain name
+where-to.tokyo
+wherein.tokyo
+whereat.tokyo
+dokohe.tokyo
+bestin.tokyo
+whatsnext.tokyo
+.tokyo
+express guide
+supe rguide
+nobsguide
+realguide
+helper
+pointer
+directvector
+straightline
+apexguide
+goalpha
+compass
+
+
 NEXT UP
 
 Architecture:

@@ -452,5 +452,11 @@ class RestaurantTagsTableSeeder extends Seeder
             'weight'             => '0'
         ));
 
+        RestaurantTag::create(array(
+            'label'              => 'organic',
+            'type'               => '100',
+            'weight'             => '0'
+        ));
+
     }
 }
