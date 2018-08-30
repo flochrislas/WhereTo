@@ -3224,16 +3224,37 @@ class RestaurantsTableSeeder extends Seeder
         $resto->attachTags(['all-you-can-eat','pasta','pizza','italian','vegan friendly','organic','cafe','no smoking','english menu']);
         $resto->fillCoordinatesFromString('35.660236, 139.700387');
 
+        $resto = Restaurant::create(array(
+            'name'              => 'Oshima ramen',
+            'location'          => 'Shibuya, Dogenzaka',
+            'type'              => 'Ramen',
+            'lunch_price'       => 750,
+            'points'            => 'Quite nice and big ramen restaurant. Very good taste. Numerous choice of ramen types, and side dishes. Prices below average.',
+            'experience'        => 'I was very pleasantly surprised at how nice and big th place was. No windows, but nicely decorated, with a good atmosphere. Numerous choice of ramen, miso, shio, original, cold (in summer), with additional gyoza or chanhan for the most hungry customers. I ordered their miso ramen, for 750 yen (cheap!) with some yaki gyoza (fried dumplings) for an additional 180 yen for 6 pieces (cheap!). The ramen was very much like I love it: very tasty miso. Good egg, good meat, even the corn was nice. The dumplings were good but nothing special. I ended up very satisfied, and would place this establishment amongst the top 5 of Shibuya for ramen.',
+            'visited'           => true,
+            'visit_date'        => '2018-08-30 13:00:00',
+            'google_maps_link'  => 'https://www.google.com/maps/place/%E5%A4%A7%E5%B3%B6%E3%83%A9%E3%83%BC%E3%83%A1%E3%83%B3+%E6%B8%8B%E8%B0%B7%E5%BA%97/@35.6578435,139.6990391,18z/data=!4m5!3m4!1s0x60188b57b06633cb:0xd42bd797b8d6f64f!8m2!3d35.6575667!4d139.6993341',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13029771/',
+            'official_website'  => 'http://www.shibuyaism.com/entry/2016/11/27/143928',
+            'score_lunch'       => 3,
+            'score_place'       => 2,
+            'score_food'        => 2,
+            'score_price'       => 2,
+            'score_date'        => 0
+        ));
+        $resto->attachTags(['ramen','noodles','miso']);
+        $resto->fillCoordinatesFromString('35.657633, 139.699313');
+
         /*
         $resto = Restaurant::create(array(
             'name'              => '',
-            'location'          => '',
+            'location'          => 'Shibuya',
             'type'              => '',
             'lunch_price'       => 950,
             'points'            => '',
             'experience'        => '',
             'visited'           => true,
-            'visit_date'        => '2018-08-07 13:00:00',
+            'visit_date'        => '2018-09-07 13:00:00',
             'google_maps_link'  => '',
             'tabelog_link'      => '',
             'official_website'  => '',
