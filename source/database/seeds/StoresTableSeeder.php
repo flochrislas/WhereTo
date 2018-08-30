@@ -56,7 +56,7 @@ class StoresTableSeeder extends Seeder
           'official_website'  => 'https://www.shibuya109.jp/MAGNET/',
           'score'             => 1
         ));
-        $store->attachTags(['men','fashion']);
+        $store->attachTags(['men','fashion','mall']);
         $store->fillCoordinatesFromString('35.659702, 139.700843');
 
         $store = Store::create(array(
@@ -95,8 +95,47 @@ class StoresTableSeeder extends Seeder
           'official_website'  => 'https://www.sogo-seibu.jp/foreign/welcome/',
           'score'             => 1
         ));
-        $store->attachTags(['fashion','luxury']);
+        $store->attachTags(['fashion','luxury','mall']);
         $store->fillCoordinatesFromString('35.660118, 139.700556');
+
+        $store = Store::create(array(
+          'name'              => 'Adidas',
+          'location'          => 'Shibuya',
+          'type'              => 'Sports',
+          'points'            => 'Adidas "Brand Core" store. Nice but possibly pricey sneakers on the first floor. 2 upper floors of sports wear for men and women.',
+          'experience'        => 'Nice staff. Size for shoes goes up to 30cm, maybe 30.5cm on some models. Slightly more expensive than other similar brands.',
+          'google_maps_link'  => 'https://www.google.com/maps/place/adidas+Brand+Core+Store+Shibuya/@35.6587902,139.6979947,18z/data=!4m8!1m2!2m1!1sadidas!3m4!1s0x60188ca82fd3a799:0x421320b45b1ea565!8m2!3d35.6597771!4d139.6992642',
+          'official_website'  => 'https://shop.adidas.jp/',
+          'score'             => 2
+        ));
+        $store->attachTags(['sports','shoes','sneakers']);
+        $store->fillCoordinatesFromString('35.659762, 139.699253');
+
+        $store = Store::create(array(
+          'name'              => 'Under Armor',
+          'location'          => 'Shibuya',
+          'type'              => 'Sports',
+          'points'            => 'Under Armor flagship. Nice sneakers on the first floor. 2 upper floors of sports wear for men and women.',
+          'experience'        => 'Kind of small room on the 1st floor for sneakers. Size for shoes goes up to 30cm.',
+          'google_maps_link'  => 'https://www.google.com/maps/place/Under+Armour+ClubHouse+Shibuya/@35.6589411,139.698767,18z/data=!4m12!1m6!3m5!1s0x60188ca82873f91d:0x383fe154199e264a!2sUnder+Armour+ClubHouse+Shibuya!8m2!3d35.6593203!4d139.6993785!3m4!1s0x60188ca82873f91d:0x383fe154199e264a!8m2!3d35.6593203!4d139.6993785',
+          'official_website'  => 'https://www.underarmour.co.jp/ja-jp/shibuya.php',
+          'score'             => 1
+        ));
+        $store->attachTags(['sports','shoes','sneakers']);
+        $store->fillCoordinatesFromString('35.659352, 139.699383');
+
+        $store = Store::create(array(
+          'name'              => 'ABC Mart',
+          'location'          => 'Shibuya',
+          'type'              => 'Shoes',
+          'points'            => 'Various sneakers from popular brands.',
+          'experience'        => 'Gives an easy and nice overview of main sneakers brand\'s models. Sizes go up to 30cm on some (rare) models.',
+          'google_maps_link'  => 'https://www.google.com/maps/place/ABC-MART+Grand+Stage+%E6%B8%8B%E8%B0%B7%E5%BA%97%EF%BB%BF/@35.6594121,139.6982193,18z/data=!4m5!3m4!1s0x60188ca9b45e6a51:0x48c45a8dbc85b19a!8m2!3d35.660238!4d139.698576',
+          'official_website'  => 'https://www.abc-mart.net/shop/',
+          'score'             => 2
+        ));
+        $store->attachTags(['shoes','sneakers']);
+        $store->fillCoordinatesFromString('35.660326, 139.698601');
 
         /*
         $store = Store::create(array(
