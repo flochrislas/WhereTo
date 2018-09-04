@@ -8,8 +8,8 @@ dokohe.tokyo
 bestin.tokyo
 whatsnext.tokyo
 .tokyo
-express guide
-supe rguide
+expressguide
+superguide
 nobsguide
 realguide
 helper
@@ -19,7 +19,16 @@ straightline
 apexguide
 goalpha
 compass
-
+hypralocate
+smartlocator
+enroute
+smartroute
+finder
+quickpointer
+gothere
+walkthere
+justgo
+wherenext
 
 NEXT UP
 
@@ -105,7 +114,7 @@ Price
 1 correct
 2 good deal
 
-Score for dates:
+Dates:
 0: Bad for dates
 1: Decent for dates
 2: Great for dates
@@ -236,3 +245,5 @@ https://en.compathy.net/magazine/2016/06/28/karaoke-in-japan-survival-guide/
 great way to have my songs into JOYSOUND
 https://soranews24.com/2016/03/31/want-your-songs-available-at-karaoke-all-across-japan-theres-a-way-and-its-absolutely-free/
 https://www.reddit.com/r/japan/comments/3adq6f/preview_karaoke_song_lists/
+
+Nathan doesnt like Whoppers, Skor bars, and some obscure restaurant near his house.

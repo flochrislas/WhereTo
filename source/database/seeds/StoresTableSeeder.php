@@ -135,7 +135,46 @@ class StoresTableSeeder extends Seeder
           'score'             => 2
         ));
         $store->attachTags(['shoes','sneakers']);
-        $store->fillCoordinatesFromString('35.660326, 139.698601');
+        $store->fillCoordinatesFromString('35.660326, 139.698601');        
+
+        $store = Store::create(array(
+          'name'              => 'Asics Walking',
+          'location'          => 'Shibuya',
+          'type'              => 'Shoes',
+          'points'            => 'Dress shoes from Asics (Japanese sneakers brand).',
+          'experience'        => 'Small shop selling dress shoes for men and woman. Leather, and more casual models as well. Most models go up to 28cm, some up to 30cm.',
+          'google_maps_link'  => 'https://www.google.com/maps/place/%E3%82%A2%E3%82%B7%E3%83%83%E3%82%AF%E3%82%B9%E3%82%A6%E3%82%A9%E3%83%BC%E3%82%AD%E3%83%B3%E3%82%B0+%E6%B8%8B%E8%B0%B7/@35.6586334,139.7018858,17z/data=!4m8!1m2!2m1!1sasics!3m4!1s0x0:0xea2cf1b0e6c971b!8m2!3d35.6602551!4d139.7050811',
+          'official_website'  => 'https://www.asics.com/jp/ja-jp/walking',
+          'score'             => 1
+        ));
+        $store->attachTags(['shoes']);
+        $store->fillCoordinatesFromString('35.660130, 139.705131');
+
+        $store = Store::create(array(
+          'name'              => 'Glitter',
+          'location'          => 'Shibuya',
+          'type'              => 'Shoes',
+          'points'            => 'Small shoe shop',
+          'experience'        => 'Dress shoes, and more casual models as well. Sizes up to 28cm.',
+          'google_maps_link'  => 'https://www.google.com/maps/place/glitter+%E6%B8%8B%E8%B0%B7%E5%BA%97/@35.6588939,139.7010323,17z/data=!4m5!3m4!1s0x60188b58c3d5573f:0x98707c0809e40e8f!8m2!3d35.6601753!4d139.7053399',
+          'official_website'  => 'http://www.mar-c.jp/shop/shop_glitter/326/',
+          'score'             => 1
+        ));
+        $store->attachTags(['shoes']);
+        $store->fillCoordinatesFromString('35.660181, 139.705350');
+
+        $store = Store::create(array(
+          'name'              => 'Western Arms',
+          'location'          => 'Shibuya',
+          'type'              => 'Airsoft guns',
+          'points'            => 'Airsoft guns, replicas from anime, movies and military.',
+          'experience'        => 'Those replicas look nice. Mostly handguns, some rifles as well. Prices range mostly betweeen 30 and 45 thousand yen.',
+          'google_maps_link'  => 'https://www.google.com/maps/place/Western+Arms/@35.6596055,139.7037567,17z/data=!4m5!3m4!1s0x60188b58c16a7a17:0x10bb05fd1d6dfe91!8m2!3d35.6602002!4d139.7054408',
+          'official_website'  => 'http://www.wa-gunnet.co.jp/',
+          'score'             => 2
+        ));
+        $store->attachTags(['airsoft']);
+        $store->fillCoordinatesFromString('35.660206, 139.705450');
 
         /*
         $store = Store::create(array(

@@ -99,6 +99,12 @@ class StoreTagsTableSeeder extends Seeder
             'weight'             => '300'
         ));
 
+        StoreTag::create(array(
+            'label'              => 'airsoft',
+            'type'               => '80',
+            'weight'             => '300'
+        ));
+
         // check meaning of mall vs dept store
 
       }
