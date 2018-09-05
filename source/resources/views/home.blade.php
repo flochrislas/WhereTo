@@ -12,11 +12,12 @@
       Lunch
       <br/>in<br/>Shibuya</a>
 
-    <a class="giantButton locked" href="{{ route('restaurants.main') }}">
+    <a class="giantButton locked" href="{{ route('stores.main') }}">
       Shopping
       <br/>in<br/>Shibuya
       <div class="purchasePrice">50</div>
     </a>
+
     <a class="giantButton locked" href="{{ route('restaurants.main') }}">
       Dating
       <br/>in<br/>Shibuya
@@ -40,11 +41,13 @@
       Drinking in<br/>Shibuya
       <div class="purchasePrice">50</div>
     </a>
-    <a class="giantButton locked" href="{{ route('restaurants.main') }}">
+
+    <a class="giantButton locked" href="{{ route('karaokes.main') }}">
       Karaoke
       <br/>in<br/>Shibuya
       <div class="purchasePrice">50</div>
     </a>
+
     <a class="giantButton locked" href="{{ route('restaurants.main') }}">
       Hair Salon
       <br/>in<br/>Shibuya

@@ -82,7 +82,7 @@ class StoresTableSeeder extends Seeder
           'official_website'  => 'https://www.onitsukatiger.com/jp/ja-jp',
           'score'             => 3
         ));
-        $store->attachTags(['sports','shoes','sneakers');
+        $store->attachTags(['sports','shoes','sneakers']);
         $store->fillCoordinatesFromString('35.661390, 139.700407');
 
         $store = Store::create(array(

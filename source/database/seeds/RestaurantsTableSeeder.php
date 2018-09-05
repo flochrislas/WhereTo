@@ -3245,6 +3245,27 @@ class RestaurantsTableSeeder extends Seeder
         $resto->attachTags(['ramen','noodles','miso']);
         $resto->fillCoordinatesFromString('35.657633, 139.699313');
 
+        $resto = Restaurant::create(array(
+            'name'              => 'Boul\'ange',
+            'location'          => 'Shibuya, 1Chome',
+            'type'              => 'Bakery',
+            'lunch_price'       => 1100,
+            'points'            => 'French bakery. Second floor has counters and tables for customers to eat.',
+            'experience'        => 'Quite a lot of choice, especially for sweet stuff. They also so have baguette sandwiches, and some kind of burger and hotdog. I tried a ham, cheese and lettuce sandwich a kind of apple pie, for a total of 850 yen. It was good for Japan, despite the bread being kind of chewy. Maybe not so great for French people.',
+            'visited'           => true,
+            'visit_date'        => '2018-09-05 13:00:00',
+            'google_maps_link'  => 'https://www.google.com/maps/place/BOUL\'+ANGE+(%E3%83%96%E3%83%BC%E3%83%AB%E3%82%A2%E3%83%B3%E3%82%B8%E3%83%A5)+%E6%B8%8B%E8%B0%B7%E5%BA%97/@35.6598152,139.7005843,17z/data=!3m1!4b1!4m5!3m4!1s0x60188b586cf68f65:0xd6b4dc95e1d0afa0!8m2!3d35.6598109!4d139.702773',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13209052/',
+            'official_website'  => 'http://boulange.baycrews.co.jp/',
+            'score_lunch'       => 2,
+            'score_place'       => 1,
+            'score_food'        => 1,
+            'score_price'       => 1,
+            'score_date'        => 0
+        ));
+        $resto->attachTags(['bakery','french','sandwich']);
+        $resto->fillCoordinatesFromString('35.659753, 139.702670');
+
         /*
         $resto = Restaurant::create(array(
             'name'              => '',

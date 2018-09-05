@@ -4,82 +4,26 @@ namespace App\Http\Controllers;
 
 use App\StoreTag;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 
 class StoreTagController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
+  /**
+  * Get all the stores tags.
+  * Using cache.
+  */
+  public function viewAllTags(Request $request)
+  {
+      $cacheKey = "all_stores_tags";
+      $tags = Cache::rememberForever($cacheKey, function() {
+            return StoreTag::orderBy('type','desc')
+                              ->orderBy('weight','desc')
+                              ->orderBy('created_at','desc')
+                              ->get();
+      });
+      //pass tags data to view and load list view
+      return view('stores.main', ['tags' => $tags]);
+  }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\StoreTag  $storeTag
-     * @return \Illuminate\Http\Response
-     */
-    public function show(StoreTag $storeTag)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\StoreTag  $storeTag
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(StoreTag $storeTag)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\StoreTag  $storeTag
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, StoreTag $storeTag)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\StoreTag  $storeTag
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(StoreTag $storeTag)
-    {
-        //
-    }
+    // If ever in need of all the default functions, just copy paste from restaurant tags controller.
 }
