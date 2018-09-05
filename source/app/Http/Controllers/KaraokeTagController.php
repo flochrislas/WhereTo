@@ -26,5 +26,5 @@ class KaraokeTagController extends Controller
         return view('karaokes.main', ['tags' => $tags]);
     }
 
-      // If ever in need of all the default functions, jsut copy paste from restaurant tags controller.
+      // If ever in need of all the default functions, just copy paste from restaurant tags controller.
 }

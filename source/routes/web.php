@@ -46,6 +46,9 @@ Route::get('restaurants/results', 'RestaurantController@results')->name('restaur
 Route::get('restaurants/details/{id}', 'RestaurantController@details')->name('restaurants.details');
 Route::get('tags/autocomplete', 'RestaurantTagController@autocomplete')->name('tags.autocomplete');
 
+// Public stores pages
+Route::get('stores', 'StoreTagController@viewAllTags')->name('stores.main');
+
 // Public karaoke pages
 Route::get('karaoke', 'KaraokeTagController@viewAllTags')->name('karaokes.main');
 

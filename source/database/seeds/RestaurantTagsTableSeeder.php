@@ -130,6 +130,12 @@ class RestaurantTagsTableSeeder extends Seeder
             'weight'             => '100'
         ));
 
+        RestaurantTag::create(array(
+            'label'              => 'bakery',
+            'type'               => '40',
+            'weight'             => '100'
+        ));
+
         /******************************************/
         /*             FEATURES                   */
         /******************************************/        
