@@ -1,54 +1,29 @@
 <div class="resultTable">
 <!-- WE NEED A COUNTER HERE TO DISPLAY THE NUMBER OF RESULTS -->
-@foreach ($restaurants as $restaurant)
+@foreach ($places as $store)
   <div class="resultsCounter"></div>
   <div class="resultRow">
     <div class="resultCell nameAndType">
-      <a href="{{ route('restaurants.details',$restaurant->id) }}">
-      <div class="rowName">{{ $restaurant->name }}</div>
-      <div class="rowType">{{ $restaurant->type }}</div>
+      <a href="{{ route('stores.details',$store->id) }}">
+      <div class="rowName">{{ $store->name }}</div>
+      <div class="rowType">{{ $store->type }}</div>
       </a>
     </div>
     <div class="resultCell distance centerContent">
       <a target="_blank"
-         href="{{ $restaurant->google_maps_link }}">
+         href="{{ $store->google_maps_link }}">
         <div class="oneDigit inline">
-        {{ App\Tools\GeoUtils::walkingTime($restaurant->currentDistance/1000) }}
-      </div>
+        {{ App\Tools\GeoUtils::walkingTime($store->currentDistance/1000) }}
+        </div>
         <br /><div class="minute inline">min</div>
       </a>
     </div>
     <div class="resultCell centerContent">
-      <div class="score" style="color: var(--color-cost);">
-        <div class="fourDigits">{{ $restaurant->lunch_price }}</div>
-      </div>
-    </div>
-    <div class="resultCell centerContent">
-      <div class="score" style="color: var(--color-lunch);">
-        <div class="oneDigit">{{ $restaurant->score_lunch }}</div>
-      </div>
-    </div>
-    <div class="resultCell centerContent">
-      <div class="score" style="color: var(--color-food);">
-        <div class="oneDigit">{{ $restaurant->score_food }}</div>
-      </div>
-    </div>
-    <div class="resultCell centerContent">
       <div class="score" style="color: var(--color-place);">
-        <div class="oneDigit">{{ $restaurant->score_place }}</div>
-      </div>
-    </div>
-    <div class="resultCell centerContent">
-      <div class="score" style="color: var(--color-price);">
-        <div class="oneDigit">{{ $restaurant->score_price }}</div>
-      </div>
-    </div>
-    <div class="resultCell centerContent">
-      <div class="score" style="color: var(--color-date);">
-        <div class="oneDigit">{{ $restaurant->score_date }}</div>
+        <div class="oneDigit">{{ $store->points }}</div>
       </div>
     </div>
   </div>
 @endforeach
 </div>
-<div id="resultsEnd">End of <strong>{{ $restaurants->count() }}</strong> amazing results</div>
+<div id="resultsEnd">End of <strong>{{ $places->count() }}</strong> amazing results</div>

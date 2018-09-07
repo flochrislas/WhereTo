@@ -59,7 +59,7 @@ class RestaurantController extends Controller
           }
           $restaurants = collect($distanceSortedRestaurants);
         }
-        else // we still need to fill the current distance data for each restaurant we show
+        else // we still need to fill the current distance data for each place we show
         {
           if (!empty($position)) {
               $distanceSortedRestaurants = $this->generateCurrentDistances($restaurants, $position);
@@ -70,7 +70,6 @@ class RestaurantController extends Controller
         // https://laravel.com/docs/5.5/requests#old-input
         $request->flash();
 
-        // return view('restaurants.main', compact('restaurants'));
         return view('restaurants.results-data', compact('restaurants'));
     }
 

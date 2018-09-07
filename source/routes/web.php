@@ -48,9 +48,13 @@ Route::get('tags/autocomplete', 'RestaurantTagController@autocomplete')->name('t
 
 // Public stores pages
 Route::get('stores', 'StoreTagController@viewAllTags')->name('stores.main');
+Route::get('stores/results', 'StoreController@results')->name('stores.results');
+Route::get('stores/details/{id}', 'StoreController@details')->name('stores.details');
 
 // Public karaoke pages
 Route::get('karaoke', 'KaraokeTagController@viewAllTags')->name('karaokes.main');
+Route::get('karaoke/results', 'KaraokeController@results')->name('karaokes.results');
+Route::get('karaoke/details/{id}', 'KaraokeController@details')->name('karaokes.details');
 
 // ===============================================
 // ADMIN SECTION =================================

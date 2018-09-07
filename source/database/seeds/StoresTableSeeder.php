@@ -176,6 +176,19 @@ class StoresTableSeeder extends Seeder
         $store->attachTags(['airsoft']);
         $store->fillCoordinatesFromString('35.660206, 139.705450');
 
+        $store = Store::create(array(
+          'name'              => 'Tokyu',
+          'location'          => 'Shibuya',
+          'type'              => 'Mall',
+          'points'            => 'Mall merged with the Shibuya train station.',
+          'experience'        => '2 buildings. Multitudes of shops. Convenient in case of bad weather because no need to get out from the station. Rather nice food section at the basement floors. Restaurants at the 9th floor.',
+          'google_maps_link'  => 'https://www.google.com/maps/place/Tokyu+Department+Store/@35.6587263,139.6986498,17z/data=!3m2!4b1!5s0x60188b59c00ac46b:0x89a02b538fc1dabb!4m5!3m4!1s0x60188b5818bf6c25:0xaa2d6c840dc985b9!8m2!3d35.658722!4d139.7008385',
+          'official_website'  => 'https://www.tokyu-dept.co.jp/toyoko/',
+          'score'             => 1
+        ));
+        $store->attachTags(['mall','fashion','food']);
+        $store->fillCoordinatesFromString('35.658762, 139.700833');
+
         /*
         $store = Store::create(array(
           'name'              => 'xxxx',
