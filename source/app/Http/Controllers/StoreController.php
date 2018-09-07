@@ -5,81 +5,68 @@ namespace App\Http\Controllers;
 use App\Store;
 use Illuminate\Http\Request;
 
-class StoreController extends Controller
+class StoreController extends PlaceController
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
+  public function getClass()
+  {
+      // $class = get_class($this);
+      $class = ClassName::class;
+      return $class;
+  }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
+  public function getModelClass()
+  {
+      return 'App\Store';
+  }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Store  $store
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Store $store)
-    {
-        //
-    }
+  /**
+   * Public
+   * Search for the list to display.
+   * Cache.
+   * TODO: implement "see more" button
+   *
+   * @return \Illuminate\Http\Response
+   */
+  public function results(Request $request)
+  {
+      // Reads request parameters
+      // Operator for the Tags
+      $op = request('op');
+      // tags as a comma separated list
+      $tags = request('tags');
+      $this->formatTags($tags);
+      // Current position from client's GPS
+      // Office from google maps '35.656660, 139.699691'
+      $position = request('position');
+      $position = '35.656660, 139.699691';
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Store  $store
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Store $store)
-    {
-        //
-    }
+      $orderBy = request('orderBy');
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Store  $store
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Store $store)
-    {
-        //
-    }
+      // key needs to be made of all the used parameters except coords
+      $cacheKey = $this->cacheKey($op, $tags, $orderBy);
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Store  $store
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Store $store)
-    {
-        //
-    }
+      // Reads from cache or DB
+      $places = $this->useCache($cacheKey, $tags, $op, $orderBy);
+
+      if ($orderBy == 'distance')
+      {
+        if (!empty($position)) {
+            $distanceSortedPlaces = $this->sortByDistance($places, $position);
+        }
+        $places = collect($distanceSortedPlaces);
+      }
+      else // we still need to fill the current distance data for each place we show
+      {
+        if (!empty($position)) {
+            $distanceSortedPlaces = $this->generateCurrentDistances($places, $position);
+        }
+      }
+
+      // Keeps the input of the user interface
+      // https://laravel.com/docs/5.5/requests#old-input
+      $request->flash();
+
+      return view('stores.results-data', compact('places'));
+  }
 }
