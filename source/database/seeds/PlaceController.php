@@ -13,8 +13,15 @@ abstract class PlaceController extends Controller
     abstract protected function getClass();
     abstract protected function getModelClass();
 
-    public function useCache($cacheKey, $tags, $op, $orderBy)
+    /**
+    * Get search results from paramters by using the cache.
+    * Generate the key, read cache, if not found then read DB and fill cache
+    */
+    public function useCache($tags, $op, $orderBy)
     {
+        // key needs to be made of all the used parameters except coords
+        $cacheKey = $this->cacheKey($op, $tags, $orderBy);
+
         $places = Cache::rememberForever($cacheKey, function() use ($tags, $op, $orderBy) {
             return $this->mainDB($tags, $op, $orderBy);
         });
@@ -165,23 +172,23 @@ abstract class PlaceController extends Controller
     }
 
     /**
-     * Return the restaurants sorted by distance from given position
+     * Return the places sorted by distance from given position
      * @return array
      */
-    public function sortByDistance($restaurants, $position)
+    public function sortByDistance($places, $position)
     {
-        Log::debug('sortByDistance from  '.$position.' for '.count($restaurants).' restaurants' );
-        // Log::debug('For restaurants '.print_r($restaurants, true));
-        // Map the restaurants with their current distance
+        Log::debug('sortByDistance from  '.$position.' for '.count($places).' places' );
+        // Log::debug('For places '.print_r($places, true));
+        // Map the places with their current distance
         $curCoords = GeoUtils::toPositionArray($position);
         $curLat = $curCoords[0];
         $curLon = $curCoords[1];
         $map = array();
-        foreach ($restaurants as $resto) {
-          if(!is_null($resto->lat)) {
-            $distance = GeoUtils::distance($curLat, $curLon, $resto->lat, $resto->lon);
+        foreach ($places as $place) {
+          if(!is_null($place->lat)) {
+            $distance = GeoUtils::distance($curLat, $curLon, $place->lat, $place->lon);
             // Log::debug('Distance found: '.$distance);
-            $resto->currentDistance = $distance;
+            $place->currentDistance = $distance;
             /*
             if (array_key_exists((string)$distance, $map)) {
                 Log::debug('UH OH, this distance is already there '.$distance.', byebye '.$map[$distance]);
@@ -194,37 +201,59 @@ abstract class PlaceController extends Controller
             // We must use a string or else the number will be truncated
             // and easily collide with previous keys
             $distanceAsString = (string)$distance;
-            $map[$distanceAsString] = $resto;
+            $map[$distanceAsString] = $place;
           }
           else {
-            Log::debug('The following restaurant does NOT have coordinates: '.$resto->name);
+            Log::debug('The following restaurant does NOT have coordinates: '.$place->name);
           }
         }
         // Sort the map by key
         ksort($map);
         // Log::debug('sortByDistance ksort the map '.print_r($map, true));
         Log::debug('sortByDistance AFTER ksort the map with '.count($map).' elements');
-        // Return just the list of restaurants
+        // Return just the list of places
         return array_values($map);
     }
 
     /**
-     * For all the given restaurants, compute the distance from the given position
+     * For all the given places, compute the distance from the given position
      * Each result is stored in the restaurant's model
      * @return void
      */
-    public function generateCurrentDistances($restaurants, $position)
+    public function generateCurrentDistances($places, $position)
     {
         Log::debug('generateCurrentDistances from  '.$position);
-        // Map the restaurants with their current distance
+        // Map the places with their current distance
         $curCoords = GeoUtils::toPositionArray($position);
         $curLat = $curCoords[0];
         $curLon = $curCoords[1];
-        foreach ($restaurants as $resto) {
-          if(!is_null($resto->lat)) {
-            $distance = GeoUtils::distance($curLat, $curLon, $resto->lat, $resto->lon);
-            $resto->currentDistance = $distance;
+        foreach ($places as $place) {
+          if(!is_null($place->lat)) {
+            $distance = GeoUtils::distance($curLat, $curLon, $place->lat, $place->lon);
+            $place->currentDistance = $distance;
           }
         }
+    }
+
+    /**
+    * Calculate distances from position, and sort them if required
+    * @return places (filled with distances)
+    */
+    public function handleDistances($places, $position, $orderBy)
+    {
+        if ($orderBy == 'distance')
+        {
+          if (!empty($position)) {
+              $distanceSortedPlaces = $this->sortByDistance($places, $position);
+          }
+          $places = collect($distanceSortedPlaces);
+        }
+        else // we still need to fill the current distance data for each place we show
+        {
+          if (!empty($position)) {
+              $this->generateCurrentDistances($places, $position);
+          }
+        }
+        return $places;
     }
 }
