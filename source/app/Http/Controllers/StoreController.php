@@ -21,52 +21,58 @@ class StoreController extends PlaceController
   }
 
   /**
-   * Public
-   * Search for the list to display.
-   * Cache.
+   * Get the list to display.
    * TODO: implement "see more" button
    *
    * @return \Illuminate\Http\Response
    */
   public function results(Request $request)
   {
+      // -----------------------------------
       // Reads request parameters
+
       // Operator for the Tags
       $op = request('op');
+
       // tags as a comma separated list
       $tags = request('tags');
       $this->formatTags($tags);
+
       // Current position from client's GPS
       // Office from google maps '35.656660, 139.699691'
       $position = request('position');
       $position = '35.656660, 139.699691';
 
+      // the sorting order for the result list
       $orderBy = request('orderBy');
 
-      // key needs to be made of all the used parameters except coords
-      $cacheKey = $this->cacheKey($op, $tags, $orderBy);
-
+      // -----------------------------------
       // Reads from cache or DB
-      $places = $this->useCache($cacheKey, $tags, $op, $orderBy);
+      $places = $this->useCache($tags, $op, $orderBy);
 
-      if ($orderBy == 'distance')
-      {
-        if (!empty($position)) {
-            $distanceSortedPlaces = $this->sortByDistance($places, $position);
-        }
-        $places = collect($distanceSortedPlaces);
-      }
-      else // we still need to fill the current distance data for each place we show
-      {
-        if (!empty($position)) {
-            $distanceSortedPlaces = $this->generateCurrentDistances($places, $position);
-        }
-      }
+      // -----------------------------------
+      // Calculate distances from position, and sort them if required
+      $places = $this->handleDistances($places, $position, $orderBy);
 
       // Keeps the input of the user interface
       // https://laravel.com/docs/5.5/requests#old-input
       $request->flash();
 
+      // Return the view with the resulted places
       return view('stores.results-data', compact('places'));
   }
+
+  /**
+   * Display the specified resource.
+   *
+   * @param  int  $id
+   * @return \Illuminate\Http\Response
+   */
+  public function details($id)
+  {
+      $class = $this->getModelClass();
+      $place = $class::find($id);
+      return view('stores.details', compact('place'));
+  }
+
 }
