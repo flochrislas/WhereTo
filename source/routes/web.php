@@ -51,7 +51,17 @@ Route::get('stores', 'StoreTagController@viewAllTags')->name('stores.main');
 Route::get('stores/results', 'StoreController@results')->name('stores.results');
 Route::get('stores/details/{id}', 'StoreController@details')->name('stores.details');
 
-// Public karaoke pages
+// Public bars pages
+Route::get('bars', 'BarTagController@viewAllTags')->name('bars.main');
+Route::get('bars/results', 'BarController@results')->name('bars.results');
+Route::get('bars/details/{id}', 'BarController@details')->name('bars.details');
+
+// Public clubs pages
+Route::get('clubs', 'ClubTagController@viewAllTags')->name('clubs.main');
+Route::get('clubs/results', 'ClubController@results')->name('clubs.results');
+Route::get('clubs/details/{id}', 'ClubController@details')->name('clubs.details');
+
+// Public karaoke pages (bit special since we dont publicly put an s to karaoke)
 Route::get('karaoke', 'KaraokeTagController@viewAllTags')->name('karaokes.main');
 Route::get('karaoke/results', 'KaraokeController@results')->name('karaokes.results');
 Route::get('karaoke/details/{id}', 'KaraokeController@details')->name('karaokes.details');

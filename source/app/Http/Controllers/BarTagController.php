@@ -4,82 +4,24 @@ namespace App\Http\Controllers;
 
 use App\BarTag;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 
 class BarTagController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    * Get all the tags.
+    * Using cache.
+    */
+    public function viewAllTags(Request $request)
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\BarTag  $barTag
-     * @return \Illuminate\Http\Response
-     */
-    public function show(BarTag $barTag)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\BarTag  $barTag
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(BarTag $barTag)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\BarTag  $barTag
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, BarTag $barTag)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\BarTag  $barTag
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(BarTag $barTag)
-    {
-        //
+        $cacheKey = "all_bars_tags";
+        $tags = Cache::rememberForever($cacheKey, function() {
+              return BarTag::orderBy('type','desc')
+                                ->orderBy('weight','desc')
+                                ->orderBy('created_at','desc')
+                                ->get();
+        });
+        //pass tags data to view and load list view
+        return view('bars.main', ['tags' => $tags]);
     }
 }

@@ -1,23 +1,23 @@
 @extends('layouts.app')
 
-@section('title', 'Karaoke')
+@section('title', 'Bars')
 
 @section('content')
 <div id="content">
 
   <div id="mainFilter">
-    @include('karaokes.filter')
+    @include('bars.filter')
   </div>
 
   <div id="mainResults">
-    @include('karaokes.results')
+    @include('bars.results')
   </div>
 
 </div>
 
 <script>
   // To be used in ajax calls for reading results
-  var resultsUrl = 'karaoke/results';
+  var resultsUrl = 'bars/results';
 </script>
 @include('inline-javascript.main')
 

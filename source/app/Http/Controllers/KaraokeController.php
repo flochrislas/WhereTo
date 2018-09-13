@@ -5,81 +5,75 @@ namespace App\Http\Controllers;
 use App\Karaoke;
 use Illuminate\Http\Request;
 
-class KaraokeController extends Controller
+class KaraokeController extends PlaceController
 {
+    const RESULTS_DATA_VIEW = 'karaokes.results-data';
+
+    const DETAILS_VIEW = 'karaokes.details';
+
+    const MODEL_CLASS = 'App\Karaoke';
+
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    * Returns the Model class to use to read the data
+    * @return Model's fully specified class name as a string
+    */
+    public function getModelClass()
     {
-        //
+        return self::MODEL_CLASS;
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Get the list to display.
+     * TODO: implement "see more" button
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function results(Request $request)
     {
-        //
-    }
+        // -----------------------------------
+        // Reads request parameters
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
+        // Operator for the Tags
+        $op = request('op');
+
+        // tags as a comma separated list
+        $tags = request('tags');
+        // makes tag into a traversable array
+        $this->formatTags($tags);
+
+        // Current position from client's GPS
+        // Office from google maps '35.656660, 139.699691'
+        $position = request('position');
+        $position = '35.656660, 139.699691';
+
+        // the sorting order for the result list
+        $orderBy = request('orderBy');
+
+        // -----------------------------------
+        // Reads from cache or DB
+        $places = $this->useCache($tags, $op, $orderBy);
+
+        // -----------------------------------
+        // Calculate distances from position, and sort them if required
+        $places = $this->handleDistances($places, $position, $orderBy);
+
+        // Keeps the input of the user interface
+        // https://laravel.com/docs/5.5/requests#old-input
+        $request->flash();
+
+        // Return the view with the resulted places
+        return view(self::RESULTS_DATA_VIEW, compact('places'));
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Karaoke  $karaoke
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Karaoke $karaoke)
+    public function details($id)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Karaoke  $karaoke
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Karaoke $karaoke)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Karaoke  $karaoke
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Karaoke $karaoke)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Karaoke  $karaoke
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Karaoke $karaoke)
-    {
-        //
+        $place = (self::MODEL_CLASS)::find($id);
+        return view(self::DETAILS_VIEW, compact('place'));
     }
 }

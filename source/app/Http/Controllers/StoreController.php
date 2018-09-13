@@ -7,72 +7,74 @@ use Illuminate\Http\Request;
 
 class StoreController extends PlaceController
 {
+    const RESULTS_DATA_VIEW = 'stores.results-data';
 
-  public function getClass()
-  {
-      // $class = get_class($this);
-      $class = ClassName::class;
-      return $class;
-  }
+    const DETAILS_VIEW = 'stores.details';
 
-  public function getModelClass()
-  {
-      return 'App\Store';
-  }
+    const MODEL_CLASS = 'App\Store';
 
-  /**
-   * Get the list to display.
-   * TODO: implement "see more" button
-   *
-   * @return \Illuminate\Http\Response
-   */
-  public function results(Request $request)
-  {
-      // -----------------------------------
-      // Reads request parameters
+    /**
+    * Returns the Model class to use to read the data
+    * @return Model's fully specified class name as a string
+    */
+    public function getModelClass()
+    {
+        return self::MODEL_CLASS;
+    }
 
-      // Operator for the Tags
-      $op = request('op');
+    /**
+     * Get the list to display.
+     * TODO: implement "see more" button
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function results(Request $request)
+    {
+        // -----------------------------------
+        // Reads request parameters
 
-      // tags as a comma separated list
-      $tags = request('tags');
-      $this->formatTags($tags);
+        // Operator for the Tags
+        $op = request('op');
 
-      // Current position from client's GPS
-      // Office from google maps '35.656660, 139.699691'
-      $position = request('position');
-      $position = '35.656660, 139.699691';
+        // tags as a comma separated list
+        $tags = request('tags');
+        // makes tag into a traversable array
+        $this->formatTags($tags);
 
-      // the sorting order for the result list
-      $orderBy = request('orderBy');
+        // Current position from client's GPS
+        // Office from google maps '35.656660, 139.699691'
+        $position = request('position');
+        $position = '35.656660, 139.699691';
 
-      // -----------------------------------
-      // Reads from cache or DB
-      $places = $this->useCache($tags, $op, $orderBy);
+        // the sorting order for the result list
+        $orderBy = request('orderBy');
 
-      // -----------------------------------
-      // Calculate distances from position, and sort them if required
-      $places = $this->handleDistances($places, $position, $orderBy);
+        // -----------------------------------
+        // Reads from cache or DB
+        $places = $this->useCache($tags, $op, $orderBy);
 
-      // Keeps the input of the user interface
-      // https://laravel.com/docs/5.5/requests#old-input
-      $request->flash();
+        // -----------------------------------
+        // Calculate distances from position, and sort them if required
+        $places = $this->handleDistances($places, $position, $orderBy);
 
-      // Return the view with the resulted places
-      return view('stores.results-data', compact('places'));
-  }
+        // Keeps the input of the user interface
+        // https://laravel.com/docs/5.5/requests#old-input
+        $request->flash();
 
-  /**
-   * Display the specified resource.
-   *
-   * @param  int  $id
-   * @return \Illuminate\Http\Response
-   */
-  public function details($id)
-  {
-      $class = $this->getModelClass();
-      $place = $class::find($id);
-      return view('stores.details', compact('place'));
-  }
+        // Return the view with the resulted places
+        return view(self::RESULTS_DATA_VIEW, compact('places'));
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function details($id)
+    {
+        $place = (self::MODEL_CLASS)::find($id);
+        return view(self::DETAILS_VIEW, compact('place'));
+    }
 
 }
