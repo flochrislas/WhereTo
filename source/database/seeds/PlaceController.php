@@ -10,7 +10,6 @@ use App\Tools\GeoUtils;
 abstract class PlaceController extends Controller
 {
     // Force Extending class to define this method
-    abstract protected function getClass();
     abstract protected function getModelClass();
 
     /**

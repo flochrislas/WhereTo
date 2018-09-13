@@ -33,11 +33,11 @@
       <div class="purchasePrice">120</div>
     </a>
 
-    <a class="giantButton locked" href="{{ route('restaurants.main') }}">
+    <a class="giantButton locked" href="{{ route('clubs.main') }}">
       Clubbing in<br/>Shibuya
       <div class="purchasePrice">50</div>
     </a>
-    <a class="giantButton locked" href="{{ route('restaurants.main') }}">
+    <a class="giantButton locked" href="{{ route('bars.main') }}">
       Drinking in<br/>Shibuya
       <div class="purchasePrice">50</div>
     </a>

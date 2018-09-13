@@ -1,6 +1,6 @@
 <div class="resultTable">
 <!-- WE NEED A COUNTER HERE TO DISPLAY THE NUMBER OF RESULTS -->
-@foreach ($restaurants as $restaurant)
+@foreach ($places as $restaurant)
   <div class="resultsCounter"></div>
   <div class="resultRow">
     <div class="resultCell nameAndType">
@@ -51,4 +51,4 @@
   </div>
 @endforeach
 </div>
-<div id="resultsEnd">End of <strong>{{ $restaurants->count() }}</strong> amazing results</div>
+<div id="resultsEnd">End of <strong>{{ $places->count() }}</strong> amazing results</div>

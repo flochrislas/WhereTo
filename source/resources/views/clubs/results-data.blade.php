@@ -1,26 +1,26 @@
 <div class="resultTable">
 <!-- WE NEED A COUNTER HERE TO DISPLAY THE NUMBER OF RESULTS -->
-@foreach ($places as $karaoke)
+@foreach ($places as $store)
   <div class="resultsCounter"></div>
   <div class="resultRow">
     <div class="resultCell nameAndType">
-      <a href="{{ route('karaokes.details',$karaoke->id) }}">
-      <div class="rowName">{{ $karaoke->name }}</div>
-      <div class="rowType">{{ $karaoke->location }}</div>
+      <a href="{{ route('stores.details',$store->id) }}">
+      <div class="rowName">{{ $store->name }}</div>
+      <div class="rowType">{{ $store->type }}</div>
       </a>
     </div>
     <div class="resultCell distance centerContent">
       <a target="_blank"
-         href="{{ $karaoke->google_maps_link }}">
+         href="{{ $store->google_maps_link }}">
         <div class="oneDigit inline">
-        {{ App\Tools\GeoUtils::walkingTime($karaoke->currentDistance/1000) }}
-      </div>
+        {{ App\Tools\GeoUtils::walkingTime($store->currentDistance/1000) }}
+        </div>
         <br /><div class="minute inline">min</div>
       </a>
     </div>
     <div class="resultCell centerContent">
-      <div class="score" style="color: var(--color-lunch);">
-        <div class="oneDigit">{{ $karaoke->score }}</div>
+      <div class="score" style="color: var(--color-place);">
+        <div class="oneDigit">{{ $store->points }}</div>
       </div>
     </div>
   </div>
