@@ -3266,6 +3266,48 @@ class RestaurantsTableSeeder extends Seeder
         $resto->attachTags(['bakery','french','sandwich']);
         $resto->fillCoordinatesFromString('35.659753, 139.702670');
 
+        $resto = Restaurant::create(array(
+            'name'              => 'Antica Forneria, by Elio',
+            'location'          => 'Shibuya, Stream',
+            'type'              => 'Italian',
+            'lunch_price'       => 1600,
+            'points'            => 'Decent Italian restaurant in Stream building 2F.',
+            'experience'        => 'Rather small place is divided in 2 parts: opened front (small tables and rather nice) and back (bigger tables but it is a room without windows...). Lunch menu offers mostly pasta or pizza of the day. For 1600yen you will get a pizza or pasta, with a small salad and a drink. That does feel a bit overpriced. As for the food itself, I ordered a cheese and salamy pizza, and it was good. The crust was very nice. The cheese surpringly good. The salami was "real". The tomato base could be improved. If you ask, you can get some (actually) spicy oil to add on your dish. Good, but in the end the experience didn\'t feel worth the price, especially if you are placed in the room in the back.',
+            'visited'           => true,
+            'visit_date'        => '2018-09-07 13:00:00',
+            'google_maps_link'  => 'https://www.google.com/maps/place/SHIBUYA+STREAM/@35.6589064,139.7020128,17z/data=!4m5!3m4!1s0x60188b31a00165ed:0x387c407b91e2ad68!8m2!3d35.6571797!4d139.7030919',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1308/A130803/13131847/',
+            'official_website'  => 'https://shibuyastream.jp/shop/shopdetail.php?id=14',
+            'score_lunch'       => 2,
+            'score_place'       => 1,
+            'score_food'        => 2,
+            'score_price'       => 0,
+            'score_date'        => 0
+        ));
+        $resto->attachTags(['italian','pasta','pizza']);
+        $resto->fillCoordinatesFromString('35.657365, 139.702853');
+
+        $resto = Restaurant::create(array(
+            'name'              => 'The Great Burger',
+            'location'          => 'Shibuya, Stream',
+            'type'              => 'Burger',
+            'lunch_price'       => 1600,
+            'points'            => 'Nice but expensive burger joint.',
+            'experience'        => 'On the first floor of the Stream building, the place is nice. If the weather allows it, you can eat outside, which is pleasant except for the possible small waves of sewer smell (depends on the wind I guess). Inside is small but nice american style decor. I ordered the cheese burger for 1300 yen plus a drink for an additional 200... kind of expensive given the relatively small size of the servings. The bread was nicely grilled, I loved that. Fair amount of fresh lettuce and tomato. Good cheese. The patty was disapointed in size and thickness. A nice experience overall, but still not really worth the price in my opinion.',
+            'visited'           => true,
+            'visit_date'        => '2018-09-18 13:00:00',
+            'google_maps_link'  => 'https://www.google.com/maps/place/THE+GREAT+BURGER+STAND/@35.6574643,139.7007862,17z/data=!3m1!4b1!4m5!3m4!1s0x60188b99189933f3:0xa6827d5fa076bc23!8m2!3d35.65746!4d139.7029749',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13225844/',
+            'official_website'  => 'https://shibuyastream.jp/shop/shopdetail.php?id=2',
+            'score_lunch'       => 2,
+            'score_place'       => 2,
+            'score_food'        => 3,
+            'score_price'       => 0,
+            'score_date'        => 1
+        ));
+        $resto->attachTags(['burger','open air space']);
+        $resto->fillCoordinatesFromString('35.657511, 139.702939');
+
         /*
         $resto = Restaurant::create(array(
             'name'              => '',

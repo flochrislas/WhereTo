@@ -413,6 +413,11 @@ td {
   color: var(--color-type);
 }
 
+.extract {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 #resultsEnd {
   margin-top: .55rem;
   margin-bottom: .1rem;
