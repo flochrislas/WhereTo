@@ -18,10 +18,8 @@
         <br /><div class="minute inline">min</div>
       </a>
     </div>
-    <div class="resultCell centerContent">
-      <div class="score" style="color: var(--color-place);">
-        <div class="oneDigit">{{ $store->points }}</div>
-      </div>
+    <div class="resultCell nameAndType">
+        <div class="extract">{{ $store->points }}</div>
     </div>
   </div>
 @endforeach
