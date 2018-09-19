@@ -57,6 +57,12 @@ class StoreController extends PlaceController
         // Calculate distances from position, and sort them if required
         $places = $this->handleDistances($places, $position, $orderBy);
 
+        // -----------------------------------
+        // Shorten the points to display in list
+        foreach ($places as $place) {
+          $place->points = $this->ellipsis($place->points, 50);
+        }
+
         // Keeps the input of the user interface
         // https://laravel.com/docs/5.5/requests#old-input
         $request->flash();

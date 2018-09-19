@@ -40,6 +40,12 @@ class StoreTagsTableSeeder extends Seeder
         ));
 
         StoreTag::create(array(
+            'label'              => 'sports',
+            'type'               => '80',
+            'weight'             => '300'
+        ));
+
+        StoreTag::create(array(
             'label'              => 'men',
             'type'               => '80',
             'weight'             => '300'
@@ -53,6 +59,12 @@ class StoreTagsTableSeeder extends Seeder
 
         StoreTag::create(array(
             'label'              => 'shoes',
+            'type'               => '80',
+            'weight'             => '300'
+        ));
+
+        StoreTag::create(array(
+            'label'              => 'sneakers',
             'type'               => '80',
             'weight'             => '300'
         ));

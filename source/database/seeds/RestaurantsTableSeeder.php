@@ -3308,6 +3308,27 @@ class RestaurantsTableSeeder extends Seeder
         $resto->attachTags(['burger','open air space']);
         $resto->fillCoordinatesFromString('35.657511, 139.702939');
 
+        $resto = Restaurant::create(array(
+            'name'              => 'CityShop Pizza',
+            'location'          => 'Shibuya, Stream',
+            'type'              => 'Pizza',
+            'lunch_price'       => 2000,
+            'points'            => 'Fancy customizable "healthy" pizza restaurant.',
+            'experience'        => 'On the 2nd floor of the Stream building, you can eat inside or in front of the shop, which is open air but still inside of the building. The system is similar with Subway, but with pizza instead of sandwiches, and fancier ingredients. You can choose 3 main toppings, 2 small toppings, one type of crust and one type of cheese. Ingredients are classified into veggies, carbs, and protein. About 12 people are behind the counter preparing your pizza, the process took less time than I expected. The resulting "pizza" was also better than I expected. Very good crust, quiet filling rich topping... it was very good. But the cost is way above my budget for lunch: about 2000 yen for your pizza with a drink.',
+            'visited'           => true,
+            'visit_date'        => '2018-09-07 13:00:00',
+            'google_maps_link'  => 'https://www.google.com/maps/place/CITYSHOP+PIZZA/@35.6572997,139.7008033,17z/data=!3m1!4b1!4m5!3m4!1s0x60188b771f06b86b:0x227bc684cd0bec37!8m2!3d35.6572954!4d139.702992',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13224516/',
+            'official_website'  => 'https://shibuyastream.jp/shop/shopdetail.php?id=17',
+            'score_lunch'       => 2,
+            'score_place'       => 1,
+            'score_food'        => 2,
+            'score_price'       => 0,
+            'score_date'        => 0
+        ));
+        $resto->attachTags(['pizza','customisable dishes','open air space','no smoking','visa','vegetarian friendly','vegan friendly']);
+        $resto->fillCoordinatesFromString('35.657298, 139.702978');
+
         /*
         $resto = Restaurant::create(array(
             'name'              => '',
