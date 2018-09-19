@@ -48,22 +48,6 @@ abstract class PlaceController extends Controller
     }
 
     /**
-     * Make the tags into an array, if it is not already the case
-     * The reference is passed in paramter, so the function directly modifies the tags
-     * @return void
-     */
-    public function formatTags(&$tags)
-    {
-        if (empty($tags)) {
-            $tags = null;
-        } elseif (!($tags instanceof Traversable)) {
-            Log::debug('tags is being transformed from: '.$tags);
-            $tags = explode(',',str_replace(', ', ',', $tags));
-            Log::debug('to this: '.print_r($tags, true));
-        }
-    }
-
-    /**
      * Search for the list to display.
      * No cache, just the DB.
      *
@@ -255,4 +239,26 @@ abstract class PlaceController extends Controller
         }
         return $places;
     }
+
+    /**
+     * Make the tags into an array, if it is not already the case
+     * The reference is passed in paramter, so the function directly modifies the tags
+     * @return void
+     */
+    public function formatTags(&$tags)
+    {
+        if (empty($tags)) {
+            $tags = null;
+        } elseif (!($tags instanceof Traversable)) {
+            Log::debug('tags is being transformed from: '.$tags);
+            $tags = explode(',',str_replace(', ', ',', $tags));
+            Log::debug('to this: '.print_r($tags, true));
+        }
+    }
+
+    public function ellipsis($string, $length) {
+        $ellipsis = "&hellip;";
+        return mb_strimwidth($string, 0, $length, $ellipsis);
+    }
+
 }

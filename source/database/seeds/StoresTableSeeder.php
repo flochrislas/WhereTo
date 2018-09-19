@@ -21,7 +21,7 @@ class StoresTableSeeder extends Seeder
         // Fill
 
         $store = Store::create(array(
-          'name'              => 'Yamada Denki',
+          'name'              => 'Yamada Denki LABI',
           'location'          => 'Shibuya',
           'type'              => 'Electronics',
           'points'            => 'Big store with lots of appliances.',
@@ -147,7 +147,7 @@ class StoresTableSeeder extends Seeder
           'official_website'  => 'https://www.asics.com/jp/ja-jp/walking',
           'score'             => 1
         ));
-        $store->attachTags(['shoes']);
+        $store->attachTags(['shoes','fashion']);
         $store->fillCoordinatesFromString('35.660130, 139.705131');
 
         $store = Store::create(array(
