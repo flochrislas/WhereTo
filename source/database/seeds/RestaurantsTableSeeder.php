@@ -3329,6 +3329,27 @@ class RestaurantsTableSeeder extends Seeder
         $resto->attachTags(['pizza','customisable dishes','open air space','no smoking','visa','vegetarian friendly','vegan friendly']);
         $resto->fillCoordinatesFromString('35.657298, 139.702978');
 
+        $resto = Restaurant::create(array(
+            'name'              => 'Spice Lip',
+            'location'          => 'Shibuya, Stream',
+            'type'              => 'Thai',
+            'lunch_price'       => 1080,
+            'points'            => 'Thai restaurant, 2nd floor of the Stream building.',
+            'experience'        => 'The place is nice. If the weather is OK, one part is opened to the outside, which is nice despite the view is blocked by immediate neighbor building, except for the occasional sewers smell. I ordered the gapao lunch set for 1000yen. It comes with a small salad and a small soup but no drink (you would need an additional 200yen for a coffee). For this price I needed something amazingly delicious or a very large portion. I\'ve got none of this. Decent gapao, but small and not worth the price.',
+            'visited'           => true,
+            'visit_date'        => '2018-09-20 13:00:00',
+            'google_maps_link'  => 'https://www.google.com/maps/place/Spice+Lip/@35.6570607,139.7013485,17z/data=!3m1!4b1!4m5!3m4!1s0x60188ba070269fc9:0x9aab2a9c51d4482a!8m2!3d35.6570607!4d139.7035372',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13225015/',
+            'official_website'  => 'https://shibuyastream.jp/shop/shopdetail.php?id=11',
+            'score_lunch'       => 1,
+            'score_place'       => 2,
+            'score_food'        => 1,
+            'score_price'       => 0,
+            'score_date'        => 1
+        ));
+        $resto->attachTags(['thai','gapoa','green curry']);
+        $resto->fillCoordinatesFromString('35.657055, 139.703530');
+
         /*
         $resto = Restaurant::create(array(
             'name'              => '',
