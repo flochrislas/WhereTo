@@ -18,7 +18,7 @@ function showFilter() {
 function getResults() {
   // This function should exist (maybe in parent/main)
   showResults();
-  // Get all if no restaurants loaded
+  // Get all if no places loaded
   if (isResultEmpty()) {
     var xhr = new XMLHttpRequest();
     xhr.open('GET', resultsUrl);
@@ -31,7 +31,7 @@ function getResults() {
   }
 }
 
-/** Check if there are restaurants in the results div */
+/** Check if there are places in the results div */
 function isResultEmpty() {
   return document.getElementById("results").innerHTML == 'empty';
 }

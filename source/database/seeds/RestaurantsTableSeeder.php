@@ -3033,7 +3033,7 @@ class RestaurantsTableSeeder extends Seeder
             'score_date'        => 0
         ));
         $resto->attachTags(['pasta','katsu','japanese curry','smoking allowed']);
-        $resto->fillCoordinatesFromString('35.656122, 139.700537');
+        $resto->fillCoordinatesFromString('35.656484, 139.701585');
 
         $resto = Restaurant::create(array(
             'name'              => 'Pancho',
@@ -3347,8 +3347,29 @@ class RestaurantsTableSeeder extends Seeder
             'score_price'       => 0,
             'score_date'        => 1
         ));
-        $resto->attachTags(['thai','gapoa','green curry']);
+        $resto->attachTags(['thai','gapao','green curry']);
         $resto->fillCoordinatesFromString('35.657055, 139.703530');
+
+        $resto = Restaurant::create(array(
+            'name'              => 'Shoutaian',
+            'location'          => 'Shibuya, Sakuragaokacho',
+            'type'              => 'Beef',
+            'lunch_price'       => 1400,
+            'points'            => 'Japanese style dishes using superior quality beef.',
+            'experience'        => 'Inside is small and cosy. Kinda dark, no windows, but nice atmosphere and nice staff. Various dishes using beef in different (Japanese) ways. Prices start at 1400 for 200g and you can order up to 600g. I tried the ponzu hamburg 200g for 1400 yen. It came with a salad and, otoshi (assortment of appetizers), a small soup, and a bowl of rice. It was very good. High quality meat indeed. A bit over my budget though, and each dish takes quiet a while to prepare (more than other restaurants in Japan, expect something like 10 minute), so as a result, the place is easily packed.',
+            'visited'           => true,
+            'visit_date'        => '2018-09-25 13:00:00',
+            'google_maps_link'  => 'https://www.google.com/maps/place/%E8%82%89%E3%83%90%E3%83%AB+%E5%B0%86%E6%B3%B0%E5%BA%B5+shou%E2%80%90taian%EF%BC%88%E3%82%B7%E3%83%A7%E3%82%A6%E3%82%BF%E3%82%A4%E3%82%A2%E3%83%B3%EF%BC%89%E6%B8%8B%E8%B0%B7%E5%BA%97/@35.6557067,139.7016565,17z/data=!4m5!3m4!1s0x60188b5742300001:0x856288d00297419d!8m2!3d35.6559892!4d139.7004459',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13156252/',
+            'official_website'  => 'http://shoutaian-shibuyasakuragaoka.com/',
+            'score_lunch'       => 2,
+            'score_place'       => 1,
+            'score_food'        => 2,
+            'score_price'       => 0,
+            'score_date'        => 0
+        ));
+        $resto->attachTags(['meat']);
+        $resto->fillCoordinatesFromString('35.655981, 139.700456');
 
         /*
         $resto = Restaurant::create(array(
@@ -3386,8 +3407,6 @@ class RestaurantsTableSeeder extends Seeder
 
         // https://www.youtube.com/watch?v=S-Xm7s9eGxU
         // https://goo.gl/TbjN44
-
-        // king of spices , or spice king, towards ebisu or somethin
 
         // fill coordinates
         $this->fillNullCoordinatesFromGoogleMapsLink();

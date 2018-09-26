@@ -11,19 +11,12 @@ use Excel;
 
 class RestaurantController extends PlaceController
 {
-    const RESULTS_DATA_VIEW = 'restaurants.results-data';
+    /** Name of the model used for DB and views */
+    const MODEL_NAME = 'Restaurant';
 
-    const DETAILS_VIEW = 'restaurants.details';
-
-    const MODEL_CLASS = 'App\Restaurant';
-
-    /**
-    * Returns the Model class to use to read the data
-    * @return Model's fully specified class name as a string
-    */
-    public function getModelClass()
+    public function getModelName()
     {
-        return self::MODEL_CLASS;
+        return self::MODEL_NAME;
     }
 
     /**
@@ -46,9 +39,7 @@ class RestaurantController extends PlaceController
         $this->formatTags($tags);
 
         // Current position from client's GPS
-        // Office from google maps '35.656660, 139.699691'
         $position = request('position');
-        $position = '35.656660, 139.699691';
 
         // the sorting order for the result list
         $orderBy = request('orderBy');
@@ -61,12 +52,18 @@ class RestaurantController extends PlaceController
         // Calculate distances from position, and sort them if required
         $places = $this->handleDistances($places, $position, $orderBy);
 
+        // -----------------------------------
+        // Shorten the points to display in list
+        foreach ($places as $place) {
+          $place->points = $this->ellipsis($place->points, 50);
+        }
+
         // Keeps the input of the user interface
         // https://laravel.com/docs/5.5/requests#old-input
         $request->flash();
 
         // Return the view with the resulted places
-        return view(self::RESULTS_DATA_VIEW, compact('places'));
+        return view($this->getModelResultsDataView(), compact('places'));
     }
 
     /**
@@ -77,8 +74,9 @@ class RestaurantController extends PlaceController
      */
     public function details($id)
     {
-        $place = (self::MODEL_CLASS)::find($id);
-        return view(self::DETAILS_VIEW, compact('place'));
+        $class = $this->getModelClass();
+        $place = $class::find($id);
+        return view($this->getModelDetailsView(), compact('place'));
     }
 
     /**

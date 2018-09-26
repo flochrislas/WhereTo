@@ -7,73 +7,71 @@ use Illuminate\Http\Request;
 
 class KaraokeController extends PlaceController
 {
-    const RESULTS_DATA_VIEW = 'karaokes.results-data';
+  /** Name of the model used for DB and views */
+  const MODEL_NAME = 'Karaoke';
 
-    const DETAILS_VIEW = 'karaokes.details';
+  public function getModelName()
+  {
+      return self::MODEL_NAME;
+  }
 
-    const MODEL_CLASS = 'App\Karaoke';
+  /**
+   * Get the list to display.
+   * TODO: implement "see more" button
+   *
+   * @return \Illuminate\Http\Response
+   */
+  public function results(Request $request)
+  {
+      // -----------------------------------
+      // Reads request parameters
 
-    /**
-    * Returns the Model class to use to read the data
-    * @return Model's fully specified class name as a string
-    */
-    public function getModelClass()
-    {
-        return self::MODEL_CLASS;
-    }
+      // Operator for the Tags
+      $op = request('op');
 
-    /**
-     * Get the list to display.
-     * TODO: implement "see more" button
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function results(Request $request)
-    {
-        // -----------------------------------
-        // Reads request parameters
+      // tags as a comma separated list
+      $tags = request('tags');
+      // makes tag into a traversable array
+      $this->formatTags($tags);
 
-        // Operator for the Tags
-        $op = request('op');
+      // Current position from client's GPS
+      $position = request('position');
 
-        // tags as a comma separated list
-        $tags = request('tags');
-        // makes tag into a traversable array
-        $this->formatTags($tags);
+      // the sorting order for the result list
+      $orderBy = request('orderBy');
 
-        // Current position from client's GPS
-        // Office from google maps '35.656660, 139.699691'
-        $position = request('position');
-        $position = '35.656660, 139.699691';
+      // -----------------------------------
+      // Reads from cache or DB
+      $places = $this->useCache($tags, $op, $orderBy);
 
-        // the sorting order for the result list
-        $orderBy = request('orderBy');
+      // -----------------------------------
+      // Calculate distances from position, and sort them if required
+      $places = $this->handleDistances($places, $position, $orderBy);
 
-        // -----------------------------------
-        // Reads from cache or DB
-        $places = $this->useCache($tags, $op, $orderBy);
+      // -----------------------------------
+      // Shorten the points to display in list
+      foreach ($places as $place) {
+        $place->points = $this->ellipsis($place->points, 50);
+      }
 
-        // -----------------------------------
-        // Calculate distances from position, and sort them if required
-        $places = $this->handleDistances($places, $position, $orderBy);
+      // Keeps the input of the user interface
+      // https://laravel.com/docs/5.5/requests#old-input
+      $request->flash();
 
-        // Keeps the input of the user interface
-        // https://laravel.com/docs/5.5/requests#old-input
-        $request->flash();
+      // Return the view with the resulted places
+      return view($this->getModelResultsDataView(), compact('places'));
+  }
 
-        // Return the view with the resulted places
-        return view(self::RESULTS_DATA_VIEW, compact('places'));
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function details($id)
-    {
-        $place = (self::MODEL_CLASS)::find($id);
-        return view(self::DETAILS_VIEW, compact('place'));
-    }
+  /**
+   * Display the specified resource.
+   *
+   * @param  int  $id
+   * @return \Illuminate\Http\Response
+   */
+  public function details($id)
+  {
+      $class = $this->getModelClass();
+      $place = $class::find($id);
+      return view($this->getModelDetailsView(), compact('place'));
+  }
 }

@@ -7,19 +7,12 @@ use Illuminate\Http\Request;
 
 class StoreController extends PlaceController
 {
-    const RESULTS_DATA_VIEW = 'stores.results-data';
+    /** Name of the model used for DB and views */
+    const MODEL_NAME = 'Store';
 
-    const DETAILS_VIEW = 'stores.details';
-
-    const MODEL_CLASS = 'App\Store';
-
-    /**
-    * Returns the Model class to use to read the data
-    * @return Model's fully specified class name as a string
-    */
-    public function getModelClass()
+    public function getModelName()
     {
-        return self::MODEL_CLASS;
+        return self::MODEL_NAME;
     }
 
     /**
@@ -42,9 +35,7 @@ class StoreController extends PlaceController
         $this->formatTags($tags);
 
         // Current position from client's GPS
-        // Office from google maps '35.656660, 139.699691'
         $position = request('position');
-        $position = '35.656660, 139.699691';
 
         // the sorting order for the result list
         $orderBy = request('orderBy');
@@ -68,7 +59,7 @@ class StoreController extends PlaceController
         $request->flash();
 
         // Return the view with the resulted places
-        return view(self::RESULTS_DATA_VIEW, compact('places'));
+        return view($this->getModelResultsDataView(), compact('places'));
     }
 
     /**
@@ -79,8 +70,8 @@ class StoreController extends PlaceController
      */
     public function details($id)
     {
-        $place = (self::MODEL_CLASS)::find($id);
-        return view(self::DETAILS_VIEW, compact('place'));
+        $class = $this->getModelClass();
+        $place = $class::find($id);
+        return view($this->getModelDetailsView(), compact('place'));
     }
-
 }
