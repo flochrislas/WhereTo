@@ -7,19 +7,12 @@ use Illuminate\Http\Request;
 
 class BarController extends PlaceController
 {
-    const RESULTS_DATA_VIEW = 'bars.results-data';
+    /** Name of the model used for DB and views */
+    const MODEL_NAME = 'Bar';
 
-    const DETAILS_VIEW = 'bars.details';
-
-    const MODEL_CLASS = 'App\Bar';
-
-    /**
-    * Returns the Model class to use to read the data
-    * @return Model's fully specified class name as a string
-    */
-    public function getModelClass()
+    public function getModelName()
     {
-        return self::MODEL_CLASS;
+        return self::MODEL_NAME;
     }
 
     /**
@@ -28,52 +21,59 @@ class BarController extends PlaceController
      *
      * @return \Illuminate\Http\Response
      */
-    public function results(Request $request)
-    {
-        // -----------------------------------
-        // Reads request parameters
+     public function results(Request $request)
+     {
+         // -----------------------------------
+         // Reads request parameters
 
-        // Operator for the Tags
-        $op = request('op');
+         // Operator for the Tags
+         $op = request('op');
 
-        // tags as a comma separated list
-        $tags = request('tags');
-        // makes tag into a traversable array
-        $this->formatTags($tags);
+         // tags as a comma separated list
+         $tags = request('tags');
+         // makes tag into a traversable array
+         $this->formatTags($tags);
 
-        // Current position from client's GPS
-        // Office from google maps '35.656660, 139.699691'
-        $position = request('position');
-        $position = '35.656660, 139.699691';
+         // Current position from client's GPS
+         // Office from google maps '35.656660, 139.699691'
+         $position = request('position');
+         $position = '35.656660, 139.699691';
 
-        // the sorting order for the result list
-        $orderBy = request('orderBy');
+         // the sorting order for the result list
+         $orderBy = request('orderBy');
 
-        // -----------------------------------
-        // Reads from cache or DB
-        $places = $this->useCache($tags, $op, $orderBy);
+         // -----------------------------------
+         // Reads from cache or DB
+         $places = $this->useCache($tags, $op, $orderBy);
 
-        // -----------------------------------
-        // Calculate distances from position, and sort them if required
-        $places = $this->handleDistances($places, $position, $orderBy);
+         // -----------------------------------
+         // Calculate distances from position, and sort them if required
+         $places = $this->handleDistances($places, $position, $orderBy);
 
-        // Keeps the input of the user interface
-        // https://laravel.com/docs/5.5/requests#old-input
-        $request->flash();
+         // -----------------------------------
+         // Shorten the points to display in list
+         foreach ($places as $place) {
+           $place->points = $this->ellipsis($place->points, 50);
+         }
 
-        // Return the view with the resulted places
-        return view(self::RESULTS_DATA_VIEW, compact('places'));
-    }
+         // Keeps the input of the user interface
+         // https://laravel.com/docs/5.5/requests#old-input
+         $request->flash();
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function details($id)
-    {
-        $place = (self::MODEL_CLASS)::find($id);
-        return view(self::DETAILS_VIEW, compact('place'));
-    }
+         // Return the view with the resulted places
+         return view($this->getModelResultsDataView(), compact('places'));
+     }
+
+     /**
+      * Display the specified resource.
+      *
+      * @param  int  $id
+      * @return \Illuminate\Http\Response
+      */
+     public function details($id)
+     {
+         $class = $this->getModelClass();
+         $place = $class::find($id);
+         return view($this->getModelDetailsView(), compact('place'));
+     }
 }

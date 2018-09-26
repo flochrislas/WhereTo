@@ -1,6 +1,9 @@
 /**
 CSS for mobile dark interface
 
+Note: HTML head has the
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
 CSS basics:
 Element selection:
 (): HTML tag. ex: div{}
@@ -492,10 +495,16 @@ td {
 .resultCell .score {
   font-size: .85rem;
 }
+/* Scalable label's font-size linked to screen's width */
 .resultTable .label {
   font-weight: 100;
-  font-size: .76rem;;
-  font-size: calc(1.5vw + 1vh);
+  font-size: calc(1.5vw + .35rem);
+}
+/* Stop increasing font size from 680 with a max of 1rem */
+@media screen and (min-width: 680px) {
+  .resultTable .label {
+    font-size: 1rem;
+  }
 }
 
 .resultsCounter {

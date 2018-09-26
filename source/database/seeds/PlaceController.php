@@ -10,7 +10,37 @@ use App\Tools\GeoUtils;
 abstract class PlaceController extends Controller
 {
     // Force Extending class to define this method
-    abstract protected function getModelClass();
+    abstract protected function getModelName();
+
+    /** Can force position for debug purposes */
+    private function positionSpoofer($position)
+    {
+        // Office from google maps '35.656660, 139.699691'
+        $position = '35.656660, 139.699691';
+        return $position;
+    }
+
+    /**
+    * Returns the Model class to use to read the data
+    * @return Model's fully specified class name as a string
+    */
+    public function getModelClass()
+    {
+        Log::debug('Auto-generated ModelClass name: '.'App\\'.$this->getModelName());
+        return 'App\\'.$this->getModelName();
+    }
+
+    public function getModelDetailsView()
+    {
+        Log::debug('Auto-generated ModelDetailsView name: '.strtolower($this->getModelName()).'s.details');
+        return strtolower($this->getModelName()).'s.details';
+    }
+
+    public function getModelResultsDataView()
+    {
+        Log::debug('Auto-generated ModelResultsDataView name: '.strtolower($this->getModelName()).'s.results-data');
+        return strtolower($this->getModelName()).'s.results-data';
+    }
 
     /**
     * Get search results from paramters by using the cache.
@@ -35,7 +65,7 @@ abstract class PlaceController extends Controller
     public function cacheKey($op, $tags, $orderBy) : string
     {
         if (empty($tags)) {
-            $cacheKey = 'all';
+            $cacheKey = 'All-'.$this->getModelName();
         } else {
             $cacheKey = md5($op .','. implode(',',$tags));
         }
@@ -224,6 +254,9 @@ abstract class PlaceController extends Controller
     */
     public function handleDistances($places, $position, $orderBy)
     {
+        /** Can force position for debug purposes */
+        $position = $this->positionSpoofer($position);
+
         if ($orderBy == 'distance')
         {
           if (!empty($position)) {
