@@ -189,6 +189,19 @@ class StoresTableSeeder extends Seeder
         $store->attachTags(['mall','fashion','food']);
         $store->fillCoordinatesFromString('35.658762, 139.700833');
 
+        $store = Store::create(array(
+          'name'              => 'Yamaya',
+          'location'          => 'Shibuya',
+          'type'              => 'World liquor',
+          'points'            => 'Lots of Japanese and imported beverages. Some snacks, sweet, and other imported condiments as well.',
+          'experience'        => 'Yamaya is a chain of stores selling mostly alcohol, but also a lot of imported beverages and condiments. This Yamaya is probably the most spacious I know. Very nice shopping there. They have tons of sake, wine, whiskey, beers, and many other stuff. Prices are quiet good as well. Common drinks are actually cheaper than combini or even supermarkets. It is a good place if you are looking for a nice bottle or some gifts. They provide with delivery service as well.',
+          'google_maps_link'  => 'https://www.google.com/maps/place/Yamaya+Dogenzaka/@35.6576688,139.6976373,17z/data=!4m8!1m2!2m1!1syamaya!3m4!1s0x0:0x122e5af592861839!8m2!3d35.6575447!4d139.6955234',
+          'official_website'  => 'https://www.yamaya.jp/pages/store/store/413dougenn.html',
+          'score'             => 2
+        ));
+        $store->attachTags(['drinks','gifts','food']);
+        $store->fillCoordinatesFromString('35.657499, 139.695740');
+
         /*
         $store = Store::create(array(
           'name'              => 'xxxx',
