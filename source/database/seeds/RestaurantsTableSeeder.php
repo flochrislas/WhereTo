@@ -3371,6 +3371,27 @@ class RestaurantsTableSeeder extends Seeder
         $resto->attachTags(['meat']);
         $resto->fillCoordinatesFromString('35.655981, 139.700456');
 
+        $resto = Restaurant::create(array(
+            'name'              => 'Oreryu shio ramen',
+            'location'          => 'Shibuya, Nanpeidaicho',
+            'type'              => 'Ramen',
+            'lunch_price'       => 900,
+            'points'            => 'Nice and spacious ramen restaurant. Very tasty.',
+            'experience'        => 'The place is quite nice for a ramen restaurant, quite spacious with big tables. Smoking semms allowed outside in the covered terrace, but inside is non-smoking. Quiet a large selection of ramens and side dishes. I ordered the spicy miso ramene with 3 yaki gyoza (dumplings) for 900 yen. I found the ramen absolutely delicious, the way I like it, with a very strong miso taste. There is also various additional miso pastes and various toppings available for free on the tables.',
+            'visited'           => true,
+            'visit_date'        => '2018-09-26 13:00:00',
+            'google_maps_link'  => 'https://www.google.com/maps/place/%E4%BF%BA%E6%B5%81%E5%A1%A9%E3%82%89%E3%83%BC%E3%82%81%E3%82%93+%E5%8D%97%E5%B9%B3%E5%8F%B0%E5%BA%97/@35.6546116,139.6950221,16z/data=!4m5!3m4!1s0x60188b5471de9181:0x1a309e05b5f0deb!8m2!3d35.6531984!4d139.6944015',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13113820/',
+            'official_website'  => 'https://oreryushio.co.jp/?page_id=140',
+            'score_lunch'       => 3,
+            'score_place'       => 2,
+            'score_food'        => 2,
+            'score_price'       => 1,
+            'score_date'        => 0
+        ));
+        $resto->attachTags(['ramen','noodles','miso','English menu','smoking area']);
+        $resto->fillCoordinatesFromString('35.653149, 139.694405');
+
         /*
         $resto = Restaurant::create(array(
             'name'              => '',
