@@ -3392,6 +3392,31 @@ class RestaurantsTableSeeder extends Seeder
         $resto->attachTags(['ramen','noodles','miso','English menu','smoking area']);
         $resto->fillCoordinatesFromString('35.653149, 139.694405');
 
+        $resto = Restaurant::create(array(
+            'name'              => 'Kyoto Katsugyu',
+            'location'          => 'Shibuya, Dogenzaka',
+            'type'              => 'Katsu',
+            'lunch_price'       => 1200,
+            'points'            => 'Nice deep fried beef cutlet restaurant.',
+            'experience'        => 'Despite being in B1F (no windows), the place was nice and clean. Nice choice of beef cutlet dishes, with various sauces. Maybe not the best choice if you have high cholesterol, but pretty good stuff.',
+            'visited'           => true,
+            'visit_date'        => '2018-09-27 13:00:00',
+            'google_maps_link'  => 'https://www.google.com/maps/place/%E7%89%9B%E3%82%AB%E3%83%84%E5%B0%82%E9%96%80%E5%BA%97+%E4%BA%AC%E9%83%BD%E5%8B%9D%E7%89%9B+%E6%B8%8B%E8%B0%B7%E9%81%93%E7%8E%84%E5%9D%82%E5%BA%97/@35.6576026,139.6973341,17z/data=!4m8!1m2!2m1!1skyoto+katsugyu+shibuya!3m4!1s0x60188b5609c33713:0x9ec2bfd2013c81a7!8m2!3d35.657262!4d139.696203',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13192127/',
+            'official_website'  => 'https://shibuya-kyotokatsugyu.business.site/',
+            'score_lunch'       => 2,
+            'score_place'       => 1,
+            'score_food'        => 2,
+            'score_price'       => 1,
+            'score_date'        => 0
+        ));
+        $resto->attachTags(['35.657257, 139.696205']);
+        $resto->fillCoordinatesFromString('katsu','meat','English menu','no smoking');
+
+        
+
+
+
         /*
         $resto = Restaurant::create(array(
             'name'              => '',
