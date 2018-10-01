@@ -240,12 +240,12 @@ class RestaurantsTableSeeder extends Seeder
         $resto->fillCoordinatesFromString('35.660339, 139.697128');
 
         $resto = Restaurant::create(array(
-            'name'              => 'Coco Ichi',
+            'name'              => 'Coco Ichibanya',
             'location'          => 'Shibuya, Sakuragaokacho',
             'type'              => 'Japanese curry',
             'lunch_price'       => 900,
-            'points'            => 'Highly customizable Japanese curry. Very delicious. Counter only.',
-            'experience'        => 'Once you find the right combination for you, it can be really delicious. I personally have "chicken katsu (deepfried) curry + nasu (eggplants) + cheese, ichi-kara (spicy level 1)". English menu is available.',
+            'points'            => 'Highly customizable Japanese curry. Very delicious. Counter only. Kinda smaller than most coco ichi.',
+            'experience'        => 'Once you find the right combination for you, it can be really delicious. I personally have "chicken katsu (deepfried) curry + nasu (eggplants) + cheese, ichi-kara (spicy level 1)". English menu is available. It is easy to order a small, or a large serving, depending on how hungry you are.',
             'visited'           => true,
             'visit_date'        => '2017-09-05 13:00:00',
             'google_maps_link'  => 'https://www.google.co.jp/maps/place/CoCo%E5%A3%B1%E7%95%AA%E5%B1%8B+%E6%B8%8B%E8%B0%B7%E5%8C%BA%E6%A1%9C%E4%B8%98%E7%94%BA%E5%BA%97/@35.6569245,139.6982403,17z/data=!4m12!1m6!3m5!1s0x60188b579e0464dd:0x5838a075cb9595d6!2zQ29Db-WjseeVquWxiyDmuIvosLfljLrmoZzkuJjnlLrlupc!8m2!3d35.6569245!4d139.700429!3m4!1s0x60188b579e0464dd:0x5838a075cb9595d6!8m2!3d35.6569245!4d139.700429',
@@ -257,16 +257,16 @@ class RestaurantsTableSeeder extends Seeder
             'score_price'       => 1,
             'score_date'        => 0
         ));
-        $resto->attachTags(['japanese curry','to-go','visa','English menu','customisable dishes','no smoking']);
+        $resto->attachTags(['japanese curry','to-go','visa','English menu','customisable dishes','no smoking','filling']);
         $resto->fillCoordinatesFromString('35.657260, 139.700408');
 
         $resto = Restaurant::create(array(
-            'name'              => 'Coco Ichi',
+            'name'              => 'Coco Ichibanya',
             'location'          => 'Shibuya, Udagawacho',
             'type'              => 'Japanese curry',
             'lunch_price'       => 900,
-            'points'            => 'Highly customizable Japanese curry. Very delicious. Counter and tables.',
-            'experience'        => 'Once you find the right combination for you, it can be really delicious. I personally have "chicken katsu (deepfried) curry + nasu (eggplants) + cheese, ichi-kara (spicy level 1)". English menu is available.',
+            'points'            => 'Highly customizable Japanese curry. Very delicious. Counter and tables. Kinda smaller than most coco ichi.',
+            'experience'        => 'Once you find the right combination for you, it can be really delicious. I personally have "chicken katsu (deepfried) curry + nasu (eggplants) + cheese, ichi-kara (spicy level 1)". English menu is available. It is easy to order a small, or a large serving, depending on how hungry you are. ',
             'visited'           => true,
             'visit_date'        => '2017-09-05 13:00:00',
             'google_maps_link'  => 'https://www.google.co.jp/maps/place/Curry+House+CoCo+Ichibanya+Shibuya-ku+Udagawach%C5%8D/@35.6598584,139.6987342,17.75z/data=!4m12!1m6!3m5!1s0x60188ca847c5a6d3:0xf060181e5db80755!2sCurry+House+CoCo+Ichibanya+Shibuya-ku+Udagawach%C5%8D!8m2!3d35.6605355!4d139.6994646!3m4!1s0x0:0xf060181e5db80755!8m2!3d35.6605352!4d139.6994649',
@@ -278,7 +278,7 @@ class RestaurantsTableSeeder extends Seeder
             'score_price'       => 1,
             'score_date'        => 0
         ));
-        $resto->attachTags(['japanese curry','to-go','visa','English menu','customisable dishes','no smoking']);
+        $resto->attachTags(['japanese curry','to-go','visa','English menu','customisable dishes','no smoking','filling']);
         $resto->fillCoordinatesFromString('35.660804, 139.699485');
 
         $resto = Restaurant::create(array(
@@ -366,16 +366,16 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create(array(
             'name'              => 'Go Go Curry',
-            'location'          => 'Shibuya, Udagawacho',
+            'location'          => 'Shibuya',
             'type'              => 'Japanese curry',
             'lunch_price'       => 850,
-            'points'            => 'chain restaurant a bit similar to cocoichi. customizable japanese curry, counter and small tables, basement floor',
+            'points'            => 'Chain restaurant a bit similar to cocoichi. Customizable Japanese curry, counter and small tables, basement floor.',
             'experience'        => 'Good alternative to cocoichi. Less customizable, less options, but less expensive as well. Not really spicy, but good japanese curry. I enjoyed my chiken katsu with cheese. Basement is not very glamorous, but for a lunch it\'s OK. Loyalty System: Point card. 5 times: free toping. 10 times: free curry.',
             'visited'           => true,
             'visit_date'        => '2017-09-05 13:00:00',
-            'google_maps_link'  => 'https://www.google.co.jp/maps/place/Go+Go+Curry+Shibuya-Udagawach%C5%8D/@35.6591408,139.6988359,17.25z/data=!4m5!3m4!1s0x60188ca915cae327:0x1ff30025a0e03069!8m2!3d35.6618738!4d139.6977677',
-            'tabelog_link'      => '',
-            'official_website'  => '',
+            'google_maps_link'  => 'https://www.google.co.jp/maps/place/Go+Go+Curry+Shibuya+Keisatusho-mae+Stadium/@35.6573056,139.7014373,17z/data=!3m1!4b1!4m5!3m4!1s0x60188b599edad969:0xd51cbf70012022f!8m2!3d35.6573056!4d139.7036313',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13127257/',
+            'official_website'  => 'http://www.gogocurry.com/shop/119/index.html',
             'score_lunch'       => 2,
             'score_place'       => 1,
             'score_food'        => 2,
@@ -383,7 +383,7 @@ class RestaurantsTableSeeder extends Seeder
             'score_date'        => 0
         ));
         $resto->attachTags(['japanese curry']);
-        $resto->fillCoordinatesFromString('35.662120, 139.697780');
+        $resto->fillCoordinatesFromString('35.657333, 139.703654');
 
         $resto = Restaurant::create(array(
             'name'              => 'Nice Pizza/Pasta restaurant',
@@ -3305,7 +3305,7 @@ class RestaurantsTableSeeder extends Seeder
             'score_price'       => 0,
             'score_date'        => 1
         ));
-        $resto->attachTags(['burger','open air space']);
+        $resto->attachTags(['burger','open air space','to-go']);
         $resto->fillCoordinatesFromString('35.657511, 139.702939');
 
         $resto = Restaurant::create(array(
@@ -3413,8 +3413,30 @@ class RestaurantsTableSeeder extends Seeder
         $resto->attachTags(['35.657257, 139.696205']);
         $resto->fillCoordinatesFromString('katsu','meat','English menu','no smoking');
 
-        
+        $resto = Restaurant::create(array(
+            'name'              => 'Bar a vin CROISEE',
+            'location'          => 'Shibuya, Stream',
+            'type'              => 'Cafe',
+            'lunch_price'       => 780,
+            'points'            => 'Nice cafe with lunch options in the Stream building (2F, river side).',
+            'experience'        => 'I had a falafel to-go there. There are many places you can eat outside around the Stream building. A falafel is 780 yen to-go, and 1000 yen inside (with some fries). It was kind of my first falafel, so it is hard to judge, but I found it very good.',
+            'visited'           => true,
+            'visit_date'        => '2018-09-28 13:00:00',
+            'google_maps_link'  => 'https://www.google.co.jp/maps/place/bar+%C3%A0+vin+CROIS%C3%89E(%EF%BD%B8%EF%BE%9B%EF%BE%9C%EF%BD%BE%EF%BE%9E)%E6%B8%8B%E8%B0%B7%E3%82%B9%E3%83%88%E3%83%AA%E3%83%BC%E3%83%A0/@35.6573286,139.7017623,16z/data=!4m5!3m4!1s0x60188bd7307763c5:0x204bb46fdc53f4f4!8m2!3d35.657139!4d139.7030203',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13225113/',
+            'official_website'  => 'https://shibuyastream.jp/shop/shopdetail.php?id=9',
+            'score_lunch'       => 2,
+            'score_place'       => 1,
+            'score_food'        => 2,
+            'score_price'       => 1,
+            'score_date'        => 1
+        ));
+        $resto->attachTags(['cafe','open air space','vegan friendly','falafel','to-go']);
+        $resto->fillCoordinatesFromString('35.657345, 139.703107');
 
+
+
+        // mcdo near stream and bic camera big one, 
 
 
         /*

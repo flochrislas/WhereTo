@@ -200,7 +200,20 @@ class StoresTableSeeder extends Seeder
           'score'             => 2
         ));
         $store->attachTags(['drinks','gifts','food']);
-        $store->fillCoordinatesFromString('35.657499, 139.695740');
+        $store->fillCoordinatesFromString('35.657499, 139.695740');      
+
+        $store = Store::create(array(
+          'name'              => 'B&D',
+          'location'          => 'Shibuya',
+          'type'              => 'Sports',
+          'points'            => 'Nice and relatively large sports shop.',
+          'experience'        => 'Nice shop with a wide choice of sneakers from different brands, and equipement to test and help you to get the best fit for your feet. Also sells cloths, gears, protein packs...',
+          'google_maps_link'  => 'https://www.google.co.jp/maps/place/B%26D/@35.6579884,139.7034932,17z/data=!4m12!1m6!3m5!1s0x60188bd7307763c5:0x204bb46fdc53f4f4!2zYmFyIMOgIHZpbiBDUk9JU8OJRSjvvbjvvpvvvpzvvb7vvp4p5riL6LC344K544OI44Oq44O844Og!8m2!3d35.657139!4d139.7030203!3m4!1s0x60188b59ac933b79:0x31446d6ad3a599b!8m2!3d35.6584251!4d139.7035358',
+          'official_website'  => 'https://www.bnd.co.jp/shop_detail/sibuya',
+          'score'             => 1
+        ));
+        $store->attachTags(['sports','sneakers','shoes']);
+        $store->fillCoordinatesFromString('5.658365, 139.703552');
 
         /*
         $store = Store::create(array(
