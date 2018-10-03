@@ -3434,6 +3434,69 @@ class RestaurantsTableSeeder extends Seeder
         $resto->attachTags(['cafe','open air space','vegan friendly','falafel','to-go']);
         $resto->fillCoordinatesFromString('35.657345, 139.703107');
 
+        $resto = Restaurant::create(array(
+            'name'              => 'Teppan kitchen',
+            'location'          => 'Shibuya, Stream',
+            'type'              => 'Teppan',
+            'lunch_price'       => 1000,
+            'points'            => 'Decent teppanyaki restaurant. Spacious and bright place in Stream 2F.',
+            'experience'        => 'Teppanyaki places are usually a bit on the expensive side, but this one is decently priced for lunch. The place is clean and bright, with a big windows bay. Tables and counter available. Then counter faces the grill so you can see the staff cooking on the teppan. I tried the chicken set,that came with some kind of pickles, a miso soup, a bowl of rice, and cabbage, for 1000 yen. It was very good. Other sets include beef, or okonomiyaki.',
+            'visited'           => true,
+            'visit_date'        => '2018-10-07 13:00:00',
+            'google_maps_link'  => 'https://www.google.co.jp/maps/place/TEPPAN+KITCHEN/@35.6577056,139.7018495,17z/data=!4m5!3m4!1s0x60188bbe03e87e7b:0xbf9402ac5fd4b835!8m2!3d35.6573787!4d139.7028044',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13225921/',
+            'official_website'  => 'https://shibuyastream.jp/shop/shopdetail.php?id=26',
+            'score_lunch'       => 2,
+            'score_place'       => 1,
+            'score_food'        => 2,
+            'score_price'       => 1,
+            'score_date'        => 1
+        ));
+        $resto->attachTags(['teppanyaki','meat','okonomiyaki','no smoking','English menu']);
+        $resto->fillCoordinatesFromString('35.657040, 139.703559');
+
+        $resto = Restaurant::create(array(
+            'name'              => 'The Dubliners',
+            'location'          => 'Shibuya, Dogenzaka',
+            'type'              => 'Pub',
+            'lunch_price'       => 980,
+            'points'            => 'Nice place, even for lunch, with a terrace on the second floor, but smoking is allowed.',
+            'experience'        => 'This is really great if the weather is nice and you get to be on their terrace on the 2nd floor. The inside is also nice, but smoking being allowed, it could ruin the experience. The menu has salad, pizza (with vegan option), pasta... I got the pasta lunch for 980 yen and it was surprisingly good. It came with a small salad and 2 slices of bread.',
+            'visited'           => true,
+            'visit_date'        => '2018-10-02 13:00:00',
+            'google_maps_link'  => 'https://www.google.com/maps/place/THE+DUBLINERS%E2%80%99+CAFE%26PUB+%E6%B8%8B%E8%B0%B7%E5%BA%97/@35.65842,139.6973621,18z/data=!4m8!1m2!2m1!1sthe+dubliners!3m4!1s0x0:0x1508740828033de5!8m2!3d35.6592533!4d139.6979588',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13025772/',
+            'official_website'  => 'http://www.dubliners.jp/shop.html',
+            'score_lunch'       => 2,
+            'score_place'       => 2,
+            'score_food'        => 1,
+            'score_price'       => 1,
+            'score_date'        => 1
+        ));
+        $resto->attachTags(['pub','pasta','pizza','vegan friendly']);
+        $resto->fillCoordinatesFromString('35.659236, 139.697944');
+
+
+        $resto = Restaurant::create(array(
+            'name'              => 'Public House',
+            'location'          => 'Shibuya, New South Exit',
+            'type'              => 'Cafe',
+            'lunch_price'       => 980,
+            'points'            => 'Big cafe and lounge with nice but inexpensive menu.',
+            'experience'        => 'Big place, with huge windows bay. Nice and confortable, divided in 2 parts: smoking and non-smoking. Buffet in the morning until 10am, then lunch until 4pm. Pasta, meat and rice... nice dishes can vary depending on the week. I tried some pork with balsamic vinegar, avocado and rice, for 980 yen. It was very good, and came with a drink as well.',
+            'visited'           => true,
+            'visit_date'        => '2018-10-03 13:00:00',
+            'google_maps_link'  => 'https://www.google.com/maps/place/PUBLIC+HOUSE/@35.6574761,139.7009524,17z/data=!3m1!5s0x60188b59c00ca2a5:0x89a02b53c17668b6!4m8!1m2!2m1!1spublic+house!3m4!1s0x0:0xf0cced61df64ae4a!8m2!3d35.6557838!4d139.7040582',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13110570/',
+            'official_website'  => 'http://www.cafecompany.co.jp/brands/publichouse/shibuya/index.html',
+            'score_lunch'       => 3,
+            'score_place'       => 2,
+            'score_food'        => 2,
+            'score_price'       => 1,
+            'score_date'        => 1
+        ));
+        $resto->attachTags(['cafe','smoking area','English menu']);
+        $resto->fillCoordinatesFromString('35.655830, 139.704006');
 
 
         // mcdo near stream and bic camera big one, 
@@ -3448,7 +3511,7 @@ class RestaurantsTableSeeder extends Seeder
             'points'            => '',
             'experience'        => '',
             'visited'           => true,
-            'visit_date'        => '2018-09-07 13:00:00',
+            'visit_date'        => '2018-10-07 13:00:00',
             'google_maps_link'  => '',
             'tabelog_link'      => '',
             'official_website'  => '',

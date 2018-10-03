@@ -435,6 +435,12 @@ class RestaurantTagsTableSeeder extends Seeder
         ));
 
         RestaurantTag::create(array(
+            'label'              => 'teppanyaki',
+            'type'               => '100',
+            'weight'             => '5'
+        ));
+
+        RestaurantTag::create(array(
             'label'              => 'meat',
             'type'               => '100',
             'weight'             => '4'
