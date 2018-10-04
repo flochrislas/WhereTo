@@ -3498,6 +3498,27 @@ class RestaurantsTableSeeder extends Seeder
         $resto->attachTags(['cafe','smoking area','English menu']);
         $resto->fillCoordinatesFromString('35.655830, 139.704006');
 
+        $resto = Restaurant::create(array(
+            'name'              => 'Kamukura',
+            'location'          => 'Shibuya, center gai',
+            'type'              => 'Ramen',
+            'lunch_price'       => 1000,
+            'points'            => 'Disapointing big ramen restaurant on center gai',
+            'experience'        => 'The place is quite big (and bright) for a ramen restaurant, but it is counter only. Comfortable enough. For 1000 yen I got a set: a ramen and bowl of minced meat on rice with an egg. The ramen was disapointing. The soup was light, with a nice taste, but was extremely hot. The noodles were OK but in a very small quantity. The meat was just bad... and appart from that it was just some cabbage in the soup. The side dish was OKayish and allowed me to fill my belly (something the ramen in itself definitely cannot do). The staff is friendly, the place is convenient and foreigner-friendly, but in the end, the food is too poor to be worth it. Better go to any of the dozen of other ramen restaurants in the erea.',
+            'visited'           => true,
+            'visit_date'        => '2018-10-04 13:00:00',
+            'google_maps_link'  => 'https://www.google.com/maps/place/Dotonbori+Kamukura+Shibuya/@35.6599138,139.69812,18z/data=!4m8!1m2!2m1!1sKamukura!3m4!1s0x0:0xaf0a49f2a71b0951!8m2!3d35.6606774!4d139.698384',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13018962/',
+            'official_website'  => 'http://www.kamukura.co.jp/',
+            'score_lunch'       => 1,
+            'score_place'       => 1,
+            'score_food'        => 1,
+            'score_price'       => 0,
+            'score_date'        => 0
+        ));
+        $resto->attachTags(['ramen','noodles']);
+        $resto->fillCoordinatesFromString('35.660569, 139.698298');
+
 
         // mcdo near stream and bic camera big one, 
 
