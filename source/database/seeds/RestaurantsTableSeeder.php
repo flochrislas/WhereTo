@@ -3519,6 +3519,26 @@ class RestaurantsTableSeeder extends Seeder
         $resto->attachTags(['ramen','noodles']);
         $resto->fillCoordinatesFromString('35.660569, 139.698298');
 
+        $resto = Restaurant::create(array(
+            'name'              => 'Wine no Ruisuke',
+            'location'          => 'Shibuya, Stream',
+            'type'              => 'Grill',
+            'lunch_price'       => 950,
+            'points'            => 'Grilled chicken. Decent place in Stream building.',
+            'experience'        => 'Decent place. I tried the chicken burger for 750 yen, with an extra 200 yen for French fries. It took forever to come, like 10 or 15 minutes. The fries were kind of cold, and the amount similar to a McDo S size. The burger was very good. The bread was tasty, and the chicken was not dry at all and quiet delicious.',
+            'visited'           => true,
+            'visit_date'        => '2018-10-09 13:00:00',
+            'google_maps_link'  => 'https://www.google.com/maps/place/Wine+no+Ruisuke/@35.6580377,139.7013155,17z/data=!4m8!1m2!2m1!1swine+no+ruisuke!3m4!1s0x0:0x2d18362c1a6a58a2!8m2!3d35.6569699!4d139.703462',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13225214/',
+            'official_website'  => 'https://shibuyastream.jp/shop/shopdetail.php?id=27',
+            'score_lunch'       => 1,
+            'score_place'       => 1,
+            'score_food'        => 2,
+            'score_price'       => 1,
+            'score_date'        => 0
+        ));
+        $resto->attachTags(['meat','no smoking','small servings']);
+        $resto->fillCoordinatesFromString('35.656970, 139.703485');
 
         // mcdo near stream and bic camera big one, 
 
