@@ -3314,7 +3314,7 @@ class RestaurantsTableSeeder extends Seeder
             'type'              => 'Pizza',
             'lunch_price'       => 2000,
             'points'            => 'Fancy customizable "healthy" pizza restaurant.',
-            'experience'        => 'On the 2nd floor of the Stream building, you can eat inside or in front of the shop, which is open air but still inside of the building. The system is similar with Subway, but with pizza instead of sandwiches, and fancier ingredients. You can choose 3 main toppings, 2 small toppings, one type of crust and one type of cheese. Ingredients are classified into veggies, carbs, and protein. About 12 people are behind the counter preparing your pizza, the process took less time than I expected. The resulting "pizza" was also better than I expected. Very good crust, quiet filling rich topping... it was very good. But the cost is way above my budget for lunch: about 2000 yen for your pizza with a drink.',
+            'experience'        => 'On the 2nd floor of the Stream building, you can eat inside or in front of the shop, which is open air but still inside of the building. The system is similar with Subway, but with pizza instead of sandwiches, and fancier ingredients. You can choose 3 main toppings, 2 small toppings, one type of crust and one type of cheese. Ingredients are classified into veggies, carbs, and protein. About 12 people are behind the counter preparing your pizza, the process took less time than I expected. The resulting "pizza" was also better than I expected. Very good crust, quite filling rich topping... it was very good. But the cost is way above my budget for lunch: about 2000 yen for your pizza with a drink.',
             'visited'           => true,
             'visit_date'        => '2018-09-07 13:00:00',
             'google_maps_link'  => 'https://www.google.com/maps/place/CITYSHOP+PIZZA/@35.6572997,139.7008033,17z/data=!3m1!4b1!4m5!3m4!1s0x60188b771f06b86b:0x227bc684cd0bec37!8m2!3d35.6572954!4d139.702992',
@@ -3539,6 +3539,49 @@ class RestaurantsTableSeeder extends Seeder
         ));
         $resto->attachTags(['meat','no smoking','small servings']);
         $resto->fillCoordinatesFromString('35.656970, 139.703485');
+
+        $resto = Restaurant::create(array(
+            'name'              => 'Maita',
+            'location'          => 'Shibuya, 2Chome',
+            'type'              => 'Indian',
+            'lunch_price'       => 860,
+            'points'            => 'Decent Indian curry place, but smoking is allowed...',
+            'experience'        => 'Situated on the 9th floor, you need to take a small and slow elevator to go there, but once inside, the place was cleaner than I expected. Windows are there but it is still quite dark. The menu is good and inexpensive. In addition to all the curry sets you could expect, they have green curry and curry soup as well. I tried the keema curry set for 780 yen (curry, nan, rice and salad) and a coffee for 80 yen. It came fast. It was good. Also: the amount of curry is really satisfying. However, the place alows smoking, and ther is no separation whatsoever. It is very likely someone will be smoking at some point, and that could really damage the experience.',
+            'visited'           => true,
+            'visit_date'        => '2018-10-10 13:00:00',
+            'google_maps_link'  => 'https://www.google.com/maps/place/%E3%83%80%E3%82%A4%E3%83%8B%E3%83%B3%E3%82%B0+%E3%83%90%E3%83%AB+MAITA/@35.6588465,139.7004431,17z/data=!4m8!1m2!2m1!1smaita!3m4!1s0x60188bc46ef88d95:0xa4b5f5de82e9dedf!8m2!3d35.6595026!4d139.7039229',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13224295/',
+            'official_website'  => 'https://www.hotpepper.jp/strJ001200494/',
+            'score_lunch'       => 1,
+            'score_place'       => 1,
+            'score_food'        => 2,
+            'score_price'       => 1,
+            'score_date'        => 0
+        ));
+        $resto->attachTags(['indian','curry','smoking allowed','English menu']);
+        $resto->fillCoordinatesFromString('35.659644, 139.703863');
+
+        $resto = Restaurant::create(array(
+            'name'              => 'Glorious Chain Cafe',
+            'location'          => 'Shibuya, 1Chome',
+            'type'              => 'Cafe',
+            'lunch_price'       => 1080,
+            'points'            => 'Decent cafe with a nice menu.',
+            'experience'        => 'Spacious cafe, with windows bay, but on the ground floor. Kind of a nice place, but the music was definitely not to my taste. I really likied the menu, it was hard to make my pick. But since it was mostly around 1200 yen, I try the cheapest option: the taco rice for 1080 yen. With one drink. Decent amount, not bad, but I wish it had been tastier.',
+            'visited'           => true,
+            'visit_date'        => '2018-10-07 13:00:00',
+            'google_maps_link'  => 'https://www.google.com/maps/place/Glorious+Chain+Cafe/@35.6613921,139.7004716,17z/data=!4m5!3m4!1s0x60188ca7b8821d0d:0x87f8747fc4c12b8f!8m2!3d35.6620808!4d139.7026281',
+            'tabelog_link'      => '',
+            'official_website'  => '',
+            'score_lunch'       => 2,
+            'score_place'       => 1,
+            'score_food'        => 1,
+            'score_price'       => 1,
+            'score_date'        => 0
+        ));
+        $resto->attachTags(['cafe','taco rice','burger','omurice']);
+        $resto->fillCoordinatesFromString('35.661942, 139.702440');
+
 
         // mcdo near stream and bic camera big one, 
 
