@@ -3583,8 +3583,29 @@ class RestaurantsTableSeeder extends Seeder
         $resto->fillCoordinatesFromString('35.661942, 139.702440');
 
 
-        // mcdo near stream and bic camera big one, 
+$resto = Restaurant::create(array(
+            'name'              => 'Curry Udon Senkichi',
+            'location'          => 'Shibuya, Dogenzaka',
+            'type'              => 'Japanese Curry',
+            'lunch_price'       => 700,
+            'points'            => 'Japanese curry with udon or rice sets. Nice and cheap.',
+            'experience'        => 'Nice little place with tables and counter. Nice choice of curry udon and curry rice, with choice of additional toppings. Prices are really low. I got a curry with omurice and roasted eggplants (700 yen), and cheese (+100 yen). This was good, but the curry could be tastier (it was quite soft).',
+            'visited'           => true,
+            'visit_date'        => '2018-10-12 13:00:00',
+            'google_maps_link'  => 'https://www.google.com/maps/place/%E3%82%AB%E3%83%AC%E3%83%BC%E3%81%86%E3%81%A9%E3%82%93%E5%8D%83%E5%90%89+%E6%B8%8B%E8%B0%B7%E9%81%93%E7%8E%84%E5%9D%82%E5%BA%97/@35.6574312,139.6956922,17z/data=!4m5!3m4!1s0x60188b55eff7b697:0xf907ca33814d6c60!8m2!3d35.6570825!4d139.6956815',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13004645/',
+            'official_website'  => 'https://senkichi.co.jp/#s02',
+            'score_lunch'       => 2,
+            'score_place'       => 1,
+            'score_food'        => 1,
+            'score_price'       => 2,
+            'score_date'        => 0
+        ));
+        $resto->attachTags(['udon','curry','omurice','English menu','no smoking']);
+        $resto->fillCoordinatesFromString('35.657078, 139.695693');     
 
+
+        // mcdo near stream and bic camera big one, 
 
         /*
         $resto = Restaurant::create(array(
