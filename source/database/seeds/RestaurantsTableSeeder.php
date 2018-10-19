@@ -1238,10 +1238,10 @@ class RestaurantsTableSeeder extends Seeder
             'google_maps_link'  => 'https://www.google.co.jp/maps/place/%E3%83%A9%E3%83%BB%E3%82%BD%E3%83%95%E3%82%A3%E3%83%83%E3%82%BF/@35.659359,139.6979001,18z/data=!4m5!3m4!1s0x60188ca854f6a1ef:0x10dc7b929c86a181!8m2!3d35.6612092!4d139.699032',
             'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13007485/',
             'official_website'  => 'https://www.lasoffitta.jp/',
-            'score_lunch'       => 3,
+            'score_lunch'       => 4,
             'score_place'       => 1,
             'score_food'        => 2,
-            'score_price'       => 1,
+            'score_price'       => 2,
             'score_date'        => 1
         ));
         $resto->attachTags(['pizza', 'pasta', 'italian']);
@@ -2081,11 +2081,11 @@ class RestaurantsTableSeeder extends Seeder
             'google_maps_link'  => 'https://www.google.com/maps/place/Trattoria+Sgrosso/@35.6571908,139.7011768,18z/data=!4m5!3m4!1s0x60188b57b4dc9449:0xf5146fd0f442e229!8m2!3d35.6576812!4d139.6988916',
             'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13019705/',
             'official_website'  => 'https://sgroa996300.gorp.jp/',
-            'score_lunch'       => 3,
+            'score_lunch'       => 2,
             'score_place'       => 2,
-            'score_food'        => 2,
+            'score_food'        => 1,
             'score_price'       => 1,
-            'score_date'        => 0
+            'score_date'        => 1
         ));
         $resto->attachTags(['italian','pasta','pizza','open air space','smoking allowed','visa']);
         $resto->fillCoordinatesFromString('35.657738, 139.698912');
@@ -3602,8 +3602,91 @@ $resto = Restaurant::create(array(
             'score_date'        => 0
         ));
         $resto->attachTags(['udon','curry','omurice','English menu','no smoking']);
-        $resto->fillCoordinatesFromString('35.657078, 139.695693');     
+        $resto->fillCoordinatesFromString('35.657078, 139.695693');
 
+        $resto = Restaurant::create(array(
+            'name'              => 'Shibuya Tonteki',
+            'location'          => 'Shibuya, Dogenzaka',
+            'type'              => 'Meat',
+            'lunch_price'       => 900,
+            'points'            => 'Kind of a meat fast food.',
+            'experience'        => 'Basically 2 types of meats, minced, or not. Grilled on a hot plate. Reday fast. Choice of the amount from 200 to 300g. 800 yen for the largest portion, +200 yen for rice and soup. I tried the minced "hamburg" meatball with Japanese style topping, and it was not especially delicious, but very decent. Adjusted to the price I would say... you can get better, but then expect to spend more than 1200 yen.',
+            'visited'           => true,
+            'visit_date'        => '2018-10-07 13:00:00',
+            'google_maps_link'  => 'https://www.google.com/maps/place/%E6%B8%8B%E8%B0%B7%E3%83%88%E3%83%B3%E3%83%86%E3%82%AD+%E6%B8%8B%E8%B0%B7%E9%81%93%E7%8E%84%E5%9D%82G%E3%82%B9%E3%82%AF%E3%82%A8%E3%82%A2%E3%83%BC%E5%BA%97/@35.6578453,139.6955151,17z/data=!4m5!3m4!1s0x60188caa0042e8d1:0xe8b86c105ee2ae0d!8m2!3d35.6578192!4d139.6962017',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13165183/',
+            'official_website'  => '',
+            'score_lunch'       => 2,
+            'score_place'       => 1,
+            'score_food'        => 1,
+            'score_price'       => 1,
+            'score_date'        => 0
+        ));
+        $resto->attachTags(['meat']);
+        $resto->fillCoordinatesFromString('35.657812, 139.696217');
+
+        $resto = Restaurant::create(array(
+            'name'              => 'Ventuno Tokyo',
+            'location'          => 'Shibuya, center gai',
+            'type'              => 'Italian',
+            'lunch_price'       => 1000,
+            'points'            => 'Spacious and bright place with tables, good pizza, and buffet option for lunch.',
+            'experience'        => 'Located on the basement floor, but spacious and well lighted, it is a confortable place with better chairs and tables than most places. You can order a simple dish of pasta (less than 100 yen) or pizza (from 1000 yen), and add some money to get salad and soup. A salad bar is available, and is pretty good. Soft drinks are free. I tried a marguerita pizza for 1000 yen and it was surprisingly good. One of the best in Shibuya! But the crust is very thin and I ended up still hungry.',
+            'visited'           => true,
+            'visit_date'        => '2018-10-07 13:00:00',
+            'google_maps_link'  => 'https://www.google.com/maps/place/Ventuno+Tokyo/@35.6597973,139.7000143,17z/data=!4m5!3m4!1s0x0:0x14266b8498cc3095!8m2!3d35.660386!4d139.699687',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13032476/',
+            'official_website'  => 'https://ventuno-tokyo.owst.jp/',
+            'score_lunch'       => 2,
+            'score_place'       => 1,
+            'score_food'        => 2,
+            'score_price'       => 1,
+            'score_date'        => 1
+        ));
+        $resto->attachTags(['italian','pizza','pasta','no smoking']);
+        $resto->fillCoordinatesFromString('35.660185, 139.699564');
+
+        $resto = Restaurant::create(array(
+            'name'              => 'Shoya',
+            'location'          => 'Shibuya, center gai',
+            'type'              => 'Izakaya',
+            'lunch_price'       => 800,
+            'points'            => 'Izakaya offering cheap lunch sets around noon.',
+            'experience'        => 'It is nice to be able to feel that "authentic" izakaya atmosphere during lunch time. Old Japanese pop songs, wooden interior but confortable seats. Food is not especially delicious, but good enough given the low price.',
+            'visited'           => true,
+            'visit_date'        => '2018-10-19 13:00:00',
+            'google_maps_link'  => 'https://www.google.com/maps/place/%E5%BA%84%E3%82%84+%E6%B8%8B%E8%B0%B7%E3%82%BB%E3%83%B3%E3%82%BF%E3%83%BC%E8%A1%97%E5%BA%97+%E3%81%AF%E3%81%AA%E3%82%8C/@35.6603131,139.7010658,17z/data=!4m5!3m4!1s0x60188ca849058759:0x4f84dc1d50badd3a!8m2!3d35.6604442!4d139.6992838',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13111596/',
+            'official_website'  => 'http://search.daisyo.co.jp/shop.php?shop_cd=3356',
+            'score_lunch'       => 2,
+            'score_place'       => 2,
+            'score_food'        => 1,
+            'score_price'       => 2,
+            'score_date'        => 0
+        ));
+        $resto->attachTags(['izakaya','English menu','smoking area','teishoku']);
+        $resto->fillCoordinatesFromString('35.660442, 139.699292');
+
+        $resto = Restaurant::create(array(
+            'name'              => 'Tare Katsu',
+            'location'          => 'Shibuya, Dogenzaka',
+            'type'              => 'Katsu',
+            'lunch_price'       => 1000,
+            'points'            => 'Nice katsudon restaurant.',
+            'experience'        => 'Small place with just a counter. Cosy. Good food. Decent price. 1000 yen for a curry rice with deep fried vegetables and 3 pieces of deep fried pork (katsu). The curry itself was not especially tasty, but some spices are available to add directly on tyhe counter. THe vegetables and katsu were very good.',
+            'visited'           => true,
+            'visit_date'        => '2018-10-07 13:00:00',
+            'google_maps_link'  => 'https://www.google.co.jp/maps/place/Tare+Katsu+Shibuya/@35.6582008,139.6988727,17z/data=!4m5!3m4!1s0x0:0x6baaa4e98431cfdd!8m2!3d35.6580526!4d139.6992428',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13185513/',
+            'official_website'  => 'http://tarekatsu.jp/',
+            'score_lunch'       => 2,
+            'score_place'       => 1,
+            'score_food'        => 2,
+            'score_price'       => 1,
+            'score_date'        => 0
+        ));
+        $resto->attachTags(['katsu','no smoking']);
+        $resto->fillCoordinatesFromString('35.658049, 139.699230');
 
         // mcdo near stream and bic camera big one, 
 
