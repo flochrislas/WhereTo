@@ -2520,15 +2520,15 @@ class RestaurantsTableSeeder extends Seeder
             'visited'           => true,
             'visit_date'        => '2018-06-27 13:00:00',
             'google_maps_link'  => 'https://www.google.com/maps/place/Brasserie+VIRON/@35.6576443,139.7017993,17z/data=!4m5!3m4!1s0x60188ca970aa2465:0x1aa8c50c49653ca!8m2!3d35.6608958!4d139.6968211',
-            'tabelog_link'      => '',
-            'official_website'  => '',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13004627/',
+            'official_website'  => 'https://xn--w8jte276hx5vdnebu3f.com/brasserie-viron-shibuya/',
             'score_lunch'       => 2,
             'score_place'       => 1,
             'score_food'        => 1,
             'score_price'       => 0,
             'score_date'        => 0
         ));
-        $resto->attachTags(['french','cafe']);
+        $resto->attachTags(['french','cafe','bakery','sandwiches']);
         $resto->fillCoordinatesFromString('35.660864, 139.696779');
 
         $resto = Restaurant::create(array(
@@ -3410,8 +3410,8 @@ class RestaurantsTableSeeder extends Seeder
             'score_price'       => 1,
             'score_date'        => 0
         ));
-        $resto->attachTags(['35.657257, 139.696205']);
-        $resto->fillCoordinatesFromString('katsu','meat','English menu','no smoking');
+        $resto->attachTags('katsu','meat','English menu','no smoking');
+        $resto->fillCoordinatesFromString(['35.657257, 139.696205']);        
 
         $resto = Restaurant::create(array(
             'name'              => 'Bar a vin CROISEE',
@@ -3687,6 +3687,48 @@ $resto = Restaurant::create(array(
         ));
         $resto->attachTags(['katsu','no smoking']);
         $resto->fillCoordinatesFromString('35.658049, 139.699230');
+
+        $resto = Restaurant::create(array(
+            'name'              => 'Guykatsu Motomura',
+            'location'          => 'Shibuya, 2Chome',
+            'type'              => 'Guykatsu',
+            'lunch_price'       => 1400,
+            'points'            => 'Decent deep fried beef.',
+            'experience'        => 'Small cosy place on the basement floor. Counter and tables. Must pay in cash upfront, choosing within 4 or 5 different sets. I tried the cheapest 1400 yen set that includes 150g of deep fried beef, difference sauces, cabbage, potatoe salad, bowl of rice (1 free refill) and miso soup. The beef is kind of raw, so you can put your slices on a small individual hot plate in front of you. I enjoyed my meal, it was quite good. The beef is of good quality, fat and kind of melting in your mouth.',
+            'visited'           => true,
+            'visit_date'        => '2018-10-22 13:00:00',
+            'google_maps_link'  => 'https://www.google.com/maps/place/Gyukatsu+Motomura/@35.6586979,139.7016605,17z/data=!4m5!3m4!1s0x60188b5978424ac1:0x52e9ab4fbb69301f!8m2!3d35.6596472!4d139.7041266',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13183447/',
+            'official_website'  => 'https://www.gyukatsu-motomura.com/shop/shibuya-bunten',
+            'score_lunch'       => 2,
+            'score_place'       => 1,
+            'score_food'        => 2,
+            'score_price'       => 1,
+            'score_date'        => 0
+        ));
+        $resto->attachTags('katsu','meat','English menu','no smoking');
+        $resto->fillCoordinatesFromString('35.659706, 139.704094');
+
+        $resto = Restaurant::create(array(
+            'name'              => 'Les deux magots',
+            'location'          => 'Shibuya, Mark City',
+            'type'              => 'Bakery',
+            'lunch_price'       => 1200,
+            'points'            => 'Bakery in the basement floor of the Mark City building, on the Shibuya station.',
+            'experience'        => 'Prices are a but high. Food is good, but maybe not enough to justify the price. Decent ham and cheese in my 500 yen small sandwich. The place is for "take-out" mostly, but there are some small tables availables as well.',
+            'visited'           => true,
+            'visit_date'        => '2018-10-23 13:00:00',
+            'google_maps_link'  => 'https://www.google.com/maps/place/%E3%83%89%E3%82%A5+%E3%83%9E%E3%82%B4+%E3%83%91%E3%83%AA+%E6%9D%B1%E6%A8%AA%E3%81%AE%E3%82%8C%E3%82%93%E5%BA%97/@35.6583688,139.6993904,18z/data=!3m1!5s0x60188b5631c5f5a9:0xf2c804909bcb1998!4m8!1m2!2m1!1z44OJ44KlIOODnuOCtA!3m4!1s0x0:0x513f651f326913bf!8m2!3d35.6587177!4d139.699942',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13198180/',
+            'official_website'  => 'http://www.saint-germain.co.jp/shop/list/shop-283/',
+            'score_lunch'       => 1,
+            'score_place'       => 1,
+            'score_food'        => 1,
+            'score_price'       => 0,
+            'score_date'        => 0
+        ));
+        $resto->attachTags(['bakery','sandwiches']);
+        $resto->fillCoordinatesFromString('35.658740, 139.699925');
 
         // mcdo near stream and bic camera big one, 
 
