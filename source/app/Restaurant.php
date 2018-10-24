@@ -76,4 +76,14 @@ class Restaurant extends Model
         // awesome https://m.dotdev.co/writing-advanced-eloquent-search-query-filters-de8b6c2598db
     }
 
+    /**
+    * The users who have visited the restaurant
+    */
+    public function users()
+    {
+        //return $this->belongsToMany(User::class);
+        //return $this->belongsToMany('App\User','user_restaurant')->withPivot('comment');
+        return $this->belongsToMany(User::class)->withPivot('comment');
+    }
+
 }
