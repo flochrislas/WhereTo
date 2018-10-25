@@ -3730,6 +3730,69 @@ $resto = Restaurant::create(array(
         $resto->attachTags(['bakery','sandwiches']);
         $resto->fillCoordinatesFromString('35.658740, 139.699925');
 
+        $resto = Restaurant::create(array(
+            'name'              => 'Kuumba du falafel',
+            'location'          => 'Shibuya, Shinsencho',
+            'type'              => 'Falafel',
+            'lunch_price'       => 1200,
+            'points'            => 'Small place. Big falafels.',
+            'experience'        => 'Small counter and a couple of tables. 1200 yen for a full (big) falafel sandwich, or 1580 for the plate. They have various intersting imported beverages as well. The full falafel sand (sand is Japanese short for sandwich) is quite big and made me full. It was delicious at the begining, but got less tasty as I was digging in, as ingredients are compartimented and the paste things are dry without topping. The only topping was a very good, but thick and quite spicy, salsa paste. Maybe the plat ewould have been better for me since I would have been able to mix things together more... but the price is dissuasive.',
+            'visited'           => true,
+            'visit_date'        => '2018-10-07 13:00:00',
+            'google_maps_link'  => 'https://www.google.com/maps/place/Kuumba+du+Falafel/@35.6568766,139.6954035,16z/data=!4m5!3m4!1s0x6018f35536baff83:0x83492aabeddee150!8m2!3d35.6571469!4d139.6907686',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13102142/dtlrvwlst/',
+            'official_website'  => 'http://kuumbainternational.com/kuumbashop/KUUMBA/LOCATION.html',
+            'score_lunch'       => 2,
+            'score_place'       => 1,
+            'score_food'        => 1,
+            'score_price'       => 0,
+            'score_date'        => 0
+        ));
+        $resto->attachTags(['falafel','vegan friendly','English menu','no smoking']);
+        $resto->fillCoordinatesFromString('35.657146, 139.690795');
+
+        $resto = Restaurant::create(array(
+            'name'              => 'Dalian',
+            'location'          => 'Shibuya, Stream',
+            'type'              => 'Chinese',
+            'lunch_price'       => 980,
+            'points'            => 'Nice and good Chinese restaurant. Stream bld. 2F.',
+            'experience'        => 'I liked the place. nice decoration, nice huge windows bay, no cheesy music, even the light bulbs were cool. Prices were surpringly decent, and the menu was offering a nice variety of choices. I ordered the boiled dumpling set, with "sui gyoza", soup, salad, rice, deep fried roll... 980 yen, +100 yen because I upgraded my rice to chanhan. I was surprised again at how good everything was. Delicious. Great experience.',
+            'visited'           => true,
+            'visit_date'        => '2018-10-25 13:00:00',
+            'google_maps_link'  => 'https://www.google.com/maps/place/DALIAN+%E6%B8%8B%E8%B0%B7%E3%82%B9%E3%83%88%E3%83%AA%E3%83%BC%E3%83%A0%E5%BA%97/@35.6571287,139.7012817,17z/data=!3m1!4b1!4m5!3m4!1s0x60188bdde90de97f:0x43949fc179489284!8m2!3d35.6571287!4d139.7034704',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13225920/',
+            'official_website'  => 'https://dalian-chukagai.owst.jp/',
+            'score_lunch'       => 3,
+            'score_place'       => 2,
+            'score_food'        => 2,
+            'score_price'       => 1,
+            'score_date'        => 1
+        ));
+        $resto->attachTags(['chinese','dumpling','gyoza','English menu', 'no smoking','noodles']);
+        $resto->fillCoordinatesFromString('35.657082, 139.703472');
+
+        $resto = Restaurant::create(array(
+            'name'              => 'Crossroads bakery',
+            'location'          => 'Shibuya, Hikarie',
+            'type'              => 'Bakery',
+            'lunch_price'       => 1200,
+            'points'            => 'A small bakery in Hikarie B2F. "Take-out" only.',
+            'experience'        => 'I wanted a baguette sandwich, ham and cheese, and at the time that was the only bakery out of the five there are at Hikarie B2F that sold some. The camembert cheese was fine, the ham was too scarce, and the bread was bad (very chewy). The price was 453 yen. The staff was nice and gave me a piece of cookie for free (but it did not taste great). This is just a bakery, no place to stay and eat, but it is easy enough to go to the 11th floor and eat there (and the the view is great).',
+            'visited'           => true,
+            'visit_date'        => '2018-10-25 13:00:00',
+            'google_maps_link'  => 'https://www.google.com/maps/place/%E3%82%AF%E3%83%AD%E3%82%B9%E3%83%AD%E3%83%BC%E3%83%89%E3%83%99%E3%83%BC%E3%82%AB%E3%83%AA%E3%83%BC/@35.6588406,139.7008418,17z/data=!3m1!4b1!4m5!3m4!1s0x60188b5203378a55:0xfe07333f6e6fab9a!8m2!3d35.6588406!4d139.7030305',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13219145/',
+            'official_website'  => 'http://crossroadbakery.com/',
+            'score_lunch'       => 1,
+            'score_place'       => 1,
+            'score_food'        => 1,
+            'score_price'       => 0,
+            'score_date'        => 0
+        ));
+        $resto->attachTags(['bakery','sandwich','to-go']);
+        $resto->fillCoordinatesFromString('35.659135, 139.703750');
+
         // mcdo near stream and bic camera big one, 
 
         /*
