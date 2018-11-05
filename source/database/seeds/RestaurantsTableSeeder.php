@@ -3793,6 +3793,27 @@ $resto = Restaurant::create(array(
         $resto->attachTags(['bakery','sandwich','to-go']);
         $resto->fillCoordinatesFromString('35.659135, 139.703750');
 
+        $resto = Restaurant::create(array(
+            'name'              => 'Suju Indigo',
+            'location'          => 'Shibuya, Stream',
+            'type'              => 'Soba',
+            'lunch_price'       => 1000,
+            'points'            => 'Nice spacious restaurant serving cold or hot thick soba dishes.',
+            'experience'        => 'Nice and spacious, with huge windows bay, counters and tables. Smooth jazz music with powerful bass. Nice choice of soba dishes, hot or cold, ranging from 950 to 1250 yen. Add 100 yen to get a decent amount. Advertising as healthy, all dishes have a fair amount of sesami and dry see weed. I tried the hot spicy chicken soba. It was good. But maybe not as delicious nor filling as to justify the price.',
+            'visited'           => true,
+            'visit_date'        => '2018-11-05 13:00:00',
+            'google_maps_link'  => 'https://www.google.com/maps/search/suju+indigo/@35.6582902,139.7011871,17z',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13225911/',
+            'official_website'  => 'http://www.suju-masayuki.com/shops/indigo.php',
+            'score_lunch'       => 2,
+            'score_place'       => 2,
+            'score_food'        => 1,
+            'score_price'       => 0,
+            'score_date'        => 0
+        ));
+        $resto->attachTags(['soba','English menu','no smoking']);
+        $resto->fillCoordinatesFromString('35.657502, 139.703012');
+
         // mcdo near stream and bic camera big one, 
 
         /*
@@ -3817,6 +3838,8 @@ $resto = Restaurant::create(array(
         $resto->attachTags(['']);
         $resto->fillCoordinatesFromString('');
         */
+
+        // NEGISHI
 
         // roppongi place with jorge and yamaguchi
         // https://www.google.com/maps/place/%E3%80%92106-0031+T%C5%8Dky%C5%8D-to,+Minato-ku,+Nishiazabu,+1+Chome%E2%88%928,+%EF%BC%A6%EF%BC%A5%EF%BC%B2%EF%BC%AD%EF%BD%89%EF%BC%AE%EF%BC%B4%EF%BC%B8%EF%BC%AF/@35.6598723,139.726296,18z/data=!4m5!3m4!1s0x60188b7a7ad6966d:0xc96057139678e33c!8m2!3d35.6608104!4d139.7248288
