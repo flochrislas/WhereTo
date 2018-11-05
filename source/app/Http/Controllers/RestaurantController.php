@@ -158,16 +158,6 @@ class RestaurantController extends PlaceController
     }
 
     /**
-    * TODO: think about this and how to handle vists and comments from users
-    */
-    public function addComment($id, $comment) {
-        // Get the authenticated user
-        $user = Auth::user();
-        $restaurant = Restaurant::find($id);
-        $restaurant->users()->attach($user, ['comment'=> $comment]);
-    }
-
-    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request

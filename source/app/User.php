@@ -29,14 +29,14 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
-}
 
-/**
-* The restaaurants visited by the user
-*/
-public function restaurants()
-{
-    //return $this->belongsToMany(Restaurant::class);
-    return $this->belongsToMany(Restaurant::class)->withPivot('comment');
-    //return $this->belongsToMany('App\Restaurant','user_restaurant')->withPivot('comment');
+    /**
+    * The restaaurants visited by the user
+    */
+    public function restaurants()
+    {
+        //return $this->belongsToMany(Restaurant::class);
+        return $this->belongsToMany(Restaurant::class)->withPivot('comment');
+        //return $this->belongsToMany('App\Restaurant','user_restaurant')->withPivot('comment');
+    }
 }
