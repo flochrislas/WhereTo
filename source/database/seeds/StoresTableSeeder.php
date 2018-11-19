@@ -30,7 +30,7 @@ class StoresTableSeeder extends Seeder
           'official_website'  => 'http://www.yamadalabi.com/shibuya/',
           'score'             => 3
         ));
-        $store->attachTags(['electronics']);
+        $store->attachTags(['electronics','computers','phones','headphones','cameras','video games']);
         $store->fillCoordinatesFromString('35.658545, 139.698468');
 
         $store = Store::create(array(
@@ -214,6 +214,58 @@ class StoresTableSeeder extends Seeder
         ));
         $store->attachTags(['sports','sneakers','shoes']);
         $store->fillCoordinatesFromString('5.658365, 139.703552');
+
+        $store = Store::create(array(
+          'name'              => 'Daiso',
+          'location'          => 'Shibuya',
+          'type'              => '100yen shop',
+          'points'            => 'All items are sold for 100 yen (+tax), and there is a lot of stuff.',
+          'experience'        => 'Impressive choice of various items (gifts, housewares, snacks...) for 100 yen. 2 floors. A great place to find unexpensive souvenirs as well, as many things are very "Japanese".',
+          'google_maps_link'  => 'https://www.google.com/maps/place/DAISO/@35.6614889,139.6949319,17z/data=!3m1!4b1!4m5!3m4!1s0x60188ca95fa1a9bd:0xaf5537d8a7346f7f!8m2!3d35.6614846!4d139.6971206',
+          'official_website'  => 'https://www.daiso-sangyo.co.jp/shop/detail/8931',
+          'score'             => 3
+        ));
+        $store->attachTags(['100yen','gifts','snacks','housewares']);
+        $store->fillCoordinatesFromString('35.661462, 139.697177');
+
+        $store = Store::create(array(
+          'name'              => 'Can Do',
+          'location'          => 'Shibuya',
+          'type'              => '100yen shop',
+          'points'            => 'All items are sold for 100 yen (+tax), and there is a lot of stuff.',
+          'experience'        => 'Impressive choice of various items (gifts, housewares, snacks...) for 100 yen. A great place to find unexpensive souvenirs as well, as many things are very "Japanese". A bit less narrow and less crowded than Daiso.',
+          'google_maps_link'  => 'https://www.google.com/maps/place/Can+Do+Shibuya+Inokashira-dori/@35.6617661,139.6954257,17z/data=!3m1!4b1!4m5!3m4!1s0x60188ca96addf449:0x913ed7631d16f53c!8m2!3d35.6617618!4d139.6976144',
+          'official_website'  => 'https://www.cando-web.co.jp/',
+          'score'             => 2
+        ));
+        $store->attachTags(['100yen','gifts','snacks','housewares']);
+        $store->fillCoordinatesFromString('35.661770, 139.697603');
+
+        $store = Store::create(array(
+          'name'              => 'Tokyu Hands',
+          'location'          => 'Shibuya',
+          'type'              => 'Gifts and housewares',
+          'points'            => 'Big store offering an enormous variety of gifts and housewares',
+          'experience'        => 'Nice and big, with a somewhat confusing floor system. Can find some great things in there, but be ready to pay a relatively high price.',
+          'google_maps_link'  => 'https://www.google.com/maps/place/Tokyu+Hands+Shibuya/@35.6607993,139.6969887,17z/data=!4m5!3m4!1s0x60188ca916447249:0x13ff108bf95bcbf1!8m2!3d35.6619892!4d139.6978121',
+          'official_website'  => 'http://shibuya.tokyu-hands.co.jp/',
+          'score'             => 2
+        ));
+        $store->attachTags(['gifts','housewares']);
+        $store->fillCoordinatesFromString('35.662000, 139.697741');
+
+        $store = Store::create(array(
+          'name'              => 'Jampara',
+          'location'          => 'Shibuya',
+          'type'              => 'Used Electronics',
+          'points'            => 'Small shop. Second hand electronics such as laptops and smartphones.',
+          'experience'        => 'Interesting choice of second hand stuff such as laptops, smartphones, some heaphones, video games consoles or video cameras...',
+          'google_maps_link'  => 'https://www.google.com/maps/place/%E3%81%98%E3%82%83%E3%82%93%E3%81%B1%E3%82%89+%E6%B8%8B%E8%B0%B7%E9%81%93%E7%8E%84%E5%9D%82%E5%BA%97/@35.6589056,139.6957593,17z/data=!3m1!4b1!4m5!3m4!1s0x60188ca9d964652b:0xae9c85f47e4cae05!8m2!3d35.6589013!4d139.697948',
+          'official_website'  => 'http://www.janpara.co.jp/',
+          'score'             => 2
+        ));
+        $store->attachTags(['electronics','computers','phones']);
+        $store->fillCoordinatesFromString('35.658948, 139.697916');
 
         /*
         $store = Store::create(array(
