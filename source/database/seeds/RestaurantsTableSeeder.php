@@ -3814,6 +3814,69 @@ $resto = Restaurant::create(array(
         $resto->attachTags(['soba','English menu','no smoking']);
         $resto->fillCoordinatesFromString('35.657502, 139.703012');
 
+        $resto = Restaurant::create(array(
+            'name'              => 'Freshness Burger',
+            'location'          => 'Shibuya, Dogenzaka',
+            'type'              => 'Burger',
+            'lunch_price'       => 1200,
+            'points'            => 'Decent Japanese alternative to Burger King.',
+            'experience'        => 'The place is not big, but has an isolated smoking area with tables. Non-smoking main area has counters with electric outlets and small tablets. The place also offers free wifi. As for the food, while maybe not as good as Burger King or Wendy\'s, it is a decent Japanese alternative.',
+            'visited'           => true,
+            'visit_date'        => '2018-11-14 13:00:00',
+            'google_maps_link'  => 'https://www.google.com/maps/place/Freshness+Burger/@35.658181,139.6943459,17z/data=!3m1!4b1!4m5!3m4!1s0x60188b5602c23785:0xfdb4e0887f638201!8m2!3d35.6581767!4d139.6965346',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13061452/',
+            'official_website'  => 'http://www.freshnessburger.co.jp/',
+            'score_lunch'       => 2,
+            'score_place'       => 1,
+            'score_food'        => 2,
+            'score_price'       => 1,
+            'score_date'        => 0
+        ));
+        $resto->attachTags(['burger','smoking area','English menu','fast food']);
+        $resto->fillCoordinatesFromString('35.658172, 139.696548');
+
+        $resto = Restaurant::create(array(
+            'name'              => 'Jeff\'s Kitchen Curry',
+            'location'          => 'Shibuya, Station',
+            'type'              => 'Japanese Curry',
+            'lunch_price'       => 900,
+            'points'            => 'Japanese curry fast food',
+            'experience'        => 'Japanese curry dishes with many options. Counter only. Pay at machine and get ticket. English available. Food comes fast. Amount and price average. Not really tasty. You can go there if you are at the station and lack time for eating... but ohterwise it is not worth it.',
+            'visited'           => true,
+            'visit_date'        => '2018-11-15 13:00:00',
+            'google_maps_link'  => 'https://www.google.com/maps/place/%E3%82%B7%E3%82%A7%E3%83%95%E3%82%BA%E3%82%AD%E3%83%83%E3%83%81%E3%83%B3+%E3%82%AB%E3%83%AC%E3%83%BC%E5%8E%A8%E6%88%BF+%E6%B8%8B%E8%B0%B7%E5%BA%97/@35.6593021,139.7007633,19z/data=!4m8!1m2!2m1!1z44Kr44Os44O8!3m4!1s0x0:0xefbe66f5dd54c1c3!8m2!3d35.6593443!4d139.701161',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13133149/',
+            'official_website'  => 'https://www.jefb.co.jp/shop/brand/65',
+            'score_lunch'       => 1,
+            'score_place'       => 1,
+            'score_food'        => 1,
+            'score_price'       => 1,
+            'score_date'        => 0
+        ));
+        $resto->attachTags(['japanese curry','fast food','no smoking']);
+        $resto->fillCoordinatesFromString('35.659364, 139.701136');
+
+        $resto = Restaurant::create(array(
+            'name'              => 'Krung Siam',
+            'location'          => 'Shibuya, Dogenzaka',
+            'type'              => 'Thai',
+            'lunch_price'       => 1080,
+            'points'            => 'Nice Thai restaurant.',
+            'experience'        => 'Inside is nice and clean. Nice staff as well. I tried the gapao set for lunch, 1080 yen, coming with a good soup and nice spring roll. The gapoa itself was tasty and quiet spicy (a bit too much to my taste).',
+            'visited'           => true,
+            'visit_date'        => '2018-11-16 13:00:00',
+            'google_maps_link'  => 'https://www.google.com/maps/place/%E3%82%AF%E3%83%AB%E3%83%B3%E3%82%B5%E3%82%A4%E3%82%A2%E3%83%A0%E6%B8%8B%E8%B0%B7%E6%96%87%E5%8C%96%E6%9D%91%E9%80%9A%E3%82%8A%E5%BA%97/@35.6575273,139.6964592,16z/data=!4m5!3m4!1s0x60188caa31ea7b1b:0xd6ef47e97b2df1c7!8m2!3d35.6596107!4d139.6955365',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13211556/',
+            'official_website'  => 'http://www.krungsiam.info/shopinfo_dougenzaka.html',
+            'score_lunch'       => 2,
+            'score_place'       => 2,
+            'score_food'        => 2,
+            'score_price'       => 1,
+            'score_date'        => 1
+        ));
+        $resto->attachTags(['thai','gapao','no smoking']);
+        $resto->fillCoordinatesFromString('35.659615, 139.695524');
+
         // mcdo near stream and bic camera big one, 
 
         /*

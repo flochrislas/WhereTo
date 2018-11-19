@@ -100,6 +100,18 @@ class StoreTagsTableSeeder extends Seeder
         ));
 
         StoreTag::create(array(
+            'label'              => 'drinks',
+            'type'               => '80',
+            'weight'             => '300'
+        ));
+
+        StoreTag::create(array(
+            'label'              => 'gifts',
+            'type'               => '80',
+            'weight'             => '300'
+        ));
+
+        StoreTag::create(array(
             'label'              => 'luxury',
             'type'               => '80',
             'weight'             => '300'
@@ -113,6 +125,48 @@ class StoreTagsTableSeeder extends Seeder
 
         StoreTag::create(array(
             'label'              => 'airsoft',
+            'type'               => '80',
+            'weight'             => '300'
+        ));
+
+        StoreTag::create(array(
+            'label'              => '100yen',
+            'type'               => '80',
+            'weight'             => '300'
+        ));
+
+        StoreTag::create(array(
+            'label'              => 'housewares',
+            'type'               => '80',
+            'weight'             => '300'
+        ));
+
+        StoreTag::create(array(
+            'label'              => 'snacks',
+            'type'               => '80',
+            'weight'             => '300'
+        ));
+
+        StoreTag::create(array(
+            'label'              => 'phones',
+            'type'               => '80',
+            'weight'             => '300'
+        ));
+
+        StoreTag::create(array(
+            'label'              => 'computers',
+            'type'               => '80',
+            'weight'             => '300'
+        ));
+
+        StoreTag::create(array(
+            'label'              => 'headphones',
+            'type'               => '80',
+            'weight'             => '300'
+        ));
+
+        StoreTag::create(array(
+            'label'              => 'cameras',
             'type'               => '80',
             'weight'             => '300'
         ));
