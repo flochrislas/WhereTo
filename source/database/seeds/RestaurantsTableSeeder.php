@@ -3372,7 +3372,7 @@ class RestaurantsTableSeeder extends Seeder
         $resto->fillCoordinatesFromString('35.655981, 139.700456');
 
         $resto = Restaurant::create(array(
-            'name'              => 'Oreryu shio ramen',
+            'name'              => 'OreRyu Shio Ramen',
             'location'          => 'Shibuya, Nanpeidaicho',
             'type'              => 'Ramen',
             'lunch_price'       => 900,
@@ -3876,6 +3876,48 @@ $resto = Restaurant::create(array(
         ));
         $resto->attachTags(['thai','gapao','no smoking']);
         $resto->fillCoordinatesFromString('35.659615, 139.695524');
+
+        $resto = Restaurant::create(array(
+            'name'              => 'OreRyu Shio Ramen',
+            'location'          => 'Shibuya, Maruyamacho',
+            'type'              => 'Ramen',
+            'lunch_price'       => 980,
+            'points'            => 'Nice place, with nice ramen.',
+            'experience'        => 'Very nice place for a ramen restaurant, with quite a lot of tables. Beattles playing in the background. Mostly shio (salt) ramen, but other kind available as well, and lots of toppings can be added, with free dressings to adjust the taste. Optional side dishes includes yaki gyoza (fried dumplings), and meat on rice. I tried a spicy miso ramen and it was very tasty... but too spicy for me!',
+            'visited'           => true,
+            'visit_date'        => '2018-11-20 13:00:00',
+            'google_maps_link'  => 'https://www.google.com/maps/place/%E4%BF%BA%E6%B5%81%E5%A1%A9%E3%82%89%E3%83%BC%E3%82%81%E3%82%93+%E5%86%86%E5%B1%B1%E7%94%BA%E5%BA%97/@35.6575779,139.6948019,18z/data=!3m1!4b1!4m5!3m4!1s0x60188b62765e4df3:0xf9fbabe2a8e8a2a2!8m2!3d35.6575757!4d139.6958962',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13225761/',
+            'official_website'  => 'https://oreryushio.co.jp/',
+            'score_lunch'       => 2,
+            'score_place'       => 2,
+            'score_food'        => 2,
+            'score_price'       => 1,
+            'score_date'        => 0
+        ));
+        $resto->attachTags(['ramen','noodles','no smoking','English menu']);
+        $resto->fillCoordinatesFromString('35.657603, 139.695906');
+
+        $resto = Restaurant::create(array(
+            'name'              => 'OreRyu Shio Ramen',
+            'location'          => 'Shibuya, Dogenzaka',
+            'type'              => 'Ramen',
+            'lunch_price'       => 980,
+            'points'            => 'Nice place, with nice ramen.',
+            'experience'        => 'Nice but small place with a couple of table available outside as well. Counter and tables. Beattles playing in the background. Mostly shio (salt) ramen, but other kind available as well, and lots of toppings can be added, with free dressings to adjust the taste. Optional side dishes includes yaki gyoza (fried dumplings), and meat on rice. I tried a creamy shio ramen. I was soft and tasty, very nice.',
+            'visited'           => true,
+            'visit_date'        => '2018-11-20 13:00:00',
+            'google_maps_link'  => 'https://www.google.com/maps/place/Oreryu+Shio-ramen+Shibuya-sohonten/@35.6550606,139.6948019,17z/data=!4m8!1m2!2m1!1z5L-65rWB5aGp44KJ44O844KB44KT!3m4!1s0x0:0x81ef09e68309aa54!8m2!3d35.656127!4d139.6954858',
+            'tabelog_link'      => 'sdfsdfsdfsdfsdfsdf',
+            'official_website'  => 'https://oreryushio.co.jp/',
+            'score_lunch'       => 2,
+            'score_place'       => 1,
+            'score_food'        => 2,
+            'score_price'       => 1,
+            'score_date'        => 0
+        ));
+        $resto->attachTags(['ramen','noodles','no smoking','English menu']);
+        $resto->fillCoordinatesFromString('35.656154, 139.695443');
 
         // mcdo near stream and bic camera big one, 
 
