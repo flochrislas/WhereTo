@@ -3919,6 +3919,98 @@ $resto = Restaurant::create(array(
         $resto->attachTags(['ramen','noodles','no smoking','English menu']);
         $resto->fillCoordinatesFromString('35.656154, 139.695443');
 
+        $resto = Restaurant::create(array(
+            'name'              => 'Suzu Cafe',
+            'location'          => 'Shibuya',
+            'type'              => 'Lounge',
+            'lunch_price'       => 1080,
+            'points'            => 'Lounge with pasta lunch and free soft drinks.',
+            'experience'        => 'Inside is spacious, high ceiling, windows bay, with soft music playing in the background. Sofa and low tables available. Few items for lunch sets, most likely to be some spagethi dishes. Softs drinks such as juice, tea or coffee are free. Lunch sets, coming with a small salad, are about 1000 yen. I tried smoked sausages with tomato sauce spagheti: it was good. Seats and tables are not accomodoting for tall people.',
+            'visited'           => true,
+            'visit_date'        => '2018-10-07 13:00:00',
+            'google_maps_link'  => 'https://www.google.com/maps/place/SUZU+CAFE+-GEMS+Shibuya-/@35.6568201,139.7024207,17z/data=!4m5!3m4!1s0x60188b5bc76c3217:0xf06939768d0b66af!8m2!3d35.655713!4d139.7045021',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13148366/',
+            'official_website'  => 'http://www.completecircle.co.jp/',
+            'score_lunch'       => 2,
+            'score_place'       => 1,
+            'score_food'        => 1,
+            'score_price'       => 1,
+            'score_date'        => 1
+        ));
+        $resto->attachTags(['cafe','pasta','smoking area']);
+        $resto->fillCoordinatesFromString('35.655705, 139.704505');
+
+        $resto = Restaurant::create(array(
+            'name'              => 'Mc Donald\'s',
+            'location'          => 'Shibuya, 1chome',
+            'type'              => 'Burger',
+            'lunch_price'       => 900,
+            'points'            => 'It is a McDonald\'s',
+            'experience'        => 'This one is quite big. Menu is what you can expect. There are some Japanese-only burgers, and most of the standards burgers.',
+            'visited'           => true,
+            'visit_date'        => '2018-01-01 13:00:00',
+            'google_maps_link'  => 'https://www.google.com/maps/place/McDonald\'s/@35.6597564,139.7010101,18z/data=!4m8!1m2!2m1!1smcdonald\'s!3m4!1s0x0:0xfee69d3a0dd310d!8m2!3d35.6599117!4d139.7020237',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13090239/',
+            'official_website'  => 'https://map.mcdonalds.co.jp/map/13208',
+            'score_lunch'       => 1,
+            'score_place'       => 1,
+            'score_food'        => 1,
+            'score_price'       => 1,
+            'score_date'        => 0
+        ));
+        $resto->attachTags(['burger','fast food','western']);
+        $resto->fillCoordinatesFromString('35.659932, 139.702090');
+
+
+        $resto = Restaurant::create(array(
+            'name'              => 'Mc Donald\'s',
+            'location'          => 'Shibuya, Jinnan',
+            'type'              => 'Burger',
+            'lunch_price'       => 900,
+            'points'            => 'It is a McDonald\'s',
+            'experience'        => 'Menu is what you can expect. There are some Japanese-only burgers, and most of the standards burgers.',
+            'visited'           => true,
+            'visit_date'        => '2018-01-01 13:00:00',
+            'google_maps_link'  => 'https://www.google.com/maps/place/McDonald\'s/@35.6594286,139.7007248,18z/data=!4m8!1m2!2m1!1smcdonald\'s!3m4!1s0x0:0x792a5218fa6c4c7b!8m2!3d35.6601969!4d139.7009731',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13098129/',
+            'official_website'  => 'https://map.mcdonalds.co.jp/map/13146',
+            'score_lunch'       => 1,
+            'score_place'       => 0,
+            'score_food'        => 1,
+            'score_price'       => 1,
+            'score_date'        => 0
+        ));
+        $resto->attachTags(['burger','fast food','western']);
+        $resto->fillCoordinatesFromString('35.660195, 139.700910');
+
+
+
+        
+
+/*
+
+Reg-On Diner レッグオンダイナー (Burger、Café / coffee shop (and others)、American)
+3.61  370 reviews 
+Reg-On Diner - 料理写真:こだわりのアボカドとベーコン、チーズの入った当店看板メニュー！
+2
+Upigorudobaga ウーピーゴールドバーガー (Burger、BBQ)
+3.45  151 reviews 
+Upigorudobaga - 料理写真:
+3
+SHIBUichi BAKERY SHIBUichi BAKERY (Bread、Cafe、Burger)
+3.39  15 reviews 
+SHIBUichi BAKERY  - 料理写真:３種のチーズとはちみつのキューブ
+4
+MAD BURGER マッドバーガー (Burger、Sandwich、Dining bar)
+3.25  31 reviews 
+MAD BURGER - 料理写真:
+5
+chi-zuandomi-tobanku CHEESE＆MEAT BANK (Steak、Bar、Burger)
+3.23  50 reviews 
+
+*/
+
+
         // mcdo near stream and bic camera big one, 
 
         /*
