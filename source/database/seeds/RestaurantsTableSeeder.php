@@ -2663,7 +2663,7 @@ class RestaurantsTableSeeder extends Seeder
             'type'              => 'Ramen',
             'lunch_price'       => 950,
             'points'            => 'Good ramen restaurant.',
-            'experience'        => 'One big counter. Foreigner friendly (friendly staff and English menus). Decent choice of ramen, tsukemen, tantanmen, and hiyashi ramen in summer. I tried shoyu tsukemen with egg, large portion for 950, and it was very good. THe piece of meat was kinda smoked, quite delicious. One thing I would reproach them though is that when I went in mid-July, their door stayed opened and it was too hot inside.',
+            'experience'        => 'One big counter. Foreigner friendly (friendly staff and English menus). Decent choice of ramen, tsukemen, tantanmen, and hiyashi (cold) ramen in summer. I tried shoyu tsukemen with egg, large portion for 950, and it was very good. The piece of meat was kinda smoked, quite delicious. One thing I would reproach them though is that when I went in mid-July, their door stayed opened and it was too hot inside. In winter. I tried the Special Ramen, which is their regular one with all toppings. It was a bit salty, but quite good. Not tasty nor filling enough for me though, and the cost was high (1200 yen).',
             'visited'           => true,
             'visit_date'        => '2018-07-11 13:00:00',
             'google_maps_link'  => 'https://www.google.com/maps/place/Usagi/@35.6570234,139.6973772,17z/data=!4m5!3m4!1s0x60188b550b2d38ff:0x1c8f91e37a97e72c!8m2!3d35.6557027!4d139.6934934',
@@ -3983,6 +3983,48 @@ $resto = Restaurant::create(array(
         $resto->attachTags(['burger','fast food','western']);
         $resto->fillCoordinatesFromString('35.660195, 139.700910');
 
+        $resto = Restaurant::create(array(
+            'name'              => 'Mad Burger',
+            'location'          => 'Shibuya',
+            'type'              => 'Burger',
+            'lunch_price'       => 1500,
+            'points'            => 'Nice burger restaurant.',
+            'experience'        => 'The interior is nice and cosy. Counter and tables of different sizes. Lunch menu add a small salad or fried potatoes to your burger for free. I had a avocado cheese burger for 1300 yen. It was very good, and very well balanced. It\'s a bit on the expensive side though. Note that you can customize your burger with additional toppings as well.',
+            'visited'           => true,
+            'visit_date'        => '2018-10-07 13:00:00',
+            'google_maps_link'  => 'https://www.google.com/maps/place/MAD+BURGER+%E6%B8%8B%E8%B0%B7%E5%BA%97/@35.656543,139.7030618,16z/data=!4m5!3m4!1s0x60188b5c19ad8e35:0x2c3ef54dfa893455!8m2!3d35.6574322!4d139.7076859',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13190615/',
+            'official_website'  => 'http://madburgers.jp/',
+            'score_lunch'       => 3,
+            'score_place'       => 2,
+            'score_food'        => 2,
+            'score_price'       => 0,
+            'score_date'        => 0
+        ));
+        $resto->attachTags(['burger','no smoking']);
+        $resto->fillCoordinatesFromString('35.657448, 139.707671');
+
+        $resto = Restaurant::create(array(
+            'name'              => 'Kirin City',
+            'location'          => 'Shibuya, Sakuragaokacho',
+            'type'              => 'Pub',
+            'lunch_price'       => 750,
+            'points'            => 'Nice, bright and spacious space for casual lunch.',
+            'experience'        => 'With large windows bay, the place is bright, and quite spacious with many tables in addition to a small counter. The menu for lunch is mostly pasta or Japanese curry. I tried "napolitan" spaghetti and was surprised at how good it was. For 750 yen. You can also get a small salad for +150yen, or the "drink bar" with soft drinks and soup for +200yen. Of course beer is also available on tap.',
+            'visited'           => true,
+            'visit_date'        => '2018-11-29 13:00:00',
+            'google_maps_link'  => 'https://www.google.com/maps/place/KIRIN+City/@35.6570982,139.7003463,18z/data=!4m8!1m2!2m1!1skirin+city!3m4!1s0x60188b59dfbde383:0xf3e4dc1ae8e0f2a4!8m2!3d35.656689!4d139.701432',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13014525/',
+            'official_website'  => 'https://kirincity138.gorp.jp/',
+            'score_lunch'       => 3,
+            'score_place'       => 2,
+            'score_food'        => 2,
+            'score_price'       => 1,
+            'score_date'        => 1
+        ));
+        $resto->attachTags(['pasta','smoking area','japanese curry']);
+        $resto->fillCoordinatesFromString('35.656753, 139.701437');
+
 
 
         
@@ -4007,6 +4049,13 @@ MAD BURGER - 料理写真:
 5
 chi-zuandomi-tobanku CHEESE＆MEAT BANK (Steak、Bar、Burger)
 3.23  50 reviews 
+
+
+crazy amount of food in hirakatashi
+https://tabelog.com/osaka/A2707/A270702/27071015/
+in shibuya
+https://tabelog.com/tokyo/A1303/A130301/13059598/
+
 
 */
 
