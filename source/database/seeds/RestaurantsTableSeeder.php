@@ -4025,16 +4025,30 @@ $resto = Restaurant::create(array(
         $resto->attachTags(['pasta','smoking area','japanese curry']);
         $resto->fillCoordinatesFromString('35.656753, 139.701437');
 
-
+        $resto = Restaurant::create(array(
+            'name'              => 'Reg-on diner',
+            'location'          => 'Shibuya',
+            'type'              => 'Burger',
+            'lunch_price'       => 1400,
+            'points'            => 'Very nice burger. Tabelog\'s highest ranking for burgers in Shibuya.',
+            'experience'        => 'Quite far from the station, the place doesn\'t look like anything special, is kinda small and not especially confortable. Windows bay make it bright and nice enough though. Menu is home made, customizable burgers only. I tried an avocado cheese burger (coming with some fried potatoes) for 1450 yen, which is a tad expensive. It was one of the best burger I ever had. It came shaped perfectly, standing beautifully on its plate without the help of any kind of pick, then squizzed smoothly in my hand as I was putting it into the folded paper to eat it. All ingredients were very fresh, lettuce was crispy, tomato was tasty, avocado was perfectly ripped, the 100% additive free meat was perfect and seasoned with pepper while mayonaise is used between the bread and the lettuce. The cheese was very good as was the bread. Very well balanced, a pleasure to eat. Tabelog might be right on this one.',
+            'visited'           => true,
+            'visit_date'        => '2018-11-30 13:00:00',
+            'google_maps_link'  => 'https://www.google.com/maps/place/Reg-On+Diner/@35.656169,139.7081992,16z/data=!4m5!3m4!1s0x60188b5d16601319:0xe4b8eafd4feb0244!8m2!3d35.6555588!4d139.7098836',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13054359/',
+            'official_website'  => 'http://www.regondiner.com/',
+            'score_lunch'       => 4,
+            'score_place'       => 1,
+            'score_food'        => 3,
+            'score_price'       => 1,
+            'score_date'        => 0
+        ));
+        $resto->attachTags(['burger','no smoking']);
+        $resto->fillCoordinatesFromString('35.655578, 139.709898');
 
         
 
 /*
-
-Reg-On Diner レッグオンダイナー (Burger、Café / coffee shop (and others)、American)
-3.61  370 reviews 
-Reg-On Diner - 料理写真:こだわりのアボカドとベーコン、チーズの入った当店看板メニュー！
-2
 Upigorudobaga ウーピーゴールドバーガー (Burger、BBQ)
 3.45  151 reviews 
 Upigorudobaga - 料理写真:
@@ -4042,20 +4056,14 @@ Upigorudobaga - 料理写真:
 SHIBUichi BAKERY SHIBUichi BAKERY (Bread、Cafe、Burger)
 3.39  15 reviews 
 SHIBUichi BAKERY  - 料理写真:３種のチーズとはちみつのキューブ
-4
-MAD BURGER マッドバーガー (Burger、Sandwich、Dining bar)
-3.25  31 reviews 
-MAD BURGER - 料理写真:
 5
 chi-zuandomi-tobanku CHEESE＆MEAT BANK (Steak、Bar、Burger)
 3.23  50 reviews 
-
 
 crazy amount of food in hirakatashi
 https://tabelog.com/osaka/A2707/A270702/27071015/
 in shibuya
 https://tabelog.com/tokyo/A1303/A130301/13059598/
-
 
 */
 
