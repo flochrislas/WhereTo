@@ -71,7 +71,7 @@ php artisan make:migration create_karaoke_karaoke_tag_table --create=karaoke_kar
 ::
 for user and restaurants... with added data to pivot table!!
 see https://stackoverflow.com/questions/24547376/insert-data-to-a-pivot-table-in-laravel diplome_user example
-php artisan make:seeder UserRestaurantsTableSeeder;
+// php artisan make:seeder UserRestaurantsTableSeeder;
 php artisan make:migration create_user_restaurant_table --create=user_restaurant;
 
 PHPUnit tests with Laravel:
@@ -273,7 +273,7 @@ PAYMENTS
 Paypal API
 https://medium.com/justlaravel/how-to-integrate-paypal-payment-gateway-in-laravel-695063599449
 https://laravelcode.com/post/how-to-integrate-paypal-payment-gateway-in-laravel-54
-
+c
 Other options info
 https://stackoverflow.com/questions/32900917/how-to-integrate-paypal-payment-gateway-in-laravel
 
@@ -288,3 +288,13 @@ https://github.com/barryvdh/laravel-omnipay
 
 
 $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+Deploying Laravel on production server
+
+https://laravel.com/docs/master/deployment
+https://www.webhostface.com/blog/install-deploy-laravel-to-server/
+https://medium.com/laravel-news/the-simple-guide-to-deploy-laravel-5-application-on-shared-hosting-1a8d0aee923e
+
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
