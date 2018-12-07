@@ -4046,9 +4046,30 @@ $resto = Restaurant::create(array(
         $resto->attachTags(['burger','no smoking']);
         $resto->fillCoordinatesFromString('35.655578, 139.709898');
 
-        
+        $resto = Restaurant::create(array(
+            'name'              => 'Double Tall',
+            'location'          => 'Shibuya',
+            'type'              => 'Cafe',
+            'lunch_price'       => 950,
+            'points'            => 'Nice casual cafe. Good but very filling.',
+            'experience'        => 'CAsual cafe, with a small terrace, and a non-smoking 2nd floor. Smoking is allowed on 1st floor. Menu has taco rice, hamburg, curry... this kind of dish, for about 1000 yen. I tried the taco rice. It was very good, but rather small. Better not to be very hungry. I enjoyed the peaceful atmosphere, as the place was not crowded and not near any busy street or road.',
+            'visited'           => true,
+            'visit_date'        => '2018-12-07 13:00:00',
+            'google_maps_link'  => 'https://www.google.com/maps/place/DOUBLE+TALL+CAFE+%E6%B8%8B%E8%B0%B7%E5%BA%97/@35.656681,139.7037923,17z/data=!3m1!4b1!4m5!3m4!1s0x60188b5bf0d75b65:0x59ba186368456417!8m2!3d35.656681!4d139.705981',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13023504/',
+            'official_website'  => 'https://doubletall.com/cafe/shibuya/',
+            'score_lunch'       => 2,
+            'score_place'       => 2,
+            'score_food'        => 2,
+            'score_price'       => 1,
+            'score_date'        => 0
+        ));
+        $resto->attachTags(['cafe','taco rice','smoking area','open air space']);
+        $resto->fillCoordinatesFromString('35.656674, 139.705983');
+               
 
 /*
+
 Upigorudobaga ウーピーゴールドバーガー (Burger、BBQ)
 3.45  151 reviews 
 Upigorudobaga - 料理写真:
@@ -4079,7 +4100,7 @@ https://tabelog.com/tokyo/A1303/A130301/13059598/
             'points'            => '',
             'experience'        => '',
             'visited'           => true,
-            'visit_date'        => '2018-10-07 13:00:00',
+            'visit_date'        => '2018-12-17 13:00:00',
             'google_maps_link'  => '',
             'tabelog_link'      => '',
             'official_website'  => '',
