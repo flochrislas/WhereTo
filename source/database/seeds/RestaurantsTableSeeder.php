@@ -4066,20 +4066,56 @@ $resto = Restaurant::create(array(
         ));
         $resto->attachTags(['cafe','taco rice','smoking area','open air space']);
         $resto->fillCoordinatesFromString('35.656674, 139.705983');
+
+        $resto = Restaurant::create(array(
+            'name'              => 'Menya Itadori',
+            'location'          => 'Shibuya',
+            'type'              => 'Ramen',
+            'lunch_price'       => 950,
+            'points'            => 'Nice curry ramen and tsukemen.',
+            'experience'        => 'The place is quite small with a counter several small tables. Curry ramen, curry tsukemen and curry rice is availble with various options. I tried the shabu curry tsukemen, for 1050yen. Quality was good, nice meat, good curry soup (not very spicy, but a little bit). Small in amount though. For an additional 150yen you can get a side dish of flavored rice, which is pretty good.',
+            'visited'           => true,
+            'visit_date'        => '2018-12-14 13:00:00',
+            'google_maps_link'  => 'https://www.google.com/maps/place/%E9%BA%BA%E5%B1%8B%E8%99%8E%E6%9D%96+%E6%B8%8B%E8%B0%B7%E5%BA%97/@35.6581636,139.6982863,18z/data=!4m8!1m2!2m1!1z6bq65bGL6JmO5p2WIOa4i-iwtw!3m4!1s0x60188bdb44f04969:0x7fc2cf2e19f3707d!8m2!3d35.6749473!4d139.7645722',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13228232/',
+            'official_website'  => 'http://menyaitadori.jp/shop_004.html',
+            'score_lunch'       => 2,
+            'score_place'       => 1,
+            'score_food'        => 1,
+            'score_price'       => 1,
+            'score_date'        => 0
+        ));
+        $resto->attachTags(['ramen','noodles','tsukemen']);
+        $resto->fillCoordinatesFromString('35.658555, 139.698586');
+
+        $resto = Restaurant::create(array(
+            'name'              => 'R',
+            'location'          => 'Shibuya',
+            'type'              => 'Cafe',
+            'lunch_price'       => 950,
+            'points'            => 'Smoking allowed. Nice atmosphere. Small amount of food.',
+            'experience'        => 'The place is small, but relaxing and with big windows bay. The music is nice (retro) and warm from huge speakers. Smoking is allowed, so I cannot recommend this place to non smokers. Food takes a long time to come, and the amount is quite small. I tried a tofu and meat sauce gratin, for 950 yen. It came with a small salad and a small soup. It was good, but left me still hungry. You can get a drink, such as a coffee, for an additional 150 yen.',
+            'visited'           => true,
+            'visit_date'        => '2018-12-19 13:00:00',
+            'google_maps_link'  => 'https://www.google.com/maps/place/Cafe+%26+Bar+R+%EF%BD%9E%E3%82%A2%E3%83%BC%E3%83%AB%EF%BD%9E/@35.657325,139.7031873,17z/data=!4m5!3m4!1s0x60188b595c34bc51:0xeaad5ebf918258b6!8m2!3d35.657325!4d139.705376',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13131541/',
+            'official_website'  => 'http://www.cafebar-r.com/',
+            'score_lunch'       => 1,
+            'score_place'       => 1,
+            'score_food'        => 1,
+            'score_price'       => 1,
+            'score_date'        => 0
+        ));
+        $resto->attachTags(['cafe','smoking allowed','small servings']);
+        $resto->fillCoordinatesFromString('35.657415, 139.705371');
+
                
 
 /*
 
-Upigorudobaga ウーピーゴールドバーガー (Burger、BBQ)
-3.45  151 reviews 
-Upigorudobaga - 料理写真:
-3
 SHIBUichi BAKERY SHIBUichi BAKERY (Bread、Cafe、Burger)
 3.39  15 reviews 
 SHIBUichi BAKERY  - 料理写真:３種のチーズとはちみつのキューブ
-5
-chi-zuandomi-tobanku CHEESE＆MEAT BANK (Steak、Bar、Burger)
-3.23  50 reviews 
 
 crazy amount of food in hirakatashi
 https://tabelog.com/osaka/A2707/A270702/27071015/
