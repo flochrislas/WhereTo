@@ -3410,8 +3410,8 @@ class RestaurantsTableSeeder extends Seeder
             'score_price'       => 1,
             'score_date'        => 0
         ));
-        $resto->attachTags('katsu','meat','English menu','no smoking');
-        $resto->fillCoordinatesFromString(['35.657257, 139.696205']);        
+        $resto->attachTags(['katsu','meat','English menu','no smoking']);
+        $resto->fillCoordinatesFromString('35.657257, 139.696205');        
 
         $resto = Restaurant::create(array(
             'name'              => 'Bar a vin CROISEE',
@@ -3706,7 +3706,7 @@ $resto = Restaurant::create(array(
             'score_price'       => 1,
             'score_date'        => 0
         ));
-        $resto->attachTags('katsu','meat','English menu','no smoking');
+        $resto->attachTags(['katsu','meat','English menu','no smoking']);
         $resto->fillCoordinatesFromString('35.659706, 139.704094');
 
         $resto = Restaurant::create(array(
