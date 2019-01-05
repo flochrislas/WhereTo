@@ -15,11 +15,10 @@ class CreateRestaurantTagsTable extends Migration
     {
         Schema::create('restaurant_tags', function (Blueprint $table) {
             $table->increments('id');
+            $table->timestamps();
             $table->string('label');
             $table->integer('type')->unsigned()->default(0);
             $table->integer('weight')->unsigned()->default(0);
-            $table->timestamps();
-
         });
     }
 

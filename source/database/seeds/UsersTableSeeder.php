@@ -17,12 +17,14 @@ class UsersTableSeeder extends Seeder
         User::create(array(
             'name'     => 'Florent',
             'email'    => 'florent.redares@gmail.com',
+            'level'    => '1',
             'password' => Hash::make('password'),
         ));
         
         User::create(array(
             'name'     => 'User2',
             'email'    => 'user2@test.rt',
+            'level'    => '1',
             'password' => Hash::make('password'),
         ));
     }

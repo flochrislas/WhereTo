@@ -1,6 +1,9 @@
 /**
 CSS for mobile dark interface
 
+Note: HTML head has the
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
 CSS basics:
 Element selection:
 (): HTML tag. ex: div{}
@@ -44,8 +47,9 @@ https://autoprefixer.github.io/
     --bg-color-inner: #141422; /* almost black */
     --bg-color-cell: #262633; /* light black */
     --color-txt-default: #CAD0AF; /* grey 2 */
+    --color-txt-tag: #000000; /* white */
     --color-name: #69e2b3; /* green */
-    --color-type: #45C3EC; /* blue */ 
+    --color-type: #45C3EC; /* blue */
     --color-dst: rgb(249, 239, 193); /* yellow */
     --color-cost: #5FE18B; /* lighter green */
     --color-lunch: #3AD46E; /* green */
@@ -249,7 +253,7 @@ td {
 /*********************************************/
 /*            RESTAURANTS FILTER             */
 /*********************************************/
-#restaurantsFilter {
+#mainFilter {
   /* Allows for fixed element*/
   overflow: hidden;
   height: 100%; /* needed for proper layout (?) */
@@ -258,7 +262,7 @@ td {
   flex-direction: column;
 }
 
-#restaurantsResults {
+#mainResults {
   /* hide by default, flex for display */
   display: none;
   font-size: .8rem;
@@ -326,7 +330,7 @@ td {
   padding: .8rem 1.15rem;
   /* text */
   font-family: 'ITCAvantGardeStdBk', sans-serif;
-  color: #000000;
+  color: var(--color-txt-tag);
   font-size: .8rem;
   font-weight: 500;
   text-decoration: none;
@@ -401,15 +405,20 @@ td {
   margin: 0 .25rem;
 }
 
-.restaurantName {
+.rowName {
   font-weight: 100;
   color: var(--color-name);
   text-decoration: none;
 }
 
-.restaurantType {
+.rowType {
   font-weight: 50;
   color: var(--color-type);
+}
+
+.extract {
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 #resultsEnd {
@@ -486,10 +495,16 @@ td {
 .resultCell .score {
   font-size: .85rem;
 }
+/* Scalable label's font-size linked to screen's width */
 .resultTable .label {
   font-weight: 100;
-  font-size: .76rem;;
-  font-size: calc(1.5vw + 1vh);
+  font-size: calc(1.5vw + .35rem);
+}
+/* Stop increasing font size from 680 with a max of 1rem */
+@media screen and (min-width: 680px) {
+  .resultTable .label {
+    font-size: 1rem;
+  }
 }
 
 .resultsCounter {
