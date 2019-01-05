@@ -51,8 +51,30 @@ sudo chgrp -R apache storage bootstrap/cache;
 sudo chmod -R ug+rwx storage bootstrap/cache;
 
 
+Many to Many relationship with eloquent. Pivot table.
+https://appdividend.com/2018/05/17/laravel-many-to-many-relationship-example/#Step_2_Create_a_model_and_migration
+* Pivot table
+* http://www.easylaravelbook.com/blog/2016/04/06/introducing-laravel-many-to-many-relations/
+* http://laraveldaily.com/pivot-tables-and-many-to-many-relationships/
+::
+php artisan make:model -m -c -r Bar;
+php artisan make:seeder BarsTableSeeder;
+php artisan make:model -m -c -r BarTag;
+php artisan make:seeder BarTagsTableSeeder;
+php artisan make:migration create_bar_bar_tag_table --create=bar_bar_tag;
+::
+php artisan make:model -m -c -r Karaoke;
+php artisan make:seeder KaraokesTableSeeder;
+php artisan make:model -m -c -r KaraokeTag;
+php artisan make:seeder KaraokeTagsTableSeeder;
+php artisan make:migration create_karaoke_karaoke_tag_table --create=karaoke_karaoke_tag;
+::
+for user and restaurants... with added data to pivot table!!
+see https://stackoverflow.com/questions/24547376/insert-data-to-a-pivot-table-in-laravel diplome_user example
+// php artisan make:seeder UserRestaurantsTableSeeder;
+php artisan make:migration create_user_restaurant_table --create=user_restaurant;
 
-PHPUnit tetse with Laravel:
+PHPUnit tests with Laravel:
 https://semaphoreci.com/community/tutorials/getting-started-with-phpunit-in-laravel
 
 Import Export Excel and CSV files
@@ -226,6 +248,9 @@ https://toddmotto.com/a-comprehensive-dive-into-nodelists-arrays-converting-node
 AWESOME FLEXIBLE TABLES!
 https://css-tricks.com/accessible-simple-responsive-tables/
 
+Scalable font size:
+https://css-tricks.com/snippets/css/fluid-typography/
+
 LARAVEL APP deploy on prod:
 Shared hosting:
 https://medium.com/laravel-news/the-simple-guide-to-deploy-laravel-5-application-on-shared-hosting-1a8d0aee923e
@@ -241,3 +266,35 @@ https://medium.com/sk-geek/deploy-laravel-app-to-elastic-beanstalk-amazon-ec2-6c
 
 Make an app (full screen web browser technique)
 https://softeng.oicr.on.ca/brice_aminou/2017/03/07/Mobile-app-with-Laravel/
+
+$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+PAYMENTS
+
+Paypal API
+https://medium.com/justlaravel/how-to-integrate-paypal-payment-gateway-in-laravel-695063599449
+https://laravelcode.com/post/how-to-integrate-paypal-payment-gateway-in-laravel-54
+c
+Other options info
+https://stackoverflow.com/questions/32900917/how-to-integrate-paypal-payment-gateway-in-laravel
+
+Omnipay
+https://omnipay.thephpleague.com/gateways/community/
+https://github.com/thephpleague/omnipay
+Omnipay 3 apypal + laravel
+https://sujipthapa.co/blog/paypal-integration-omnipay-paypal-php-library-v30-with-laravel
+Laravel + omnipay github
+https://github.com/barryvdh/laravel-omnipay
+
+
+
+$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+Deploying Laravel on production server
+
+https://laravel.com/docs/master/deployment
+https://www.webhostface.com/blog/install-deploy-laravel-to-server/
+https://medium.com/laravel-news/the-simple-guide-to-deploy-laravel-5-application-on-shared-hosting-1a8d0aee923e
+
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!

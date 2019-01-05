@@ -1,19 +1,19 @@
 <div class="resultTable">
 <!-- WE NEED A COUNTER HERE TO DISPLAY THE NUMBER OF RESULTS -->
-@foreach ($restaurants as $restaurant)
+@foreach ($places as $restaurant)
   <div class="resultsCounter"></div>
   <div class="resultRow">
     <div class="resultCell nameAndType">
       <a href="{{ route('restaurants.details',$restaurant->id) }}">
-      <div class="restaurantName">{{ $restaurant->name }}</div>
-      <div class="restaurantType">{{ $restaurant->type }}</div>
+      <div class="rowName">{{ $restaurant->name }}</div>
+      <div class="rowType">{{ $restaurant->type }}</div>
       </a>
     </div>
     <div class="resultCell distance centerContent">
       <a target="_blank"
          href="{{ $restaurant->google_maps_link }}">
         <div class="oneDigit inline">
-        {{ App\GeoUtils::walkingTime($restaurant->currentDistance/1000) }}
+        {{ App\Tools\GeoUtils::walkingTime($restaurant->currentDistance/1000) }}
       </div>
         <br /><div class="minute inline">min</div>
       </a>
@@ -51,4 +51,4 @@
   </div>
 @endforeach
 </div>
-<div id="resultsEnd">End of <strong>{{ $restaurants->count() }}</strong> amazing results</div>
+<div id="resultsEnd">End of <strong>{{ $places->count() }}</strong> amazing results</div>

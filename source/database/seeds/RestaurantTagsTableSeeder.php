@@ -130,6 +130,12 @@ class RestaurantTagsTableSeeder extends Seeder
             'weight'             => '100'
         ));
 
+        RestaurantTag::create(array(
+            'label'              => 'bakery',
+            'type'               => '40',
+            'weight'             => '100'
+        ));
+
         /******************************************/
         /*             FEATURES                   */
         /******************************************/        
@@ -387,6 +393,12 @@ class RestaurantTagsTableSeeder extends Seeder
         ));
 
         RestaurantTag::create(array(
+            'label'              => 'katsu',
+            'type'               => '100',
+            'weight'             => '20'
+        ));
+
+        RestaurantTag::create(array(
             'label'              => 'yakitori',
             'type'               => '100',
             'weight'             => '11'
@@ -417,6 +429,24 @@ class RestaurantTagsTableSeeder extends Seeder
         ));
 
         RestaurantTag::create(array(
+            'label'              => 'taco rice',
+            'type'               => '100',
+            'weight'             => '5'
+        ));
+
+        RestaurantTag::create(array(
+            'label'              => 'teppanyaki',
+            'type'               => '100',
+            'weight'             => '5'
+        ));
+
+        RestaurantTag::create(array(
+            'label'              => 'meat',
+            'type'               => '100',
+            'weight'             => '4'
+        ));
+
+        RestaurantTag::create(array(
             'label'              => 'desert',
             'type'               => '100',
             'weight'             => '4'
@@ -429,6 +459,12 @@ class RestaurantTagsTableSeeder extends Seeder
         ));
 
         RestaurantTag::create(array(
+            'label'              => 'fallafel',
+            'type'               => '100',
+            'weight'             => '4'
+        ));
+
+        RestaurantTag::create(array(
             'label'              => 'tonkotsu',
             'type'               => '100',
             'weight'             => '0'
@@ -436,6 +472,12 @@ class RestaurantTagsTableSeeder extends Seeder
 
         RestaurantTag::create(array(
             'label'              => 'miso',
+            'type'               => '100',
+            'weight'             => '0'
+        ));
+
+        RestaurantTag::create(array(
+            'label'              => 'organic',
             'type'               => '100',
             'weight'             => '0'
         ));

@@ -23,6 +23,14 @@ Route::get('/', array('as' => 'home', function() {
     return View::make('home');
 }));
 
+Route::get('info/main', array('as' => 'info', function() {
+    return view('info.main');
+}));
+
+Route::get('vip/main', array('as' => 'vip', function() {
+    return view('vip.main');
+}));
+
 // about page (resources/views/about.blade.php)
 Route::get('about', array('as' => 'about', function() {
     return View::make('about');
@@ -37,6 +45,26 @@ Route::get('restaurants', 'RestaurantTagController@restaurantsFilter')->name('re
 Route::get('restaurants/results', 'RestaurantController@results')->name('restaurants.results');
 Route::get('restaurants/details/{id}', 'RestaurantController@details')->name('restaurants.details');
 Route::get('tags/autocomplete', 'RestaurantTagController@autocomplete')->name('tags.autocomplete');
+
+// Public stores pages
+Route::get('stores', 'StoreTagController@viewAllTags')->name('stores.main');
+Route::get('stores/results', 'StoreController@results')->name('stores.results');
+Route::get('stores/details/{id}', 'StoreController@details')->name('stores.details');
+
+// Public bars pages
+Route::get('bars', 'BarTagController@viewAllTags')->name('bars.main');
+Route::get('bars/results', 'BarController@results')->name('bars.results');
+Route::get('bars/details/{id}', 'BarController@details')->name('bars.details');
+
+// Public clubs pages
+Route::get('clubs', 'ClubTagController@viewAllTags')->name('clubs.main');
+Route::get('clubs/results', 'ClubController@results')->name('clubs.results');
+Route::get('clubs/details/{id}', 'ClubController@details')->name('clubs.details');
+
+// Public karaoke pages (bit special since we dont publicly put an s to karaoke)
+Route::get('karaoke', 'KaraokeTagController@viewAllTags')->name('karaokes.main');
+Route::get('karaoke/results', 'KaraokeController@results')->name('karaokes.results');
+Route::get('karaoke/details/{id}', 'KaraokeController@details')->name('karaokes.details');
 
 // ===============================================
 // ADMIN SECTION =================================

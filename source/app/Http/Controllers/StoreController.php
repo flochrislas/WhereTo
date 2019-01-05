@@ -5,81 +5,73 @@ namespace App\Http\Controllers;
 use App\Store;
 use Illuminate\Http\Request;
 
-class StoreController extends Controller
+class StoreController extends PlaceController
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    /** Name of the model used for DB and views */
+    const MODEL_NAME = 'Store';
+
+    public function getModelName()
     {
-        //
+        return self::MODEL_NAME;
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Get the list to display.
+     * TODO: implement "see more" button
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function results(Request $request)
     {
-        //
-    }
+        // -----------------------------------
+        // Reads request parameters
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
+        // Operator for the Tags
+        $op = request('op');
+
+        // tags as a comma separated list
+        $tags = request('tags');
+        // makes tag into a traversable array
+        $this->formatTags($tags);
+
+        // Current position from client's GPS
+        $position = request('position');
+
+        // the sorting order for the result list
+        $orderBy = request('orderBy');
+
+        // -----------------------------------
+        // Reads from cache or DB
+        $places = $this->useCache($tags, $op, $orderBy);
+
+        // -----------------------------------
+        // Calculate distances from position, and sort them if required
+        $places = $this->handleDistances($places, $position, $orderBy);
+
+        // -----------------------------------
+        // Shorten the points to display in list
+        foreach ($places as $place) {
+          $place->points = $this->ellipsis($place->points, 50);
+        }
+
+        // Keeps the input of the user interface
+        // https://laravel.com/docs/5.5/requests#old-input
+        $request->flash();
+
+        // Return the view with the resulted places
+        return view($this->getModelResultsDataView(), compact('places'));
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Store  $store
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Store $store)
+    public function details($id)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Store  $store
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Store $store)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Store  $store
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Store $store)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Store  $store
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Store $store)
-    {
-        //
+        $class = $this->getModelClass();
+        $place = $class::find($id);
+        return view($this->getModelDetailsView(), compact('place'));
     }
 }
