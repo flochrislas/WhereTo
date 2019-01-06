@@ -44,10 +44,12 @@ function refreshResults(orderBy) {
 /** Actually send the request to the server */
 function ajaxResults(op, tags, orderBy) {
   var xhr = new XMLHttpRequest();
+  var x = document.getElementById("position-report");
   var url = resultsUrl
           + '?op=' + op
           + '&tags=' + tags
-          + '&orderBy=' + orderBy;
+          + '&orderBy=' + orderBy
+          + '&position=' + x.value;
   xhr.open('GET', url);
   xhr.onload = function() {
       if (xhr.status === 200) {

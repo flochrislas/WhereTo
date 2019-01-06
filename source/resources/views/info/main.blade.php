@@ -1,27 +1,16 @@
-@extends('layouts.app')SanDomainValidationEntity
+@extends('layouts.app')
 
 @section('title', 'Info')
 
 @section('content')
     <div>Disclaimer</div>
-    <div>General information</div>
-      Walking around
-        There is some untold rules such as:
-          Walking on the left side (not in the middle, not on the right side)
+    All content is by me from my personal experience, judgement and opinion.
+    Naturally, individual experience, or taste, may differ.
 
-      Seasons
-        Summer
-          Very hot and humid. Do not plan to stay outside for extensive period of time. Plan to cool down indoor regularly.
-        Autumn
-          Great season. Great weather.
-        Winter
-          Great weather. Gets really cold around February.
-        Srping
-          Good weather alternates with shitty weather... It is a mix of warm blue sky and grey cold rainy days.
     <div>Going for lunch</div>
 
       Ratings
-        Ratings are made by ,me alone, after going to have lunch to a place one or multiple times. I beleive this makes for more consistent ratings than hundreds of different people rating different places.
+        Ratings are made by me alone, after going to have lunch to a place one or multiple times. I beleive this makes for more consistent ratings than hundreds of different people rating different places.
 
           Lunch (Global enojoyment)
           0: Absolutely horrible
@@ -63,6 +52,22 @@
     <div>Cafes</div>
     <div>Internet cafes</div>
     <div>Toilets</div>
+    <div>General information</div>
+      Walking around
+        There is some untold rules such as:
+          Walking on the left side (not in the middle, not on the right side)
+          Sticking on the left side in the escalators if you are not climbing the stairs
+          No smoking unless some sign is specifically saying you can
+
+      Seasons
+        Summer
+          Very hot and humid. Do not plan to stay outside for extensive period of time. Plan to cool down indoor regularly.
+        Autumn
+          Great season. Mostly great weather.
+        Winter
+          Mostly sunny, clear and cold weather. Gets really cold around February.
+        Srping
+          Good weather alternates with shitty weather... It is a mix of warm blue sky and grey cold rainy days.
     @include('payments.donations')
     @include('ads.baner')
 @endsection
