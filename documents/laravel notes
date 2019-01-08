@@ -41,6 +41,9 @@ Laravel version check
 php artisan --version
 5.5.14
 
+Deploying optimizations:
+https://laravel.com/docs/5.7/deployment
+
 Great post on Laravel permissions setting
 https://stackoverflow.com/questions/27674597/laravel-daily-log-created-with-wrong-permissions
 Also, from https://stackoverflow.com/questions/30639174/file-permissions-for-laravel-5-and-others
