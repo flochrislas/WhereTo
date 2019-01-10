@@ -7,6 +7,10 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Cache;
 use App\Tools\GeoUtils;
 
+/**
+* If you have a Model class that describbes a place (such as Restaurant.php or Karaoke.php),
+* you might want its Controller to extend this class
+*/
 abstract class PlaceController extends Controller
 {
     // Force Extending class to define this method
@@ -16,7 +20,20 @@ abstract class PlaceController extends Controller
     private function positionSpoofer($position)
     {
         // Office from google maps '35.656660, 139.699691'
-        $position = '35.656660, 139.699691';
+        // $position = '35.656660, 139.699691';
+
+        // TODO: detect if the user is in the area
+        // ex: around shibuya station if lookinbg for something in shibuya),
+        // and if he is not, computing time from the nearest station
+        
+        // Shibuya Station from google maps is '35.658789, 139.701262'
+        if (!isset($position)) {
+          $position = '35.658789, 139.701262';
+          Log::debug('GPS position not set. Using Shibuya Station coordinates.');
+        }
+        else {
+          Log::debug('GPS position set from user: '.$position);
+        }
         return $position;
     }
 

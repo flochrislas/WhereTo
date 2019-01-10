@@ -617,6 +617,8 @@ class RestaurantsTableSeeder extends Seeder
         $resto->attachTags(['burger', 'grill', 'western']);
         $resto->fillCoordinatesFromString('35.661641, 139.697613');
 
+        // This place has been shut down, building demolished for new building
+        /*
         $resto = Restaurant::create(array(
             'name'              => 'Asuka',
             'location'          => 'Shibuya, south',
@@ -637,7 +639,10 @@ class RestaurantsTableSeeder extends Seeder
         ));
         $resto->attachTags(['ramen']);
         $resto->fillCoordinatesFromString('35.657230, 139.701387');
+        */
 
+        // Building has been demolished
+        /*
         $resto = Restaurant::create(array(
             'name'              => 'Samrat',
             'location'          => 'Shibuya',
@@ -658,6 +663,7 @@ class RestaurantsTableSeeder extends Seeder
         ));
         $resto->attachTags(['indian','curry']);
         $resto->fillCoordinatesFromString('35.661795, 139.697803');
+        */
 
         $resto = Restaurant::create(array(
             'name'              => 'Mos Burger',
@@ -959,7 +965,7 @@ class RestaurantsTableSeeder extends Seeder
             'type'              => 'Burger',
             'lunch_price'       => 1500,
             'points'            => 'Very nice place (confortable, various tables, big windows bay, enjoyable music). Expensive. Premium burgers. Salad bar at lunch.',
-            'experience'        => 'Very nice experience, nejoyed the place and the music. Loved the salad bar, with lots of choices, and good. Burger came fast. I tried the JS burger. The ingredient were undeniably good, but globally, it was lacking taste as there were almost no sauce. Still, I ended up full and satisfied.',
+            'experience'        => 'Very nice experience, enjoyed the place and the music. Loved the salad bar, with lots of choices, and good. Burger came fast. I tried the JS burger. The ingredient were undeniably good, but globally, it was lacking taste as there were almost no sauce. Still, I ended up full and satisfied.',
             'visited'           => true,
             'visit_date'        => '2017-11-29 13:00:00',
             'google_maps_link'  => 'https://www.google.co.jp/maps/place/J.S.+BURGERS+CAFE+%E6%B8%8B%E8%B0%B7%E5%BA%97/@35.6602266,139.6982899,17z/data=!4m12!1m6!3m5!1s0x60188ca8f1e3e571:0x3c325c2063be4a6a!2zSi5TLiBCVVJHRVJTIENBRkUg5riL6LC35bqX!8m2!3d35.6621966!4d139.6996954!3m4!1s0x60188ca8f1e3e571:0x3c325c2063be4a6a!8m2!3d35.6621966!4d139.6996954',
@@ -2972,6 +2978,8 @@ class RestaurantsTableSeeder extends Seeder
         $resto->attachTags(['cafe','pasta','desert']);
         $resto->fillCoordinatesFromString('35.659735, 139.700788');
 
+        // This place has been shut down for new building construction
+        /*
         $resto = Restaurant::create(array(
             'name'              => 'Mud',
             'location'          => 'Shibuya',
@@ -2992,6 +3000,7 @@ class RestaurantsTableSeeder extends Seeder
         ));
         $resto->attachTags(['cafe','sandwich','hotdog','open air space','smoking area']);
         $resto->fillCoordinatesFromString('35.656930, 139.702169');
+        */
 
         $resto = Restaurant::create(array(
             'name'              => 'Sathaban Wijai Ahan Thai',
@@ -4110,7 +4119,8 @@ $resto = Restaurant::create(array(
         $resto->fillCoordinatesFromString('35.657415, 139.705371');
 
                
-
+// TODO: write about the ramen OIL on ramen street, and then the big ramen i had miso and rice side dish next to jampara
+        
 /*
 
 SHIBUichi BAKERY SHIBUichi BAKERY (Bread、Cafe、Burger)

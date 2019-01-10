@@ -2,16 +2,17 @@
   <!-- Branding Image -->
   <div class="left">
       <a class="title" href="{{ url('/') }}">
-          {{ config('app.name', 'WhereTo') }}
+          {{ config('app.name', 'FindItFast') }}
       </a>
   </div>
 
-  <div class="right">
+  <!-- TODO: Implement this -->
+  <div class="right" style="display: none">
       <a class="tap" href="{{ route('info') }}"><strong>Info</strong></a>
       <a class="tap" href="{{ route('vip') }}"><strong>VIP</strong></a>
   </div>
 
-  <!-- Decide what to do with those -->
+  <!-- TODO: Decide what to do with those -->
   <div class="right" style="display: none">
     @if (Auth::guest())
       <a class="tap" href="{{ route('about') }}"><strong>About</strong></a>
