@@ -4119,7 +4119,8 @@ $resto = Restaurant::create(array(
         $resto->fillCoordinatesFromString('35.657415, 139.705371');
 
                
-
+// TODO: write about the ramen OIL on ramen street, and then the big ramen i had miso and rice side dish next to jampara
+        
 /*
 
 SHIBUichi BAKERY SHIBUichi BAKERY (Bread、Cafe、Burger)
