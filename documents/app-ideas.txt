@@ -163,8 +163,44 @@ OTHER idea to make little monery:
 print tshit
 	bible theme "dont drown the swines/no drowning swines, swines protection league", "no cursing on fig trees (even if hungry)- organization for the protection of fig trees"
 	"where is sataoshi - i am not satoshi"
-print stickers for headphones: "Jesus? I don't hear <i>Him</i> coming."
+print stickers for headphones: "Jesus? I don't hear <i>Him</i> coming." , Surely cant hear HIM coming
 print for casquette ou koi: YHWH en hebreux
+
+------------------------------------------------------------------------------------------------------
+
+    <a class="giantButton locked" href="{{ route('restaurants.main') }}">
+      Dating
+      <br/>in<br/>Shibuya
+      <div class="purchasePrice">50</div>
+    </a>
+
+    <a class="giantButton locked" href="{{ route('restaurants.main') }}">
+      WhatsNext<br/>Extension
+      <div class="purchasePrice">120</div>
+    </a>
+    <a class="giantButton locked" href="{{ route('restaurants.main') }}">
+      Hashigo<br/>Extension<br/>
+      <div class="purchasePrice">120</div>
+    </a>
+
+    <a class="giantButton locked" href="{{ route('clubs.main') }}">
+      Clubbing in<br/>Shibuya
+      <div class="purchasePrice">50</div>
+    </a>
+
+    <a class="giantButton locked" href="{{ route('restaurants.main') }}">
+      Hair Salon
+      <br/>in<br/>Shibuya
+      <div class="purchasePrice">50</div>
+    </a>
+
+    <a class="giantButton locked" href="{{ route('restaurants.main') }}">
+      Shibuya's Secrets
+      <br/>MEGAPACK
+      <div class="purchasePrice">500</div>
+    </a>
+    ------------------------------------------------------------------------------------------------------
+
 
 
 upload photos on photo repo website

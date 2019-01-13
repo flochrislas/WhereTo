@@ -22,17 +22,33 @@ abstract class PlaceController extends Controller
         // Office from google maps '35.656660, 139.699691'
         // $position = '35.656660, 139.699691';
 
-        // TODO: detect if the user is in the area
-        // ex: around shibuya station if lookinbg for something in shibuya),
-        // and if he is not, computing time from the nearest station
+        // Detect if the user is in the area
+        // If more than 5Km from nearest stationLat
+        // Switches position from current to nearest station
 
         // Shibuya Station from google maps is '35.658789, 139.701262'
+        $closestStationPosition = '35.658789, 139.701262';
         if (!isset($position)) {
-          $position = '35.658789, 139.701262';
+          $position = $closestStationPosition;
           Log::debug('GPS position not set. Using Shibuya Station coordinates.');
         }
         else {
-          Log::debug('GPS position set from user: '.$position);
+          // We check the distance from shibuya Station
+          $curCoords = GeoUtils::toPositionArray($position);
+          $curLat = $curCoords[0];
+          $curLon = $curCoords[1];
+          $stationCoords = GeoUtils::toPositionArray($closestStationPosition);
+          $stationLat = $stationCoords[0];
+          $stationLon = $stationCoords[1];
+          $distance = GeoUtils::distance($curLat, $curLon, $stationLat, $stationLon);
+          Log::debug('Distance from Shibuya Station: '.$distance);
+          if ($distance > 5000) {
+            $position = $closestStationPosition;
+            Log::debug('Position is too far. Using Shibuya Station coordinates.');
+          }
+          else {
+            Log::debug('GPS position set from user: '.$position);
+          }
         }
         return $position;
     }

@@ -15,50 +15,23 @@
     <a class="giantButton locked" href="{{ route('stores.main') }}">
       Shopping
       <br/>in<br/>Shibuya
-      <div class="purchasePrice">50</div>
+      <div class="alphaVersion">alpha version</div>
     </a>
 
-    <a class="giantButton locked" href="{{ route('restaurants.main') }}">
-      Dating
-      <br/>in<br/>Shibuya
-      <div class="purchasePrice">50</div>
-    </a>
-
-    <a class="giantButton locked" href="{{ route('restaurants.main') }}">
-      WhatsNext<br/>Extension
-      <div class="purchasePrice">120</div>
-    </a>
-    <a class="giantButton locked" href="{{ route('restaurants.main') }}">
-      Hashigo<br/>Extension<br/>
-      <div class="purchasePrice">120</div>
-    </a>
-
-    <a class="giantButton locked" href="{{ route('clubs.main') }}">
-      Clubbing in<br/>Shibuya
-      <div class="purchasePrice">50</div>
-    </a>
     <a class="giantButton locked" href="{{ route('bars.main') }}">
       Drinking in<br/>Shibuya
-      <div class="purchasePrice">50</div>
+      <div class="alphaVersion">alpha version</div>
     </a>
 
     <a class="giantButton locked" href="{{ route('karaokes.main') }}">
       Karaoke
       <br/>in<br/>Shibuya
-      <div class="purchasePrice">50</div>
+      <div class="alphaVersion">alpha version</div>
     </a>
 
-    <a class="giantButton locked" href="{{ route('restaurants.main') }}">
-      Hair Salon
-      <br/>in<br/>Shibuya
-      <div class="purchasePrice">50</div>
-    </a>
-
-    <a class="giantButton locked" href="{{ route('restaurants.main') }}">
-      Shibuya's Secrets
-      <br/>MEGAPACK
-      <div class="purchasePrice">500</div>
-    </a>
   </div>
+  <div class="note"><b>Note:</b> The app will try to get your GPS coordinates.<br>
+    If you refuse, or if it fails, or if you are too far from Shibuya, the app will give distances from Shibuya's station, instead of your current position.<br>
+    Coming back to this home page would refresh your position.</div>
 </div>
 @endsection
