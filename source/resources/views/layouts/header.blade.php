@@ -6,6 +6,11 @@
       </a>
   </div>
 
+
+  <div class="right">
+      <i>SHIBUYA beta version</i>
+  </div>
+
   <!-- TODO: Implement this -->
   <div class="right" style="display: none">
       <a class="tap" href="{{ route('info') }}"><strong>Info</strong></a>

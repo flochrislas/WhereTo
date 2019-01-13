@@ -13,6 +13,7 @@ class GeoUtils
 {
     /**
     * The method used in the app for calculated the distance
+    * @return distance in meters
     */
     public static function distance(float $lat1, float $lon1, float $lat2, float $lon2) : float
     {

@@ -22,13 +22,6 @@
   </div>
 
   <div class="detailRow">
-      <div class="detail score lunch">
-        <div class="label">Lunch</div>
-        <div class="grade">{{ $place->score_lunch }}/4</div>
-      </div>
-  </div>
-
-  <div class="detailRow">
       <div class="detail border15"
            overlay="Main point">
       {{ $place->points }}</div>
@@ -46,8 +39,7 @@
     @foreach ($place->tagsCached() as $placeTag)
         <div class="tag tagType{{$placeTag->type}}"
               tagId="{{$placeTag->id}}"
-              id="tagShow{{$placeTag->id}}"
-              onClick="moveTag(event)">
+              id="tagShow{{$placeTag->id}}">
           {{$placeTag->label}}
         </div>
     @endforeach
