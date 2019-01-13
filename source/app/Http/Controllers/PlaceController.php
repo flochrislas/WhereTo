@@ -25,7 +25,7 @@ abstract class PlaceController extends Controller
         // TODO: detect if the user is in the area
         // ex: around shibuya station if lookinbg for something in shibuya),
         // and if he is not, computing time from the nearest station
-        
+
         // Shibuya Station from google maps is '35.658789, 139.701262'
         if (!isset($position)) {
           $position = '35.658789, 139.701262';
