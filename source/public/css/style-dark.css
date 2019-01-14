@@ -198,8 +198,11 @@ td {
   position: relative; /* need this to position inner content */
   overflow-y: auto;
   /* Flex container properties */
+  /* If enabled, all boxes restrict themselves to fit on the screen */
+  /*
   display: flex;
   flex-direction: column;
+  */
 
 }
 

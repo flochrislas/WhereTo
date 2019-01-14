@@ -7,7 +7,7 @@
   </div>
 
 
-  <div class="right">
+  <div class="right" style="font-size:.7rem">
       <i>SHIBUYA beta version</i>
   </div>
 
