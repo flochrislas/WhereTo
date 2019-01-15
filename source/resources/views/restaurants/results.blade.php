@@ -1,8 +1,5 @@
 <div id="resultsTop">
 
-  <!-- messages -->
-  <div id="position-report"></div>
-
   <!-- buttons -->
   <div id="resultsControl">
     <button class="sortButton" onclick="refreshResults('ratings')">

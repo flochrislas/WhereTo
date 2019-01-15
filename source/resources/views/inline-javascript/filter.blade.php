@@ -2,6 +2,9 @@
 <script>
 /** What happens when we click on a tag */
 function moveTag(event) {
+  // Refresh position (async and takes a while...)
+  getLocation();
+
   // Move the tag in the proper div
   if (event.target.parentNode.id == "selectedTags") {
     document.getElementById("tags").appendChild(event.target);
@@ -19,6 +22,7 @@ function refreshResults(orderBy) {
   var tags = document.getElementById("selectedTags").children;
   /* make a list of all their ids or labels to send as parameters */
   var tagsLabels = getTagsLabels(tags);
+
   /* check for orderBy choice */
   if (orderBy != null) {
     // priority to the current parameter
@@ -34,9 +38,11 @@ function refreshResults(orderBy) {
       store("orderBy", orderBy);
     }
   }
+
   /* read order/operand/options parameters */
   // We will implement that later
   var op = 'AND';
+
   /* AJAX request to update the results */
   ajaxResults(op, tagsLabels, orderBy);
 }
@@ -44,13 +50,13 @@ function refreshResults(orderBy) {
 /** Actually send the request to the server */
 function ajaxResults(op, tags, orderBy) {
   var xhr = new XMLHttpRequest();
-  var x = document.getElementById("position-report");
   var url = resultsUrl
           + '?op=' + op
           + '&tags=' + tags
           + '&orderBy=' + orderBy
-          + '&position=' + x.value;
+          + '&position=' + getLocation();
   xhr.open('GET', url);
+  console.info("GET: " + url);
   xhr.onload = function() {
       if (xhr.status === 200) {
           /* write results */
@@ -106,12 +112,12 @@ function store(key, value) {
     localStorage.setItem(key, value);
     // sessionStorage.setItem(key value);
   } else {
-      // Sorry! No Web Storage support..
+      console.warn("No local storage support from the browser. Application's behavior may be affected.");
   }
 }
 
 function readStore(key) {
-    localStorage.getItem(key);
+    return localStorage.getItem(key);
 }
 
 </script>
