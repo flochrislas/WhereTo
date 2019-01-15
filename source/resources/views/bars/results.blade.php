@@ -26,7 +26,7 @@
         <div class="label distanceAdjust" style="color: var(--color-dst);">dst.</div>
       </div>
       <div class="resultCell centerContent">
-        <div class="label" style="color: var(--color-lunch);">score</div>
+        <div class="label" style="color: var(--color-lunch);">comment</div>
       </div>
     </div>
   </div>

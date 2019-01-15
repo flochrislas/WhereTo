@@ -15,7 +15,7 @@
     <button class="sortButton"
       onclick="window.open('{{ $place->official_website }}', '_blank')">
       Website</button>
-    <button class="navButton" onclick="history.back(-1)">BACK</button>
+    <button class="navButton" onclick="history.go(-1)">BACK</button>
   </div>
 
   <div id="detailTitle" class="detailRow">

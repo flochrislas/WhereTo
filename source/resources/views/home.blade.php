@@ -8,7 +8,7 @@
       </div>
   @endif
   <div class="grid">
-    <a class="giantButton" href="{{ route('restaurants.main') }}">
+    <a class="giantButton" href="{{ route('restaurants.main') }}" onclick="getLocation()">
       Lunch
       <br/>in<br/>Shibuya</a>
 

@@ -24,10 +24,14 @@
      <div id="app">
         <!-- HEADER -->
         @include('layouts.header')
+        <!-- Geolocalisation messages (and possibly info) -->
+        <div id="position-report"></div>
         <!-- CONTENT -->
         @yield('content')
         <!-- FOOTER -->
         @include('layouts.footer')
     </div>
+
+    @include('inline-javascript.geolocalisation')
 </body>
 </html>
