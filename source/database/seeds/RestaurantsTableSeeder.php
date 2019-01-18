@@ -4118,8 +4118,33 @@ $resto = Restaurant::create(array(
         $resto->attachTags(['cafe','smoking allowed','small servings']);
         $resto->fillCoordinatesFromString('35.657415, 139.705371');
 
+// TODO: write about the ramen OIL on ramen street, and then the big ramen i had miso and rice side dish next to jampara, and glubalicious
+
+        $resto = Restaurant::create(array(
+            'name'              => 'Gabulicious',
+            'location'          => 'Shibuya',
+            'type'              => 'Cafe',
+            'lunch_price'       => 800,
+            'points'            => 'Delicious food for a humble price, in a cosy place.',
+            'experience'        => '2 floors, nice cosy place. Very diverse menu with beef steak, curry, pasta, pizza, fish, salads, ham, cheese... I tried the keema curry for 780 yen and it was absolutely delicious.',
+            'visited'           => true,
+            'visit_date'        => '2019-01-18 13:00:00',
+            'google_maps_link'  => 'https://www.google.com/maps/place/%E3%83%AF%E3%82%A4%E3%83%B3%E9%85%92%E5%A0%B4+GabuLicious%EF%BC%88%E3%82%AC%E3%83%96%E3%83%AA%E3%82%B7%E3%83%A3%E3%82%B9%EF%BC%89%E6%B8%8B%E8%B0%B7%E5%BA%97/@35.6572429,139.6955888,17z/data=!4m5!3m4!1s0x60188b56047d36b1:0xa10736b847d6df29!8m2!3d35.6578248!4d139.6967153',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13153474/',
+            'official_website'  => 'http://www.sld-inc.com/gabulicious_shibuya.html',
+            'score_lunch'       => 3,
+            'score_place'       => 2,
+            'score_food'        => 3,
+            'score_price'       => 1,
+            'score_date'        => 1
+        ));
+        $resto->attachTags(['Japanese curry','pasta','teishoku','meat','pizza']);
+        $resto->fillCoordinatesFromString('35.657885, 139.696650');
+
                
-// TODO: write about the ramen OIL on ramen street, and then the big ramen i had miso and rice side dish next to jampara
+// TODO: write about the ramen OIL on ramen street, and then the big ramen i had miso and rice side dish next to jampara, and glubalicious
+
+
         
 /*
 
@@ -4146,13 +4171,13 @@ https://tabelog.com/tokyo/A1303/A130301/13059598/
             'points'            => '',
             'experience'        => '',
             'visited'           => true,
-            'visit_date'        => '2018-12-17 13:00:00',
+            'visit_date'        => '2019-01-01 13:00:00',
             'google_maps_link'  => '',
             'tabelog_link'      => '',
             'official_website'  => '',
-            'score_lunch'       => 3,
+            'score_lunch'       => 1,
             'score_place'       => 1,
-            'score_food'        => 2,
+            'score_food'        => 1,
             'score_price'       => 1,
             'score_date'        => 0
         ));
