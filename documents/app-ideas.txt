@@ -37,7 +37,11 @@ Architecture:
 - Analytics: Google Analytics
 - Enhancement: register domainname in CloudFlare OR Fastly
 
+Fix issue that we need to relaod restaurant page in order to update the GPS coordinates
+
 Can turn GPS mode OFF and then distance will be calculated roughtly from Shibuya station
+
+make a section with nice pics of foods instead of tags to choose easily
 
 login VIP , nickname, can say "im eating here" on detail page if your gps coordinates match roughtly , then gain LVL , comments under details will be ordered by user LVL (lvlo1 rambling ignorant , lvl99 shibuya god)
 
