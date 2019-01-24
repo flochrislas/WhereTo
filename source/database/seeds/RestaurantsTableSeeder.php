@@ -4141,7 +4141,9 @@ $resto = Restaurant::create(array(
         $resto->attachTags(['Japanese curry','pasta','teishoku','meat','pizza']);
         $resto->fillCoordinatesFromString('35.657885, 139.696650');
 
-               
+               // Basement floor, the inside was clean and nice, but rather uncomfortable and very loud. Music is playing rather loudly, and a movie is also playing on a big TV at the same time, same at about the same volume.  Tables for 2 are very, very small, and ther eare 2 larger tables for larger groups. The menu for lunch has sandwiches and burgers. I tried the cheese and ham toasted sandwich with a drink for 1300 yen. Despite the bread being kind of chewy, it was quite good.
+// SAI: cosy wine bar restaurant with smoking and non smoking tables. Dish took forever to come to my table, but it was the best napolitan pasta I ever had.
+
 // TODO: write about the ramen OIL on ramen street, and then the big ramen i had miso and rice side dish next to jampara, and glubalicious
 
 
