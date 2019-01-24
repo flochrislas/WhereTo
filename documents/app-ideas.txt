@@ -307,3 +307,22 @@ walkthere
 justgo
 wherenext
 DOKOHE
+
+
++++ super old
+
+-----
+App
+could be online wensite, but also could be DL as an offline app
+could import google maps customer reviews into personal exprience fierlds
+tag system
+tag cloud (to see most popular tags and other ideas and be able to click them)
+default on where to have lunch in shibuya, but other tab include where to have diner, where eto drink, where to party, and where to rest after last train. lso have all the last and first troains times
+user interaction: complete information, write exp. , just like or dislike buttons, or star rating system
+link to tabelog or other relevant website
+feature: closest combini, now
+feature: closest loveho, now
+feature: closest <tag>, now
+whuen browsing, add the info of how long by foot it would take to reach there from current gps position.
+Basic info for real tourists: always carry enough cash to pay for the meal. Pokemon go? shibuya is like poke heaven.
+-----------

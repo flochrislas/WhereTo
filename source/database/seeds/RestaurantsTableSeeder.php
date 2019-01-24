@@ -4100,7 +4100,7 @@ $resto = Restaurant::create(array(
         $resto = Restaurant::create(array(
             'name'              => 'R',
             'location'          => 'Shibuya',
-            'type'              => 'Cafe',
+            'type'              => 'Cafe bar',
             'lunch_price'       => 950,
             'points'            => 'Smoking allowed. Nice atmosphere. Small amount of food.',
             'experience'        => 'The place is small, but relaxing and with big windows bay. The music is nice (retro) and warm from huge speakers. Smoking is allowed, so I cannot recommend this place to non smokers. Food takes a long time to come, and the amount is quite small. I tried a tofu and meat sauce gratin, for 950 yen. It came with a small salad and a small soup. It was good, but left me still hungry. You can get a drink, such as a coffee, for an additional 150 yen.',
@@ -4118,12 +4118,52 @@ $resto = Restaurant::create(array(
         $resto->attachTags(['cafe','smoking allowed','small servings']);
         $resto->fillCoordinatesFromString('35.657415, 139.705371');
 
-// TODO: write about the ramen OIL on ramen street, and then the big ramen i had miso and rice side dish next to jampara, and glubalicious
+        $resto = Restaurant::create(array(
+            'name'              => 'Kasugatei',
+            'location'          => 'Shibuya',
+            'type'              => 'Abura soba',
+            'lunch_price'       => 1000,
+            'points'            => 'Decent soupless ramen (abura soba, maze soba).',
+            'experience'        => 'Narrow place with small tables. Dish was good, but I was expecting a bit better for the price, maybe it tasted a bit light to my taste.',
+            'visited'           => true,
+            'visit_date'        => '2019-01-01 13:00:00',
+            'google_maps_link'  => 'https://www.google.com/maps/place/%E6%B2%B9%E3%81%9D%E3%81%B0+%E6%98%A5%E6%97%A5%E4%BA%AD+%E6%B8%8B%E8%B0%B7%E5%BA%97/@35.6585896,139.6970284,17.03z/data=!4m8!1m2!2m1!1z5rK544Gd44Gw!3m4!1s0x0:0xbe7c2b17507771d6!8m2!3d35.6589385!4d139.6984066',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13109540/',
+            'official_website'  => 'http://www.kasugatei.com/',
+            'score_lunch'       => 2,
+            'score_place'       => 1,
+            'score_food'        => 1,
+            'score_price'       => 1,
+            'score_date'        => 0
+        ));
+        $resto->attachTags(['noodles','ramen']);
+        $resto->fillCoordinatesFromString('35.658927, 139.698365');
+
+        $resto = Restaurant::create(array(
+            'name'              => 'Ichikakuya',
+            'location'          => 'Shibuya',
+            'type'              => 'Ramen',
+            'lunch_price'       => 1000,
+            'points'            => 'Good strong heavy ramen.',
+            'experience'        => 'I like rich and strong taste for my ramen, and this place got me covered. Very good, for a humble price. They have a lot of choice but their main is Yakohama ikei ramen, which is one with a rich, fat and tasty soup.',
+            'visited'           => true,
+            'visit_date'        => '2019-01-01 13:00:00',
+            'google_maps_link'  => 'https://www.google.com/maps/place/Ichikakuya/@35.6587626,139.696484,17.5z/data=!4m5!3m4!1s0x60188ca9d9c63a9f:0xbadb93c8d7e0cbf7!8m2!3d35.6589671!4d139.6983001',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13170862/',
+            'official_website'  => 'https://gardengroup.co.jp/brand/yokohamadou/',
+            'score_lunch'       => 2,
+            'score_place'       => 1,
+            'score_food'        => 2,
+            'score_price'       => 1,
+            'score_date'        => 0
+        ));
+        $resto->attachTags(['noodles','ramen','miso']);
+        $resto->fillCoordinatesFromString('35.659068, 139.698397');
 
         $resto = Restaurant::create(array(
             'name'              => 'Gabulicious',
             'location'          => 'Shibuya',
-            'type'              => 'Cafe',
+            'type'              => 'Cafe bar',
             'lunch_price'       => 800,
             'points'            => 'Delicious food for a humble price, in a cosy place.',
             'experience'        => '2 floors, nice cosy place. Very diverse menu with beef steak, curry, pasta, pizza, fish, salads, ham, cheese... I tried the keema curry for 780 yen and it was absolutely delicious.',
@@ -4138,15 +4178,71 @@ $resto = Restaurant::create(array(
             'score_price'       => 1,
             'score_date'        => 1
         ));
-        $resto->attachTags(['Japanese curry','pasta','teishoku','meat','pizza']);
+        $resto->attachTags(['curry','pasta','teishoku','meat','pizza']);
         $resto->fillCoordinatesFromString('35.657885, 139.696650');
 
-               // Basement floor, the inside was clean and nice, but rather uncomfortable and very loud. Music is playing rather loudly, and a movie is also playing on a big TV at the same time, same at about the same volume.  Tables for 2 are very, very small, and ther eare 2 larger tables for larger groups. The menu for lunch has sandwiches and burgers. I tried the cheese and ham toasted sandwich with a drink for 1300 yen. Despite the bread being kind of chewy, it was quite good.
-// SAI: cosy wine bar restaurant with smoking and non smoking tables. Dish took forever to come to my table, but it was the best napolitan pasta I ever had.
+        $resto = Restaurant::create(array(
+            'name'              => 'Libero Carta',
+            'location'          => 'Shibuya',
+            'type'              => 'Bar cafe',
+            'lunch_price'       => 1300,
+            'points'            => 'Clean but loud small bar restaurant serving good sandwiches and burgers at lunch.',
+            'experience'        => 'Basement floor, the inside was clean and nice, but rather uncomfortable and very loud. Music is playing rather loudly, and a movie is also playing on a big TV at the same time, same at about the same volume.  Tables for 2 are very, very small, and ther eare 2 larger tables for larger groups. The menu for lunch has sandwiches and burgers. I tried the cheese and ham toasted sandwich with a drink for 1300 yen. Despite the bread being kind of chewy, it was quite very good.',
+            'visited'           => true,
+            'visit_date'        => '2019-01-21 13:00:00',
+            'google_maps_link'  => 'https://www.google.com/maps/place/LIBERO+CARTA+%E6%B8%8B%E8%B0%B7%E5%BA%97/@35.660562,139.6977494,17z/data=!3m1!4b1!4m5!3m4!1s0x60188ca84934ab03:0x9f51a719b65960d5!8m2!3d35.660562!4d139.699297',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13214622',
+            'official_website'  => 'https://www.hotpepper.jp/strJ001185821/',
+            'score_lunch'       => 2,
+            'score_place'       => 1,
+            'score_food'        => 2,
+            'score_price'       => 1,
+            'score_date'        => 0
+        ));
+        $resto->attachTags(['burger','sandwich','English menu']);
+        $resto->fillCoordinatesFromString('35.660576, 139.699281');
 
-// TODO: write about the ramen OIL on ramen street, and then the big ramen i had miso and rice side dish next to jampara, and glubalicious
+        $resto = Restaurant::create(array(
+            'name'              => 'Wine&Cafe Sai',
+            'location'          => 'Shibuya',
+            'type'              => 'Cafe bar',
+            'lunch_price'       => 1000,
+            'points'            => 'Cosy wine bar restaurant with smoking and non smoking tables. Food quality seems above average.',
+            'experience'        => 'Despite having a counter and some tables with people smoking, and could not smell any smoke at all, in the non-smoking area. The place seems rather popular and is busy. The menu for lunch had napolitan pasta, hamburg steak, omurice, shogayaki, and chicken curry... I tried the napolitan pasta for 1000yen, and it took forever to come to my table, but it was the best napolitan pasta I ever had. Prices go from 1000 to 1300 and include a drink.',
+            'visited'           => true,
+            'visit_date'        => '2019-01-23 13:00:00',
+            'google_maps_link'  => 'https://www.google.com/maps/place/Wine%26Cafe+Sai/@35.6579771,139.6976704,17z/data=!4m8!1m2!2m1!1sshibuya+sai!3m4!1s0x60188b57c88afa95:0x574cf43d3c5eafdd!8m2!3d35.6582123!4d139.6993619',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13163276/',
+            'official_website'  => 'http://www.cafeonesai.com/',
+            'score_lunch'       => 2,
+            'score_place'       => 1,
+            'score_food'        => 3,
+            'score_price'       => 1,
+            'score_date'        => 1
+        ));
+        $resto->attachTags(['pasta','hamburg','omurice','curry','smoking area','English menu','teishoku']);
+        $resto->fillCoordinatesFromString('35.658232, 139.699348');
 
-
+        $resto = Restaurant::create(array(
+            'name'              => 'Baluccha',
+            'location'          => 'Shibuya',
+            'type'              => 'Italian',
+            'lunch_price'       => 1000,
+            'points'            => 'Delicious food in a cosy place for a decent price.',
+            'experience'        => 'On the 2nd floor, at first the entrance looks like your are climbing some residential stairs to some appartment. But inside is nice and cosy. A counter and some tables. Just a few options for lunch, including the pasta of the day, for 1000 yen. Coming with a drink, it was above average. Very good.',
+            'visited'           => true,
+            'visit_date'        => '2019-01-01 13:00:00',
+            'google_maps_link'  => 'https://www.google.com/maps/place/%E5%8C%97%E9%99%B8%C3%97%E3%82%A4%E3%82%BF%E3%83%AA%E3%82%A2%E3%83%B3+%E3%83%90%E3%83%AB%E3%83%83%E3%83%81%E3%83%A3/@35.6575774,139.6970158,17z/data=!3m1!4b1!4m5!3m4!1s0x60188b57b10baaab:0xd5d3f7eb96a54719!8m2!3d35.6575774!4d139.6992045',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13206012/',
+            'official_website'  => 'https://ja-jp.facebook.com/%E5%8C%97%E9%99%B8%E3%82%A4%E3%82%BF%E3%83%AA%E3%82%A2%E3%83%B3-%E3%83%90%E3%83%AB%E3%83%83%E3%83%81%E3%83%A3-%E9%81%93%E7%8E%84%E5%9D%82-1274143949367616/',
+            'score_lunch'       => 3,
+            'score_place'       => 2,
+            'score_food'        => 2,
+            'score_price'       => 1,
+            'score_date'        => 1
+        ));
+        $resto->attachTags(['italian','pasta']);
+        $resto->fillCoordinatesFromString('35.657577, 139.699157');
         
 /*
 
@@ -4158,6 +4254,8 @@ crazy amount of food in hirakatashi
 https://tabelog.com/osaka/A2707/A270702/27071015/
 in shibuya
 https://tabelog.com/tokyo/A1303/A130301/13059598/
+
+try vandalism
 
 */
 
