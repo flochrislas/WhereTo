@@ -459,7 +459,7 @@ class RestaurantTagsTableSeeder extends Seeder
         ));
 
         RestaurantTag::create(array(
-            'label'              => 'fallafel',
+            'label'              => 'falafel',
             'type'               => '100',
             'weight'             => '4'
         ));
