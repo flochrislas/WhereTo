@@ -817,13 +817,13 @@ class RestaurantsTableSeeder extends Seeder
             'location'          => 'D side in front of shibuya language shool',
             'type'              => 'Indian curry',
             'lunch_price'       => 850,
-            'points'            => 'nice little indian restaurant. Not a chain. Relatively nice staff. No cheesy TV clips. Decent price curry sets. No keema. Free nan and rice.',
+            'points'            => 'Nice little indian restaurant. Not a chain. Relatively nice staff. No cheesy TV clips. Decent price curry sets. No keema. Free nan and rice.',
             'experience'        => 'Enjoyed the place, but the chiken curry I ordered was bland, tasteless.',
             'visited'           => true,
             'visit_date'        => '2017-09-05 13:00:00',
             'google_maps_link'  => 'https://www.google.co.jp/maps/place/%E3%82%A2%E3%83%B4%E3%82%A1%E3%82%BF%E3%83%BC%E3%83%AB%EF%BC%88%EF%BC%A1%EF%BC%B6%EF%BC%A1%EF%BC%B4%EF%BC%A1%EF%BC%B2%EF%BC%89/@35.6583902,139.6980654,16.75z/data=!4m5!3m4!1s0x60188b5a14212195:0xaddbce0d1c82d4a7!8m2!3d35.654973!4d139.7023979',
-            'tabelog_link'      => '',
-            'official_website'  => '',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13061017/',
+            'official_website'  => 'https://retty.me/area/PRE13/ARE8/SUB803/100000448097/',
             'score_lunch'       => 1,
             'score_place'       => 1,
             'score_food'        => 0,
@@ -4245,27 +4245,29 @@ $resto = Restaurant::create(array(
         $resto->fillCoordinatesFromString('35.657577, 139.699157');
 
         $resto = Restaurant::create(array(
-            'name'              => '',
-            'location'          => 'Shibuya',
-            'type'              => '',
-            'lunch_price'       => 950,
-            'points'            => '',
-            'experience'        => '',
+            'name'              => 'Tandoor',
+            'location'          => 'Shibuya, Seibu',
+            'type'              => 'Indian curry',
+            'lunch_price'       => 1480,
+            'points'            => 'Decent Indian curry at Seibu B2F.',
+            'experience'        => 'Down Seibu second basement floor, this restaurant will not be crowded. One of the cheapest lunch set includes 2 types of curry, an infinite amount of rice and nan, a salad and a drink, for 1480 yen. Lots of curry types you can choose from. I picked chicken keema and mutton masala. The curry came in generous amounts, and tasted very decent. The nan was OK, not great. As usual, Indian music was playing, but this time, from a CD that was skipping like every 2 seconds. Funny, for about 5 seconds. Anyway, this place was not bad, but I am looking for tastier curry that this, and the price is above my personal lunch budget, so I doubt I will be back.',
             'visited'           => true,
-            'visit_date'        => '2019-01-25 13:00:00',
-            'google_maps_link'  => '',
-            'tabelog_link'      => '',
-            'official_website'  => '',
+            'visit_date'        => '2019-01-28 13:00:00',
+            'google_maps_link'  => 'https://www.google.com/maps/place/%E3%82%BF%E3%83%B3%E3%83%89%E3%82%A5%E3%83%BC%E3%83%AB%E8%A5%BF%E6%AD%A6%E6%B8%8B%E8%B0%B7%E5%BA%97/@35.6603096,139.6984438,17.25z/data=!3m1!5s0x60188ca8177055e1:0x8ba002957d0f0ca1!4m5!3m4!1s0x60188ca81a7404b7:0x3ad0d47a7549883e!8m2!3d35.660239!4d139.700462',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13183492/',
+            'official_website'  => 'http://www.tandoor.co.jp/',
             'score_lunch'       => 1,
             'score_place'       => 1,
             'score_food'        => 1,
             'score_price'       => 1,
             'score_date'        => 0
         ));
-        $resto->attachTags(['']);
-        $resto->fillCoordinatesFromString('');
+        $resto->attachTags(['indian','curry','English menu','no smoking']);
+        $resto->fillCoordinatesFromString('35.660191, 139.700325');
         
 /*
+
+// try this curry place : https://tabelog.com/tokyo/A1303/A130301/13171069/dtlmap/
 
 SHIBUichi BAKERY SHIBUichi BAKERY (Bread、Cafe、Burger)
 3.39  15 reviews 
