@@ -4122,9 +4122,9 @@ $resto = Restaurant::create(array(
             'name'              => 'Kasugatei',
             'location'          => 'Shibuya',
             'type'              => 'Abura soba',
-            'lunch_price'       => 1000,
+            'lunch_price'       => 980,
             'points'            => 'Decent soupless ramen (abura soba, maze soba).',
-            'experience'        => 'Narrow place with small tables. Dish was good, but I was expecting a bit better for the price, maybe it tasted a bit light to my taste.',
+            'experience'        => 'Small and narrow place with just a counter. Easily packed. Nice cool atmosphere, with walls full of handwritings. Very good abura soba.',
             'visited'           => true,
             'visit_date'        => '2019-01-01 13:00:00',
             'google_maps_link'  => 'https://www.google.com/maps/place/%E6%B2%B9%E3%81%9D%E3%81%B0+%E6%98%A5%E6%97%A5%E4%BA%AD+%E6%B8%8B%E8%B0%B7%E5%BA%97/@35.6585896,139.6970284,17.03z/data=!4m8!1m2!2m1!1z5rK544Gd44Gw!3m4!1s0x0:0xbe7c2b17507771d6!8m2!3d35.6589385!4d139.6984066',
@@ -4132,7 +4132,7 @@ $resto = Restaurant::create(array(
             'official_website'  => 'http://www.kasugatei.com/',
             'score_lunch'       => 2,
             'score_place'       => 1,
-            'score_food'        => 1,
+            'score_food'        => 2,
             'score_price'       => 1,
             'score_date'        => 0
         ));
@@ -4143,7 +4143,7 @@ $resto = Restaurant::create(array(
             'name'              => 'Ichikakuya',
             'location'          => 'Shibuya',
             'type'              => 'Ramen',
-            'lunch_price'       => 1000,
+            'lunch_price'       => 980,
             'points'            => 'Good strong heavy ramen.',
             'experience'        => 'I like rich and strong taste for my ramen, and this place got me covered. Very good, for a humble price. They have a lot of choice but their main is Yakohama ikei ramen, which is one with a rich, fat and tasty soup.',
             'visited'           => true,
@@ -4243,6 +4243,27 @@ $resto = Restaurant::create(array(
         ));
         $resto->attachTags(['italian','pasta']);
         $resto->fillCoordinatesFromString('35.657577, 139.699157');
+
+        $resto = Restaurant::create(array(
+            'name'              => '',
+            'location'          => 'Shibuya',
+            'type'              => '',
+            'lunch_price'       => 950,
+            'points'            => '',
+            'experience'        => '',
+            'visited'           => true,
+            'visit_date'        => '2019-01-25 13:00:00',
+            'google_maps_link'  => '',
+            'tabelog_link'      => '',
+            'official_website'  => '',
+            'score_lunch'       => 1,
+            'score_place'       => 1,
+            'score_food'        => 1,
+            'score_price'       => 1,
+            'score_date'        => 0
+        ));
+        $resto->attachTags(['']);
+        $resto->fillCoordinatesFromString('');
         
 /*
 
