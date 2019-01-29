@@ -57,12 +57,26 @@ function ajaxResults(op, tags, orderBy) {
           + '&position=' + getLocation();
   xhr.open('GET', url);
   console.info("GET: " + url);
+  var now = nowStamp();
+  setResultsLoadingTime(now);
+  setResultsLoading("tag");
   xhr.onload = function() {
-      if (xhr.status === 200) {
-          /* write results */
-          document.getElementById("results").innerHTML = xhr.responseText;
-          /* update the show result button with the number of results */
-          refreshShowResultsButton();
+      if (now < getResultsLoadingTime()) { // if a more recent request has been nameAndType
+          getResultsDiv().innerHTML = "Updating results...";
+      }
+      else {
+          if (xhr.status === 200) {
+              /* write results */
+              getResultsDiv().innerHTML = xhr.responseText;
+              /* update the show result button with the number of results */
+              refreshShowResultsButton();
+          }
+          else {
+              getResultsDiv().innerHTML = "Sorry, an error occured during the search. Check your Internet connection and try again.";
+          }
+          if (now == getResultsLoadingTime()) {
+              setResultsLoading("none");
+          }
       }
   };
   xhr.send();
@@ -104,7 +118,7 @@ function refreshShowResultsButton() {
 
 }
 
-/* TO MOVE IN A SUPERIOR CLASS */
+/** Store methods  TO MOVE IN A SUPERIOR CLASS */
 function store(key, value) {
   // Look up for different options, chose the best
   if (typeof(Storage) !== "undefined") {

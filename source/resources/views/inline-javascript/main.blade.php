@@ -21,24 +21,55 @@ function getResults() {
   // Refresh position
   getLocation();
   // Get all if no places loaded
-  if (isResultEmpty()) {
+  if (getResultsLoading() == "none" && getResultsLoadingTime() == 0) {
+    setResultsLoading("all");
+    getResultsDiv().innerHTML = "Loading ALL entries. Please wait or select a tag...";
     var xhr = new XMLHttpRequest();
     var url = resultsUrl
             + '?position=' + getLocation();
     console.info('calling: '+url),
     xhr.open('GET', resultsUrl);
     xhr.onload = function() {
-        if (xhr.status === 200) {
-            document.getElementById("results").innerHTML = xhr.responseText;
+        if (getResultsLoading() == "all") {
+            if (xhr.status === 200) {
+                getResultsDiv().innerHTML = xhr.responseText;
+            }
+            else {
+                getResultsDiv().innerHTML = "Sorry, an error occured during the search. Check your Internet connection and try again.";
+            }
+            setResultsLoading("none");
         }
     };
     xhr.send();
   }
 }
 
-/** Check if there are places in the results div */
-function isResultEmpty() {
-  return document.getElementById("results").innerHTML == 'empty';
+/** Where the results would be displayed */
+function getResultsDiv() {
+  return document.getElementById("results");
+}
+/** Could be none, all, tag */
+function getResultsLoading() {
+  console.info('getResultsLoading: ' + getResultsDiv().getAttribute("loading"));
+  return getResultsDiv().getAttribute("loading");
+}
+/** State could be none, all, tag */
+function setResultsLoading(state) {
+  console.info('setResultsLoading: ' + state);
+  return getResultsDiv().setAttribute("loading", state);
+}
+/** results loading time methods */
+function nowStamp() {
+  if (!Date.now) {
+      return new Date().getTime();
+  }
+  return Date.now();
+}
+function getResultsLoadingTime() {
+  return getResultsDiv().getAttribute("time");
+}
+function setResultsLoadingTime(time) {
+  return getResultsDiv().setAttribute("time", time);
 }
 
 </script>
