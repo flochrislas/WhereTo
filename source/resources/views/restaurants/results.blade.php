@@ -45,4 +45,4 @@
   </div>
 
 <!-- data -->
-<div id="results">empty</div>
+<div id="results" loading="none" time="0">Loading...</div>

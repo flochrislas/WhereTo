@@ -16,6 +16,7 @@
       onclick="window.open('{{ $place->official_website }}', '_blank')">
       Website</button>
     <button class="navButton" onclick="history.go(-1)">BACK</button>
+    <!-- if the above doesnt work then i must maybe implement result page full page cache -->
   </div>
 
   <div id="detailTitle" class="detailRow">
