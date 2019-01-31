@@ -8,7 +8,7 @@
     Naturally, individual experience, or taste, may differ.
 
     <div>Going for lunch</div>
-
+      Opening time: usually between 11am and 2:30pm. Sometimes more, but if you fall outside this time window, it is better to double-check if it is opened, by looking on the Google or Tabelog linked page.
       Ratings
         Ratings are made by me alone, after going to have lunch to a place one or multiple times. I beleive this makes for more consistent ratings than hundreds of different people rating different places.
 

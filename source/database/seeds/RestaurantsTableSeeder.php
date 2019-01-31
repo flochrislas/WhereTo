@@ -4264,6 +4264,29 @@ $resto = Restaurant::create(array(
         ));
         $resto->attachTags(['indian','curry','English menu','no smoking']);
         $resto->fillCoordinatesFromString('35.660191, 139.700325');
+
+        $resto = Restaurant::create(array(
+            'name'              => 'Botanical bar Oniwa',
+            'location'          => 'Shibuya, Dogenzaka',
+            'type'              => 'Bar',
+            'lunch_price'       => 1200,
+            'points'            => 'Bar that cooks curry for lunch.',
+            'experience'        => 'On the way up to loves hotels, in a bar that is rather difficult to find. The bar decoration is mostly plastic plants, hence the name. 2 low tables with sofas and a large counter. Curry is 700 yen for a portion or 1000 yen for all you can eat, with rice. You will need to buy a drink as well. Cheapest being 500 yen (coffee or other non alcoholic beverages). The place is dark, rather comfortable and intimate. The curry, "chicken colagen", is absolutely delicious. But with the additional cost just for the drink, the overall cost is stil too much.',
+            'visited'           => true,
+            'visit_date'        => '2019-01-30 13:00:00',
+            'google_maps_link'  => 'https://www.google.com/maps/place/Botanical+Bar+ONIWA/@35.6595252,139.696404,18z/data=!4m8!1m2!2m1!1sbotanical+bar!3m4!1s0x0:0xdbc6a0bae6d65a2!8m2!3d35.6601729!4d139.6965426',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13212879/',
+            'official_website'  => 'https://www.oniwa.tokyo/',
+            'score_lunch'       => 2,
+            'score_place'       => 2,
+            'score_food'        => 2,
+            'score_price'       => 0,
+            'score_date'        => 1
+        ));
+        $resto->attachTags(['japanese curry','curry','bar']);
+        $resto->fillCoordinatesFromString('35.660200, 139.696471');
+
+
         
 /*
 
