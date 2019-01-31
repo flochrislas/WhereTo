@@ -38,16 +38,19 @@
         <div class="oneDigit">{{ $restaurant->score_place }}</div>
       </div>
     </div>
+    <!--
     <div class="resultCell centerContent">
       <div class="score" style="color: var(--color-price);">
         <div class="oneDigit">{{ $restaurant->score_price }}</div>
       </div>
     </div>
+    -->
+    <!--
     <div class="resultCell centerContent">
       <div class="score" style="color: var(--color-date);">
         <div class="oneDigit">{{ $restaurant->score_date }}</div>
       </div>
-    </div>
+    </div> -->
   </div>
 @endforeach
 </div>

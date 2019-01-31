@@ -5,6 +5,8 @@ removing a tag triggers the find all requests, that takes ages even with cache a
 should not trtigger find them all after removing tag? only when hitting the button with see all? or try memcached with unix socket instead of port and IP
 or when request is launched, add a marker in html, and when response comes, check if the marker is there still and update. if marker is gone because a faster request has been made in between, dont update result list.
 
+idea: remove date and price from default columns
+
 NEXT UP
 
 Architecture:
