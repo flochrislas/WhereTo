@@ -119,6 +119,12 @@ class RestaurantTagsTableSeeder extends Seeder
         ));
 
         RestaurantTag::create(array(
+            'label'              => 'bar',
+            'type'               => '40',
+            'weight'             => '100'
+        ));
+
+        RestaurantTag::create(array(
             'label'              => 'teishoku',
             'type'               => '40',
             'weight'             => '100'

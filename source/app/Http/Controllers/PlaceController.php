@@ -28,7 +28,7 @@ abstract class PlaceController extends Controller
 
         // Shibuya Station from google maps is '35.658789, 139.701262'
         $closestStationPosition = '35.658789, 139.701262';
-        if (!isset($position)) {
+        if (!isset($position) || $position == "null") {
           $position = $closestStationPosition;
           Log::debug('GPS position not set. Using Shibuya Station coordinates.');
         }
