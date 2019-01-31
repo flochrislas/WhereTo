@@ -34,12 +34,14 @@
         <div class="resultCell centerContent">
           <div class="label" style="color: var(--color-place);">place</div>
         </div>
+        <!--
         <div class="resultCell centerContent">
           <div class="label" style="color: var(--color-price);">price</div>
-        </div>
+        </div> -->
+        <!--
         <div class="resultCell centerContent">
           <div class="label" style="color: var(--color-date);">date</div>
-        </div>
+        </div> -->
       </div>
     </div>
   </div>
