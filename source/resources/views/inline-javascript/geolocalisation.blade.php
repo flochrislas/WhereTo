@@ -37,10 +37,10 @@ function onSuccess(position) {
 
 /** getCurrentPosition failure */
 function onError(error) {
-    console.warn('Geolocalisation Failure (${error.code}): ${error.message}');
+    var additionalWarning = " Distances will be from the station."
     switch(error.code) {
         case error.PERMISSION_DENIED:
-            geolocalisationMessage.innerHTML = "User denied the request for Geolocation."
+            geolocalisationMessage.innerHTML = "User denied the request for Geolocation." + additionalWarning
             break;
         case error.POSITION_UNAVAILABLE:
             geolocalisationMessage.innerHTML = "Location information is unavailable."
@@ -52,12 +52,13 @@ function onError(error) {
             geolocalisationMessage.innerHTML = "An unknown error occurred."
             break;
     }
-    if (error.message.startsWith("Only secure")) {
+    if (location.protocol !== "https:") {
       geolocalisationMessage.innerHTML = " Please use the HTTPS version of the service to enable geolocalisation."
     }
     else {
-      geolocalisationMessage.innerHTML = " ERREUR (${error.code}): ${error.message}"
+      geolocalisationMessage.innerHTML = " Error" + error.code +": " + error.message;
     }
+    geolocalisationMessage.innerHTML += additionalWarning;
 }
 
 /** TO MOVE IN A SUPERIOR CLASS */
