@@ -3,7 +3,7 @@
 @section('title', 'Store details')
 
 @section('content')
-<div id="content">
+<div id="content-unchained">
 
   <div id="resultsControl">
     <button class="sortButton"

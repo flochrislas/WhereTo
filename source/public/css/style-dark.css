@@ -199,11 +199,19 @@ td {
   overflow-y: auto;
   /* Flex container properties */
   /* If enabled, all boxes restrict themselves to fit on the screen */
-  /*
+  /* Needed to make fixed top menus in chrome and opera */
   display: flex;
   flex-direction: column;
-  */
+}
 
+#content-unchained {
+  background-color:  var(--bg-color-inner) ; /* almost black */
+  margin: .1rem;
+  color: #d0d0d2;
+  /* Flex properties to work with fixed header and footer */
+  flex: 1 1 auto;
+  position: relative; /* need this to position inner content */
+  overflow-y: auto;
 }
 
 /*********************************************/
