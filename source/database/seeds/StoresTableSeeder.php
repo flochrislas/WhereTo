@@ -47,11 +47,24 @@ class StoresTableSeeder extends Seeder
         $store->fillCoordinatesFromString('35.670367, 139.706605');
 
         $store = Store::create(array(
-          'name'              => '109 men',
+          'name'              => 'Shibuya109',
           'location'          => 'Shibuya',
           'type'              => 'Fashion',
-          'points'            => 'Small shops mostly for young men\'s fashion.',
-          'experience'        => 'Interesting styles, targets (very) young Japanese guys with trendy clothes and accessories. Employees are quite pushy. Not easy to find a fitting size for foreigners. Some restaurants on 7F, and an access to the rooof top, wher eit is possible to have your picture taken from way above so you appear with the legendary crossing below.',
+          'points'            => 'The famous 109. Fashion for girls.',
+          'experience'        => 'Multitude of small fashion stores for girls.',
+          'google_maps_link'  => 'https://www.google.com/maps/place/109/@35.6595752,139.696562,17z/data=!3m2!4b1!5s0x60188ca9cd4c44b5:0xc538795a27b68b27!4m5!3m4!1s0x60188ca9cd6c1c87:0x55a2a75ba417e072!8m2!3d35.6595709!4d139.6987507',
+          'official_website'  => 'https://www.shibuya109.jp',
+          'score'             => 1
+        ));
+        $store->attachTags(['women','fashion','mall']);
+        $store->fillCoordinatesFromString('35.659551, 139.698904');
+
+        $store = Store::create(array(
+          'name'              => 'Magnet by Shibuya109',
+          'location'          => 'Shibuya',
+          'type'              => 'Fashion',
+          'points'            => 'Previously called 109men. Small shops mostly for young men\'s fashion.',
+          'experience'        => 'Interesting styles, targets (very) young Japanese guys with trendy clothes and accessories. Employees are quite pushy. Not easy to find a fitting size for foreigners. Some restaurants on 7F, and an access to the rooof top, with a nice view, where it is possible to have your picture taken from way above so you appear with the legendary crossing below.',
           'google_maps_link'  => 'https://www.google.com/maps/place/Magnet+by+Shibuya+109/@35.6583877,139.7002794,18z/data=!4m5!3m4!1s0x0:0x6c103e05d0fa17a7!8m2!3d35.6597803!4d139.7009392',
           'official_website'  => 'https://www.shibuya109.jp/MAGNET/',
           'score'             => 1
@@ -84,19 +97,6 @@ class StoresTableSeeder extends Seeder
         ));
         $store->attachTags(['sports','shoes','sneakers']);
         $store->fillCoordinatesFromString('35.661390, 139.700407');
-
-        $store = Store::create(array(
-          'name'              => 'Seibu',
-          'location'          => 'Shibuya',
-          'type'              => 'Fashion',
-          'points'            => 'Big spacious mall with multitudes of small luxury shops.',
-          'experience'        => 'Not crowded. Spacious, with many luxury fashion brands. Prices starts at about 10 thousand yen for the simplest white T-Shirt. The mall is divided in 2 buildings called A and B.',
-          'google_maps_link'  => 'https://www.google.com/maps/place/Seibu+Shibuya/@35.659452,139.7001252,18z/data=!3m1!5s0x60188ca85cf67879:0x8e906976d63cbfb6!4m8!1m2!2m1!1sSEIBU!3m4!1s0x0:0x5d0968ff236330a0!8m2!3d35.660616!4d139.7003089',
-          'official_website'  => 'https://www.sogo-seibu.jp/foreign/welcome/',
-          'score'             => 1
-        ));
-        $store->attachTags(['fashion','luxury','mall']);
-        $store->fillCoordinatesFromString('35.660118, 139.700556');
 
         $store = Store::create(array(
           'name'              => 'Adidas',
@@ -181,7 +181,7 @@ class StoresTableSeeder extends Seeder
           'location'          => 'Shibuya',
           'type'              => 'Mall',
           'points'            => 'Mall merged with the Shibuya train station.',
-          'experience'        => '2 buildings. Multitudes of shops. Convenient in case of bad weather because no need to get out from the station. Rather nice food section at the basement floors. Restaurants at the 9th floor.',
+          'experience'        => 'Multitudes of shops. Convenient in case of bad weather because no need to get out from the station. Rather nice food section at the basement floors. Restaurants at the 9th floor.',
           'google_maps_link'  => 'https://www.google.com/maps/place/Tokyu+Department+Store/@35.6587263,139.6986498,17z/data=!3m2!4b1!5s0x60188b59c00ac46b:0x89a02b538fc1dabb!4m5!3m4!1s0x60188b5818bf6c25:0xaa2d6c840dc985b9!8m2!3d35.658722!4d139.7008385',
           'official_website'  => 'https://www.tokyu-dept.co.jp/toyoko/',
           'score'             => 1
@@ -256,7 +256,7 @@ class StoresTableSeeder extends Seeder
 
         $store = Store::create(array(
           'name'              => 'Jampara',
-          'location'          => 'Shibuya',
+          'location'          => 'Shibuya, Dogenzaka',
           'type'              => 'Used Electronics',
           'points'            => 'Small shop. Second hand electronics such as laptops and smartphones.',
           'experience'        => 'Interesting choice of second hand stuff such as laptops, smartphones, some heaphones, video games consoles or video cameras...',
@@ -267,7 +267,111 @@ class StoresTableSeeder extends Seeder
         $store->attachTags(['electronics','computers','phones']);
         $store->fillCoordinatesFromString('35.658948, 139.697916');
 
+        
+        $store = Store::create(array(
+          'name'              => 'Mark City',
+          'location'          => 'Shibuya, station',
+          'type'              => 'Mall',
+          'points'            => 'Big mall attached to Shibuya station.',
+          'experience'        => 'Generally opened from 10am to 9pm. The mall might be tricky because of its first 3 floors are separated in 2 different buildings, the west and east malls. You might really need to <a target="blank" href="http://www.s-markcity.co.jp/foreign/floormap.html">lookup the map</a>.
+          <ul>
+              <li>B1F: Tokyu Food Show: lots of very nice food to buy for oneself or as a present</li>
+              <li>1F: Fashion, interior, restaurants and cafes, beauty, services.</li>
+              <li>2F: Fashion, interior, restaurants and cafes, shoes, services</li>
+              <li>3F: Cosmetics, restaurants and cafes</li>
+              <li>4F: Restaurants and cafes, shopping (fashion shoes, goods, glasses), services</li>
+              <li>5F: Cafe lounge, access to offices and the hotel</li>
+              <li>6F: Conference and banquet rooms</li>
+              <li>7-24F: hotel rooms</li>
+              <li>25F: 1 French restaurant and 1 Japanese restaurant, with nice view.</li>
+          </ul>',
+          'google_maps_link'  => 'https://www.google.com/maps/place/Shibuya+Mark+City/@35.6579883,139.6958671,17z/data=!3m2!4b1!5s0x60188b5631c5f5a9:0xf2c804904456f99b!4m5!3m4!1s0x60188caa6707c341:0xe0f267e59f717458!8m2!3d35.6579883!4d139.6980558',
+          'official_website'  => 'http://www.s-markcity.co.jp/',
+          'score'             => 1
+        ));
+        $store->attachTags(['mall','fashion','food']);
+        $store->fillCoordinatesFromString('35.658766, 139.699672');
+
+        $store = Store::create(array(
+          'name'              => 'Seibu',
+          'location'          => 'Shibuya, Seibu',
+          'type'              => 'Mall',
+          'points'            => 'Big spacious mall with multitudes of small luxury shops.',
+          'experience'        => 'Not crowded. Spacious, with many luxury fashion brands. Prices starts at about 10 thousand yen for the simplest white T-Shirt. The mall is divided in 2 buildings called A and B, that connects to each other on some floors. You can connect to their free wifi using the password "seibu123". Tax free service is available at A 7F.
+          <ul>
+              <li>A B2F: Restaurants</li>
+              <li>A B1F: Japanese sweets</li>
+              <li>A 1F: Cosmetics</li>
+              <li>A 2F: Fashion (Chanel)</li>
+              <li>A 3F: Fashion (women)</li>
+              <li>A 4F: Fashion (women)</li>
+              <li>A 5F: Fashion (women)</li>
+              <li>A 6F: Fashion (women and children)</li>
+              <li>A 7F: Handcraft goods, event space, tax exemption counter</li>
+              <li>A 8F: Japanese restaurants</li>
+          </ul>
+          <ul>
+              <li>B B1F: Beauty</li>
+              <li>B 1F: Luxury brands</li>
+              <li>B 2F: Luxury brands</li>
+              <li>B 3F: Fashion (women)</li>
+              <li>B 4F: Fashion (men)</li>
+              <li>B 5F: Fashion (men)</li>
+              <li>B 6F: Fashion (men)</li>
+              <li>B 7F: Tablewear, interior, furniture, gifts</li>
+              <li>B 8F: Watches, jewelry</li>
+              <li>B RoofTop: Pet shop</li>
+          </ul>',
+          'google_maps_link'  => 'https://www.google.com/maps/place/Seibu+Shibuya/@35.659452,139.7001252,18z/data=!3m1!5s0x60188ca85cf67879:0x8e906976d63cbfb6!4m8!1m2!2m1!1sSEIBU!3m4!1s0x0:0x5d0968ff236330a0!8m2!3d35.660616!4d139.7003089',
+          'official_website'  => 'https://www.sogo-seibu.jp/foreign/welcome/',
+          'score'             => 1
+        ));
+        $store->attachTags(['fashion','luxury','mall']);
+        $store->fillCoordinatesFromString('35.660118, 139.700556');
+
+        $store = Store::create(array(
+          'name'              => 'Hikarie ShinQs',
+          'location'          => 'Shibuya, Hikarie',
+          'type'              => 'Mall',
+          'points'            => 'Fancy mall, connected to Shibuya station.',
+          'experience'        => 'Nice things. No need to go outside from the station to get there. Can get a nice view from higher floor.
+          <ul>
+              <li>B3F: Foods, sweets</li>
+              <li>B2F: Foods, bakery, sweets</li>
+              <li>B1F: Cosmetics, beauty</li>
+              <li>1F: Beauty, fashion</li>
+              <li>2F: Fashion</li>
+              <li>3F: Career fashion</li>
+              <li>4F: Casual fashion</li>
+              <li>5F: Lifestyle goods</li>
+              <li>6F: Restaurants</li>
+              <li>7F: Restaurants</li>
+              <li>8F: Restaurants</li>
+              <li>11F: Restaurants</li>
+          </ul>',
+          'google_maps_link'  => 'https://www.google.com/maps/place/Hikarie+ShinQs+Shibuya/@35.6590292,139.7012843,17z/data=!3m2!4b1!5s0x60188b58f894f891:0x4ceb5b05dd6f9d0b!4m5!3m4!1s0x60188b5789e3c191:0x118f18fc8ef872eb!8m2!3d35.6590249!4d139.703473',
+          'official_website'  => 'http://www.hikarie.jp/',
+          'score'             => 1
+        ));
+        $store->attachTags(['mall','fashion']);
+        $store->fillCoordinatesFromString('35.658929, 139.703265');
+
+        $store = Store::create(array(
+          'name'              => 'Tokyu Honten',
+          'location'          => 'Shibuya, Bunkamura',
+          'type'              => 'Mall',
+          'points'            => 'Tokyu main department store. Luxury stuff.',
+          'experience'        => 'Big spacious department store. Mostly luxury fashion and goods.',
+          'google_maps_link'  => 'https://www.google.com/maps/place/Tokyu+Honten/@35.6606425,139.6938291,17z/data=!3m2!4b1!5s0x60188cabd76c1a77:0xea9b2a49da49661e!4m5!3m4!1s0x60188cabdc972d2f:0x7e09efa541645aa5!8m2!3d35.6606382!4d139.6960178',
+          'official_website'  => 'https://www.tokyu-dept.co.jp/honten/',
+          'score'             => 1
+        ));
+        $store->attachTags(['mall','fashion','luxury','jewelry','watches']);
+        $store->fillCoordinatesFromString('35.660640, 139.696345');
+
+
         /*
+        ///AAA///
         $store = Store::create(array(
           'name'              => 'xxxx',
           'location'          => 'Shibuya',

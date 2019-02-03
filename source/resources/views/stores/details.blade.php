@@ -30,7 +30,7 @@
   <div class="detailRow">
       <div class="detail"
            overlay="Personal experience">
-        {{ $place->experience }}
+        {!!html_entity_decode($place->experience)!!}
       </div>
   </div>
 
