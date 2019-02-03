@@ -33,6 +33,8 @@ function getResults() {
         if (getResultsLoading() == "all") {
             if (xhr.status === 200) {
                 getResultsDiv().innerHTML = xhr.responseText;
+                // We allow this query just once
+                setResultsLoadingTime(1);
             }
             else {
                 getResultsDiv().innerHTML = "Sorry, an error occured during the search. Check your Internet connection and try again.";
