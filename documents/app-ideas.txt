@@ -1,6 +1,10 @@
 \tkyfs01\Administration\Public\社内催し写真\GS2018新年会写真
 
 ISSUE:
+
+!! Fixed menu button dont work anymore after i remloved some css flex attribute.............
+if ALL results are loaded, prevent another ALL resdult search, jsut show it again, its already there....
+
 removing a tag triggers the find all requests, that takes ages even with cache and will replace the results even after user added a tag to disaply less results...
 should not trtigger find them all after removing tag? only when hitting the button with see all? or try memcached with unix socket instead of port and IP
 or when request is launched, add a marker in html, and when response comes, check if the marker is there still and update. if marker is gone because a faster request has been made in between, dont update result list.
@@ -16,10 +20,6 @@ Architecture:
 Print meishi with bar code
 FindItFast tokyo
 (police de character jaune identique a un chronometre) SHIUYA edition
-
-Fix issue that we need to relaod restaurant page in order to update the GPS coordinates
-
-Can turn GPS mode OFF and then distance will be calculated roughtly from Shibuya station
 
 make a section with nice pics of foods instead of tags to choose easily
 

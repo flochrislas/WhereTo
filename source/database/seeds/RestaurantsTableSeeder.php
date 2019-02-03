@@ -2534,7 +2534,7 @@ class RestaurantsTableSeeder extends Seeder
             'score_price'       => 0,
             'score_date'        => 0
         ));
-        $resto->attachTags(['french','cafe','bakery','sandwiches']);
+        $resto->attachTags(['french','cafe','bakery','sandwiches','croque-monsieur']);
         $resto->fillCoordinatesFromString('35.660864, 139.696779');
 
         $resto = Restaurant::create(array(
