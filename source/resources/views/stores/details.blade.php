@@ -3,7 +3,7 @@
 @section('title', 'Store details')
 
 @section('content')
-<div id="content">
+<div id="content-unchained">
 
   <div id="resultsControl">
     <button class="sortButton"
@@ -30,7 +30,7 @@
   <div class="detailRow">
       <div class="detail"
            overlay="Personal experience">
-        {{ $place->experience }}
+        {!!html_entity_decode($place->experience)!!}
       </div>
   </div>
 
