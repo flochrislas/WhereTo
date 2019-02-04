@@ -173,7 +173,7 @@ class RestaurantsTableSeeder extends Seeder
             'score_price'       => 2,
             'score_date'        => 0
         ));
-        $resto->attachTags(['burger','fast food','to-go','visa']);
+        $resto->attachTags(['burger','fast food','to-go','visa','western','american']);
         $resto->fillCoordinatesFromString('35.660876, 139.698979');
 
         $resto = Restaurant::create(array(
@@ -194,7 +194,7 @@ class RestaurantsTableSeeder extends Seeder
             'score_price'       => 0,
             'score_date'        => 0
         ));
-        $resto->attachTags(['burger','fast food','to-go','visa']);
+        $resto->attachTags(['burger','fast food','to-go','visa','western','american']);
         $resto->fillCoordinatesFromString('35.660390, 139.699116');
 
         $resto = Restaurant::create(array(
@@ -614,7 +614,7 @@ class RestaurantsTableSeeder extends Seeder
             'score_price'       => 1,
             'score_date'        => 1
         ));
-        $resto->attachTags(['burger', 'grill', 'western']);
+        $resto->attachTags(['burger','grill','western','american']);
         $resto->fillCoordinatesFromString('35.661641, 139.697613');
 
         // This place has been shut down, building demolished for new building
@@ -977,7 +977,7 @@ class RestaurantsTableSeeder extends Seeder
             'score_price'       => 0,
             'score_date'        => 1
         ));
-        $resto->attachTags(['burger', 'salad buffet', 'western']);
+        $resto->attachTags(['burger','salad buffet','western']);
         $resto->fillCoordinatesFromString('35.662428, 139.699706');
 
         $resto = Restaurant::create(array(
@@ -2114,7 +2114,7 @@ class RestaurantsTableSeeder extends Seeder
             'score_price'       => 0,
             'score_date'        => 0
         ));
-        $resto->attachTags(['burger','american','to-go','visa']);
+        $resto->attachTags(['burger','western','american','to-go','visa']);
         $resto->fillCoordinatesFromString('35.659714, 139.700917');
 
         $resto = Restaurant::create(array(
@@ -4286,6 +4286,26 @@ $resto = Restaurant::create(array(
         $resto->attachTags(['japanese curry','curry','bar']);
         $resto->fillCoordinatesFromString('35.660200, 139.696471');
 
+        $resto = Restaurant::create(array(
+            'name'              => 'It Balls',
+            'location'          => 'Shibuya',
+            'type'              => 'Burger',
+            'lunch_price'       => 1300,
+            'points'            => 'Good burgers.',
+            'experience'        => 'The place is nice and cosy, if you don\'t mind the 4 TVs silently showing some Japanese chanels. A bunch of tables and a small counter. THe menu has mostly burgers, but also some alternatives such as pasta, salad, chicken or shrimps. Prices range from 1080 to about 1580. I tried the cheese burger for 1280 yen. Coming with a drink, some fries and pickles, the bread was nicely toasted, plenty of lettuce, fresh tomato, decent cheese and sauce. The patty was good, grilled with pepper, but the amount of meat relatively small. Overall, slightly above average in my opinion, but I wish it would have been a bit tastier.',
+            'visited'           => true,
+            'visit_date'        => '2019-02-04 13:00:00',
+            'google_maps_link'  => 'https://www.google.com/maps/place/%EF%BC%91F,+3+Chome-6-19+Shibuya,+Shibuya-ku,+T%C5%8Dky%C5%8D-to+150-0002/@35.6572775,139.7033648,17.25z/data=!4m5!3m4!1s0x60188b596c02f923:0xd9d6190474d14d3d!8m2!3d35.6576834!4d139.7048312',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13230499/',
+            'official_website'  => 'https://itballs.gorp.jp/',
+            'score_lunch'       => 2,
+            'score_place'       => 1,
+            'score_food'        => 2,
+            'score_price'       => 1,
+            'score_date'        => 0
+        ));
+        $resto->attachTags(['burger','to-go','western','american','English menu']);
+        $resto->fillCoordinatesFromString('35.657682, 139.704761');
 
         
 /*
