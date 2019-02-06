@@ -50,6 +50,8 @@ Route::get('tags/autocomplete', 'RestaurantTagController@autocomplete')->name('t
 Route::get('stores', 'StoreTagController@viewAllTags')->name('stores.main');
 Route::get('stores/results', 'StoreController@results')->name('stores.results');
 Route::get('stores/details/{id}', 'StoreController@details')->name('stores.details');
+// Hmmmm, to test :
+Route::get('store/details/{id}', 'StoreController@details')->name('stores.details.single');
 
 // Public bars pages
 Route::get('bars', 'BarTagController@viewAllTags')->name('bars.main');

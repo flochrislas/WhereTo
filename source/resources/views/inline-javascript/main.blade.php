@@ -74,4 +74,9 @@ function setResultsLoadingTime(time) {
   return getResultsDiv().setAttribute("time", time);
 }
 
+/** Where the details would be displayed */
+function getDetailsDiv() {
+  return document.getElementById("mainDetails");
+}
+
 </script>

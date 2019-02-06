@@ -15,6 +15,10 @@
 
 </div>
 
+<div id="content-unchained">
+  <div id="mainDetails"></div>
+</div>
+
 <script>
   // To be used in ajax calls for reading results
   var resultsUrl = 'stores/results';
