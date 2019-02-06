@@ -2,14 +2,14 @@
 
 ISSUE:
 
-!! Fixed menu button dont work anymore after i remloved some css flex attribute.............
-if ALL results are loaded, prevent another ALL resdult search, jsut show it again, its already there....
+sticker for cup: Certified Sergeable since 2015
 
 removing a tag triggers the find all requests, that takes ages even with cache and will replace the results even after user added a tag to disaply less results...
 should not trtigger find them all after removing tag? only when hitting the button with see all? or try memcached with unix socket instead of port and IP
 or when request is launched, add a marker in html, and when response comes, check if the marker is there still and update. if marker is gone because a faster request has been made in between, dont update result list.
 
 need: have URL to result page so we can SHARE them and go back quick even using chrome
+make the detail view part of the filter and result ONE PAGE , click a place will load deail content, hide result and show detail. then back wil  just hide detail and show result. it. is . genius.
 
 NEXT UP
 
@@ -25,7 +25,7 @@ make a section with nice pics of foods instead of tags to choose easily
 
 login VIP , nickname, can say "im eating here" on detail page if your gps coordinates match roughtly , then gain LVL , comments under details will be ordered by user LVL (lvlo1 rambling ignorant , lvl99 shibuya god)
 
-Administration: Get a fre Virtual Private Server somewhere (or at first it could be jsut some local html files in my VM and phone) and setup dashboard: link to googl eanalitics, cloudflare, OVH, AWS, other tools and monitoring, suc has ping, speed, new relic, nagios, is it up etc... also adds tab for all my hosted services, old google blog, free arda website .. and drives  dropbox, mega uplaod ... 
+Administration: Get a free Virtual Private Server somewhere (or at first it could be jsut some local html files in my VM and phone) and setup dashboard: link to googl eanalitics, cloudflare, OVH, AWS, other tools and monitoring, suc has ping, speed, new relic, nagios, is it up etc... also adds tab for all my hosted services, old google blog, free arda website .. and drives  dropbox, mega uplaod ... 
 
 Note: VPS used by sam and nathan : https://www.vultr.com/pricing/
 For website hosting: dreamhost (nathan)
