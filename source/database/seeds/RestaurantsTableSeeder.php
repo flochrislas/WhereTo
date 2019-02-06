@@ -4308,6 +4308,29 @@ $resto = Restaurant::create(array(
         $resto->fillCoordinatesFromString('35.657682, 139.704761');
 
         
+        $resto = Restaurant::create(array(
+            'name'              => 'Bokkokukaitentori QueRico',
+            'location'          => 'Shibuya, near Stream',
+            'type'              => 'Mexican',
+            'lunch_price'       => 980,
+            'points'            => 'Good mexican roasted chicken tapas.',
+            'experience'        => 'I liked inside was very colorful and clean, with the right volume of mexican music. For lunch, the menu consists mainly of roasted chicken with something else on the side. You can have one third, one half, or the full chicken. Lunch set comes with a delicious tomato soup. I tried the roasted chicken with taco rice, with the half-chicken size, for 980 yen. The chicken was absolutely delicious. The taco rice was very good, but I was expecting a bit tastier coming from mexican cuisine (but I could have used some of the additional sauce that were on the table, maybe that was my mistake). I ended up very satisfied, especially given the fact that it made me full for under a thousand yen. The English menu does not really covers the lunch sets, but the waitress was nice and helpful.',
+            'visited'           => true,
+            'visit_date'        => '2019-02-06 13:00:00',
+            'google_maps_link'  => 'https://www.google.com/maps/place/Bokkokukaitentori/@35.6574011,139.7016273,18z/data=!4m5!3m4!1s0x60188b6acb418b83:0x3bb77ae2c24819bc!8m2!3d35.657261!4d139.702609',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13225362/',
+            'official_website'  => 'http://querico.jp/',
+            'score_lunch'       => 3,
+            'score_place'       => 2,
+            'score_food'        => 2,
+            'score_price'       => 1,
+            'score_date'        => 0
+        ));
+        $resto->attachTags(['mexican','taco rice','meat']);
+        $resto->fillCoordinatesFromString('35.657699, 139.702552');
+
+
+        
 /*
 
 // try this curry place : https://tabelog.com/tokyo/A1303/A130301/13171069/dtlmap/
