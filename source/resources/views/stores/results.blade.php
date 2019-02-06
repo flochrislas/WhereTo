@@ -34,3 +34,5 @@
 
 <!-- data -->
 <div id="results">empty</div>
+
+@include('inline-javascript.results')
