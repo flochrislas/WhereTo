@@ -23,11 +23,13 @@ function showDetails(url, placeId) {
       ajaxDetails(url);
   }
   getDetailsDiv().style.display = "block";
+  //document.getElementById("content-unchained").style.display = "block";
   document.getElementById("content").style.display = "none";
 }
 
 function hideDetails() {
   getDetailsDiv().style.display = "none";
+  //document.getElementById("content-unchained").style.display = "none";
   document.getElementById("content").style.display = "flex";
 }
 
@@ -35,7 +37,7 @@ function getCurrentDetailsId() {
   if (document.getElementById("detailName") == null) {
     return null;
   }
-  return document.getElementById("detailName").getAttribute("placeId");
+  return document.getElementById("detailName").getAttribute("detailId");
 }
 
 </script>

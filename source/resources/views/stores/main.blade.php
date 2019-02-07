@@ -9,14 +9,13 @@
     @include('stores.filter')
   </div>
 
-  <div id="mainResults">
+  <div id="mainResults" style="display: none">
     @include('stores.results')
   </div>
 
 </div>
 
-<div id="content-unchained">
-  <div id="mainDetails"></div>
+<div id="mainDetails" class="content-unchained" style="display: none">
 </div>
 
 <script>

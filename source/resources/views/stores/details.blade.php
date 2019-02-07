@@ -9,7 +9,7 @@
 </div>
 
 <div id="detailTitle" class="detailRow">
-    <div id="detailName" class="detail" placeId="{{ $place->id }}"><div>{{ $place->name }}</div></div>
+    <div id="detailName" class="detail" detailId="{{ $place->id }}"><div>{{ $place->name }}</div></div>
     <div id="detailType" class="detail"><div>{{ $place->type }}</div></div>
     <div id="detailLocation" class="detail"><div>{{ $place->location }}</div></div>
 </div>
