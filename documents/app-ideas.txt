@@ -11,6 +11,8 @@ or when request is launched, add a marker in html, and when response comes, chec
 need: have URL to result page so we can SHARE them and go back quick even using chrome
 make the detail view part of the filter and result ONE PAGE , click a place will load deail content, hide result and show detail. then back wil  just hide detail and show result. it. is . genius.
 
+Get rid of some CSS id and do class instead, like content 
+
 NEXT UP
 
 Architecture:

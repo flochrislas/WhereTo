@@ -214,6 +214,16 @@ td {
   overflow-y: auto;
 }
 
+.content-unchained {
+  background-color:  var(--bg-color-inner) ; /* almost black */
+  margin: .1rem;
+  color: #d0d0d2;
+  /* Flex properties to work with fixed header and footer */
+  flex: 1 1 auto;
+  position: relative; /* need this to position inner content */
+  overflow-y: auto;
+}
+
 /*********************************************/
 /*            Home screen                   */
 /*********************************************/
