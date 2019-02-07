@@ -52,12 +52,12 @@ function getResultsDiv() {
 }
 /** Could be none, all, tag */
 function getResultsLoading() {
-  console.info('getResultsLoading: ' + getResultsDiv().getAttribute("loading"));
+  // console.info('getResultsLoading: ' + getResultsDiv().getAttribute("loading"));
   return getResultsDiv().getAttribute("loading");
 }
 /** State could be none, all, tag */
 function setResultsLoading(state) {
-  console.info('setResultsLoading: ' + state);
+  // console.info('setResultsLoading: ' + state);
   return getResultsDiv().setAttribute("loading", state);
 }
 /** results loading time methods */
@@ -72,6 +72,11 @@ function getResultsLoadingTime() {
 }
 function setResultsLoadingTime(time) {
   return getResultsDiv().setAttribute("time", time);
+}
+
+/** Where the details would be displayed */
+function getDetailsDiv() {
+  return document.getElementById("mainDetails");
 }
 
 </script>
