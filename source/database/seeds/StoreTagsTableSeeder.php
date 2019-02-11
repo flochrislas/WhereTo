@@ -207,7 +207,7 @@ class StoreTagsTableSeeder extends Seeder
             'weight'             => '300'
         ));
 
-        // check meaning of mall vs dept store
+        // check meaning of mall vs dept store .
 
       }
 }
