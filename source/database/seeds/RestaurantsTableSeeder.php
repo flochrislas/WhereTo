@@ -4334,6 +4334,7 @@ $resto = Restaurant::create(array(
 /*
 
 // try this curry place : https://tabelog.com/tokyo/A1303/A130301/13171069/dtlmap/
+// ramen kiraku https://fr.favy-jp.com/topics/2309
 
 SHIBUichi BAKERY SHIBUichi BAKERY (Bread、Cafe、Burger)
 3.39  15 reviews 

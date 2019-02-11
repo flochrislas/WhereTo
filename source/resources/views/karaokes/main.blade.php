@@ -9,10 +9,13 @@
     @include('karaokes.filter')
   </div>
 
-  <div id="mainResults">
+  <div id="mainResults" style="display: none">
     @include('karaokes.results')
   </div>
 
+</div>
+
+<div id="mainDetails" class="content-unchained" style="display: none">
 </div>
 
 <script>

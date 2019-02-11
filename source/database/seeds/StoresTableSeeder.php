@@ -369,6 +369,109 @@ class StoresTableSeeder extends Seeder
         $store->attachTags(['mall','fashion','luxury','jewelry','watches']);
         $store->fillCoordinatesFromString('35.660640, 139.696345');
 
+        $store = Store::create(array(
+          'name'              => 'Lighthouse Records',
+          'location'          => 'Shibuya',
+          'type'              => 'Records',
+          'points'            => 'Cool shop, great for electronic and house music.',
+          'experience'        => 'Very easy to miss from the street, but very nice shop. Great selection of electronic music, nu disco and house.',
+          'google_maps_link'  => 'https://www.google.com/maps/place/Lighthouse+Records/@35.6581766,139.6970925,17.25z/data=!4m5!3m4!1s0x60188b56282f48a7:0x34eb8d132bc55332!8m2!3d35.658761!4d139.698286',
+          'official_website'  => 'http://lighthouserecords.jp/',
+          'score'             => 1
+        ));
+        $store->attachTags(['music','records','vinyl']);
+        $store->fillCoordinatesFromString('35.658782, 139.698320');
+
+        $store = Store::create(array(
+          'name'              => 'HMV Record Shop',
+          'location'          => 'Shibuya, Udagawacho',
+          'type'              => 'Records',
+          'points'            => 'Big chain of records shops.',
+          'experience'        => 'Big chain, selling new and second hand music of all genre. Seems good to find some Japanese independant pop or some soul and jazz imports.',
+          'google_maps_link'  => 'https://www.google.com/maps/place/HMV+record+shop+Shibuya/@35.6617985,139.6954999,17.25z/data=!4m5!3m4!1s0x60188ca9415924a3:0x81eea8f480cb05d5!8m2!3d35.6620243!4d139.6972123',
+          'official_website'  => 'http://recordshop.hmv.co.jp/',
+          'score'             => 1
+        ));
+        $store->attachTags(['music','records','vinyl']);
+        $store->fillCoordinatesFromString('35.662127, 139.697295');
+        
+        $store = Store::create(array(
+          'name'              => 'Face Records',
+          'location'          => 'Shibuya, Udagawacho',
+          'type'              => 'Records',
+          'points'            => 'Great for soul, jazz and reggae on vinyl',
+          'experience'        => 'Great atmosphere. Sells vinyls, but also some CDs, DVDs, and books.',
+          'google_maps_link'  => 'https://www.google.com/maps/place/Face+Record/@35.66268,139.6949487,17z/data=!3m1!4b1!4m5!3m4!1s0x60188cac07d0dd05:0x7aba033eb37ed2ce!8m2!3d35.6626757!4d139.6971374',
+          'official_website'  => 'http://www.facerecords.com/',
+          'score'             => 1
+        ));
+        $store->attachTags(['music','records','vinyl']);
+        $store->fillCoordinatesFromString('35.662674, 139.697147');
+
+        $store = Store::create(array(
+          'name'              => 'Next Records',
+          'location'          => 'Shibuya, Udagawacho',
+          'type'              => 'Records',
+          'points'            => 'Vinyls for funk, disco, dance or RnB.',
+          'experience'        => 'Always up to date when it comes to funk, disco, dance or RnB, with imports from Europe and U.S.A. No bootlegs. About 10,000 original 12" singles. Also selling some second hand Technics turntables (and a DJ equipment shop is next door).',
+          'google_maps_link'  => 'https://www.google.com/maps/place/next+records/@35.6625535,139.6950264,17z/data=!3m1!4b1!4m5!3m4!1s0x60188ca94de4afa3:0x5436e42f3cf7da0!8m2!3d35.6625492!4d139.6972151',
+          'official_website'  => 'http://www.nextrecordsjapan.net/for-foreign-visitor.html',
+          'score'             => 1
+        ));
+        $store->attachTags(['music','records','vinyl']);
+        $store->fillCoordinatesFromString('35.662570, 139.697193');
+
+        $store = Store::create(array(
+          'name'              => 'Technique',
+          'location'          => 'Shibuya, Udagawacho',
+          'type'              => 'Records',
+          'points'            => 'Great for electronic music on vinyl.',
+          'experience'        => 'Highly specialized in house, dance, and any kind of electronic music. Small, but nice shop, where you can even have a beer, and check out flyers for upcoming DJ event in town.',
+          'google_maps_link'  => 'https://www.google.com/maps/place/TECHNIQUE/@35.6609314,139.6948219,17z/data=!3m1!4b1!4m5!3m4!1s0x60188ca970e7aaab:0xbc1e41d88c7706d6!8m2!3d35.6609271!4d139.6970106',
+          'official_website'  => 'https://technique.co.jp/',
+          'score'             => 1
+        ));
+        $store->attachTags(['music','records','vinyl']);
+        $store->fillCoordinatesFromString('35.660924, 139.697028');
+
+        $store = Store::create(array(
+          'name'              => 'Manhattan Records',
+          'location'          => 'Shibuya, Udagawacho',
+          'type'              => 'Records',
+          'points'            => 'Awesome for rap and hip-hop.',
+          'experience'        => 'Higly specilized in rap and hip-hop, with lots of American and Japanese vinyls, old and new.',
+          'google_maps_link'  => 'https://www.google.com/maps/place/Manhattan+Records/@35.6625155,139.6947012,17z/data=!3m1!4b1!4m5!3m4!1s0x60188ca94e710061:0x1d13fad0be6bdbfb!8m2!3d35.6625112!4d139.6968899',
+          'official_website'  => 'http://manhattanrecords.jp/',
+          'score'             => 1
+        ));
+        $store->attachTags(['music','records','vinyl']);
+        $store->fillCoordinatesFromString('35.662505, 139.69688');
+
+        $store = Store::create(array(
+          'name'              => 'Disc Union Shibuya',
+          'location'          => 'Shibuya, Udagawacho',
+          'type'              => 'Records',
+          'points'            => 'Very popular store for music and vinyls discs.',
+          'experience'        => 'This store often appears in the world\'s top 10 best record shops... The first two floors have tons of used vinyl discs of every kind. Then going up there is dance and hip hop, and up again for punk, hardcore and heavy metal. In the basement is where you’ll find the some rare groove, soul and jazz. If you are a music enthusiast looking for rarities, this is a very exiting place.',
+          'google_maps_link'  => 'https://www.google.com/maps/place/Disk+Union+Record+Vinyl+Store/@35.6608982,139.6958764,17z/data=!3m1!4b1!4m5!3m4!1s0x60188ca9a7bb87cd:0x116297446f5495a9!8m2!3d35.6608939!4d139.6980651',
+          'official_website'  => 'http://diskunion.net/',
+          'score'             => 2
+        ));
+        $store->attachTags(['music','records','vinyl']);
+        $store->fillCoordinatesFromString('35.660934, 139.698086');
+        
+        $store = Store::create(array(
+          'name'              => 'Tower Records Shibuya',
+          'location'          => 'Shibuya, Jinnan',
+          'type'              => 'Records',
+          'points'            => 'Biggest records store in Japan.',
+          'experience'        => '7 floors, selling mostly CDs, for all kind of music. Big, peculiar building, with another statue of Hachiko at its feet, it makes for another popular meeting points for young people.',
+          'google_maps_link'  => 'https://www.google.com/maps/place/Tower+Records+Shibuya/@35.6619233,139.6988062,17z/data=!3m1!4b1!4m5!3m4!1s0x60188ca87eba86d5:0xc878b2fe3fed54f0!8m2!3d35.661919!4d139.7009949',
+          'official_website'  => 'http://tower.jp/',
+          'score'             => 1
+        ));
+        $store->attachTags(['music','records','vinyl']);
+        $store->fillCoordinatesFromString('35.661911, 139.700972');
 
         /*
         ///AAA///
@@ -385,6 +488,8 @@ class StoresTableSeeder extends Seeder
         $store->attachTags(['xxxx']);
         $store->fillCoordinatesFromString('xxxx');
         */
+
+        // https://on-mag.fr/index.php/topaudio/musique/18317-vinyles-a-tokyo-8-disquaires-incontournables-du-quartier-de-shibuya
 
     }
 }

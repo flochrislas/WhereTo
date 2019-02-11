@@ -18,10 +18,34 @@ class BarTagsTableSeeder extends Seeder
         // Fill
 
         /******************************************/
-        /*             COUNTRIES                  */
+        /*             XXXXXXXXX                  */
         /******************************************/
         BarTag::create(array(
             'label'              => 'standing',
+            'type'               => '100',
+            'weight'             => '100'
+        ));
+
+        BarTag::create(array(
+            'label'              => 'craft beers',
+            'type'               => '100',
+            'weight'             => '100'
+        ));
+
+        BarTag::create(array(
+            'label'              => 'shisha',
+            'type'               => '100',
+            'weight'             => '100'
+        ));
+
+        BarTag::create(array(
+            'label'              => 'no table charge',
+            'type'               => '100',
+            'weight'             => '100'
+        ));
+
+        BarTag::create(array(
+            'label'              => 'non smoking area',
             'type'               => '100',
             'weight'             => '100'
         ));

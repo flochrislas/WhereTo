@@ -44,7 +44,6 @@ class KaraokesTableSeeder extends Seeder
         $karaoke->attachTags(['joysound','private rooms']);
         $karaoke->fillCoordinatesFromString('35.658400, 139.699813');
 
-
         $karaoke = Karaoke::create(array(
             'name'              => 'Joysound',
             'area'              => 'Shibuya',
@@ -60,9 +59,12 @@ class KaraokesTableSeeder extends Seeder
         $karaoke->attachTags(['joysound','private rooms']);
         $karaoke->fillCoordinatesFromString('35.657687, 139.698939');
 
-        https://www.google.com/maps/place/JOYSOUND/@35.6590358,139.6999694,18z/data=!4m8!1m2!2m1!1sjoysound!3m4!1s0x60188b57c0c20b7b:0x2daf0687b41f13ca!8m2!3d35.6583445!4d139.6998317
+        /*
 
+        https://en.compathy.net/magazine/2016/06/28/karaoke-in-japan-survival-guide/
+        https://www.japan-guide.com/e/e2066.html
 
+        */
 
     }
 }
