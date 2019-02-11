@@ -21,7 +21,13 @@ class KaraokeTagsTableSeeder extends Seeder
         /*             SYSTEMS                    */
         /******************************************/
         KaraokeTag::create(array(
-            'label'              => 'japanese',
+            'label'              => 'DAM',
+            'type'               => '200',
+            'weight'             => '200'
+        ));
+        // System: JOYSOUND , but that is also the name of a place
+        KaraokeTag::create(array(
+            'label'              => 'JOYSOUND',
             'type'               => '200',
             'weight'             => '200'
         ));
