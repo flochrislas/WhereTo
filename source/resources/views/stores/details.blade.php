@@ -38,7 +38,3 @@
   @endforeach
   </div>
 </div>
-
-@if ($place->visited != 1)
-  <div class="mysteryDot"> . </div>
-@endif

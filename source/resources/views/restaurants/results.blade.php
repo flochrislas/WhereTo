@@ -47,6 +47,6 @@
   </div>
 
 <!-- data -->
-<div id="results" loading="none" time="0">Loading...</div>
+<div id="results" loading="none" time="0"></div>
 
 @include('inline-javascript.results')

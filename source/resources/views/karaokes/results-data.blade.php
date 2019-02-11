@@ -3,11 +3,10 @@
 @foreach ($places as $karaoke)
   <div class="resultsCounter"></div>
   <div class="resultRow">
-    <div class="resultCell nameAndType">
-      <a href="{{ route('karaokes.details',$karaoke->id) }}">
+    <div class="resultCell nameAndType"
+        onclick="showDetails('{{ route('karaokes.details',$karaoke->id) }}','{{ $karaoke->id }}')">
       <div class="rowName">{{ $karaoke->name }}</div>
       <div class="rowType">{{ $karaoke->location }}</div>
-      </a>
     </div>
     <div class="resultCell distance centerContent">
       <a target="_blank"
