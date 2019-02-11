@@ -3,6 +3,8 @@
 ISSUE:
 
 sticker for cup: Certified Sergeable since 2015
+dont forget other stickers and tshirts ideas i nthis file§§§ such as Save the Swines
+also for cool tshirt: sew many of the charms we have on it!
 
 removing a tag triggers the find all requests, that takes ages even with cache and will replace the results even after user added a tag to disaply less results...
 should not trtigger find them all after removing tag? only when hitting the button with see all? or try memcached with unix socket instead of port and IP

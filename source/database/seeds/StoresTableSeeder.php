@@ -369,6 +369,115 @@ class StoresTableSeeder extends Seeder
         $store->attachTags(['mall','fashion','luxury','jewelry','watches']);
         $store->fillCoordinatesFromString('35.660640, 139.696345');
 
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        $store = Store::create(array(
+          'name'              => 'Lighthouse Records',
+          'location'          => 'Shibuya',
+          'type'              => 'Records',
+          'points'            => 'xxxx',
+          'experience'        => 'Ce magasin est un petit bijou, à la fois pour les mélomanes et pour les audiophiles. De très belles enceintes Klipsch trônent sur leurs pieds devant la baie vitrée de ce disquaire très discret que l’on rate facilement depuis la rue – chercher une grande enseigne de restaurant orange (plan). Au comptoir, deux platines sont posées sur des parpaings de béton et reliées à des électroniques à tubes. On profite d’écoutes sélectionnées dans d’excellentes conditions et il est également possible d’écouter au casque les disques de son choix sur plusieurs platines mises à disposition. La sélection axée sur les musiques électroniques, la nu disco et la house est aussi originale que qualitative et les prix restent raisonnables. Un magasin animé avec passion, ce qui en fait un must-see dans le quartier. Nous avions eu du mal à partir…',
+          'google_maps_link'  => 'xxxx',
+          'official_website'  => 'http://lighthouserecords.jp/',
+          'score'             => 1
+        ));
+        $store->attachTags(['music','records','vinyl']);
+        $store->fillCoordinatesFromString('xxxx');
+
+        $store = Store::create(array(
+          'name'              => 'HMV Record Shop',
+          'location'          => 'Shibuya',
+          'type'              => 'Records',
+          'points'            => 'xxxx',
+          'experience'        => 'Chaîne de plusieurs magasins dont un autre à Shinjuku. Au beau milieu du quartier des disquaires (plan), HMV propose une très large sélection. On y trouve du neuf comme de l’occasion en rock, pop, jazz, hip-hop, reggae et bien d’autres genres. On y trouve des sorties japonaises et des imports sélectionnés dans tous les styles et un personnel plutôt nombreux, disponible et sympathique. C’est l’endroit où chiner pour trouver des enregistrements japonais (plutôt indépendants que J-Pop) et des imports intéressants en soul et jazz.',
+          'google_maps_link'  => 'xxxx',
+          'official_website'  => 'http://recordshop.hmv.co.jp/',
+          'score'             => 1
+        ));
+        $store->attachTags(['music','records','vinyl']);
+        $store->fillCoordinatesFromString('xxxx');
+        
+        $store = Store::create(array(
+          'name'              => 'Face Records',
+          'location'          => 'Shibuya',
+          'type'              => 'Records',
+          'points'            => 'xxxx',
+          'experience'        => 'Fondé en 1994 et disposant dune autre enseigne à New York, c un des magasins du quartier (plan) qui bénéficie de lambiance la plus cool. La lumière chaleureuse et le petit balcon devant l’entrée nous feraient croire que nous sommes dans un petit café. On y discute facilement avec le personnel tout en parcourant une large sélection de vinyles axée sur la soul, le jazz et le reggae. Le magasin vend également quelques CD et DVD et livres.',
+          'google_maps_link'  => 'xxxx',
+          'official_website'  => 'http://www.facerecords.com/',
+          'score'             => 1
+        ));
+        $store->attachTags(['music','records','vinyl']);
+        $store->fillCoordinatesFromString('xxxx');
+
+        $store = Store::create(array(
+          'name'              => 'Next Records',
+          'location'          => 'Shibuya',
+          'type'              => 'Records',
+          'points'            => 'xxxx',
+          'experience'        => 'Cette boutique se trouve littéralement en face de Face Records (plan). Toujours à la page en funk, disco, dance et RnB, elle reçoit très régulièrement de nouveaux stocks d’Europe et des Etats-Unis. Des platines sont à disposition pour des écoutes et le personnel est très sympathique. Une partie des disques sont stockés sous les bacs, donc n’hésitez pas à vous accroupir pour chiner. Le magasin vend également des platines et se trouve juste à côté d’un magasin de matériel pro pour DJ.',
+          'google_maps_link'  => 'xxxx',
+          'official_website'  => 'http://www.nextrecordsjapan.net/for-foreign-visitor.html',
+          'score'             => 1
+        ));
+        $store->attachTags(['music','records','vinyl']);
+        $store->fillCoordinatesFromString('xxxx');
+
+        $store = Store::create(array(
+          'name'              => 'Technique',
+          'location'          => 'Shibuya',
+          'type'              => 'Records',
+          'points'            => 'xxxx',
+          'experience'        => 'Spécialiste en house, dance, techno et autres musiques électroniques, ce disquaire à la décoration épurée et au sound system très bien réglé est un repère pour Djs et clubbers exigeants où règne une ambiance décontractée. La sélection s’étend sur un seul rayon, avec beaucoup de nouveautés. Des platines sont à disposition pour les écoutes, et on peut également savourer une petite bière au comptoir pour se remettre de sa chasse aux disques. Le personnel jeune, dynamique et sympathique est très accessible et on trouve aussi dans ce magasin de nombreux flyers et annonces de soirées à Tokyo et dans la région. Un lieu de rencontre qui vaut le détour (plan) même si lon nest pas fan de techno.',
+          'google_maps_link'  => 'xxxx',
+          'official_website'  => 'https://technique.co.jp/',
+          'score'             => 1
+        ));
+        $store->attachTags(['music','records','vinyl']);
+        $store->fillCoordinatesFromString('xxxx');
+
+        $store = Store::create(array(
+          'name'              => 'Manhattan Records',
+          'location'          => 'Shibuya',
+          'type'              => 'Records',
+          'points'            => 'xxxx',
+          'experience'        => 'On peut repérer ce disquaire dès la sortie d’HMV Records (plan) : il suffit de chercher sur sa gauche le bâtiment couvert de fresques. Même à Shibuya, ce n’est pas monnaie courante ! Ici, on ne parle que de Hip-Hop et on meurt pour le rap, le break et le graffiti. D’excellents vinyles des années 1980 à nos jours sont disponibles dans des éditions étasuniennes ou japonaises. Les écoutes sont possibles et il y a un petit rayon au fond du magasin avec des occasions à prix réduits. On peut aussi se procurer des casquettes, sweaters et bombes de peinture. Pilier depuis 30 ans de la culture Hip-Hop à Tokyo, le magasin édite ses propres compilations et propose des CD et DVD neufs.',
+          'google_maps_link'  => 'xxxx',
+          'official_website'  => 'http://manhattanrecords.jp/',
+          'score'             => 1
+        ));
+        $store->attachTags(['music','records','vinyl']);
+        $store->fillCoordinatesFromString('xxxx');
+
+        $store = Store::create(array(
+          'name'              => 'Disc Union Shibuya',
+          'location'          => 'Shibuya, Udagawacho',
+          'type'              => 'Records',
+          'points'            => 'Very popular store for music and vinyls discs.',
+          'experience'        => 'This store often appears in the world\'s top 10 best record shops... The first two floors have tons of used vinyl discs of every kind. Then going up there is dance and hip hop, and up again for punk, hardcore and heavy metal. In the basement is where you’ll find the some rare groove, soul and jazz. If you are a music enthusiast looking for rarities, this is a very exiting place.',
+          'google_maps_link'  => 'https://www.google.com/maps/place/Disk+Union+Record+Vinyl+Store/@35.6608982,139.6958764,17z/data=!3m1!4b1!4m5!3m4!1s0x60188ca9a7bb87cd:0x116297446f5495a9!8m2!3d35.6608939!4d139.6980651',
+          'official_website'  => 'http://diskunion.net/',
+          'score'             => 2
+        ));
+        $store->attachTags(['music','records','vinyl']);
+        $store->fillCoordinatesFromString('35.660934, 139.698086');
+        
+        $store = Store::create(array(
+          'name'              => 'Tower Records Shibuya',
+          'location'          => 'Shibuya, Jinnan',
+          'type'              => 'Records',
+          'points'            => 'Biggest records store in Japan.',
+          'experience'        => '7 floors, selling mostly CDs, for all kind of music. Big, peculiar building, with another statue of Hachiko at its feet, it makes for another popular meeting points for young people.',
+          'google_maps_link'  => 'https://www.google.com/maps/place/Tower+Records+Shibuya/@35.6619233,139.6988062,17z/data=!3m1!4b1!4m5!3m4!1s0x60188ca87eba86d5:0xc878b2fe3fed54f0!8m2!3d35.661919!4d139.7009949',
+          'official_website'  => 'http://tower.jp/',
+          'score'             => 1
+        ));
+        $store->attachTags(['music','records','vinyl']);
+        $store->fillCoordinatesFromString('35.661911, 139.700972');
+
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         /*
         ///AAA///
@@ -385,6 +494,8 @@ class StoresTableSeeder extends Seeder
         $store->attachTags(['xxxx']);
         $store->fillCoordinatesFromString('xxxx');
         */
+
+        // https://on-mag.fr/index.php/topaudio/musique/18317-vinyles-a-tokyo-8-disquaires-incontournables-du-quartier-de-shibuya
 
     }
 }
