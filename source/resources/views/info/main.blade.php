@@ -40,7 +40,7 @@
           0: bad for dates
           1: decent for dates
           2: great for dates
-    <div>Shibuya Wi-Wi-Fi: areas with free WiFi https://www.atpress.ne.jp/news/165698</div>
+    <div>Shibuya Wi-Wi-Fi: Around Shibuya, and especially near malls, free WiFi Wi-Wi-Fi is available. You can select it, acess your web browser, register once (quick and easy), and done. Check areas here: https://www.atpress.ne.jp/news/165698</div>
     <div>Going for diner</div>
     <div>Going for a drink</div>
     <div>Clubbing</div>
