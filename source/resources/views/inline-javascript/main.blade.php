@@ -2,17 +2,13 @@
 <script>
 
 function showResults() {
-  var mainFilter = document.getElementById("mainFilter");
-  var mainResults = document.getElementById("mainResults");
-  mainFilter.style.display = "none";
-  mainResults.style.display = "flex"; // was block
+  getMainFilterDiv().style.display = "none";
+  getMainResultsDiv().style.display = "flex"; // was block
 }
 
 function showFilter() {
-  var mainFilter = document.getElementById("mainFilter");
-  var mainResults = document.getElementById("mainResults");
-  mainFilter.style.display = "flex"; // was block
-  mainResults.style.display = "none";
+  getMainFilterDiv().style.display = "flex"; // was block
+  getMainResultsDiv().style.display = "none";
 }
 
 function getResults() {
@@ -74,6 +70,13 @@ function setResultsLoadingTime(time) {
   return getResultsDiv().setAttribute("time", time);
 }
 
+/**** Get important elements ****/
+function getMainFilterDiv() {
+    return document.getElementById("mainFilter");
+}
+function getMainResultsDiv() {
+    return document.getElementById("mainResults");
+}
 /** Where the details would be displayed */
 function getDetailsDiv() {
   return document.getElementById("mainDetails");

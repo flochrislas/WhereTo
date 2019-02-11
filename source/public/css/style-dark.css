@@ -519,6 +519,7 @@ td {
   flex: 4;
   text-align: left;
   margin-right: .1rem;
+  cursor: pointer;
 }
 .resultCell.nameAndType a {
   text-decoration: none;
