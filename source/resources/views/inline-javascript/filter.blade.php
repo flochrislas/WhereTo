@@ -8,18 +8,34 @@ function moveTag(event) {
   // Move the tag in the proper div
   if (event.target.parentNode.id == "selectedTags") {
     document.getElementById("tags").appendChild(event.target);
+    // Check if any selectedTag left
+    if (getSelectedTagsDiv().children.length > 0) {
+      /* Run the search from the selectedTags immediately in the background */
+      refreshResults();
+    }
+    else {
+      // Reset the showResults button
+      resetFilterHeaderButton();
+    }
   } else {
-    document.getElementById("selectedTags").appendChild(event.target);
+    getSelectedTagsDiv().appendChild(event.target);
+    /* Run the search from the selectedTags immediately in the background */
+    refreshResults();
   }
-  /* Run the search from the selectedTags immediately in the background */
-  refreshResults();
+}
+
+function resetFilterHeaderButton() {
+  setResultsLoading("none");
+  setResultsLoadingTime(0);
+  getFilterHeaderButtonDiv().disabled = false;
+  getFilterHeaderButtonDiv().innerHTML = "Show All";
 }
 
 /** Refreshes the list of results */
 function refreshResults(orderBy) {
   // Default parameter doc: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Default_parameters
   /* read all the div under selectedTags */
-  var tags = document.getElementById("selectedTags").children;
+  var tags = getSelectedTagsDiv().children;
   /* make a list of all their ids or labels to send as parameters */
   var tagsLabels = getTagsLabels(tags);
 
@@ -108,30 +124,39 @@ function refreshShowResultsButton() {
   var nbResults = document.getElementsByClassName("resultsCounter").length;
   /* Change button label/text */
   if (nbResults == 0) {
-    document.getElementById("filterHeaderButton").innerHTML = "No result";
-    document.getElementById("filterHeaderButton").disabled = true;
+    getFilterHeaderButtonDiv().innerHTML = "No result";
+    getFilterHeaderButtonDiv().disabled = true;
   }
   else {
-      document.getElementById("filterHeaderButton").disabled = false;
-      document.getElementById("filterHeaderButton").innerHTML = "Show " + nbResults + " results";
+      getFilterHeaderButtonDiv().disabled = false;
+      getFilterHeaderButtonDiv().innerHTML = "Show " + nbResults + " results";
   }
 
 }
 
 /** Store methods  TO MOVE IN A SUPERIOR CLASS */
 function store(key, value) {
-  // Look up for different options, chose the best
-  if (typeof(Storage) !== "undefined") {
-    // Code for localStorage/sessionStorage.
-    localStorage.setItem(key, value);
-    // sessionStorage.setItem(key value);
-  } else {
-      console.warn("No local storage support from the browser. Application's behavior may be affected.");
-  }
+    // Look up for different options, chose the best
+    if (typeof(Storage) !== "undefined") {
+        // Code for localStorage/sessionStorage.
+        localStorage.setItem(key, value);
+        // sessionStorage.setItem(key value);
+    } else {
+        console.warn("No local storage support from the browser. Application's behavior may be affected.");
+    }
 }
 
 function readStore(key) {
     return localStorage.getItem(key);
+}
+/** * * * * * * * * * * * * * * * * * * * * * *  */
+
+/**** Get important elements ****/
+function getFilterHeaderButtonDiv() {
+    return document.getElementById("filterHeaderButton");
+}
+function getSelectedTagsDiv() {
+    return document.getElementById("selectedTags");
 }
 
 </script>
