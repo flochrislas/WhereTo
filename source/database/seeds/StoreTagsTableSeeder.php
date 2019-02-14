@@ -94,6 +94,12 @@ class StoreTagsTableSeeder extends Seeder
         ));
 
         StoreTag::create(array(
+            'label'              => 'outdoor',
+            'type'               => '80',
+            'weight'             => '300'
+        ));
+
+        StoreTag::create(array(
             'label'              => 'food',
             'type'               => '80',
             'weight'             => '300'
@@ -207,7 +213,7 @@ class StoreTagsTableSeeder extends Seeder
             'weight'             => '300'
         ));
 
-        // check meaning of mall vs dept store
+        // check meaning of mall vs dept store .
 
       }
 }

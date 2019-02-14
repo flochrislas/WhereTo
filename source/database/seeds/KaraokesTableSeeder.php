@@ -26,7 +26,7 @@ class KaraokesTableSeeder extends Seeder
             'official_website'  => 'http://karaokekan.jp/index.html',
             'score'             => 1
         ));
-        $karaoke->attachTags(['karaokekan','private rooms']);
+        $karaoke->attachTags(['karaokekan','private rooms','JOYSOUND','DAM']);
         $karaoke->fillCoordinatesFromString('35.660434, 139.698699');
 
         $karaoke = Karaoke::create(array(
@@ -41,7 +41,7 @@ class KaraokesTableSeeder extends Seeder
             'official_website'  => 'https://shop.joysound.com/shop/joysound-shibuyaminamiguchi/',
             'score'             => 1
         ));
-        $karaoke->attachTags(['joysound','private rooms']);
+        $karaoke->attachTags(['joysound','private rooms','JOYSOUND']);
         $karaoke->fillCoordinatesFromString('35.658400, 139.699813');
 
         $karaoke = Karaoke::create(array(
@@ -56,8 +56,23 @@ class KaraokesTableSeeder extends Seeder
             'official_website'  => 'https://shop.joysound.com/shop/joysound-shibuyadougenzaka/',
             'score'             => 1
         ));
-        $karaoke->attachTags(['joysound','private rooms']);
+        $karaoke->attachTags(['joysound','private rooms','JOYSOUND']);
         $karaoke->fillCoordinatesFromString('35.657687, 139.698939');
+
+        $karaoke = Karaoke::create(array(
+            'name'              => 'Uta hiroba',
+            'area'              => 'Shibuya, Udagawacho',
+            'location'          => 'Center Gai',
+            'points'            => 'Probably the cheapest karaoke chain',
+            'experience'        => 'Cheap, especially if you want drinks. Rooms are okay, but far from the greatest.',
+            'visited'           => true,
+            'visit_date'        => null,
+            'google_maps_link'  => 'https://www.google.com/maps/place/Utahiroba/@35.6602727,139.6967805,17z/data=!3m1!4b1!4m5!3m4!1s0x60188ca9b444643b:0x6e3a4892d8daafed!8m2!3d35.660269!4d139.698621',
+            'official_website'  => 'http://www.utahiro.com/',
+            'score'             => 1
+        ));
+        $karaoke->attachTags(['private rooms','JOYSOUND','DAM']);
+        $karaoke->fillCoordinatesFromString('35.660288, 139.698565');
 
         /*
 

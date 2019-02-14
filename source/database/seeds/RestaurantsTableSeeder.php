@@ -4329,6 +4329,27 @@ $resto = Restaurant::create(array(
         $resto->attachTags(['mexican','taco rice','meat']);
         $resto->fillCoordinatesFromString('35.657699, 139.702552');
 
+        $resto = Restaurant::create(array(
+            'name'              => 'Hobishuka',
+            'location'          => 'Shibuya, Dogenzaka',
+            'type'              => 'Chinese',
+            'lunch_price'       => 790,
+            'points'            => 'Cheap Chinese restaurant allowing smoking inside.',
+            'experience'        => '4F of a relatively crappy building. Inside is somehow casual and relaxing. Windows bay. No music, and a TV at very low volume. Smoking is allowed, so I cannot recommend this place unless you would like to smoke. At the time I went however, the smoke did not incomodate me (people were smoking 3 tables away from me). The menu has pictures and numbers, and offers a very large choice of dishes (more than 30), meat with vegetables, dumplings, tantamen or cantonese rice. For 790 yen I got a plate of meat and vegetables, a small plate of spicy tofu (you can change it for a salad), a soup, a small desert, and a bowl of rice. Cheap, tastes average.',
+            'visited'           => true,
+            'visit_date'        => '2019-01-01 13:00:00',
+            'google_maps_link'  => 'https://www.google.com/maps/place/%E4%B8%AD%E8%8F%AF%E6%96%99%E7%90%86+%E9%B3%B3%E7%BE%8E%E9%85%92%E5%AE%B6/@35.6576666,139.6973208,17z/data=!3m1!4b1!4m5!3m4!1s0x60188b57ba8cc315:0x882d084effa600ee!8m2!3d35.6576666!4d139.6995095',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13117990/',
+            'official_website'  => 'https://gegz100.gorp.jp/',
+            'score_lunch'       => 1,
+            'score_place'       => 1,
+            'score_food'        => 1,
+            'score_price'       => 2,
+            'score_date'        => 0
+        ));
+        $resto->attachTags(['chinese','dumpling','gyoza','teishoku','smoking allowed']);
+        $resto->fillCoordinatesFromString('35.657693, 139.699551');
+
 
         
 /*

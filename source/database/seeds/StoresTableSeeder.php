@@ -473,6 +473,59 @@ class StoresTableSeeder extends Seeder
         $store->attachTags(['music','records','vinyl']);
         $store->fillCoordinatesFromString('35.661911, 139.700972');
 
+        $store = Store::create(array(
+          'name'              => 'Mont-Bell',
+          'location'          => 'Shibuya, Udagawacho',
+          'type'              => 'Outdoor',
+          'points'            => 'Big store selling all kind of outdoor sports gear.',
+          'experience'        => 'There is an English version of their website here: <a href="https://en.montbell.jp/">https://en.montbell.jp/.</a>',
+          'google_maps_link'  => 'https://www.google.com/maps/place/mont-bell+Shibuya/@35.6623943,139.6953583,17z/data=!3m1!4b1!4m5!3m4!1s0x60188ca93864d0d7:0xa311ee2a69accd57!8m2!3d35.66239!4d139.697547',
+          'official_website'  => 'http://store.montbell.jp/',
+          'score'             => 1
+        ));
+        $store->attachTags(['outdoor','sports','clothes']);
+        $store->fillCoordinatesFromString('35.662339, 139.697618');
+
+        $store = Store::create(array(
+          'name'              => 'Function Junction',
+          'location'          => 'Shibuya, Udagawacho',
+          'type'              => 'Outdoor',
+          'points'            => 'Small shop, cool outdoor clothes and gear.',
+          'experience'        => 'Small shop, cool outdoor clothes and gear.',
+          'google_maps_link'  => 'https://www.google.com/maps/place/FUNCTION+JUNCTION+TOKYO/@35.6614306,139.6964239,17z/data=!4m5!3m4!1s0x60188ca93fbd2021:0xdd16ce3769b16d28!8m2!3d35.6620372!4d139.6975833',
+          'official_website'  => 'http://www.functionjunctiontokyo.com/',
+          'score'             => 1
+        ));
+        $store->attachTags(['outdoor','sports','clothes']);
+        $store->fillCoordinatesFromString('35.662035, 139.697575');        
+
+        $store = Store::create(array(
+          'name'              => 'A&F Country',
+          'location'          => 'Shibuya, Hikarie',
+          'type'              => 'Outdoor',
+          'points'            => 'Nice outdoor shop inside the Hikarie building.',
+          'experience'        => 'Nice outdoor shop inside the Hikarie building.',
+          'google_maps_link'  => 'https://www.google.com/maps/place/A%26F%E3%82%AB%E3%83%B3%E3%83%88%E3%83%AA%E3%83%BC+%E6%B8%8B%E8%B0%B7%E3%83%92%E3%82%AB%E3%83%AA%E3%82%A8ShinQs%E5%BA%97/@35.6591053,139.7015284,16.75z/data=!3m1!5s0x60188b58f894f891:0x4ceb5b05e50a8109!4m5!3m4!1s0x60188b58f9ad804b:0x8ca51d84e75fc700!8m2!3d35.6592766!4d139.7040703',
+          'official_website'  => 'https://www.aandf.co.jp/stores/afcountry/shibuya_hikarie',
+          'score'             => 1
+        ));
+        $store->attachTags(['outdoor','sports','clothes']);
+        $store->fillCoordinatesFromString('35.659258, 139.704020');
+
+        $store = Store::create(array(
+          'name'              => 'Colombia sportswear',
+          'location'          => 'Shibuya, Udagawacho',
+          'type'              => 'Outdoor',
+          'points'            => 'Famous outdoor brand.',
+          'experience'        => 'Smaller than the one in Harajuku, but still, nice shop.',
+          'google_maps_link'  => 'https://www.google.com/maps/place/Columbia+Sportswear+Shibuya/@35.6601673,139.6967184,16.5z/data=!4m5!3m4!1s0x60188ca9042e31f5:0x21538d45887342c3!8m2!3d35.6615303!4d139.698513',
+          'official_website'  => 'https://www.columbiasports.co.jp/',
+          'score'             => 1
+        ));
+        $store->attachTags(['outdoor','sports','clothes']);
+        $store->fillCoordinatesFromString('35.661549, 139.698497');
+        
+
         /*
         ///AAA///
         $store = Store::create(array(
