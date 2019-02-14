@@ -501,7 +501,7 @@ class StoresTableSeeder extends Seeder
 
         $store = Store::create(array(
           'name'              => 'A&F Country',
-          'location'          => 'Shibuya',
+          'location'          => 'Shibuya, Hikarie',
           'type'              => 'Outdoor',
           'points'            => 'Nice outdoor shop inside the Hikarie building.',
           'experience'        => 'Nice outdoor shop inside the Hikarie building.',
@@ -511,6 +511,20 @@ class StoresTableSeeder extends Seeder
         ));
         $store->attachTags(['outdoor','sports','clothes']);
         $store->fillCoordinatesFromString('35.659258, 139.704020');
+
+        $store = Store::create(array(
+          'name'              => 'Colombia sportswear',
+          'location'          => 'Shibuya, Udagawacho',
+          'type'              => 'Outdoor',
+          'points'            => 'Famous outdoor brand.',
+          'experience'        => 'Smaller than the one in Harajuku, but still, nice shop.',
+          'google_maps_link'  => 'https://www.google.com/maps/place/Columbia+Sportswear+Shibuya/@35.6601673,139.6967184,16.5z/data=!4m5!3m4!1s0x60188ca9042e31f5:0x21538d45887342c3!8m2!3d35.6615303!4d139.698513',
+          'official_website'  => 'https://www.columbiasports.co.jp/',
+          'score'             => 1
+        ));
+        $store->attachTags(['outdoor','sports','clothes']);
+        $store->fillCoordinatesFromString('35.661549, 139.698497');
+        
 
         /*
         ///AAA///
