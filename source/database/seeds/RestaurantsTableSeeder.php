@@ -4350,6 +4350,27 @@ $resto = Restaurant::create(array(
         $resto->attachTags(['chinese','dumpling','gyoza','teishoku','smoking allowed']);
         $resto->fillCoordinatesFromString('35.657693, 139.699551');
 
+        $resto = Restaurant::create(array(
+            'name'              => 'Queens Steak & Burger',
+            'location'          => 'Shibuya',
+            'type'              => 'Steak house',
+            'lunch_price'       => 1000,
+            'points'            => 'Nice steak and burger small restaurant.',
+            'experience'        => 'Inside is simple and peaceful. You can order something for 1000 yen, but the full lunch set is 1500 yen. I tried the burger lunch set for 1500yen. I got one good coffee, one delicious soup and very delicious salad. The amount of soup and salad was way above average. Then the burger came with fries. The fries were very... fried. Hard. The burger sauce was delicious, and it had fresh tomato and lettuce, with decent bread. The patty was relatively big, 180g, but, very sadly, overcooked. Ended full and satisfied nonetheless.',
+            'visited'           => true,
+            'visit_date'        => '2019-02-15 13:00:00',
+            'google_maps_link'  => 'https://www.google.com/maps/place/Queens+Steak+%26+Burger+%E3%82%AF%E3%82%A4%E3%83%BC%E3%83%B3%E3%82%BA+%E3%82%B9%E3%83%86%E3%83%BC%E3%82%AD%26%E3%83%90%E3%83%BC%E3%82%AC%E3%83%BC/@35.6593041,139.7008074,17z/data=!4m5!3m4!1s0x60188b573d1510f9:0xfcf677176ecd9fbf!8m2!3d35.6557529!4d139.6995206',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13220190/',
+            'official_website'  => 'http://queens-japan.info/',
+            'score_lunch'       => 3,
+            'score_place'       => 1,
+            'score_food'        => 2,
+            'score_price'       => 1,
+            'score_date'        => 1
+        ));
+        $resto->attachTags(['meat','burger','English menu']);
+        $resto->fillCoordinatesFromString('35.655720, 139.69960');
+
 
         
 /*
@@ -4375,25 +4396,25 @@ try vandalism
 
         /*
         $resto = Restaurant::create(array(
-            'name'              => '',
+            'name'              => 'xxxxx',
             'location'          => 'Shibuya',
-            'type'              => '',
+            'type'              => 'xxxxx',
             'lunch_price'       => 950,
-            'points'            => '',
-            'experience'        => '',
+            'points'            => 'xxxxx',
+            'experience'        => 'xxxxx',
             'visited'           => true,
-            'visit_date'        => '2019-01-01 13:00:00',
-            'google_maps_link'  => '',
-            'tabelog_link'      => '',
-            'official_website'  => '',
+            'visit_date'        => '2019-02-01 13:00:00',
+            'google_maps_link'  => 'xxxxx',
+            'tabelog_link'      => 'xxxxx',
+            'official_website'  => 'xxxxx',
             'score_lunch'       => 1,
             'score_place'       => 1,
             'score_food'        => 1,
             'score_price'       => 1,
             'score_date'        => 0
         ));
-        $resto->attachTags(['']);
-        $resto->fillCoordinatesFromString('');
+        $resto->attachTags(['xxxxx']);
+        $resto->fillCoordinatesFromString('xxxxx');
         */
 
         // NEGISHI
