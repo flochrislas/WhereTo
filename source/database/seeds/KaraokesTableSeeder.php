@@ -78,7 +78,12 @@ class KaraokesTableSeeder extends Seeder
 
         https://en.compathy.net/magazine/2016/06/28/karaoke-in-japan-survival-guide/
         https://www.japan-guide.com/e/e2066.html
-
+KARAOKE
+info
+https://en.compathy.net/magazine/2016/06/28/karaoke-in-japan-survival-guide/
+great way to have my songs into JOYSOUND
+https://soranews24.com/2016/03/31/want-your-songs-available-at-karaoke-all-across-japan-theres-a-way-and-its-absolutely-free/
+https://www.reddit.com/r/japan/comments/3adq6f/preview_karaoke_song_lists/
         */
 
     }

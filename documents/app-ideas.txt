@@ -6,12 +6,7 @@ sticker for cup: Certified Sergeable since 2015
 dont forget other stickers and tshirts ideas i nthis file§§§ such as Save the Swines
 also for cool tshirt: sew many of the charms we have on it!
 
-removing a tag triggers the find all requests, that takes ages even with cache and will replace the results even after user added a tag to disaply less results...
-should not trtigger find them all after removing tag? only when hitting the button with see all? or try memcached with unix socket instead of port and IP
-or when request is launched, add a marker in html, and when response comes, check if the marker is there still and update. if marker is gone because a faster request has been made in between, dont update result list.
-
-need: have URL to result page so we can SHARE them and go back quick even using chrome
-make the detail view part of the filter and result ONE PAGE , click a place will load deail content, hide result and show detail. then back wil  just hide detail and show result. it. is . genius.
+need: have URL to result page so we can SHARE
 
 Get rid of some CSS id and do class instead, like content 
 
@@ -29,7 +24,10 @@ make a section with nice pics of foods instead of tags to choose easily
 
 login VIP , nickname, can say "im eating here" on detail page if your gps coordinates match roughtly , then gain LVL , comments under details will be ordered by user LVL (lvlo1 rambling ignorant , lvl99 shibuya god)
 
+add a giant button of a different color for vip SEARCH ALL for full text search.
+
 Administration: Get a free Virtual Private Server somewhere (or at first it could be jsut some local html files in my VM and phone) and setup dashboard: link to googl eanalitics, cloudflare, OVH, AWS, other tools and monitoring, suc has ping, speed, new relic, nagios, is it up etc... also adds tab for all my hosted services, old google blog, free arda website .. and drives  dropbox, mega uplaod ... 
+
 
 Note: VPS used by sam and nathan : https://www.vultr.com/pricing/
 For website hosting: dreamhost (nathan)
@@ -54,8 +52,6 @@ link to tabelog or other relevant website
 feature: closest combini, now
 feature: closest loveho, now
 feature: closest <tag>, now
-when browsing, add the info of how long by foot it would take to reach there from current gps position.
-Basic info for real tourists: always carry enough cash to pay for the meal. Pokemon go? shibuya is like poke heaven.
 Sleep[anytime, without booking] -> (solo), (couple) -> (capsule hotels, internet cafe...) (love hotels, how to recognize one, stations with some nearby, magic sentence to tell the taxi)
 Information center: archive info about tons of stuff
 on pages, link to related info from info center (how to call the staff, how to ask for an extension, how to ask for the check...)
@@ -70,52 +66,13 @@ depeding on time: its lunch time! input keyword to find a nice place to eat
 second top menu or hidden left panel with default settings: 1 person, more than 1 star, less than 10mn by foot
 one touch display the tags instead of having to type any letters... diaply tags and user add tags by tapping, results update
 
-global info
-Lunch time: most regular restaurants open between 11:30 and 3pm for lunch. Lots of big chain restaurants just stay opened all the time.
-
 FAIRE DEFILER les details a travers les resultats  upon swipe droite gauche
 
-afficher les filtres actif et tap remove et bouton filter pour en ajouter en retournant sur la pages des tags
 
 DB extension: similar to restaurants, but for shopping, karaoke, bars, clubs, hotels, studio, loto, money exchange, atm
 WhatsNext extension: gives user amazing ideas he can do next (from the place he is visiting, given his history, the time, info he gave in his profile etc...)
 Ashigo Extension: 
 
------------
-
-(pouce)
-Score lunch global:
-0: Absolutely horrible place
-1: Bad or whatever, I won't go again
-2: OK, I might go again if <insert quite particular reason> ex(I crave for this specific kind of lunch / or if I extra money I can spare / Im really hungry)
-3: Very good. I would be down to go again any time
-4: Excellent. It is hard to refrain to go back to that place every week or more
-
-(fork and knife, or baguettes, or bowl of rice or bowl with smoke or plate with smoke)
-Food:
-0: poor
-1: good
-2: delicious
-3: divine
-
-(chair and table)
-Place
-0 horrible
-1 decent
-2 very nice
-3 fantastic
-
-(yen symbol)
-Price
-0 overpriced
-1 correct
-2 good deal
-
-(heart , with kissing face profile? or candle)
-Dates:
-0: Bad for dates
-1: Decent for dates
-2: Great for dates
 
 ----------------------------
 
@@ -141,12 +98,8 @@ the one front koban with VR floor
 3rd VR
 games: Yamanote train simulator, music games, racing, shoot, Tekken7, cards, gundam... old stuff, nothing interesting
 
-electronics shopping
 
-cloth shopping men / women
-
-
-OTHER idea to make little monery:
+OTHER idea to make little money:
 
 print tshit
 	bible theme "dont drown the swines/no drowning swines, swines protection league", "no cursing on fig trees (even if hungry)- organization for the protection of fig trees"
@@ -154,45 +107,9 @@ print tshit
 print stickers for headphones: "Jesus? I don't hear <i>Him</i> coming." , Surely cant hear HIM coming
 print it on a rim sticker so the headset beand is still visible in the middle
 print for casquette ou koi: YHWH en hebreux
-
 ------------------------------------------------------------------------------------------------------
-
-    <a class="giantButton locked" href="{{ route('restaurants.main') }}">
-      Dating
-      <br/>in<br/>Shibuya
-      <div class="purchasePrice">50</div>
-    </a>
-
-    <a class="giantButton locked" href="{{ route('restaurants.main') }}">
-      WhatsNext<br/>Extension
-      <div class="purchasePrice">120</div>
-    </a>
-    <a class="giantButton locked" href="{{ route('restaurants.main') }}">
-      Hashigo<br/>Extension<br/>
-      <div class="purchasePrice">120</div>
-    </a>
-
-    <a class="giantButton locked" href="{{ route('clubs.main') }}">
-      Clubbing in<br/>Shibuya
-      <div class="purchasePrice">50</div>
-    </a>
-
-    <a class="giantButton locked" href="{{ route('restaurants.main') }}">
-      Hair Salon
-      <br/>in<br/>Shibuya
-      <div class="purchasePrice">50</div>
-    </a>
-
-    <a class="giantButton locked" href="{{ route('restaurants.main') }}">
-      Shibuya's Secrets
-      <br/>MEGAPACK
-      <div class="purchasePrice">500</div>
-    </a>
-    ------------------------------------------------------------------------------------------------------
-
-
-
 upload photos on photo repo website
+write a book
 --------------------------------------------------------------------------------------------------------------
 
 In the code, filter blade page:
@@ -274,12 +191,6 @@ LIMIT tags selection to 5
 GEOSPATIAL laravel 5.6 neighborhood, maybe useful for WhatsNext?
 https://medium.com/@brice_hartmann/getting-started-with-geospatial-data-in-laravel-94502dc74d55
 
-KARAOKE
-info
-https://en.compathy.net/magazine/2016/06/28/karaoke-in-japan-survival-guide/
-great way to have my songs into JOYSOUND
-https://soranews24.com/2016/03/31/want-your-songs-available-at-karaoke-all-across-japan-theres-a-way-and-its-absolutely-free/
-https://www.reddit.com/r/japan/comments/3adq6f/preview_karaoke_song_lists/
 
 Nathan doesnt like Whoppers, Skor bars, and some obscure restaurant near his house.
 
