@@ -4393,6 +4393,7 @@ $resto = Restaurant::create(array(
         $resto->fillCoordinatesFromString('35.662355, 139.697588');
         
 /*
+// try french boistrot 139 near MontBell
 
 // try this curry place : https://tabelog.com/tokyo/A1303/A130301/13171069/dtlmap/
 // ramen kiraku https://fr.favy-jp.com/topics/2309

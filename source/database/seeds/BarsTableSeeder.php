@@ -39,7 +39,7 @@ class BarsTableSeeder extends Seeder
 All the HUbs
 Coin bar
 Jazz bar
-Shisha place
+Shisha place the 3 ones
 the 2 pubs near office
 the irish pub
 the dubliners
