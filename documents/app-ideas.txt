@@ -1,6 +1,7 @@
 \tkyfs01\Administration\Public\社内催し写真\GS2018新年会写真
 
 ISSUE:
+Make sure display all sort by distance by default
 
 sticker for cup: Certified Sergeable since 2015
 dont forget other stickers and tshirts ideas i nthis file§§§ such as Save the Swines
