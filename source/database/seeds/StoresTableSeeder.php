@@ -477,8 +477,14 @@ class StoresTableSeeder extends Seeder
           'name'              => 'Mont-Bell',
           'location'          => 'Shibuya, Udagawacho',
           'type'              => 'Outdoor',
-          'points'            => 'Big store selling all kind of outdoor sports gear.',
-          'experience'        => 'There is an English version of their website here: <a href="https://en.montbell.jp/">https://en.montbell.jp/.</a>',
+          'points'            => 'Big store selling all kind of outdoor clothes and gear.',
+          'experience'        => 'Spacious and nice, it provides a relaxing shopping experience. There are a lot of clothes and gear for moutains, snow, and cycling. Mont-Bell is a Japanese brand, making high quality stuff and selling them slightly cheaper than big names such as The North Face. There is an English version of their website here: <a href="https://en.montbell.jp/">https://en.montbell.jp/.</a>.
+          <ul>
+              <li>B1F: Restaurant Spice Magic</li>
+              <li>1F: Gear and goods</li>
+              <li>2F: Women and children</li>
+              <li>3F: Men</li>
+          </ul>',
           'google_maps_link'  => 'https://www.google.com/maps/place/mont-bell+Shibuya/@35.6623943,139.6953583,17z/data=!3m1!4b1!4m5!3m4!1s0x60188ca93864d0d7:0xa311ee2a69accd57!8m2!3d35.66239!4d139.697547',
           'official_website'  => 'http://store.montbell.jp/',
           'score'             => 1
@@ -491,7 +497,7 @@ class StoresTableSeeder extends Seeder
           'location'          => 'Shibuya, Udagawacho',
           'type'              => 'Outdoor',
           'points'            => 'Small shop, cool outdoor clothes and gear.',
-          'experience'        => 'Small shop, cool outdoor clothes and gear.',
+          'experience'        => 'Small shop, very nice staff. Selling high quality, expensive clothes and gears from various brands. There are also some Tokyo souvenirs T-shirts and whatnot.',
           'google_maps_link'  => 'https://www.google.com/maps/place/FUNCTION+JUNCTION+TOKYO/@35.6614306,139.6964239,17z/data=!4m5!3m4!1s0x60188ca93fbd2021:0xdd16ce3769b16d28!8m2!3d35.6620372!4d139.6975833',
           'official_website'  => 'http://www.functionjunctiontokyo.com/',
           'score'             => 1
@@ -504,7 +510,7 @@ class StoresTableSeeder extends Seeder
           'location'          => 'Shibuya, Hikarie',
           'type'              => 'Outdoor',
           'points'            => 'Nice outdoor shop inside the Hikarie building.',
-          'experience'        => 'Nice outdoor shop inside the Hikarie building.',
+          'experience'        => 'Nice shop at the 4th floor of Hikarie. Helpful staff. Selling high quality brand, such as Outdoor Research. Also in the same alley with small shops for The North Face and Sora, which is selling Patagonia.',
           'google_maps_link'  => 'https://www.google.com/maps/place/A%26F%E3%82%AB%E3%83%B3%E3%83%88%E3%83%AA%E3%83%BC+%E6%B8%8B%E8%B0%B7%E3%83%92%E3%82%AB%E3%83%AA%E3%82%A8ShinQs%E5%BA%97/@35.6591053,139.7015284,16.75z/data=!3m1!5s0x60188b58f894f891:0x4ceb5b05e50a8109!4m5!3m4!1s0x60188b58f9ad804b:0x8ca51d84e75fc700!8m2!3d35.6592766!4d139.7040703',
           'official_website'  => 'https://www.aandf.co.jp/stores/afcountry/shibuya_hikarie',
           'score'             => 1
@@ -512,6 +518,8 @@ class StoresTableSeeder extends Seeder
         $store->attachTags(['outdoor','sports','clothes']);
         $store->fillCoordinatesFromString('35.659258, 139.704020');
 
+        /*
+        // Seems like the building is closing
         $store = Store::create(array(
           'name'              => 'Colombia sportswear',
           'location'          => 'Shibuya, Udagawacho',
@@ -524,6 +532,26 @@ class StoresTableSeeder extends Seeder
         ));
         $store->attachTags(['outdoor','sports','clothes']);
         $store->fillCoordinatesFromString('35.661549, 139.698497');
+        */
+
+        $store = Store::create(array(
+          'name'              => 'Ikebe Digital Tower',
+          'location'          => 'Shibuya',
+          'type'              => 'Music gear',
+          'points'            => 'Sells and show stuff for DJs and home studio, keyboards and pianos.',
+          'experience'        => 'Crappy, easy to miss entrance in a back street, but this is a nice shop with a lot of stuff you can see and try.
+          <ul>
+              <li>3F: DJs controller, turntables, mixers, speakers...</li>
+              <li>5F: DAW, audio interfaces, midi controllers.../li>
+              <li>6F: Mics, headphones, studio monitors and cables</li>
+              <li>7F: Keyboards, synthesizers, piano and accordions</li>
+          </ul>',
+          'google_maps_link'  => 'https://www.google.com/maps/place/Ikebe+musical+instrument+Kenbando/@35.6574117,139.6994381,17.25z/data=!4m5!3m4!1s0x60188b576570fcd1:0x8a5b1ebf3eea54e4!8m2!3d35.6567834!4d139.7007594',
+          'official_website'  => 'http://www.ikebe-digital.com/',
+          'score'             => 1
+        ));
+        $store->attachTags(['music instruments','music gear']);
+        $store->fillCoordinatesFromString('35.656830, 139.700697');
         
 
         /*
@@ -541,6 +569,8 @@ class StoresTableSeeder extends Seeder
         $store->attachTags(['xxxx']);
         $store->fillCoordinatesFromString('xxxx');
         */
+
+        // http://www.tokyopocketguide.com/tokyo/shibuya.shopping.html
 
         // https://on-mag.fr/index.php/topaudio/musique/18317-vinyles-a-tokyo-8-disquaires-incontournables-du-quartier-de-shibuya
 

@@ -4350,9 +4350,50 @@ $resto = Restaurant::create(array(
         $resto->attachTags(['chinese','dumpling','gyoza','teishoku','smoking allowed']);
         $resto->fillCoordinatesFromString('35.657693, 139.699551');
 
+        $resto = Restaurant::create(array(
+            'name'              => 'Queens Steak & Burger',
+            'location'          => 'Shibuya',
+            'type'              => 'Steak house',
+            'lunch_price'       => 1000,
+            'points'            => 'Nice steak and burger small restaurant.',
+            'experience'        => 'Inside is simple and peaceful. You can order something for 1000 yen, but the full lunch set is 1500 yen. I tried the burger lunch set for 1500yen. I got one good coffee, one delicious soup and very delicious salad. The amount of soup and salad was way above average. Then the burger came with fries. The fries were very... fried. Hard. The burger sauce was delicious, and it had fresh tomato and lettuce, with decent bread. The patty was relatively big, 180g, but, very sadly, overcooked. Ended full and satisfied nonetheless.',
+            'visited'           => true,
+            'visit_date'        => '2019-02-15 13:00:00',
+            'google_maps_link'  => 'https://www.google.com/maps/place/Queens+Steak+%26+Burger+%E3%82%AF%E3%82%A4%E3%83%BC%E3%83%B3%E3%82%BA+%E3%82%B9%E3%83%86%E3%83%BC%E3%82%AD%26%E3%83%90%E3%83%BC%E3%82%AC%E3%83%BC/@35.6593041,139.7008074,17z/data=!4m5!3m4!1s0x60188b573d1510f9:0xfcf677176ecd9fbf!8m2!3d35.6557529!4d139.6995206',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13220190/',
+            'official_website'  => 'http://queens-japan.info/',
+            'score_lunch'       => 3,
+            'score_place'       => 1,
+            'score_food'        => 2,
+            'score_price'       => 1,
+            'score_date'        => 1
+        ));
+        $resto->attachTags(['meat','burger','English menu']);
+        $resto->fillCoordinatesFromString('35.655720, 139.69960');
 
+        $resto = Restaurant::create(array(
+            'name'              => 'Spice Magic',
+            'location'          => 'Shibuya, Udagawacho',
+            'type'              => 'Exotic',
+            'lunch_price'       => 800,
+            'points'            => 'Very peaceful, comfortable. Very good gapao, curry, and buritos.',
+            'experience'        => 'Inside the Mont-Bell (shop for outdoor clothes and gear) building. Nice place, with a windows bay, and very soft guitar and piano music, accompanied by birds chirping. This create a relaxing atmosphere. Seats are confortable. On the menu are some rice and curry or gapao dishes, and some buritos, cakes or ice cream as well. I tried the gapao for 780yen, and the spicy chicken burito for 400 yen. The gapao was not like the one you find in a Thai restaurant, but it was totally delicious. The burito was very good as well. It is very good quality for the price. Warning though: it is spicy in the sense of flavor. It is not spicy hot, at all. Since it is in a Mont-Bell store, there are some moutains related magazines and stuff available to read. This place is very quite, and it is a thing hard to come by in Shibuya.',
+            'visited'           => true,
+            'visit_date'        => '2019-02-18 13:00:00',
+            'google_maps_link'  => 'https://www.google.com/maps/place/%E3%82%B9%E3%83%91%E3%82%A4%E3%82%B9%E3%83%9E%E3%82%B8%E3%83%83%E3%82%AF+%E6%B8%8B%E8%B0%B7%E5%BA%97/@35.6623943,139.6953583,17z/data=!3m1!4b1!4m5!3m4!1s0x60188ca9386fd50f:0xc6e4e5616f800733!8m2!3d35.66239!4d139.697547',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13045782/',
+            'official_website'  => 'http://store.montbell.jp/spicemagic/',
+            'score_lunch'       => 3,
+            'score_place'       => 2,
+            'score_food'        => 2,
+            'score_price'       => 2,
+            'score_date'        => 0
+        ));
+        $resto->attachTags(['gapao','curry','English menu','no smoking']);
+        $resto->fillCoordinatesFromString('35.662355, 139.697588');
         
 /*
+// try french boistrot 139 near MontBell
 
 // try this curry place : https://tabelog.com/tokyo/A1303/A130301/13171069/dtlmap/
 // ramen kiraku https://fr.favy-jp.com/topics/2309
@@ -4375,25 +4416,25 @@ try vandalism
 
         /*
         $resto = Restaurant::create(array(
-            'name'              => '',
+            'name'              => 'xxxxx',
             'location'          => 'Shibuya',
-            'type'              => '',
+            'type'              => 'xxxxx',
             'lunch_price'       => 950,
-            'points'            => '',
-            'experience'        => '',
+            'points'            => 'xxxxx',
+            'experience'        => 'xxxxx',
             'visited'           => true,
-            'visit_date'        => '2019-01-01 13:00:00',
-            'google_maps_link'  => '',
-            'tabelog_link'      => '',
-            'official_website'  => '',
+            'visit_date'        => '2019-02-01 13:00:00',
+            'google_maps_link'  => 'xxxxx',
+            'tabelog_link'      => 'xxxxx',
+            'official_website'  => 'xxxxx',
             'score_lunch'       => 1,
             'score_place'       => 1,
             'score_food'        => 1,
             'score_price'       => 1,
             'score_date'        => 0
         ));
-        $resto->attachTags(['']);
-        $resto->fillCoordinatesFromString('');
+        $resto->attachTags(['xxxxx']);
+        $resto->fillCoordinatesFromString('xxxxx');
         */
 
         // NEGISHI

@@ -98,6 +98,12 @@ class KaraokeTagsTableSeeder extends Seeder
             'weight'             => '50'
         ));
 
+        KaraokeTag::create(array(
+            'label'              => 'uta hiroba',
+            'type'               => '50',
+            'weight'             => '50'
+        ));
+
 
     }
 }
