@@ -4371,7 +4371,26 @@ $resto = Restaurant::create(array(
         $resto->attachTags(['meat','burger','English menu']);
         $resto->fillCoordinatesFromString('35.655720, 139.69960');
 
-
+        $resto = Restaurant::create(array(
+            'name'              => 'Spice Magic',
+            'location'          => 'Shibuya, Udagawacho',
+            'type'              => 'Exotic',
+            'lunch_price'       => 800,
+            'points'            => 'Very peaceful, comfortable. Very good gapao, curry, and buritos.',
+            'experience'        => 'Inside the Mont-Bell (shop for outdoor clothes and gear) building. Nice place, with a windows bay, and very soft guitar and piano music, accompanied by birds chirping. This create a relaxing atmosphere. Seats are confortable. On the menu are some rice and curry or gapao dishes, and some buritos, cakes or ice cream as well. I tried the gapao for 780yen, and the spicy chicken burito for 400 yen. The gapao was not like the one you find in a Thai restaurant, but it was totally delicious. The burito was very good as well. It is very good quality for the price. Warning though: it is spicy in the sense of flavor. It is not spicy hot, at all. Since it is in a Mont-Bell store, there are some moutains related magazines and stuff available to read. This place is very quite, and it is a thing hard to come by in Shibuya.',
+            'visited'           => true,
+            'visit_date'        => '2019-02-18 13:00:00',
+            'google_maps_link'  => 'https://www.google.com/maps/place/%E3%82%B9%E3%83%91%E3%82%A4%E3%82%B9%E3%83%9E%E3%82%B8%E3%83%83%E3%82%AF+%E6%B8%8B%E8%B0%B7%E5%BA%97/@35.6623943,139.6953583,17z/data=!3m1!4b1!4m5!3m4!1s0x60188ca9386fd50f:0xc6e4e5616f800733!8m2!3d35.66239!4d139.697547',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13045782/',
+            'official_website'  => 'http://store.montbell.jp/spicemagic/',
+            'score_lunch'       => 3,
+            'score_place'       => 2,
+            'score_food'        => 2,
+            'score_price'       => 2,
+            'score_date'        => 0
+        ));
+        $resto->attachTags(['gapao','curry','English menu','no smoking']);
+        $resto->fillCoordinatesFromString('35.662355, 139.697588');
         
 /*
 
