@@ -4391,6 +4391,27 @@ $resto = Restaurant::create(array(
         ));
         $resto->attachTags(['gapao','curry','English menu','no smoking']);
         $resto->fillCoordinatesFromString('35.662355, 139.697588');
+
+        $resto = Restaurant::create(array(
+            'name'              => 'Gh Ethnica',
+            'location'          => 'Shibuya, Stream',
+            'type'              => 'Ethnic',
+            'lunch_price'       => 1000,
+            'points'            => 'Good dish of curry and mixed plates.',
+            'experience'        => 'Located along the Shibuya river, in the ground floor of the Stream building, the place is rather nice, with its big windows bay. It is comfortable if you get a table with chairs, but lots of tables have stools to sit around. For lunch, the menu offers 3 different mixed plates (serving of meat and vegetables). I tried the special curry set for 1000 yen. It came with a salad on the side, of decent amount. The dish itself was delicious, and kind of fancy. The chicken curry was good, the rice as well, and on the top was various fresh vegetables. Drink set is plus 200 yen.',
+            'visited'           => true,
+            'visit_date'        => '2019-02-20 13:00:00',
+            'google_maps_link'  => 'https://www.google.com/maps/place/GH+ETHNICA/@35.6573243,139.7010106,17z/data=!3m1!4b1!4m5!3m4!1s0x60188b868edda8a9:0x8b52a817991e927!8m2!3d35.65732!4d139.7031993',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13225123/',
+            'official_website'  => 'http://www.ghghgh.jp/gh-ethnica/',
+            'score_lunch'       => 3,
+            'score_place'       => 2,
+            'score_food'        => 2,
+            'score_price'       => 1,
+            'score_date'        => 1
+        ));
+        $resto->attachTags(['curry','no smoking','English menu']);
+        $resto->fillCoordinatesFromString('35.657391, 139.703171');
         
 /*
 // try french boistrot 139 near MontBell
