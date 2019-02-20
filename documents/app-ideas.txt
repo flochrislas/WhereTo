@@ -1,11 +1,27 @@
 \tkyfs01\Administration\Public\社内催し写真\GS2018新年会写真
-
-ISSUE:
-Make sure display all sort by distance by default
-
+------------------*******////////------*******/
+STICKERS AND PRINTS FOR CLOTHES AND STUFF
 sticker for cup: Certified Sergeable since 2015
 dont forget other stickers and tshirts ideas i nthis file§§§ such as Save the Swines
 also for cool tshirt: sew many of the charms we have on it!
+sticker for the air humidifier: Siberianizer, with a red star, maybe above for the middle i
+
+print tshit
+	bible theme "dont drown the swines/no drowning swines, swines protection league", "no cursing on fig trees (even if hungry)- organization for the protection of fig trees"
+	"where is sataoshi - i am not satoshi"
+	Save the Swines sur un paneau interdit avec un sanglier qui se jette de la falaise, on peut ecrire dans le cercle rouge
+print stickers for headphones: "Jesus? I don't hear <i>Him</i> coming." , Surely cant hear HIM coming
+print it on a rim sticker so the headset beand is still visible in the middle
+print for casquette ou koi: YHWH en hebreux
+------------------------------------------------------------------------------------------------------
+upload photos on photo repo website
+write a book
+------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------
+
+ISSUE:
+Make sure display all sort by distance by default
 
 need: have URL to result page so we can SHARE
 
@@ -16,6 +32,15 @@ NEXT UP
 Architecture:
 - Analytics: Google Analytics
 - Enhancement: register domainname in CloudFlare OR Fastly
+
+Marketing:
+blog, write anytghing about tokyo, and relate updates and pics
+facebook business page
+instagramm usiness page with post from pictures we take in the city
+if all updates and posts elsewhere automatize it, post on twitter
+youtube video
+LINE page maybe hard
+
 
 Print meishi with bar code
 FindItFast tokyo
@@ -99,19 +124,6 @@ the one front koban with VR floor
 3rd VR
 games: Yamanote train simulator, music games, racing, shoot, Tekken7, cards, gundam... old stuff, nothing interesting
 
-
-OTHER idea to make little money:
-
-print tshit
-	bible theme "dont drown the swines/no drowning swines, swines protection league", "no cursing on fig trees (even if hungry)- organization for the protection of fig trees"
-	"where is sataoshi - i am not satoshi"
-print stickers for headphones: "Jesus? I don't hear <i>Him</i> coming." , Surely cant hear HIM coming
-print it on a rim sticker so the headset beand is still visible in the middle
-print for casquette ou koi: YHWH en hebreux
-------------------------------------------------------------------------------------------------------
-upload photos on photo repo website
-write a book
---------------------------------------------------------------------------------------------------------------
 
 In the code, filter blade page:
 - AUTO COMPLETE CODE
