@@ -1946,7 +1946,7 @@ class RestaurantsTableSeeder extends Seeder
             'score_price'       => 1,
             'score_date'        => 0
         ));
-        $resto->attachTags(['curry', 'vegetarian']);
+        $resto->attachTags(['curry','vegetarian friendly']);
         $resto->fillCoordinatesFromString('35.662753, 139.695291');
 
         $resto = Restaurant::create(array(
@@ -2186,7 +2186,7 @@ class RestaurantsTableSeeder extends Seeder
             'type'              => 'Sushi',
             'lunch_price'       => 1000,
             'points'            => 'Big and popular (read busy) sushi restaurant. Lot of choices (hundreds) with not only sushi, but meat and different dishes as well. Reasonably priced. Decent taste.',
-            'experience'        => 'There seems to be always a line of people sitting, waiting their turn to be able to enter the place. THe place is quite big, with tables and counters. You can grab items from the convey belt running everywhere, but there is a big menu with hundreds of choices and paper where you just have to put dish number and amount to place an order. You can get a dish of 2 sushi for as cheap as 100 yen. Tastes decent. There is also a fair amount of vegan sushi and dishes. I was surprised at how good the avocado tenpura was, and quite filling for 250 yen. The amount of fish on each sushi is quite nice.',
+            'experience'        => 'There seems to be always a line of people sitting, waiting their turn to be able to enter the place. THe place is quite big, with tables and counters. You can grab items from the convey belt running everywhere, but there is a big menu with hundreds of choices and paper where you just have to put dish number and amount to place an order. You can get a dish of 2 sushi for as cheap as 100 yen. Tastes decent. There is also a fair amount of vegetarian sushi and dishes. I was surprised at how good the avocado tenpura was, and quite filling for 250 yen. The amount of fish on each sushi is quite nice.',
             'visited'           => true,
             'visit_date'        => '2018-05-31 13:00:00',
             'google_maps_link'  => 'https://www.google.co.jp/maps/place/Katsu+Midori+Seibu+Shibuya/@35.6578812,139.7035082,16z/data=!4m5!3m4!1s0x0:0xa9b1e2d5e31cd607!8m2!3d35.6602348!4d139.7005149',
@@ -2198,7 +2198,7 @@ class RestaurantsTableSeeder extends Seeder
             'score_price'       => 1,
             'score_date'        => 0
         ));
-        $resto->attachTags(['sushi', 'vegan friendly', 'vegetarian friendly']);
+        $resto->attachTags(['sushi', 'vegetarian friendly']);
         $resto->fillCoordinatesFromString('35.660271, 139.700488');
 
         $resto = Restaurant::create(array(
@@ -3083,7 +3083,7 @@ class RestaurantsTableSeeder extends Seeder
             'score_price'       => 1,
             'score_date'        => 1
         ));
-        $resto->attachTags(['open air space','no smoking','cafe','vegan friendly','organic']);
+        $resto->attachTags(['open air space','no smoking','cafe','vegetarian friendly','organic']);
         $resto->fillCoordinatesFromString('35.655948, 139.699819');
 
         $resto = Restaurant::create(array(
@@ -3230,7 +3230,7 @@ class RestaurantsTableSeeder extends Seeder
             'score_price'       => 1,
             'score_date'        => 1
         ));
-        $resto->attachTags(['all-you-can-eat','pasta','pizza','italian','vegan friendly','organic','cafe','no smoking','english menu']);
+        $resto->attachTags(['all-you-can-eat','pasta','pizza','italian','vegetarian friendly','organic','cafe','no smoking','english menu']);
         $resto->fillCoordinatesFromString('35.660236, 139.700387');
 
         $resto = Restaurant::create(array(
@@ -3335,7 +3335,7 @@ class RestaurantsTableSeeder extends Seeder
             'score_price'       => 0,
             'score_date'        => 0
         ));
-        $resto->attachTags(['pizza','customisable dishes','open air space','no smoking','visa','vegetarian friendly','vegan friendly']);
+        $resto->attachTags(['pizza','customisable dishes','open air space','no smoking','visa','vegetarian friendly']);
         $resto->fillCoordinatesFromString('35.657298, 139.702978');
 
         $resto = Restaurant::create(array(
@@ -3440,7 +3440,7 @@ class RestaurantsTableSeeder extends Seeder
             'score_price'       => 1,
             'score_date'        => 1
         ));
-        $resto->attachTags(['cafe','open air space','vegan friendly','falafel','to-go']);
+        $resto->attachTags(['cafe','open air space','vegetarian friendly','falafel','to-go']);
         $resto->fillCoordinatesFromString('35.657345, 139.703107');
 
         $resto = Restaurant::create(array(
@@ -3470,7 +3470,7 @@ class RestaurantsTableSeeder extends Seeder
             'type'              => 'Pub',
             'lunch_price'       => 980,
             'points'            => 'Nice place, even for lunch, with a terrace on the second floor, but smoking is allowed.',
-            'experience'        => 'This is really great if the weather is nice and you get to be on their terrace on the 2nd floor. The inside is also nice, but smoking being allowed, it could ruin the experience. The menu has salad, pizza (with vegan option), pasta... I got the pasta lunch for 980 yen and it was surprisingly good. It came with a small salad and 2 slices of bread.',
+            'experience'        => 'This is really great if the weather is nice and you get to be on their terrace on the 2nd floor. The inside is also nice, but smoking being allowed, it could ruin the experience. The menu has salad, pizza (with vegetarian options), pasta... I got the pasta lunch for 980 yen and it was surprisingly good. It came with a small salad and 2 slices of bread.',
             'visited'           => true,
             'visit_date'        => '2018-10-02 13:00:00',
             'google_maps_link'  => 'https://www.google.com/maps/place/THE+DUBLINERS%E2%80%99+CAFE%26PUB+%E6%B8%8B%E8%B0%B7%E5%BA%97/@35.65842,139.6973621,18z/data=!4m8!1m2!2m1!1sthe+dubliners!3m4!1s0x0:0x1508740828033de5!8m2!3d35.6592533!4d139.6979588',
@@ -3482,7 +3482,7 @@ class RestaurantsTableSeeder extends Seeder
             'score_price'       => 1,
             'score_date'        => 1
         ));
-        $resto->attachTags(['pub','pasta','pizza','vegan friendly']);
+        $resto->attachTags(['pub','pasta','pizza','vegetarian friendly']);
         $resto->fillCoordinatesFromString('35.659236, 139.697944');
 
 
@@ -3682,7 +3682,7 @@ $resto = Restaurant::create(array(
             'type'              => 'Katsu',
             'lunch_price'       => 1000,
             'points'            => 'Nice katsudon restaurant.',
-            'experience'        => 'Small place with just a counter. Cosy. Good food. Decent price. 1000 yen for a curry rice with deep fried vegetables and 3 pieces of deep fried pork (katsu). The curry itself was not especially tasty, but some spices are available to add directly on tyhe counter. THe vegetables and katsu were very good.',
+            'experience'        => 'Small place with just a counter. Cosy. Good food. Decent price. 1000 yen for a curry rice with deep fried vegetables and 3 pieces of deep fried pork (katsu). The curry itself was not especially tasty, but some spices are available to add directly on tyhe counter. The vegetables and katsu were very good.',
             'visited'           => true,
             'visit_date'        => '2018-10-07 13:00:00',
             'google_maps_link'  => 'https://www.google.co.jp/maps/place/Tare+Katsu+Shibuya/@35.6582008,139.6988727,17z/data=!4m5!3m4!1s0x0:0x6baaa4e98431cfdd!8m2!3d35.6580526!4d139.6992428',
@@ -3757,7 +3757,7 @@ $resto = Restaurant::create(array(
             'score_price'       => 0,
             'score_date'        => 0
         ));
-        $resto->attachTags(['falafel','vegan friendly','English menu','no smoking']);
+        $resto->attachTags(['falafel','vegetarian friendly','English menu','no smoking']);
         $resto->fillCoordinatesFromString('35.657146, 139.690795');
 
         $resto = Restaurant::create(array(
