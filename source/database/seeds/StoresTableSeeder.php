@@ -243,10 +243,40 @@ class StoresTableSeeder extends Seeder
 
         $store = Store::create(array(
           'name'              => 'Tokyu Hands',
-          'location'          => 'Shibuya',
-          'type'              => 'Gifts and housewares',
-          'points'            => 'Big store offering an enormous variety of gifts and housewares',
-          'experience'        => 'Nice and big, with a somewhat confusing floor system. Can find some great things in there, but be ready to pay a relatively high price.',
+          'location'          => 'Shibuya, Udagawacho',
+          'type'              => 'Creative Gifts',
+          'points'            => 'Big store offering an enormous variety of gifts, craft and... lots of stuff.',
+          'experience'        => 'Nice and big, with a somewhat confusing floors system. Can find some great things in there, but be ready to pay a relatively high price.
+          <ul>
+              <li>A B1F: DIY creative materials</li>
+              <li>A 1F: Outdoor goods</li>
+              <li>A 2F: Variety & mobile</li>
+              <li>A 3F: Health care</li>
+              <li>A 4F: Interior (furniture and storage)</li>
+              <li>A 5F: Stationery</li>
+              <li>A 6F: Craft and workshop</li>
+              <li>A 7F: Hint7, cafe</li>
+          </ul>
+          <ul>
+              <li>B B1F: DIY woodwork</li>
+              <li>B 1F: Wallets, watches, accessories</li>
+              <li>B 2F: Anniversary</li>
+              <li>B 3F: Cleaning & laundry</li>
+              <li>B 4F: Interior (bed and pillows)</li>
+              <li>B 5F: Stationery (office supplies)</li>
+              <li>B 6F: Craft</li>
+              <li>B 7F: Miniature models and hobbies</li>
+          </ul>
+          <ul>
+              <li>C B2F: Cyclings</li>
+              <li>C B1F: DIY home fixtures</li>
+              <li>C 1F: Bags & travel</li>
+              <li>C 2F: Beauty & cosmetic</li>
+              <li>C 3F: Kitchen supplies</li>
+              <li>C 4F: Interior (toilets & bath)</li>
+              <li>C 5F: Stationery</li>
+              <li>C 6F: Pet</li>
+          </ul>',
           'google_maps_link'  => 'https://www.google.com/maps/place/Tokyu+Hands+Shibuya/@35.6607993,139.6969887,17z/data=!4m5!3m4!1s0x60188ca916447249:0x13ff108bf95bcbf1!8m2!3d35.6619892!4d139.6978121',
           'official_website'  => 'http://shibuya.tokyu-hands.co.jp/',
           'score'             => 2
@@ -255,10 +285,10 @@ class StoresTableSeeder extends Seeder
         $store->fillCoordinatesFromString('35.662000, 139.697741');
 
         $store = Store::create(array(
-          'name'              => 'Jampara',
+          'name'              => 'Janpara',
           'location'          => 'Shibuya, Dogenzaka',
           'type'              => 'Used Electronics',
-          'points'            => 'Small shop. Second hand electronics such as laptops and smartphones.',
+          'points'            => 'Small shop. Buy and sell second hand smartphones and electronics..',
           'experience'        => 'Interesting choice of second hand stuff such as laptops, smartphones, some heaphones, video games consoles or video cameras...',
           'google_maps_link'  => 'https://www.google.com/maps/place/%E3%81%98%E3%82%83%E3%82%93%E3%81%B1%E3%82%89+%E6%B8%8B%E8%B0%B7%E9%81%93%E7%8E%84%E5%9D%82%E5%BA%97/@35.6589056,139.6957593,17z/data=!3m1!4b1!4m5!3m4!1s0x60188ca9d964652b:0xae9c85f47e4cae05!8m2!3d35.6589013!4d139.697948',
           'official_website'  => 'http://www.janpara.co.jp/',
@@ -266,6 +296,19 @@ class StoresTableSeeder extends Seeder
         ));
         $store->attachTags(['electronics','computers','phones']);
         $store->fillCoordinatesFromString('35.658948, 139.697916');
+
+        $store = Store::create(array(
+          'name'              => 'Janpara',
+          'location'          => 'Shibuya, Udagawa',
+          'type'              => 'Used Electronics',
+          'points'            => 'Small shop, on 2 floors. Buy and sell second hand smartphones and electronics.',
+          'experience'        => 'Interesting choice of second hand stuff such as laptops, smartphones, some heaphones, video games consoles or video cameras...',
+          'google_maps_link'  => 'https://www.google.com/maps/place/Jun-Para+Shibuya+Udagawa/@35.6605314,139.6963436,16.75z/data=!4m5!3m4!1s0x60188ca90a37c15f:0xdecb0d4d9500cb3f!8m2!3d35.661687!4d139.6978643',
+          'official_website'  => 'http://www.janpara.co.jp/',
+          'score'             => 2
+        ));
+        $store->attachTags(['electronics','computers','phones']);
+        $store->fillCoordinatesFromString('35.661688, 139.697853');
 
         
         $store = Store::create(array(
@@ -387,7 +430,7 @@ class StoresTableSeeder extends Seeder
           'location'          => 'Shibuya, Udagawacho',
           'type'              => 'Records',
           'points'            => 'Big chain of records shops.',
-          'experience'        => 'Big chain, selling new and second hand music of all genre. Seems good to find some Japanese independant pop or some soul and jazz imports.',
+          'experience'        => 'Big chain, selling new and second hand music of all genre. Seems good to find some Japanese independant pop or some soul and jazz imports. Also sells some turntables, some CDs, DVDs, and books. The shop is spacious enough for comfortable shopping.',
           'google_maps_link'  => 'https://www.google.com/maps/place/HMV+record+shop+Shibuya/@35.6617985,139.6954999,17.25z/data=!4m5!3m4!1s0x60188ca9415924a3:0x81eea8f480cb05d5!8m2!3d35.6620243!4d139.6972123',
           'official_website'  => 'http://recordshop.hmv.co.jp/',
           'score'             => 1
@@ -481,9 +524,11 @@ class StoresTableSeeder extends Seeder
           'experience'        => 'Spacious and nice, it provides a relaxing shopping experience. There are a lot of clothes and gear for moutains, snow, and cycling. Mont-Bell is a Japanese brand, making high quality stuff and selling them slightly cheaper than big names such as The North Face. There is an English version of their website here: <a href="https://en.montbell.jp/">https://en.montbell.jp/.</a>.
           <ul>
               <li>B1F: Restaurant Spice Magic</li>
-              <li>1F: Gear and goods</li>
+              <li>1F: Accessory</li>
               <li>2F: Women and children</li>
               <li>3F: Men</li>
+              <li>4F: Outdoor gears</li>
+              <li>5F: Salon</li>
           </ul>',
           'google_maps_link'  => 'https://www.google.com/maps/place/mont-bell+Shibuya/@35.6623943,139.6953583,17z/data=!3m1!4b1!4m5!3m4!1s0x60188ca93864d0d7:0xa311ee2a69accd57!8m2!3d35.66239!4d139.697547',
           'official_website'  => 'http://store.montbell.jp/',

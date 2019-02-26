@@ -192,12 +192,6 @@ class RestaurantTagsTableSeeder extends Seeder
         ));
 
         RestaurantTag::create(array(
-            'label'              => 'vegan friendly',
-            'type'               => '60',
-            'weight'             => '80'
-        ));
-
-        RestaurantTag::create(array(
             'label'              => 'menu with calories',
             'type'               => '60',
             'weight'             => '80'
