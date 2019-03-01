@@ -4412,6 +4412,50 @@ $resto = Restaurant::create(array(
         ));
         $resto->attachTags(['curry','no smoking','English menu']);
         $resto->fillCoordinatesFromString('35.657391, 139.703171');
+
+        // bahama kitchen
+
+        $resto = Restaurant::create(array(
+            'name'              => 'Bahama kitchen',
+            'location'          => 'Shibuya, Udagawacho',
+            'type'              => 'Ethnic',
+            'lunch_price'       => 1000,
+            'points'            => 'Very cosy cafe-bar-restaurant offering curry, hot sandwiches, rice or salads for lunch.',
+            'experience'        => '4th floor. The place is small, with maybe 5 tables and a counter, but with a very nice relaxing atmosphere, helped by some old school reggae music. There is also a veranda where you can chill out and smoke. The place seems to also sell some vinyls. They have curry, hot sandwiches, flavored rice and salads for lunch, for about 1000 yen. I tried the "rainbow curry", for 1000 yen, which came with a nice little salad on the side. The dish was very good, and I wished the amount was a bit bigger. For an additional 100 yen you can get a drink. Their coffee was quite good.',
+            'visited'           => true,
+            'visit_date'        => '2019-02-27 13:00:00',
+            'google_maps_link'  => 'https://www.google.com/maps/place/BAHAMA+KITCHEN+%2F+%E3%83%90%E3%83%8F%E3%83%9E%E3%82%AD%E3%83%83%E3%83%81%E3%83%B3/@35.6624397,139.695118,17z/data=!3m1!4b1!4m5!3m4!1s0x60188d6670611e41:0x8cb8ebfb58ffa1c5!8m2!3d35.6624354!4d139.6973067',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13229320/',
+            'official_website'  => 'https://www.bahamakitchen.tokyo/',
+            'score_lunch'       => 3,
+            'score_place'       => 2,
+            'score_food'        => 2,
+            'score_price'       => 1,
+            'score_date'        => 1
+        ));
+        $resto->attachTags(['curry',]);
+        $resto->fillCoordinatesFromString('35.662427, 139.697371');
+
+        $resto = Restaurant::create(array(
+            'name'              => 'Le Sun Palm',
+            'location'          => 'Shibuya, Mark City',
+            'type'              => 'Cafe Restaurant',
+            'lunch_price'       => 1000,
+            'points'            => 'Cafe restaurant.',
+            'experience'        => 'Tried the avocado cheese gravy hamburg for a thousand yen, plus about 200 extra for a coffee and a salad. The whole thing was good, but no so tasty. A good example of "it looks better than it actually tastes". They have various sweet, cakes, curry, salads, sandwiches... The place in itself was nothing special, decent, and conveniently situated right below the station, at one of the entrance of Mark City.',
+            'visited'           => true,
+            'visit_date'        => '2019-03-01 13:00:00',
+            'google_maps_link'  => 'https://www.google.com/maps/place/LE+SUN+PALM/@35.6583188,139.6983185,18z/data=!3m1!5s0x60188b5631c5f5a9:0xf2c804904456f99b!4m5!3m4!1s0x60188b5634144fd7:0x2d7418c4a0b97b43!8m2!3d35.6579592!4d139.6985438',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13154333/',
+            'official_website'  => 'http://www.s-markcity.co.jp/shop/detail.php?id=142',
+            'score_lunch'       => 1,
+            'score_place'       => 1,
+            'score_food'        => 1,
+            'score_price'       => 1,
+            'score_date'        => 0
+        ));
+        $resto->attachTags(['cafe','sandwich','hamburg','curry','no smoking']);
+        $resto->fillCoordinatesFromString('35.658016, 139.698608');
         
 /*
 // try french boistrot 139 near MontBell
