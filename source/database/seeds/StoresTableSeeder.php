@@ -225,7 +225,7 @@ class StoresTableSeeder extends Seeder
           'official_website'  => 'https://www.daiso-sangyo.co.jp/shop/detail/8931',
           'score'             => 3
         ));
-        $store->attachTags(['100yen','gifts','snacks','housewares']);
+        $store->attachTags(['100yen','gifts','snacks','housewares','stationery']);
         $store->fillCoordinatesFromString('35.661462, 139.697177');
 
         $store = Store::create(array(
@@ -238,7 +238,7 @@ class StoresTableSeeder extends Seeder
           'official_website'  => 'https://www.cando-web.co.jp/',
           'score'             => 2
         ));
-        $store->attachTags(['100yen','gifts','snacks','housewares']);
+        $store->attachTags(['100yen','gifts','snacks','housewares','stationery']);
         $store->fillCoordinatesFromString('35.661770, 139.697603');
 
         $store = Store::create(array(
@@ -281,7 +281,7 @@ class StoresTableSeeder extends Seeder
           'official_website'  => 'http://shibuya.tokyu-hands.co.jp/',
           'score'             => 2
         ));
-        $store->attachTags(['gifts','housewares']);
+        $store->attachTags(['gifts','housewares','stationery']);
         $store->fillCoordinatesFromString('35.662000, 139.697741');
 
         $store = Store::create(array(
@@ -615,7 +615,11 @@ class StoresTableSeeder extends Seeder
         $store->fillCoordinatesFromString('xxxx');
         */
 
+        // Loft
+
         // http://www.tokyopocketguide.com/tokyo/shibuya.shopping.html
+
+        // https://www.google.com/search?rlz=1C1GGRV_enJP759JP759&ei=pT12XKL8MtGUmAXVqobQDg&q=biggest+stationery+shop+in+tokyo&oq=stationery&gs_l=psy-ab.1.0.0i71l8.0.0..341850...0.0..0.0.0.......0......gws-wiz.Q7xVS2tN4_o&safe=active&ssui=on
 
         // https://on-mag.fr/index.php/topaudio/musique/18317-vinyles-a-tokyo-8-disquaires-incontournables-du-quartier-de-shibuya
 
