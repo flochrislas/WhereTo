@@ -4456,6 +4456,27 @@ $resto = Restaurant::create(array(
         ));
         $resto->attachTags(['cafe','sandwich','hamburg','curry','no smoking']);
         $resto->fillCoordinatesFromString('35.658016, 139.698608');
+
+        $resto = Restaurant::create(array(
+            'name'              => 'Nepalico',
+            'location'          => 'Shibuya',
+            'type'              => 'Curry',
+            'lunch_price'       => 875,
+            'points'            => 'Nice little place for Nepalese cuisine.',
+            'experience'        => 'I liked the cosy interior, gentle lights, and instrumental music. The lunch menu mostly consists of curry with rice. I tried keema curry for 875 yen. It comes with a salad, and a drink, and I could get free large portion. Food is good, but my curry was not especially tasty. Quantity is good for the price.',
+            'visited'           => true,
+            'visit_date'        => '2019-03-01 13:00:00',
+            'google_maps_link'  => 'https://www.google.com/maps/place/%E3%83%8D%E3%83%91%E3%83%AA%E3%82%B3+%E6%B8%8B%E8%B0%B7%E5%BA%97/@35.6568359,139.6970088,17z/data=!4m5!3m4!1s0x60188b56e4633e11:0x614743e2231beb93!8m2!3d35.6558378!4d139.6983928',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13116418/',
+            'official_website'  => 'http://www.nepalico.com/',
+            'score_lunch'       => 2,
+            'score_place'       => 2,
+            'score_food'        => 1,
+            'score_price'       => 1,
+            'score_date'        => 1
+        ));
+        $resto->attachTags(['curry','no smoking']);
+        $resto->fillCoordinatesFromString('35.655858, 139.698378');
         
 /*
 // try french boistrot 139 near MontBell
@@ -4488,7 +4509,7 @@ try vandalism
             'points'            => 'xxxxx',
             'experience'        => 'xxxxx',
             'visited'           => true,
-            'visit_date'        => '2019-02-01 13:00:00',
+            'visit_date'        => '2019-03-01 13:00:00',
             'google_maps_link'  => 'xxxxx',
             'tabelog_link'      => 'xxxxx',
             'official_website'  => 'xxxxx',
