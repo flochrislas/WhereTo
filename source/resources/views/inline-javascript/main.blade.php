@@ -22,9 +22,10 @@ function getResults() {
     getResultsDiv().innerHTML = "Loading ALL entries. Please wait or select a tag...";
     var xhr = new XMLHttpRequest();
     var url = resultsUrl
-            + '?position=' + getLocation();
+            + '?position=' + getLocation()
+            + '&orderBy=distance';
     console.info('calling: '+url),
-    xhr.open('GET', resultsUrl);
+    xhr.open('GET', url);
     xhr.onload = function() {
         if (getResultsLoading() == "all") {
             if (xhr.status === 200) {

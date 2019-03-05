@@ -26,11 +26,16 @@ write a book
 --------------------------------------------------------------------------------------------
 
 ISSUE:
-Make sure display all sort by distance by default
+TEST Make sure display all sort by distance by default -- just add orderBy=distance
 
 need: have URL to result page so we can SHARE
 
-Get rid of some CSS id and do class instead, like content 
+Get rid of some CSS id and do class instead, like content
+
+IDEA
+entertainement, have fun in shibuya: rehearsal studio, cinema, arcade, game center, VR, love hotels, karaoke
+J'aime le sentiment de fantaisie du lobby, mais l'équipement sonore essentiel n'est pas très bon. Bien qu'il soit moins cher que Noah, il est un peu cher comparé à Gateway et penta.
+Studio Familia Shibuya
 
 NEXT UP
 
