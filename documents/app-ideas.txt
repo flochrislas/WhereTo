@@ -28,6 +28,10 @@ write a book
 ISSUE:
 TEST Make sure display all sort by distance by default -- just add orderBy=distance
 
+
+Package phpoffice/phpexcel is abandoned, you should avoid using it. Use phpoffice/phpspreadsheet instead.
+
+
 need: have URL to result page so we can SHARE
 
 Get rid of some CSS id and do class instead, like content
