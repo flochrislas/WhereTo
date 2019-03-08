@@ -534,23 +534,23 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create(array(
             'name'              => 'Ramen and Tsukemen',
-            'location'          => 'Shibuya',
+            'location'          => 'Shibuya, Sakuragaokacho',
             'type'              => 'Ramen',
             'lunch_price'       => 800,
-            'points'            => 'tonkostsu ramen, soupless ramen, curry, gyoza... and mini versions available.',
-            'experience'        => 'Tried the white miso ramne, and it was pretty bland, not worth the 800yen. I liked the atmosphere, very local, kinda cosy, with the TV on and the grand mothers as the staff.',
+            'points'            => 'Tonkostsu ramen, soupless ramen, curry, gyoza... and mini versions available.',
+            'experience'        => 'Tried the white miso ramen, and it was pretty bland, not worth the 800yen. I liked the atmosphere, very local, kinda cosy, with the TV on and the grand-mothers as the staff.',
             'visited'           => true,
             'visit_date'        => '2017-09-05 13:00:00',
-            'google_maps_link'  => '',
-            'tabelog_link'      => '',
-            'official_website'  => '',
+            'google_maps_link'  => 'https://www.google.com/maps/place/%E3%83%A9%E3%83%BC%E3%83%A1%E3%83%B3%E3%83%BB%E3%81%A4%E3%81%91%E9%BA%BA+%E6%A1%9C%E3%82%93%E5%9D%8A/@35.6581587,139.6991789,17z/data=!4m5!3m4!1s0x60188b575ce19af3:0xec3fd4ba6e393d06!8m2!3d35.6564414!4d139.700917',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13135184/',
+            'official_website'  => 'https://ramendb.supleks.jp/s/23232.html',
             'score_lunch'       => 1,
             'score_place'       => 1,
             'score_food'        => 1,
             'score_price'       => 1,
             'score_date'        => 0
         ));
-        $resto->attachTags(['ramen']);
+        $resto->attachTags(['ramen','noodles']);
         $resto->fillCoordinatesFromString('35.656451, 139.700907');
 
         /* Place closed - confirmed 2017-12-26
@@ -4477,9 +4477,53 @@ $resto = Restaurant::create(array(
         ));
         $resto->attachTags(['curry','no smoking']);
         $resto->fillCoordinatesFromString('35.655858, 139.698378');
+
+        $resto = Restaurant::create(array(
+            'name'              => 'Yasube',
+            'location'          => 'Shibuya',
+            'type'              => 'Tsukemen',
+            'lunch_price'       => 880,
+            'points'            => 'Good tsukemen (noodles separated from soup) place.',
+            'experience'        => 'Decent place with one counter and seats very close to each other, but it is pretty standard in any noodle restaurant. Staff is nice, music is better than usual. The place is for tsukemen only. But it is good. I tried the miso tsukemen, large portion, for 880 yen, added an egg in the soup for 100 yen more. The soup, that has quite consistent toppings, was very good. The noodles very good. I was plenty satisified.',
+            'visited'           => true,
+            'visit_date'        => '2019-03-01 13:00:00',
+            'google_maps_link'  => 'https://www.google.com/maps/place/Tsukemen+Yasubee/@35.6571377,139.7016121,17z/data=!3m1!4b1!4m5!3m4!1s0x60188b599da15555:0xb75387d44f62076!8m2!3d35.6571334!4d139.7038008',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13001149/',
+            'official_website'  => 'http://www.yasubee.com/',
+            'score_lunch'       => 3,
+            'score_place'       => 1,
+            'score_food'        => 2,
+            'score_price'       => 1,
+            'score_date'        => 0
+        ));
+        $resto->attachTags(['noodles','tsukemen']);
+        $resto->fillCoordinatesFromString('35.657175, 139.703850');
+
+        $resto = Restaurant::create(array(
+            'name'              => 'AzabuSabo',
+            'location'          => 'Shibuya, Seibu',
+            'type'              => 'Teishoku',
+            'lunch_price'       => 1200,
+            'points'            => 'Down Seibu B2F. Quiet, but not very good.',
+            'experience'        => 'Never very exciting going down Seibu B2F, but some good places are there. This one is not one of them. Lunch prices are above 1000 yen, for noodles, or rice based dishes. I tried some chicken with rice, with a salad, a soup and some pickles, for 1200 yen. It was not very good. The place seems to offer variety of sweets, and maybe rely on this more than regular meals. For 1200 yen, mine was very disappointing.',
+            'visited'           => true,
+            'visit_date'        => '2019-03-08 13:00:00',
+            'google_maps_link'  => 'https://www.google.com/maps/place/%E9%BA%BB%E5%B8%83%E8%8C%B6%E6%88%BF+%E8%A5%BF%E6%AD%A6%E6%B8%8B%E8%B0%B7%E5%BA%97/@35.660479,139.6988661,18z/data=!3m1!5s0x60188ca8177055e1:0xf009a238452b6721!4m5!3m4!1s0x60188ca810804057:0xfba0048bd9a7ab8d!8m2!3d35.6602633!4d139.7005452?hl=en',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13180111/',
+            'official_website'  => 'http://www.amaya-company.co.jp/shop/',
+            'score_lunch'       => 1,
+            'score_place'       => 1,
+            'score_food'        => 1,
+            'score_price'       => 0,
+            'score_date'        => 0
+        ));
+        $resto->attachTags(['no smoking','teishoku','ramen','noodles']);
+        $resto->fillCoordinatesFromString('35.660260, 139.700536');
         
 /*
 // try french boistrot 139 near MontBell
+
+// try HIDE OUT next to Daiso
 
 // try this curry place : https://tabelog.com/tokyo/A1303/A130301/13171069/dtlmap/
 // ramen kiraku https://fr.favy-jp.com/topics/2309
