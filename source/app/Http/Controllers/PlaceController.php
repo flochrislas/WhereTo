@@ -63,10 +63,20 @@ abstract class PlaceController extends Controller
         return 'App\\'.$this->getModelName();
     }
 
-    public function getModelDetailsView()
+    /**
+    * Returns the view4s name for the place's details
+    * @param single , default is false, true if we want SINGLE details view (that can be shared),
+    * instead of the view that fits into the one page design
+    * @return Model's details view name
+    */
+    public function getModelDetailsView($single=false)
     {
-        Log::debug('Auto-generated ModelDetailsView name: '.strtolower($this->getModelName()).'s.details');
-        return strtolower($this->getModelName()).'s.details';
+        $viewName = strtolower($this->getModelName()).'s.details';
+        if ($single) {
+          $viewName .= '-single';
+        }
+        Log::debug('Auto-generated ModelDetailsView name: '.$viewName);
+        return $viewName;
     }
 
     public function getModelResultsDataView()

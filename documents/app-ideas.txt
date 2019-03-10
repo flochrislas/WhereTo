@@ -33,6 +33,13 @@ Package phpoffice/phpexcel is abandoned, you should avoid using it. Use phpoffic
 
 
 need: have URL to result page so we can SHARE
+SHARE: share results , modal popup, with sharing options, copy url to clipboard
+SHARE detail page using old style url with ID
+or create route to laod one-page with details, or maybe do it just for the serach results
+details single fix back button to go back to restaurant or shop or whatev
+make th edetails single use the core of details  (include the details and suround it by html and single pag estuff)
+
+the way the url is given to javascript ajax is not good: it should be jsp writing this url info, not hardcoded in the main view
 
 Get rid of some CSS id and do class instead, like content
 

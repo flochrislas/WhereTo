@@ -1,3 +1,4 @@
+@include('inline-javascript.details')
 <div id="resultsControl">
   <button class="sortButton"
     onclick="window.open('{{ $place->google_maps_link }}', '_blank')">
@@ -8,6 +9,9 @@
   <button class="sortButton"
     onclick="window.open('{{ $place->official_website }}', '_blank')">
     Website</button>
+  <button class="sortButton"
+    onclick="copyStringToClipboard('{{ route('restaurants.details.single',$place->id) }}')">
+    Share</button>
   <button class="navButton" onclick="hideDetails()">BACK</button>
 </div>
 

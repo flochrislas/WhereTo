@@ -20,7 +20,7 @@
 
 <script>
   // To be used in ajax calls for reading results
-  var resultsUrl = 'karaoke/results';
+  var resultsUrl = "{{ route('karaokes.results') }}";
 </script>
 @include('inline-javascript.main')
 

@@ -63,7 +63,7 @@ class StoreController extends PlaceController
     }
 
     /**
-     * Display the specified resource.
+     * Display the specified resource in one-apge view
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
@@ -73,5 +73,18 @@ class StoreController extends PlaceController
         $class = $this->getModelClass();
         $place = $class::find($id);
         return view($this->getModelDetailsView(), compact('place'));
+    }
+
+    /**
+     * Display the specified resource in independent page
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function detailsSingle($id)
+    {
+        $class = $this->getModelClass();
+        $place = $class::find($id);
+        return view($this->getModelDetailsView(true), compact('place'));
     }
 }
