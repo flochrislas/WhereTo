@@ -20,7 +20,7 @@
 
 <script>
   // To be used in ajax calls for reading results
-  var resultsUrl = 'bars/results';
+  var resultsUrl = "{{ route('bars.results') }}";
 </script>
 @include('inline-javascript.main')
 
