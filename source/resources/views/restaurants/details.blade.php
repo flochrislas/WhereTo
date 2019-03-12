@@ -1,4 +1,3 @@
-@include('inline-javascript.details')
 <div id="resultsControl">
   <button class="sortButton"
     onclick="window.open('{{ $place->google_maps_link }}', '_blank')">

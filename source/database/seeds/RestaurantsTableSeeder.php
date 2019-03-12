@@ -4519,9 +4519,31 @@ $resto = Restaurant::create(array(
         ));
         $resto->attachTags(['no smoking','teishoku','ramen','noodles']);
         $resto->fillCoordinatesFromString('35.660260, 139.700536');
+
+        $resto = Restaurant::create(array(
+            'name'              => 'The Neworder Table',
+            'location'          => 'Shibuya',
+            'type'              => 'Italian',
+            'lunch_price'       => 1180,
+            'points'            => 'Decent Italianish place, a bit pricey, but delicious.',
+            'experience'        => 'The place is under the Toho cinema, underground, so no windows. But it is spacious inside, and confortable enough. Menu mostly have Italian oriented dishes, like pasta, pizza, salads... I tried the eggplants arabiata spaghetti for 1180 yen. Quite pricey, and coming without drink nor salad or soup. But, I have to admit it was absolutely delicious.',
+            'visited'           => true,
+            'visit_date'        => '2019-03-01 13:00:00',
+            'google_maps_link'  => 'https://www.google.com/maps/place/%E6%B8%8B%E8%B0%B7+%E3%82%A4%E3%82%BF%E3%83%AA%E3%82%A2%E3%83%B3+%E3%83%A9%E3%83%B3%E3%83%81+The+Neworder+Table-%E3%83%8B%E3%83%A5%E3%83%BC%E3%82%AA%E3%83%BC%E3%83%80%E3%83%BC%E3%83%86%E3%83%BC%E3%83%96%E3%83%AB-/@35.6581668,139.6990518,18z/data=!4m5!3m4!1s0x60188ca82a823dc5:0xf7b5ad8899dd0e28!8m2!3d35.6591105!4d139.6989445',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13199399/',
+            'official_website'  => 'https://thenewordertable.com/',
+            'score_lunch'       => 2,
+            'score_place'       => 2,
+            'score_food'        => 2,
+            'score_price'       => 1,
+            'score_date'        => 1
+        ));
+        $resto->attachTags(['italian','pasta','pizza']);
+        $resto->fillCoordinatesFromString('35.659108, 139.698960');
         
 /*
 // try french boistrot 139 near MontBell
+
 
 // try HIDE OUT next to Daiso
 
@@ -4538,6 +4560,8 @@ in shibuya
 https://tabelog.com/tokyo/A1303/A130301/13059598/
 
 try vandalism
+
+SERGEY: Prospect 2018 , downfall 2004
 
 */
 
