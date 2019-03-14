@@ -4547,12 +4547,12 @@ $resto = Restaurant::create(array(
             'type'              => 'Protein',
             'lunch_price'       => 1100,
             'points'            => 'Nice place, focused on protein diet. Lots of meats and data on what you eat.',
-            'experience'        => 'Nice place, with large counter and tables. Energetic music. Fair amount of options in the menu, with detailed info about amounts of protein, fat, carbs, calories etc... In addition of the cloassic glass of water, we also get a small cup of strawberry protein drink. I tried the chicken salad with balsamic vinegar dressing, for 1100 yen. It was big and delicious. The chicken was amazing, not dry, and not fat. Note that you can get dishes consisting mostly of differents meats, but price will raise consistently, possibly above 2000 yen.',
+            'experience'        => 'With a funny name, meaning "muscle canteen", this is a nice place, with large counter and tables. Energetic music. Fair amount of options in the menu, with detailed info about amounts of protein, fat, carbs, calories etc... In addition of the cloassic glass of water, we also get a small cup of strawberry protein drink. I tried the chicken salad with balsamic vinegar dressing, for 1100 yen. It was big and delicious. The chicken was amazing, not dry, and not fat. Note that you can get dishes consisting mostly of differents meats, but price will raise consistently, possibly above 2000 yen.',
             'visited'           => true,
             'visit_date'        => '2019-03-13 13:00:00',
             'google_maps_link'  => 'https://www.google.com/maps/place/%E7%AD%8B%E8%82%89%E9%A3%9F%E5%A0%82+%E6%B8%8B%E8%B0%B7%E5%BA%97/@35.6567511,139.696381,17z/data=!4m5!3m4!1s0x60188b1c7282a307:0x974fdd1c3cf0f798!8m2!3d35.6572698!4d139.6965419',
-            'tabelog_link'      => 'http://kinnikushokudo.jp/',
-            'official_website'  => 'https://www.google.com/maps/place/%E7%AD%8B%E8%82%89%E9%A3%9F%E5%A0%82+%E6%B8%8B%E8%B0%B7%E5%BA%97/@35.6567511,139.696381,17z/data=!4m5!3m4!1s0x60188b1c7282a307:0x974fdd1c3cf0f798!8m2!3d35.6572698!4d139.6965419',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13225444/',
+            'official_website'  => 'http://kinnikushokudo.jp/',
             'score_lunch'       => 3,
             'score_place'       => 1,
             'score_food'        => 2,
@@ -4560,7 +4560,7 @@ $resto = Restaurant::create(array(
             'score_date'        => 0
         ));
         $resto->attachTags(['meat']);
-        $resto->fillCoordinatesFromString('xxxxx');
+        $resto->fillCoordinatesFromString('35.657248, 139.696506');
         
 /*
 // try french boistrot 139 near MontBell
