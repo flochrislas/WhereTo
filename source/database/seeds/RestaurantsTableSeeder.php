@@ -4540,6 +4540,27 @@ $resto = Restaurant::create(array(
         ));
         $resto->attachTags(['italian','pasta','pizza']);
         $resto->fillCoordinatesFromString('35.659108, 139.698960');
+
+        $resto = Restaurant::create(array(
+            'name'              => 'Kinniku shokudo',
+            'location'          => 'Shibuya',
+            'type'              => 'Protein',
+            'lunch_price'       => 1100,
+            'points'            => 'Nice place, focused on protein diet. Lots of meats and data on what you eat.',
+            'experience'        => 'Nice place, with large counter and tables. Energetic music. Fair amount of options in the menu, with detailed info about amounts of protein, fat, carbs, calories etc... In addition of the cloassic glass of water, we also get a small cup of strawberry protein drink. I tried the chicken salad with balsamic vinegar dressing, for 1100 yen. It was big and delicious. The chicken was amazing, not dry, and not fat. Note that you can get dishes consisting mostly of differents meats, but price will raise consistently, possibly above 2000 yen.',
+            'visited'           => true,
+            'visit_date'        => '2019-03-13 13:00:00',
+            'google_maps_link'  => 'xxxxx',
+            'tabelog_link'      => 'xxxxx',
+            'official_website'  => 'xxxxx',
+            'score_lunch'       => 1,
+            'score_place'       => 1,
+            'score_food'        => 1,
+            'score_price'       => 1,
+            'score_date'        => 0
+        ));
+        $resto->attachTags(['xxxxx']);
+        $resto->fillCoordinatesFromString('xxxxx');
         
 /*
 // try french boistrot 139 near MontBell
