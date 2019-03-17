@@ -44,29 +44,31 @@ Route::get('test-html', array('as' => 'test', function() {
 Route::get('restaurants', 'RestaurantTagController@restaurantsFilter')->name('restaurants.main');
 Route::get('restaurants/results', 'RestaurantController@results')->name('restaurants.results');
 Route::get('restaurants/details/{id}', 'RestaurantController@details')->name('restaurants.details');
+Route::get('restaurant/details/{id}', 'RestaurantController@detailsSingle')->name('restaurants.details.single');
 Route::get('tags/autocomplete', 'RestaurantTagController@autocomplete')->name('tags.autocomplete');
 
 // Public stores pages
 Route::get('stores', 'StoreTagController@viewAllTags')->name('stores.main');
 Route::get('stores/results', 'StoreController@results')->name('stores.results');
 Route::get('stores/details/{id}', 'StoreController@details')->name('stores.details');
-// Hmmmm, to test :
-Route::get('store/details/{id}', 'StoreController@details')->name('stores.details.single');
+Route::get('store/details/{id}', 'StoreController@detailsSingle')->name('stores.details.single');
 
 // Public bars pages
 Route::get('bars', 'BarTagController@viewAllTags')->name('bars.main');
 Route::get('bars/results', 'BarController@results')->name('bars.results');
 Route::get('bars/details/{id}', 'BarController@details')->name('bars.details');
+Route::get('bar/details/{id}', 'BarController@detailsSingle')->name('bars.details.single');
+
+// Public karaoke pages
+Route::get('karaokes', 'KaraokeTagController@viewAllTags')->name('karaokes.main');
+Route::get('karaokes/results', 'KaraokeController@results')->name('karaokes.results');
+Route::get('karaokes/details/{id}', 'KaraokeController@details')->name('karaokes.details');
+Route::get('karaoke/details/{id}', 'KaraokeController@detailsSingle')->name('karaokes.details.single');
 
 // Public clubs pages
 Route::get('clubs', 'ClubTagController@viewAllTags')->name('clubs.main');
 Route::get('clubs/results', 'ClubController@results')->name('clubs.results');
 Route::get('clubs/details/{id}', 'ClubController@details')->name('clubs.details');
-
-// Public karaoke pages (bit special since we dont publicly put an s to karaoke)
-Route::get('karaoke', 'KaraokeTagController@viewAllTags')->name('karaokes.main');
-Route::get('karaoke/results', 'KaraokeController@results')->name('karaokes.results');
-Route::get('karaoke/details/{id}', 'KaraokeController@details')->name('karaokes.details');
 
 // ===============================================
 // ADMIN SECTION =================================
@@ -82,7 +84,7 @@ Route::middleware(['auth'])->prefix('admin')->group(function()
     Route::post('debug', 'AdminPanelController@debugModeSwitch')->name('debug.switch');
 
     // Restaurants CRUD
-    Route::resource('restaurants','RestaurantController');
+    Route::resource('restaurants','RestaurantAdminController');
 
     // RestaurantType CRUD
     // tuto https://www.codexworld.com/laravel-tutorial-crud-add-edit-delete-operations/
@@ -101,8 +103,8 @@ Route::middleware(['auth'])->prefix('admin')->group(function()
     Route::get('restaurantsFiles', function() {
         return view('admin.restaurantsFiles');
     })->name('restaurants.imex');
-    Route::get('restaurants/export/{type}', 'RestaurantController@export')->name('restaurants.export');
-    Route::post('restaurants/import', 'RestaurantController@importAlt')->name('restaurants.import');
+    Route::get('restaurants/export/{type}', 'RestaurantAdminController@export')->name('restaurants.export');
+    Route::post('restaurants/import', 'RestaurantAdminController@importAlt')->name('restaurants.import');
 
     // Laravel's welcome page
     Route::get('laravel', function () {

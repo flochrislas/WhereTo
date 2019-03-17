@@ -27,13 +27,7 @@ class BarTagsTableSeeder extends Seeder
         ));
 
         BarTag::create(array(
-            'label'              => 'craft beers',
-            'type'               => '100',
-            'weight'             => '100'
-        ));
-
-        BarTag::create(array(
-            'label'              => 'shisha',
+            'label'              => 'pub',
             'type'               => '100',
             'weight'             => '100'
         ));
@@ -49,5 +43,24 @@ class BarTagsTableSeeder extends Seeder
             'type'               => '100',
             'weight'             => '100'
         ));
+
+        BarTag::create(array(
+            'label'              => 'no smoking',
+            'type'               => '100',
+            'weight'             => '100'
+        ));
+
+        BarTag::create(array(
+            'label'              => 'craft beers',
+            'type'               => '100',
+            'weight'             => '100'
+        ));
+
+        BarTag::create(array(
+            'label'              => 'shisha',
+            'type'               => '100',
+            'weight'             => '100'
+        ));
+
     }
 }

@@ -534,23 +534,23 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create(array(
             'name'              => 'Ramen and Tsukemen',
-            'location'          => 'Shibuya',
+            'location'          => 'Shibuya, Sakuragaokacho',
             'type'              => 'Ramen',
             'lunch_price'       => 800,
-            'points'            => 'tonkostsu ramen, soupless ramen, curry, gyoza... and mini versions available.',
-            'experience'        => 'Tried the white miso ramne, and it was pretty bland, not worth the 800yen. I liked the atmosphere, very local, kinda cosy, with the TV on and the grand mothers as the staff.',
+            'points'            => 'Tonkostsu ramen, soupless ramen, curry, gyoza... and mini versions available.',
+            'experience'        => 'Tried the white miso ramen, and it was pretty bland, not worth the 800yen. I liked the atmosphere, very local, kinda cosy, with the TV on and the grand-mothers as the staff.',
             'visited'           => true,
             'visit_date'        => '2017-09-05 13:00:00',
-            'google_maps_link'  => '',
-            'tabelog_link'      => '',
-            'official_website'  => '',
+            'google_maps_link'  => 'https://www.google.com/maps/place/%E3%83%A9%E3%83%BC%E3%83%A1%E3%83%B3%E3%83%BB%E3%81%A4%E3%81%91%E9%BA%BA+%E6%A1%9C%E3%82%93%E5%9D%8A/@35.6581587,139.6991789,17z/data=!4m5!3m4!1s0x60188b575ce19af3:0xec3fd4ba6e393d06!8m2!3d35.6564414!4d139.700917',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13135184/',
+            'official_website'  => 'https://ramendb.supleks.jp/s/23232.html',
             'score_lunch'       => 1,
             'score_place'       => 1,
             'score_food'        => 1,
             'score_price'       => 1,
             'score_date'        => 0
         ));
-        $resto->attachTags(['ramen']);
+        $resto->attachTags(['ramen','noodles']);
         $resto->fillCoordinatesFromString('35.656451, 139.700907');
 
         /* Place closed - confirmed 2017-12-26
@@ -1388,7 +1388,7 @@ class RestaurantsTableSeeder extends Seeder
             'experience'        => 'The room and music is very nice, but for some reason they use very small stools instead of chairs... which make it like a not so good place for a date. I had some lasgna, quite good, and a salad, bread and coffee, fine as well, for 980yen.',
             'visited'           => true,
             'visit_date'        => '2018-01-29 13:00:00',
-            'google_maps_link'  => 'https://www.google.co.jp/maps/place/HAGARE%E6%B8%8B%E8%B0%B7%E5%BA%97/@35.6588789,139.7004375,18z/data=!4m5!3m4!1s0x60188b58045b55f1:0xafc420dda6788d31!8m2!3d35.66057!4d139.704088',
+            'google_maps_link'  => 'https://www.google.co.jp/maps/place/HAGARE%E6%B8%8B%E8%B0%B7%E5%BA%97/@35.6600991,139.7023562,17z/data=!4m5!3m4!1s0x60188b58045b55f1:0xafc420dda6788d31!8m2!3d35.66057!4d139.704088',
             'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13209378/',
             'official_website'  => 'https://www.kaldi.co.jp/sp/cafe/hagare_shibuya/',
             'score_lunch'       => 2,
@@ -1397,7 +1397,7 @@ class RestaurantsTableSeeder extends Seeder
             'score_price'       => 1,
             'score_date'        => 1
         ));
-        $resto->attachTags(['Italian']);
+        $resto->attachTags(['italian','pasta']);
         $resto->fillCoordinatesFromString('italian','pasta');
 
         $resto = Restaurant::create(array(
@@ -4477,9 +4477,96 @@ $resto = Restaurant::create(array(
         ));
         $resto->attachTags(['curry','no smoking']);
         $resto->fillCoordinatesFromString('35.655858, 139.698378');
+
+        $resto = Restaurant::create(array(
+            'name'              => 'Yasube',
+            'location'          => 'Shibuya',
+            'type'              => 'Tsukemen',
+            'lunch_price'       => 880,
+            'points'            => 'Good tsukemen (noodles separated from soup) place.',
+            'experience'        => 'Decent place with one counter and seats very close to each other, but it is pretty standard in any noodle restaurant. Staff is nice, music is better than usual. The place is for tsukemen only. But it is good. I tried the miso tsukemen, large portion, for 880 yen, added an egg in the soup for 100 yen more. The soup, that has quite consistent toppings, was very good. The noodles very good. I was plenty satisified.',
+            'visited'           => true,
+            'visit_date'        => '2019-03-01 13:00:00',
+            'google_maps_link'  => 'https://www.google.com/maps/place/Tsukemen+Yasubee/@35.6571377,139.7016121,17z/data=!3m1!4b1!4m5!3m4!1s0x60188b599da15555:0xb75387d44f62076!8m2!3d35.6571334!4d139.7038008',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13001149/',
+            'official_website'  => 'http://www.yasubee.com/',
+            'score_lunch'       => 3,
+            'score_place'       => 1,
+            'score_food'        => 2,
+            'score_price'       => 1,
+            'score_date'        => 0
+        ));
+        $resto->attachTags(['noodles','tsukemen']);
+        $resto->fillCoordinatesFromString('35.657175, 139.703850');
+
+        $resto = Restaurant::create(array(
+            'name'              => 'AzabuSabo',
+            'location'          => 'Shibuya, Seibu',
+            'type'              => 'Teishoku',
+            'lunch_price'       => 1200,
+            'points'            => 'Down Seibu B2F. Quiet, but not very good.',
+            'experience'        => 'Never very exciting going down Seibu B2F, but some good places are there. This one is not one of them. Lunch prices are above 1000 yen, for noodles, or rice based dishes. I tried some chicken with rice, with a salad, a soup and some pickles, for 1200 yen. It was not very good. The place seems to offer variety of sweets, and maybe rely on this more than regular meals. For 1200 yen, mine was very disappointing.',
+            'visited'           => true,
+            'visit_date'        => '2019-03-08 13:00:00',
+            'google_maps_link'  => 'https://www.google.com/maps/place/%E9%BA%BB%E5%B8%83%E8%8C%B6%E6%88%BF+%E8%A5%BF%E6%AD%A6%E6%B8%8B%E8%B0%B7%E5%BA%97/@35.660479,139.6988661,18z/data=!3m1!5s0x60188ca8177055e1:0xf009a238452b6721!4m5!3m4!1s0x60188ca810804057:0xfba0048bd9a7ab8d!8m2!3d35.6602633!4d139.7005452?hl=en',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13180111/',
+            'official_website'  => 'http://www.amaya-company.co.jp/shop/',
+            'score_lunch'       => 1,
+            'score_place'       => 1,
+            'score_food'        => 1,
+            'score_price'       => 0,
+            'score_date'        => 0
+        ));
+        $resto->attachTags(['no smoking','teishoku','ramen','noodles']);
+        $resto->fillCoordinatesFromString('35.660260, 139.700536');
+
+        $resto = Restaurant::create(array(
+            'name'              => 'The Neworder Table',
+            'location'          => 'Shibuya',
+            'type'              => 'Italian',
+            'lunch_price'       => 1180,
+            'points'            => 'Decent Italianish place, a bit pricey, but delicious.',
+            'experience'        => 'The place is under the Toho cinema, underground, so no windows. But it is spacious inside, and confortable enough. Menu mostly have Italian oriented dishes, like pasta, pizza, salads... I tried the eggplants arabiata spaghetti for 1180 yen. Quite pricey, and coming without drink nor salad or soup. But, I have to admit it was absolutely delicious.',
+            'visited'           => true,
+            'visit_date'        => '2019-03-01 13:00:00',
+            'google_maps_link'  => 'https://www.google.com/maps/place/%E6%B8%8B%E8%B0%B7+%E3%82%A4%E3%82%BF%E3%83%AA%E3%82%A2%E3%83%B3+%E3%83%A9%E3%83%B3%E3%83%81+The+Neworder+Table-%E3%83%8B%E3%83%A5%E3%83%BC%E3%82%AA%E3%83%BC%E3%83%80%E3%83%BC%E3%83%86%E3%83%BC%E3%83%96%E3%83%AB-/@35.6581668,139.6990518,18z/data=!4m5!3m4!1s0x60188ca82a823dc5:0xf7b5ad8899dd0e28!8m2!3d35.6591105!4d139.6989445',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13199399/',
+            'official_website'  => 'https://thenewordertable.com/',
+            'score_lunch'       => 2,
+            'score_place'       => 2,
+            'score_food'        => 2,
+            'score_price'       => 1,
+            'score_date'        => 1
+        ));
+        $resto->attachTags(['italian','pasta','pizza']);
+        $resto->fillCoordinatesFromString('35.659108, 139.698960');
+
+        $resto = Restaurant::create(array(
+            'name'              => 'Kinniku shokudo',
+            'location'          => 'Shibuya',
+            'type'              => 'Protein',
+            'lunch_price'       => 1100,
+            'points'            => 'Nice place, focused on protein diet. Lots of meats and data on what you eat.',
+            'experience'        => 'With a funny name, meaning "muscle canteen", this is a nice place, with large counter and tables. Energetic music. Fair amount of options in the menu, with detailed info about amounts of protein, fat, carbs, calories etc... In addition of the cloassic glass of water, we also get a small cup of strawberry protein drink. I tried the chicken salad with balsamic vinegar dressing, for 1100 yen. It was big and delicious. The chicken was amazing, not dry, and not fat. Note that you can get dishes consisting mostly of differents meats, but price will raise consistently, possibly above 2000 yen.',
+            'visited'           => true,
+            'visit_date'        => '2019-03-13 13:00:00',
+            'google_maps_link'  => 'https://www.google.com/maps/place/%E7%AD%8B%E8%82%89%E9%A3%9F%E5%A0%82+%E6%B8%8B%E8%B0%B7%E5%BA%97/@35.6567511,139.696381,17z/data=!4m5!3m4!1s0x60188b1c7282a307:0x974fdd1c3cf0f798!8m2!3d35.6572698!4d139.6965419',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13225444/',
+            'official_website'  => 'http://kinnikushokudo.jp/',
+            'score_lunch'       => 3,
+            'score_place'       => 1,
+            'score_food'        => 2,
+            'score_price'       => 1,
+            'score_date'        => 0
+        ));
+        $resto->attachTags(['meat']);
+        $resto->fillCoordinatesFromString('35.657248, 139.696506');
         
 /*
 // try french boistrot 139 near MontBell
+
+
+// try HIDE OUT next to Daiso
 
 // try this curry place : https://tabelog.com/tokyo/A1303/A130301/13171069/dtlmap/
 // ramen kiraku https://fr.favy-jp.com/topics/2309
@@ -4494,6 +4581,8 @@ in shibuya
 https://tabelog.com/tokyo/A1303/A130301/13059598/
 
 try vandalism
+
+SERGEY: Prospect 2018 , downfall 2004
 
 */
 

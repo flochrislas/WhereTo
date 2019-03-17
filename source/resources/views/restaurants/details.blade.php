@@ -8,6 +8,9 @@
   <button class="sortButton"
     onclick="window.open('{{ $place->official_website }}', '_blank')">
     Website</button>
+  <button class="sortButton"
+    onclick="copyStringToClipboard('{{ route('restaurants.details.single',$place->id) }}')">
+    Copy<br>URL</button>
   <button class="navButton" onclick="hideDetails()">BACK</button>
 </div>
 
