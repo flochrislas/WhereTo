@@ -10,7 +10,7 @@
     Website</button>
   <button class="sortButton"
     onclick="copyStringToClipboard('{{ route('restaurants.details.single',$place->id) }}')">
-    Share</button>
+    Copy<br>URL</button>
   <button class="navButton" onclick="hideDetails()">BACK</button>
 </div>
 
