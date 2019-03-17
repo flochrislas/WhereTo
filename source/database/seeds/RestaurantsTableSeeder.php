@@ -1388,7 +1388,7 @@ class RestaurantsTableSeeder extends Seeder
             'experience'        => 'The room and music is very nice, but for some reason they use very small stools instead of chairs... which make it like a not so good place for a date. I had some lasgna, quite good, and a salad, bread and coffee, fine as well, for 980yen.',
             'visited'           => true,
             'visit_date'        => '2018-01-29 13:00:00',
-            'google_maps_link'  => 'https://www.google.co.jp/maps/place/HAGARE%E6%B8%8B%E8%B0%B7%E5%BA%97/@35.6588789,139.7004375,18z/data=!4m5!3m4!1s0x60188b58045b55f1:0xafc420dda6788d31!8m2!3d35.66057!4d139.704088',
+            'google_maps_link'  => 'https://www.google.co.jp/maps/place/HAGARE%E6%B8%8B%E8%B0%B7%E5%BA%97/@35.6600991,139.7023562,17z/data=!4m5!3m4!1s0x60188b58045b55f1:0xafc420dda6788d31!8m2!3d35.66057!4d139.704088',
             'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13209378/',
             'official_website'  => 'https://www.kaldi.co.jp/sp/cafe/hagare_shibuya/',
             'score_lunch'       => 2,
@@ -1397,7 +1397,7 @@ class RestaurantsTableSeeder extends Seeder
             'score_price'       => 1,
             'score_date'        => 1
         ));
-        $resto->attachTags(['Italian']);
+        $resto->attachTags(['italian','pasta']);
         $resto->fillCoordinatesFromString('italian','pasta');
 
         $resto = Restaurant::create(array(

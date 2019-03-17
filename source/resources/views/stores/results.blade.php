@@ -36,3 +36,4 @@
 <div id="results" loading="none" time="0">Loading...</div>
 
 @include('inline-javascript.results')
+@include('inline-javascript.details')
