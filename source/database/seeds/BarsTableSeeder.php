@@ -186,16 +186,16 @@ class BarsTableSeeder extends Seeder
         $bar->fillCoordinatesFromString('35.660836, 139.697885');
 
         $bar = Bar::create(array(
-            'name'              => 'BAR',
+            'name'              => 'Start bar',
             'location'          => 'Shibuya, Sakuragaokacho',
             'type'              => 'Bar',
-            'points'            => 'No table charge. Could not figure out the name of the place.',
-            'experience'        => '3F. The place is actually quite nice, rather spacious, dark but clean and with tables next to the windows, and a large U-shape counter. On a Friday night, nobody was there around 9pm, and when I tried again around 11pm, a bunch of friends, young people, were playing a soccer video game on a PS4.',
+            'points'            => 'No table charge.',
+            'experience'        => '3F. The place is quite nice, rather spacious, dark but clean and with tables next to the windows, and a large U-shape counter. Friendly bartender. On a Friday night, nobody was there around 9pm, and when I tried again around 11pm, a bunch of friends, young people, were playing a soccer video game on a PS4.',
             'visited'           => true,
             'visit_date'        => '2017-07-07 22:00:00',
-            'google_maps_link'  => 'https://www.google.com/maps/place/%E3%80%92150-0031+T%C5%8Dky%C5%8D-to,+Shibuya-ku,+Sakuragaokach%C5%8D,+17%E2%88%9212+%E6%B8%8B%E8%B0%B7%E3%82%B8%E3%83%A7%E3%83%B3%E3%82%BD%E3%83%B3%E3%83%93%E3%83%AB3F/@35.6567914,139.699856,17.25z/data=!4m5!3m4!1s0x60188b57588ff7e3:0xd18c54432a6f217e!8m2!3d35.6561446!4d139.7013286',
-            'tabelog_link'      => '',
-            'official_website'  => '',
+            'google_maps_link'  => 'https://www.google.com/maps/place/Start+Bar/@35.65644,139.6987829,16.75z/data=!4m5!3m4!1s0x60188b575886aaab:0xcae17a169b9e55a6!8m2!3d35.65615!4d139.701309',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13188833/',
+            'official_website'  => 'http://start-bar.com/',
             'score'             => 1,
             'score_place'       => 1,
             'score_mingling'    => 1,
@@ -222,6 +222,25 @@ class BarsTableSeeder extends Seeder
         ));
         $bar->attachTags(['no smoking']);
         $bar->fillCoordinatesFromString('35.656348, 139.700879');
+
+        $bar = Bar::create(array(
+            'name'              => 'Rock no cocoro',
+            'location'          => 'Shibuya, Udagawacho',
+            'type'              => 'Bar',
+            'points'            => 'Lound rock music. Quite narrow, but pretty nice atmosphere.',
+            'experience'        => 'Quite loud, it is difficult to have a conversation. Can be smoky too. If not too crowded, it is possible to play darts. If you enjoy the music, atmosphere is quite nice, and the crowd usually as well.',
+            'visited'           => true,
+            'visit_date'        => '2017-07-07 22:00:00',
+            'google_maps_link'  => 'https://www.google.com/maps/place/%E3%83%AD%E3%83%83%E3%82%AF%E3%81%AE%E3%81%93%E3%81%93%E3%82%8D+rock+no+cocoro/@35.6624971,139.6948316,17z/data=!3m1!4b1!4m5!3m4!1s0x60188ca94e710061:0xaaa1b5c22d19ddd3!8m2!3d35.6624928!4d139.6970203',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13096097/',
+            'official_website'  => 'http://www.rocknococoro.com/home.html',
+            'score'             => 1,
+            'score_place'       => 1,
+            'score_mingling'    => 2,
+            'score_price'       => 1
+        ));
+        $bar->attachTags(['no table charge','rock']);
+        $bar->fillCoordinatesFromString('35.662463, 139.696944');
 
         /*
         $bar = Bar::create(array(

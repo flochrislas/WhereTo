@@ -62,5 +62,16 @@ class BarTagsTableSeeder extends Seeder
             'weight'             => '100'
         ));
 
+        BarTag::create(array(
+            'label'              => 'rock',
+            'type'               => '100',
+            'weight'             => '100'
+        ));
+        BarTag::create(array(
+            'label'              => 'jazz',
+            'type'               => '100',
+            'weight'             => '100'
+        ));
+
     }
 }
