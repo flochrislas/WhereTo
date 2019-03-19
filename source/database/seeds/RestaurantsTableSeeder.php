@@ -4582,6 +4582,27 @@ $resto = Restaurant::create(array(
         ));
         $resto->attachTags(['indian','curry','no smoking','vegetarian friendly']);
         $resto->fillCoordinatesFromString('35.656342, 139.701420');
+
+        $resto = Restaurant::create(array(
+            'name'              => 'Atomasashiya',
+            'location'          => 'Shibuya, Nanpeidaicho',
+            'type'              => 'Ramen',
+            'lunch_price'       => 900,
+            'points'            => 'Quite unique and delicious ramen.',
+            'experience'        => 'Away from the busy part of Shibuya, this place is peaceful ramen restaurant run by an old couple. There are some tables and a counter. THe place seems it can be quite busy. The old man can speak English and will help foreigners to pick a ramen  on the ticket machine. It takes quite a while for the dish to be ready, but it is worth it. The soup has a rich and delicious taste. Noodles are good, and I loved the meat. I ordered an egg to be added, and it was also very delicious. It is, however, not very filling. Still, one of the best ramen in Shibuya.',
+            'visited'           => true,
+            'visit_date'        => '2019-03-01 13:00:00',
+            'google_maps_link'  => 'https://www.google.com/maps/place/Atomasashiya/@35.6552862,139.693382,16.75z/data=!4m5!3m4!1s0x60188b542b9fb427:0x7840d7d541b5d67!8m2!3d35.655413!4d139.695995',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13122253/',
+            'official_website'  => 'https://www.masaemon.jp/entry/2014/05/12/tokyo-shibuya-ramen-artmasashiya',
+            'score_lunch'       => 3,
+            'score_place'       => 2,
+            'score_food'        => 2,
+            'score_price'       => 1,
+            'score_date'        => 0
+        ));
+        $resto->attachTags(['ramen','noodles']);
+        $resto->fillCoordinatesFromString('35.655411, 139.695988');
         
 /*
 // try french boistrot 139 near MontBell
