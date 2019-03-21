@@ -182,7 +182,7 @@ class BarsTableSeeder extends Seeder
             'score_mingling'    => 1,
             'score_price'       => 0
         ));
-        $bar->attachTags(['jazz']);
+        $bar->attachTags(['jazz','music']);
         $bar->fillCoordinatesFromString('35.660836, 139.697885');
 
         $bar = Bar::create(array(
@@ -207,7 +207,7 @@ class BarsTableSeeder extends Seeder
         $bar = Bar::create(array(
             'name'              => 'The Wine',
             'location'          => 'Shibuya',
-            'type'              => 'Restaurant',
+            'type'              => 'Izakaya',
             'points'            => 'Very cheap, and good wine. 500 yen table charge.',
             'experience'        => 'B1F. This is a nice little restaurant. Nice staff as well. It is OK to go there and just drink. The wine is good and very cheap, starting 180 yen a glass, or 800 yen for a bootle! But there is a 500 yen table charge (a fee each person must pay).',
             'visited'           => true,
@@ -220,7 +220,7 @@ class BarsTableSeeder extends Seeder
             'score_mingling'    => 0,
             'score_price'       => 1
         ));
-        $bar->attachTags(['no smoking']);
+        $bar->attachTags(['no smoking','izakaya']);
         $bar->fillCoordinatesFromString('35.656348, 139.700879');
 
         $bar = Bar::create(array(
@@ -228,7 +228,7 @@ class BarsTableSeeder extends Seeder
             'location'          => 'Shibuya, Udagawacho',
             'type'              => 'Bar',
             'points'            => 'Lound rock music. Quite narrow, but pretty nice atmosphere.',
-            'experience'        => 'Quite loud, it is difficult to have a conversation. Can be smoky too. If not too crowded, it is possible to play darts. If you enjoy the music, atmosphere is quite nice, and the crowd usually as well.',
+            'experience'        => 'Quite loud, it is difficult to have a conversation. Can be smoky too. If not too crowded, it is possible to play darts. If you enjoy the music, atmosphere is quite nice, and the crowd usually as well. Prices are alright (like 600 yen for a glass of wine).',
             'visited'           => true,
             'visit_date'        => '2017-07-07 22:00:00',
             'google_maps_link'  => 'https://www.google.com/maps/place/%E3%83%AD%E3%83%83%E3%82%AF%E3%81%AE%E3%81%93%E3%81%93%E3%82%8D+rock+no+cocoro/@35.6624971,139.6948316,17z/data=!3m1!4b1!4m5!3m4!1s0x60188ca94e710061:0xaaa1b5c22d19ddd3!8m2!3d35.6624928!4d139.6970203',
@@ -239,8 +239,66 @@ class BarsTableSeeder extends Seeder
             'score_mingling'    => 2,
             'score_price'       => 1
         ));
-        $bar->attachTags(['no table charge','rock']);
+        $bar->attachTags(['no table charge','rock','music']);
         $bar->fillCoordinatesFromString('35.662463, 139.696944');
+
+        $bar = Bar::create(array(
+            'name'              => 'JBS',
+            'location'          => 'Shibuya',
+            'type'              => 'Music Bar',
+            'points'            => 'Small music bar. No smoking. Scary bartender. Great music, not too loud. No table charge. Cheap drinks. No food.',
+            'experience'        => 'This place is very unique. First thing you notice, is the very nice room, all wood, and thousands and thousands of vynils. Then you notice the bartender is an old Japanese man who looks extremely angry and unfriendly. You will not feel welcomed. If you ask him if there is a menu, or if you can smoke, or he has Japanese sake, he will just get angry at you. It is seriously unbelievable, especially in Japan. But, if you can ignore this, then you can have a great time. Just ask for a drink based on what bottles you see at the bar. It will be 500 yen for a whiskey or a simple cocktail like a vodka tonic, or a bottled beer. There is no charge. No food. The music, and the accoustic, is really great. The volume was perfect to me, loud enough to enjoy the music, but without hurting your ears, and there is no problem having a conversation without speaking loudly. Actually, try not being loud, that would make the owner even angrier.',
+            'visited'           => true,
+            'visit_date'        => '2019-03-20 22:00:00',
+            'google_maps_link'  => 'https://www.google.com/maps/place/Jazz+Blues+Soul+Bar/@35.6570326,139.6945271,17z/data=!3m1!4b1!4m5!3m4!1s0x60188b560d4a3e8d:0x38273669398e2e25!8m2!3d35.6570283!4d139.6967158',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13123950/',
+            'official_website'  => 'https://eyescream.jp/fashion/1608/',
+            'score'             => 2,
+            'score_place'       => 2,
+            'score_mingling'    => 1,
+            'score_price'       => 1
+        ));
+        $bar->attachTags(['no table charge','music','no smoking']);
+        $bar->fillCoordinatesFromString('35.657019, 139.696739');
+
+
+        $bar = Bar::create(array(
+            'name'              => 'Tokyo Wine Club Raku',
+            'location'          => 'Shibuya',
+            'type'              => 'Izakaya',
+            'points'            => 'Nice and lively place. Good to enjoy some unexpensive wine. 500 yen otoshi.',
+            'experience'        => 'The place was quite crowded, but with a very nice and lively atmosphere. Nice staff. Terrace with a few tables available outside too. Wine is not expensive, starting at 2800 yen a bottle, with lots of options. You will have to accept a small salad that costs 500 yen in order to stay. They offer a lots of small dishes to accompany wine, as well.',
+            'visited'           => true,
+            'visit_date'        => '2019-03-20 22:00:00',
+            'google_maps_link'  => 'https://www.google.com/maps/place/%E6%9D%B1%E4%BA%AC%E3%83%AF%E3%82%A4%E3%83%B3%E5%80%B6%E6%A5%BD%E9%83%A8+%E6%A5%BD/@35.6577027,139.6965384,17.75z/data=!4m5!3m4!1s0x0:0x5bcac7d78f4ec076!8m2!3d35.6573443!4d139.6977125',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13109931/',
+            'official_website'  => 'https://tokyowinecluberaku.gorp.jp/',
+            'score'             => 2,
+            'score_place'       => 2,
+            'score_mingling'    => 0,
+            'score_price'       => 1
+        ));
+        $bar->attachTags(['izakaya','wine']);
+        $bar->fillCoordinatesFromString('35.657538, 139.697765');
+
+        $bar = Bar::create(array(
+            'name'              => 'Tavern Bach',
+            'location'          => 'Shibuya',
+            'type'              => 'Izakaya',
+            'points'            => 'Feels like a very cheap izakaya, but actually not cheap.',
+            'experience'        => 'Inside looks terrible. No decoration nor atmosphere whatsoever. It is just a big room with simple tables next to each other, with stools to seat. It is extremely bare. It feels cheap, but it is not. Prices are the same than a regular, nice izakaya. It gets crowded easily for some reasons though, so it can become noisy and smoky. There are tablets for placing orders but it is in Japanese only, without pictures, and the interface is crappy and not intuitive. It is possible to order from an English paper menu, despite the staff does not understand English. It takes longer but it is doable. The choice of food is not great, and the quality is not great either... I cannot see any reason to go there.',
+            'visited'           => true,
+            'visit_date'        => '2019-03-20 22:00:00',
+            'google_maps_link'  => 'https://www.google.com/maps/place/Tavern+Bach/@35.6571329,139.6967588,18.5z/data=!4m5!3m4!1s0x60188b566b2f02bf:0x122b10ce3fa1163a!8m2!3d35.6570919!4d139.6973728',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13182198/',
+            'official_website'  => 'https://www.hotpepper.jp/strJ001127934/yoyaku/?vos=othpporgzzzzx00000001',
+            'score'             => 0,
+            'score_place'       => 0,
+            'score_mingling'    => 0,
+            'score_price'       => 1
+        ));
+        $bar->attachTags(['izakaya']);
+        $bar->fillCoordinatesFromString('35.657093, 139.697368');
 
         /*
         $bar = Bar::create(array(
@@ -259,7 +317,7 @@ class BarsTableSeeder extends Seeder
             'score_mingling'    => 1,
             'score_price'       => 1
         ));
-        $bar->attachTags(['no table charge');
+        $bar->attachTags(['no table charge']);
         $bar->fillCoordinatesFromString('xxxxxxxxxxx');
         */
     }
