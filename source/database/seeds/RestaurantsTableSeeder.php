@@ -4561,6 +4561,69 @@ $resto = Restaurant::create(array(
         ));
         $resto->attachTags(['meat']);
         $resto->fillCoordinatesFromString('35.657248, 139.696506');
+
+        $resto = Restaurant::create(array(
+            'name'              => 'Kantipur',
+            'location'          => 'Shibuya, Sakuragaokacho',
+            'type'              => 'Nepalese',
+            'lunch_price'       => 1000,
+            'points'            => 'Very decent place to get curry and Nepalese/Indian food.',
+            'experience'        => 'The access to the restaurant is not obvious and far from being appealing, but once inside, it is surprisingly spacious and cosy. Mostly curry for lunch (including an vegetables one), with all-you-can-eat nan and rice. The amount of curry is generous. The price is about 1000 yen. But they have a super lunch set with 7 different foods (in addition to the wecome salad) you can order for 1480 yen. So I tried that, choose one curry that was included, as well as a drink. It was, globally, very nice. Now, about the curry in itself, I chose keema, and it was fine, but I wished it was a bit tastier. Also, those who like spicy/hot food might be disapointed. It is all very mild. The nan was not especially good either. But I was happy eating there, mostly for the non-curry part, and the nice affordable big lunch set.',
+            'visited'           => true,
+            'visit_date'        => '2019-03-15 13:00:00',
+            'google_maps_link'  => 'https://www.google.com/maps/place/Kantipur/@35.6562803,139.6998904,17z/data=!4m5!3m4!1s0x60188b575fc324bd:0xc09c92ad59533e0d!8m2!3d35.65635!4d139.701194',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13003357/',
+            'official_website'  => 'http://www.kantipur.co.jp/index.html',
+            'score_lunch'       => 2,
+            'score_place'       => 1,
+            'score_food'        => 2,
+            'score_price'       => 1,
+            'score_date'        => 0
+        ));
+        $resto->attachTags(['indian','curry','no smoking','vegetarian friendly']);
+        $resto->fillCoordinatesFromString('35.656342, 139.701420');
+
+        $resto = Restaurant::create(array(
+            'name'              => 'Atomasashiya',
+            'location'          => 'Shibuya, Nanpeidaicho',
+            'type'              => 'Ramen',
+            'lunch_price'       => 900,
+            'points'            => 'Quite unique and delicious ramen.',
+            'experience'        => 'Away from the busy part of Shibuya, this place is peaceful ramen restaurant run by an old couple. There are some tables and a counter. THe place seems it can be quite busy. The old man can speak English and will help foreigners to pick a ramen  on the ticket machine. It takes quite a while for the dish to be ready, but it is worth it. The soup has a rich and delicious taste. Noodles are good, and I loved the meat. I ordered an egg to be added, and it was also very delicious. It is, however, not very filling. Still, one of the best ramen in Shibuya.',
+            'visited'           => true,
+            'visit_date'        => '2019-03-18 13:00:00',
+            'google_maps_link'  => 'https://www.google.com/maps/place/Atomasashiya/@35.6552862,139.693382,16.75z/data=!4m5!3m4!1s0x60188b542b9fb427:0x7840d7d541b5d67!8m2!3d35.655413!4d139.695995',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13122253/',
+            'official_website'  => 'https://www.masaemon.jp/entry/2014/05/12/tokyo-shibuya-ramen-artmasashiya',
+            'score_lunch'       => 3,
+            'score_place'       => 2,
+            'score_food'        => 2,
+            'score_price'       => 1,
+            'score_date'        => 0
+        ));
+        $resto->attachTags(['ramen','noodles']);
+        $resto->fillCoordinatesFromString('35.655411, 139.695988');
+
+        $resto = Restaurant::create(array(
+            'name'              => 'Tengu Sakaba',
+            'location'          => 'Shibuya, Sakuragaokacho',
+            'type'              => 'Izakaya',
+            'lunch_price'       => 560,
+            'points'            => 'Very cheap lunch, nice place, decent taste.',
+            'experience'        => 'The lunch sets are very cheap, less tha 600 yen, and you can ask for big portion of rice without additional fee. The place is spacious and nice. The lunch options are mainly rice with deep fried meat, katsu, and/or Japanese curry. I tried the chicken katsu curry for 560 yen, that came with a miso soup, and an additional cabbage salad for 100 yen. The curry was quite bland, but at least the chicken was decent.',
+            'visited'           => true,
+            'visit_date'        => '2019-03-01 13:00:00',
+            'google_maps_link'  => 'https://www.google.com/maps/place/%E3%83%86%E3%83%B3%E3%82%B0%E9%85%92%E5%A0%B4+%E6%B8%8B%E8%B0%B7%E8%A5%BF%E5%8F%A3%E6%A1%9C%E4%B8%98%E5%BA%97/@35.6560825,139.6993113,17z/data=!4m8!1m2!2m1!1z5aSp54uX6YWS5aC0!3m4!1s0x60188b59fced79a1:0x4f183c7889af75a2!8m2!3d35.6559867!4d139.7015374',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13150021/',
+            'official_website'  => 'https://www.teng.co.jp/sakaba/',
+            'score_lunch'       => 2,
+            'score_place'       => 2,
+            'score_food'        => 1,
+            'score_price'       => 2,
+            'score_date'        => 0
+        ));
+        $resto->attachTags(['izakaya','teishoku','katsu']);
+        $resto->fillCoordinatesFromString('35.656076, 139.701500');
         
 /*
 // try french boistrot 139 near MontBell
