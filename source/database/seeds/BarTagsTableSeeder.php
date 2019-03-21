@@ -33,6 +33,12 @@ class BarTagsTableSeeder extends Seeder
         ));
 
         BarTag::create(array(
+            'label'              => 'izakaya',
+            'type'               => '100',
+            'weight'             => '100'
+        ));
+
+        BarTag::create(array(
             'label'              => 'no table charge',
             'type'               => '100',
             'weight'             => '100'
@@ -63,12 +69,27 @@ class BarTagsTableSeeder extends Seeder
         ));
 
         BarTag::create(array(
+            'label'              => 'music',
+            'type'               => '100',
+            'weight'             => '100'
+        ));
+        BarTag::create(array(
             'label'              => 'rock',
             'type'               => '100',
             'weight'             => '100'
         ));
         BarTag::create(array(
             'label'              => 'jazz',
+            'type'               => '100',
+            'weight'             => '100'
+        ));
+        BarTag::create(array(
+            'label'              => 'wine',
+            'type'               => '100',
+            'weight'             => '100'
+        ));
+        BarTag::create(array(
+            'label'              => 'beer',
             'type'               => '100',
             'weight'             => '100'
         ));
