@@ -17,10 +17,8 @@
         <br /><div class="minute inline">min</div>
       </a>
     </div>
-    <div class="resultCell centerContent">
-      <div class="score" style="color: var(--color-lunch);">
-        <div class="oneDigit">{{ $karaoke->score }}</div>
-      </div>
+    <div class="resultCell nameAndType">
+        <div class="extract">{{ $karaoke->points }}</div>
     </div>
   </div>
 @endforeach
