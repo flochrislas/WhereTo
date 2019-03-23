@@ -1385,7 +1385,7 @@ class RestaurantsTableSeeder extends Seeder
             'type'              => 'Italian',
             'lunch_price'       => 900,
             'points'            => 'Nice room, nice music, nice food, decent prices. Italian food, but no pizza.',
-            'experience'        => 'The room and music is very nice, but for some reason they use very small stools instead of chairs... which make it like a not so good place for a date. I had some lasgna, quite good, and a salad, bread and coffee, fine as well, for 980yen.',
+            'experience'        => 'The room and music is very nice, but for some reason they use very small stools instead of chairs... which make it like a not so good place for a date. I had some lasgna, quite good, and a salad, bread and coffee, fine as well, for 980yen. On a second occasion, I tried the mozzarela, raw ham and toasted bread for 1200 yen, and it was actually delicious (yes, even the bread).',
             'visited'           => true,
             'visit_date'        => '2018-01-29 13:00:00',
             'google_maps_link'  => 'https://www.google.co.jp/maps/place/HAGARE%E6%B8%8B%E8%B0%B7%E5%BA%97/@35.6600991,139.7023562,17z/data=!4m5!3m4!1s0x60188b58045b55f1:0xafc420dda6788d31!8m2!3d35.66057!4d139.704088',
@@ -1398,7 +1398,7 @@ class RestaurantsTableSeeder extends Seeder
             'score_date'        => 1
         ));
         $resto->attachTags(['italian','pasta']);
-        $resto->fillCoordinatesFromString('italian','pasta');
+        $resto->fillCoordinatesFromString('35.660612, 139.704054');
 
         $resto = Restaurant::create(array(
             'name'              => 'Concombre',
@@ -1406,7 +1406,7 @@ class RestaurantsTableSeeder extends Seeder
             'type'              => 'French',
             'lunch_price'       => 1300,
             'points'            => 'A nice little French restaurant, bistro style. Lunches are between 1000 and 2000 yen and come as plate with bread, salad, soup, dessert, and free refilled coffee. Food is good. Restaurant is decent for dates because of the nice French food, but no so great because of room and the proximity with other tables.',
-            'experience'        => 'I enjoyed eating "tomate farcie", since it is quite rare to find. It was quite good. I paid 1300 yen for the lunch, which is above what I like to pay, but I think it was worth it. Seems like a lot of people going there between 12 and 13. Even after 13, it took quite a while for me to get served (about 20mn). Interesting note: you canbring your own wine if you pay 500 yen fee per bottle.',
+            'experience'        => 'I enjoyed eating "tomate farcie", since it is quite rare to find. It was quite good. I paid 1300 yen for the lunch, which is above what I like to pay, but I think it was worth it. Seems like a lot of people going there between 12 and 13. Even after 13, it took quite a while for me to get served (about 20mn). Interesting note: you can bring your own wine if you pay 500 yen fee per bottle.',
             'visited'           => true,
             'visit_date'        => '2018-01-31 13:00:00',
             'google_maps_link'  => 'https://www.google.co.jp/maps/place/Concombre/@35.6590569,139.7008431,18z/data=!4m5!3m4!1s0x60188b586fce186d:0xfac0c76926a651a1!8m2!3d35.660071!4d139.7031221',

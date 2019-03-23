@@ -25,8 +25,8 @@
       <div class="resultCell distance centerContent">
         <div class="label distanceAdjust" style="color: var(--color-dst);">dst.</div>
       </div>
-      <div class="resultCell centerContent">
-        <div class="label" style="color: var(--color-lunch);">score</div>
+      <div class="resultCell description">
+        <div class="label" >Description</div>
       </div>
     </div>
   </div>
