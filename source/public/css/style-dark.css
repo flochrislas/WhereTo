@@ -525,7 +525,7 @@ td {
   text-decoration: none;
 }
 .resultCell.description {
-  flex: 4;
+  flex: 5;
   text-align: left;
   cursor: pointer;
 }
