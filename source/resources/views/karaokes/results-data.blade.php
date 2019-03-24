@@ -17,7 +17,7 @@
         <br /><div class="minute inline">min</div>
       </a>
     </div>
-    <div class="resultCell nameAndType">
+    <div class="resultCell description">
         <div class="extract">{{ $karaoke->points }}</div>
     </div>
   </div>
