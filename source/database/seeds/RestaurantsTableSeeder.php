@@ -4612,7 +4612,7 @@ $resto = Restaurant::create(array(
             'points'            => 'Very cheap lunch, nice place, decent taste.',
             'experience'        => 'The lunch sets are very cheap, less tha 600 yen, and you can ask for big portion of rice without additional fee. The place is spacious and nice. The lunch options are mainly rice with deep fried meat, katsu, and/or Japanese curry. I tried the chicken katsu curry for 560 yen, that came with a miso soup, and an additional cabbage salad for 100 yen. The curry was quite bland, but at least the chicken was decent.',
             'visited'           => true,
-            'visit_date'        => '2019-03-01 13:00:00',
+            'visit_date'        => '2019-03-20 13:00:00',
             'google_maps_link'  => 'https://www.google.com/maps/place/%E3%83%86%E3%83%B3%E3%82%B0%E9%85%92%E5%A0%B4+%E6%B8%8B%E8%B0%B7%E8%A5%BF%E5%8F%A3%E6%A1%9C%E4%B8%98%E5%BA%97/@35.6560825,139.6993113,17z/data=!4m8!1m2!2m1!1z5aSp54uX6YWS5aC0!3m4!1s0x60188b59fced79a1:0x4f183c7889af75a2!8m2!3d35.6559867!4d139.7015374',
             'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13150021/',
             'official_website'  => 'https://www.teng.co.jp/sakaba/',
@@ -4624,10 +4624,72 @@ $resto = Restaurant::create(array(
         ));
         $resto->attachTags(['izakaya','teishoku','katsu']);
         $resto->fillCoordinatesFromString('35.656076, 139.701500');
+
+        $resto = Restaurant::create(array(
+            'name'              => 'Kiraku',
+            'location'          => 'Shibuya',
+            'type'              => 'Wonton',
+            'lunch_price'       => 950,
+            'points'            => 'Delicious wontonmen: ramen with Chinese dumplings inside.',
+            'experience'        => 'Small restaurant on 2 floors, no decoration or atmosphere, and you can be seated on the same table where some random person is eating. The place is very popular, so there is often some wait time. The food is quite great. I tried the moyashi wontonmen, a big ramen with Chinese dumplings inside, for 950 yen. The soup was extremely hot, I would say, more than usual ramen. But it tasted great. The Chinese dumplings were also very good.',
+            'visited'           => true,
+            'visit_date'        => '2019-03-22 13:00:00',
+            'google_maps_link'  => 'https://www.google.com/maps/place/Kiraku/@35.6585435,139.6965551,18z/data=!4m5!3m4!1s0x60188ca9c413ffff:0x9dbdd7c1104a4596!8m2!3d35.6590386!4d139.6968685',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13001705/',
+            'official_website'  => 'https://ramendb.supleks.jp/s/41.html',
+            'score_lunch'       => 2,
+            'score_place'       => 0,
+            'score_food'        => 2,
+            'score_price'       => 1,
+            'score_date'        => 0
+        ));
+        $resto->attachTags(['ramen']);
+        $resto->fillCoordinatesFromString('35.659075, 139.696878');
+
+        $resto = Restaurant::create(array(
+            'name'              => 'Gokigentori',
+            'location'          => 'Shibuya, Dogenzaka',
+            'type'              => 'Yakitori',
+            'lunch_price'       => 950,
+            'points'            => 'Nice cosy place. Very good yakitori lunch set.',
+            'experience'        => 'I liked the cosy atmosphere and the wooden interior. There is a windows bay, but it remains rather dark, maybe because they have a loft, which is nice and allows for more tables. One large counter, and a few big tables. Nice music trying to set a "bistro" mood. Nice staff. I tried the first yakitori-don lunch set for 900 yen. 3 pieces of different skewered chicken, on a bowl of rice, with a miso soup and a small salad. It was all very good. Warning: if you order a set with more than 3 yakitori, you will get neck, soft bone and liver, which is quite different from the first 3 regular chicken meat.',
+            'visited'           => true,
+            'visit_date'        => '2019-03-25 13:00:00',
+            'google_maps_link'  => 'https://www.google.com/maps/place/Bistro+Gokigentori+Shibuyahonshaten/@35.6568055,139.6948655,17z/data=!3m1!4b1!4m5!3m4!1s0x60188b566e8c7bc9:0x11c2c3313a50e4b5!8m2!3d35.6568055!4d139.6970542',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13151085/',
+            'official_website'  => 'http://www.gokigendori.jp/shoplist/shibuya.html',
+            'score_lunch'       => 3,
+            'score_place'       => 2,
+            'score_food'        => 2,
+            'score_price'       => 1,
+            'score_date'        => 1
+        ));
+        $resto->attachTags(['yakitori','no smoking');
+        $resto->fillCoordinatesFromString('35.656778, 139.697045');
+
+        $resto = Restaurant::create(array(
+            'name'              => 'Kabe no ana',
+            'location'          => 'Shibuya, Dogenzaka',
+            'type'              => 'Pasta',
+            'lunch_price'       => 1350,
+            'points'            => 'Good pasta. Bit expensive.',
+            'experience'        => 'The place is decent without being especially nice. There is a counter in front of the windows bay, and tables. It specializes in pasta, mostly spaghetti, with a lot of choices sorted by base. I tried the tomato-cream based avocado and mozzarella spaghetti. It came fuming hot, with a small salad and a drink, for 1350 yen. A bit expensive, but it was very good, a bit above average.',
+            'visited'           => true,
+            'visit_date'        => '2019-03-01 13:00:00',
+            'google_maps_link'  => 'https://www.google.com/maps/place/Kabe+no+Ana+Shibuya+Shop/@35.6595738,139.6955171,17z/data=!3m1!4b1!4m5!3m4!1s0x60188ca9c04fec51:0x1d70d674d3a3a85e!8m2!3d35.6595738!4d139.6977058',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13003362/',
+            'official_website'  => 'http://www.kabenoana.com/',
+            'score_lunch'       => 2,
+            'score_place'       => 1,
+            'score_food'        => 2,
+            'score_price'       => 0,
+            'score_date'        => 0
+        ));
+        $resto->attachTags(['pasta','no smoking','visa']);
+        $resto->fillCoordinatesFromString('35.659573, 139.697730');
         
 /*
 // try french boistrot 139 near MontBell
-
 
 // try HIDE OUT next to Daiso
 
