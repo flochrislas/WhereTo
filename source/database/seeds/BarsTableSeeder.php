@@ -324,12 +324,17 @@ class BarsTableSeeder extends Seeder
 
     /*
 
-    
-Jazz bar
+JBS Shibuya
+https://favy-jp.com/shops/106930
+
+Music Bar 45
+Rockaholic
+
+Hakuri Tabai Hanbey Shibuya (薄利多賣半兵ヱ 渋谷道玄坂店)
+that maybe is the place i went with tapia
+
 Shisha place the 3 ones
 the 2 pubs near office
-the irish pub
-the dubliners
 abbot choice
 
 https://fr.favy-jp.com/topics/121
@@ -339,13 +344,19 @@ sake stand
 MUSIC BAR ROCKAHOLIC 渋谷(ロックバー)
 
 https://theculturetrip.com/asia/japan/articles/the-10-best-nightclubs-and-bars-in-tokyo-for-cheap-drinks/
+Aoyama Tunnel, Shibuya
+Oath, Shibuya
+loud music
 
 https://www.google.com/maps/place/NIGHTFLY/@35.6628603,139.6941868,18z/data=!4m8!1m2!2m1!1sudagawacho+shibuya+bar!3m4!1s0x60188cac6b7b7ef9:0xd9f8a5101f317a8c!8m2!3d35.6628603!4d139.6948375
 
-
+Milli bar
 https://www.google.com/maps/place/%EF%BC%AD%EF%BC%A9%EF%BC%AC%EF%BC%AC%EF%BC%A9%EF%BC%A2%EF%BC%A1%EF%BC%B2/@35.6609738,139.6965086,20z/data=!4m8!1m2!2m1!1sudagawacho+shibuya+bar!3m4!1s0x60188ca97b2e66d3:0xe80b9e858422743b!8m2!3d35.6609912!4d139.6967015
 
 http://tokyojazzsite.com/directory/categories/shibuya
+
+Club de Beluga : 
+Anticipation (feat Thomas Siffing)
 
     */
 }
