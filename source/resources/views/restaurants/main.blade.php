@@ -1,6 +1,9 @@
 @extends('layouts.app')
 
-@section('title', 'Restaurants')
+@section('metatags')
+  <title>{{config('app.name')}} - Restaurants for lunch in Shibuya</title>
+  <meta name="description" content="Quickly find the best restaurants for having lunch in Shibuya.">
+@endsection
 
 @section('content')
 <div id="content">

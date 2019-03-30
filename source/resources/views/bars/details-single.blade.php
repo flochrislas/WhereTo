@@ -1,6 +1,9 @@
 @extends('layouts.app')
 
-@section('title', 'Store details')
+@section('metatags')
+  <title>{{config('app.name')}} - {{$place->name}} - Details & {{ str_limit($place->updated_at, $limit = 4, $end = '') }} review</title>
+  <meta name="description" content="Detailed information page for {{$place->name}}, in Tokyo Shibuya. Full {{ str_limit($place->updated_at, $limit = 4, $end = '') }} review and ratings.">
+@endsection
 
 @section('content')
 <div id="content-unchained">
