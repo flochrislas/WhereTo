@@ -34,6 +34,7 @@ TEST Make sure display all sort by distance by default -- just add orderBy=dista
 
 Package phpoffice/phpexcel is abandoned, you should avoid using it. Use phpoffice/phpspreadsheet instead.
 
+SEO: use yield and section to write metatag in headers
 
 need: have URL to result page so we can SHARE
 SHARE: share results , modal popup, with sharing options, copy url to clipboard

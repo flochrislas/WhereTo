@@ -1,6 +1,9 @@
 @extends('layouts.app')
 
-@section('title', 'Karaoke')
+@section('metatags')
+  <title>{{config('app.name')}} - Karaoke in Shibuya</title>
+  <meta name="description" content="Quickly find the best karaoke for you in Shibuya.">
+@endsection
 
 @section('content')
 <div id="content">

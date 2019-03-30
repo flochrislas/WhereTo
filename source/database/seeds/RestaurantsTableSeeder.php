@@ -245,7 +245,7 @@ class RestaurantsTableSeeder extends Seeder
             'type'              => 'Japanese curry',
             'lunch_price'       => 900,
             'points'            => 'Highly customizable Japanese curry. Very delicious. Counter only. Kinda smaller than most coco ichi.',
-            'experience'        => 'Once you find the right combination for you, it can be really delicious. I personally have "chicken katsu (deepfried) curry + nasu (eggplants) + cheese, ichi-kara (spicy level 1)". English menu is available. It is easy to order a small, or a large serving, depending on how hungry you are.',
+            'experience'        => 'Better known as just "Coco Ichi". Once you find the right combination for you, it can be really delicious. I personally have "chicken katsu (deepfried) curry + nasu (eggplants) + cheese, ichi-kara (spicy level 1)". English menu is available. It is easy to order a small, or a large serving, depending on how hungry you are. Coco Ichi is very present in Tokyo, so if you have the opportunity, I would recommend trying one that is not in Shibuya, as it will be more spacious and less crowded.',
             'visited'           => true,
             'visit_date'        => '2017-09-05 13:00:00',
             'google_maps_link'  => 'https://www.google.co.jp/maps/place/CoCo%E5%A3%B1%E7%95%AA%E5%B1%8B+%E6%B8%8B%E8%B0%B7%E5%8C%BA%E6%A1%9C%E4%B8%98%E7%94%BA%E5%BA%97/@35.6569245,139.6982403,17z/data=!4m12!1m6!3m5!1s0x60188b579e0464dd:0x5838a075cb9595d6!2zQ29Db-WjseeVquWxiyDmuIvosLfljLrmoZzkuJjnlLrlupc!8m2!3d35.6569245!4d139.700429!3m4!1s0x60188b579e0464dd:0x5838a075cb9595d6!8m2!3d35.6569245!4d139.700429',
@@ -257,7 +257,7 @@ class RestaurantsTableSeeder extends Seeder
             'score_price'       => 1,
             'score_date'        => 0
         ));
-        $resto->attachTags(['japanese curry','to-go','visa','English menu','customisable dishes','no smoking','filling']);
+        $resto->attachTags(['japanese curry','to-go','visa','English menu','customisable dishes','no smoking','filling','vegetarian friendly']);
         $resto->fillCoordinatesFromString('35.657260, 139.700408');
 
         $resto = Restaurant::create(array(
@@ -266,7 +266,7 @@ class RestaurantsTableSeeder extends Seeder
             'type'              => 'Japanese curry',
             'lunch_price'       => 900,
             'points'            => 'Highly customizable Japanese curry. Very delicious. Counter and tables. Kinda smaller than most coco ichi.',
-            'experience'        => 'Once you find the right combination for you, it can be really delicious. I personally have "chicken katsu (deepfried) curry + nasu (eggplants) + cheese, ichi-kara (spicy level 1)". English menu is available. It is easy to order a small, or a large serving, depending on how hungry you are. ',
+            'experience'        => 'Better known as just "Coco Ichi". Once you find the right combination for you, it can be really delicious. I personally have "chicken katsu (deepfried) curry + nasu (eggplants) + cheese, ichi-kara (spicy level 1)". English menu is available. It is easy to order a small, or a large serving, depending on how hungry you are. Coco Ichi is very present in Tokyo, so if you have the opportunity, I would recommend trying one that is not in Shibuya, as it will be more spacious and less crowded.',
             'visited'           => true,
             'visit_date'        => '2017-09-05 13:00:00',
             'google_maps_link'  => 'https://www.google.co.jp/maps/place/Curry+House+CoCo+Ichibanya+Shibuya-ku+Udagawach%C5%8D/@35.6598584,139.6987342,17.75z/data=!4m12!1m6!3m5!1s0x60188ca847c5a6d3:0xf060181e5db80755!2sCurry+House+CoCo+Ichibanya+Shibuya-ku+Udagawach%C5%8D!8m2!3d35.6605355!4d139.6994646!3m4!1s0x0:0xf060181e5db80755!8m2!3d35.6605352!4d139.6994649',
@@ -278,7 +278,7 @@ class RestaurantsTableSeeder extends Seeder
             'score_price'       => 1,
             'score_date'        => 0
         ));
-        $resto->attachTags(['japanese curry','to-go','visa','English menu','customisable dishes','no smoking','filling']);
+        $resto->attachTags(['japanese curry','to-go','visa','English menu','customisable dishes','no smoking','filling','vegetarian friendly']);
         $resto->fillCoordinatesFromString('35.660804, 139.699485');
 
         $resto = Restaurant::create(array(
@@ -2962,8 +2962,8 @@ class RestaurantsTableSeeder extends Seeder
             'location'          => 'Shibuya crossing',
             'type'              => 'Cafe',
             'lunch_price'       => 1200,
-            'points'            => 'Counter with great view on Shibuya\'s crossing. Nice cafe serving pasta and deserts with fresh fruits.',
-            'experience'        => '7th floor right in front of the crossing. THe view is very nice> The pasta were actually delicious. For lunch, you can add +400yen to your 1200yen pasta dish in order to get a mini fresh fruits parfait. The food comes rather slowly, but it is easy to be patient while enjoying the view. Each time I went the place was rather empty, which is another good point. The mini parfait I had was not especially great, lacking sweetness to my westerner taste.',
+            'points'            => 'Counter with great view on Shibuya crossing. Nice cafe serving pasta and deserts with fresh fruits.',
+            'experience'        => '7th floor right in front of the crossing. The view is very nice. The pasta were actually delicious. For lunch, you can add +400yen to your 1200yen pasta dish in order to get a mini fresh fruits parfait. The food comes rather slowly, but it is easy to be patient while enjoying the view. Each time I went the place was rather empty, which is another good point. The mini parfait I had was not especially great, lacking sweetness to my westerner taste.',
             'visited'           => true,
             'visit_date'        => '2018-08-09 13:00:00',
             'google_maps_link'  => 'https://www.google.com/maps/place/SHIBUYA+PARLOR/@35.6597365,139.6986217,17z/data=!3m1!4b1!4m5!3m4!1s0x60188b6d7d3f546f:0x922824b7ce3b34ef!8m2!3d35.6597322!4d139.7008104',
@@ -2975,7 +2975,7 @@ class RestaurantsTableSeeder extends Seeder
             'score_price'       => 1,
             'score_date'        => 1
         ));
-        $resto->attachTags(['cafe','pasta','desert']);
+        $resto->attachTags(['cafe','pasta','desert','no smoking']);
         $resto->fillCoordinatesFromString('35.659735, 139.700788');
 
         // This place has been shut down for new building construction
@@ -4664,7 +4664,7 @@ $resto = Restaurant::create(array(
             'score_price'       => 1,
             'score_date'        => 1
         ));
-        $resto->attachTags(['yakitori','no smoking');
+        $resto->attachTags(['yakitori','no smoking']);
         $resto->fillCoordinatesFromString('35.656778, 139.697045');
 
         $resto = Restaurant::create(array(
