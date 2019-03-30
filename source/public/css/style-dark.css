@@ -261,6 +261,10 @@ td {
   border-color: #545454; /* a01453 */
   border-style: dashed;
 }
+.sns {
+  border-color: var(--color-date);
+  background-color: var(--color-price);
+}
 .purchasePrice {
   display: none; /* no see until its ready...*/
 	font-style: italic;
