@@ -575,9 +575,11 @@ class RestaurantsTableSeeder extends Seeder
         $resto->attachTags(['burger']);]
         */
 
+        /*
+        // Closed due to block demolition
         $resto = Restaurant::create(array(
             'name'              => 'Mediterranean Pizzeria Domani',
-            'location'          => 'Shibuyq',
+            'location'          => 'Shibuya',
             'type'              => 'Italian',
             'lunch_price'       => 900,
             'points'            => 'Interior OK. Pizza OK but really nothing special... 900 yen for pizza + salad. The salad (some lattuce) is small but the dressing is delicious. Tables and counter, not small.',
@@ -595,6 +597,7 @@ class RestaurantsTableSeeder extends Seeder
         ));
         $resto->attachTags(['pasta', 'pizza', 'italian']);
         $resto->fillCoordinatesFromString('35.656491, 139.702546');
+        */
 
         $resto = Restaurant::create(array(
             'name'              => 'Meat Bank',
@@ -4031,7 +4034,7 @@ $resto = Restaurant::create(array(
             'score_price'       => 1,
             'score_date'        => 1
         ));
-        $resto->attachTags(['pasta','smoking area','japanese curry']);
+        $resto->attachTags(['pasta','meat','vegetarian friendly','English menu','smoking area','japanese curry']);
         $resto->fillCoordinatesFromString('35.656753, 139.701437');
 
         $resto = Restaurant::create(array(
@@ -4687,6 +4690,69 @@ $resto = Restaurant::create(array(
         ));
         $resto->attachTags(['pasta','no smoking','visa','vegetarian friendly']);
         $resto->fillCoordinatesFromString('35.659573, 139.697730');
+
+        $resto = Restaurant::create(array(
+            'name'              => 'Gansozushi',
+            'location'          => 'Shibuya, Dogenzaka',
+            'type'              => 'Sushi',
+            'lunch_price'       => 1000,
+            'points'            => 'Cheap sushi.',
+            'experience'        => 'The place is small and bare. Very narrow counter and small stools. Way less crowded than Uobei, another cheap sushi restaurant next door. There is a suhi-go-round convey belt, but there will not be much circulating there if there are not many customers. So you will haev to ask the chief directly. He is nice, can understand English, and make sushi very quickly. Prices start at 90yen for 2 sushi, such as tuna or saumon. Very cheap. Taste is decent for the price... but I would not recommend this place unless you would like a quick sushi snack (the place is opened from lunch to late diner non stop).',
+            'visited'           => true,
+            'visit_date'        => '2019-04-01 13:00:00',
+            'google_maps_link'  => 'https://www.google.com/maps/place/Sushi+go-round+Restaurant+Shibuya/@35.6596115,139.6965986,18z/data=!4m5!3m4!1s0x60188ca9bedc7287:0xeef88e73f9aeca1e!8m2!3d35.6598861!4d139.6977761',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13044773/',
+            'official_website'  => 'http://www.gansozushi.com/shop/cat5/20091010post-10.html',
+            'score_lunch'       => 1,
+            'score_place'       => 0,
+            'score_food'        => 1,
+            'score_price'       => 2,
+            'score_date'        => 0
+        ));
+        $resto->attachTags(['sushi']);
+        $resto->fillCoordinatesFromString('35.659887, 139.697758');
+
+        $resto = Restaurant::create(array(
+            'name'              => 'Kirin City',
+            'location'          => 'Shibuya, Dogenzaka',
+            'type'              => 'Pub',
+            'lunch_price'       => 740,
+            'points'            => 'Nice pub. Good pasta.',
+            'experience'        => 'Nice and confortable place. Various choice of vegetables, meats, pasta etc... Prices start cheap, at 740yen for the Napolitan spaghetti dish, which is quite good. You can also get a small salad for +150yen. As it is a pub, beer is available on tap',
+            'visited'           => true,
+            'visit_date'        => '2019-04-01 13:00:00',
+            'google_maps_link'  => 'https://www.google.com/maps/place/Kirin+City+shibuya+dogenzaka/@35.6595889,139.6971534,18z/data=!4m5!3m4!1s0x60188ca9bd988ef9:0xd049d78122b6495e!8m2!3d35.660052!4d139.6975961',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13055706/',
+            'official_website'  => 'https://kirincity104.gorp.jp/',
+            'score_lunch'       => 2,
+            'score_place'       => 2,
+            'score_food'        => 1,
+            'score_price'       => 1,
+            'score_date'        => 0
+        ));
+        $resto->attachTags(['pasta','meat','vegetarian friendly','English menu']);
+        $resto->fillCoordinatesFromString('35.660059, 139.697676');
+/*
+        $resto = Restaurant::create(array(
+            'name'              => 'Kirin City',
+            'location'          => 'Shibuya, Sakuragaokacho',
+            'type'              => 'Pub',
+            'lunch_price'       => 750,
+            'points'            => 'Nice, bright and spacious space for casual lunch.',
+            'experience'        => 'With large windows bay, the place is bright, and quite spacious with many tables in addition to a small counter. The menu for lunch is mostly pasta or Japanese curry. I tried "napolitan" spaghetti and was surprised at how good it was. For 750 yen. You can also get a small salad for +150yen, or the "drink bar" with soft drinks and soup for +200yen. Of course beer is also available on tap.',
+            'visited'           => true,
+            'visit_date'        => '2018-11-29 13:00:00',
+            'google_maps_link'  => 'https://www.google.com/maps/place/KIRIN+City/@35.6570982,139.7003463,18z/data=!4m8!1m2!2m1!1skirin+city!3m4!1s0x60188b59dfbde383:0xf3e4dc1ae8e0f2a4!8m2!3d35.656689!4d139.701432',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13014525/',
+            'official_website'  => 'https://kirincity138.gorp.jp/',
+            'score_lunch'       => 3,
+            'score_place'       => 2,
+            'score_food'        => 2,
+            'score_price'       => 1,
+            'score_date'        => 1
+        ));
+        $resto->attachTags(['pasta','smoking area','japanese curry']);
+        $resto->fillCoordinatesFromString('35.656753, 139.701437');*/
         
 /*
 // try french boistrot 139 near MontBell
@@ -4723,7 +4789,7 @@ SERGEY: Prospect 2018 , downfall 2004
             'points'            => 'xxxxx',
             'experience'        => 'xxxxx',
             'visited'           => true,
-            'visit_date'        => '2019-03-01 13:00:00',
+            'visit_date'        => '2019-04-01 13:00:00',
             'google_maps_link'  => 'xxxxx',
             'tabelog_link'      => 'xxxxx',
             'official_website'  => 'xxxxx',
