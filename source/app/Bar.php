@@ -25,8 +25,10 @@ class Bar extends Model
      */
     public function tagsCached()
     {
-        return \Cache::rememberForever($this->id.'-tags', function () {
-            \Debugbar::debug('Caching tags from DB: '.($this->tags));
+        $cacheKey = strtolower(class_basename($this)).'-'.$this->id.'-tags';
+        \Debugbar::debug('Cache key for those tags: '.$cacheKey);
+        return \Cache::rememberForever($cacheKey, function () {
+            \Debugbar::debug('Caching tags from DB: '.$this->tags);
             return  $this->tags;
         });
     }
