@@ -38,13 +38,15 @@ class Store extends Model
          * Read from the cache
          * https://ctf0.wordpress.com/2017/08/19/how-to-cache-models-relationships-in-laravel/
          */
-        public function tagsCached()
-        {
-            return \Cache::rememberForever($this->id.'-tags', function () {
-                \Debugbar::debug('Caching tags from DB: '.($this->tags));
-                return  $this->tags;
-            });
-        }
+         public function tagsCached()
+         {
+             $cacheKey = strtolower(class_basename($this)).'-'.$this->id.'-tags';
+             \Debugbar::debug('Cache key for those tags: '.$cacheKey);
+             return \Cache::rememberForever($cacheKey, function () {
+                 \Debugbar::debug('Caching tags from DB: '.$this->tags);
+                 return  $this->tags;
+             });
+         }
 
         /**
          * Attach the given tags (that must already exist) to the store
