@@ -4685,7 +4685,7 @@ $resto = Restaurant::create(array(
             'score_price'       => 0,
             'score_date'        => 0
         ));
-        $resto->attachTags(['pasta','no smoking','visa']);
+        $resto->attachTags(['pasta','no smoking','visa','vegetarian friendly']);
         $resto->fillCoordinatesFromString('35.659573, 139.697730');
         
 /*
