@@ -102,6 +102,12 @@ class RestaurantTagsTableSeeder extends Seeder
             'type'               => '80',
             'weight'             => '50'
         ));
+
+        RestaurantTag::create(array(
+            'label'              => 'african',
+            'type'               => '80',
+            'weight'             => '50'
+        ));
         
         /******************************************/
         /*             TYPE                       */
@@ -460,6 +466,12 @@ class RestaurantTagsTableSeeder extends Seeder
 
         RestaurantTag::create(array(
             'label'              => 'falafel',
+            'type'               => '100',
+            'weight'             => '4'
+        ));
+
+        RestaurantTag::create(array(
+            'label'              => 'kebab',
             'type'               => '100',
             'weight'             => '4'
         ));

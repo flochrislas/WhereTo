@@ -4732,27 +4732,27 @@ $resto = Restaurant::create(array(
         ));
         $resto->attachTags(['pasta','meat','vegetarian friendly','English menu']);
         $resto->fillCoordinatesFromString('35.660059, 139.697676');
-/*
+
         $resto = Restaurant::create(array(
-            'name'              => 'Kirin City',
-            'location'          => 'Shibuya, Sakuragaokacho',
-            'type'              => 'Pub',
-            'lunch_price'       => 750,
-            'points'            => 'Nice, bright and spacious space for casual lunch.',
-            'experience'        => 'With large windows bay, the place is bright, and quite spacious with many tables in addition to a small counter. The menu for lunch is mostly pasta or Japanese curry. I tried "napolitan" spaghetti and was surprised at how good it was. For 750 yen. You can also get a small salad for +150yen, or the "drink bar" with soft drinks and soup for +200yen. Of course beer is also available on tap.',
+            'name'              => 'Yinega',
+            'location'          => 'Shibuya, 1Chome',
+            'type'              => 'Ethnic',
+            'lunch_price'       => 890,
+            'points'            => 'xxxxx',
+            'experience'        => 'xxxxx',
             'visited'           => true,
-            'visit_date'        => '2018-11-29 13:00:00',
-            'google_maps_link'  => 'https://www.google.com/maps/place/KIRIN+City/@35.6570982,139.7003463,18z/data=!4m8!1m2!2m1!1skirin+city!3m4!1s0x60188b59dfbde383:0xf3e4dc1ae8e0f2a4!8m2!3d35.656689!4d139.701432',
-            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13014525/',
-            'official_website'  => 'https://kirincity138.gorp.jp/',
-            'score_lunch'       => 3,
-            'score_place'       => 2,
-            'score_food'        => 2,
+            'visit_date'        => '2019-04-03 13:00:00',
+            'google_maps_link'  => 'https://www.google.com/maps/place/%E3%82%A4%E3%82%A7%E3%83%8D%E3%82%AC/@35.660704,139.7029031,17z/data=!3m1!4b1!4m5!3m4!1s0x60188b58967a3719:0x1d0da2d9f68202f5!8m2!3d35.6606997!4d139.7050918',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13162279/',
+            'official_website'  => 'https://yinega.wixsite.com/yinega',
+            'score_lunch'       => 2,
+            'score_place'       => 1,
+            'score_food'        => 1,
             'score_price'       => 1,
-            'score_date'        => 1
+            'score_date'        => 0
         ));
-        $resto->attachTags(['pasta','smoking area','japanese curry']);
-        $resto->fillCoordinatesFromString('35.656753, 139.701437');*/
+        $resto->attachTags(['african','curry','kebab','taco rice','vegetarian friendly']);
+        $resto->fillCoordinatesFromString('35.660703, 139.705117');
         
 /*
 // try french boistrot 139 near MontBell
