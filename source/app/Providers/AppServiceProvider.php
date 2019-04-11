@@ -17,6 +17,10 @@ class AppServiceProvider extends ServiceProvider
         // Add setting to separate log files
         \Log::getMonolog()->popHandler();
         \Log::useDailyFiles(storage_path('/logs/').php_sapi_name().'-'.get_current_user().'.log');
+        // Then add this to help PhpStorm and IDE
+        if ($this->app->environment() !== 'production') {
+            $this->app->register(\Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class);
+        }
     }
 
     /**
