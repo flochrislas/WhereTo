@@ -76,3 +76,9 @@ desktop.ini
 #*.tar
 #*.zip
 source/\.buildpath
+
+source/\.phpstorm\.meta\.php
+
+source/_ide_helper\.php
+
+source/composer\.phar
