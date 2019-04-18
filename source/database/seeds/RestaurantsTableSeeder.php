@@ -4733,6 +4733,7 @@ $resto = Restaurant::create(array(
         $resto->attachTags(['pasta','meat','vegetarian friendly','English menu']);
         $resto->fillCoordinatesFromString('35.660059, 139.697676');
 
+        // TODO //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         $resto = Restaurant::create(array(
             'name'              => 'Yinega',
             'location'          => 'Shibuya, 1Chome',
@@ -4754,10 +4755,117 @@ $resto = Restaurant::create(array(
         $resto->attachTags(['african','curry','kebab','taco rice','vegetarian friendly']);
         $resto->fillCoordinatesFromString('35.660703, 139.705117');
 
-        // Rin ramen
+        // TODO Rin ramen
+        $resto = Restaurant::create(array(
+            'name'              => 'Rin',
+            'location'          => 'Shibuya, Udagawacho',
+            'type'              => 'Ramen',
+            'lunch_price'       => 870,
+            'points'            => 'Delicious, and huge, ramen.',
+            'experience'        => 'Small place, with a few tables and a small counter. Interior is very bare (if you eat at the counter, you will be facing a decrepit wall and some machine to mix flour or something). The music is surprisingly good (maybe it has to do with the fact the restaraunt is in a records stores area). It has numerous options for the soup of the ramen: shio (salt), shoyu (soy sauce), spicy miso, ponzu, and even curry and curry cheese. Japanese menu only. Cash only. Order at the machine (1000yen bills only, otherwise ask the staff for change). Then it takes a while for the chef to cook (more than the fast pace of the average ramen). Despite the unexpensive price, the ramen is absolutely huge. Maybe 3 times more than the average, so you better be hungry. Lots of noodles, but also an extremely generous amount of very good meat. I tried the spicy miso ramen, and it was really delicious, with a very rich flavor. Quite a unique taste. Easily one of my favorite in Shibuya. And it made me so full... which is rare for a ramen. Note: there is no paper tissue, so I recommend you have some on you.',
+            'visited'           => true,
+            'visit_date'        => '2019-04-08 13:00:00',
+            'google_maps_link'  => 'https://www.google.com/maps/place/Rin+Shibuya/@35.6613949,139.6974323,17z/data=!4m5!3m4!1s0x60188caeb3709559:0x4296cbdad9b41c51!8m2!3d35.6630335!4d139.6971554',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13121071/',
+            'official_website'  => 'https://www.shonanboy.net/shibuya-ramen-rin/',
+            'score_lunch'       => 1,
+            'score_place'       => 1,
+            'score_food'        => 1,
+            'score_price'       => 1,
+            'score_date'        => 0
+        ));
+        $resto->attachTags(['ramen','noodles','miso','filling']);
+        $resto->fillCoordinatesFromString('35.663035, 139.697177');
 
-        // Vandalism
-        
+        // TODO Vandalism
+        $resto = Restaurant::create(array(
+            'name'              => 'Vandalism',
+            'location'          => 'Shibuya',
+            'type'              => 'Bar Cafe',
+            'lunch_price'       => 950,
+            'points'            => 'xxxxx',
+            'experience'        => 'xxxxx',
+            'visited'           => true,
+            'visit_date'        => '2019-04-10 13:00:00',
+            'google_maps_link'  => 'https://www.google.com/maps/place/VANDALISM+%E6%B8%8B%E8%B0%B7/@35.6601789,139.6967235,17z/data=!3m1!4b1!4m5!3m4!1s0x60188ca83562a5b3:0x6c5c80f130fe8f1d!8m2!3d35.6601746!4d139.6989122',
+            'tabelog_link'      => 'xxxxx',
+            'official_website'  => 'http://vandalism.jp/',
+            'score_lunch'       => 1,
+            'score_place'       => 1,
+            'score_food'        => 1,
+            'score_price'       => 1,
+            'score_date'        => 0
+        ));
+        $resto->attachTags(['burger']);
+        $resto->fillCoordinatesFromString('35.660237, 139.698954');
+
+        // TODO Chao Thai
+        $resto = Restaurant::create(array(
+            'name'              => 'Chao Thai',
+            'location'          => 'Shibuya, Dogenzaka',
+            'type'              => 'Thai',
+            'lunch_price'       => 950,
+            'points'            => 'xxxxx',
+            'experience'        => 'xxxxx',
+            'visited'           => true,
+            'visit_date'        => '2019-04-12 13:00:00',
+            'google_maps_link'  => 'https://www.google.com/maps/place/Chao+Thai+Shibuya+Dogenzaka+shop/@35.6588557,139.6958478,17z/data=!3m1!4b1!4m5!3m4!1s0x60188ca9d9c63a9f:0x9fe65bb7c5478600!8m2!3d35.6588514!4d139.6980365',
+            'tabelog_link'      => 'xxxxx',
+            'official_website'  => 'http://www.chaothai.jp/',
+            'score_lunch'       => 1,
+            'score_place'       => 1,
+            'score_food'        => 1,
+            'score_price'       => 1,
+            'score_date'        => 0
+        ));
+        $resto->attachTags(['thai','gapao']);
+        $resto->fillCoordinatesFromString('35.659001, 139.697995');
+
+        // TODO J.S. Curry
+        $resto = Restaurant::create(array(
+            'name'              => 'J.S. Curry',
+            'location'          => 'Shibuya, 1Chome',
+            'type'              => 'Japanese Curry',
+            'lunch_price'       => 1047,
+            'points'            => 'xxxxx',
+            'experience'        => 'xxxxx',
+            'visited'           => true,
+            'visit_date'        => '2019-04-15 13:00:00',
+            'google_maps_link'  => 'https://www.google.com/maps/place/J.S.CURRY+Miyamasuzaka/@35.6599431,139.7013178,17z/data=!3m1!4b1!4m5!3m4!1s0x60188b5866d5ca05:0xa16cc0d1f628d227!8m2!3d35.6599388!4d139.7035065',
+            'tabelog_link'      => 'xxxxx',
+            'official_website'  => 'https://www.baycrews.co.jp/brandlist/food/',
+            'score_lunch'       => 1,
+            'score_place'       => 1,
+            'score_food'        => 1,
+            'score_price'       => 1,
+            'score_date'        => 0
+        ));
+        $resto->attachTags(['curry']);
+        $resto->fillCoordinatesFromString('35.659834, 139.703527');
+
+        // TODO Grandma George
+        $resto = Restaurant::create(array(
+            'name'              => 'Grandma\'s Georges',
+            'location'          => 'Shibuya',
+            'type'              => 'Cafe Restaurant',
+            'lunch_price'       => 950,
+            'points'            => 'Nice cafe but can be noisy.',
+            'experience'        => 'I was surprised at how very nice inside is, despite being underground. Very nice interior, high ceiling, and smooth jazz songs. Lots of tables, fitting for groups. Crowd is mostly woman. Menu offers various healthy looking dishes for lunch. Very reasonably priced. I paid about 950yen for a coffee, a soup, a small salad, rice, and a dish of grilled chicken with vegetables. Second good surprise, the dish was absolutely delicious. Now, because the room is big and there is no partitioning, it can get noisy in there. Also, smoking is allowed... so there is a risk you can smell smoke during your lunch, even if it does not seem like a place that can get smoky.',
+            'visited'           => true,
+            'visit_date'        => '2019-04-17 13:00:00',
+            'google_maps_link'  => 'https://www.google.com/maps/place/Grandma\'s+GEORGES/@35.6621366,139.6973616,17z/data=!3m1!4b1!4m5!3m4!1s0x60188ca8f02f712d:0x5b77b493d83ffa87!8m2!3d35.6621323!4d139.6995503',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13163682/',
+            'official_website'  => 'https://r.gnavi.co.jp/1g6kpzkm0000/',
+            'score_lunch'       => 1,
+            'score_place'       => 1,
+            'score_food'        => 1,
+            'score_price'       => 1,
+            'score_date'        => 0
+        ));
+        $resto->attachTags(['xxxxx']);
+        $resto->fillCoordinatesFromString('35.662126, 139.699524');
+
+      
 /*
 // try french boistrot 139 near MontBell
 
@@ -4775,7 +4883,6 @@ https://tabelog.com/osaka/A2707/A270702/27071015/
 in shibuya
 https://tabelog.com/tokyo/A1303/A130301/13059598/
 
-try vandalism
 
 SERGEY: Prospect 2018 , downfall 2004
 
