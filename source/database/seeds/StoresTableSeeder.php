@@ -615,6 +615,13 @@ class StoresTableSeeder extends Seeder
         $store->fillCoordinatesFromString('xxxx');
         */
 
+/*
+nitori
+
+8 floors
+
+small ikea
+*/
         // Loft
 
         // http://www.tokyopocketguide.com/tokyo/shibuya.shopping.html
