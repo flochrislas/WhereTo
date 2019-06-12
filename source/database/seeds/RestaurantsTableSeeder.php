@@ -4900,6 +4900,8 @@ $resto = Restaurant::create(array(
         ));
         $resto->attachTags(['cafe','no smoking','English menu']);
         $resto->fillCoordinatesFromString('35.663817, 139.699896');
+
+        // table tennis
  
       
 /*
