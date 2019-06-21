@@ -4697,7 +4697,7 @@ $resto = Restaurant::create(array(
             'type'              => 'Sushi',
             'lunch_price'       => 1000,
             'points'            => 'Cheap sushi.',
-            'experience'        => 'The place is small and bare. Very narrow counter and small stools. Way less crowded than Uobei, another cheap sushi restaurant next door. There is a suhi-go-round convey belt, but there will not be much circulating there if there are not many customers. So you will haev to ask the chief directly. He is nice, can understand English, and make sushi very quickly. Prices start at 90yen for 2 sushi, such as tuna or saumon. Very cheap. Taste is decent for the price... but I would not recommend this place unless you would like a quick sushi snack (the place is opened from lunch to late diner non stop).',
+            'experience'        => 'The place is small and bare. Very narrow counter and small stools. Way less crowded than Uobei, another cheap sushi restaurant next door. There is a suhi-go-round convey belt, but there will not be much circulating there if there are not many customers. So you will have to ask the chief directly. He is nice, can understand English, and make sushi very quickly. Prices start at 90yen for 2 sushi, such as tuna or saumon. Very cheap. Taste is decent for the price... but I would not recommend this place unless you would like a quick sushi snack (the place is opened from lunch to late diner non stop).',
             'visited'           => true,
             'visit_date'        => '2019-04-01 13:00:00',
             'google_maps_link'  => 'https://www.google.com/maps/place/Sushi+go-round+Restaurant+Shibuya/@35.6596115,139.6965986,18z/data=!4m5!3m4!1s0x60188ca9bedc7287:0xeef88e73f9aeca1e!8m2!3d35.6598861!4d139.6977761',
@@ -4902,6 +4902,16 @@ $resto = Restaurant::create(array(
         $resto->fillCoordinatesFromString('35.663817, 139.699896');
 
         // table tennis
+
+        // all vegan resto Nagi+Shokudo
+        // https://www.google.com/maps/place/Nagi+Shokudo/@35.6560255,139.6971527,16.5z/data=!4m5!3m4!1s0x60188b50a2c09741:0xf212d404e2dfb46b!8m2!3d35.6541775!4d139.7008754
+        // 35.654197, 139.700889
+        // https://tabelog.com/tokyo/A1303/A130301/13048497/
+        // http://nagishokudo.com/
+
+        // black brown next to labi
+        // baachan B1F past arestrant
+        // 650 -> dai 830
  
       
 /*
