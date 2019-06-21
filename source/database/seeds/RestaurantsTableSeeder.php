@@ -4915,6 +4915,7 @@ $resto = Restaurant::create(array(
 
         // Ottotto
         // Nice and clean, the bar offers various dishes of pasta, a burger, and something different depending on the day. For less than 1000 yen, you can get a dish, in regular or big quantity, a salad with soup, and free access to water and coffee (hot and cold). I tried spicy bolognese spaghetti, it was quite spicy, good. Amount was good too. Service was good, the place felt nice, and made for a pleasant experience. It is non smoking but they have individual smoking booths you can use inside. The front is opened to the outside when the weather allows it.
+        // 380yen
  
       
 /*
