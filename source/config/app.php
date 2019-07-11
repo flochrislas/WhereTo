@@ -168,9 +168,6 @@ return [
         /*
          * Package Service Providers...
          */
-        // To Import Export CSV files:
-        // https://appdividend.com/2017/06/12/import-export-data-csv-excel-laravel-5-4
-        Maatwebsite\Excel\ExcelServiceProvider::class,
         // To help with forms:
         // http://itsolutionstuff.com/post/laravel-55-crud-example-from-scratchexample.html
         Collective\Html\HtmlServiceProvider::class,
