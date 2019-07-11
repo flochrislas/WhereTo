@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
-// use Barryvdh\Debugbar\Facade as Debugbar;
 use Illuminate\Support\Facades\Cache;
 use App\RestaurantTag;
 use Session;
@@ -14,6 +13,8 @@ class RestaurantTagController extends Controller
 
   public function restaurantsFilter(Request $request)
   {
+      Log::debug("Test Log message");
+      \Debugbar::info("Test Debugbar message");
       // Fetch all restaurantTags data
       // $restaurantTags = RestaurantTag::orderBy('created_at','desc')->get();
       // Use cache

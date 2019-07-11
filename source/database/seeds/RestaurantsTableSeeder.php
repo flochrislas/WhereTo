@@ -4910,7 +4910,7 @@ $resto = Restaurant::create(array(
         // http://nagishokudo.com/
 
         // black brown next to labi
-        // baachan B1F past arestrant
+        // baachan B1F past arestrant decent pasta for cheap, basement not so exciting, very small smoking area
         // 650 -> dai 830
 
         // Ottotto
