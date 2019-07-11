@@ -3,10 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Cache;
-use App\Restaurant;
-use App\Tools\GeoUtils;
 
 class RestaurantController extends PlaceController
 {
