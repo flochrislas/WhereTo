@@ -3809,9 +3809,9 @@ $resto = Restaurant::create(array(
             'name'              => 'Suju Indigo',
             'location'          => 'Shibuya, Stream',
             'type'              => 'Soba',
-            'lunch_price'       => 1000,
+            'lunch_price'       => 1200,
             'points'            => 'Nice spacious restaurant serving cold or hot thick soba dishes.',
-            'experience'        => 'Nice and spacious, with huge windows bay, counters and tables. Smooth jazz music with powerful bass. Nice choice of soba dishes, hot or cold, ranging from 950 to 1250 yen. Add 100 yen to get a decent amount. Advertising as healthy, all dishes have a fair amount of sesami and dry see weed. I tried the hot spicy chicken soba. It was good. But maybe not as delicious nor filling as to justify the price.',
+            'experience'        => 'Nice and spacious, with huge windows bay, counters and tables. Smooth jazz music with powerful bass. Nice choice of soba dishes, hot or cold, ranging from 650 to 1250 yen. Add 100 yen to get a decent amount (could be free if you are having a late lunch, it depends on the time). Advertising as healthy, all dishes have a fair amount of sesami and dry see weed. I tried the hot spicy chicken soba. It was good. But maybe not as delicious nor filling as to justify the price. Another time I tried the chicken coconut curry soba, for 1250 yen, and I liked it better.',
             'visited'           => true,
             'visit_date'        => '2018-11-05 13:00:00',
             'google_maps_link'  => 'https://www.google.com/maps/search/suju+indigo/@35.6582902,139.7011871,17z',
@@ -4902,87 +4902,96 @@ $resto = Restaurant::create(array(
         $resto->fillCoordinatesFromString('35.663817, 139.699896');
 
 /////////////////////////////////////////////////////////////////////////////// TO DO
-        // table tennis
+
         $resto = Restaurant::create(array(
-            'name'              => 'xxxxx',
-            'location'          => 'Shibuya',
-            'type'              => 'xxxxx',
-            'lunch_price'       => 950,
-            'points'            => 'xxxxx',
-            'experience'        => 'xxxxx',
+            'name'              => 'The Rally Table',
+            'location'          => 'Shibuya, Jinnan',
+            'type'              => 'Bar restaurant',
+            'lunch_price'       => 1000,
+            'points'            => 'Table tennis',
+            'experience'        => 'Part of T4 Tokyo, this restaurant is linked to some table tennis association. You can actually play table tennis there. There is no windows so it is a bit dark, and it feels more like an evening place, but lunch sets are good. Food was surprisingly good, and I really enjoyed my "Memories of manager! Chicken on rice".',
             'visited'           => true,
-            'visit_date'        => '2019-04-23 13:00:00',
-            'google_maps_link'  => 'xxxxx',
-            'tabelog_link'      => 'xxxxx',
-            'official_website'  => 'xxxxx',
-            'score_lunch'       => 1,
+            'visit_date'        => '2019-06-15 13:00:00',
+            'google_maps_link'  => 'https://www.google.com/maps/place/THE+RALLY+TABLE/@35.6619057,139.698438,16.75z/data=!4m5!3m4!1s0x60188ca890600e59:0xdfca0c73585a0e1!8m2!3d35.6627854!4d139.7005426',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13210107/',
+            'official_website'  => 'https://t-4.jp/tokyo/',
+            'score_lunch'       => 2,
             'score_place'       => 1,
-            'score_food'        => 1,
+            'score_food'        => 2,
             'score_price'       => 1,
             'score_date'        => 0
         ));
-        $resto->attachTags(['xxxxx']);
-        $resto->fillCoordinatesFromString('xxxxx');
+        $resto->attachTags(['pasta','burger','salad','taco rice','western']);
+        $resto->fillCoordinatesFromString('35.662760, 139.700671');
 
-        // all vegan resto Nagi+Shokudo
-        // https://www.google.com/maps/place/Nagi+Shokudo/@35.6560255,139.6971527,16.5z/data=!4m5!3m4!1s0x60188b50a2c09741:0xf212d404e2dfb46b!8m2!3d35.6541775!4d139.7008754
-        // 35.654197, 139.700889
-        // https://tabelog.com/tokyo/A1303/A130301/13048497/
-        // http://nagishokudo.com/
         $resto = Restaurant::create(array(
-            'name'              => 'xxxxx',
+            'name'              => 'Nagi Shokudo',
             'location'          => 'Shibuya',
-            'type'              => 'xxxxx',
-            'lunch_price'       => 950,
-            'points'            => 'xxxxx',
-            'experience'        => 'xxxxx',
+            'type'              => 'Vegetarian',
+            'lunch_price'       => 1000,
+            'points'            => 'Vegetarian, very local restaurant.',
+            'experience'        => 'I liked the local atmosphere, nothing fancy, and just 3 plates on the menu. It is vegeterarian, but quite various and good. I really enjoyed my plate.',
             'visited'           => true,
-            'visit_date'        => '2019-04-01 13:00:00',
-            'google_maps_link'  => 'xxxxx',
-            'tabelog_link'      => 'xxxxx',
-            'official_website'  => 'xxxxx',
-            'score_lunch'       => 1,
+            'visit_date'        => '2019-06-15 13:00:00',
+            'google_maps_link'  => 'https://www.google.com/maps/place/Nagi+Shokudo/@35.6560255,139.6971527,16.5z/data=!4m5!3m4!1s0x60188b50a2c09741:0xf212d404e2dfb46b!8m2!3d35.6541775!4d139.7008754',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13048497/',
+            'official_website'  => 'http://nagishokudo.com/',
+            'score_lunch'       => 3,
             'score_place'       => 1,
-            'score_food'        => 1,
+            'score_food'        => 2,
             'score_price'       => 1,
             'score_date'        => 0
         ));
-        $resto->attachTags(['xxxxx']);
-        $resto->fillCoordinatesFromString('xxxxx');
+        $resto->attachTags(['vegetarian friendly','no smoking']);
+        $resto->fillCoordinatesFromString('35.654197, 139.700889');
 
-        // black brown next to labi
-        // baachan B1F past arestrant decent pasta for cheap, basement not so exciting, very small smoking area
-        // 650 -> dai 830
         $resto = Restaurant::create(array(
-            'name'              => 'xxxxx',
-            'location'          => 'Shibuya',
-            'type'              => 'xxxxx',
-            'lunch_price'       => 950,
-            'points'            => 'xxxxx',
-            'experience'        => 'xxxxx',
+            'name'              => 'Black Brown',
+            'location'          => 'Shibuya, Dogenzaka',
+            'type'              => 'Pasta',
+            'lunch_price'       => 830,
+            'points'            => 'Cheap and decent pasta down B1F.',
+            'experience'        => 'b1F, not a very sexy place. Long counter with USB plugs to charge your phone, and tables. The crownd is mostly eldery. There is a very small smoking area (a corner where a couple of persons can stand and have a cigarette). Fair choice of pasta dishes, quite cheap, with option to get extra. My pasta dish was very good, and I got a large portion for 830 yen (regular was 650 yen). Satisfying.',
             'visited'           => true,
-            'visit_date'        => '2019-04-01 13:00:00',
-            'google_maps_link'  => 'xxxxx',
-            'tabelog_link'      => 'xxxxx',
-            'official_website'  => 'xxxxx',
-            'score_lunch'       => 1,
+            'visit_date'        => '2019-06-15 13:00:00',
+            'google_maps_link'  => 'https://www.google.com/maps/place/Black+Brown/@35.6596085,139.6968821,17.5z/data=!4m5!3m4!1s0x60188ca9b91b6c49:0xdb65cc83d50cdbf!8m2!3d35.659958!4d139.697951',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13001777/',
+            'official_website'  => 'https://www.google.com/search?q=Black+Brown+shibuya+pasta',
+            'score_lunch'       => 2,
             'score_place'       => 1,
-            'score_food'        => 1,
-            'score_price'       => 1,
+            'score_food'        => 2,
+            'score_price'       => 2,
             'score_date'        => 0
         ));
-        $resto->attachTags(['xxxxx']);
-        $resto->fillCoordinatesFromString('xxxxx');
+        $resto->attachTags(['pasta','italian','western','smoking area']);
+        $resto->fillCoordinatesFromString('35.659996, 139.698089');
 
-        // Ottotto
-        // Nice and clean, the bar offers various dishes of pasta, a burger, and something different depending on the day. For less than 1000 yen, you can get a dish, in regular or big quantity, a salad with soup, and free access to water and coffee (hot and cold). I tried spicy bolognese spaghetti, it was quite spicy, good. Amount was good too. Service was good, the place felt nice, and made for a pleasant experience. It is non smoking but they have individual smoking booths you can use inside. The front is opened to the outside when the weather allows it.
-        // 380yen
+        $resto = Restaurant::create(array(
+            'name'              => 'Ottotto',
+            'location'          => 'Shibuya, Dogenzaka',
+            'type'              => 'Pub',
+            'lunch_price'       => 1380,
+            'points'            => 'Pub with a relatively nice interior, opened to the outside. Good food>.',
+            'experience'        => 'Nice and clean (but not especially confortable...), the bar offers various dishes of pasta, a burger, and something different depending on the day. For less than 1000 yen, you can get a dish, in regular or big quantity, a salad with soup, and free access to water and coffee (hot and cold). I tried spicy bolognese spaghetti, it was quite spicy, good. Amount was good too. Service was good, the place felt nice, and made for a pleasant experience. It is non smoking but they have individual smoking booths you can use inside. The front is opened to the outside when the weather allows it.',
+            'visited'           => true,
+            'visit_date'        => '2019-06-15 13:00:00',
+            'google_maps_link'  => 'https://www.google.com/maps/place/Ottotto+BREWERY+(%E3%82%AA%E3%83%83%E3%83%88%E3%83%83%E3%83%88%E3%83%96%E3%83%AB%E3%83%AF%E3%83%AA%E3%83%BC)%E6%B8%8B%E8%B0%B7%E9%81%93%E7%8E%84%E5%9D%82%E5%BA%97/@35.6598011,139.6954953,17z/data=!3m1!4b1!4m5!3m4!1s0x60188de56b352345:0x9668edff0ab8eda4!8m2!3d35.6597968!4d139.697684',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13231204/',
+            'official_website'  => 'https://ottotto-shibuya.owst.jp/',
+            'score_lunch'       => 2,
+            'score_place'       => 2,
+            'score_food'        => 2,
+            'score_price'       => 0,
+            'score_date'        => 0
+        ));
+        $resto->attachTags(['pasta','burger','western','smoking area']);
+        $resto->fillCoordinatesFromString('35.659790, 139.697697');
 
         // Flamingo
         // drink pasta of the day 980yen good music bit loud bar tables
         // 1380yen
         $resto = Restaurant::create(array(
-            'name'              => 'xxxxx',
+            'name'              => 'Flamingo',
             'location'          => 'Shibuya',
             'type'              => 'xxxxx',
             'lunch_price'       => 950,
@@ -4990,7 +4999,7 @@ $resto = Restaurant::create(array(
             'experience'        => 'xxxxx',
             'visited'           => true,
             'visit_date'        => '2019-04-01 13:00:00',
-            'google_maps_link'  => 'xxxxx',
+            'google_maps_link'  => 'https://www.google.com/maps/place/cafe+FLAMINGO/@35.6626356,139.6948628,17z/data=!3m1!4b1!4m5!3m4!1s0x60188ca94d71d8cb:0xb6ee77b4b88ac74b!8m2!3d35.6626313!4d139.6970515',
             'tabelog_link'      => 'xxxxx',
             'official_website'  => 'xxxxx',
             'score_lunch'       => 1,
@@ -5002,8 +5011,6 @@ $resto = Restaurant::create(array(
         $resto->attachTags(['xxxxx']);
         $resto->fillCoordinatesFromString('xxxxx');
 
-        // Nanpedai lounge sofa table tenis
-        // spicy chicken curry, sweet beef curry, or both, for 850 yen and it is coming with a drink. This is quite cheap, and it was very good. The place was nice, music was good, the stool at the bar were not very confortable, but if you are not alone you will be placed on a table with sofa or chairs. But I think they allow smoking, so the experience might be ruined.
         $resto = Restaurant::create(array(
             'name'              => 'Nanpeidai Lounge',
             'location'          => 'Shibuya',
@@ -5012,18 +5019,39 @@ $resto = Restaurant::create(array(
             'points'            => 'Lounge atmosphere.',
             'experience'        => 'Inside is rather cosy, with a small counter, sofas and low tables, and a table for table tennis. Very simple menu with: spicy chicken curry, sweet beef curry, or both, for 850 yen and it is coming with a drink. This is quite cheap, and it was very good. Music was good, the stools at the bar were not very confortable, but if you are not alone you will be placed on a table with sofa. But I think they allow smoking, so the experience might be ruined.',
             'visited'           => true,
-            'visit_date'        => '2019-04-01 13:00:00',
+            'visit_date'        => '2019-06-15 13:00:00',
             'google_maps_link'  => 'https://www.google.com/maps/place/NANPEIDAI+LOUNGE/@35.656044,139.6923326,16z/data=!4m5!3m4!1s0x60188b542a0affff:0x28548efbfd971ad!8m2!3d35.655429!4d139.6962385',
             'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13173759/',
             'official_website'  => 'https://nanla2014.gorp.jp/',
             'score_lunch'       => 2,
             'score_place'       => 1,
-            'score_food'        => 1,
+            'score_food'        => 2,
             'score_price'       => 1,
             'score_date'        => 0
         ));
-        $resto->attachTags(['xxxxx']);
-        $resto->fillCoordinatesFromString('xxxxx');
+        $resto->attachTags(['curry','smoking allowed']);
+        $resto->fillCoordinatesFromString('35.655351, 139.696264');
+
+        $resto = Restaurant::create(array(
+            'name'              => 'Erick South Masala Diner',
+            'location'          => 'Shibuya',
+            'type'              => 'Indian',
+            'lunch_price'       => 1000,
+            'points'            => 'Delicious Indian curry.',
+            'experience'        => '5th floor of a GEMS building, the place is very decent, but without the usually fancy decoration or loud music. In fact, I did not see any Indian workers in there. However, my curry lunch set came fast, like, less than a minute after ordering it, and it was absolutely delicious. In fact, it was the best tasting Indian curry I had in years. For 1000 yen you get 3 small curries, a mini salad and a cracker, and safran rice which is refillable for free. All very good. Each curry was very unique. Not only spicy stuff with the basic taste of chiken, mutton, beef or veggies. I could greatly enjoy the taste of different spices in each of of them, which is sadly a rare thing in the majority of Indian joints. Quantity is relatively small for the price, and it does not even include a drink (of course you still have water available).',
+            'visited'           => true,
+            'visit_date'        => '2019-07-12 13:00:00',
+            'google_maps_link'  => 'https://www.google.com/maps/place/ERICK+SOUTH+MASALA+DINER+%E7%A5%9E%E5%AE%AE%E5%89%8D/@35.6614946,139.6991246,16.5z/data=!4m5!3m4!1s0x60188ca63e5d0235:0xa36c90e273d16241!8m2!3d35.663782!4d139.7023696',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13220984/',
+            'official_website'  => 'https://enso.ne.jp/erick-masala/',
+            'score_lunch'       => 3,
+            'score_place'       => 1,
+            'score_food'        => 3,
+            'score_price'       => 1,
+            'score_date'        => 1
+        ));
+        $resto->attachTags(['indian','curry','no smoking']);
+        $resto->fillCoordinatesFromString('35.663766, 139.702333');
  
       
 /*
