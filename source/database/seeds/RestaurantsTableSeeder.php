@@ -4901,17 +4901,78 @@ $resto = Restaurant::create(array(
         $resto->attachTags(['cafe','no smoking','English menu']);
         $resto->fillCoordinatesFromString('35.663817, 139.699896');
 
+/////////////////////////////////////////////////////////////////////////////// TO DO
         // table tennis
+        $resto = Restaurant::create(array(
+            'name'              => 'xxxxx',
+            'location'          => 'Shibuya',
+            'type'              => 'xxxxx',
+            'lunch_price'       => 950,
+            'points'            => 'xxxxx',
+            'experience'        => 'xxxxx',
+            'visited'           => true,
+            'visit_date'        => '2019-04-23 13:00:00',
+            'google_maps_link'  => 'xxxxx',
+            'tabelog_link'      => 'xxxxx',
+            'official_website'  => 'xxxxx',
+            'score_lunch'       => 1,
+            'score_place'       => 1,
+            'score_food'        => 1,
+            'score_price'       => 1,
+            'score_date'        => 0
+        ));
+        $resto->attachTags(['xxxxx']);
+        $resto->fillCoordinatesFromString('xxxxx');
 
         // all vegan resto Nagi+Shokudo
         // https://www.google.com/maps/place/Nagi+Shokudo/@35.6560255,139.6971527,16.5z/data=!4m5!3m4!1s0x60188b50a2c09741:0xf212d404e2dfb46b!8m2!3d35.6541775!4d139.7008754
         // 35.654197, 139.700889
         // https://tabelog.com/tokyo/A1303/A130301/13048497/
         // http://nagishokudo.com/
+        $resto = Restaurant::create(array(
+            'name'              => 'xxxxx',
+            'location'          => 'Shibuya',
+            'type'              => 'xxxxx',
+            'lunch_price'       => 950,
+            'points'            => 'xxxxx',
+            'experience'        => 'xxxxx',
+            'visited'           => true,
+            'visit_date'        => '2019-04-01 13:00:00',
+            'google_maps_link'  => 'xxxxx',
+            'tabelog_link'      => 'xxxxx',
+            'official_website'  => 'xxxxx',
+            'score_lunch'       => 1,
+            'score_place'       => 1,
+            'score_food'        => 1,
+            'score_price'       => 1,
+            'score_date'        => 0
+        ));
+        $resto->attachTags(['xxxxx']);
+        $resto->fillCoordinatesFromString('xxxxx');
 
         // black brown next to labi
         // baachan B1F past arestrant decent pasta for cheap, basement not so exciting, very small smoking area
         // 650 -> dai 830
+        $resto = Restaurant::create(array(
+            'name'              => 'xxxxx',
+            'location'          => 'Shibuya',
+            'type'              => 'xxxxx',
+            'lunch_price'       => 950,
+            'points'            => 'xxxxx',
+            'experience'        => 'xxxxx',
+            'visited'           => true,
+            'visit_date'        => '2019-04-01 13:00:00',
+            'google_maps_link'  => 'xxxxx',
+            'tabelog_link'      => 'xxxxx',
+            'official_website'  => 'xxxxx',
+            'score_lunch'       => 1,
+            'score_place'       => 1,
+            'score_food'        => 1,
+            'score_price'       => 1,
+            'score_date'        => 0
+        ));
+        $resto->attachTags(['xxxxx']);
+        $resto->fillCoordinatesFromString('xxxxx');
 
         // Ottotto
         // Nice and clean, the bar offers various dishes of pasta, a burger, and something different depending on the day. For less than 1000 yen, you can get a dish, in regular or big quantity, a salad with soup, and free access to water and coffee (hot and cold). I tried spicy bolognese spaghetti, it was quite spicy, good. Amount was good too. Service was good, the place felt nice, and made for a pleasant experience. It is non smoking but they have individual smoking booths you can use inside. The front is opened to the outside when the weather allows it.
@@ -4919,6 +4980,50 @@ $resto = Restaurant::create(array(
 
         // Flamingo
         // drink pasta of the day 980yen good music bit loud bar tables
+        // 1380yen
+        $resto = Restaurant::create(array(
+            'name'              => 'xxxxx',
+            'location'          => 'Shibuya',
+            'type'              => 'xxxxx',
+            'lunch_price'       => 950,
+            'points'            => 'xxxxx',
+            'experience'        => 'xxxxx',
+            'visited'           => true,
+            'visit_date'        => '2019-04-01 13:00:00',
+            'google_maps_link'  => 'xxxxx',
+            'tabelog_link'      => 'xxxxx',
+            'official_website'  => 'xxxxx',
+            'score_lunch'       => 1,
+            'score_place'       => 1,
+            'score_food'        => 1,
+            'score_price'       => 1,
+            'score_date'        => 0
+        ));
+        $resto->attachTags(['xxxxx']);
+        $resto->fillCoordinatesFromString('xxxxx');
+
+        // Nanpedai lounge sofa table tenis
+        // spicy chicken curry, sweet beef curry, or both, for 850 yen and it is coming with a drink. This is quite cheap, and it was very good. The place was nice, music was good, the stool at the bar were not very confortable, but if you are not alone you will be placed on a table with sofa or chairs. But I think they allow smoking, so the experience might be ruined.
+        $resto = Restaurant::create(array(
+            'name'              => 'Nanpeidai Lounge',
+            'location'          => 'Shibuya',
+            'type'              => 'Lounge',
+            'lunch_price'       => 850,
+            'points'            => 'Lounge atmosphere.',
+            'experience'        => 'Inside is rather cosy, with a small counter, sofas and low tables, and a table for table tennis. Very simple menu with: spicy chicken curry, sweet beef curry, or both, for 850 yen and it is coming with a drink. This is quite cheap, and it was very good. Music was good, the stools at the bar were not very confortable, but if you are not alone you will be placed on a table with sofa. But I think they allow smoking, so the experience might be ruined.',
+            'visited'           => true,
+            'visit_date'        => '2019-04-01 13:00:00',
+            'google_maps_link'  => 'https://www.google.com/maps/place/NANPEIDAI+LOUNGE/@35.656044,139.6923326,16z/data=!4m5!3m4!1s0x60188b542a0affff:0x28548efbfd971ad!8m2!3d35.655429!4d139.6962385',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13173759/',
+            'official_website'  => 'https://nanla2014.gorp.jp/',
+            'score_lunch'       => 2,
+            'score_place'       => 1,
+            'score_food'        => 1,
+            'score_price'       => 1,
+            'score_date'        => 0
+        ));
+        $resto->attachTags(['xxxxx']);
+        $resto->fillCoordinatesFromString('xxxxx');
  
       
 /*
