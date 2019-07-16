@@ -8,16 +8,16 @@
     Naturally, individual experience, or taste, may differ.
 
     <div>Going for lunch</div>
-      Lunch time: usually opened between 11am and 2:30pm. Sometimes more, but if you fall outside this time window, it is better to double-check if it is opened, by looking on the Google or Tabelog linked page.
+      Lunch time: most establishments are usually take orders between 11am and 2:30pm. Sometimes more, but if you fall outside this time window, it is better to double-check if it is opened, by looking on the Google or Tabelog linked page.
       Ratings
-        Ratings are made by me alone, after going to have lunch to a place one or multiple times. I beleive this makes for more consistent ratings than hundreds of different people rating different places.
+        Ratings are made by me alone, after going to have lunch at a place one or multiple times. I beleive this makes for more consistent ratings than hundreds of different people rating different places.
 
           Lunch (Global enojoyment)
           0: Absolutely horrible
-          1: Bad or whatever, I won't go again
-          2: OK, I might go again if I crave for this specific kind of lunch / or if I have extra money I can spare, etc...
-          3: Very good. I would be down to go again any time
-          4: Excellent. It is hard to refrain to go back to that place every week or more
+          1: Meh, I don't think I will go again
+          2: OK, I might go again in some specific context (craving this specific food, feeling rich...)
+          3: Very good. I would go again any time
+          4: Excellent. It is hard to refrain going back to that place every other days
 
           Food (Taste)
           0: poor
@@ -55,14 +55,18 @@
     <div>Toilets</div>
     <div>General information</div>
       Walking around
-        There is some untold rules such as:
+        There are some untold rules such as:
           Walking on the left side (not in the middle, not on the right side)
           Sticking on the left side in the escalators if you are not climbing the stairs
-          No smoking unless some sign is specifically saying you can
+          No smoking, unless some sign is specifically saying you can
+          Japanese people don't eat or drink while walking
+          Japanese poeple use their phone while walking, but they should not
+          It is OK to ride a bycicle on the sidewalk
+          Japanese people use umbrella any time it rains. When entering a shop or restaurant, you should fold it, and either let it in a rack outside, or use a plastic cover or a dryer if available at the entrance. The purpose is to prevent your umbrella to drop water on the floor inside.
 
       Seasons
         Summer
-          Very hot and humid. Do not plan to stay outside for extensive period of time. Plan to cool down indoor regularly.
+          Rainy until mid-July, then very hot and humid. Do not plan to stay outside for extensive period of time. Plan to cool down indoor regularly.
         Autumn
           Great season. Mostly great weather.
         Winter

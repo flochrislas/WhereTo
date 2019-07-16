@@ -3,11 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Cache;
 use App\Restaurant;
-use App\Tools\GeoUtils;
-use Excel;
 
 class RestaurantAdminController
 {
@@ -133,97 +129,6 @@ class RestaurantAdminController
         Restaurant::find($id)->delete();
         return redirect()->route('restaurants.index')
             ->with('success','Restaurant deleted successfully');
-    }
-
-    /**
-     * export a file in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function export(Request $request, $type)
-    {
-        $data = Restaurant::all();
-        return Excel::create('restaurants-export', function($excel) use ($data)
-        {
-            $excel->sheet('Restaurants Export', function($sheet) use ($data)
-            {
-                $sheet->fromArray($data);
-            });
-        })->download($type);
-
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function import(Request $request)
-    {
-        if($request->file('imported-file'))
-        {
-            $path = $request->file('imported-file')->getRealPath();
-            $data = Excel::load($path, function($reader) {})->get();
-
-            if(!empty($data) && $data->count())
-            {
-                $data = $data->toArray();
-                for($i=0;$i<count($data);$i++)
-                {
-                    $dataImported[] = $data[$i];
-                }
-            }
-            Restaurant::insert($dataImported);
-            return back()->with('success','Restaurants import successful.');
-        }
-        return back()->with('error','Something seems to be wrong with the import file.');;
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function importAlt(Request $request)
-    {
-        if($request->hasFile('imported-file'))
-        {
-            $path = $request->file('imported-file')->getRealPath();
-            $data = Excel::load($path, function($reader) {})->get();
-
-            if (!empty($data) && $data->count())
-            {
-                foreach ($data->toArray() as $key => $value)
-                {
-                    if (!empty($value))
-                    {
-                        foreach ($value as $v)
-                        {
-                            $insert[] = [
-                                'name' => $v['name'],
-                                'location' => $v['location'],
-                                'type' => $v['type'],
-                                'lunch_price' => $v['lunch_price'],
-                                'points' => $v['points'],
-                                'experience' => $v['experience'],
-                                'visited' => $v['visited'],
-                                'visit_time' => $v['visit_time']
-                            ];
-                        }
-                    }
-                }
-
-                if (!empty($insert))
-                {
-                    Robot::insert($insert);
-                    return back()->with('success','Restaurants import successful.');
-                }
-            }
-        }
-        return back()->with('error','Something seems to be wrong with the import file.');
     }
 
 }

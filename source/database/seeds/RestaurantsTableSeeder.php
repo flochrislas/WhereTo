@@ -47,7 +47,7 @@ class RestaurantsTableSeeder extends Seeder
             'score_price'       => 2,
             'score_date'        => 0
         ));
-        $resto->attachTags(['ramen','noodles','miso']);
+        $resto->attachTags(['ramen','noodles','miso','japanese']);
         $resto->fillCoordinatesFromString('35.658545, 139.698468');
 
         $resto = Restaurant::create(array(
@@ -68,7 +68,7 @@ class RestaurantsTableSeeder extends Seeder
             'score_price'       => 1,
             'score_date'        => 0
         ));
-        $resto->attachTags(['ramen','noodles']);
+        $resto->attachTags(['ramen','noodles','japanese']);
         $resto->fillCoordinatesFromString('35.659122, 139.698168');
 
         $resto = Restaurant::create(array(
@@ -89,7 +89,7 @@ class RestaurantsTableSeeder extends Seeder
             'score_price'       => 1,
             'score_date'        => 0
         ));
-        $resto->attachTags(['ramen','noodles']);
+        $resto->attachTags(['ramen','noodles','japanese']);
         $resto->fillCoordinatesFromString('35.658591, 139.698608');
 
         $resto = Restaurant::create(array(
@@ -110,7 +110,7 @@ class RestaurantsTableSeeder extends Seeder
             'score_price'       => 1,
             'score_date'        => 1
         ));
-        $resto->attachTags(['ramen','noodles','tonkotsu']);
+        $resto->attachTags(['ramen','noodles','tonkotsu','japanese']);
         $resto->fillCoordinatesFromString('35.659177, 139.698102');
 
         $resto = Restaurant::create(array(
@@ -131,7 +131,7 @@ class RestaurantsTableSeeder extends Seeder
             'score_price'       => 1,
             'score_date'        => 0
         ));
-        $resto->attachTags(['ramen','noodles']);
+        $resto->attachTags(['ramen','noodles','japanese']);
         $resto->fillCoordinatesFromString('35.660566, 139.698425');
 
         $resto = Restaurant::create(array(
@@ -152,7 +152,7 @@ class RestaurantsTableSeeder extends Seeder
             'score_price'       => 1,
             'score_date'        => 0
         ));
-        $resto->attachTags(['ramen','noodles','miso','tonkotsu']);
+        $resto->attachTags(['ramen','noodles','miso','tonkotsu','japanese']);
         $resto->fillCoordinatesFromString('35.660598, 139.699240');
 
         $resto = Restaurant::create(array(
@@ -445,7 +445,7 @@ class RestaurantsTableSeeder extends Seeder
             'score_price'       => 2,
             'score_date'        => 0
         ));
-        $resto->attachTags(['maze soba', 'abura soba', 'ramen','noodles']);
+        $resto->attachTags(['maze soba','abura soba','ramen','noodles','japanese']);
         $resto->fillCoordinatesFromString('35.656633, 139.701051');
 
         $resto = Restaurant::create(array(
@@ -550,7 +550,7 @@ class RestaurantsTableSeeder extends Seeder
             'score_price'       => 1,
             'score_date'        => 0
         ));
-        $resto->attachTags(['ramen','noodles']);
+        $resto->attachTags(['ramen','noodles','japanese']);
         $resto->fillCoordinatesFromString('35.656451, 139.700907');
 
         /* Place closed - confirmed 2017-12-26
@@ -1022,7 +1022,7 @@ class RestaurantsTableSeeder extends Seeder
             'score_price'       => 1,
             'score_date'        => 0
         ));
-        $resto->attachTags(['sushi']);
+        $resto->attachTags(['sushi','japanese']);
         $resto->fillCoordinatesFromString('35.658972, 139.698201');
 
         $resto = Restaurant::create(array(
@@ -1106,7 +1106,7 @@ class RestaurantsTableSeeder extends Seeder
             'score_price'       => 1,
             'score_date'        => 0
         ));
-        $resto->attachTags(['ramen','noodles','miso']);
+        $resto->attachTags(['ramen','noodles','miso','japanese']);
         $resto->fillCoordinatesFromString('35.660128, 139.698765');
 
         $resto = Restaurant::create(array(
@@ -1527,7 +1527,7 @@ class RestaurantsTableSeeder extends Seeder
             'score_price'       => 1,
             'score_date'        => 0
         ));
-        $resto->attachTags(['ramen','miso']);
+        $resto->attachTags(['ramen','miso','japanese']);
         $resto->fillCoordinatesFromString('35.660452,139.704341');
 
         $resto = Restaurant::create(array(
@@ -1843,7 +1843,7 @@ class RestaurantsTableSeeder extends Seeder
             'score_price'       => 0,
             'score_date'        => 0
         ));
-        $resto->attachTags(['ramen','noodles']);
+        $resto->attachTags(['ramen','noodles','japanese']);
         $resto->fillCoordinatesFromString('35.6610036,139.6899592,15');
 
         $resto = Restaurant::create(array(
@@ -1864,7 +1864,7 @@ class RestaurantsTableSeeder extends Seeder
             'score_price'       => 2,
             'score_date'        => 0
         ));
-        $resto->attachTags(['ramen','noodles','tonkotsu','miso']);
+        $resto->attachTags(['ramen','noodles','tonkotsu','miso','japanese']);
         $resto->fillCoordinatesFromString('35.657915, 139.699472');
 
         $resto = Restaurant::create(array(
@@ -1907,7 +1907,7 @@ class RestaurantsTableSeeder extends Seeder
             'score_price'       => 1,
             'score_date'        => 0
         ));
-        $resto->attachTags(['ramen','noodles']);
+        $resto->attachTags(['ramen','noodles','japanese']);
         $resto->fillCoordinatesFromString('35.658978, 139.696993');
 
         $resto = Restaurant::create(array(
@@ -2033,7 +2033,7 @@ class RestaurantsTableSeeder extends Seeder
             'score_price'       => 1,
             'score_date'        => 0
         ));
-        $resto->attachTags(['ramen', 'filling']);
+        $resto->attachTags(['ramen','filling','japanese']);
         $resto->fillCoordinatesFromString('35.658967, 139.699456');
 
         $resto = Restaurant::create(array(
@@ -2189,7 +2189,7 @@ class RestaurantsTableSeeder extends Seeder
             'type'              => 'Sushi',
             'lunch_price'       => 1000,
             'points'            => 'Big and popular (read busy) sushi restaurant. Lot of choices (hundreds) with not only sushi, but meat and different dishes as well. Reasonably priced. Decent taste.',
-            'experience'        => 'There seems to be always a line of people sitting, waiting their turn to be able to enter the place. THe place is quite big, with tables and counters. You can grab items from the convey belt running everywhere, but there is a big menu with hundreds of choices and paper where you just have to put dish number and amount to place an order. You can get a dish of 2 sushi for as cheap as 100 yen. Tastes decent. There is also a fair amount of vegetarian sushi and dishes. I was surprised at how good the avocado tenpura was, and quite filling for 250 yen. The amount of fish on each sushi is quite nice.',
+            'experience'        => 'There seems to be always a line of people sitting, waiting their turn to be able to enter the place. The place is quite big, with tables and counters. You can grab items from the convey belt running everywhere, but there is a big menu with hundreds of choices and paper where you just have to put dish number and amount to place an order. You can get a dish of 2 sushi for as cheap as 100 yen. Tastes decent. There is also a fair amount of vegetarian sushi and dishes. I was surprised at how good the avocado tenpura was, and quite filling for 250 yen. The amount of fish on each sushi is quite nice.',
             'visited'           => true,
             'visit_date'        => '2018-05-31 13:00:00',
             'google_maps_link'  => 'https://www.google.co.jp/maps/place/Katsu+Midori+Seibu+Shibuya/@35.6578812,139.7035082,16z/data=!4m5!3m4!1s0x0:0xa9b1e2d5e31cd607!8m2!3d35.6602348!4d139.7005149',
@@ -2201,7 +2201,7 @@ class RestaurantsTableSeeder extends Seeder
             'score_price'       => 1,
             'score_date'        => 0
         ));
-        $resto->attachTags(['sushi', 'vegetarian friendly']);
+        $resto->attachTags(['sushi','vegetarian friendly','japanese']);
         $resto->fillCoordinatesFromString('35.660271, 139.700488');
 
         $resto = Restaurant::create(array(
@@ -2222,7 +2222,7 @@ class RestaurantsTableSeeder extends Seeder
             'score_price'       => 1,
             'score_date'        => 0
         ));
-        $resto->attachTags(['ramen','tsukemen']);
+        $resto->attachTags(['ramen','tsukemen','japanese']);
         $resto->fillCoordinatesFromString('35.657917, 139.704644');
 
         $resto = Restaurant::create(array(
@@ -2327,7 +2327,7 @@ class RestaurantsTableSeeder extends Seeder
             'score_price'       => 0,
             'score_date'        => 0
         ));
-        $resto->attachTags(['ramen']);
+        $resto->attachTags(['ramen','noodles','japanese']);
         $resto->fillCoordinatesFromString('35.657297, 139.697979');
 
         $resto = Restaurant::create(array(
@@ -2369,7 +2369,7 @@ class RestaurantsTableSeeder extends Seeder
             'score_price'       => 1,
             'score_date'        => 0
         ));
-        $resto->attachTags(['sushi']);
+        $resto->attachTags(['sushi','japanese']);
         $resto->fillCoordinatesFromString('35.658616, 139.698996');
 
         $resto = Restaurant::create(array(
@@ -2495,7 +2495,7 @@ class RestaurantsTableSeeder extends Seeder
             'score_price'       => 1,
             'score_date'        => 0
         ));
-        $resto->attachTags(['ramen','noodles','miso']);
+        $resto->attachTags(['ramen','noodles','miso','japanese']);
         $resto->fillCoordinatesFromString('35.660200, 139.699393');
 
         $resto = Restaurant::create(array(
@@ -2516,7 +2516,7 @@ class RestaurantsTableSeeder extends Seeder
             'score_price'       => 1,
             'score_date'        => 0
         ));
-        $resto->attachTags(['sushi']);
+        $resto->attachTags(['sushi','japanese']);
         $resto->fillCoordinatesFromString('35.661094, 139.696603');
 
         $resto = Restaurant::create(array(
@@ -2621,7 +2621,7 @@ class RestaurantsTableSeeder extends Seeder
             'score_price'       => 1,
             'score_date'        => 0
         ));
-        $resto->attachTags(['tsukemen','ramen','noodles']);
+        $resto->attachTags(['tsukemen','ramen','noodles','japanese']);
         $resto->fillCoordinatesFromString('35.659501, 139.697777');
 
         $resto = Restaurant::create(array(
@@ -2630,7 +2630,7 @@ class RestaurantsTableSeeder extends Seeder
             'type'              => 'Ramen',
             'lunch_price'       => 950,
             'points'            => 'Delicious miso ramen.',
-            'experience'        => 'I usually always add some toppings on my ramen to make iot tasty enough for me (pepper, spice, etc...), but here I did not have to. Not even a little bit. The miso soup was just delicious. The meat was OK but far from great, the egg was good, noodles as well, and one big surprise I had with with the bamboo shoot. That is right, the bamboo shoot you almost always find in ramen and most likely don\'t pay any attention to. Well her those were huge pieces, and tasty! A first for me. The size of the serving is rather small for the price but worth it. The interior has nothing special: 2 floors, counter and tables.',
+            'experience'        => 'I usually always add some toppings on my ramen to make it tasty enough for me (pepper, spice, etc...), but here I did not have to. Not even a little bit. The miso soup was just delicious. The meat was OK but far from great, the egg was good, noodles as well, and one big surprise I had with with the bamboo shoot. That is right, the bamboo shoot you almost always find in ramen and most likely don\'t pay any attention to. Well her those were huge pieces, and tasty! A first for me. The size of the serving is rather small for the price but worth it. The interior has nothing special: 2 floors, counter and tables.',
             'visited'           => true,
             'visit_date'        => '2018-07-06 13:00:00',
             'google_maps_link'  => 'https://www.google.com/maps/place/%E7%9C%9F%E6%AD%A6%E5%92%B2%E5%BC%A5+%E6%B8%8B%E8%B0%B7%E5%BA%97/@35.6576872,139.6983625,18z/data=!4m5!3m4!1s0x60188b5604786a35:0x98e575d2a803fca7!8m2!3d35.6578594!4d139.6966083',
@@ -2642,7 +2642,7 @@ class RestaurantsTableSeeder extends Seeder
             'score_price'       => 1,
             'score_date'        => 0
         ));
-        $resto->attachTags(['ramen','noodles','miso']);
+        $resto->attachTags(['ramen','noodles','miso','japanese']);
         $resto->fillCoordinatesFromString('35.657856, 139.696602');
 
         $resto = Restaurant::create(array(
@@ -2713,7 +2713,7 @@ class RestaurantsTableSeeder extends Seeder
             'location'          => 'Shibuya',
             'type'              => 'Ramen',
             'lunch_price'       => 900,
-            'points'            => 'Small ramen restaurant with narrow counters. Very decent tsukemen with "original" noodles. ',
+            'points'            => 'Small ramen restaurant with narrow counters. Very decent tsukemen with "original" noodles.',
             'experience'        => 'Small ramen shop offering tsukemen and ramen. 2 types of noodles, classic or original. My tsukemen was good, depite the soup being very slightly fishy (I do not like fishy taste). Thick and tasty soup, decent meat and egg, and original noodles were thick but good. Counter is quite narrow but somehow OK. Tsukemen can take 10mn to get ready, which is a bit long by Japanese standards.',
             'visited'           => true,
             'visit_date'        => '2018-07-12 13:00:00',
@@ -2726,7 +2726,7 @@ class RestaurantsTableSeeder extends Seeder
             'score_price'       => 1,
             'score_date'        => 0
         ));
-        $resto->attachTags(['ramen','tsukemen','noodles']);
+        $resto->attachTags(['ramen','tsukemen','noodles','japanese']);
         $resto->fillCoordinatesFromString('35.657712, 139.696492');
 
         $resto = Restaurant::create(array(
@@ -2852,7 +2852,7 @@ class RestaurantsTableSeeder extends Seeder
             'score_price'       => 1,
             'score_date'        => 0
         ));
-        $resto->attachTags(['sushi']);
+        $resto->attachTags(['sushi','japanese']);
         $resto->fillCoordinatesFromString('35.659256, 139.697918');
 
         $resto = Restaurant::create(array(
@@ -3254,7 +3254,7 @@ class RestaurantsTableSeeder extends Seeder
             'score_price'       => 2,
             'score_date'        => 0
         ));
-        $resto->attachTags(['ramen','noodles','miso']);
+        $resto->attachTags(['ramen','noodles','miso','japanese']);
         $resto->fillCoordinatesFromString('35.657633, 139.699313');
 
         $resto = Restaurant::create(array(
@@ -3401,7 +3401,7 @@ class RestaurantsTableSeeder extends Seeder
             'score_price'       => 1,
             'score_date'        => 0
         ));
-        $resto->attachTags(['ramen','noodles','miso','English menu','smoking area']);
+        $resto->attachTags(['ramen','noodles','miso','English menu','smoking area','japanese']);
         $resto->fillCoordinatesFromString('35.653149, 139.694405');
 
         $resto = Restaurant::create(array(
@@ -3809,9 +3809,9 @@ $resto = Restaurant::create(array(
             'name'              => 'Suju Indigo',
             'location'          => 'Shibuya, Stream',
             'type'              => 'Soba',
-            'lunch_price'       => 1000,
+            'lunch_price'       => 1200,
             'points'            => 'Nice spacious restaurant serving cold or hot thick soba dishes.',
-            'experience'        => 'Nice and spacious, with huge windows bay, counters and tables. Smooth jazz music with powerful bass. Nice choice of soba dishes, hot or cold, ranging from 950 to 1250 yen. Add 100 yen to get a decent amount. Advertising as healthy, all dishes have a fair amount of sesami and dry see weed. I tried the hot spicy chicken soba. It was good. But maybe not as delicious nor filling as to justify the price.',
+            'experience'        => 'Nice and spacious, with huge windows bay, counters and tables. Smooth jazz music with powerful bass. Nice choice of soba dishes, hot or cold, ranging from 650 to 1250 yen. Add 100 yen to get a decent amount (could be free if you are having a late lunch, it depends on the time). Advertising as healthy, all dishes have a fair amount of sesami and dry see weed. I tried the hot spicy chicken soba. It was good. But maybe not as delicious nor filling as to justify the price. Another time I tried the chicken coconut curry soba, for 1250 yen, and I liked it better.',
             'visited'           => true,
             'visit_date'        => '2018-11-05 13:00:00',
             'google_maps_link'  => 'https://www.google.com/maps/search/suju+indigo/@35.6582902,139.7011871,17z',
@@ -3907,7 +3907,7 @@ $resto = Restaurant::create(array(
             'score_price'       => 1,
             'score_date'        => 0
         ));
-        $resto->attachTags(['ramen','noodles','no smoking','English menu']);
+        $resto->attachTags(['ramen','noodles','no smoking','English menu','japanese']);
         $resto->fillCoordinatesFromString('35.657603, 139.695906');
 
         $resto = Restaurant::create(array(
@@ -3928,7 +3928,7 @@ $resto = Restaurant::create(array(
             'score_price'       => 1,
             'score_date'        => 0
         ));
-        $resto->attachTags(['ramen','noodles','no smoking','English menu']);
+        $resto->attachTags(['ramen','noodles','no smoking','English menu','japanese']);
         $resto->fillCoordinatesFromString('35.656154, 139.695443');
 
         $resto = Restaurant::create(array(
@@ -4097,7 +4097,7 @@ $resto = Restaurant::create(array(
             'score_price'       => 1,
             'score_date'        => 0
         ));
-        $resto->attachTags(['ramen','noodles','tsukemen']);
+        $resto->attachTags(['ramen','noodles','tsukemen','japanese']);
         $resto->fillCoordinatesFromString('35.658555, 139.698586');
 
         $resto = Restaurant::create(array(
@@ -4139,7 +4139,7 @@ $resto = Restaurant::create(array(
             'score_price'       => 1,
             'score_date'        => 0
         ));
-        $resto->attachTags(['noodles','ramen']);
+        $resto->attachTags(['noodles','ramen','japanese']);
         $resto->fillCoordinatesFromString('35.658927, 139.698365');
 
         $resto = Restaurant::create(array(
@@ -4160,7 +4160,7 @@ $resto = Restaurant::create(array(
             'score_price'       => 1,
             'score_date'        => 0
         ));
-        $resto->attachTags(['noodles','ramen','miso']);
+        $resto->attachTags(['noodles','ramen','miso','japanese']);
         $resto->fillCoordinatesFromString('35.659068, 139.698397');
 
         $resto = Restaurant::create(array(
@@ -4295,7 +4295,7 @@ $resto = Restaurant::create(array(
             'type'              => 'Burger',
             'lunch_price'       => 1300,
             'points'            => 'Good burgers.',
-            'experience'        => 'The place is nice and cosy, if you don\'t mind the 4 TVs silently showing some Japanese chanels. A bunch of tables and a small counter. THe menu has mostly burgers, but also some alternatives such as pasta, salad, chicken or shrimps. Prices range from 1080 to about 1580. I tried the cheese burger for 1280 yen. Coming with a drink, some fries and pickles, the bread was nicely toasted, plenty of lettuce, fresh tomato, decent cheese and sauce. The patty was good, grilled with pepper, but the amount of meat relatively small. Overall, slightly above average in my opinion, but I wish it would have been a bit tastier.',
+            'experience'        => 'The place is nice and cosy, if you don\'t mind the 4 TVs silently showing some Japanese chanels. A bunch of tables and a small counter. The menu has mostly burgers, but also some alternatives such as pasta, salad, chicken or shrimps. Prices range from 1080 to about 1580. I tried the cheese burger for 1280 yen. Coming with a drink, some fries and pickles, the bread was nicely toasted, plenty of lettuce, fresh tomato, decent cheese and sauce. The patty was good, grilled with pepper, but the amount of meat relatively small. Overall, slightly above average in my opinion, but I wish it would have been a bit tastier.',
             'visited'           => true,
             'visit_date'        => '2019-02-04 13:00:00',
             'google_maps_link'  => 'https://www.google.com/maps/place/%EF%BC%91F,+3+Chome-6-19+Shibuya,+Shibuya-ku,+T%C5%8Dky%C5%8D-to+150-0002/@35.6572775,139.7033648,17.25z/data=!4m5!3m4!1s0x60188b596c02f923:0xd9d6190474d14d3d!8m2!3d35.6576834!4d139.7048312',
@@ -4592,7 +4592,7 @@ $resto = Restaurant::create(array(
             'type'              => 'Ramen',
             'lunch_price'       => 900,
             'points'            => 'Quite unique and delicious ramen.',
-            'experience'        => 'Away from the busy part of Shibuya, this place is peaceful ramen restaurant run by an old couple. There are some tables and a counter. THe place seems it can be quite busy. The old man can speak English and will help foreigners to pick a ramen  on the ticket machine. It takes quite a while for the dish to be ready, but it is worth it. The soup has a rich and delicious taste. Noodles are good, and I loved the meat. I ordered an egg to be added, and it was also very delicious. It is, however, not very filling. Still, one of the best ramen in Shibuya.',
+            'experience'        => 'Away from the busy part of Shibuya, this place is peaceful ramen restaurant run by an old couple. There are some tables and a counter. The place seems it can be quite busy. The old man can speak English and will help foreigners to pick a ramen  on the ticket machine. It takes quite a while for the dish to be ready, but it is worth it. The soup has a rich and delicious taste. Noodles are good, and I loved the meat. I ordered an egg to be added, and it was also very delicious. It is, however, not very filling. Still, one of the best ramen in Shibuya.',
             'visited'           => true,
             'visit_date'        => '2019-03-18 13:00:00',
             'google_maps_link'  => 'https://www.google.com/maps/place/Atomasashiya/@35.6552862,139.693382,16.75z/data=!4m5!3m4!1s0x60188b542b9fb427:0x7840d7d541b5d67!8m2!3d35.655413!4d139.695995',
@@ -4646,7 +4646,7 @@ $resto = Restaurant::create(array(
             'score_price'       => 1,
             'score_date'        => 0
         ));
-        $resto->attachTags(['ramen']);
+        $resto->attachTags(['ramen','noodles']);
         $resto->fillCoordinatesFromString('35.659075, 139.696878');
 
         $resto = Restaurant::create(array(
@@ -4697,7 +4697,7 @@ $resto = Restaurant::create(array(
             'type'              => 'Sushi',
             'lunch_price'       => 1000,
             'points'            => 'Cheap sushi.',
-            'experience'        => 'The place is small and bare. Very narrow counter and small stools. Way less crowded than Uobei, another cheap sushi restaurant next door. There is a suhi-go-round convey belt, but there will not be much circulating there if there are not many customers. So you will haev to ask the chief directly. He is nice, can understand English, and make sushi very quickly. Prices start at 90yen for 2 sushi, such as tuna or saumon. Very cheap. Taste is decent for the price... but I would not recommend this place unless you would like a quick sushi snack (the place is opened from lunch to late diner non stop).',
+            'experience'        => 'The place is small and bare. Very narrow counter and small stools. Way less crowded than Uobei, another cheap sushi restaurant next door. There is a suhi-go-round convey belt, but there will not be much circulating there if there are not many customers. So you will have to ask the chief directly. He is nice, can understand English, and make sushi very quickly. Prices start at 90yen for 2 sushi, such as tuna or saumon. Very cheap. Taste is decent for the price... but I would not recommend this place unless you would like a quick sushi snack (the place is opened from lunch to late diner non stop).',
             'visited'           => true,
             'visit_date'        => '2019-04-01 13:00:00',
             'google_maps_link'  => 'https://www.google.com/maps/place/Sushi+go-round+Restaurant+Shibuya/@35.6596115,139.6965986,18z/data=!4m5!3m4!1s0x60188ca9bedc7287:0xeef88e73f9aeca1e!8m2!3d35.6598861!4d139.6977761',
@@ -4709,7 +4709,7 @@ $resto = Restaurant::create(array(
             'score_price'       => 2,
             'score_date'        => 0
         ));
-        $resto->attachTags(['sushi']);
+        $resto->attachTags(['sushi','japanese']);
         $resto->fillCoordinatesFromString('35.659887, 139.697758');
 
         $resto = Restaurant::create(array(
@@ -4772,7 +4772,7 @@ $resto = Restaurant::create(array(
             'score_price'       => 2,
             'score_date'        => 0
         ));
-        $resto->attachTags(['ramen','noodles','miso','filling']);
+        $resto->attachTags(['ramen','noodles','miso','filling','japanese']);
         $resto->fillCoordinatesFromString('35.663035, 139.697177');
 
         $resto = Restaurant::create(array(
@@ -4900,6 +4900,176 @@ $resto = Restaurant::create(array(
         ));
         $resto->attachTags(['cafe','no smoking','English menu']);
         $resto->fillCoordinatesFromString('35.663817, 139.699896');
+
+/////////////////////////////////////////////////////////////////////////////// TO DO
+
+        $resto = Restaurant::create(array(
+            'name'              => 'The Rally Table',
+            'location'          => 'Shibuya, Jinnan',
+            'type'              => 'Bar restaurant',
+            'lunch_price'       => 1000,
+            'points'            => 'Table tennis',
+            'experience'        => 'Part of T4 Tokyo, this restaurant is linked to some table tennis association. You can actually play table tennis there. There is no windows so it is a bit dark, and it feels more like an evening place, but lunch sets are good. Food was surprisingly good, and I really enjoyed my "Memories of manager! Chicken on rice".',
+            'visited'           => true,
+            'visit_date'        => '2019-06-15 13:00:00',
+            'google_maps_link'  => 'https://www.google.com/maps/place/THE+RALLY+TABLE/@35.6619057,139.698438,16.75z/data=!4m5!3m4!1s0x60188ca890600e59:0xdfca0c73585a0e1!8m2!3d35.6627854!4d139.7005426',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13210107/',
+            'official_website'  => 'https://t-4.jp/tokyo/',
+            'score_lunch'       => 2,
+            'score_place'       => 1,
+            'score_food'        => 2,
+            'score_price'       => 1,
+            'score_date'        => 0
+        ));
+        $resto->attachTags(['pasta','burger','salad','taco rice','western']);
+        $resto->fillCoordinatesFromString('35.662760, 139.700671');
+
+        $resto = Restaurant::create(array(
+            'name'              => 'Nagi Shokudo',
+            'location'          => 'Shibuya',
+            'type'              => 'Vegetarian',
+            'lunch_price'       => 1000,
+            'points'            => 'Vegetarian, very local restaurant.',
+            'experience'        => 'I liked the local atmosphere, nothing fancy, and just 3 plates on the menu. It is vegeterarian, but quite various and good. I really enjoyed my plate.',
+            'visited'           => true,
+            'visit_date'        => '2019-06-15 13:00:00',
+            'google_maps_link'  => 'https://www.google.com/maps/place/Nagi+Shokudo/@35.6560255,139.6971527,16.5z/data=!4m5!3m4!1s0x60188b50a2c09741:0xf212d404e2dfb46b!8m2!3d35.6541775!4d139.7008754',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13048497/',
+            'official_website'  => 'http://nagishokudo.com/',
+            'score_lunch'       => 3,
+            'score_place'       => 1,
+            'score_food'        => 2,
+            'score_price'       => 1,
+            'score_date'        => 0
+        ));
+        $resto->attachTags(['vegetarian friendly','no smoking']);
+        $resto->fillCoordinatesFromString('35.654197, 139.700889');
+
+        $resto = Restaurant::create(array(
+            'name'              => 'Black Brown',
+            'location'          => 'Shibuya, Dogenzaka',
+            'type'              => 'Pasta',
+            'lunch_price'       => 830,
+            'points'            => 'Cheap and decent pasta down B1F.',
+            'experience'        => 'b1F, not a very sexy place. Long counter with USB plugs to charge your phone, and tables. The crownd is mostly eldery. There is a very small smoking area (a corner where a couple of persons can stand and have a cigarette). Fair choice of pasta dishes, quite cheap, with option to get extra. My pasta dish was very good, and I got a large portion for 830 yen (regular was 650 yen). Satisfying.',
+            'visited'           => true,
+            'visit_date'        => '2019-06-15 13:00:00',
+            'google_maps_link'  => 'https://www.google.com/maps/place/Black+Brown/@35.6596085,139.6968821,17.5z/data=!4m5!3m4!1s0x60188ca9b91b6c49:0xdb65cc83d50cdbf!8m2!3d35.659958!4d139.697951',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13001777/',
+            'official_website'  => 'https://www.google.com/search?q=Black+Brown+shibuya+pasta',
+            'score_lunch'       => 2,
+            'score_place'       => 1,
+            'score_food'        => 2,
+            'score_price'       => 2,
+            'score_date'        => 0
+        ));
+        $resto->attachTags(['pasta','italian','western','smoking area']);
+        $resto->fillCoordinatesFromString('35.659996, 139.698089');
+
+        $resto = Restaurant::create(array(
+            'name'              => 'Ottotto',
+            'location'          => 'Shibuya, Dogenzaka',
+            'type'              => 'Pub',
+            'lunch_price'       => 1380,
+            'points'            => 'Pub with a relatively nice interior, opened to the outside. Good food>.',
+            'experience'        => 'Nice and clean (but not especially confortable...), the bar offers various dishes of pasta, a burger, and something different depending on the day. For less than 1000 yen, you can get a dish, in regular or big quantity, a salad with soup, and free access to water and coffee (hot and cold). I tried spicy bolognese spaghetti, it was quite spicy, good. Amount was good too. Service was good, the place felt nice, and made for a pleasant experience. It is non smoking but they have individual smoking booths you can use inside. The front is opened to the outside when the weather allows it.',
+            'visited'           => true,
+            'visit_date'        => '2019-06-15 13:00:00',
+            'google_maps_link'  => 'https://www.google.com/maps/place/Ottotto+BREWERY+(%E3%82%AA%E3%83%83%E3%83%88%E3%83%83%E3%83%88%E3%83%96%E3%83%AB%E3%83%AF%E3%83%AA%E3%83%BC)%E6%B8%8B%E8%B0%B7%E9%81%93%E7%8E%84%E5%9D%82%E5%BA%97/@35.6598011,139.6954953,17z/data=!3m1!4b1!4m5!3m4!1s0x60188de56b352345:0x9668edff0ab8eda4!8m2!3d35.6597968!4d139.697684',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13231204/',
+            'official_website'  => 'https://ottotto-shibuya.owst.jp/',
+            'score_lunch'       => 2,
+            'score_place'       => 2,
+            'score_food'        => 2,
+            'score_price'       => 0,
+            'score_date'        => 0
+        ));
+        $resto->attachTags(['pasta','burger','western','smoking area']);
+        $resto->fillCoordinatesFromString('35.659790, 139.697697');
+
+        $resto = Restaurant::create(array(
+            'name'              => 'Cafe Flamingo',
+            'location'          => 'Shibuya, Udagawacho',
+            'type'              => 'Bar',
+            'lunch_price'       => 980,
+            'points'            => 'Feels a bit like an American bar, with neons and kitch decoration. Offers decent lunch.',
+            'experience'        => 'Mirror balls and neon light, feels like a bar, but offers decent lunch. Counter, and tables availables. I ordered the pasta of the day, for 980 yen, and it was very good, but rather small in quantity. The staff will cook the dish afer you orer, and it takes some time in comparison to a real restaurant. The music was decent, but a bit loud. There is a windows bay but the place stays rather dark. Nobody was smoking when I went there, but it seems maybe it is allowed.',
+            'visited'           => true,
+            'visit_date'        => '2019-04-01 13:00:00',
+            'google_maps_link'  => 'https://www.google.com/maps/place/cafe+FLAMINGO/@35.6626356,139.6948628,17z/data=!3m1!4b1!4m5!3m4!1s0x60188ca94d71d8cb:0xb6ee77b4b88ac74b!8m2!3d35.6626313!4d139.6970515',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13163978/',
+            'official_website'  => 'https://www.udagawacafe.com/cafe-flamingo/',
+            'score_lunch'       => 1,
+            'score_place'       => 1,
+            'score_food'        => 2,
+            'score_price'       => 0,
+            'score_date'        => 0
+        ));
+        $resto->attachTags(['cafe','pasta']);
+        $resto->fillCoordinatesFromString('35.662616, 139.697090');
+
+        $resto = Restaurant::create(array(
+            'name'              => 'Nanpeidai Lounge',
+            'location'          => 'Shibuya, Nanpeidai',
+            'type'              => 'Lounge',
+            'lunch_price'       => 850,
+            'points'            => 'Lounge atmosphere.',
+            'experience'        => 'Inside is rather cosy, with a small counter, sofas and low tables, and a table for table tennis. Very simple menu with: spicy chicken curry, sweet beef curry, or both, for 850 yen and it is coming with a drink. This is quite cheap, and it was very good. Music was good, the stools at the bar were not very confortable, but if you are not alone you will be placed on a table with sofa. But I think they allow smoking, so the experience might be ruined.',
+            'visited'           => true,
+            'visit_date'        => '2019-06-15 13:00:00',
+            'google_maps_link'  => 'https://www.google.com/maps/place/NANPEIDAI+LOUNGE/@35.656044,139.6923326,16z/data=!4m5!3m4!1s0x60188b542a0affff:0x28548efbfd971ad!8m2!3d35.655429!4d139.6962385',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13173759/',
+            'official_website'  => 'https://nanla2014.gorp.jp/',
+            'score_lunch'       => 2,
+            'score_place'       => 1,
+            'score_food'        => 2,
+            'score_price'       => 1,
+            'score_date'        => 0
+        ));
+        $resto->attachTags(['curry','smoking allowed']);
+        $resto->fillCoordinatesFromString('35.655351, 139.696264');
+
+        $resto = Restaurant::create(array(
+            'name'              => 'Erick South Masala Diner',
+            'location'          => 'Shibuya',
+            'type'              => 'Indian',
+            'lunch_price'       => 1000,
+            'points'            => 'Delicious Indian curry.',
+            'experience'        => '5th floor of a GEMS building, the place is very decent, but without the usually fancy decoration or loud music. In fact, I did not see any Indian workers in there. However, my curry lunch set came fast, like, less than a minute after ordering it, and it was absolutely delicious. In fact, it was the best tasting Indian curry I had in years. For 1000 yen you get 3 small curries, a mini salad and a cracker, and safran rice which is refillable for free. All very good. Each curry was very unique. Not only spicy stuff with the basic taste of chiken, mutton, beef or veggies. I could greatly enjoy the taste of different spices in each of of them, which is sadly a rare thing in the majority of Indian joints. Quantity is relatively small for the price, and it does not even include a drink (of course you still have water available).',
+            'visited'           => true,
+            'visit_date'        => '2019-07-12 13:00:00',
+            'google_maps_link'  => 'https://www.google.com/maps/place/ERICK+SOUTH+MASALA+DINER+%E7%A5%9E%E5%AE%AE%E5%89%8D/@35.6614946,139.6991246,16.5z/data=!4m5!3m4!1s0x60188ca63e5d0235:0xa36c90e273d16241!8m2!3d35.663782!4d139.7023696',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13220984/',
+            'official_website'  => 'https://enso.ne.jp/erick-masala/',
+            'score_lunch'       => 3,
+            'score_place'       => 1,
+            'score_food'        => 3,
+            'score_price'       => 1,
+            'score_date'        => 1
+        ));
+        $resto->attachTags(['indian','curry','no smoking']);
+        $resto->fillCoordinatesFromString('35.663766, 139.702333');
+
+        $resto = Restaurant::create(array(
+            'name'              => 'Krung Siam',
+            'location'          => 'Shibuya',
+            'type'              => 'Thai',
+            'lunch_price'       => 1080,
+            'points'            => 'Excellent Thai restaurant.',
+            'experience'        => 'Great place, clean, bright and very colorful. It is on the 6th floor of the GEMS building, and there is a windows bay. Counters and tables available. It is rather noisy and busy. Lunch choices are numerous. I chose the the gapao set for 1080 yen. It came to me very fast, with a soup, some rolls and desert on the side. Very nice. And the gapao was actually one of the very best I had in Shibuya. Great experience.',
+            'visited'           => true,
+            'visit_date'        => '2019-06-15 13:00:00',
+            'google_maps_link'  => 'https://www.google.com/maps/place/%E3%82%AF%E3%83%AB%E3%83%B3%E3%83%BB%E3%82%B5%E3%82%A4%E3%82%A2%E3%83%A0GEMS%E7%A5%9E%E5%AE%AE%E5%89%8D/@35.6623248,139.699803,16.5z/data=!4m5!3m4!1s0x60188ca63e7272e1:0xedf7b546a928438a!8m2!3d35.6636845!4d139.7023466',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13220055/',
+            'official_website'  => 'http://www.krungsiam.info/',
+            'score_lunch'       => 3,
+            'score_place'       => 2,
+            'score_food'        => 2,
+            'score_price'       => 1,
+            'score_date'        => 1
+        ));
+        $resto->attachTags(['thai','gapao']);
+        $resto->fillCoordinatesFromString('35.663690, 139.702330');
  
       
 /*
