@@ -227,7 +227,7 @@ class BarsTableSeeder extends Seeder
             'name'              => 'Rock no cocoro',
             'location'          => 'Shibuya, Udagawacho',
             'type'              => 'Bar',
-            'points'            => 'Lound rock music. Quite narrow, but pretty nice atmosphere.',
+            'points'            => 'Loud rock music. Quite narrow, but pretty nice atmosphere.',
             'experience'        => 'Quite loud, it is difficult to have a conversation. Can be smoky too. If not too crowded, it is possible to play darts. If you enjoy the music, atmosphere is quite nice, and the crowd usually as well. Prices are alright (like 600 yen for a glass of wine).',
             'visited'           => true,
             'visit_date'        => '2017-07-07 22:00:00',
