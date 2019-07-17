@@ -1,6 +1,8 @@
-90 days to switch to public repository otherwise need paying gitkraken
+implement on top page "its lunch time, how about XXXX"
+based on time of tha day, season, restaurants distance and ratings
+name of restaurant would be a link to that, and a button try again to generate another proposition suggestion
 
-------------------*******////////------*******/
+---------OTHER RANDOM CRAP IDEA ---------*******////////------*******/
 STICKERS AND PRINTS FOR CLOTHES AND STUFF
 sticker for cup: Certified Sergeable since 2015
 dont forget other stickers and tshirts ideas i nthis file§§§ such as Save the Swines
@@ -37,7 +39,7 @@ NEW: its lunch time, how about you try XXXX , on main page. a suggestion
 
 Package phpoffice/phpexcel is abandoned, you should avoid using it. Use phpoffice/phpspreadsheet instead.
 
-SEO: use yield and section to write metatag in headers
+SEO: use yield and section to write metatag in headers -- use hashtags in one page design to help google references restaurants details ? or site map
 
 need: have URL to result page so we can SHARE
 SHARE: share results , modal popup, with sharing options, copy url to clipboard
