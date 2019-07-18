@@ -3,15 +3,9 @@
 namespace Tests\Unit;
 
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 
 use App\Restaurant;
 use App\Http\Controllers\RestaurantController;
-use Illuminate\Http\Request;
-use Illuminate\Http\JsonResponse;
-
-use Illuminate\Support\Collection as BaseCollection;
-use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 
 class RestaurantControllerTest extends TestCase
 {
