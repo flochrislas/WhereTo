@@ -17,7 +17,7 @@ class RestaurantController extends PlaceController
     /**
      * Get the list to display.
      * TODO: implement "see more" button
-     *
+     * @param Request $request
      * @return \Illuminate\Http\Response
      */
     public function results(Request $request)
