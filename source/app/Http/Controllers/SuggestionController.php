@@ -28,10 +28,11 @@ class SuggestionController
      */
     public function suggestLunch($position) : string {
 
-        if ($this->isLunchTime()) {
-            return "It's about lunch time!";
-        }
+        $TOP_N = 35;
 
+        if (!$this->isLunchTime()) {
+            return "";
+        }
 
         // Get restaurants
         // Limit must be big cause we dont know location, distances are important
@@ -41,14 +42,29 @@ class SuggestionController
         $restaurantController = new RestaurantController;
         // Read DB
         $places = $restaurantController->readFromDB(null, 'AND', 'ratings', 150);
+
+        // Use collection filter to remove places too close if its good weather, and too far if its cold hot or raining
+
         // Calculate distances from position, and sort them
         $places = $restaurantController->handleDistances($places, $position, 'distance');
 
-        // take a restricted 35 bests
+        // take a chunk of the 35 bests
+        //$topN = $places->chunk($TOP_N)->toArray()[0];
+        $topN = $places->chunk($TOP_N)[0];
+        //dump($topN->get(0)->currentDistance);
 
         // pick one randomly
+        $selected = $topN->get(rand(0, $TOP_N-1));
+        $url = route('restaurants.details.single', $selected->id);
+        $aTagStart = '<a href="'.$url.'">';
+        $aTagEnd = '</a>';
 
-        return '';
+        $result = "It's about lunch time! ";
+        $result .= "How about a nice";
+        $result .= $selected->type . " restaurant, ";
+        $result .= $aTagStart . $selected->name . $aTagEnd . "?";
+
+        return $result;
     }
 
 }
