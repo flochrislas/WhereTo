@@ -3032,7 +3032,7 @@ class RestaurantsTableSeeder extends Seeder
             'type'              => 'Bar restaurant',
             'lunch_price'       => 830,
             'points'            => 'Bar restaurant with a windows bay above the Sakuragaokacho\'s crossing. Unexpensive good lunch plates. Smoking allowed.',
-            'experience'        => 'I went there late and it was almost empty, so nobody was smoking. Otherwise that could have been a big problem... I sat at the counter in front of the windows bay, it was very nice. Some music was playing, and some TV were on with a soccer game. I ordred a katsu curry plate, and it was really very good. The katsu was great, the curry was tasty, the rice was in abundance and some lettuce and tomatoes were on the side. Plus a fried egg on the rice. For 830 yen (it was the most expensive dish there). I enjoyed it much. Other items on the menu includes popular Japanese style taco-rice, napolitan pasta, and othjer combinations, starting 500 yen. Add 100yen for a salad or a drink.',
+            'experience'        => 'I went there late and it was almost empty, so nobody was smoking. Otherwise that could have been a big problem... I sat at the counter in front of the windows bay, it was very nice. Some music was playing, and some TV were on with a soccer game. I ordred a katsu curry plate, and it was really very good. The katsu was great, the curry was tasty, the rice was in abundance and some lettuce and tomatoes were on the side. Plus a fried egg on the rice. For 830 yen (it was the most expensive dish there). I enjoyed it much. Other items on the menu includes popular Japanese style taco-rice (I tried it later on, and it was not good...), napolitan pasta, and other combinations, starting 500 yen. Add 100yen for a salad or a drink.',
             'visited'           => true,
             'visit_date'        => '2018-08-16 14:00:00',
             'google_maps_link'  => 'https://www.google.com/maps/place/Fields/@35.6571737,139.7014883,17z/data=!4m5!3m4!1s0x60188b59e1618d81:0x4734f154b5bf8f44!8m2!3d35.656485!4d139.701617',
@@ -5070,6 +5070,27 @@ $resto = Restaurant::create(array(
         ));
         $resto->attachTags(['thai','gapao']);
         $resto->fillCoordinatesFromString('35.663690, 139.702330');
+
+        $resto = Restaurant::create(array(
+            'name'              => 'The Great Burger',
+            'location'          => 'Shibuya, Jingumae',
+            'type'              => 'Burger',
+            'lunch_price'       => 1600,
+            'points'            => 'Nice but expensive burger joint.',
+            'experience'        => 'This place was always overcrowded until they opened another joint in Shibuya Stream. Still crowded, but relatively accessible depending on your luck. Place is nice, bigger and better than the one in Stream. The burgers are good, but not as good as they are expensive... It also takes a long time for the food to be served. So in the end, I do not think the distance (the place is far from any station), waiting time, before and then at the table, plus the expensive price, make that burger worth it.',
+            'visited'           => true,
+            'visit_date'        => '2019-07-19 15:00:00',
+            'google_maps_link'  => 'https://www.google.com/maps/place/The+Great+Burger/@35.6662263,139.7024993,17z/data=!3m1!4b1!4m5!3m4!1s0x60188ca428c01717:0x6d9cff4312428fd5!8m2!3d35.666222!4d139.704688',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1306/A130601/13042654/',
+            'official_website'  => 'http://the-great-burger.com/',
+            'score_lunch'       => 2,
+            'score_place'       => 2,
+            'score_food'        => 3,
+            'score_price'       => 0,
+            'score_date'        => 1
+        ));
+        $resto->attachTags(['burger','to-go']);
+        $resto->fillCoordinatesFromString('35.666205, 139.704710');
  
       
 /*

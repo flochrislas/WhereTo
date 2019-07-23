@@ -13,9 +13,8 @@ class SuggestionControllerTest extends TestCase
         // Mock now
         $lunchTimeNow = Carbon::create(2017, 3, 19, 12);
         Carbon::setTestNow($lunchTimeNow);
-        $this->assertStringStartsWith(
-            "It's about lunch time!",
-            (new SuggestionController)->suggestLunch(null)
+        $this->assertTrue(
+            (new SuggestionController)->isLunchTime()
         );
         // Clear the mock
         Carbon::setTestNow();
@@ -26,9 +25,8 @@ class SuggestionControllerTest extends TestCase
         // Mock now
         $lunchTimeNow = Carbon::create(2017, 3, 19, 18);
         Carbon::setTestNow($lunchTimeNow);
-        $this->assertEquals(
-            "",
-            (new SuggestionController)->suggestLunch(null)
+        $this->assertNotTrue(
+            (new SuggestionController)->isLunchTime()
         );
         // Clear the mock
         Carbon::setTestNow();
