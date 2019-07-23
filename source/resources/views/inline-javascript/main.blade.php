@@ -20,8 +20,8 @@ function getResults() {
   if (getResultsLoading() == "none" && getResultsLoadingTime() == 0) {
     setResultsLoading("all");
     getResultsDiv().innerHTML = "Loading ALL entries. Please wait or select a tag...";
-    var xhr = new XMLHttpRequest();
-    var url = resultsUrl
+    let xhr = new XMLHttpRequest();
+    let url = resultsUrl
             + '?position=' + getLocation()
             + '&orderBy=distance';
     console.info('calling: '+url),
