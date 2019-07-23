@@ -20,7 +20,7 @@
                 getSuggestionDiv().innerHTML = xhr.responseText + '<div id="suggestButton" onclick="ajaxSuggestion()">Try again</div>';
             }
             else {
-                getSuggestionDiv().innerHTML = "Err, nothing from the top of my head, sorry.";
+                getSuggestionDiv().innerHTML = "Err(or), nothing from the top of my head, sorry.";
             }
         };
         xhr.send();

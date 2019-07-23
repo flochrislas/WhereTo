@@ -4,7 +4,7 @@
 /** Actually send the request to the server */
 function ajaxDetails(url) {
   getDetailsDiv().innerHTML = "Loading...";
-  var xhr = new XMLHttpRequest();
+  let xhr = new XMLHttpRequest();
   xhr.open('GET', url);
   console.info("GET: " + url);
   xhr.onload = function() {
