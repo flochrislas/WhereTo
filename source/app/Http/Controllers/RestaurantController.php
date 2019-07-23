@@ -55,6 +55,7 @@ class RestaurantController extends PlaceController
 
         // Keeps the input of the user interface
         // https://laravel.com/docs/5.5/requests#old-input
+        // TODO: check if working or if useful?
         $request->flash();
 
         // Return the view with the resulted places

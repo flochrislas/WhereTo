@@ -12,7 +12,7 @@ function ajaxDetails(url) {
           getDetailsDiv().innerHTML = xhr.responseText;
       }
       else {
-          getDetailsDiv().innerHTML = "Sorry, detailed data could not be retreived. Check your Internet connection and try again.";
+          getDetailsDiv().innerHTML = "Sorry, detailed data could not be retrieved. Check your Internet connection and try again.";
       }
   };
   xhr.send();
