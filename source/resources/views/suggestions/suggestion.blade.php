@@ -1,6 +1,6 @@
 @inject('suggestionController', 'App\Http\Controllers\SuggestionController')
 
-@if($suggestionController::isLunchTime())
+@if($suggestionController::isLunchTime()==false)
     <div id="suggestion">
         It's about lunch time! <div id="suggestButton" onclick="ajaxSuggestion()">Get a suggestion</div>
     </div>
