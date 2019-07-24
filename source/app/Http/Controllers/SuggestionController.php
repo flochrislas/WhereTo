@@ -24,7 +24,7 @@ class SuggestionController
             return $this->suggestLunch($position);
         }
 
-        return "NOTHING " . $position;
+        return "";
     }
 
     /**
@@ -52,14 +52,14 @@ class SuggestionController
 
         $TOP_N = 35;
 
-        // Get restaurants
+        // Get best restaurants
         // Limit must be big cause we dont know location, distances are important
         // Adjust max distance if too hot or too cold or raining
-        // Weather : https://openweathermap.org/price direct api imlp, or use some laravel composer package
+        // Weather : https://openweathermap.org/price direct api impl, or use some laravel composer package
 
         $restaurantController = new RestaurantController;
-        // Read DB
-        $places = $restaurantController->readFromDB(null, 'AND', 'ratings', 150);
+        // Read Cache or DB
+        $places = $restaurantController->useCache(null, 'AND', 'ratings', 100);
 
         // Use collection filter to remove places too close if its good weather, and too far if its cold hot or raining
 
@@ -67,10 +67,10 @@ class SuggestionController
         $places = $restaurantController->handleDistances($places, $position, 'distance');
 
         // take a chunk of the 35 bests
-        //$topN = $places->chunk($TOP_N)->toArray()[0];
         $topN = $places->chunk($TOP_N)[0];
-        //dump($topN->get(0)->currentDistance);
-//---------------- SHOULD CACHE THE ABOVE topN? no because depends on distance? maybe store in user session?
+
+//---------------- SHOULD CACHE THE ABOVE topN? no because depends on distance? maybe store in user session? or in browser store?
+
         // pick one randomly
         $selected = $topN->get(rand(0, $TOP_N-1));
         $url = route('restaurants.details.single', $selected->id);
