@@ -3,11 +3,12 @@
 namespace App\Http\Controllers;
 
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Log;
 
 class SuggestionController
 {
     private const TIMEZONE = 'Asia/Tokyo';
-    private const LUNCH_START = 'today 11am';
+    private const LUNCH_START = 'today 11:30am';
     private const LUNCH_END = 'today 2pm';
 
     /**
@@ -68,11 +69,16 @@ class SuggestionController
 
         // take a chunk of the 35 bests
         $topN = $places->chunk($TOP_N)[0];
-
-//---------------- SHOULD CACHE THE ABOVE topN? no because depends on distance? maybe store in user session? or in browser store?
+        // Log::debug('Top chunk $topN '.print_r($topN, true));
+        // DEBUG
+        /*
+        foreach ($topN as $candidate) {
+            Log::debug('Candidate  '. $candidate->name .' at '. $candidate->currentDistance);
+        }*/
 
         // pick one randomly
         $selected = $topN->get(rand(0, $TOP_N-1));
+        // Log::debug('Selected  '.print_r($selected, true));
         $url = route('restaurants.details.single', $selected->id);
         $aTagStart = '<a href="'.$url.'">';
         $aTagEnd = '</a>';
