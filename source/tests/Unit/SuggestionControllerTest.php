@@ -11,7 +11,7 @@ class SuggestionControllerTest extends TestCase
     public function testLunchTime() : void
     {
         // Mock now
-        $lunchTimeNow = Carbon::create(2017, 3, 19, 12);
+        $lunchTimeNow = Carbon::create(2017, 3, 19, 11, 30);
         Carbon::setTestNow($lunchTimeNow);
         $this->assertTrue(
             (new SuggestionController)->isLunchTime()
@@ -23,7 +23,7 @@ class SuggestionControllerTest extends TestCase
     public function testNotLunchTime() : void
     {
         // Mock now
-        $lunchTimeNow = Carbon::create(2017, 3, 19, 18);
+        $lunchTimeNow = Carbon::create(2017, 3, 19, 11 ,29);
         Carbon::setTestNow($lunchTimeNow);
         $this->assertNotTrue(
             (new SuggestionController)->isLunchTime()

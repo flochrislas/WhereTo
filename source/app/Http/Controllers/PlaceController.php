@@ -41,7 +41,7 @@ abstract class PlaceController extends Controller
           $stationLon = $stationCoords[1];
           $distance = GeoUtils::distance($curLat, $curLon, $stationLat, $stationLon);
           Log::debug('Distance from Shibuya Station: '.$distance);
-          if ($distance > 5000) {
+          if ($distance > 2500) {
             $position = $closestStationPosition;
             Log::debug('Position is too far. Using Shibuya Station coordinates.');
           }
@@ -229,7 +229,7 @@ abstract class PlaceController extends Controller
         foreach ($places as $place) {
           if(!is_null($place->lat)) {
             $distance = GeoUtils::distance($curLat, $curLon, $place->lat, $place->lon);
-            // Log::debug('Distance found: '.$distance);
+            //Log::debug('Distance found: '.$distance);
             $place->currentDistance = $distance;
             /*
             if (array_key_exists((string)$distance, $map)) {
