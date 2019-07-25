@@ -40,6 +40,9 @@ Route::get('test-html', array('as' => 'test', function() {
     return view('test-html');
 }));
 
+// Get a suggestions
+Route::get('suggestions', 'SuggestionController@suggest')->name('suggestions');
+
 // Public restaurants pages
 Route::get('restaurants', 'RestaurantTagController@restaurantsFilter')->name('restaurants.main');
 Route::get('restaurants/results', 'RestaurantController@results')->name('restaurants.results');

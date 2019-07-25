@@ -4,7 +4,7 @@
 /** Actually send the request to the server */
 function ajaxDetails(url) {
   getDetailsDiv().innerHTML = "Loading...";
-  var xhr = new XMLHttpRequest();
+  let xhr = new XMLHttpRequest();
   xhr.open('GET', url);
   console.info("GET: " + url);
   xhr.onload = function() {
@@ -12,7 +12,7 @@ function ajaxDetails(url) {
           getDetailsDiv().innerHTML = xhr.responseText;
       }
       else {
-          getDetailsDiv().innerHTML = "Sorry, detailed data could not be retreived. Check your Internet connection and try again.";
+          getDetailsDiv().innerHTML = "Sorry, detailed data could not be retrieved. Check your Internet connection and try again.";
       }
   };
   xhr.send();

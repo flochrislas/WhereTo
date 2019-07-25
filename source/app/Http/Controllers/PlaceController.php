@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Cache;
 use App\Tools\GeoUtils;
 
 /**
-* If you have a Model class that describbes a place (such as Restaurant.php or Karaoke.php),
+* If you have a Model class that describes a place (such as Restaurant.php or Karaoke.php),
 * you might want its Controller to extend this class
 */
 abstract class PlaceController extends Controller
@@ -41,7 +41,7 @@ abstract class PlaceController extends Controller
           $stationLon = $stationCoords[1];
           $distance = GeoUtils::distance($curLat, $curLon, $stationLat, $stationLon);
           Log::debug('Distance from Shibuya Station: '.$distance);
-          if ($distance > 5000) {
+          if ($distance > 2500) {
             $position = $closestStationPosition;
             Log::debug('Position is too far. Using Shibuya Station coordinates.');
           }
@@ -63,12 +63,12 @@ abstract class PlaceController extends Controller
     }
 
     /**
-    * Returns the view4s name for the place's details
-    * @param single , default is false, true if we want SINGLE details view (that can be shared),
-    * instead of the view that fits into the one page design
-    * @return Model's details view name
-    */
-    public function getModelDetailsView($single=false)
+     * Returns the view's name for the place's details
+     * @param bool $single default is false, true if we want SINGLE details view (that can be shared),
+     * instead of the view that fits into the one page design
+     * @return string Model's details view name
+     */
+    public function getModelDetailsView($single=false) : string
     {
         $viewName = strtolower($this->getModelName()).'s.details';
         if ($single) {
@@ -85,31 +85,45 @@ abstract class PlaceController extends Controller
     }
 
     /**
-    * Get search results from paramters by using the cache.
-    * Generate the key, read cache, if not found then read DB and fill cache
-    */
-    public function useCache($tags, $op, $orderBy)
+     * Get search results from parameters by using the cache.
+     * Generate the key, read cache, if not found then read DB and fill cache
+     * @param $tags used in the search
+     * @param $op used in the search
+     * @param $orderBy used in the search
+     * @param int $limit used in the search
+     * @return mixed
+     */
+    public function useCache($tags, $op, $orderBy, $limit = 0)
     {
         // key needs to be made of all the used parameters except coords
-        $cacheKey = $this->cacheKey($op, $tags, $orderBy);
+        $cacheKey = $this->cacheKey($op, $tags, $orderBy, $limit);
 
-        $places = Cache::rememberForever($cacheKey, function() use ($tags, $op, $orderBy) {
-            return $this->mainDB($tags, $op, $orderBy);
+        $places = Cache::rememberForever($cacheKey, function() use ($tags, $op, $orderBy, $limit) {
+            return $this->readFromDB($tags, $op, $orderBy, $limit);
         });
 
         return $places;
     }
 
     /**
-     * Generate the key to use for puting the main query into cache
-     * @return string
+     * Generates the key to use for putting the main query into cache
+     * @param $op used in the search
+     * @param $tags used in the search. Can be empty for ALL, or an array of actual tags
+     * @param $orderBy used in the search
+     * @param int $limit used in the search
+     * @return string the key
      */
-    public function cacheKey($op, $tags, $orderBy) : string
+    public function cacheKey($op, $tags, $orderBy, $limit = 0) : string
     {
         if (empty($tags)) {
             $cacheKey = 'All-'.$this->getModelName();
+        } else if($tags == 'suggestion') {
+            $cacheKey = 'Suggestion-'.$this->getModelName();
         } else {
             $cacheKey = md5($op .','. implode(',',$tags));
+        }
+        if ($limit > 0) {
+            $cacheKey = 'l'.$limit.'-'.$cacheKey;
         }
         // The logic below is a bit dangerous, but currently
         // only orderBy costs influence the cached results
@@ -120,20 +134,27 @@ abstract class PlaceController extends Controller
     }
 
     /**
-     * Search for the list to display.
+     * Read from the DB.
      * No cache, just the DB.
-     *
+     * @param array $tags
+     * @param string $op
+     * @param string $orderBy
+     * @param integer $limit
      * @return Illuminate\Database\Eloquent\Collection
      */
-    public function mainDB($tags, $op = 'AND', $orderBy = 'distance')
+    public function readFromDB($tags, $op = 'AND', $orderBy = 'distance', $limit = 0)
     {
-        Log::debug('Hitting the DB with mainDB with op '.$op.' orderBy '.$orderBy);
+        Log::debug('Hitting the DB with mainDB with op '.$op.' orderBy '.$orderBy.' limit '.$limit);
         $class = $this->getModelClass();
         $query = (new $class)->newQuery();
 
         $this->whereTags($query, $tags, $op);
         if ($class == 'App\Restaurant') {
           $this->orderBy($query, $orderBy);
+        }
+
+        if ($limit > 0) {
+            $query->limit($limit);
         }
 
         $places = $query->get();
@@ -192,40 +213,6 @@ abstract class PlaceController extends Controller
         }
     }
 
-    public function whereTypes(&$query, $types, $op = 'AND') : void
-    {
-        if (isset($types) && !empty($types)) {
-
-            if ($op == 'AND') {
-                $query->whereHas('tags', function ($query) use ($types) {
-                    foreach ($types as $type) {
-                      $query->where('label', '=', $type);
-                    }
-                });
-            }
-
-            if ($op == 'OR') {
-                $query->whereHas('tags', function ($query) use ($types) {
-                      $query->whereIn('label', $types);
-                });
-            }
-
-            if ($op == 'ANDNOT') {
-                $query->whereDoesntHave('tags', function ($query) use ($types) {
-                    foreach ($types as $type) {
-                      $query->where('label', '=', $type);
-                    }
-                });
-            }
-
-            if ($op == 'ORNOT') {
-                $query->whereHas('tags', function ($query) use ($types) {
-                      $query->whereNotIn('label', $types);
-                });
-            }
-        }
-    }
-
     /**
      * Return the places sorted by distance from given position
      * @return array
@@ -242,7 +229,7 @@ abstract class PlaceController extends Controller
         foreach ($places as $place) {
           if(!is_null($place->lat)) {
             $distance = GeoUtils::distance($curLat, $curLon, $place->lat, $place->lon);
-            // Log::debug('Distance found: '.$distance);
+            //Log::debug('Distance found: '.$distance);
             $place->currentDistance = $distance;
             /*
             if (array_key_exists((string)$distance, $map)) {
@@ -317,7 +304,7 @@ abstract class PlaceController extends Controller
 
     /**
      * Make the tags into an array, if it is not already the case
-     * The reference is passed in paramter, so the function directly modifies the tags
+     * The reference is passed in parameter, so the function directly modifies the tags
      * @return void
      */
     public function formatTags(&$tags)

@@ -27,7 +27,7 @@ function getLocation() {
     }
 }
 
-/** getCurrentPosition sucess */
+/** getCurrentPosition success */
 function onSuccess(position) {
     sessionStore("lastCoordinates", position.coords.latitude + "," + position.coords.longitude);
     // For debugging purposes:
@@ -37,7 +37,7 @@ function onSuccess(position) {
 
 /** getCurrentPosition failure */
 function onError(error) {
-    var additionalWarning = " Distances will be from the station."
+    let additionalWarning = " Distances will be from the station."
     switch(error.code) {
         case error.PERMISSION_DENIED:
             geolocalisationMessage.innerHTML = "User denied the request for Geolocation." + additionalWarning

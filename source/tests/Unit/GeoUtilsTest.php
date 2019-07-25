@@ -3,10 +3,8 @@
 namespace Tests\Unit;
 
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Support\Facades\Log;
 
-use App\GeoUtils;
+use App\Tools\GeoUtils;
 
 /**
 * Tools on the Internet allow for some verifications:

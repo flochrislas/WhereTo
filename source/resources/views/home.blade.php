@@ -12,6 +12,9 @@
           {{ session('status') }}
       </div>
   @endif
+
+    @include('suggestions.suggestion')
+
   <div class="grid">
     <a class="giantButton" href="{{ route('restaurants.main') }}" onclick="getLocation()">
       Lunch

@@ -45,7 +45,7 @@ function refreshResults(orderBy) {
     store("orderBy", orderBy);
   } else {
     // if no param then try read store
-    var storeOrderBy = readStore("orderBy");
+    let storeOrderBy = readStore("orderBy");
     if (storeOrderBy != null) {
       orderBy = storeOrderBy;
     } else {
@@ -57,7 +57,7 @@ function refreshResults(orderBy) {
 
   /* read order/operand/options parameters */
   // We will implement that later
-  var op = 'AND';
+  let op = 'AND';
 
   /* AJAX request to update the results */
   ajaxResults(op, tagsLabels, orderBy);
@@ -65,15 +65,15 @@ function refreshResults(orderBy) {
 
 /** Actually send the request to the server */
 function ajaxResults(op, tags, orderBy) {
-  var xhr = new XMLHttpRequest();
-  var url = resultsUrl
+  let xhr = new XMLHttpRequest();
+  let url = resultsUrl
           + '?op=' + op
           + '&tags=' + tags
           + '&orderBy=' + orderBy
           + '&position=' + getLocation();
   xhr.open('GET', url);
   console.info("GET: " + url);
-  var now = nowStamp();
+  let now = nowStamp();
   setResultsLoadingTime(now);
   setResultsLoading("tag");
   xhr.onload = function() {
@@ -98,9 +98,9 @@ function ajaxResults(op, tags, orderBy) {
   xhr.send();
 }
 
-/** From NodeList of tag div, get concatained string of tags labels */
+/** From NodeList of tag div, get concatenated string of tags labels */
 function getTagsLabels(tags) {
-  var tagsLabels = "";
+  let tagsLabels = "";
   for (i = 0; i < tags.length; ++i) {
     tagsLabels = tagsLabels + tags[i].innerHTML.trim() + ',';
   }
@@ -110,8 +110,8 @@ function getTagsLabels(tags) {
 
 /** From NodeList of tag div, get array of tags ids */
 function getTagsIdArray(op, tags) {
-  var tagsIds = [];
-  for (i = 0; i < tags.length; ++i) {
+  let tagsIds = [];
+  for (let i = 0; i < tags.length; ++i) {
     tagsIds.push(tags[i].getAttribute("tagId"));
   }
   return tagsIds;
@@ -121,7 +121,7 @@ function refreshShowResultsButton() {
   /* get number of results */
   // var nbResults = document.getElementById("results").children.count();
   // var nbResults = document.getElementById('resultsTable').rows.length;
-  var nbResults = document.getElementsByClassName("resultsCounter").length;
+  let nbResults = document.getElementsByClassName("resultsCounter").length;
   /* Change button label/text */
   if (nbResults == 0) {
     getFilterHeaderButtonDiv().innerHTML = "No result";
