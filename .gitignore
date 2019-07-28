@@ -81,4 +81,6 @@ source/\.phpstorm\.meta\.php
 
 source/_ide_helper\.php
 
+source/_ide_helper_models\.php
+
 source/composer\.phar

@@ -175,6 +175,7 @@ return [
         // To use debug Barryvdh
         // https://github.com/barryvdh/laravel-debugbar
         Barryvdh\Debugbar\ServiceProvider::class,
+        // But there is auto discovery from Laravel 5.5 ...
 
         /*
          * Application Service Providers...

@@ -20,10 +20,6 @@ class AppServiceProvider extends ServiceProvider
          // \Log::useDailyFiles(storage_path('/logs/').php_sapi_name().'-'.get_current_user().'.log');
         // TODO: The above cannot be done above Laravel 5.5, check how to do, maybe just use daily log driver in config logging
 
-        // Then add this to help PhpStorm and IDE
-        if ($this->app->environment() !== 'production') {
-            $this->app->register(\Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class);
-        }
     }
 
     /**
@@ -33,6 +29,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        // Helps PhpStorm and IDE (was in boot() before...)
+        if ($this->app->environment() !== 'production') {
+            $this->app->register(\Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class);
+        }
     }
 }
