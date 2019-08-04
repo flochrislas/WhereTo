@@ -13,7 +13,7 @@ class AdminPanelController extends Controller
      */
     public function debugModeSwitch(Request $request)
     {
-        $switch = request('mode'));
+        $switch = request('mode');
         if ($switch == 'on') {
             $this->debugModeOn();
         }
