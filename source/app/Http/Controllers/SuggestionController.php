@@ -21,7 +21,7 @@ class SuggestionController
         // Current position from client's GPS
         $position = request('position');
 
-        if (!$this->isLunchTime()) {
+        if ($this->isLunchTime()) {
             return $this->suggestLunch($position);
         }
 
