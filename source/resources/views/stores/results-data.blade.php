@@ -18,7 +18,7 @@
       </a>
     </div>
     <div class="resultCell description">
-        <div class="extract">{{ $store->points }}</div>
+        <div class="extract">{!! $store->points !!}</div>
     </div>
   </div>
 @endforeach

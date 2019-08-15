@@ -229,8 +229,10 @@ td {
 /*********************************************/
 
 #suggestion {
-  margin: .1rem;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
   margin-left: .5rem;
+  margin-right: .5rem;
   color: black;
   background-color: burlywood;
   padding: .2rem;
