@@ -5112,6 +5112,8 @@ class RestaurantsTableSeeder extends Seeder
         ));
         $resto->attachTags(['burrito', 'vegetarian friendly', 'English menu']);
         $resto->fillCoordinatesFromString('35.661473, 139.696902');
+
+        // Must add Rekaru, delicious omurice and deserts, basement floor but great decor and ambiance.
  
       
 /*
