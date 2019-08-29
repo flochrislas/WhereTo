@@ -587,7 +587,7 @@ class StoresTableSeeder extends Seeder
           'experience'        => 'Crappy, easy to miss entrance in a back street, but this is a nice shop with a lot of stuff you can see and try.
           <ul>
               <li>3F: DJs controller, turntables, mixers, speakers...</li>
-              <li>5F: DAW, audio interfaces, midi controllers.../li>
+              <li>5F: DAW, audio interfaces, midi controllers...</li>
               <li>6F: Mics, headphones, studio monitors and cables</li>
               <li>7F: Keyboards, synthesizers, piano and accordions</li>
           </ul>',

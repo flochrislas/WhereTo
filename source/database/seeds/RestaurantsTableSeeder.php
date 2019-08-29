@@ -1557,7 +1557,7 @@ class RestaurantsTableSeeder extends Seeder
             'type'              => 'Pasta',
             'lunch_price'       => 600,
             'points'            => 'Decent pasta. Cheap price. Fast service. Narrow counter only.',
-            'experience'        => '600yen for decent size pasta dish. Nice. Choice between thick or thin spagethi. The counter is really narrow but in front of a window. Food comes fast. Unfortunately, my tomato mozzarella pasta kind of lacked taste. Still, decent, and a good deal. Another time I got small serving of arabiata for 480yen, and it was quite good.',
+            'experience'        => '600yen for decent size pasta dish. Nice. Choice between thick or thin spaghetti. The counter is really narrow but in front of a window. Food comes fast. Unfortunately, my tomato mozzarella pasta kind of lacked taste. Still, decent, and a good deal. Another time I got small serving of arabiata for 480yen, and it was quite good.',
             'visited'           => true,
             'visit_date'        => '2018-02-20 13:00:00',
             'google_maps_link'  => 'https://www.google.co.jp/maps/place/POTA+PASTA+%E6%B8%8B%E8%B0%B7%E5%BA%97/@35.6585489,139.6984537,18z/data=!4m5!3m4!1s0x60188b57d475e281:0x267d9086f80cb4dc!8m2!3d35.6587047!4d139.6989325',
@@ -2063,7 +2063,7 @@ class RestaurantsTableSeeder extends Seeder
             'type'              => 'Italian',
             'lunch_price'       => 1000,
             'points'            => 'Nice and big interior. Great salad buffet during lunch time. Mediocre pasta dish.',
-            'experience'        => 'The interior is very nice, and quite spacious. I was pleased. The buffet was great, including carrots, lentils, eggs, fried potatoes, onions, bread, and a delicious baslsamic sauce dressing. I tried the mozarealla and tomato sauce spagethi dish, but it was quite mediocre, especially with regards to the tomato sauce. But, for 1000yen, it made me full and the buffet makes it worth it.',
+            'experience'        => 'The interior is very nice, and quite spacious. I was pleased. The buffet was great, including carrots, lentils, eggs, fried potatoes, onions, bread, and a delicious baslsamic sauce dressing. I tried the mozarealla and tomato sauce spaghetti dish, but it was quite mediocre, especially with regards to the tomato sauce. But, for 1000yen, it made me full and the buffet makes it worth it.',
             'visited'           => true,
             'visit_date'        => '2018-05-21 13:00:00',
             'google_maps_link'  => 'https://www.google.com/maps/place/Tharros/@35.6577442,139.7007574,18z/data=!4m5!3m4!1s0x60188b57b83f1c37:0x895372195d90c946!8m2!3d35.6580471!4d139.6995289',
@@ -3937,7 +3937,7 @@ class RestaurantsTableSeeder extends Seeder
             'type'              => 'Lounge',
             'lunch_price'       => 1080,
             'points'            => 'Lounge with pasta lunch and free soft drinks.',
-            'experience'        => 'Inside is spacious, high ceiling, windows bay, with soft music playing in the background. Sofa and low tables available. Few items for lunch sets, most likely to be some spagethi dishes. Softs drinks such as juice, tea or coffee are free. Lunch sets, coming with a small salad, are about 1000 yen. I tried smoked sausages with tomato sauce spagheti: it was good. Seats and tables are not accomodoting for tall people.',
+            'experience'        => 'Inside is spacious, high ceiling, windows bay, with soft music playing in the background. Sofa and low tables available. Few items for lunch sets, most likely to be some spaghetti dishes. Softs drinks such as juice, tea or coffee are free. Lunch sets, coming with a small salad, are about 1000 yen. I tried smoked sausages with tomato sauce spagheti: it was good. Seats and tables are not accomodoting for tall people.',
             'visited'           => true,
             'visit_date'        => '2018-10-07 13:00:00',
             'google_maps_link'  => 'https://www.google.com/maps/place/SUZU+CAFE+-GEMS+Shibuya-/@35.6568201,139.7024207,17z/data=!4m5!3m4!1s0x60188b5bc76c3217:0xf06939768d0b66af!8m2!3d35.655713!4d139.7045021',
@@ -4901,7 +4901,7 @@ class RestaurantsTableSeeder extends Seeder
         $resto->attachTags(['cafe','no smoking','English menu']);
         $resto->fillCoordinatesFromString('35.663817, 139.699896');
 
-/////////////////////////////////////////////////////////////////////////////// TO DO
+/////////////////////////////////////////////////////////////////////////////// TO doublecheck maybe
 
         $resto = Restaurant::create(array(
             'name'              => 'The Rally Table',
@@ -5098,7 +5098,7 @@ class RestaurantsTableSeeder extends Seeder
             'type'              => 'Burritos',
             'lunch_price'       => 1260,
             'points'            => 'Delicious burritos',
-            'experience'        => 'The place is at the basement floor, and inside was kind of smoky, from the kitchen\'s grills or something. However, the interior was OK, and the staff nice and trying to speak English. They have different burritos, pork, beef, veggies... and you have the option to deepfry them. They have lunch sets that include one burrito, but I was quite hungry, so I ordered 2 burritos for a total of 1260 yen. A deepfried chicken burrito, and a regular beef burrito. Both were big and delicious. They came with some salad, pickles and sauces. I ended up fully satisfied.',
+            'experience'        => 'The place is at the basement floor, and inside was kind of foggy, from the kitchen\'s grills or something. However, the interior was OK, and the staff nice and trying to speak English. They have different burritos, pork, beef, veggies... and you have the option to deepfry them. They have lunch sets that include one burrito, but I was quite hungry, so I ordered 2 burritos for a total of 1260 yen. A deepfried chicken burrito, and a regular beef burrito. Both were big and delicious. They came with some salad, pickles and sauces. I ended up fully satisfied.',
             'visited'           => true,
             'visit_date'        => '2019-08-14 13:00:00',
             'google_maps_link'  => 'https://www.google.com/maps/place/HIDEOUT/@35.6605703,139.6955383,17z/data=!4m5!3m4!1s0x60188ca96f2b3775:0x8edfe1fcfca87f95!8m2!3d35.6615074!4d139.6969974',
@@ -5110,10 +5110,31 @@ class RestaurantsTableSeeder extends Seeder
             'score_price'       => 1,
             'score_date'        => 0
         ));
-        $resto->attachTags(['burrito', 'vegetarian friendly', 'English menu']);
+        $resto->attachTags(['burrito','vegetarian friendly','English menu']);
         $resto->fillCoordinatesFromString('35.661473, 139.696902');
 
-        // Must add Rekaru, delicious omurice and deserts, basement floor but great decor and ambiance.
+        $resto = Restaurant::create(array(
+            'name'              => 'Torico',
+            'location'          => 'Shibuya, Kamiyamacho',
+            'type'              => 'Western',
+            'lunch_price'       => 1080,
+            'points'            => 'Nice little restaurant with good, customizable, lunch plates.',
+            'experience'        => 'The place is small and only has a narrow counter and high stools... but it somehow feels nice. You can customize your lunch plate in 6 steps: choice within 2 sizes (1080 for regular, 1280 for big), 6 preparations of rice, 6 preparations of spaghetti, 4 fried foods, 6 different sauces, and then add some pid additional toppings if you wish. Drink can be added for 250 yen. So I tried chicken rice, Napolitan spaghetti, fried chicken with ratatouille sauce, no topping nor drink. The plate came faster that I expected, and it had some salad included. It was all very good. Nice lunch.',
+            'visited'           => true,
+            'visit_date'        => '2019-08-26 13:00:00',
+            'google_maps_link'  => 'https://www.google.com/maps/place/Torico/@35.6620704,139.6943241,17z/data=!4m5!3m4!1s0x60188cac416ed139:0xbe1cda6573bb4b62!8m2!3d35.6634695!4d139.6945494',
+            'tabelog_link'      => 'https://tabelog.com//tokyo/A1303/A130301/13204037/',
+            'official_website'  => 'https://www.shibuyabunka.com/blog.php?wovn=en&id=903',
+            'score_lunch'       => 3,
+            'score_place'       => 2,
+            'score_food'        => 2,
+            'score_price'       => 1,
+            'score_date'        => 0
+        ));
+        $resto->attachTags(['pasta','western','English menu']);
+        $resto->fillCoordinatesFromString('35.663451, 139.694560');
+
+        // Must add Rekaru... Rakeru, delicious omurice and deserts, basement floor but great decor and ambiance.
  
       
 /*
@@ -5148,7 +5169,7 @@ SERGEY: Prospect 2018 , downfall 2004
             'points'            => 'xxxxx',
             'experience'        => 'xxxxx',
             'visited'           => true,
-            'visit_date'        => '2019-04-01 13:00:00',
+            'visit_date'        => '2019-08-01 13:00:00',
             'google_maps_link'  => 'xxxxx',
             'tabelog_link'      => 'xxxxx',
             'official_website'  => 'xxxxx',
