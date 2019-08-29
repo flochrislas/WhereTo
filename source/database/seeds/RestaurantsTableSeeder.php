@@ -34,8 +34,8 @@ class RestaurantsTableSeeder extends Seeder
             'location'          => 'Shibuya',
             'type'              => 'Ramen',
             'lunch_price'       => 800,
-            'points'            => 'Tonkostsu miso available, up to 2 free kaidama, choice soft/hard for the noodles',
-            'experience'        => 'Very good ramen, strong taste, good price, not very confortable (narrow counter, crappy pop music...)',
+            'points'            => 'Top tier ramen in Shibuya.',
+            'experience'        => 'Very great ramen, strong taste, good price. Place average for a ramen restaurant, not very confortable (narrow counter, crappy pop music...), but they do have a couple of tables for groups. They speciallized in tonkostsu ramen. Spicy miso available as well, and even cold soupless ramen in summer. You can ask for up to 2 free kaedama (fair amount of additional noodles), and choose for the soft/hardness of the noodles.',
             'visited'           => true,
             'visit_date'        => '2017-09-05 13:00:00',
             'google_maps_link'  => 'https://www.google.co.jp/maps/place/Hakata+Furyu/@35.6585187,139.6983918,21z/data=!4m5!3m4!1s0x60188b5629325fa5:0x59eb6bd6fac9b856!8m2!3d35.6585287!4d139.6984651',
@@ -215,7 +215,7 @@ class RestaurantsTableSeeder extends Seeder
             'score_price'       => 1,
             'score_date'        => 0
         ));
-        $resto->attachTags(['mexican','fast food','to-go','visa']);
+        $resto->attachTags(['burrito', 'mexican','fast food','to-go','visa']);
         $resto->fillCoordinatesFromString('35.660199, 139.697664');
 
         $resto = Restaurant::create(array(
@@ -775,8 +775,8 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create(array(
             'name'              => 'Pizza Slice',
-            'location'          => 'Shibuya, Sarugakucho',
-            'type'              => 'pizza',
+            'location'          => 'Shibuya, Sakuragaokacho',
+            'type'              => 'Pizza',
             'lunch_price'       => 1000,
             'points'            => 'big, heigh celing room with big windows bay. 500 yen american/newyork style pizza slices. Served fast. Just slices on a paper plate, no knife and fork. Free toppings include spicy stuff (but no oil), and oregan. Big tables avaialbe in addition of small and counter.',
             'experience'        => 'Pizza were decent. I liked the free oregan herbs available as topping on the tables. A bit overpriced though. Room is cool. When I was there, there were 29 girls for 3 guys.',
@@ -791,7 +791,7 @@ class RestaurantsTableSeeder extends Seeder
             'score_price'       => 1,
             'score_date'        => 0
         ));
-        $resto->attachTags(['pizza']);
+        $resto->attachTags(['pizza', 'English menu', 'to-go']);
         $resto->fillCoordinatesFromString('35.653555, 139.705145');
 
         $resto = Restaurant::create(array(
@@ -800,7 +800,7 @@ class RestaurantsTableSeeder extends Seeder
             'type'              => 'Italian',
             'lunch_price'       => 1000,
             'points'            => 'Open space restaurant in nice Hikarie 7F. Busy floor, but nice setting. A bit expensive, but one of the cheapest restaurant in the building.',
-            'experience'        => '1162 yen Pasta Set with Salad + bread + organic tomato avocado pasta. Nice salad, hot bread, and very, very good pasta. I would go as far as to call the pasta "exquisite". I also liked the setting, tables and chairs.',
+            'experience'        => '1162 yen Pasta Set with Salad + bread + organic tomato avocado pasta. Nice salad, hot bread, and very, very good pasta. I would go as far as to call the pasta "exquisite". I also liked the setting, tables and chairs. They also have pizza but it looks small and expensive.',
             'visited'           => true,
             'visit_date'        => '2017-09-05 13:00:00',
             'google_maps_link'  => 'https://www.google.co.jp/maps/place/iBeer+Le+Sun+Palm/@35.659252,139.6999228,17z/data=!3m1!5s0x60188b58f894f891:0xa230d50aab3d69e4!4m8!1m2!2m1!1siBeer!3m4!1s0x0:0xe0dfc9c31b013e93!8m2!3d35.659052!4d139.7037091',
@@ -812,12 +812,12 @@ class RestaurantsTableSeeder extends Seeder
             'score_price'       => 0,
             'score_date'        => 0
         ));
-        $resto->attachTags(['pasta','pasta','italian']);
+        $resto->attachTags(['pasta','pizza','italian']);
         $resto->fillCoordinatesFromString('35.659067, 139.703709');
 
         $resto = Restaurant::create(array(
             'name'              => 'Avatar',
-            'location'          => 'D side in front of shibuya language shool',
+            'location'          => 'Shibuya, Sakuragaokacho',
             'type'              => 'Indian curry',
             'lunch_price'       => 850,
             'points'            => 'Nice little indian restaurant. Not a chain. Relatively nice staff. No cheesy TV clips. Decent price curry sets. No keema. Free nan and rice.',
@@ -838,11 +838,11 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create(array(
             'name'              => 'Guzman y Gomez',
-            'location'          => 'past tower record',
+            'location'          => 'Shibuya, Jinnan',
             'type'              => 'Mexican',
             'lunch_price'       => 1300,
             'points'            => 'Good mexican fastfood cuisine. American chain. Expensive.',
-            'experience'        => 'First and foremost, this place is insanely overpriced. I got 3 kedasilla for 1070 yen. It felt like a small snack. Definitely insufficient for a lunch. I left hungry and had to go eat something cheaper elsewhere. Taste-wise, it was good, and I could choose the meat amongst 8 different choices, for each of my 3 small kedasilla. The interior, and ordering system, is like a cheap fastfood. When I ate there the doors were kept opened despite the cold and I had to keep my jacket on. The music was very cheesy.',
+            'experience'        => 'First and foremost, this place is insanely overpriced. I got 3 kedasilla for 1070 yen, and it felt like a small snack. Definitely insufficient for a lunch. I left hungry and had to go eat something cheaper elsewhere. Taste-wise, it was very good, and I could choose the meat amongst 8 different choices, for each of my 3 small kedasilla. The interior, and ordering system, is like a cheap fastfood. When I ate there the doors were kept opened despite the cold and I had to keep my jacket on. The music was very cheesy.',
             'visited'           => true,
             'visit_date'        => '2017-09-05 13:00:00',
             'google_maps_link'  => 'https://www.google.co.jp/maps/place/Guzman+y+Gomez+%E6%B8%8B%E8%B0%B7%E5%BA%97/@35.662334,139.7004488,19z/data=!4m12!1m6!3m5!1s0x60188ca88131ea95:0x111613650b9602bd!2zR3V6bWFuIHkgR29tZXog5riL6LC35bqX!8m2!3d35.662334!4d139.700996!3m4!1s0x60188ca88131ea95:0x111613650b9602bd!8m2!3d35.662334!4d139.700996',
@@ -854,12 +854,12 @@ class RestaurantsTableSeeder extends Seeder
             'score_price'       => 0,
             'score_date'        => 0
         ));
-        $resto->attachTags(['mexican','to-go','visa']);
+        $resto->attachTags(['mexican','to-go','visa','burrito']);
         $resto->fillCoordinatesFromString('35.662400, 139.700988');
 
         $resto = Restaurant::create(array(
             'name'              => 'Il Fiume',
-            'location'          => 'far',
+            'location'          => 'Shibuya, 3Chome',
             'type'              => 'Italian',
             'lunch_price'       => 980,
             'points'            => 'Nice place, nice interior, even has a terrace, in a calm street. Lunch has salad buffet, with decent variety of salads. Dish can be chosen from the menu. Japanese-italian style. No pizza.',
@@ -867,7 +867,7 @@ class RestaurantsTableSeeder extends Seeder
             'visited'           => true,
             'visit_date'        => '2017-09-05 13:00:00',
             'google_maps_link'  => 'https://www.google.co.jp/maps/place/%E3%82%A4%E3%83%AB%E3%83%95%E3%83%A5%E3%83%BC%E3%83%A1/@35.655656,139.70675,21z/data=!4m5!3m4!1s0x60188b5c7914049f:0xdda113f8492b26d9!8m2!3d35.6556367!4d139.7066753',
-            'tabelog_link'      => '',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13147788/',
             'official_website'  => 'https://il-fiume.biz/',
             'score_lunch'       => 2,
             'score_place'       => 2,
@@ -1557,7 +1557,7 @@ class RestaurantsTableSeeder extends Seeder
             'type'              => 'Pasta',
             'lunch_price'       => 600,
             'points'            => 'Decent pasta. Cheap price. Fast service. Narrow counter only.',
-            'experience'        => '600yen for decent size pasta dish. Nice. Choice between thick or thin spagethi. The counter is really narrow but in front of a window. Food comes fast. Unfortunately, my tomato mozzarella pasta kind of lacked taste. Still, decent, and a good deal. Another time I got small serving of arabiata for 480yen, and it was quite good.',
+            'experience'        => '600yen for decent size pasta dish. Nice. Choice between thick or thin spaghetti. The counter is really narrow but in front of a window. Food comes fast. Unfortunately, my tomato mozzarella pasta kind of lacked taste. Still, decent, and a good deal. Another time I got small serving of arabiata for 480yen, and it was quite good.',
             'visited'           => true,
             'visit_date'        => '2018-02-20 13:00:00',
             'google_maps_link'  => 'https://www.google.co.jp/maps/place/POTA+PASTA+%E6%B8%8B%E8%B0%B7%E5%BA%97/@35.6585489,139.6984537,18z/data=!4m5!3m4!1s0x60188b57d475e281:0x267d9086f80cb4dc!8m2!3d35.6587047!4d139.6989325',
@@ -2063,7 +2063,7 @@ class RestaurantsTableSeeder extends Seeder
             'type'              => 'Italian',
             'lunch_price'       => 1000,
             'points'            => 'Nice and big interior. Great salad buffet during lunch time. Mediocre pasta dish.',
-            'experience'        => 'The interior is very nice, and quite spacious. I was pleased. The buffet was great, including carrots, lentils, eggs, fried potatoes, onions, bread, and a delicious baslsamic sauce dressing. I tried the mozarealla and tomato sauce spagethi dish, but it was quite mediocre, especially with regards to the tomato sauce. But, for 1000yen, it made me full and the buffet makes it worth it.',
+            'experience'        => 'The interior is very nice, and quite spacious. I was pleased. The buffet was great, including carrots, lentils, eggs, fried potatoes, onions, bread, and a delicious baslsamic sauce dressing. I tried the mozarealla and tomato sauce spaghetti dish, but it was quite mediocre, especially with regards to the tomato sauce. But, for 1000yen, it made me full and the buffet makes it worth it.',
             'visited'           => true,
             'visit_date'        => '2018-05-21 13:00:00',
             'google_maps_link'  => 'https://www.google.com/maps/place/Tharros/@35.6577442,139.7007574,18z/data=!4m5!3m4!1s0x60188b57b83f1c37:0x895372195d90c946!8m2!3d35.6580471!4d139.6995289',
@@ -3583,8 +3583,8 @@ class RestaurantsTableSeeder extends Seeder
             'visited'           => true,
             'visit_date'        => '2018-10-07 13:00:00',
             'google_maps_link'  => 'https://www.google.com/maps/place/Glorious+Chain+Cafe/@35.6613921,139.7004716,17z/data=!4m5!3m4!1s0x60188ca7b8821d0d:0x87f8747fc4c12b8f!8m2!3d35.6620808!4d139.7026281',
-            'tabelog_link'      => '',
-            'official_website'  => '',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13119575/',
+            'official_website'  => 'https://www.transit-web.com/content/shops/glorious_chain_cafe/glorious_chain_cafe_shibuya/',
             'score_lunch'       => 2,
             'score_place'       => 1,
             'score_food'        => 1,
@@ -3595,7 +3595,7 @@ class RestaurantsTableSeeder extends Seeder
         $resto->fillCoordinatesFromString('35.661942, 139.702440');
 
 
-$resto = Restaurant::create(array(
+        $resto = Restaurant::create(array(
             'name'              => 'Curry Udon Senkichi',
             'location'          => 'Shibuya, Dogenzaka',
             'type'              => 'Japanese Curry',
@@ -3937,7 +3937,7 @@ $resto = Restaurant::create(array(
             'type'              => 'Lounge',
             'lunch_price'       => 1080,
             'points'            => 'Lounge with pasta lunch and free soft drinks.',
-            'experience'        => 'Inside is spacious, high ceiling, windows bay, with soft music playing in the background. Sofa and low tables available. Few items for lunch sets, most likely to be some spagethi dishes. Softs drinks such as juice, tea or coffee are free. Lunch sets, coming with a small salad, are about 1000 yen. I tried smoked sausages with tomato sauce spagheti: it was good. Seats and tables are not accomodoting for tall people.',
+            'experience'        => 'Inside is spacious, high ceiling, windows bay, with soft music playing in the background. Sofa and low tables available. Few items for lunch sets, most likely to be some spaghetti dishes. Softs drinks such as juice, tea or coffee are free. Lunch sets, coming with a small salad, are about 1000 yen. I tried smoked sausages with tomato sauce spagheti: it was good. Seats and tables are not accomodoting for tall people.',
             'visited'           => true,
             'visit_date'        => '2018-10-07 13:00:00',
             'google_maps_link'  => 'https://www.google.com/maps/place/SUZU+CAFE+-GEMS+Shibuya-/@35.6568201,139.7024207,17z/data=!4m5!3m4!1s0x60188b5bc76c3217:0xf06939768d0b66af!8m2!3d35.655713!4d139.7045021',
@@ -4901,7 +4901,7 @@ $resto = Restaurant::create(array(
         $resto->attachTags(['cafe','no smoking','English menu']);
         $resto->fillCoordinatesFromString('35.663817, 139.699896');
 
-/////////////////////////////////////////////////////////////////////////////// TO DO
+/////////////////////////////////////////////////////////////////////////////// TO doublecheck maybe
 
         $resto = Restaurant::create(array(
             'name'              => 'The Rally Table',
@@ -5091,12 +5091,54 @@ $resto = Restaurant::create(array(
         ));
         $resto->attachTags(['burger','to-go']);
         $resto->fillCoordinatesFromString('35.666205, 139.704710');
+
+        $resto = Restaurant::create(array(
+            'name'              => 'Hideout',
+            'location'          => 'Shibuya, Udagawacho',
+            'type'              => 'Burritos',
+            'lunch_price'       => 1260,
+            'points'            => 'Delicious burritos',
+            'experience'        => 'The place is at the basement floor, and inside was kind of foggy, from the kitchen\'s grills or something. However, the interior was OK, and the staff nice and trying to speak English. They have different burritos, pork, beef, veggies... and you have the option to deepfry them. They have lunch sets that include one burrito, but I was quite hungry, so I ordered 2 burritos for a total of 1260 yen. A deepfried chicken burrito, and a regular beef burrito. Both were big and delicious. They came with some salad, pickles and sauces. I ended up fully satisfied.',
+            'visited'           => true,
+            'visit_date'        => '2019-08-14 13:00:00',
+            'google_maps_link'  => 'https://www.google.com/maps/place/HIDEOUT/@35.6605703,139.6955383,17z/data=!4m5!3m4!1s0x60188ca96f2b3775:0x8edfe1fcfca87f95!8m2!3d35.6615074!4d139.6969974',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13158499/',
+            'official_website'  => 'https://hideout-shibuya.gorp.jp/',
+            'score_lunch'       => 3,
+            'score_place'       => 1,
+            'score_food'        => 2,
+            'score_price'       => 1,
+            'score_date'        => 0
+        ));
+        $resto->attachTags(['burrito','vegetarian friendly','English menu']);
+        $resto->fillCoordinatesFromString('35.661473, 139.696902');
+
+        $resto = Restaurant::create(array(
+            'name'              => 'Torico',
+            'location'          => 'Shibuya, Kamiyamacho',
+            'type'              => 'Western',
+            'lunch_price'       => 1080,
+            'points'            => 'Nice little restaurant with good, customizable, lunch plates.',
+            'experience'        => 'The place is small and only has a narrow counter and high stools... but it somehow feels nice. You can customize your lunch plate in 6 steps: choice within 2 sizes (1080 for regular, 1280 for big), 6 preparations of rice, 6 preparations of spaghetti, 4 fried foods, 6 different sauces, and then add some pid additional toppings if you wish. Drink can be added for 250 yen. So I tried chicken rice, Napolitan spaghetti, fried chicken with ratatouille sauce, no topping nor drink. The plate came faster that I expected, and it had some salad included. It was all very good. Nice lunch.',
+            'visited'           => true,
+            'visit_date'        => '2019-08-26 13:00:00',
+            'google_maps_link'  => 'https://www.google.com/maps/place/Torico/@35.6620704,139.6943241,17z/data=!4m5!3m4!1s0x60188cac416ed139:0xbe1cda6573bb4b62!8m2!3d35.6634695!4d139.6945494',
+            'tabelog_link'      => 'https://tabelog.com//tokyo/A1303/A130301/13204037/',
+            'official_website'  => 'https://www.shibuyabunka.com/blog.php?wovn=en&id=903',
+            'score_lunch'       => 3,
+            'score_place'       => 2,
+            'score_food'        => 2,
+            'score_price'       => 1,
+            'score_date'        => 0
+        ));
+        $resto->attachTags(['pasta','western','English menu']);
+        $resto->fillCoordinatesFromString('35.663451, 139.694560');
+
+        // Must add Rekaru... Rakeru, delicious omurice and deserts, basement floor but great decor and ambiance.
  
       
 /*
 // try french boistrot 139 near MontBell
-
-// try HIDE OUT next to Daiso
 
 // try this curry place : https://tabelog.com/tokyo/A1303/A130301/13171069/dtlmap/
 // ramen kiraku https://fr.favy-jp.com/topics/2309
@@ -5127,7 +5169,7 @@ SERGEY: Prospect 2018 , downfall 2004
             'points'            => 'xxxxx',
             'experience'        => 'xxxxx',
             'visited'           => true,
-            'visit_date'        => '2019-04-01 13:00:00',
+            'visit_date'        => '2019-08-01 13:00:00',
             'google_maps_link'  => 'xxxxx',
             'tabelog_link'      => 'xxxxx',
             'official_website'  => 'xxxxx',

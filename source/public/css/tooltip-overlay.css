@@ -1,0 +1,62 @@
+/*********************************************/
+/*            Tooltip overlay                */
+/*********************************************/
+/* I deactivate the tooltips for now... */
+/* TODO: maybe remove the overlay attributes from divs... */
+div[overlay] {
+    display: inline-block;/*bug fix*/
+    position: relative;
+    text-decoration: none;
+}
+div[overlay]:after {
+    /* read from html attribute */
+    content: attr(overlay);
+    /* enable new lines in content */
+    white-space: pre;
+    /* ensure overlay visible above other elements */
+    z-index: 2;
+    visibility: visible;
+    /* colors */
+    background: #20968b;
+    color: black;
+    padding: 5px 15px;
+    opacity: 0;
+    /* positioning */
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    /* transition */
+    transition: all 0.5s ease;
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -ms-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+}
+div[overlay]:before {
+    /* hide overlay */
+    content: "";
+    width: 0;
+    height: 0;
+    opacity: 0;
+    position: absolute;
+    left: 0%;
+    bottom: 0%;
+}
+div[overlay]:hover:after,
+div[overlay]:active:after {
+    top: 0;
+    bottom:0;
+    right: 0;
+    left:0;
+    opacity:0;
+}
+div[overlay]:hover:before,
+div[overlay]:active:before  {
+    bottom: 0%;
+}
+div[overlay]:hover:after,
+div[overlay]:active:after,
+div[overlay]:hover:before,
+div[overlay]:active:before {
+    opacity: 0.94;
+}
