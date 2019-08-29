@@ -1,0 +1,80 @@
+/*********************************************/
+/*                TOOLTIPS                    /
+/*********************************************/
+/*
+* Main inspiration: https://codepen.io/team/css-tricks/pen/RPmpYa;
+* NEW LINE: content: "line1 \A line2", or
+* content: attr(attrName) needs to use &#xa; in its text
+*/
+/*********************************************/
+/*           Absolute Tooltip                 /
+/*********************************************/
+/* TODO: remove divs attributes in code if we dont use it */
+
+div[absolute-tooltip] {
+}
+div[absolute-tooltip]:after {
+    /* read from html attribute */
+    content: attr(absolute-tooltip);
+    /* enable new lines in content */
+    white-space: pre;
+    /* ensure absolute-tooltip visible above other elements */
+    z-index: 9;
+    visibility: visible;
+    /* colors */
+    background: #20968b; /* nice orange #ffcb66; */
+    color: black;
+    padding: .4rem .75rem;
+    opacity: 0;
+    /* positioning */
+    position: absolute;
+    top: 4.1rem;
+    left:.2rem;
+    height:4.1rem;
+    width:91%;
+    /* rounded edges */
+    border-radius: 2px;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    -ms-border-radius: 2px;
+    -o-border-radius: 2px;
+    /* transition */
+    transition: all 0.5s ease;
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -ms-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+}
+div[absolute-tooltip]:before {
+    /* hide absolute-tooltip */
+    content: "";
+    width: 0;
+    height: 0;
+    opacity: 0;
+    /* triangle pointer */
+    position: absolute;
+    top: 9rem;
+    border-top: 1rem solid #20968b; /* nice orange #ffcb66; */
+    border-left: 1rem solid transparent;
+    border-right: 1rem solid transparent;
+    /* triangle transition */
+    transition: all 0.5s ease;
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -ms-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+}
+div[absolute-tooltip]:hover:after,
+div[absolute-tooltip]:active:after {
+    bottom: 100%;
+}
+div[absolute-tooltip]:hover:before,
+div[absolute-tooltip]:active:before  {
+    bottom: 70%;
+}
+div[absolute-tooltip]:hover:after,
+div[absolute-tooltip]:active:after,
+div[absolute-tooltip]:hover:before,
+div[absolute-tooltip]:active:before {
+    opacity: 0.95;
+}
