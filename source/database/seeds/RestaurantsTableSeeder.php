@@ -139,8 +139,8 @@ class RestaurantsTableSeeder extends Seeder
             'location'          => 'Shibuya, Udagawacho',
             'type'              => 'Ramen',
             'lunch_price'       => 800,
-            'points'            => 'Fairly customizable ramen, one free kaidama available. Feels "cleaner" that regular ramen places.',
-            'experience'        => 'Very good ramen. Good miso.',
+            'points'            => 'Delicious, fairly customizable ramen, one free kaedama available. Feels "cleaner" that regular ramen places.',
+            'experience'        => 'Very delicious ramen. Good miso. The only thing I feel a bit unconfortable with, is that the staff does not offer "lunch service" (one free refill, or one free topping or rice, and choice of noodle hardness) to foreigners... You can ask for it and it will be given to you, but the staff will not say word about it upfront (as they totally do to Japanese customers).',
             'visited'           => true,
             'visit_date'        => '2017-09-05 13:00:00',
             'google_maps_link'  => 'https://www.google.co.jp/maps/place/IPPUDO+SHIROMARU+BASE+%E6%B8%8B%E8%B0%B7%E5%BA%97/@35.6603496,139.6970402,17z/data=!4m12!1m6!3m5!1s0x60188ca849c5a249:0xaa481a46e532685c!2zSVBQVURPIFNISVJPTUFSVSBCQVNFIOa4i-iwt-W6lw!8m2!3d35.6603496!4d139.6992289!3m4!1s0x60188ca849c5a249:0xaa481a46e532685c!8m2!3d35.6603496!4d139.6992289',
@@ -4395,6 +4395,8 @@ class RestaurantsTableSeeder extends Seeder
         $resto->attachTags(['gapao','curry','English menu','no smoking']);
         $resto->fillCoordinatesFromString('35.662355, 139.697588');
 
+        // This place closed , to be replaced by Flunky Parlor!
+        /*
         $resto = Restaurant::create(array(
             'name'              => 'Gh Ethnica',
             'location'          => 'Shibuya, Stream',
@@ -4415,8 +4417,7 @@ class RestaurantsTableSeeder extends Seeder
         ));
         $resto->attachTags(['curry','no smoking','English menu']);
         $resto->fillCoordinatesFromString('35.657391, 139.703171');
-
-        // bahama kitchen
+        */
 
         $resto = Restaurant::create(array(
             'name'              => 'Bahama kitchen',
@@ -5133,6 +5134,27 @@ class RestaurantsTableSeeder extends Seeder
         ));
         $resto->attachTags(['pasta','western','English menu']);
         $resto->fillCoordinatesFromString('35.663451, 139.694560');
+
+        $resto = Restaurant::create(array(
+            'name'              => 'Flunky Parlor',
+            'location'          => 'Shibuya, Stream',
+            'type'              => 'Western',
+            'lunch_price'       => 850,
+            'points'            => 'Confortable place in front of Shibuya river.',
+            'experience'        => 'Located along the Shibuya river, in the ground floor of the Stream building, the place is rather nice, with its big windows bay. You can also eat outside, which is quite nice, if the river does not stink too much. The menu has curry, pasta... decent amount of choices. The lunch set includes a small salad. I took the cheapest pasta, Napolitan spagheti for 850 yen, big portion for no additional charge. The amount was decent, but unfortunately, it was not great... below average for a spagheti dish in Shibuya.',
+            'visited'           => true,
+            'visit_date'        => '2019-08-30 13:00:00',
+            'google_maps_link'  => 'https://www.google.co.jp/maps/place/FLUNKY+PARLOR/@35.6579976,139.7006583,17z/data=!4m5!3m4!1s0x60188fc37b3f7213:0xbbfe4791fc365ae!8m2!3d35.6575138!4d139.703083',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13232929/',
+            'official_website'  => 'https://shibuyastream.jp/shop/shopdetail.php?id=3',
+            'score_lunch'       => 2,
+            'score_place'       => 2,
+            'score_food'        => 1,
+            'score_price'       => 1,
+            'score_date'        => 1
+        ));
+        $resto->attachTags(['pasta','curry','no smoking','English menu','open air space']);
+        $resto->fillCoordinatesFromString('35.657391, 139.703171');
 
         // Must add Rekaru... Rakeru, delicious omurice and deserts, basement floor but great decor and ambiance.
  
