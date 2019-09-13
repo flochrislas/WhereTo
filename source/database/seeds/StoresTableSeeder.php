@@ -695,7 +695,7 @@ class StoresTableSeeder extends Seeder
       end of ramen street 
       IWAKI
       https://www.google.com/maps/place/%E3%82%A4%E3%83%AF%E3%82%AD+%E6%B8%8B%E8%B0%B7%E5%BA%97+(IWAKI+OPTICAL+Shibuya+Store%EF%BC%89/@35.6590152,139.6981549,20z/data=!4m8!1m2!2m1!1z44Oh44Ks44ON!3m4!1s0x0:0x7b28bc9cfffb0aa5!8m2!3d35.6590081!4d139.6981429
-      
+
         Go to 109 and then:
 
         Megane super (small)
@@ -709,6 +709,14 @@ class StoresTableSeeder extends Seeder
 
         JIN
         https://www.google.com/maps/place/JINS/@35.6601088,139.6967828,18z/data=!4m8!1m2!2m1!1z44Oh44Ks44ON!3m4!1s0x0:0x9e2c5d9dca932835!8m2!3d35.6616276!4d139.6976527
+
+        Kaneko Optical 
+        Kaneko Optical Shop (Shibuya Hikarie ShinQs) 金子眼鏡店 渋谷ヒカリエ ShinQs店
+        Rather small. Limited choice. Nothing cheap.
+
+        Ogura megane
+        オグラメガネ渋谷店ロービジョンセンター
+        Decent amount of choice, but mostly expensive (above 30,000 yen), with some Cartier above 100,000 yen.
 
 */
 
