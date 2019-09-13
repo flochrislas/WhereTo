@@ -5157,6 +5157,9 @@ class RestaurantsTableSeeder extends Seeder
         $resto->fillCoordinatesFromString('35.657391, 139.703171');
 
         // Must add Rekaru... Rakeru, delicious omurice and deserts, basement floor but great decor and ambiance.
+        // Nice choices. Good omurice. Nice and fast service. Basement, but nice decoration. There is soft music to ease the ambient noise that can be... a bit noisy. 1200 yen +300 for desert option, soup and drink included , good and decent amount, if the omurice did not suffice the bread make sure you feel rather full.
+
+        // JS curry stand became js steak stand !!
  
       
 /*
