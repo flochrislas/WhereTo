@@ -690,35 +690,77 @@ class StoresTableSeeder extends Seeder
         $store->attachTags(['glasses']);
         $store->fillCoordinatesFromString('35.662270, 139.699513');
 
-/*
 
+        $store = Store::create(array(
+          'name'              => 'Megane Super',
+          'location'          => 'Shibuya, Udagawacho',
+          'type'              => 'Glasses',
+          'points'            => 'Small place with very limited choice.',
+          'experience'        => 'Small place with very limited choice. Prices looked normal.',
+          'google_maps_link'  => 'https://www.google.com/maps/place/MEGANE+SUPER+%E6%B8%8B%E8%B0%B7%E6%9C%AC%E5%BA%97/@35.6607043,139.6975889,18z/data=!4m5!3m4!1s0x60188d128d06cb4d:0xf53c7eeab8c8e2a9!8m2!3d35.6609309!4d139.698061',
+          'official_website'  => 'https://www.meganesuper.co.jp/shops/megane-super-%E6%B8%8B%E8%B0%B7%E6%9C%AC%E5%BA%97/',
+          'score'             => 0
+        ));
+        $store->attachTags(['glasses']);
+        $store->fillCoordinatesFromString('35.660958, 139.698069');
+
+        $store = Store::create(array(
+          'name'              => 'Klein',
+          'location'          => 'Shibuya, Udagawacho',
+          'type'              => 'Glasses',
+          'points'            => 'Small fashionable shop.',
+          'experience'        => 'Fashionable, with limited choice, the prices seem to remain decent.',
+          'google_maps_link'  => 'https://www.google.com/maps/place/KLEIN+EYEWEAR/@35.6601088,139.6967828,18z/data=!4m8!1m2!2m1!1z44Oh44Ks44ON!3m4!1s0x0:0x42c55ca99d5d5c82!8m2!3d35.6614421!4d139.6970368',
+          'official_website'  => 'https://klein-eyewear.com/',
+          'score'             => 1
+        ));
+        $store->attachTags(['glasses']);
+        $store->fillCoordinatesFromString('35.661403, 139.697093');
+
+        $store = Store::create(array(
+          'name'              => 'JINS',
+          'location'          => 'Shibuya, Udagawacho',
+          'type'              => 'Glasses',
+          'points'            => 'Decent choice, nice prices.',
+          'experience'        => 'Decent choice of glasses and some sunglasses as well. Prices range from 5 to 30 thousand yen.',
+          'google_maps_link'  => 'https://www.google.com/maps/place/JINS/@35.6604592,139.6972773,17.52z/data=!4m5!3m4!1s0x60188ca91368ded3:0x9e2c5d9dca932835!8m2!3d35.6616275!4d139.6976526',
+          'official_website'  => 'https://store-jp.jins.com/b/jins/info/20365/',
+          'score'             => 1
+        ));
+        $store->attachTags(['glasses']);
+        $store->fillCoordinatesFromString('35.661676, 139.697662');
+
+        $store = Store::create(array(
+          'name'              => 'Kaneko optical',
+          'location'          => 'Shibuya, Hikarie',
+          'type'              => 'Glasses',
+          'points'            => 'Rather small. Limited choice. Nothing cheap.',
+          'experience'        => 'In the Hikarie building, 3rd floor, amongst other ShinQs shops. Rather small. Limited choice. Nothing cheap.',
+          'google_maps_link'  => 'https://www.google.com/maps/place/Kaneko+Optical+Shop+(Shibuya+Hikarie+ShinQs)/@35.659058,139.7013144,17.26z/data=!4m5!3m4!1s0x60188bc1bebc7469:0xaa8325c092658e7c!8m2!3d35.6590249!4d139.703473',
+          'official_website'  => 'http://www.kaneko-optical.co.jp/jp/company/stores/kaneko.html',
+          'score'             => 0
+        ));
+        $store->attachTags(['glasses']);
+        $store->fillCoordinatesFromString('35.659028, 139.703465');
+
+        $store = Store::create(array(
+          'name'              => 'Ogura megane',
+          'location'          => 'Shibuya, 1Chome',
+          'type'              => 'Glasses',
+          'points'            => 'Large, upper class shop, decent choice.',
+          'experience'        => 'Decent amount of choice, but mostly expensive (above 30,000 yen), with some Cartier above 100,000 yen.',
+          'google_maps_link'  => 'https://www.google.com/maps/place/%E3%82%AA%E3%82%B0%E3%83%A9%E3%83%A1%E3%82%AC%E3%83%8D%E6%B8%8B%E8%B0%B7%E5%BA%97%E3%83%AD%E3%83%BC%E3%83%93%E3%82%B8%E3%83%A7%E3%83%B3%E3%82%BB%E3%83%B3%E3%82%BF%E3%83%BC/@35.6608694,139.7012906,18z/data=!4m5!3m4!1s0x60188ca7e88dec69:0xc43a610e32bae6b3!8m2!3d35.661266!4d139.702051',
+          'official_website'  => 'http://www.ogura-megane.co.jp/shop/5/',
+          'score'             => 1
+        ));
+        $store->attachTags(['glasses']);
+        $store->fillCoordinatesFromString('35.661262, 139.702103');
+
+      /*
       end of ramen street 
       IWAKI
       https://www.google.com/maps/place/%E3%82%A4%E3%83%AF%E3%82%AD+%E6%B8%8B%E8%B0%B7%E5%BA%97+(IWAKI+OPTICAL+Shibuya+Store%EF%BC%89/@35.6590152,139.6981549,20z/data=!4m8!1m2!2m1!1z44Oh44Ks44ON!3m4!1s0x0:0x7b28bc9cfffb0aa5!8m2!3d35.6590081!4d139.6981429
-
-        Go to 109 and then:
-
-        Megane super (small)
-        https://www.google.com/maps/place/Megane+Super+Shibuya/@35.6599948,139.6965022,17z/data=!3m1!4b1!4m5!3m4!1s0x60188ca9ca959897:0xddf2c76367714ebe!8m2!3d35.6599948!4d139.6986909
-
-        Megane super (main)
-        https://www.google.com/maps/place/MEGANE+SUPER+%E6%B8%8B%E8%B0%B7%E6%9C%AC%E5%BA%97/@35.6603529,139.6969598,18z/data=!4m8!1m2!2m1!1z44Oh44Ks44ON!3m4!1s0x0:0xf53c7eeab8c8e2a9!8m2!3d35.660931!4d139.6980611
-
-        Klein
-        https://www.google.com/maps/place/KLEIN+EYEWEAR/@35.6601088,139.6967828,18z/data=!4m8!1m2!2m1!1z44Oh44Ks44ON!3m4!1s0x0:0x42c55ca99d5d5c82!8m2!3d35.6614421!4d139.6970368
-
-        JIN
-        https://www.google.com/maps/place/JINS/@35.6601088,139.6967828,18z/data=!4m8!1m2!2m1!1z44Oh44Ks44ON!3m4!1s0x0:0x9e2c5d9dca932835!8m2!3d35.6616276!4d139.6976527
-
-        Kaneko Optical 
-        Kaneko Optical Shop (Shibuya Hikarie ShinQs) 金子眼鏡店 渋谷ヒカリエ ShinQs店
-        Rather small. Limited choice. Nothing cheap.
-
-        Ogura megane
-        オグラメガネ渋谷店ロービジョンセンター
-        Decent amount of choice, but mostly expensive (above 30,000 yen), with some Cartier above 100,000 yen.
-
-*/
+      */
 
         /*
         ///AAA///
