@@ -343,6 +343,8 @@ class RestaurantsTableSeeder extends Seeder
         $resto->attachTags(['indonesian']);
         $resto->fillCoordinatesFromString('35.655166, 139.700365');
 
+        /*
+        // This place has been replaced by the FIX Lounge
         $resto = Restaurant::create(array(
             'name'              => 'M-SPO cafe dining',
             'location'          => 'Shibuya, Udagawacho',
@@ -363,6 +365,7 @@ class RestaurantsTableSeeder extends Seeder
         ));
         $resto->attachTags(['pizza', 'pasta']);
         $resto->fillCoordinatesFromString('35.662026, 139.698027');
+        */
 
         $resto = Restaurant::create(array(
             'name'              => 'Go Go Curry',
@@ -385,6 +388,7 @@ class RestaurantsTableSeeder extends Seeder
         $resto->attachTags(['japanese curry']);
         $resto->fillCoordinatesFromString('35.657333, 139.703654');
 
+        // TODO: complete this
         $resto = Restaurant::create(array(
             'name'              => 'Nice Pizza/Pasta restaurant',
             'location'          => 'Shibuya, Udagawacho',
@@ -1253,7 +1257,7 @@ class RestaurantsTableSeeder extends Seeder
             'score_price'       => 2,
             'score_date'        => 1
         ));
-        $resto->attachTags(['pizza', 'pasta', 'italian']);
+        $resto->attachTags(['pizza', 'pasta', 'italian', 'open air space']);
         $resto->fillCoordinatesFromString('35.661357, 139.699022');
 
         $resto = Restaurant::create(array(
@@ -5156,14 +5160,43 @@ class RestaurantsTableSeeder extends Seeder
         $resto->attachTags(['pasta','curry','no smoking','English menu','open air space']);
         $resto->fillCoordinatesFromString('35.657391, 139.703171');
 
+        $resto = Restaurant::create(array(
+            'name'              => 'Rakeru',
+            'location'          => 'Shibuya, 1Chome',
+            'type'              => 'Omurice',
+            'lunch_price'       => 1200,
+            'points'            => 'Very nice omurice and deserts, basement floor but great decor and ambiance.',
+            'experience'        => 'Nice choices from the menu. Good omurice. Nice and fast service. Basement, but nice decoration. There is soft music to ease the ambient noise that can be... a bit noisy. 1200 yen +300 for desert option, soup and drink included, good and decent amount, if the omurice did not suffice, the bread makes sure you feel rather full.',
+            'visited'           => true,
+            'visit_date'        => '2019-09-02 13:00:00',
+            'google_maps_link'  => 'https://www.google.com/maps/place/RAKERU/@35.6596089,139.7023686,17.52z/data=!4m5!3m4!1s0x60188b588cd34965:0xbeaa05c70cab88f8!8m2!3d35.66001!4d139.7044138',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13001322/',
+            'official_website'  => 'http://www.rakeru.jp/',
+            'score_lunch'       => 3,
+            'score_place'       => 2,
+            'score_food'        => 2,
+            'score_price'       => 1,
+            'score_date'        => 1
+        ));
+        $resto->attachTags(['western','omurice','no smoking']);
+        $resto->fillCoordinatesFromString('35.659966, 139.704420');
+
         // Must add Rekaru... Rakeru, delicious omurice and deserts, basement floor but great decor and ambiance.
         // Nice choices. Good omurice. Nice and fast service. Basement, but nice decoration. There is soft music to ease the ambient noise that can be... a bit noisy. 1200 yen +300 for desert option, soup and drink included , good and decent amount, if the omurice did not suffice the bread make sure you feel rather full.
 
+        // Ballo ballo
+        // The place is underground, so no windows, but it's not too bad inside, they tried to make it cosy. The music is good and not too loud. The lunch menu costs 1080 yen for a dish, a mini salad, mini soup, and a drink.
+
+        // Dao Thai yumyum 10F thai restaurant nice place , great windows bay. Infinite soup and drink, one dessert, gapao was tasty, and hot, but the meat they use is not great (mostly ok, but I found hard pieces and pieces that were just chicken skin, which I do not like). Lunch set is 1000 yen. If you are very hungry you can order an additional mini-version of a dish. I got a mini chicken green curry and it was delicious (and quite hot). I thought it was a real treat for 200 yen, not so small. Also, staff (Thai who can speak Japanese and English as well) was nice, wich is always a plus.
+
+
         // JS curry stand became js steak stand !!
+        // try the other js curry stand
+        // fix remainig todos above...
  
       
 /*
-// try french boistrot 139 near MontBell
+// try french bistrot 139 near MontBell
 
 // try this curry place : https://tabelog.com/tokyo/A1303/A130301/13171069/dtlmap/
 // ramen kiraku https://fr.favy-jp.com/topics/2309
@@ -5178,7 +5211,8 @@ in shibuya
 https://tabelog.com/tokyo/A1303/A130301/13059598/
 
 
-SERGEY: Prospect 2018 , downfall 2004
+SERGEY: Prospect 2018 , downfall 2004, Generation war, Downfall, Frindge
+// jurassic world: fallen kingdom, Joker, Gotham, GoT
 
 */
 
