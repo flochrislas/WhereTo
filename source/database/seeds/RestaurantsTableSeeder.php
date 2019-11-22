@@ -5181,19 +5181,51 @@ class RestaurantsTableSeeder extends Seeder
         $resto->attachTags(['western','omurice','no smoking']);
         $resto->fillCoordinatesFromString('35.659966, 139.704420');
 
-        // Must add Rekaru... Rakeru, delicious omurice and deserts, basement floor but great decor and ambiance.
-        // Nice choices. Good omurice. Nice and fast service. Basement, but nice decoration. There is soft music to ease the ambient noise that can be... a bit noisy. 1200 yen +300 for desert option, soup and drink included , good and decent amount, if the omurice did not suffice the bread make sure you feel rather full.
+        $resto = Restaurant::create(array(
+            'name'              => 'Ballo ballo',
+            'location'          => 'Shibuya, Udagawacho',
+            'type'              => 'xxxxx',
+            'lunch_price'       => 950,
+            'points'            => 'Dark underground cosy place where you can smoke and have a decent meal.',
+            'experience'        => 'The place is underground, so no windows, but it\'s not too bad inside, they tried to make it cosy. The music is good and not too loud. The lunch menu costs 1080 yen for a dish, a mini salad, mini soup, and a drink. It was Okayish... but I cannot recommend the food for thast price. I would only recommend that place to people who want to smoke.',
+            'visited'           => true,
+            'visit_date'        => '2019-11-15 13:00:00',
+            'google_maps_link'  => 'https://www.google.com/maps/place/Cafe%26Dining+ballo+ballo/@35.662047,139.6956221,17z/data=!4m5!3m4!1s0x60188ca916447249:0x84956fd1c3fcf0ca!8m2!3d35.662108!4d139.697564',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13116693/',
+            'official_website'  => 'http://www.sld-inc.com/balloballo.html',
+            'score_lunch'       => 1,
+            'score_place'       => 1,
+            'score_food'        => 1,
+            'score_price'       => 1,
+            'score_date'        => 0
+        ));
+        $resto->attachTags(['pasta','smoking allowed']);
+        $resto->fillCoordinatesFromString('35.662091, 139.697509');
 
-        // Ballo ballo
-        // The place is underground, so no windows, but it's not too bad inside, they tried to make it cosy. The music is good and not too loud. The lunch menu costs 1080 yen for a dish, a mini salad, mini soup, and a drink.
-
-        // Dao Thai yumyum 10F thai restaurant nice place , great windows bay. Infinite soup and drink, one dessert, gapao was tasty, and hot, but the meat they use is not great (mostly ok, but I found hard pieces and pieces that were just chicken skin, which I do not like). Lunch set is 1000 yen. If you are very hungry you can order an additional mini-version of a dish. I got a mini chicken green curry and it was delicious (and quite hot). I thought it was a real treat for 200 yen, not so small. Also, staff (Thai who can speak Japanese and English as well) was nice, wich is always a plus.
-
+        $resto = Restaurant::create(array(
+            'name'              => 'Dao Thai Yumyum',
+            'location'          => 'Shibuya, Udagawacho',
+            'type'              => 'Thai',
+            'lunch_price'       => 1000,
+            'points'            => 'Great windows bay on 10th floor, good Thai cuisine, good lunch.',
+            'experience'        => 'Nice place, great windows bay. Infinite soup and drink, one dessert, gapao was tasty, and hot, but the meat they use is not great (mostly ok, but I found hard pieces and pieces that were just chicken skin, which I do not like). Lunch set is 1000 yen. If you are very hungry you can order an additional mini-version of a dish. I got a mini chicken green curry and it was delicious (and quite hot). I thought it was a real treat for 200 yen, not so small. Also, staff (Thai who can speak Japanese and English as well) was nice, wich is always a plus.',
+            'visited'           => true,
+            'visit_date'        => '2019-11-13 13:00:00',
+            'google_maps_link'  => 'https://www.google.com/maps/place/%E6%B8%8B%E8%B0%B7%E3%82%BF%E3%82%A4%E6%96%99%E7%90%86+DaoThai+yumyum+(%E3%83%80%E3%82%AA%E3%82%BF%E3%82%A4+%E3%83%A4%E3%83%A0%E3%83%A4%E3%83%A0)/@35.6612006,139.6961942,17z/data=!4m5!3m4!1s0x60188ca9137378d7:0x5f0bdede03d810e8!8m2!3d35.6616626!4d139.6976648',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13208849/',
+            'official_website'  => 'https://www.annew.jp/shop/%E6%B8%8B%E8%B0%B7%E3%82%BF%E3%82%A4%E6%96%99%E7%90%86-%E3%83%80%E3%82%AA%E3%82%BF%E3%82%A4%E3%83%A4%E3%83%A0%E3%83%A4%E3%83%A0/',
+            'score_lunch'       => 2,
+            'score_place'       => 2,
+            'score_food'        => 2,
+            'score_price'       => 1,
+            'score_date'        => 1
+        ));
+        $resto->attachTags(['thai','gapao','green curry','no smoking']);
+        $resto->fillCoordinatesFromString('35.661677, 139.697643');
 
         // JS curry stand became js steak stand !!
         // try the other js curry stand
-        // fix remainig todos above...
- 
+        // fix remainig todos above... 
       
 /*
 // try french bistrot 139 near MontBell
@@ -5228,7 +5260,7 @@ SERGEY: Prospect 2018 , downfall 2004, Generation war, Downfall, Frindge
             'points'            => 'xxxxx',
             'experience'        => 'xxxxx',
             'visited'           => true,
-            'visit_date'        => '2019-08-01 13:00:00',
+            'visit_date'        => '2019-11-01 13:00:00',
             'google_maps_link'  => 'xxxxx',
             'tabelog_link'      => 'xxxxx',
             'official_website'  => 'xxxxx',
