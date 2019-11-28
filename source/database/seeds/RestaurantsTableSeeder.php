@@ -390,24 +390,24 @@ class RestaurantsTableSeeder extends Seeder
 
         // TODO: complete this
         $resto = Restaurant::create(array(
-            'name'              => 'Nice Pizza/Pasta restaurant',
+            'name'              => 'Il Ritrovo',
             'location'          => 'Shibuya, Udagawacho',
             'type'              => 'Italian',
-            'lunch_price'       => 1000,
-            'points'            => '9th floor with nice large bay windows, spacious room with large tables. Real pizza oven. 1000yen menu set with a drink, bowl of soup, large salad, and large pizza. music playing, boom boom type, a bit loud but OK if you are alone.',
-            'experience'        => 'loved the room. fast service. Taste was bland (marguerita). The deco is all fine except for that reindeer\'s head sprouting out of a column for no apparent reasons.',
+            'lunch_price'       => 970,
+            'points'            => '9th floor with nice large bay windows, spacious room with large tables. Real pizza oven. Lunch sets arjust below 1000yen and come with a drink, bowl of soup, salad, and a large pizza. Quite satisfying and very good for the price.',
+            'experience'        => 'Loved the room. Fast service. The 4 cheeses pizza was better than the marguerita. The decor is all fine except maybe for that reindeer\'s head sprouting out of a column for no apparent reasons. Some long and large tables seem fit to host large groups as well.',
             'visited'           => true,
             'visit_date'        => '2017-09-05 13:00:00',
-            'google_maps_link'  => '',
-            'tabelog_link'      => '',
-            'official_website'  => '',
-            'score_lunch'       => 1,
-            'score_place'       => 1,
-            'score_food'        => 1,
+            'google_maps_link'  => 'https://www.google.com/maps/place/IL+Ritrovo+Shibuya/@35.6616357,139.6954397,17z/data=!3m1!4b1!4m5!3m4!1s0x60188ca91368ded3:0x243ed7422229d976!8m2!3d35.6616314!4d139.6976284',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13208743/',
+            'official_website'  => 'https://goodspiral.jp/restaurant/ilritrovo/',
+            'score_lunch'       => 2,
+            'score_place'       => 2,
+            'score_food'        => 2,
             'score_price'       => 1,
             'score_date'        => 1
         ));
-        $resto->attachTags(['pizza', 'pasta']);
+        $resto->attachTags(['pizza', 'pasta', 'no smoking']);
         $resto->fillCoordinatesFromString('35.661657, 139.697616');
 
         $resto = Restaurant::create(array(
