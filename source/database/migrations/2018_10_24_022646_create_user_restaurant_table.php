@@ -14,7 +14,7 @@ class CreateUserRestaurantTable extends Migration
     public function up()
     {
         Schema::create('user_restaurant', function (Blueprint $table) {
-          // We use on cascade deelte so if any entry is deleted,
+          // We use on cascade delete so if any entry is deleted,
           // its relationships will as well, and we dont need to manually detach from code
 
           $table->integer('user_id')->unsigned()->nullable();
