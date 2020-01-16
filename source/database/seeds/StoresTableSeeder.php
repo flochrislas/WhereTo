@@ -587,7 +587,7 @@ class StoresTableSeeder extends Seeder
           'experience'        => 'Crappy, easy to miss entrance in a back street, but this is a nice shop with a lot of stuff you can see and try.
           <ul>
               <li>3F: DJs controller, turntables, mixers, speakers...</li>
-              <li>5F: DAW, audio interfaces, midi controllers.../li>
+              <li>5F: DAW, audio interfaces, midi controllers...</li>
               <li>6F: Mics, headphones, studio monitors and cables</li>
               <li>7F: Keyboards, synthesizers, piano and accordions</li>
           </ul>',
@@ -597,7 +597,170 @@ class StoresTableSeeder extends Seeder
         ));
         $store->attachTags(['music instruments','music gear']);
         $store->fillCoordinatesFromString('35.656830, 139.700697');
-        
+
+        $store = Store::create(array(
+          'name'              => 'Zoff',
+          'location'          => 'Shibuya, Mark City',
+          'type'              => 'Glasses',
+          'points'            => 'Decent choice, nice prices.',
+          'experience'        => 'Decent choice of glasses and some sunglasses as well. Prices range from 5 to 30 thousand yen.',
+          'google_maps_link'  => 'https://www.google.com/maps/place/Zoff+%E6%B8%8B%E8%B0%B7%E3%83%9E%E3%83%BC%E3%82%AF%E3%82%B7%E3%83%86%E3%82%A3%E5%BA%97/@35.6578426,139.6965479,17.5z/data=!3m1!5s0x60188b5631f5f4af:0xf2c804907c6b11f9!4m5!3m4!1s0x60188b560f5d27e3:0x24a4d2c31e8cc1e8!8m2!3d35.6577383!4d139.6973389',
+          'official_website'  => 'https://www.zoff.co.jp/shop/store/11006',
+          'score'             => 1
+        ));
+        $store->attachTags(['glasses']);
+        $store->fillCoordinatesFromString('35.657738, 139.697360');
+
+        $store = Store::create(array(
+          'name'              => 'Zoff',
+          'location'          => 'Shibuya, Center Gai',
+          'type'              => 'Glasses',
+          'points'            => 'Decent choice, nice prices.',
+          'experience'        => 'Decent choice of glasses and some sunglasses as well. Prices range from 5 to 30 thousand yen. This store is bigger than the one in Mark City.',
+          'google_maps_link'  => 'https://www.google.com/maps/place/Zoff+%E3%82%B0%E3%83%A9%E3%83%B3%E3%83%89%E6%9D%B1%E4%BA%AC%E6%B8%8B%E8%B0%B7%E5%BA%97/@35.6601384,139.6952022,17.25z/data=!4m5!3m4!1s0x60188d6daa575853:0x192eb2eb0b363826!8m2!3d35.660804!4d139.6974263',
+          'official_website'  => 'https://www.zoff.co.jp/shop/store/11273',
+          'score'             => 1
+        ));
+        $store->attachTags(['glasses']);
+        $store->fillCoordinatesFromString('35.660804, 139.697525');
+
+        $store = Store::create(array(
+          'name'              => 'Washin Optical Shibuya',
+          'location'          => 'Shibuya, Udagawacho',
+          'type'              => 'Glasses',
+          'points'            => 'Lots of choice, can be pricey.',
+          'experience'        => 'Lots of choice, can be pricey. Nice shop.',
+          'google_maps_link'  => 'https://www.google.com/maps/place/WASHIN+OPTICAL+SHIBUYA/@35.6599246,139.6969207,17z/data=!3m1!4b1!4m5!3m4!1s0x60188ca833e2f497:0xd9d9ef6495cf3f8a!8m2!3d35.6599246!4d139.6991094',
+          'official_website'  => 'https://www.washin-optical.co.jp/',
+          'score'             => 1
+        ));
+        $store->attachTags(['glasses']);
+        $store->fillCoordinatesFromString('35.659868, 139.698984');
+
+
+        $store = Store::create(array(
+          'name'              => 'Megane Ichiba',
+          'location'          => 'Shibuya, Udagawacho',
+          'type'              => 'Glasses',
+          'points'            => 'Very decent choice, some sunglasses, decent prices.',
+          'experience'        => 'There are 2 floors. A lot more choices are on the 2nd floor. Prices are like 20 or 30 thousand yen.',
+          'google_maps_link'  => 'https://www.google.com/maps/place/Megane+Ichiba/@35.6608763,139.6984219,17z/data=!3m1!4b1!4m5!3m4!1s0x60188ca812d3604d:0x6b0f0c3e3ad9299!8m2!3d35.6608763!4d139.7006106',
+          'official_website'  => 'https://www.meganeichiba.jp/',
+          'score'             => 1
+        ));
+        $store->attachTags(['glasses']);
+        $store->fillCoordinatesFromString('35.660889, 139.700693');
+
+        $store = Store::create(array(
+          'name'              => 'Owndays',
+          'location'          => 'Shibuya, Mark City',
+          'type'              => 'Glasses',
+          'points'            => 'Very small, very little choice.',
+          'experience'        => 'Very small, very little choice. Some glasses from Rayban. Situated on the ground floor of Mark City.',
+          'google_maps_link'  => 'https://www.google.com/maps/place/OWNDAYS+%E6%B8%8B%E8%B0%B7%E3%83%9E%E3%83%BC%E3%82%AF%E3%82%B7%E3%83%86%E3%82%A3%E5%BA%97/@35.6585808,139.697107,17z/data=!3m2!4b1!5s0x60188b5631c5f5a9:0xf2c804904456f99b!4m5!3m4!1s0x60188b57cdd3837d:0xb37fd1e3ab97907e!8m2!3d35.6585808!4d139.6992957',
+          'official_website'  => 'https://www.owndays.com/jp/ja/shops/687',
+          'score'             => 0
+        ));
+        $store->attachTags(['glasses']);
+        $store->fillCoordinatesFromString('35.658576, 139.699308');
+
+        $store = Store::create(array(
+          'name'              => '999.9',
+          'location'          => 'Shibuya, Jinnan',
+          'type'              => 'Glasses',
+          'points'            => 'Decent but rather small, with some glasses and sunglasses.',
+          'experience'        => 'Decent small store for the brand "Four nines", with limited choices of glasses and sunglasses.',
+          'google_maps_link'  => 'https://www.google.com/maps/place/Four+Nines/@35.661782,139.6977373,17z/data=!3m1!4b1!4m5!3m4!1s0x60188ca8f4e4df61:0x7a511e3081efebd!8m2!3d35.661782!4d139.699926',
+          'official_website'  => 'http://www.fournines.co.jp/en/',
+          'score'             => 1
+        ));
+        $store->attachTags(['glasses']);
+        $store->fillCoordinatesFromString('35.661781, 139.699920');
+
+        $store = Store::create(array(
+          'name'              => 'Eyewear Mebius',
+          'location'          => 'Shibuya, Jinnan',
+          'type'              => 'Glasses',
+          'points'            => 'Small shop with some models out of the ordinary.',
+          'experience'        => 'Easy to miss, situated on 3 floor. Small shop, selling a German brand that has some interesting unique designs. Not so much choice though, and prices are rather high, like between 40 and 60 thousand yen.',
+          'google_maps_link'  => 'https://www.google.com/maps/place/Eyewear+Mebius+%E6%B8%8B%E8%B0%B7/@35.6622188,139.6973623,17z/data=!3m1!4b1!4m5!3m4!1s0x60188ca8efc7cfff:0x6b206c380fa7cc21!8m2!3d35.6622188!4d139.699551',
+          'official_website'  => 'https://www.eyewearmebius.com/shop-info/',
+          'score'             => 0
+        ));
+        $store->attachTags(['glasses']);
+        $store->fillCoordinatesFromString('35.662270, 139.699513');
+
+
+        $store = Store::create(array(
+          'name'              => 'Megane Super',
+          'location'          => 'Shibuya, Udagawacho',
+          'type'              => 'Glasses',
+          'points'            => 'Small place with very limited choice.',
+          'experience'        => 'Small place with very limited choice. Prices looked normal.',
+          'google_maps_link'  => 'https://www.google.com/maps/place/MEGANE+SUPER+%E6%B8%8B%E8%B0%B7%E6%9C%AC%E5%BA%97/@35.6607043,139.6975889,18z/data=!4m5!3m4!1s0x60188d128d06cb4d:0xf53c7eeab8c8e2a9!8m2!3d35.6609309!4d139.698061',
+          'official_website'  => 'https://www.meganesuper.co.jp/shops/megane-super-%E6%B8%8B%E8%B0%B7%E6%9C%AC%E5%BA%97/',
+          'score'             => 0
+        ));
+        $store->attachTags(['glasses']);
+        $store->fillCoordinatesFromString('35.660958, 139.698069');
+
+        $store = Store::create(array(
+          'name'              => 'Klein',
+          'location'          => 'Shibuya, Udagawacho',
+          'type'              => 'Glasses',
+          'points'            => 'Small fashionable shop.',
+          'experience'        => 'Fashionable, with limited choice, the prices seem to remain decent.',
+          'google_maps_link'  => 'https://www.google.com/maps/place/KLEIN+EYEWEAR/@35.6601088,139.6967828,18z/data=!4m8!1m2!2m1!1z44Oh44Ks44ON!3m4!1s0x0:0x42c55ca99d5d5c82!8m2!3d35.6614421!4d139.6970368',
+          'official_website'  => 'https://klein-eyewear.com/',
+          'score'             => 1
+        ));
+        $store->attachTags(['glasses']);
+        $store->fillCoordinatesFromString('35.661403, 139.697093');
+
+        $store = Store::create(array(
+          'name'              => 'JINS',
+          'location'          => 'Shibuya, Udagawacho',
+          'type'              => 'Glasses',
+          'points'            => 'Decent choice, nice prices.',
+          'experience'        => 'Decent choice of glasses and some sunglasses as well. Prices range from 5 to 30 thousand yen.',
+          'google_maps_link'  => 'https://www.google.com/maps/place/JINS/@35.6604592,139.6972773,17.52z/data=!4m5!3m4!1s0x60188ca91368ded3:0x9e2c5d9dca932835!8m2!3d35.6616275!4d139.6976526',
+          'official_website'  => 'https://store-jp.jins.com/b/jins/info/20365/',
+          'score'             => 1
+        ));
+        $store->attachTags(['glasses']);
+        $store->fillCoordinatesFromString('35.661676, 139.697662');
+
+        $store = Store::create(array(
+          'name'              => 'Kaneko optical',
+          'location'          => 'Shibuya, Hikarie',
+          'type'              => 'Glasses',
+          'points'            => 'Rather small. Limited choice. Nothing cheap.',
+          'experience'        => 'In the Hikarie building, 3rd floor, amongst other ShinQs shops. Rather small. Limited choice. Nothing cheap.',
+          'google_maps_link'  => 'https://www.google.com/maps/place/Kaneko+Optical+Shop+(Shibuya+Hikarie+ShinQs)/@35.659058,139.7013144,17.26z/data=!4m5!3m4!1s0x60188bc1bebc7469:0xaa8325c092658e7c!8m2!3d35.6590249!4d139.703473',
+          'official_website'  => 'http://www.kaneko-optical.co.jp/jp/company/stores/kaneko.html',
+          'score'             => 0
+        ));
+        $store->attachTags(['glasses']);
+        $store->fillCoordinatesFromString('35.659028, 139.703465');
+
+        $store = Store::create(array(
+          'name'              => 'Ogura megane',
+          'location'          => 'Shibuya, 1Chome',
+          'type'              => 'Glasses',
+          'points'            => 'Large, upper class shop, decent choice.',
+          'experience'        => 'Decent amount of choice, but mostly expensive (above 30,000 yen), with some Cartier above 100,000 yen.',
+          'google_maps_link'  => 'https://www.google.com/maps/place/%E3%82%AA%E3%82%B0%E3%83%A9%E3%83%A1%E3%82%AC%E3%83%8D%E6%B8%8B%E8%B0%B7%E5%BA%97%E3%83%AD%E3%83%BC%E3%83%93%E3%82%B8%E3%83%A7%E3%83%B3%E3%82%BB%E3%83%B3%E3%82%BF%E3%83%BC/@35.6608694,139.7012906,18z/data=!4m5!3m4!1s0x60188ca7e88dec69:0xc43a610e32bae6b3!8m2!3d35.661266!4d139.702051',
+          'official_website'  => 'http://www.ogura-megane.co.jp/shop/5/',
+          'score'             => 1
+        ));
+        $store->attachTags(['glasses']);
+        $store->fillCoordinatesFromString('35.661262, 139.702103');
+
+      /*
+      end of ramen street 
+      IWAKI
+      https://www.google.com/maps/place/%E3%82%A4%E3%83%AF%E3%82%AD+%E6%B8%8B%E8%B0%B7%E5%BA%97+(IWAKI+OPTICAL+Shibuya+Store%EF%BC%89/@35.6590152,139.6981549,20z/data=!4m8!1m2!2m1!1z44Oh44Ks44ON!3m4!1s0x0:0x7b28bc9cfffb0aa5!8m2!3d35.6590081!4d139.6981429
+      */
 
         /*
         ///AAA///
