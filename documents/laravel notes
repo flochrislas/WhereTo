@@ -41,6 +41,13 @@ Laravel version check
 php artisan --version
 5.5.14
 
+Enhancing IDE to work with Laravel
+https://www.dunebook.com/5-best-ide-laravel-ide-with-laravel-ide-helper/
+https://github.com/barryvdh/laravel-ide-helper
+php artisan ide-helper:generate
+php artisan ide-helper:meta
+php artisan ide-helper:models
+
 Deploying optimizations:
 https://laravel.com/docs/5.7/deployment
 
@@ -60,6 +67,11 @@ sudo find /home/florent/git/medium/source -type d -exec chmod 775 {} \;
 sudo chgrp -R apache storage bootstrap/cache;
 sudo chmod -R ug+rwx storage bootstrap/cache;
 
+sudo chown -R $USER:apache storage bootstrap/cache;
+chmod -R 775 storage bootstrap/cache;
+chmod g+s storage/logs bootstrap/cache;
+
+composer dump-autoload;
 
 Many to Many relationship with eloquent. Pivot table.
 https://appdividend.com/2018/05/17/laravel-many-to-many-relationship-example/#Step_2_Create_a_model_and_migration
@@ -115,12 +127,6 @@ Translations, multilanguage
 https://laravel.com/docs/5.5/localization
 https://laracasts.com/discuss/channels/tips/example-on-how-to-use-multiple-locales-in-your-laravel-5-website
 
-Enhancing IDE to work with Laravel
-https://www.dunebook.com/5-best-ide-laravel-ide-with-laravel-ide-helper/
-https://github.com/barryvdh/laravel-ide-helper
-php artisan ide-helper:generate
-php artisan ide-helper:meta
-php artisan ide-helper:models
 
 Pagination
 https://laravel.com/docs/5.5/pagination

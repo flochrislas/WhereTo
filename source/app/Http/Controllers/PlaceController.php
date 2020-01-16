@@ -53,9 +53,9 @@ abstract class PlaceController extends Controller
     }
 
     /**
-    * Returns the Model class to use to read the data
-    * @return Model's fully specified class name as a string
-    */
+     * Returns the Model class to use to read the data
+     * @return string Model's fully specified class name as a string
+     */
     public function getModelClass()
     {
         Log::debug('Auto-generated ModelClass name: '.'App\\'.$this->getModelName());
