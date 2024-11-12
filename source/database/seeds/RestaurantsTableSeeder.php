@@ -139,8 +139,8 @@ class RestaurantsTableSeeder extends Seeder
             'location'          => 'Shibuya, Udagawacho',
             'type'              => 'Ramen',
             'lunch_price'       => 800,
-            'points'            => 'Fairly customizable ramen, one free kaidama available. Feels "cleaner" that regular ramen places.',
-            'experience'        => 'Very good ramen. Good miso.',
+            'points'            => 'Delicious, fairly customizable ramen, one free kaedama available. Feels "cleaner" that regular ramen places.',
+            'experience'        => 'Very delicious ramen. Good miso. The only thing I feel a bit unconfortable with, is that the staff does not offer "lunch service" (one free refill, or one free topping or rice, and choice of noodle hardness) to foreigners... You can ask for it and it will be given to you, but the staff will not say word about it upfront (as they totally do to Japanese customers).',
             'visited'           => true,
             'visit_date'        => '2017-09-05 13:00:00',
             'google_maps_link'  => 'https://www.google.co.jp/maps/place/IPPUDO+SHIROMARU+BASE+%E6%B8%8B%E8%B0%B7%E5%BA%97/@35.6603496,139.6970402,17z/data=!4m12!1m6!3m5!1s0x60188ca849c5a249:0xaa481a46e532685c!2zSVBQVURPIFNISVJPTUFSVSBCQVNFIOa4i-iwt-W6lw!8m2!3d35.6603496!4d139.6992289!3m4!1s0x60188ca849c5a249:0xaa481a46e532685c!8m2!3d35.6603496!4d139.6992289',
@@ -343,6 +343,8 @@ class RestaurantsTableSeeder extends Seeder
         $resto->attachTags(['indonesian']);
         $resto->fillCoordinatesFromString('35.655166, 139.700365');
 
+        /*
+        // This place has been replaced by the FIX Lounge
         $resto = Restaurant::create(array(
             'name'              => 'M-SPO cafe dining',
             'location'          => 'Shibuya, Udagawacho',
@@ -363,6 +365,7 @@ class RestaurantsTableSeeder extends Seeder
         ));
         $resto->attachTags(['pizza', 'pasta']);
         $resto->fillCoordinatesFromString('35.662026, 139.698027');
+        */
 
         $resto = Restaurant::create(array(
             'name'              => 'Go Go Curry',
@@ -385,25 +388,26 @@ class RestaurantsTableSeeder extends Seeder
         $resto->attachTags(['japanese curry']);
         $resto->fillCoordinatesFromString('35.657333, 139.703654');
 
+        // TODO: complete this
         $resto = Restaurant::create(array(
-            'name'              => 'Nice Pizza/Pasta restaurant',
+            'name'              => 'Il Ritrovo',
             'location'          => 'Shibuya, Udagawacho',
             'type'              => 'Italian',
-            'lunch_price'       => 1000,
-            'points'            => '9th floor with nice large bay windows, spacious room with large tables. Real pizza oven. 1000yen menu set with a drink, bowl of soup, large salad, and large pizza. music playing, boom boom type, a bit loud but OK if you are alone.',
-            'experience'        => 'loved the room. fast service. Taste was bland (marguerita). The deco is all fine except for that reindeer\'s head sprouting out of a column for no apparent reasons.',
+            'lunch_price'       => 970,
+            'points'            => '9th floor with nice large bay windows, spacious room with large tables. Real pizza oven. Lunch sets arjust below 1000yen and come with a drink, bowl of soup, salad, and a large pizza. Quite satisfying and very good for the price.',
+            'experience'        => 'Loved the room. Fast service. The 4 cheeses pizza was better than the marguerita. The decor is all fine except maybe for that reindeer\'s head sprouting out of a column for no apparent reasons. Some long and large tables seem fit to host large groups as well.',
             'visited'           => true,
             'visit_date'        => '2017-09-05 13:00:00',
-            'google_maps_link'  => '',
-            'tabelog_link'      => '',
-            'official_website'  => '',
-            'score_lunch'       => 1,
-            'score_place'       => 1,
-            'score_food'        => 1,
+            'google_maps_link'  => 'https://www.google.com/maps/place/IL+Ritrovo+Shibuya/@35.6616357,139.6954397,17z/data=!3m1!4b1!4m5!3m4!1s0x60188ca91368ded3:0x243ed7422229d976!8m2!3d35.6616314!4d139.6976284',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13208743/',
+            'official_website'  => 'https://goodspiral.jp/restaurant/ilritrovo/',
+            'score_lunch'       => 2,
+            'score_place'       => 2,
+            'score_food'        => 2,
             'score_price'       => 1,
             'score_date'        => 1
         ));
-        $resto->attachTags(['pizza', 'pasta']);
+        $resto->attachTags(['pizza', 'pasta', 'no smoking']);
         $resto->fillCoordinatesFromString('35.661657, 139.697616');
 
         $resto = Restaurant::create(array(
@@ -1253,7 +1257,7 @@ class RestaurantsTableSeeder extends Seeder
             'score_price'       => 2,
             'score_date'        => 1
         ));
-        $resto->attachTags(['pizza', 'pasta', 'italian']);
+        $resto->attachTags(['pizza', 'pasta', 'italian', 'open air space']);
         $resto->fillCoordinatesFromString('35.661357, 139.699022');
 
         $resto = Restaurant::create(array(
@@ -3221,7 +3225,7 @@ class RestaurantsTableSeeder extends Seeder
             'type'              => 'Organic',
             'lunch_price'       => 1480,
             'points'            => 'Really great all-you-can-eat salad buffet, and wide choice of dishes.',
-            'experience'        => 'While it is not especially exciting going to the second basement of the Seibu mall, the restaurants there are nice and clean and stand by Seibu\'s relatively nice  standards. Sept Anges is located in the middle of the floor, and has an all-you-can-eat salad buffet opened at lunch time. Lots of different things, including deepfried eggplants and potatoes, bread, raw vegetables, and many different oils, vinegars and spices you can uses. All was surpringly very tasty. Inluding in the lunch price is a choice of main dish. Many are available (A to K, English menu available). I picked some ariabata spaghetti, it was relatively small in amount, but delicious.',
+            'experience'        => 'While it is not especially exciting going to the second basement of the Seibu mall, the restaurants there are nice and clean and stand by Seibu\'s relatively nice  standards. Sept Anges is located in the middle of the floor, and has an all-you-can-eat salad buffet opened at lunch time. Lots of different things, including deepfried eggplants and potatoes, bread, raw vegetables, and many different oils, vinegars and spices you can uses. All was surpringly very tasty. Inluding in the lunch price is a choice of main dish. Many are available (A to K, English menu available). I picked some ariabata spaghetti, it was relatively small in amount, but delicious. Another time I tried the marguerita pizza, and it was top-tier by Shibuya\'s standards. Very good and decent in size as well (but about 400 yen mor eexpensive than the spaghetti...).',
             'visited'           => true,
             'visit_date'        => '2018-08-29 13:00:00',
             'google_maps_link'  => 'https://www.google.com/maps/place/Cinagro+Shibuya/@35.6590155,139.699435,18z/data=!3m1!5s0x60188ca8177055e1:0xf009a238452b6721!4m5!3m4!1s0x60188ca81772ab83:0x59c10e0dfc85cb41!8m2!3d35.6602337!4d139.7002987',
@@ -4395,6 +4399,8 @@ class RestaurantsTableSeeder extends Seeder
         $resto->attachTags(['gapao','curry','English menu','no smoking']);
         $resto->fillCoordinatesFromString('35.662355, 139.697588');
 
+        // This place closed , to be replaced by Flunky Parlor!
+        /*
         $resto = Restaurant::create(array(
             'name'              => 'Gh Ethnica',
             'location'          => 'Shibuya, Stream',
@@ -4415,8 +4421,7 @@ class RestaurantsTableSeeder extends Seeder
         ));
         $resto->attachTags(['curry','no smoking','English menu']);
         $resto->fillCoordinatesFromString('35.657391, 139.703171');
-
-        // bahama kitchen
+        */
 
         $resto = Restaurant::create(array(
             'name'              => 'Bahama kitchen',
@@ -5134,11 +5139,96 @@ class RestaurantsTableSeeder extends Seeder
         $resto->attachTags(['pasta','western','English menu']);
         $resto->fillCoordinatesFromString('35.663451, 139.694560');
 
-        // Must add Rekaru... Rakeru, delicious omurice and deserts, basement floor but great decor and ambiance.
- 
+        $resto = Restaurant::create(array(
+            'name'              => 'Flunky Parlor',
+            'location'          => 'Shibuya, Stream',
+            'type'              => 'Western',
+            'lunch_price'       => 850,
+            'points'            => 'Confortable place in front of Shibuya river.',
+            'experience'        => 'Located along the Shibuya river, in the ground floor of the Stream building, the place is rather nice, with its big windows bay. You can also eat outside, which is quite nice, if the river does not stink too much. The menu has curry, pasta... decent amount of choices. The lunch set includes a small salad. I took the cheapest pasta, Napolitan spagheti for 850 yen, big portion for no additional charge. The amount was decent, but unfortunately, it was not great... below average for a spagheti dish in Shibuya.',
+            'visited'           => true,
+            'visit_date'        => '2019-08-30 13:00:00',
+            'google_maps_link'  => 'https://www.google.co.jp/maps/place/FLUNKY+PARLOR/@35.6579976,139.7006583,17z/data=!4m5!3m4!1s0x60188fc37b3f7213:0xbbfe4791fc365ae!8m2!3d35.6575138!4d139.703083',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13232929/',
+            'official_website'  => 'https://shibuyastream.jp/shop/shopdetail.php?id=3',
+            'score_lunch'       => 2,
+            'score_place'       => 2,
+            'score_food'        => 1,
+            'score_price'       => 1,
+            'score_date'        => 1
+        ));
+        $resto->attachTags(['pasta','curry','no smoking','English menu','open air space']);
+        $resto->fillCoordinatesFromString('35.657391, 139.703171');
+
+        $resto = Restaurant::create(array(
+            'name'              => 'Rakeru',
+            'location'          => 'Shibuya, 1Chome',
+            'type'              => 'Omurice',
+            'lunch_price'       => 1200,
+            'points'            => 'Very nice omurice and deserts, basement floor but great decor and ambiance.',
+            'experience'        => 'Nice choices from the menu. Good omurice. Nice and fast service. Basement, but nice decoration. There is soft music to ease the ambient noise that can be... a bit noisy. 1200 yen +300 for desert option, soup and drink included, good and decent amount, if the omurice did not suffice, the bread makes sure you feel rather full.',
+            'visited'           => true,
+            'visit_date'        => '2019-09-02 13:00:00',
+            'google_maps_link'  => 'https://www.google.com/maps/place/RAKERU/@35.6596089,139.7023686,17.52z/data=!4m5!3m4!1s0x60188b588cd34965:0xbeaa05c70cab88f8!8m2!3d35.66001!4d139.7044138',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13001322/',
+            'official_website'  => 'http://www.rakeru.jp/',
+            'score_lunch'       => 3,
+            'score_place'       => 2,
+            'score_food'        => 2,
+            'score_price'       => 1,
+            'score_date'        => 1
+        ));
+        $resto->attachTags(['western','omurice','no smoking']);
+        $resto->fillCoordinatesFromString('35.659966, 139.704420');
+
+        $resto = Restaurant::create(array(
+            'name'              => 'Ballo ballo',
+            'location'          => 'Shibuya, Udagawacho',
+            'type'              => 'xxxxx',
+            'lunch_price'       => 950,
+            'points'            => 'Dark underground cosy place where you can smoke and have a decent meal.',
+            'experience'        => 'The place is underground, so no windows, but it\'s not too bad inside, they tried to make it cosy. The music is good and not too loud. The lunch menu costs 1080 yen for a dish, a mini salad, mini soup, and a drink. It was Okayish... but I cannot recommend the food for thast price. I would only recommend that place to people who want to smoke.',
+            'visited'           => true,
+            'visit_date'        => '2019-11-15 13:00:00',
+            'google_maps_link'  => 'https://www.google.com/maps/place/Cafe%26Dining+ballo+ballo/@35.662047,139.6956221,17z/data=!4m5!3m4!1s0x60188ca916447249:0x84956fd1c3fcf0ca!8m2!3d35.662108!4d139.697564',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13116693/',
+            'official_website'  => 'http://www.sld-inc.com/balloballo.html',
+            'score_lunch'       => 1,
+            'score_place'       => 1,
+            'score_food'        => 1,
+            'score_price'       => 1,
+            'score_date'        => 0
+        ));
+        $resto->attachTags(['pasta','smoking allowed']);
+        $resto->fillCoordinatesFromString('35.662091, 139.697509');
+
+        $resto = Restaurant::create(array(
+            'name'              => 'Dao Thai Yumyum',
+            'location'          => 'Shibuya, Udagawacho',
+            'type'              => 'Thai',
+            'lunch_price'       => 1000,
+            'points'            => 'Great windows bay on 10th floor, good Thai cuisine, good lunch.',
+            'experience'        => 'Nice place, great windows bay. Infinite soup and drink, one dessert, gapao was tasty, and hot, but the meat they use is not great (mostly ok, but I found hard pieces and pieces that were just chicken skin, which I do not like). Lunch set is 1000 yen. If you are very hungry you can order an additional mini-version of a dish. I got a mini chicken green curry and it was delicious (and quite hot). I thought it was a real treat for 200 yen, not so small. Also, staff (Thai who can speak Japanese and English as well) was nice, wich is always a plus.',
+            'visited'           => true,
+            'visit_date'        => '2019-11-13 13:00:00',
+            'google_maps_link'  => 'https://www.google.com/maps/place/%E6%B8%8B%E8%B0%B7%E3%82%BF%E3%82%A4%E6%96%99%E7%90%86+DaoThai+yumyum+(%E3%83%80%E3%82%AA%E3%82%BF%E3%82%A4+%E3%83%A4%E3%83%A0%E3%83%A4%E3%83%A0)/@35.6612006,139.6961942,17z/data=!4m5!3m4!1s0x60188ca9137378d7:0x5f0bdede03d810e8!8m2!3d35.6616626!4d139.6976648',
+            'tabelog_link'      => 'https://tabelog.com/tokyo/A1303/A130301/13208849/',
+            'official_website'  => 'https://www.annew.jp/shop/%E6%B8%8B%E8%B0%B7%E3%82%BF%E3%82%A4%E6%96%99%E7%90%86-%E3%83%80%E3%82%AA%E3%82%BF%E3%82%A4%E3%83%A4%E3%83%A0%E3%83%A4%E3%83%A0/',
+            'score_lunch'       => 2,
+            'score_place'       => 2,
+            'score_food'        => 2,
+            'score_price'       => 1,
+            'score_date'        => 1
+        ));
+        $resto->attachTags(['thai','gapao','green curry','no smoking']);
+        $resto->fillCoordinatesFromString('35.661677, 139.697643');
+
+        // JS curry stand became js steak stand !!
+        // try the other js curry stand
+        // fix remainig todos above... 
       
 /*
-// try french boistrot 139 near MontBell
+// try french bistrot 139 near MontBell
 
 // try this curry place : https://tabelog.com/tokyo/A1303/A130301/13171069/dtlmap/
 // ramen kiraku https://fr.favy-jp.com/topics/2309
@@ -5153,7 +5243,8 @@ in shibuya
 https://tabelog.com/tokyo/A1303/A130301/13059598/
 
 
-SERGEY: Prospect 2018 , downfall 2004
+SERGEY: Prospect 2018 , downfall 2004, Generation war, Downfall, Frindge
+// jurassic world: fallen kingdom, Joker, Gotham, GoT
 
 */
 
@@ -5169,7 +5260,7 @@ SERGEY: Prospect 2018 , downfall 2004
             'points'            => 'xxxxx',
             'experience'        => 'xxxxx',
             'visited'           => true,
-            'visit_date'        => '2019-08-01 13:00:00',
+            'visit_date'        => '2019-11-01 13:00:00',
             'google_maps_link'  => 'xxxxx',
             'tabelog_link'      => 'xxxxx',
             'official_website'  => 'xxxxx',

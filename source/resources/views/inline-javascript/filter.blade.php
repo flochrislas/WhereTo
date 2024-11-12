@@ -88,7 +88,7 @@ function ajaxResults(op, tags, orderBy) {
               refreshShowResultsButton();
           }
           else {
-              getResultsDiv().innerHTML = "Sorry, an error occured during the search. Check your Internet connection and try again.";
+              getResultsDiv().innerHTML = "Sorry, an error occurred during the search. Check your Internet connection and try again.";
           }
           if (now == getResultsLoadingTime()) {
               setResultsLoading("none");
