@@ -57,7 +57,7 @@ Seeders live in `database/seeders/` (namespace `Database\Seeders`). `DatabaseSee
 
 ## Cache keys
 
-Everything is cached with `rememberForever`, so any data change requires `php artisan cache:clear` (the seeder does it for you). Laravel 13 refuses to unserialize cached objects unless their classes are listed in `cache.serializable_classes`; `config/cache.php` lists the eight place/tag models and the Eloquent `Collection`.
+Everything is cached with `rememberForever`. The admin controllers and the seeder flush the cache; any other data change (SQL, tinker) requires `php artisan cache:clear`. Laravel 13 refuses to unserialize cached objects unless their classes are listed in `cache.serializable_classes`; `config/cache.php` lists the eight place/tag models, the Eloquent `Collection` and the `Pivot` class that tags loaded through `belongsToMany` carry.
 
 | Key | Content |
 |---|---|

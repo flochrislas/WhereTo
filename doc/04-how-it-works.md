@@ -5,7 +5,7 @@ The public site is a mostly single-page experience per place type. The server re
 ## 1. Home page
 
 ```
-GET /  ──▶ closure returns view('home')
+GET /  ──▶ Route::view('/', 'home')
             ├─ layouts.app  (header, #position-report, footer, geolocation JS)
             └─ suggestions.suggestion
                  @inject SuggestionController
@@ -100,7 +100,7 @@ Because the dataset is tiny and only changes through seeders, every query result
 
 | Setting | Effect |
 |---|---|
-| `APP_ENV=production` | Skips registering the IDE helper provider. |
+| `APP_ENV` | Nothing app-specific depends on it; only framework defaults change. |
 | `APP_DEBUG=true` | Detailed error pages; the Debugbar is enabled by default when installed. |
 | `DEBUGBAR_ENABLED` | Forces the Debugbar on or off. Note that `php artisan serve` only forwards a whitelist of environment variables to the server process, so put it in `.env`. |
 | `CACHE_STORE` | Defaults to `database`; `file` or `redis` work as well. |

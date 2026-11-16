@@ -142,6 +142,7 @@ Apache users can keep the committed `public/.htaccess` with `mod_rewrite` and `A
   php artisan tinker --execute="App\Models\User::where('email','user2@test.rt')->delete();"
   ```
 
+- `POST /login` is throttled to 5 attempts per minute per IP (`throttle:5,1` in `routes/web.php`).
 - `GET /up` is the framework health endpoint; restrict it at the proxy if you do not want it public.
 - Keep `storage/logs` rotated: the `daily` channel already rotates by day (14 days kept by default).
 

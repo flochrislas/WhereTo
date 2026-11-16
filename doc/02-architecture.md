@@ -17,7 +17,7 @@ WhereTo/
     │   └── Providers/AppServiceProvider.php
     ├── bootstrap/app.php, bootstrap/providers.php   application configuration (no Kernel classes)
     ├── config/, public/, storage/
-    ├── database/migrations/             skeleton tables + 13 WhereTo tables
+    ├── database/migrations/             skeleton tables + 14 WhereTo tables
     ├── database/seeders/                the actual data lives here (see 03-data-model.md)
     ├── database/factories/UserFactory.php
     ├── resources/views/                 Blade templates
@@ -59,10 +59,10 @@ Models are equally repetitive: each place model `use`s the `Location` trait, dec
 | Controller | Role |
 |---|---|
 | `SuggestionController` | Lunch suggestion. Plain class; `isLunchTime()` is static so Blade can call it through `@inject`. Renders `suggestions.suggestion-text`. |
-| `RestaurantAdminController` | Resource CRUD for restaurants behind `auth`. |
-| `RestaurantTypeController` | Non-resourceful CRUD for the `restaurant_types` lookup table. |
+| `RestaurantAdminController` | Resource CRUD for restaurants behind `auth`; parses the "lat, lon" form field and flushes the cache after every write. |
+| `RestaurantTypeController` | Non-resourceful CRUD for the `restaurant_types` lookup table (`PUT` update, `DELETE` delete); flushes the cache after every write. |
 | `AdminPanelController` | `POST admin/debug` toggles the Debugbar when it is installed. |
-| `Auth\LoginController` | Hand-written login/logout (`Auth::attempt`). No registration, no password reset. |
+| `Auth\LoginController` | Hand-written login/logout (`Auth::attempt`). `POST /login` is throttled to 5 attempts per minute. No registration, no password reset. |
 
 ## Routes (`routes/web.php`)
 

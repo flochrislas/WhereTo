@@ -27,7 +27,7 @@ podman compose up -d            # start (first run builds the image and installs
 podman compose logs -f app      # watch the bootstrap / request log
 podman compose down             # stop, keep the database
 podman compose down -v          # stop and wipe the database and Composer cache
-podman compose build --no-cache # rebuild the image after editing Containerfile
+podman compose build --no-cache # rebuild the image after editing Containerfile or entrypoint.sh
 ```
 
 Inside the app container:

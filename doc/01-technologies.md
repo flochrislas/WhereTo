@@ -28,7 +28,7 @@ State after the November 2026 upgrade (branch `upgrade-2026`). Versions come fro
 | Package | Role |
 |---|---|
 | `fruitcake/laravel-debugbar` `^4.4` | Debugbar (renamed from `barryvdh/laravel-debugbar` in 2026). Toggle with `DEBUGBAR_ENABLED`. |
-| `barryvdh/laravel-ide-helper` `^3.8` | IDE stubs, registered by `AppServiceProvider` outside production |
+| `barryvdh/laravel-ide-helper` `^3.8` | IDE stubs (`php artisan ide-helper:generate`), auto-discovered, dev only |
 | `larastan/larastan` `^3.15` | PHPStan for Laravel, level 5, config in `phpstan.neon` |
 | `laravel/pint` | Code style (Laravel preset) |
 | `phpunit/phpunit` `^12.5`, `mockery/mockery`, `fakerphp/faker`, `laravel/pail`, `laravel/pao`, `nunomaduro/collision` | Skeleton defaults |
@@ -45,12 +45,12 @@ Unchanged in spirit: no build step, no framework.
 - The admin and login pages use `layouts/html.blade.php` with Bootstrap 3.4.1 and jQuery 3.7.1 from jsDelivr.
 - Google Analytics was removed (the Universal Analytics property was dead).
 
-The Laravel 13 skeleton's Vite files (`package.json`, `vite.config.js`, `.npmrc`, `resources/js`, `resources/css`) are not used and should not be committed; no view calls `@vite`.
+The Laravel 13 skeleton's Vite files (`package.json`, `vite.config.js`, `.npmrc`, `resources/js`, `resources/css`) were deleted; no view calls `@vite`.
 
 ## Tooling
 
 - `dev/`: podman compose environment (PHP 8.5 image, PostgreSQL 18, Composer 2), see `05-dev-environment.md`.
-- `phpunit.xml`: skeleton version, SQLite in-memory, array cache and session drivers.
+- `phpunit.xml`: skeleton version, SQLite in-memory, array cache and session drivers. The database, cache and session entries carry `force="true"` so that variables exported into a container cannot override them.
 - `pint.json` is not needed (Laravel preset by default); run `vendor/bin/pint`.
 - `phpstan.neon`: Larastan level 5 over `app/`, `database/`, `routes/`.
 - `public/.htaccess` and `public/index.php`: stock Laravel 13.

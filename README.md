@@ -1,18 +1,34 @@
-# README #
+# WhereTo
 
-### What is this repository for? ###
+A small Laravel website that helps you pick a place in Shibuya, Tokyo: restaurants for lunch, stores, bars and karaoke. Places are tagged, scored and geolocated; the site filters by tag, sorts by rating, cost or walking distance from your position, and suggests a lunch spot around noon.
 
-* Hosting code for a personal project, codename WhereTo
-* No proper versioning
+Personal project, started in 2017, upgraded in November 2026 to Laravel 13 / PHP 8.5 / PostgreSQL 18.
 
-### How do I get set up? ###
+## Layout
 
-* This is a PHP application using the Laravel framework
+| Folder | Content |
+|---|---|
+| [`source/`](source/) | The Laravel application |
+| [`dev/`](dev/) | Podman compose development environment (app on http://localhost:8010) |
+| [`doc/`](doc/) | Documentation: technologies, architecture, data model, request flows, dev setup, production deployment, upgrade notes, findings |
 
-### Contribution guidelines ###
+## Quick start
 
-* No specific guidelines yet
+```sh
+cd dev
+podman compose up -d        # builds the image, installs dependencies, migrates and seeds on first run
+```
 
-### Who do I talk to? ###
+Then open http://localhost:8010. The admin is at `/admin` with the seeded account (see [`dev/README.md`](dev/README.md)). To run without containers, follow [`doc/05-dev-environment.md`](doc/05-dev-environment.md).
 
-* Me, personally.
+Tests, code style and static analysis, from `source/`:
+
+```sh
+php artisan test
+vendor/bin/pint
+vendor/bin/phpstan analyse
+```
+
+## License
+
+GPL-3.0, see [LICENSE](LICENSE).

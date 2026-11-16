@@ -9,7 +9,7 @@ Written on 2026-11-16. The repository is on Laravel 5.8 (July 2019) and PHP 7.1+
 | Component | Today (Nov 2026) | Target | Remarks |
 |---|---|---|---|
 | PHP | 8.5.12 is the current stable release; 8.6.0 GA is scheduled for 19 Nov 2026; 8.2 reaches end of life on 31 Dec 2026 | **8.5** | Laravel 13 declares support for PHP 8.3 to 8.5. Move to 8.6 once Laravel and the packages add it to their matrices (usually a few weeks after GA). |
-| Laravel | 13.x (released 17 Mar 2026, latest patch 13.35); 12 is on security fixes only; 11 and older are end of life | **13.x** | Laravel 14 is due in Q1 2027. |
+| Laravel | 13.x (released 17 Mar 2026; 13.42 when the upgrade was done); 12 is on security fixes only; 11 and older are end of life | **13.x** | Laravel 14 is due in Q1 2027. |
 | PostgreSQL | 18.7; 19.0 GA is scheduled for 19 Nov 2026; 14 just received its last release | **18** | Nothing in the schema is version-specific. |
 | Node.js | 26 "Lithium" is Active LTS; 24 and 22 are Maintenance LTS | **26** only if you adopt Vite | Not required otherwise. |
 | Composer | 2.9 | 2.x | |
@@ -163,7 +163,7 @@ What was verified against the legacy app (baseline captures in `dev/baseline/`, 
 - Seeded row counts identical for every table.
 - Tag clouds of the four filter pages identical.
 - 12 of the 16 captured result/details fragments byte-identical. The 4 others differ for understood reasons: two restaurant lists swap rows that have equal scores/prices (PostgreSQL returned ties in arbitrary order; the new code adds `id` as a tiebreaker), and the two bar lists show different walking minutes because the legacy `BarController` hard-coded an "office" position instead of using the visitor's (a debug leftover, now fixed).
-- `php artisan test`: 47 tests, 145 assertions, green. Pint and Larastan (level 5) clean.
+- `php artisan test`: 53 tests, 193 assertions, green. Pint and Larastan (level 5) clean.
 - `route:cache`, `config:cache`, `view:cache` work; the app boots with `composer install --no-dev`.
 
 Deviations from the plan above:
@@ -174,6 +174,7 @@ Deviations from the plan above:
 - The Debugbar package is `fruitcake/laravel-debugbar` 4.x; `AdminPanelController` only touches it when the container binding exists.
 - Pint reformatted the seeders (short array syntax, unused imports removed), so git shows them as new files rather than renames of `database/seeds/*`.
 - The skeleton's Vite files (`package.json`, `vite.config.js`, `.npmrc`, `resources/js`, `resources/css`), `AGENTS.md` and `welcome.blade.php` were deleted; `.env.example` is a WhereTo template (same keys as `dev/laravel.env`, empty secrets).
+- A code review of the port added: `throttle:5,1` on `POST /login` (the legacy trait had a lockout), a "lat, lon" field on the admin restaurant form and a cache flush in the three admin controllers (otherwise a new place never showed up), working `PUT`/`DELETE` forms for tag and type edit/delete (broken since 2019), `Pivot` in `cache.serializable_classes` with a test through the `file` store, and no more `DB_*` variables in `dev/compose.yaml` (Laravel reads `$_SERVER` before `$_ENV`, so they overrode `phpunit.xml` and the tests wrote a SQLite file named `whereto` into `source/`).
 
 ## References (consulted 2026-11-16)
 

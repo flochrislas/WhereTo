@@ -53,6 +53,6 @@ Issues and surprises found while documenting the legacy code on 2026-11-16. Tick
 - (legacy) The admin restaurant form had no coordinates field in the port, so new places never appeared in distance-sorted lists. *Fixed: "lat, lon" field.*
 - (legacy) Login lost its 5-per-minute throttle when `AuthenticatesUsers` went away. *Fixed: `throttle:5,1` on `POST /login`.*
 - Tags cached from a `belongsToMany` carry a `Pivot` object; it must be in `cache.serializable_classes` or it comes back as `__PHP_Incomplete_Class`. *Fixed and tested.*
-- `Log::debug` is called on nearly every code path; set `APP_LOG_LEVEL=info` in production.
+- `Log::debug` is called on nearly every code path; set `LOG_LEVEL=info` in production.
 - (legacy) `route:cache` could not be used because several routes were closures. *Fixed: all routes are controller or view routes.*
 - `dev/laravel.env` is the reference environment file for the container; `source/.env.example` has the same keys with empty secrets.

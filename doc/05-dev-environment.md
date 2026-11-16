@@ -10,7 +10,7 @@ The app runs on Laravel 13 / PHP 8.5 / PostgreSQL 18. The podman compose environ
 | PHP extensions | `pdo_pgsql`, `mbstring`, `openssl`, `tokenizer`, `xml`, `ctype`, `fileinfo`, `bcmath`, `intl`, `zip` | Laravel requirements plus PostgreSQL and Composer |
 | Composer | 2.x | |
 | PostgreSQL | 18 (any supported version works) | Default connection. SQLite also works for a quick look. |
-| Node.js | not needed | No build step; the skeleton's Vite files are unused. |
+| Node.js | not needed | No build step; the skeleton's Vite files were removed. |
 
 ## Option A: podman compose (recommended, ready to use)
 
@@ -89,7 +89,7 @@ All commands run from `source/`.
 php artisan test          # or vendor/bin/phpunit
 ```
 
-`phpunit.xml` uses an in-memory SQLite database and array cache/session drivers, so the suite is isolated from the dev database. State on 2026-11-16: 47 tests, 145 assertions, all passing.
+`phpunit.xml` uses an in-memory SQLite database and array cache/session drivers, so the suite is isolated from the dev database. State on 2026-11-16: 53 tests, 193 assertions, all passing.
 
 | Suite | What it covers |
 |---|---|
@@ -99,9 +99,10 @@ php artisan test          # or vendor/bin/phpunit
 | `Unit/SuggestionControllerTest` | lunch-time window in Tokyo time |
 | `Feature/PlacesTest` | per place type: filter page, results by distance, AND tag filter, details fragment and standalone page, 404; restaurant ratings and cost order; home page |
 | `Feature/SuggestionTest` | empty outside lunch time, suggestion with link at lunch time |
-| `Feature/AdminTest` | login/logout, guest redirect, `/register` is 404, restaurant and tag CRUD |
+| `Feature/AdminTest` | login/logout and throttling, guest redirect, `/register` is 404, restaurant CRUD (coordinates field, new place visible in results), tag and type edit/delete |
+| `Feature/CacheSerializationTest` | forever-cache round trip through the `file` store, proving the `serializable_classes` allow-list is complete |
 | `Feature/ExampleTest`, `Unit/ExampleTest` | skeleton smoke tests |
 
 ## Front-end assets
 
-Nothing to build. Edit `public/css/style-dark.css` and the Blade partials under `resources/views/inline-javascript/` directly. If you ever want a build step, the skeleton's Vite setup (`vite.config.js`, `laravel/vite-plugin`) is the way; it is currently unused.
+Nothing to build. Edit `public/css/style-dark.css` and the Blade partials under `resources/views/inline-javascript/` directly. If you ever want a build step, re-add the Laravel 13 skeleton's Vite setup (`laravel/vite-plugin`, `package.json`, `vite.config.js`); those files were removed from this repository.

@@ -2,7 +2,7 @@
 
 WhereTo (branded "FindItFast / enjoyShibuya" in the UI) is a small Laravel web app that helps you pick a place in Shibuya, Tokyo: restaurants for lunch, stores, bars and karaoke. Places are tagged, scored and geolocated; the UI filters by tag, sorts by rating, cost or walking distance from the visitor's GPS position, and shows a lunch suggestion around noon.
 
-The application code lives in `source/`. These notes were written in November 2026 from reading the code; the last functional commit dates from January 2020.
+The application code lives in `source/`. These notes were written in November 2026 and describe the app after its upgrade to Laravel 13 / PHP 8.5 (branch `upgrade-2026`); before that, the last functional commit dated from January 2020.
 
 | Document | What it covers |
 |---|---|
