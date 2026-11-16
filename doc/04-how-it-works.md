@@ -107,3 +107,14 @@ Because the dataset is tiny and only changes through seeders, every query result
 | `DEBUGBAR_ENABLED` | Forces the Debugbar on or off. Note that `php artisan serve` only forwards a whitelist of environment variables to the server process, so put it in `.env`. |
 | `CACHE_STORE` | Defaults to `database`; `file` or `redis` work as well. |
 | `LOG_LEVEL` | Keep `info` or higher in production; the controllers log at `debug` level on every request. |
+
+## 8. Installable app and offline (service worker)
+
+`whereto.js` registers `public/sw.js` on every public page. The worker:
+
+1. On install, pre-caches the app shell: `/`, the four place pages, the stylesheet, the font, the icon and the manifest.
+2. For static files (`/css`, `/js`, `/fonts`, `/icons`, the manifest, the favicon): answers from the cache at once and refreshes the copy in the background ("stale-while-revalidate"). The script tag's `?v=` makes a new `whereto.js` a new URL, so it is fetched from the network.
+3. For pages, results and details fragments: network first, and the last copy seen when offline. An unknown page requested offline falls back to the cached home page.
+4. Never touches `/admin`, `/login`, `/logout`, `/_debugbar`, POST requests or other origins.
+
+`CACHE_VERSION` in `sw.js` names the cache; bumping it drops the previous cache on activation. The manifest (`public/manifest.json`) gives the name, colours and icons used by "Add to home screen"; the layout links it with `rel="manifest"` and an `apple-touch-icon` for iOS.

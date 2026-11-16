@@ -2,7 +2,7 @@
 
 Target: one Linux server (Ubuntu 24.04 LTS or Debian 12), Nginx, PHP-FPM, PostgreSQL, HTTPS through Let's Encrypt. The app is small and read-mostly, so a single small VM is plenty. These steps are for the upgraded app (PHP 8.5, Laravel 13).
 
-HTTPS is not optional: the browser geolocation API only works on secure origins, and the whole "near first" sorting depends on it.
+HTTPS is not optional: the browser geolocation API and the service worker (installable app, offline) only work on secure origins, and the whole "near first" sorting depends on it.
 
 ## 1. System packages
 
@@ -110,7 +110,12 @@ server {
 
     location ~ /\.(?!well-known).* { deny all; }
 
-    location ~* \.(css|js|woff2?|ttf|svg|ico)$ {
+    # The service worker must never be cached for long, or browsers keep an old version for days
+    location = /sw.js {
+        add_header Cache-Control "no-cache";
+    }
+
+    location ~* \.(css|js|woff2|svg|ico|png|json)$ {
         expires 30d;
         access_log off;
     }

@@ -482,3 +482,10 @@ function ajaxSuggestion() {
 if (getResultsUrl() !== null) {
   startGeolocation();
 }
+
+// Register the service worker (public/sw.js): makes the app installable and usable offline.
+// Needs HTTPS or localhost, like geolocation. Browsers without support simply skip this.
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/sw.js')
+    .catch(e => console.warn('Service worker registration failed: ' + e));
+}

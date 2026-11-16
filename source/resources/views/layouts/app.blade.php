@@ -10,6 +10,12 @@
     <meta name="theme-color" content="#141422">
     <!-- Tell the browser the page is dark, so its own UI (scrollbars, form controls) matches -->
     <meta name="color-scheme" content="dark">
+    <!-- Progressive Web App: the manifest describes the app for "Add to home screen" (name, icons, colours) -->
+    <link rel="manifest" href="{{ asset('manifest.json') }}">
+    <!-- Icons: browser tab, and the one iOS uses on the home screen -->
+    <link rel="icon" href="{{ asset('favicon.ico') }}" sizes="32x32">
+    <link rel="icon" href="{{ asset('icons/icon.svg') }}" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="{{ asset('icons/icon-180.png') }}">
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- SEO -->

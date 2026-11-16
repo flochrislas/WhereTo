@@ -110,6 +110,9 @@ class PlacesTest extends TestCase
     public function test_home_page(): void
     {
         $this->get('/')->assertOk()->assertSee('Shibuya')
-            ->assertSee('src="'.asset('js/whereto.js').'?v=', false);
+            ->assertSee('src="'.asset('js/whereto.js').'?v=', false)
+            // Progressive Web App: manifest and home screen icon
+            ->assertSee('rel="manifest" href="'.asset('manifest.json').'"', false)
+            ->assertSee('rel="apple-touch-icon"', false);
     }
 }

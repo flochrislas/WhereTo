@@ -8,11 +8,12 @@ The order inside each section is a suggested priority. If only a few are done, t
 
 The UI is already responsive (viewport meta, one `@media` breakpoint at 680px, CSS variables, system-free dark theme). These are the things that make a web app feel like a native one on a phone and still look right on a large screen.
 
-### 1.1 Make it installable as a Progressive Web App (M)
+### 1.1 Make it installable as a Progressive Web App (M) — done
 
 - **Why**: a PWA can be added to the home screen on Android and iOS, opens full screen without the browser chrome, and keeps the page shell available offline. It is the cheapest way to be "an app" on every platform without app stores or a second code base.
 - **How**: add `public/manifest.webmanifest` (name, icons, `display: standalone`, `theme_color`, `background_color`), link it from `layouts/app.blade.php`, and add a small service worker in `public/sw.js` that pre-caches the shell (`/`, `/restaurants`, the CSS, the fonts) and uses network-first for `/*/results` and `/*/details/*`. Laravel needs no change; the files are static.
 - **Note**: geolocation already requires HTTPS, and so does a service worker, so the production deploy must be HTTPS anyway (see `06-deploy-production.md`).
+- **Done (November 2026)**: `public/manifest.json`, `public/sw.js`, icons generated from `public/icons/icon.svg` (also a real `favicon.ico`, the old one was an empty file), registration in `whereto.js`, Nginx rule for `sw.js` in the deploy doc. Described in `04-how-it-works.md` section 8.
 
 ### 1.2 Finish the phone polish in the stylesheet (S) — done
 
@@ -178,4 +179,4 @@ The items that are an hour or two each and improve the phone experience the most
 6. 5.1 CI workflow
 7. 6 results counter
 
-Then 1.1 (PWA) as the first medium item (2.1, JS to static files, is done), and 3.1 (one place set) as the structural project if the app keeps evolving.
+1.1 (PWA) and 2.1 (JS to static files) are done. Next: 2.3 (accessibility), 4.1 (production checklist), 5.1 (CI), the results counter, then 3.1 (one place set) as the structural project if the app keeps evolving.
