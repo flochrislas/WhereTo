@@ -21,7 +21,8 @@
     <!-- SEO -->
     @yield('metatags')    
     <!-- Style -->
-    <link href="/css/style-dark.css" rel="stylesheet">
+    <!-- ?v= is the file modification time: a changed stylesheet has a new URL, so the browser cache cannot serve the old one -->
+    <link href="{{ asset('css/style-dark.css') }}?v={{ filemtime(public_path('css/style-dark.css')) }}" rel="stylesheet">
     <!-- Scripts: one static file, cached by the browser. "defer" runs it after the HTML is parsed.
          The ?v= query string changes with the file, so a new version is not served from the cache. -->
     <script src="{{ asset('js/whereto.js') }}?v={{ filemtime(public_path('js/whereto.js')) }}" defer></script>

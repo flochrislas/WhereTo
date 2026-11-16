@@ -99,6 +99,11 @@ server {
     add_header X-Frame-Options "SAMEORIGIN";
     add_header X-Content-Type-Options "nosniff";
 
+    # Compress text responses (HTML pages and fragments, CSS, JS, manifest, SVG)
+    gzip on;
+    gzip_types text/plain text/css application/javascript application/json image/svg+xml;
+    gzip_min_length 1024;
+
     location / {
         try_files $uri $uri/ /index.php?$query_string;
     }
@@ -115,8 +120,11 @@ server {
         add_header Cache-Control "no-cache";
     }
 
+    # Static files. The stylesheet and the script are linked with a ?v= that changes with the file,
+    # so the browser may keep them for a year without ever asking again ("immutable").
     location ~* \.(css|js|woff2|svg|ico|png|json)$ {
-        expires 30d;
+        expires 1y;
+        add_header Cache-Control "public, immutable";
         access_log off;
     }
 }
@@ -128,11 +136,29 @@ sudo nginx -t && sudo systemctl reload nginx
 sudo certbot --nginx -d your.domain        # obtains the certificate and adds the HTTPS server block + redirect
 ```
 
+In the HTTPS server block that certbot adds, enable HTTP/2 (one connection for all the files, fewer round trips on mobile): `listen 443 ssl; http2 on;` (Nginx 1.25+; older versions use `listen 443 ssl http2;`).
+
 Certbot installs a systemd timer for renewal. If you terminate TLS on a proxy or load balancer in front of Nginx instead, add `$middleware->trustProxies(at: '<proxy ip>')` in `bootstrap/app.php` so that `url()` and `SESSION_SECURE_COOKIE` see the original scheme.
 
 Apache users can keep the committed `public/.htaccess` with `mod_rewrite` and `AllowOverride All`.
 
-## 7. Hardening checklist
+## 7. OPcache
+
+PHP-FPM compiles every PHP file on each request unless OPcache keeps the compiled code in memory. It is on by default in Ubuntu's packages, but the production settings are worth setting in `/etc/php/8.5/fpm/conf.d/99-whereto.ini`:
+
+```ini
+opcache.enable=1
+opcache.memory_consumption=128
+opcache.max_accelerated_files=20000
+; Never check the files for changes: the code only changes at deploy time, and the deploy restarts PHP-FPM
+opcache.validate_timestamps=0
+```
+
+With `validate_timestamps=0`, PHP-FPM must be **restarted** (not just reloaded) after every deploy, otherwise it keeps running the old code; the update steps in section 9 do that. Leave `validate_timestamps` at its default of 1 if that is a problem.
+
+Together with `php artisan optimize` (configuration, routes, views and events compiled once) this is where the server time per request goes from tens of milliseconds to a few.
+
+## 8. Hardening checklist
 
 - `APP_DEBUG=false`.
 - There is no registration route any more; create the admin account with the seeder or `php artisan tinker`:
@@ -151,7 +177,7 @@ Apache users can keep the committed `public/.htaccess` with `mod_rewrite` and `A
 - `GET /up` is the framework health endpoint; restrict it at the proxy if you do not want it public.
 - Keep `storage/logs` rotated: the `daily` channel already rotates by day (14 days kept by default).
 
-## 8. Updating a running deployment
+## 9. Updating a running deployment
 
 ```sh
 cd /var/www/whereto && git pull
@@ -161,12 +187,14 @@ php artisan migrate --force
 php artisan db:seed --force      # only when seeders changed; it wipes and reloads every table
 php artisan cache:clear
 php artisan optimize
-sudo systemctl reload php8.5-fpm
+sudo systemctl restart php8.5-fpm   # restart, not reload: drops the OPcache of the old code (section 7)
 ```
+
+The stylesheet and the script are linked with their modification time, and the service worker refreshes its copies in the background, so visitors get the new front-end files on their next load without any manual cache busting.
 
 Add `php artisan down` / `php artisan up` around it if the seeding takes more than a second or two.
 
-## 9. Backups
+## 10. Backups
 
 The source of truth for the data is the seeders in git, so a database dump is only needed if you ever add content through the admin:
 
@@ -176,7 +204,7 @@ pg_dump -U wheretouser -Fc whereto > whereto-$(date +%F).dump
 
 Also keep `.env` somewhere safe; it holds the `APP_KEY` that encrypts sessions and cookies.
 
-## 10. Alternative hosting
+## 11. Alternative hosting
 
 - **Laravel Forge / Ploi**: point them at the repository with `source` as the project root; they generate the Nginx config, PHP-FPM pool, certbot and the deploy script above.
 - **Containers**: a `php:8.5-fpm-alpine` image plus an Nginx sidecar works (the `dev/Containerfile` shows the extensions needed); mount nothing writable except `storage`. Use `CACHE_STORE` and `SESSION_DRIVER` `database` or `redis` so that multiple replicas share state.

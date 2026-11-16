@@ -108,12 +108,13 @@ The UI is already responsive (viewport meta, one `@media` breakpoint at 680px, C
 
 ## 4. Performance and operations
 
-### 4.1 Production checklist that costs nothing (S)
+### 4.1 Production checklist that costs nothing (S) — done
 
 - `php artisan optimize` after each deploy (config, routes, views, events cached). The upgrade removed all route closures, so `route:cache` works now.
 - OPcache with `opcache.validate_timestamps=0` in production (and `opcache.preload` if the host allows it).
 - Nginx: `gzip`/`brotli` on, `Cache-Control: public, max-age=31536000, immutable` for `/css`, `/js`, `/fonts`, HTTP/2 or HTTP/3.
 - `SESSION_DRIVER=database` or `redis` only if there are several web nodes; the file driver is fine for one server.
+- **Done (November 2026)** in `06-deploy-production.md`: gzip, HTTP/2, immutable one-year cache for the static files (the stylesheet link now carries a `?v=` like the script), an OPcache section, and a restart of PHP-FPM in the update steps. HTTP/3 and Brotli are left out: they need extra Nginx modules.
 
 ### 4.2 Browser caching for the fragments (S)
 
@@ -176,8 +177,8 @@ The items that are an hour or two each and improve the phone experience the most
 2. ~~1.5 WOFF2 only~~ done
 3. ~~1.6 position freshness~~ done
 4. ~~2.3 accessibility~~ done
-5. 4.1 production checklist
+5. ~~4.1 production checklist~~ done
 6. 5.1 CI workflow
 7. ~~6 results counter~~ done
 
-1.1 (PWA) and 2.1 (JS to static files) are done. Next: 4.1 (production checklist), 5.1 (CI), then 3.1 (one place set) as the structural project if the app keeps evolving.
+1.1 (PWA) and 2.1 (JS to static files) are done. Next: 5.1 (CI), then 3.1 (one place set) as the structural project if the app keeps evolving.
