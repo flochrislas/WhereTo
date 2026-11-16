@@ -1,0 +1,19 @@
+# Dependabot opens a pull request when a dependency has a new version.
+# Composer packages of the Laravel project, and the actions used by the CI workflow. Once a week, on Monday.
+version: 2
+updates:
+  - package-ecosystem: composer
+    directory: /source
+    schedule:
+      interval: weekly
+      day: monday
+    # One pull request for all the minor and patch updates, instead of one per package
+    groups:
+      composer-minor-and-patch:
+        update-types: [minor, patch]
+
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday

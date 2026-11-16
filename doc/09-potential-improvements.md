@@ -139,10 +139,11 @@ The UI is already responsive (viewport meta, one `@media` breakpoint at 680px, C
 
 ## 5. Quality, testing and delivery
 
-### 5.1 Continuous integration (S)
+### 5.1 Continuous integration (S) — done
 
 - **Why**: Pint, PHPStan and the 53 tests are run by hand in the container. A GitHub Actions workflow runs them on every push and on the pull request, with a PostgreSQL 18 service so the tests exercise the real database instead of SQLite.
 - **How**: `.github/workflows/ci.yml` with `shivammathur/setup-php` (PHP 8.5, `pdo_pgsql`), `composer install`, `vendor/bin/pint --test`, `vendor/bin/phpstan`, `php artisan test`. Add Dependabot or Renovate for Composer updates.
+- **Done (November 2026)**: `.github/workflows/ci.yml` (Pint, PHPStan, `node --check`, tests on SQLite and on a PostgreSQL 18 service) and `.github/dependabot.yml` (weekly, Composer updates grouped).
 
 ### 5.2 Browser tests for the JavaScript (M)
 
@@ -178,7 +179,7 @@ The items that are an hour or two each and improve the phone experience the most
 3. ~~1.6 position freshness~~ done
 4. ~~2.3 accessibility~~ done
 5. ~~4.1 production checklist~~ done
-6. 5.1 CI workflow
+6. ~~5.1 CI workflow~~ done
 7. ~~6 results counter~~ done
 
-1.1 (PWA) and 2.1 (JS to static files) are done. Next: 5.1 (CI), then 3.1 (one place set) as the structural project if the app keeps evolving.
+1.1 (PWA) and 2.1 (JS to static files) are done. All the quick wins are done. Next: 3.1 (one place set) as the structural project if the app keeps evolving.
