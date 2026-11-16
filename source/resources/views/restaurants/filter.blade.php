@@ -6,21 +6,23 @@
   </div>
 
   <!-- selected tags for active search -->
-  <div id="selectedTags">
+  <div id="selectedTags" aria-label="Selected tags">
   </div>
 
   <p>Available options</p>
 </div>
 
 <!-- showing available tags -->
-<div id="tags">
+<div id="tags" aria-label="Available tags">
   @foreach ($restaurantTags as $restaurantTag)
-      <div class="tag tagType{{$restaurantTag->type}}"
+      <!-- A real button: works with the keyboard and screen readers. aria-pressed tells them if the tag is selected -->
+      <button type="button" class="tag tagType{{$restaurantTag->type}}"
             tagId="{{$restaurantTag->id}}"
             id="tagShow{{$restaurantTag->id}}"
+            aria-pressed="false"
             onClick="moveTag(event)">
         {{$restaurantTag->label}}
-      </div>
+      </button>
   @endforeach
 </div>
 

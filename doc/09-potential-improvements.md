@@ -62,11 +62,12 @@ The UI is already responsive (viewport meta, one `@media` breakpoint at 680px, C
 - **Option B**: return JSON (`PlaceResource` API resources) and render client-side with a small framework (Vue, Svelte or Alpine). This gives client-side sorting without a round trip and makes a native wrapper (Capacitor) easier later, but it needs Node and a build step, which the project decided against. Only worth it if the UI is going to grow a lot.
 - **Option C**: Livewire 4 (first-party Laravel). Interactivity written in PHP, no Node required, but every tag click goes through the server and the page weight grows. Good fit for the admin, less so for the public filter.
 
-### 2.3 Accessibility (S)
+### 2.3 Accessibility (S) — done
 
 - The tags are `<div>` elements with `onclick`; make them `<button type="button">` so they work with the keyboard and screen readers, and use `aria-pressed` for the selected state.
 - Put `aria-live="polite"` on `#results` and `#position-report` so updates are announced.
 - Give the three sort buttons `aria-pressed` reflecting the stored `orderBy`.
+- **Done (November 2026)**: tags are `<button type="button">` with `aria-pressed`, the sort buttons carry `data-order-by` and `aria-pressed`, `#results`, `#position-report` and `#suggestion` are `aria-live="polite"`, the result name cells are `role="button" tabindex="0"` with Enter/Space handled in `whereto.js`, visible focus outlines, and the suggestion button is a real button.
 
 ### 2.4 Admin pages on the same stack as the public pages (S)
 
@@ -174,9 +175,9 @@ The items that are an hour or two each and improve the phone experience the most
 1. ~~1.2 phone polish in the stylesheet~~ done
 2. ~~1.5 WOFF2 only~~ done
 3. ~~1.6 position freshness~~ done
-4. 2.3 accessibility
+4. ~~2.3 accessibility~~ done
 5. 4.1 production checklist
 6. 5.1 CI workflow
 7. ~~6 results counter~~ done
 
-1.1 (PWA) and 2.1 (JS to static files) are done. Next: 2.3 (accessibility), 4.1 (production checklist), 5.1 (CI), then 3.1 (one place set) as the structural project if the app keeps evolving.
+1.1 (PWA) and 2.1 (JS to static files) are done. Next: 4.1 (production checklist), 5.1 (CI), then 3.1 (one place set) as the structural project if the app keeps evolving.

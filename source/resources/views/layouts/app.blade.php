@@ -31,7 +31,7 @@
         <!-- HEADER -->
         @include('layouts.header')
         <!-- Geolocalisation messages (and possibly info) -->
-        <div id="position-report"></div>
+        <div id="position-report" aria-live="polite"></div>
         <!-- CONTENT -->
         @yield('content')
         <!-- FOOTER -->

@@ -4,7 +4,7 @@
 @foreach ($places as $restaurant)
   <div class="resultsCounter"></div>
   <div class="resultRow">
-    <div class="resultCell nameAndType"
+    <div class="resultCell nameAndType" role="button" tabindex="0"
         onclick="showDetails('{{ route('restaurants.details',$restaurant->id) }}','{{ $restaurant->id }}')">
       <div class="rowName">{{ $restaurant->name }}</div>
       <div class="rowType">{{ $restaurant->type }}</div>

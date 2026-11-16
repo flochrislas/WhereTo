@@ -37,7 +37,7 @@ Stores, bars and karaoke do the same through `StoreTagController@viewAllTags` an
 
 Client behaviour (`public/js/whereto.js`, tag filter and results sections):
 
-1. Clicking a tag moves its `<div>` between `#tags` and `#selectedTags` (`moveTag`).
+1. Clicking a tag (a `<button>`) moves it between `#tags` and `#selectedTags` (`moveTag`), toggling its `aria-pressed` state.
 2. Any change calls `refreshResults()`, which reads the labels of the selected tags, picks the sort order (parameter, else `localStorage.orderBy`, else `distance`), hard-codes `op=AND`, and calls `ajaxResults()`.
 3. `ajaxResults()` requests `GET /restaurants/results?op=AND&tags=a,b&orderBy=distance&position=lat,lon` (parameters URL-encoded), stamps the request time in the `#results` `time` attribute so that stale responses are ignored, and injects the returned HTML into `#results`. The "Show All" button label becomes "Show N results" (N counted from `.resultsCounter` placeholders).
 4. "Show All" with no tag selected (`getResults()`) loads every place once, sorted by distance (`loadAllResults()`), then switches to the results panel.

@@ -63,6 +63,10 @@ class PlacesTest extends TestCase
     {
         $this->seedTwo($model, $tagModel);
         $this->get("/$plural")->assertOk()->assertSee('tagType10')->assertSee('tagType20')
+            // Tags are real buttons with a pressed state, the results div is a live region
+            ->assertSee('<button type="button" class="tag tagType10"', false)
+            ->assertSee('aria-pressed="false"', false)
+            ->assertSee('id="results" loading="none" time="0" aria-live="polite"', false)
             // The JavaScript reads the results URL from this attribute
             ->assertSee('data-results-url="'.route("$plural.results").'"', false)
             // One static script for all the public pages, with a cache-busting version

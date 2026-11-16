@@ -278,11 +278,21 @@ function refreshResults(orderBy) {
     }
   }
 
+  // Show which sort button is the current one
+  markSortButton(orderBy);
+
   // Operator between the tags. Other operators (OR, ANDNOT, ORNOT) exist server-side but are not exposed yet
   const op = 'AND';
 
   // AJAX request to update the results
   ajaxResults(op, tagsLabels, orderBy);
+}
+
+/** aria-pressed="true" on the sort button of the given order, "false" on the others (buttons carry data-order-by) */
+function markSortButton(orderBy) {
+  document.querySelectorAll('.sortButton[data-order-by]').forEach(button => {
+    button.setAttribute('aria-pressed', button.dataset.orderBy === orderBy ? 'true' : 'false');
+  });
 }
 
 /** Request the results fragment. Responses older than the latest request are ignored. */
@@ -338,10 +348,13 @@ function getSelectedTagsDiv() {
 
 /** What happens when we click on a tag: it moves between the available and selected lists, then the results refresh */
 function moveTag(event) {
+  // currentTarget: the button the handler is on (target could be something inside it)
+  const tag = event.currentTarget;
   // Move the tag in the proper div
-  if (event.target.parentNode.id == "selectedTags") {
+  if (tag.parentNode.id == "selectedTags") {
     // Was selected: back to the available tags
-    document.getElementById("tags").appendChild(event.target);
+    document.getElementById("tags").appendChild(tag);
+    tag.setAttribute("aria-pressed", "false");
     // Check if any selected tag is left
     if (getSelectedTagsDiv().children.length > 0) {
       // Run the search from the selected tags immediately in the background
@@ -352,7 +365,8 @@ function moveTag(event) {
     }
   } else {
     // Was available: add it to the selected tags
-    getSelectedTagsDiv().appendChild(event.target);
+    getSelectedTagsDiv().appendChild(tag);
+    tag.setAttribute("aria-pressed", "true");
     // Run the search from the selected tags immediately in the background
     refreshResults();
   }
@@ -465,7 +479,7 @@ function ajaxSuggestion() {
     .then(response => response.ok ? response.text() : Promise.reject(response.status))
     .then(html => {
       // Replace the box content with the suggestion and a button to ask again
-      getSuggestionDiv().innerHTML = html + '<div id="suggestButton" onclick="ajaxSuggestion()">Try again</div>';
+      getSuggestionDiv().innerHTML = html + '<button type="button" id="suggestButton" onclick="ajaxSuggestion()">Try again</button>';
     })
     .catch(() => {
       getSuggestionDiv().innerHTML = "Err(or), nothing from the top of my head, sorry.";
@@ -481,7 +495,18 @@ function ajaxSuggestion() {
 // so the permission prompt does not appear before the visitor did anything.
 if (getResultsUrl() !== null) {
   startGeolocation();
+  // Show the remembered sort order on its button
+  markSortButton(readStore("orderBy") || "distance");
 }
+
+// Keyboard: Enter or Space on an element with role="button" (the result names) acts like a click.
+// Real <button> elements do this by themselves.
+document.addEventListener("keydown", event => {
+  if ((event.key === "Enter" || event.key === " ") && event.target.getAttribute("role") === "button") {
+    event.preventDefault(); // Space would scroll the page
+    event.target.click();
+  }
+});
 
 // Register the service worker (public/sw.js): makes the app installable and usable offline.
 // Needs HTTPS or localhost, like geolocation. Browsers without support simply skip this.

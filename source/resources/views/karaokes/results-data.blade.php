@@ -4,7 +4,7 @@
 @foreach ($places as $karaoke)
   <div class="resultsCounter"></div>
   <div class="resultRow">
-    <div class="resultCell nameAndType"
+    <div class="resultCell nameAndType" role="button" tabindex="0"
         onclick="showDetails('{{ route('karaokes.details',$karaoke->id) }}','{{ $karaoke->id }}')">
       <div class="rowName">{{ $karaoke->name }}</div>
       <div class="rowType">{{ $karaoke->location }}</div>

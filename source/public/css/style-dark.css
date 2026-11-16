@@ -271,6 +271,9 @@ td {
   margin-left: 1rem;
   font-size: .9rem;
   font-style: oblique;
+  font-weight: normal;
+  font-family: inherit;
+  background: none; /* <button>: no default grey background */
   color: brown;
   border: brown solid 2px;
   border-radius: .7rem;
@@ -433,6 +436,25 @@ td {
   text-decoration: none;
   text-align: center;
   white-space: nowrap;
+  /* The tags are <button> elements: undo what the generic button rule sets */
+  border-radius: 0;
+  line-height: normal;
+}
+
+/* Keyboard focus visible on the tags and the clickable result names */
+.tag:focus-visible, .resultCell[role="button"]:focus-visible {
+  outline: 2px solid var(--color-dst);
+  outline-offset: 2px;
+}
+
+/* Selected tag (moved to the selected list): a little brighter */
+.tag[aria-pressed="true"] {
+  filter: brightness(1.15);
+}
+
+/* The sort button of the current order */
+.sortButton[aria-pressed="true"] {
+  border-color: var(--color-dst);
 }
 
 .tagType100 {
