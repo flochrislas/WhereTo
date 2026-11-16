@@ -43,6 +43,8 @@ https://autoprefixer.github.io/
 /* needs double dashes */
 /* How to set / get from JS: https://stackoverflow.com/questions/41370741/how-do-i-edit-a-css-variable-using-js */
 :root {
+    /* Browser UI (scrollbars, form controls) in dark too */
+    color-scheme: dark;
     --bg-color-outter: black;
     --bg-color-inner: #141422; /* almost black */
     --bg-color-cell: #262633; /* light black */
@@ -64,6 +66,11 @@ html, body {
   background-color: black;
   font-family: 'Open Sans', sans-serif;
   color: var(--color-txt-default); /* grey 2 */
+  /* No grey flash on tap (iOS/Android), the :active styles do the feedback */
+  -webkit-tap-highlight-color: transparent;
+  /* Do not inflate the text when a phone goes landscape */
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
 }
 
 body {
@@ -99,6 +106,12 @@ td {
   padding: 0;
   max-width: 40rem;
   height: 100%; /* needed for proper layout (?) */
+  /* dvh: the height of the viewport as it is now, address bar shown or hidden (mobile browsers).
+     Browsers that do not know dvh keep the 100% above. */
+  height: 100dvh;
+  /* Keep clear of the notch and the rounded corners (viewport-fit=cover in the HTML) */
+  padding-left: env(safe-area-inset-left);
+  padding-right: env(safe-area-inset-right);
   /* Flex container properties to organize content */
   display: flex;
   flex-direction: column;
@@ -111,6 +124,8 @@ td {
 #header {
   margin: .1rem;
   margin-bottom: .4rem;
+  /* Below the status bar / notch when installed full screen */
+  padding-top: env(safe-area-inset-top);
   /* Flex properties for fixed header */
   flex: 0 0 auto;
   /* Flex container properties */
@@ -172,6 +187,8 @@ td {
   margin: .7rem;
   margin-top: .185rem;
   font-size: .65rem;
+  /* Above the home bar of iPhones */
+  padding-bottom: env(safe-area-inset-bottom);
   /* Flex properties for fixed footer */
   flex: 0 0 auto;
   /* Flex container properties */
@@ -256,10 +273,10 @@ td {
   color: brown;
   border: brown solid 2px;
   border-radius: .7rem;
-  padding: .1rem;
-  padding-left: .2rem;
-  padding-right: .2rem;
+  /* Big enough to tap (44px is the usual minimum) */
+  padding: .5rem .8rem;
   cursor: pointer;
+  touch-action: manipulation;
 }
 
 .grid {
@@ -401,6 +418,12 @@ td {
   background-color: #3BA0C3;
   margin: .4rem .15rem;
   padding: .8rem 1.15rem;
+  min-height: 44px; /* usual minimum tap target */
+  box-sizing: border-box;
+  /* No double-tap zoom delay on the tags, and no text selection when tapping fast */
+  touch-action: manipulation;
+  user-select: none;
+  -webkit-user-select: none;
   /* text */
   font-family: 'ITCAvantGardeStdBk', sans-serif;
   color: var(--color-txt-tag);
@@ -809,6 +832,8 @@ td {
  font-size:.86rem;
  /*line-height:1;*/
  padding: .62rem .8rem;
+ min-height: 44px; /* usual minimum tap target */
+ touch-action: manipulation; /* no double-tap zoom delay */
  text-align:center;
  font-weight:700;
  text-decoration:none;
@@ -846,4 +871,16 @@ td {
  opacity:.5;
  -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
  filter:alpha(opacity=50)
+}
+
+/*********************************************/
+/*            ACCESSIBILITY                  */
+/*********************************************/
+
+/* The visitor asked the OS for less motion: no transitions nor animations */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    transition-duration: 0s !important;
+    animation-duration: 0s !important;
+  }
 }

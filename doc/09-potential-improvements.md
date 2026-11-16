@@ -14,13 +14,14 @@ The UI is already responsive (viewport meta, one `@media` breakpoint at 680px, C
 - **How**: add `public/manifest.webmanifest` (name, icons, `display: standalone`, `theme_color`, `background_color`), link it from `layouts/app.blade.php`, and add a small service worker in `public/sw.js` that pre-caches the shell (`/`, `/restaurants`, the CSS, the fonts) and uses network-first for `/*/results` and `/*/details/*`. Laravel needs no change; the files are static.
 - **Note**: geolocation already requires HTTPS, and so does a service worker, so the production deploy must be HTTPS anyway (see `06-deploy-production.md`).
 
-### 1.2 Finish the phone polish in the stylesheet (S)
+### 1.2 Finish the phone polish in the stylesheet (S) — done
 
 - `<meta name="theme-color">` so the Android status bar and the Safari tab match the dark theme.
 - `env(safe-area-inset-*)` padding on the header and footer for phones with a notch or a home bar; `viewport-fit=cover` in the viewport meta.
 - `100dvh` instead of `100vh` for full-height panels, so the address bar of mobile browsers does not hide the bottom of the results.
 - Touch targets of at least 44px for the tags and the sort buttons (`.tap`, `.sortButton`).
 - `prefers-reduced-motion` guard around any transition.
+- **Done (November 2026)**: all of the above in `layouts/app.blade.php` and `style-dark.css`, plus `color-scheme: dark`, `touch-action: manipulation` on the tappable elements (no double-tap zoom delay), no tap highlight, and no text inflation in landscape.
 
 ### 1.3 Add a light theme and let the system choose (S)
 
@@ -168,7 +169,7 @@ Small features that the current data already supports.
 
 The items that are an hour or two each and improve the phone experience the most:
 
-1. 1.2 phone polish in the stylesheet
+1. ~~1.2 phone polish in the stylesheet~~ done
 2. 1.5 WOFF2 only
 3. ~~1.6 position freshness~~ done
 4. 2.3 accessibility
