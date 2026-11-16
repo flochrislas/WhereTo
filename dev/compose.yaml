@@ -1,0 +1,45 @@
+# WhereTo development environment: podman compose up -d (run from this folder).
+# App on http://localhost:8010, PostgreSQL on localhost:5433.
+name: whereto
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Containerfile
+    image: localhost/whereto-app:php7.4
+    ports:
+      - "8010:8000"
+    volumes:
+      - ../source:/app
+      - ./laravel.env:/dev-config/laravel.env:ro
+      - composer-cache:/composer
+    environment:
+      DB_HOST: db
+      DB_PORT: "5432"
+      DB_DATABASE: whereto
+      DB_USERNAME: wheretouser
+      DB_PASSWORD: whereto
+    depends_on:
+      db:
+        condition: service_healthy
+
+  db:
+    image: docker.io/library/postgres:18
+    ports:
+      - "5433:5432"
+    environment:
+      POSTGRES_DB: whereto
+      POSTGRES_USER: wheretouser
+      POSTGRES_PASSWORD: whereto
+    volumes:
+      - db-data:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U wheretouser -d whereto"]
+      interval: 3s
+      timeout: 3s
+      retries: 20
+
+volumes:
+  db-data:
+  composer-cache:

@@ -84,3 +84,6 @@ source/_ide_helper\.php
 source/_ide_helper_models\.php
 
 source/composer\.phar
+
+# Dev container first-run marker (dev/entrypoint.sh)
+source/storage/.dev-seeded

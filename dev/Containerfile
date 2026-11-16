@@ -1,0 +1,24 @@
+# Legacy runtime for WhereTo (Laravel 5.8): PHP 7.4 CLI + extensions + Composer.
+# PHP 7.4 is end of life; this image exists only to run the app as committed.
+FROM docker.io/library/php:7.4-cli
+
+# Debian bullseye left the main mirrors in 2026; point apt at the archive.
+RUN sed -i 's|deb.debian.org/debian|archive.debian.org/debian|g; s|security.debian.org/debian-security|archive.debian.org/debian-security|g; /bullseye-updates/d' /etc/apt/sources.list \
+ && apt-get -o Acquire::Check-Valid-Until=false update \
+ && apt-get install -y --no-install-recommends git unzip libpq-dev libzip-dev libicu-dev \
+ && docker-php-ext-install -j"$(nproc)" pdo_pgsql bcmath zip intl pcntl \
+ && rm -rf /var/lib/apt/lists/*
+
+# Composer 1: Laravel 5.8 cannot parse Composer 2's installed.json (package:discover fails).
+COPY --from=docker.io/library/composer:1 /usr/bin/composer /usr/bin/composer
+
+ENV COMPOSER_ALLOW_SUPERUSER=1 \
+    COMPOSER_HOME=/composer
+
+WORKDIR /app
+COPY entrypoint.sh /usr/local/bin/entrypoint.sh
+RUN chmod +x /usr/local/bin/entrypoint.sh
+
+EXPOSE 8000
+ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
+CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port=8000"]
