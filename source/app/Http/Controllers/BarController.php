@@ -14,6 +14,12 @@ class BarController extends PlaceController
         return self::MODEL_NAME;
     }
 
+    /** The rating of a bar: the overall score, then the place, then how easy it is to mingle */
+    protected function ratingColumns(): array
+    {
+        return ['score', 'score_place', 'score_mingling'];
+    }
+
     /**
      * Get the list to display (HTML fragment loaded by AJAX).
      * Parameters: op (AND/OR/ANDNOT/ORNOT), tags (comma separated), position (lat,lon), orderBy (distance/ratings/cost).

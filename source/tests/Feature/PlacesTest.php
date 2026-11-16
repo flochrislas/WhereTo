@@ -45,8 +45,8 @@ class PlacesTest extends TestCase
     {
         $tagModel::create(['label' => 'a', 'type' => 10, 'weight' => 1]);
         $tagModel::create(['label' => 'b', 'type' => 20, 'weight' => 1]);
-        $near = $model::create(['name' => 'Near one', 'type' => 'T', 'lat' => 35.6586, 'lon' => 139.7016, 'points' => 'near', 'lunch_price' => 1200, 'score_lunch' => 1, 'score_food' => 1, 'score_place' => 1]);
-        $far = $model::create(['name' => 'Far one', 'type' => 'T', 'lat' => 35.6700, 'lon' => 139.7100, 'points' => 'far', 'lunch_price' => 800, 'score_lunch' => 3, 'score_food' => 3, 'score_place' => 3]);
+        $near = $model::create(['name' => 'Near one', 'type' => 'T', 'lat' => 35.6586, 'lon' => 139.7016, 'points' => 'near', 'lunch_price' => 1200, 'score_lunch' => 1, 'score_food' => 1, 'score_place' => 1, 'score' => 1]);
+        $far = $model::create(['name' => 'Far one', 'type' => 'T', 'lat' => 35.6700, 'lon' => 139.7100, 'points' => 'far', 'lunch_price' => 800, 'score_lunch' => 3, 'score_food' => 3, 'score_place' => 3, 'score' => 3]);
         $near->attachTags(['a', 'b']);
         $far->attachTags(['a']);
     }
@@ -99,9 +99,22 @@ class PlacesTest extends TestCase
     {
         $this->seedTwo($model, $tagModel);
         $id = $model::where('name', 'Near one')->value('id');
-        $this->get("/$plural/details/$id")->assertOk()->assertSee('Near one');
+        $details = $this->get("/$plural/details/$id")->assertOk()->assertSee('Near one');
+        if (in_array($plural, ['restaurants', 'bars'], true)) {
+            // These two show a grade out of 4; bars used to print the restaurant column, which they do not have
+            $details->assertSee('1/4');
+        }
         $this->get("/$singular/details/$id")->assertOk()->assertSee('Near one')->assertSee('<html', false);
         $this->get("/$plural/details/999")->assertNotFound();
+    }
+
+    /** Every kind sorts by its own score columns ("score" for stores and karaoke, several for restaurants and bars) */
+    #[DataProvider('placeTypes')]
+    public function test_results_sorted_by_ratings(string $plural, string $singular, string $model, string $tagModel): void
+    {
+        $this->seedTwo($model, $tagModel);
+        $html = $this->get("/$plural/results?orderBy=ratings&position=".self::STATION)->assertOk()->getContent();
+        $this->assertSame(['Far one', 'Near one'], $this->namesInOrder($html), 'best scores first');
     }
 
     public function test_restaurants_sorted_by_ratings_and_cost(): void

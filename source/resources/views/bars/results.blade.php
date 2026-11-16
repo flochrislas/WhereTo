@@ -6,8 +6,6 @@
   <div id="resultsControl">
     <button class="sortButton" data-order-by="ratings" aria-pressed="false" onclick="refreshResults('ratings')">
       Best<br>first</button>
-    <button class="sortButton" data-order-by="cost" aria-pressed="false" onclick="refreshResults('cost')">
-      Cost<br>first</button>
     <button class="sortButton" data-order-by="distance" aria-pressed="false" onclick="refreshResults('distance')">
       Near<br>first</button>
     <button class="navButton" onclick="showFilter()">Show Filters</button>

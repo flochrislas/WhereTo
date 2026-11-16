@@ -20,7 +20,7 @@
   <div class="detailRow">
       <div class="detail score lunch">
         <div class="label">Grade</div>
-        <div class="grade">{{ $place->score_lunch }}/4</div>
+        <div class="grade">{{ $place->score }}/4</div>
       </div>
   </div>
 

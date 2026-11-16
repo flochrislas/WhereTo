@@ -78,6 +78,10 @@ The UI is already responsive (viewport meta, one `@media` breakpoint at 680px, C
 
 ### 3.1 Collapse the four copy-pasted place sets (L)
 
+> Two copy-paste bugs were found and fixed in November 2026 without merging: the "Best first" sort did nothing for stores, bars and karaoke (the rating columns were the restaurant ones), and the bar details printed a restaurant score column. The rating columns are now a per-kind hook in `PlaceController`.
+
+> **Decision (November 2026): not for now.** The duplication costs nothing at runtime thanks to the cache, and keeping the four kinds separate lets each evolve its own columns and views freely. Revisit only if the four sets start drifting in ways that have to be fixed four times.
+
 - **Why**: restaurants, stores, bars and karaokes each have their own model, tag model, pivot, migration pair, seeder pair, controller pair, and four views. `RestaurantController`, `StoreController`, `BarController` and `KaraokeController` are byte-for-byte identical apart from the model name. Any change has to be made four times. This was kept on purpose during the upgrade ("port and fix only") and is the biggest structural improvement left.
 - **How, least invasive**: keep the four tables, but have one `PlaceController` whose model is chosen from the route: `Route::get('{kind}/results', [PlaceController::class, 'results'])->whereIn('kind', ['restaurants', 'stores', 'bars', 'karaokes'])`, with a `PlaceKind` PHP enum mapping the URL segment to the model class, the tag model, the views and the route names. The views can be shared with `@include` and a `$kind` variable; only the restaurant row has the cost and lunch columns, which a `@if` handles.
 - **How, full**: one `places` table with a `kind` column and nullable restaurant-only columns, one `tags` table with a `kind` column, one pivot. The queries become simpler and tags could even be shared across kinds. This needs a data migration from the four existing tables and changes the cache keys.
@@ -182,4 +186,4 @@ The items that are an hour or two each and improve the phone experience the most
 6. ~~5.1 CI workflow~~ done
 7. ~~6 results counter~~ done
 
-1.1 (PWA) and 2.1 (JS to static files) are done. All the quick wins are done. Next: 3.1 (one place set) as the structural project if the app keeps evolving.
+1.1 (PWA) and 2.1 (JS to static files) are done. All the quick wins are done. 3.1 (one place set) was considered and declined for now, see the decision note there.

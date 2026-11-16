@@ -28,6 +28,25 @@ abstract class PlaceController extends Controller
     abstract protected function getModelName(): string;
 
     /**
+     * The score columns that make the rating, best first. One column for most kinds;
+     * the restaurants override this with their lunch/food/place scores.
+     *
+     * @return string[]
+     */
+    protected function ratingColumns(): array
+    {
+        return ['score'];
+    }
+
+    /**
+     * The column used by the "cost" order, or null when the kind has no price (then "cost" sorts like "ratings").
+     */
+    protected function costColumn(): ?string
+    {
+        return null;
+    }
+
+    /**
      * Detect if the user is in the area.
      * Fall back to Shibuya Station when the position is missing, invalid, or more than 2.5 km away.
      */
@@ -162,10 +181,8 @@ abstract class PlaceController extends Controller
 
         // Add the tag filter to the query
         $this->whereTags($query, $tags, $op);
-        // Only restaurants have the score columns used for sorting
-        if ($this->getModelName() === 'Restaurant') {
-            $this->orderBy($query, $orderBy);
-        }
+        // Add the ORDER BY clause (the columns depend on the kind of place)
+        $this->orderBy($query, $orderBy);
         if ($limit > 0) {
             $query->limit($limit);
         }
@@ -175,26 +192,21 @@ abstract class PlaceController extends Controller
     }
 
     /**
-     * Add the ORDER BY clause to the query (restaurants only).
+     * Add the ORDER BY clause to the query.
+     * Sorting by distance happens outside the query (in PHP), so "distance" and "ratings" are the same here:
+     * the best places on top. "cost" puts the price first when the kind has one.
      */
     public function orderBy(Builder $query, string $orderBy = 'distance'): void
     {
-        if ($orderBy === 'distance' || $orderBy === 'ratings') {
-            // Sorting by distance happens outside the query (in PHP).
-            // We still put the best places on top (rating).
-            $query->orderByDesc('score_lunch')
-                ->orderByDesc('score_food')
-                ->orderByDesc('score_place')
-                ->orderBy('id'); // deterministic order for ties
+        // Price first, only for the kinds that have a price column (restaurants: lunch_price)
+        if ($orderBy === 'cost' && $this->costColumn() !== null) {
+            $query->orderBy($this->costColumn());
         }
-        if ($orderBy === 'cost') {
-            // Price first, but we still try to put the best places on top
-            $query->orderBy('lunch_price')
-                ->orderByDesc('score_lunch')
-                ->orderByDesc('score_food')
-                ->orderByDesc('score_place')
-                ->orderBy('id');
+        // Then the best places on top: one orderByDesc per rating column
+        foreach ($this->ratingColumns() as $column) {
+            $query->orderByDesc($column);
         }
+        $query->orderBy('id'); // deterministic order for ties
     }
 
     /**

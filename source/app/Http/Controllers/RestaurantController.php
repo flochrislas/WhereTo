@@ -14,6 +14,18 @@ class RestaurantController extends PlaceController
         return self::MODEL_NAME;
     }
 
+    /** The rating of a restaurant: lunch first, then food, then the place */
+    protected function ratingColumns(): array
+    {
+        return ['score_lunch', 'score_food', 'score_place'];
+    }
+
+    /** The "cost" order uses the lunch price */
+    protected function costColumn(): ?string
+    {
+        return 'lunch_price';
+    }
+
     /**
      * Get the list to display (HTML fragment loaded by AJAX).
      * Parameters: op (AND/OR/ANDNOT/ORNOT), tags (comma separated), position (lat,lon), orderBy (distance/ratings/cost).
