@@ -159,7 +159,7 @@ The UI is already responsive (viewport meta, one `@media` breakpoint at 680px, C
 
 Small features that the current data already supports.
 
-- **Results counter**: the `WE NEED A COUNTER HERE` comment in `results-data.blade.php` is easy to resolve with `{{ $places->count() }}` in the header row.
+- **Results counter**: done (November 2026), a "N results" line above the list in the four `results-data` fragments.
 - **OR filter**: `whereTags()` already implements `OR`, `ANDNOT` and `ORNOT`; a single toggle next to the selected tags would expose it.
 - **Opening hours and "open now"**: a `hours` JSON column per place and a filter that uses the same Tokyo clock as the lunch suggestion.
 - **Japanese UI**: Laravel localisation (`lang/ja.json`) with the browser language as default; the data already has Japanese names.
@@ -177,6 +177,6 @@ The items that are an hour or two each and improve the phone experience the most
 4. 2.3 accessibility
 5. 4.1 production checklist
 6. 5.1 CI workflow
-7. 6 results counter
+7. ~~6 results counter~~ done
 
-1.1 (PWA) and 2.1 (JS to static files) are done. Next: 2.3 (accessibility), 4.1 (production checklist), 5.1 (CI), the results counter, then 3.1 (one place set) as the structural project if the app keeps evolving.
+1.1 (PWA) and 2.1 (JS to static files) are done. Next: 2.3 (accessibility), 4.1 (production checklist), 5.1 (CI), then 3.1 (one place set) as the structural project if the app keeps evolving.

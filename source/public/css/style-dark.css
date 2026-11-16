@@ -615,6 +615,14 @@ td {
   display: none;
 }
 
+.resultsCount {
+  /* "N results" line above the list */
+  font-size: .75rem;
+  text-align: right;
+  margin: .1rem .3rem .2rem;
+  color: var(--color-txt-default);
+}
+
 /*********************************************/
 /*            RESTAURANTS DETAILS            */
 /*********************************************/

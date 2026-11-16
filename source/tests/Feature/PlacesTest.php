@@ -73,7 +73,9 @@ class PlacesTest extends TestCase
     public function test_results_sorted_by_distance(string $plural, string $singular, string $model, string $tagModel): void
     {
         $this->seedTwo($model, $tagModel);
-        $html = $this->get("/$plural/results?orderBy=distance&position=".self::STATION)->assertOk()->getContent();
+        $html = $this->get("/$plural/results?orderBy=distance&position=".self::STATION)->assertOk()
+            ->assertSee('2 results') // the counter line above the list
+            ->getContent();
         $this->assertSame(['Near one', 'Far one'], $this->namesInOrder($html));
         $this->assertStringContainsString('End of <strong>2</strong>', $html);
     }

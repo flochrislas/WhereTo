@@ -1,5 +1,6 @@
+<!-- Number of results. count() on the collection; Str::plural adds the "s" when needed -->
+<div class="resultsCount">{{ $places->count() }} {{ \Illuminate\Support\Str::plural('result', $places->count()) }}</div>
 <div class="resultTable">
-<!-- WE NEED A COUNTER HERE TO DISPLAY THE NUMBER OF RESULTS -->
 @foreach ($places as $restaurant)
   <div class="resultsCounter"></div>
   <div class="resultRow">
