@@ -2,89 +2,58 @@
 
 namespace App\Http\Controllers;
 
-use App\Store;
 use Illuminate\Http\Request;
 
 class StoreController extends PlaceController
 {
-    /** Name of the model used for DB and views */
-    const MODEL_NAME = 'Store';
+    /** Name of the model, used to derive the model class and the view names. */
+    public const MODEL_NAME = 'Store';
 
-    public function getModelName()
+    public function getModelName(): string
     {
         return self::MODEL_NAME;
     }
 
     /**
-     * Get the list to display.
-     * TODO: implement "see more" button
-     *
-     * @return \Illuminate\Http\Response
+     * Results list (HTML fragment loaded by AJAX).
+     * Parameters: op (AND/OR/ANDNOT/ORNOT), tags (comma separated), position (lat,lon), orderBy (distance/ratings/cost).
      */
     public function results(Request $request)
     {
-        // -----------------------------------
-        // Reads request parameters
+        $op = $request->query('op');
+        $tags = $this->formatTags($request->query('tags'));
+        $position = $this->positionParam($request);
+        $orderBy = $request->query('orderBy');
 
-        // Operator for the Tags
-        $op = request('op');
-
-        // tags as a comma separated list
-        $tags = request('tags');
-        // makes tag into a traversable array
-        $this->formatTags($tags);
-
-        // Current position from client's GPS
-        $position = request('position');
-
-        // the sorting order for the result list
-        $orderBy = request('orderBy');
-
-        // -----------------------------------
-        // Reads from cache or DB
         $places = $this->useCache($tags, $op, $orderBy);
-
-        // -----------------------------------
-        // Calculate distances from position, and sort them if required
         $places = $this->handleDistances($places, $position, $orderBy);
 
-        // -----------------------------------
-        // Shorten the points to display in list
         foreach ($places as $place) {
-          $place->points = $this->ellipsis($place->points, 50);
+            $place->setAttribute('points', $this->ellipsis($place->getAttribute('points'), 50));
         }
 
-        // Keeps the input of the user interface
-        // https://laravel.com/docs/5.5/requests#old-input
-        $request->flash();
-
-        // Return the view with the resulted places
         return view($this->getModelResultsDataView(), compact('places'));
     }
 
     /**
-     * Display the specified resource in one-apge view
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * Details fragment for the one-page view.
      */
-    public function details($id)
+    public function details(int $id)
     {
         $class = $this->getModelClass();
-        $place = $class::find($id);
+        $place = $class::findOrFail($id);
+
         return view($this->getModelDetailsView(), compact('place'));
     }
 
     /**
-     * Display the specified resource in independent page
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * Details as a standalone, shareable page.
      */
-    public function detailsSingle($id)
+    public function detailsSingle(int $id)
     {
         $class = $this->getModelClass();
-        $place = $class::find($id);
+        $place = $class::findOrFail($id);
+
         return view($this->getModelDetailsView(true), compact('place'));
     }
 }

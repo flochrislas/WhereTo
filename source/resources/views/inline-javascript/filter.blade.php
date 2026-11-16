@@ -1,25 +1,17 @@
-<!-- The Javascript to operate this filter -->
+<!-- The Javascript to operate the tag filter -->
 <script>
-/** What happens when we click on a tag */
+/** Clicking a tag moves it between the available and selected lists, then refreshes the results. */
 function moveTag(event) {
-  // Refresh position (async and takes a while...)
   getLocation();
-
-  // Move the tag in the proper div
   if (event.target.parentNode.id == "selectedTags") {
     document.getElementById("tags").appendChild(event.target);
-    // Check if any selectedTag left
     if (getSelectedTagsDiv().children.length > 0) {
-      /* Run the search from the selectedTags immediately in the background */
       refreshResults();
-    }
-    else {
-      // Reset the showResults button
+    } else {
       resetFilterHeaderButton();
     }
   } else {
     getSelectedTagsDiv().appendChild(event.target);
-    /* Run the search from the selectedTags immediately in the background */
     refreshResults();
   }
 }
@@ -31,127 +23,90 @@ function resetFilterHeaderButton() {
   getFilterHeaderButtonDiv().innerHTML = "Show All";
 }
 
-/** Refreshes the list of results */
+/** Refreshes the list of results. orderBy: distance | ratings | cost (remembered in localStorage). */
 function refreshResults(orderBy) {
-  // Default parameter doc: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Default_parameters
-  /* read all the div under selectedTags */
-  var tags = getSelectedTagsDiv().children;
-  /* make a list of all their ids or labels to send as parameters */
-  var tagsLabels = getTagsLabels(tags);
+  const tagsLabels = getTagsLabels(getSelectedTagsDiv().children);
 
-  /* check for orderBy choice */
   if (orderBy != null) {
-    // priority to the current parameter
     store("orderBy", orderBy);
   } else {
-    // if no param then try read store
-    let storeOrderBy = readStore("orderBy");
-    if (storeOrderBy != null) {
-      orderBy = storeOrderBy;
-    } else {
-      // if nothing in param or store use default value
+    orderBy = readStore("orderBy");
+    if (orderBy == null) {
       orderBy = "distance";
       store("orderBy", orderBy);
     }
   }
 
-  /* read order/operand/options parameters */
-  // We will implement that later
-  let op = 'AND';
-
-  /* AJAX request to update the results */
+  const op = 'AND'; // other operators (OR, ANDNOT, ORNOT) exist server-side but are not exposed yet
   ajaxResults(op, tagsLabels, orderBy);
 }
 
-/** Actually send the request to the server */
+/** Request the results fragment. Responses older than the latest request are ignored. */
 function ajaxResults(op, tags, orderBy) {
-  let xhr = new XMLHttpRequest();
-  let url = resultsUrl
-          + '?op=' + op
-          + '&tags=' + tags
-          + '&orderBy=' + orderBy
+  const url = resultsUrl
+          + '?op=' + encodeURIComponent(op)
+          + '&tags=' + encodeURIComponent(tags)
+          + '&orderBy=' + encodeURIComponent(orderBy)
           + '&position=' + getLocation();
-  xhr.open('GET', url);
   console.info("GET: " + url);
-  let now = nowStamp();
+  const now = nowStamp();
   setResultsLoadingTime(now);
   setResultsLoading("tag");
-  xhr.onload = function() {
-      if (now < getResultsLoadingTime()) { // if a more recent request has been nameAndType
-          getResultsDiv().innerHTML = "Updating results...";
+  fetch(url)
+    .then(response => response.ok ? response.text() : Promise.reject(response.status))
+    .then(html => {
+      if (now < getResultsLoadingTime()) { // a more recent request is in flight
+        getResultsDiv().innerHTML = "Updating results...";
+        return;
       }
-      else {
-          if (xhr.status === 200) {
-              /* write results */
-              getResultsDiv().innerHTML = xhr.responseText;
-              /* update the show result button with the number of results */
-              refreshShowResultsButton();
-          }
-          else {
-              getResultsDiv().innerHTML = "Sorry, an error occurred during the search. Check your Internet connection and try again.";
-          }
-          if (now == getResultsLoadingTime()) {
-              setResultsLoading("none");
-          }
+      getResultsDiv().innerHTML = html;
+      refreshShowResultsButton();
+    })
+    .catch(() => {
+      if (now >= getResultsLoadingTime()) {
+        getResultsDiv().innerHTML = "Sorry, an error occurred during the search. Check your Internet connection and try again.";
       }
-  };
-  xhr.send();
+    })
+    .finally(() => {
+      if (now == getResultsLoadingTime()) {
+        setResultsLoading("none");
+      }
+    });
 }
 
-/** From NodeList of tag div, get concatenated string of tags labels */
+/** From a NodeList of tag divs, the comma separated tag labels */
 function getTagsLabels(tags) {
-  let tagsLabels = "";
-  for (i = 0; i < tags.length; ++i) {
-    tagsLabels = tagsLabels + tags[i].innerHTML.trim() + ',';
-  }
-  // Slice removes the last comma
-  return tagsLabels.slice(0,-1);
-}
-
-/** From NodeList of tag div, get array of tags ids */
-function getTagsIdArray(op, tags) {
-  let tagsIds = [];
-  for (let i = 0; i < tags.length; ++i) {
-    tagsIds.push(tags[i].getAttribute("tagId"));
-  }
-  return tagsIds;
+  return Array.from(tags).map(tag => tag.innerHTML.trim()).join(',');
 }
 
 function refreshShowResultsButton() {
-  /* get number of results */
-  // var nbResults = document.getElementById("results").children.count();
-  // var nbResults = document.getElementById('resultsTable').rows.length;
-  let nbResults = document.getElementsByClassName("resultsCounter").length;
-  /* Change button label/text */
+  const nbResults = document.getElementsByClassName("resultsCounter").length;
   if (nbResults == 0) {
     getFilterHeaderButtonDiv().innerHTML = "No result";
     getFilterHeaderButtonDiv().disabled = true;
+  } else {
+    getFilterHeaderButtonDiv().disabled = false;
+    getFilterHeaderButtonDiv().innerHTML = "Show " + nbResults + " results";
   }
-  else {
-      getFilterHeaderButtonDiv().disabled = false;
-      getFilterHeaderButtonDiv().innerHTML = "Show " + nbResults + " results";
-  }
-
 }
 
-/** Store methods  TO MOVE IN A SUPERIOR CLASS */
+/** localStorage helpers */
 function store(key, value) {
-    // Look up for different options, chose the best
-    if (typeof(Storage) !== "undefined") {
-        // Code for localStorage/sessionStorage.
-        localStorage.setItem(key, value);
-        // sessionStorage.setItem(key value);
-    } else {
-        console.warn("No local storage support from the browser. Application's behavior may be affected.");
-    }
+  try {
+    localStorage.setItem(key, value);
+  } catch (e) {
+    console.warn("No local storage support from the browser. Application's behavior may be affected.");
+  }
 }
-
 function readStore(key) {
+  try {
     return localStorage.getItem(key);
+  } catch (e) {
+    return null;
+  }
 }
-/** * * * * * * * * * * * * * * * * * * * * * *  */
 
-/**** Get important elements ****/
+/**** Important elements ****/
 function getFilterHeaderButtonDiv() {
     return document.getElementById("filterHeaderButton");
 }

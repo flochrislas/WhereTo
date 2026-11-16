@@ -1,0 +1,55 @@
+<div id="resultsControl">
+    <button class="sortButton"
+      onclick="window.open('https://www.google.com/maps/place/TASUICHI/@35.6599464,139.6966029,17z/data=!4m5!3m4!1s0x60188ca970e7aaab:0x8b912b8ebfe8bafe!8m2!3d35.6609271!4d139.6970106', '_blank')">
+      Google<br>maps</button>
+    <button class="sortButton"
+      onclick="window.open('http://www.tasuichi.co.jp/', '_blank')">
+      Website</button>
+    <button class="sortButton"
+      onclick="copyStringToClipboard('http://127.0.0.1:8001/bar/details/1')">
+      Copy<br>URL</button>
+    <button class="navButton" onclick="hideDetails()">BACK</button>
+  </div>
+
+  <div id="detailTitle" class="detailRow">
+      <div id="detailName" class="detail" detailId="1"><div>Tatsu Ichi</div></div>
+      <div id="detailType" class="detail"><div>Standing Bar</div></div>
+      <div id="detailLocation" class="detail"><div>Shibuya, Center Gai</div></div>
+  </div>
+
+  <div class="detailRow">
+      <div class="detail score lunch">
+        <div class="label">Grade</div>
+        <div class="grade">/4</div>
+      </div>
+  </div>
+
+  <div class="detailRow">
+      <div class="detail border15"
+           overlay="Main point">
+      A standing bar where it is easy to mingle with people. Quite cheap, no table charge.</div>
+  </div>
+
+  <div class="detailRow">
+      <div class="detail"
+           overlay="Personal experience">
+        Situated at the end of the main street &quot;center gai&quot;, there is always a lot of foreigners there. Friendly Japanese staff. TV playing sports. Music. All kind of drinks and food also available. Payment must be done upon order at the table. Beer is 300yen. Can be kind of loud and smoky. Very easy to mingle with people. There is a live webcam you can access from their website, if you want to check the crowd.
+      </div>
+  </div>
+
+  <div class="detailRow">
+    <div class="detail">
+            <div class="tag tagType100"
+              tagId="1"
+              id="tagShow1"
+              onClick="moveTag(event)">
+          standing
+        </div>
+            <div class="tag tagType100"
+              tagId="4"
+              id="tagShow4"
+              onClick="moveTag(event)">
+          no table charge
+        </div>
+        </div>
+  </div>

@@ -3,47 +3,45 @@
 namespace App\Traits;
 
 use App\Tools\GeoUtils;
+use Illuminate\Support\Facades\Log;
+use InvalidArgumentException;
 
+/**
+ * Coordinates helpers shared by the place models (restaurants, stores, bars, karaoke).
+ */
 trait Location
 {
-    // Storing calculated distance
-    public $currentDistance;
-
-    // Required fields
-    /*
-    protected $fillable = [
-        'lat',
-        'lon'
-    ];*/
+    /** Distance from the visitor, in metres, computed per request (not stored). */
+    public ?float $currentDistance = null;
 
     /**
-     * Simply fill lat and lon fron a string with both
+     * Fill lat and lon from a "lat, lon" string and save.
      */
-    public function fillCoordinatesFromString(string $coordinates) : void
+    public function fillCoordinatesFromString(string $coordinates): void
     {
         try {
-          $coord = GeoUtils::toPositionArray($coordinates);
-          $this->lat = $coord[0];
-          $this->lon = $coord[1];
-          $this->save();
-        } catch (\ErrorException $e) {
-          \Log::debug('Invalid coordinates for restaurant '.$this->id);
+            $coord = GeoUtils::toPositionArray($coordinates);
+            $this->lat = $coord[0];
+            $this->lon = $coord[1];
+            $this->save();
+        } catch (InvalidArgumentException $e) {
+            Log::debug('Invalid coordinates for '.class_basename($this).' '.$this->id.': '.$e->getMessage());
         }
     }
 
     /**
-     * Try to fill lat and lon with the ones found in the Google Maps link
-     * NOTE: link's coordiantes are actually for the center of the map, NOT the location we want
+     * Fill lat and lon from the Google Maps link and save.
+     * NOTE: the link's coordinates are the centre of the map, NOT the marker.
      */
-    public function fillCoordinatesFromGoogleLink() : void
+    public function fillCoordinatesFromGoogleLink(): void
     {
         try {
-          $coord = GeoUtils::google2coord($this->google_maps_link);
-          $this->lat = $coord[0];
-          $this->lon = $coord[1];
-          $this->save();
-        } catch (\ErrorException $e) {
-          \Log::debug('Could not find coordinates from Google Maps link in restaurant id '.$this->id);
+            $coord = GeoUtils::google2coord((string) $this->google_maps_link);
+            $this->lat = $coord[0];
+            $this->lon = $coord[1];
+            $this->save();
+        } catch (InvalidArgumentException $e) {
+            Log::debug('Could not find coordinates in the Google Maps link of '.class_basename($this).' '.$this->id);
         }
     }
 }

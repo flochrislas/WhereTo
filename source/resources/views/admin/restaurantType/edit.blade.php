@@ -17,8 +17,9 @@
                 Edit restaurantType <a href="{{ route('restaurantType.index') }}" class="label label-primary pull-right">Back</a>
             </div>
             <div class="panel-body">
-                <form action="{{ route('restaurantType.update', $restaurantType->id) }}" method="restaurantType" class="form-horizontal">
-                    {{ csrf_field() }}
+                <form action="{{ route('restaurantType.update', $restaurantType->id) }}" method="POST" class="form-horizontal">
+                    @method('PUT')
+                    @csrf
                     <div class="form-group">
                         <label class="control-label col-sm-2" >Label</label>
                         <div class="col-sm-10">

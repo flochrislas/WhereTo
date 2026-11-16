@@ -1,34 +1,24 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
-class CreateRestaurantTagsTable extends Migration
+return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
-    public function up()
+    public function up(): void
     {
         Schema::create('restaurant_tags', function (Blueprint $table) {
-            $table->increments('id');
+            $table->id();
             $table->timestamps();
             $table->string('label');
-            $table->integer('type')->unsigned()->default(0);
-            $table->integer('weight')->unsigned()->default(0);
+            $table->unsignedInteger('type')->default(0);   // tag family, drives colour and ordering
+            $table->unsignedInteger('weight')->default(0); // importance inside the family
         });
     }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
-    public function down()
+    public function down(): void
     {
         Schema::dropIfExists('restaurant_tags');
     }
-}
+};

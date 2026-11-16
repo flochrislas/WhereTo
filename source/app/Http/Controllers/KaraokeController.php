@@ -2,89 +2,58 @@
 
 namespace App\Http\Controllers;
 
-use App\Karaoke;
 use Illuminate\Http\Request;
 
 class KaraokeController extends PlaceController
 {
-  /** Name of the model used for DB and views */
-  const MODEL_NAME = 'Karaoke';
+    /** Name of the model, used to derive the model class and the view names. */
+    public const MODEL_NAME = 'Karaoke';
 
-  public function getModelName()
-  {
-      return self::MODEL_NAME;
-  }
+    public function getModelName(): string
+    {
+        return self::MODEL_NAME;
+    }
 
-  /**
-   * Get the list to display.
-   * TODO: implement "see more" button
-   *
-   * @return \Illuminate\Http\Response
-   */
-  public function results(Request $request)
-  {
-      // -----------------------------------
-      // Reads request parameters
+    /**
+     * Results list (HTML fragment loaded by AJAX).
+     * Parameters: op (AND/OR/ANDNOT/ORNOT), tags (comma separated), position (lat,lon), orderBy (distance/ratings/cost).
+     */
+    public function results(Request $request)
+    {
+        $op = $request->query('op');
+        $tags = $this->formatTags($request->query('tags'));
+        $position = $this->positionParam($request);
+        $orderBy = $request->query('orderBy');
 
-      // Operator for the Tags
-      $op = request('op');
+        $places = $this->useCache($tags, $op, $orderBy);
+        $places = $this->handleDistances($places, $position, $orderBy);
 
-      // tags as a comma separated list
-      $tags = request('tags');
-      // makes tag into a traversable array
-      $this->formatTags($tags);
+        foreach ($places as $place) {
+            $place->setAttribute('points', $this->ellipsis($place->getAttribute('points'), 50));
+        }
 
-      // Current position from client's GPS
-      $position = request('position');
+        return view($this->getModelResultsDataView(), compact('places'));
+    }
 
-      // the sorting order for the result list
-      $orderBy = request('orderBy');
+    /**
+     * Details fragment for the one-page view.
+     */
+    public function details(int $id)
+    {
+        $class = $this->getModelClass();
+        $place = $class::findOrFail($id);
 
-      // -----------------------------------
-      // Reads from cache or DB
-      $places = $this->useCache($tags, $op, $orderBy);
+        return view($this->getModelDetailsView(), compact('place'));
+    }
 
-      // -----------------------------------
-      // Calculate distances from position, and sort them if required
-      $places = $this->handleDistances($places, $position, $orderBy);
+    /**
+     * Details as a standalone, shareable page.
+     */
+    public function detailsSingle(int $id)
+    {
+        $class = $this->getModelClass();
+        $place = $class::findOrFail($id);
 
-      // -----------------------------------
-      // Shorten the points to display in list
-      foreach ($places as $place) {
-        $place->points = $this->ellipsis($place->points, 50);
-      }
-
-      // Keeps the input of the user interface
-      // https://laravel.com/docs/5.5/requests#old-input
-      $request->flash();
-
-      // Return the view with the resulted places
-      return view($this->getModelResultsDataView(), compact('places'));
-  }
-
-  /**
-   * Display the specified resource in one-apge view
-   *
-   * @param  int  $id
-   * @return \Illuminate\Http\Response
-   */
-  public function details($id)
-  {
-      $class = $this->getModelClass();
-      $place = $class::find($id);
-      return view($this->getModelDetailsView(), compact('place'));
-  }
-
-  /**
-   * Display the specified resource in independent page
-   *
-   * @param  int  $id
-   * @return \Illuminate\Http\Response
-   */
-  public function detailsSingle($id)
-  {
-      $class = $this->getModelClass();
-      $place = $class::find($id);
-      return view($this->getModelDetailsView(true), compact('place'));
-  }
+        return view($this->getModelDetailsView(true), compact('place'));
+    }
 }

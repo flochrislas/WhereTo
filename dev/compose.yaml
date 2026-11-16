@@ -7,19 +7,15 @@ services:
     build:
       context: .
       dockerfile: Containerfile
-    image: localhost/whereto-app:php7.4
+    image: localhost/whereto-app:php8.5
     ports:
       - "8010:8000"
     volumes:
       - ../source:/app
       - ./laravel.env:/dev-config/laravel.env:ro
       - composer-cache:/composer
-    environment:
-      DB_HOST: db
-      DB_PORT: "5432"
-      DB_DATABASE: whereto
-      DB_USERNAME: wheretouser
-      DB_PASSWORD: whereto
+    # No DB_* variables here on purpose: the app reads them from source/.env, and anything
+    # exported into the container would also override phpunit.xml (Laravel reads $_SERVER first).
     depends_on:
       db:
         condition: service_healthy

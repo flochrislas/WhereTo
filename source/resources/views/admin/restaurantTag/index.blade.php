@@ -43,7 +43,11 @@
                             <td>
                                 <a href="{{ route('restaurantTag.show', $restaurantTag->id) }}" class="label label-success">Details</a>
                                 <a href="{{ route('restaurantTag.edit', $restaurantTag->id) }}" class="label label-warning">Edit</a>
-                                <a href="{{ route('restaurantTag.destroy', $restaurantTag->id) }}" class="label label-danger" onclick="return confirm('Are you sure to delete?')">Delete</a>
+                                <form method="POST" action="{{ route('restaurantTag.destroy', $restaurantTag->id) }}" style="display:inline" onsubmit="return confirm('Are you sure to delete?')">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="label label-danger" style="border:0">Delete</button>
+                                </form>
                             </td>
                         </tr>
                     @endforeach

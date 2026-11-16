@@ -3,65 +3,54 @@
 
 function showResults() {
   getMainFilterDiv().style.display = "none";
-  getMainResultsDiv().style.display = "flex"; // was block
+  getMainResultsDiv().style.display = "flex";
 }
 
 function showFilter() {
-  getMainFilterDiv().style.display = "flex"; // was block
+  getMainFilterDiv().style.display = "flex";
   getMainResultsDiv().style.display = "none";
 }
 
+/** "Show All" button: load every place once (sorted by distance) and switch to the results panel. */
 function getResults() {
-  // This function should exist (maybe in parent/main)
   showResults();
-  // Refresh position
   getLocation();
-  // Get all if no places loaded
   if (getResultsLoading() == "none" && getResultsLoadingTime() == 0) {
     setResultsLoading("all");
     getResultsDiv().innerHTML = "Loading ALL entries. Please wait or select a tag...";
-    let xhr = new XMLHttpRequest();
-    let url = resultsUrl
-            + '?position=' + getLocation()
-            + '&orderBy=distance';
-    console.info('calling: '+url),
-    xhr.open('GET', url);
-    xhr.onload = function() {
+    const url = resultsUrl + '?position=' + getLocation() + '&orderBy=distance';
+    console.info('GET: ' + url);
+    fetch(url)
+      .then(response => response.ok ? response.text() : Promise.reject(response.status))
+      .then(html => {
         if (getResultsLoading() == "all") {
-            if (xhr.status === 200) {
-                getResultsDiv().innerHTML = xhr.responseText;
-                // We allow this query just once
-                setResultsLoadingTime(1);
-            }
-            else {
-                getResultsDiv().innerHTML = "Sorry, an error occured during the search. Check your Internet connection and try again.";
-            }
-            setResultsLoading("none");
+          getResultsDiv().innerHTML = html;
+          setResultsLoadingTime(1); // this query is allowed just once
         }
-    };
-    xhr.send();
+      })
+      .catch(() => {
+        getResultsDiv().innerHTML = "Sorry, an error occurred during the search. Check your Internet connection and try again.";
+      })
+      .finally(() => {
+        if (getResultsLoading() == "all") {
+          setResultsLoading("none");
+        }
+      });
   }
 }
 
-/** Where the results would be displayed */
+/** Where the results are displayed */
 function getResultsDiv() {
   return document.getElementById("results");
 }
-/** Could be none, all, tag */
+/** Loading state: none, all, tag */
 function getResultsLoading() {
-  // console.info('getResultsLoading: ' + getResultsDiv().getAttribute("loading"));
   return getResultsDiv().getAttribute("loading");
 }
-/** State could be none, all, tag */
 function setResultsLoading(state) {
-  // console.info('setResultsLoading: ' + state);
   return getResultsDiv().setAttribute("loading", state);
 }
-/** results loading time methods */
 function nowStamp() {
-  if (!Date.now) {
-      return new Date().getTime();
-  }
   return Date.now();
 }
 function getResultsLoadingTime() {
@@ -71,14 +60,13 @@ function setResultsLoadingTime(time) {
   return getResultsDiv().setAttribute("time", time);
 }
 
-/**** Get important elements ****/
+/**** Important elements ****/
 function getMainFilterDiv() {
     return document.getElementById("mainFilter");
 }
 function getMainResultsDiv() {
     return document.getElementById("mainResults");
 }
-/** Where the details would be displayed */
 function getDetailsDiv() {
   return document.getElementById("mainDetails");
 }

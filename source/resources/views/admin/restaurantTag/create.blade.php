@@ -1,4 +1,4 @@
-@extends('layouts.app')addadd
+@extends('layouts.app')
 
 @section('title', 'Restaurant Tag Create')
 
@@ -18,7 +18,7 @@
             </div>
             <div class="panel-body">
                 <form action="{{ route('restaurantTag.store') }}" method="POST" class="form-horizontal">
-                    {{ csrf_field() }}
+                    @csrf
                     <div class="form-group">
                         <label class="control-label col-sm-2" >Label</label>
                         <div class="col-sm-10">

@@ -2,133 +2,71 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Restaurant;
 use Illuminate\Http\Request;
-use App\Restaurant;
+use Illuminate\Support\Facades\Cache;
 
-class RestaurantAdminController
+/**
+ * Admin CRUD for restaurants (Route::resource('restaurants')).
+ */
+class RestaurantAdminController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
-        $restaurants = Restaurant::orderBy('id', 'desc')->get();
-        return view('admin.restaurants.index', compact('restaurants'));
+        return view('admin.restaurants.index', ['restaurants' => Restaurant::with('tags')->orderByDesc('id')->get()]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         return view('admin.restaurants.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
-        // From CRUD tuto https://appdividend.com/2017/10/15/laravel-5-5-crud-example-tutorial/
-        /*
-        $restaurant = new restaurant();
-        $data = $this->validate($request, [
-            'name'=>'required',
-            'type'=> 'required'
-        ]);
+        $request->validate(['name' => 'required', 'type' => 'required']);
+        $this->save(new Restaurant, $request);
 
-        $restaurant->saverestaurant($data);
-        return redirect('/restaurant-create')
-            ->with('success', 'New restaurant has been created! Wait sometime to get resolved');
-        */
-        ////////////////////////////////////////////////// VS
+        return redirect()->route('restaurants.index')->with('success', 'Restaurant created successfully');
+    }
 
-        request()->validate([
-            'name'=>'required',
-            'type'=> 'required'
-        ]);
+    public function show(int $id)
+    {
+        return view('admin.restaurants.show', ['restaurant' => Restaurant::findOrFail($id)]);
+    }
 
-        Restaurant::create($request->all());
+    public function edit(int $id)
+    {
+        return view('admin.restaurants.edit', ['restaurant' => Restaurant::findOrFail($id)]);
+    }
 
-        return redirect()->route('restaurants.index')
-            ->with('success','Restaurant created successfully');
+    public function update(Request $request, int $id)
+    {
+        $request->validate(['name' => 'required', 'type' => 'required']);
+        $this->save(Restaurant::findOrFail($id), $request);
+
+        return redirect()->route('restaurants.index')->with('success', 'Restaurant updated successfully');
+    }
+
+    public function destroy(int $id)
+    {
+        Restaurant::findOrFail($id)->delete();
+        Cache::flush();
+
+        return redirect()->route('restaurants.index')->with('success', 'Restaurant deleted successfully');
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * Fill from the form, parse the optional "lat, lon" field, save and drop the forever-cache
+     * so the public pages see the change.
      */
-    public function show($id)
+    private function save(Restaurant $restaurant, Request $request): void
     {
-        $restaurant = Restaurant::find($id);
-        return view('admin.restaurants.show',compact('restaurant'));
+        $restaurant->fill($request->except('coord'));
+        $coord = trim((string) $request->input('coord', ''));
+        if ($coord !== '') {
+            $restaurant->fillCoordinatesFromString($coord);
+        }
+        $restaurant->save();
+        Cache::flush();
     }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        $restaurant = Restaurant::find($id);
-        return view('admin.restaurants.edit',compact('restaurant'));
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        /*
-        $ticket = new Ticket();
-        $data = $this->validate($request, [
-            'name'=>'required',
-            'type'=> 'required'
-        ]);
-        $data['id'] = $id;
-        $ticket->updateTicket($data);
-
-        return redirect('/restaurants-list')->with('success', 'The restaurant has been updated!');
-        */
-        ////////////////////////// VS
-
-        request()->validate([
-            'name'=>'required',
-            'type'=> 'required'
-        ]);
-
-        Restaurant::find($id)->update($request->all());
-
-        return redirect()->route('restaurants.index')
-            ->with('success','Restaurant updated successfully');
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        Restaurant::find($id)->delete();
-        return redirect()->route('restaurants.index')
-            ->with('success','Restaurant deleted successfully');
-    }
-
 }

@@ -3,36 +3,21 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class AdminPanelController extends Controller
 {
     /**
-     * Turn on/off DEBUG mode
-     *
-     * @return \Illuminate\Http\Response
+     * Turn the Debugbar on or off for the current process (dev dependency, may be absent).
      */
     public function debugModeSwitch(Request $request)
     {
-        $switch = request('mode');
-        if ($switch == 'on') {
-            $this->debugModeOn();
+        $on = $request->input('mode') === 'on';
+        Log::debug('Debug mode '.($on ? 'ON' : 'OFF'));
+        if (app()->bound('debugbar')) {
+            $on ? app('debugbar')->enable() : app('debugbar')->disable();
         }
-        else {
-            $this->debugModeOff();
-        }
-        // Redirect the user to where he was
+
         return back()->withInput();
-    }
-
-    private function debugModeOn() : void
-    {
-        \Log::debug('Debug mode ON!');
-        \Debugbar::enable();
-    }
-
-    private function debugModeOff() : void
-    {
-        \Log::debug('Debug mode OFF!');
-        \Debugbar::disable();
     }
 }

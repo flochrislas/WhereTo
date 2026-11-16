@@ -1,122 +1,88 @@
 <?php
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
-
-// The following use has been added by and for Eclipse
+use App\Http\Controllers\AdminPanelController;
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\BarController;
+use App\Http\Controllers\BarTagController;
+use App\Http\Controllers\KaraokeController;
+use App\Http\Controllers\KaraokeTagController;
+use App\Http\Controllers\RestaurantAdminController;
+use App\Http\Controllers\RestaurantController;
+use App\Http\Controllers\RestaurantTagController;
+use App\Http\Controllers\RestaurantTypeController;
+use App\Http\Controllers\StoreController;
+use App\Http\Controllers\StoreTagController;
+use App\Http\Controllers\SuggestionController;
 use Illuminate\Support\Facades\Route;
 
 // ===============================================
 // PUBLIC PAGES ==================================
 // ===============================================
 
-// show a static view for the home page (resources/views/home.blade.php)
-Route::get('/', array('as' => 'home', function() {
-    return View::make('home');
-}));
+Route::view('/', 'home')->name('home');
+Route::view('info/main', 'info.main')->name('info');
+Route::view('vip/main', 'vip.main')->name('vip');
 
-Route::get('info/main', array('as' => 'info', function() {
-    return view('info.main');
-}));
+// Lunch suggestion (HTML fragment, loaded by AJAX from the home page)
+Route::get('suggestions', [SuggestionController::class, 'suggest'])->name('suggestions');
 
-Route::get('vip/main', array('as' => 'vip', function() {
-    return view('vip.main');
-}));
+// Restaurants
+Route::get('restaurants', [RestaurantTagController::class, 'restaurantsFilter'])->name('restaurants.main');
+Route::get('restaurants/results', [RestaurantController::class, 'results'])->name('restaurants.results');
+Route::get('restaurants/details/{id}', [RestaurantController::class, 'details'])->name('restaurants.details');
+Route::get('restaurant/details/{id}', [RestaurantController::class, 'detailsSingle'])->name('restaurants.details.single');
+Route::get('tags/autocomplete', [RestaurantTagController::class, 'autocomplete'])->name('tags.autocomplete');
 
-// about page (resources/views/about.blade.php)
-Route::get('about', array('as' => 'about', function() {
-    return View::make('about');
-}));
+// Stores
+Route::get('stores', [StoreTagController::class, 'viewAllTags'])->name('stores.main');
+Route::get('stores/results', [StoreController::class, 'results'])->name('stores.results');
+Route::get('stores/details/{id}', [StoreController::class, 'details'])->name('stores.details');
+Route::get('store/details/{id}', [StoreController::class, 'detailsSingle'])->name('stores.details.single');
 
-Route::get('test-html', array('as' => 'test', function() {
-    return view('test-html');
-}));
+// Bars
+Route::get('bars', [BarTagController::class, 'viewAllTags'])->name('bars.main');
+Route::get('bars/results', [BarController::class, 'results'])->name('bars.results');
+Route::get('bars/details/{id}', [BarController::class, 'details'])->name('bars.details');
+Route::get('bar/details/{id}', [BarController::class, 'detailsSingle'])->name('bars.details.single');
 
-// Get a suggestions
-Route::get('suggestions', 'SuggestionController@suggest')->name('suggestions');
+// Karaoke
+Route::get('karaokes', [KaraokeTagController::class, 'viewAllTags'])->name('karaokes.main');
+Route::get('karaokes/results', [KaraokeController::class, 'results'])->name('karaokes.results');
+Route::get('karaokes/details/{id}', [KaraokeController::class, 'details'])->name('karaokes.details');
+Route::get('karaoke/details/{id}', [KaraokeController::class, 'detailsSingle'])->name('karaokes.details.single');
 
-// Public restaurants pages
-Route::get('restaurants', 'RestaurantTagController@restaurantsFilter')->name('restaurants.main');
-Route::get('restaurants/results', 'RestaurantController@results')->name('restaurants.results');
-Route::get('restaurants/details/{id}', 'RestaurantController@details')->name('restaurants.details');
-Route::get('restaurant/details/{id}', 'RestaurantController@detailsSingle')->name('restaurants.details.single');
-Route::get('tags/autocomplete', 'RestaurantTagController@autocomplete')->name('tags.autocomplete');
+// ===============================================
+// AUTHENTICATION (login only, no registration) ==
+// ===============================================
 
-// Public stores pages
-Route::get('stores', 'StoreTagController@viewAllTags')->name('stores.main');
-Route::get('stores/results', 'StoreController@results')->name('stores.results');
-Route::get('stores/details/{id}', 'StoreController@details')->name('stores.details');
-Route::get('store/details/{id}', 'StoreController@detailsSingle')->name('stores.details.single');
-
-// Public bars pages
-Route::get('bars', 'BarTagController@viewAllTags')->name('bars.main');
-Route::get('bars/results', 'BarController@results')->name('bars.results');
-Route::get('bars/details/{id}', 'BarController@details')->name('bars.details');
-Route::get('bar/details/{id}', 'BarController@detailsSingle')->name('bars.details.single');
-
-// Public karaoke pages
-Route::get('karaokes', 'KaraokeTagController@viewAllTags')->name('karaokes.main');
-Route::get('karaokes/results', 'KaraokeController@results')->name('karaokes.results');
-Route::get('karaokes/details/{id}', 'KaraokeController@details')->name('karaokes.details');
-Route::get('karaoke/details/{id}', 'KaraokeController@detailsSingle')->name('karaokes.details.single');
-
-// Public clubs pages
-Route::get('clubs', 'ClubTagController@viewAllTags')->name('clubs.main');
-Route::get('clubs/results', 'ClubController@results')->name('clubs.results');
-Route::get('clubs/details/{id}', 'ClubController@details')->name('clubs.details');
+Route::middleware('guest')->group(function () {
+    Route::get('login', [LoginController::class, 'showLoginForm'])->name('login');
+    Route::post('login', [LoginController::class, 'login'])->middleware('throttle:5,1');
+});
+Route::post('logout', [LoginController::class, 'logout'])->middleware('auth')->name('logout');
 
 // ===============================================
 // ADMIN SECTION =================================
 // ===============================================
-Route::middleware(['auth'])->prefix('admin')->group(function()
-{
-    // main page for the admin section (resources/views/admin/dashboard.blade.php)
-    Route::get('/', function() {
-        return view('admin.dashboard');
-    })->name('admin.dashboard');
 
-    // To switch debug mode ON or OFF or possibly some other setups
-    Route::post('debug', 'AdminPanelController@debugModeSwitch')->name('debug.switch');
+Route::middleware('auth')->prefix('admin')->group(function () {
+    Route::view('/', 'admin.dashboard')->name('admin.dashboard');
+
+    // Debugbar on/off for the running process
+    Route::post('debug', [AdminPanelController::class, 'debugModeSwitch'])->name('debug.switch');
 
     // Restaurants CRUD
-    Route::resource('restaurants','RestaurantAdminController');
+    Route::resource('restaurants', RestaurantAdminController::class);
 
-    // RestaurantType CRUD
-    // tuto https://www.codexworld.com/laravel-tutorial-crud-add-edit-delete-operations/
-    Route::get('restaurantType', 'RestaurantTypeController@index')->name('restaurantType.index');
-    Route::get('restaurantType/details/{id}', 'RestaurantTypeController@show')->name('restaurantType.details');
-    Route::get('restaurantType/add', 'RestaurantTypeController@create')->name('restaurantType.add');
-    Route::post('restaurantType/insert', 'RestaurantTypeController@store')->name('restaurantType.insert');
-    Route::get('restaurantType/edit/{id}', 'RestaurantTypeController@edit')->name('restaurantType.edit');
-    Route::post('restaurantType/update/{id}', 'RestaurantTypeController@update')->name('restaurantType.update');
-    Route::get('restaurantType/delete/{id}', 'RestaurantTypeController@destroy')->name('restaurantType.delete');
+    // Restaurant types CRUD
+    Route::get('restaurantType', [RestaurantTypeController::class, 'index'])->name('restaurantType.index');
+    Route::get('restaurantType/details/{id}', [RestaurantTypeController::class, 'show'])->name('restaurantType.details');
+    Route::get('restaurantType/add', [RestaurantTypeController::class, 'create'])->name('restaurantType.add');
+    Route::post('restaurantType/insert', [RestaurantTypeController::class, 'store'])->name('restaurantType.insert');
+    Route::get('restaurantType/edit/{id}', [RestaurantTypeController::class, 'edit'])->name('restaurantType.edit');
+    Route::put('restaurantType/update/{id}', [RestaurantTypeController::class, 'update'])->name('restaurantType.update');
+    Route::delete('restaurantType/delete/{id}', [RestaurantTypeController::class, 'destroy'])->name('restaurantType.delete');
 
-    // Restaurant Tags CRUD
-    Route::resource('restaurantTag','RestaurantTagController');
-
-    // Restaurants Import Export
-    Route::get('restaurantsFiles', function() {
-        return view('admin.restaurantsFiles');
-    })->name('restaurants.imex');
-    Route::get('restaurants/export/{type}', 'RestaurantAdminController@export')->name('restaurants.export');
-    Route::post('restaurants/import', 'RestaurantAdminController@importAlt')->name('restaurants.import');
-
-    // Laravel's welcome page
-    Route::get('laravel', function () {
-        return view('admin.laravel');
-    })->name('laravel');
+    // Restaurant tags CRUD
+    Route::resource('restaurantTag', RestaurantTagController::class);
 });
-
-// ===============================================
-// Authentication ================================
-// ===============================================
-Auth::routes();
-// For admin auth see https://laracasts.com/discuss/channels/laravel/user-admin-authentication

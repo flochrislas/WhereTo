@@ -2,46 +2,30 @@
 
 namespace Tests\Unit;
 
-use Tests\TestCase;
-
-use App\RestaurantTag;
 use App\Http\Controllers\RestaurantTagController;
-
-use Illuminate\Support\Collection as BaseCollection;
+use App\Models\RestaurantTag;
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
 
 class RestaurantTagControllerTest extends TestCase
 {
-    public function testCreateFromLabel(): void
+    use RefreshDatabase;
+
+    public function test_create_from_label(): void
     {
-        $this->assertInstanceOf(
-            RestaurantTag::class,
-            RestaurantTag::create(['label'=>'unit test create'])
-        );
+        $this->assertInstanceOf(RestaurantTag::class, RestaurantTag::create(['label' => 'unit test create']));
     }
 
-    public function testAutocompleteDB(): void
+    public function test_autocomplete_db_matches_labels(): void
     {
-        // 2 different types of collections in Laravel
-        // https://medium.com/@lynn80827/two-types-of-collections-in-laravel-888d43858c4e
-        $expectedArray = [
-                      ["id"=>9,"value"=>"japanese"],
-                      ["id"=>21,"value"=>"japanese curry"]
-                    ];
-        $expected = new EloquentCollection([
-                      new RestaurantTag(["id"=>9,"value"=>"japanese"]),
-                      new RestaurantTag(["id"=>21,"value"=>"japanese curry"])
-                    ]);
+        RestaurantTag::create(['label' => 'japanese']);
+        RestaurantTag::create(['label' => 'ramen']);
+        RestaurantTag::create(['label' => 'japanese curry']);
+
         $result = (new RestaurantTagController)->autocompleteDB('jap');
 
-        $this->assertInstanceOf(BaseCollection::class, $result);
         $this->assertInstanceOf(EloquentCollection::class, $result);
-
-        $this->assertEquals(
-            $expectedArray,
-            $result->toArray()
-        );
-
+        $this->assertSame(['japanese', 'japanese curry'], $result->pluck('value')->all());
     }
-
 }

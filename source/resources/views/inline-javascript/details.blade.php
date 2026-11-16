@@ -1,22 +1,33 @@
-<!-- The Javascript for the details page -->
+<!-- The Javascript to show details from the results list -->
 <script>
 
-function copyStringToClipboard (str) {
-   console.info("copyStringToClipboard: " + str);
-   // Create new element
-   let el = document.createElement('textarea');
-   // Set value (string to be copied)
-   el.value = str;
-   // Set non-editable to avoid focus and move outside of view
-   el.setAttribute('readonly', '');
-   el.style = {position: 'absolute', left: '-9999px'};
-   document.body.appendChild(el);
-   // Select text inside element
-   el.select();
-   // Copy text to clipboard
-   document.execCommand('copy');
-   // Remove temporary element
-   document.body.removeChild(el);
+function ajaxDetails(url) {
+  getDetailsDiv().innerHTML = "Loading...";
+  console.info("GET: " + url);
+  fetch(url)
+    .then(response => response.ok ? response.text() : Promise.reject(response.status))
+    .then(html => { getDetailsDiv().innerHTML = html; })
+    .catch(() => {
+      getDetailsDiv().innerHTML = "Sorry, detailed data could not be retrieved. Check your Internet connection and try again.";
+    });
+}
+
+function showDetails(url, placeId) {
+  if (placeId != getCurrentDetailsId()) {
+      ajaxDetails(url);
+  }
+  getDetailsDiv().style.display = "block";
+  document.getElementById("content").style.display = "none";
+}
+
+function hideDetails() {
+  getDetailsDiv().style.display = "none";
+  document.getElementById("content").style.display = "flex";
+}
+
+function getCurrentDetailsId() {
+  const name = document.getElementById("detailName");
+  return name == null ? null : name.getAttribute("detailId");
 }
 
 </script>

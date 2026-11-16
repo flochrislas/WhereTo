@@ -2,138 +2,58 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\RestaurantType;
 use Illuminate\Http\Request;
-use App\RestaurantType;
-use Session;
+use Illuminate\Support\Facades\Cache;
 
 /**
- * Restaurant type controller.
- * Using tuto https://www.codexworld.com/laravel-tutorial-crud-add-edit-delete-operations/
+ * Admin CRUD for the restaurant types lookup table.
  */
 class RestaurantTypeController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
-        //fetch all restaurantTypes data
-        $restaurantTypes = RestaurantType::orderBy('created_at','desc')->get();
-
-        //pass restaurantTypes data to view and load list view
-        return view('admin.restaurantType.index', ['restaurantTypes' => $restaurantTypes]);
+        return view('admin.restaurantType.index', ['restaurantTypes' => RestaurantType::orderByDesc('created_at')->get()]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
-        //load form view
         return view('admin.restaurantType.add');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
-        //validate restaurantType data
-        $this->validate($request, [
-            'label' => 'required'
-        ]);
+        $request->validate(['label' => 'required']);
+        RestaurantType::create($request->all());
+        Cache::flush();
 
-        //get restaurantType data
-        $restaurantTypeData = $request->all();
-
-        //insert restaurantType data
-        RestaurantType::create($restaurantTypeData);
-
-        //store status message
-        Session::flash('success_msg', 'Restaurant Type added successfully!');
-
-        return redirect()->route('restaurantType.index');
+        return redirect()->route('restaurantType.index')->with('success_msg', 'Restaurant Type added successfully!');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
+    public function show(int $id)
     {
-        //fetch restaurantType data
-        $restaurantType = RestaurantType::find($id);
-
-        //pass restaurantTypes data to view and load list view
-        return view('admin.restaurantType.details', ['restaurantType' => $restaurantType]);
+        return view('admin.restaurantType.details', ['restaurantType' => RestaurantType::findOrFail($id)]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
+    public function edit(int $id)
     {
-        //get restaurantType data by id
-        $restaurantType = RestaurantType::find($id);
-
-        //load form view
-        return view('admin.restaurantType.edit', ['restaurantType' => $restaurantType]);
+        return view('admin.restaurantType.edit', ['restaurantType' => RestaurantType::findOrFail($id)]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
+    public function update(Request $request, int $id)
     {
-        //validate restaurantType data
-        $this->validate($request, [
-            'label' => 'required'
-        ]);
+        $request->validate(['label' => 'required']);
+        RestaurantType::findOrFail($id)->update($request->all());
+        Cache::flush();
 
-        //get restaurantType data
-        $restaurantTypeData = $request->all();
-
-        //update restaurantType data
-        RestaurantType::find($id)->update($restaurantTypeData);
-
-        //store status message
-        Session::flash('success_msg', 'Restaurant Type updated successfully!');
-
-        return redirect()->route('restaurantType.index');
-
-        //return redirect('/restaurants-list')->with('success', 'The restaurant has been updated!');
+        return redirect()->route('restaurantType.index')->with('success_msg', 'Restaurant Type updated successfully!');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
+    public function destroy(int $id)
     {
-        //update restaurantType data
-        RestaurantType::find($id)->delete();
+        RestaurantType::findOrFail($id)->delete();
+        Cache::flush();
 
-        //store status message
-        Session::flash('success_msg', 'Restaurant Type deleted successfully!');
-
-        return redirect()->route('restaurantType.index');
+        return redirect()->route('restaurantType.index')->with('success_msg', 'Restaurant Type deleted successfully!');
     }
 }

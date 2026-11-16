@@ -1,39 +1,21 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
-class CreateBarBarTagTable extends Migration
+return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
-    public function up()
+    public function up(): void
     {
         Schema::create('bar_bar_tag', function (Blueprint $table) {
-          // We use on cascade deelte so if any entry is deleted,
-          // its relationships will as well, and we dont need to manually detach from code
-
-          $table->integer('bar_id')->unsigned()->nullable();
-          $table->foreign('bar_id')->references('id')
-                ->on('bars')->onDelete('cascade');
-
-          $table->integer('bar_tag_id')->unsigned()->nullable();
-          $table->foreign('bar_tag_id')->references('id')
-                ->on('bar_tags')->onDelete('cascade');
+            $table->foreignId('bar_id')->constrained('bars')->cascadeOnDelete();
+            $table->foreignId('bar_tag_id')->constrained('bar_tags')->cascadeOnDelete();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
-    public function down()
+    public function down(): void
     {
         Schema::dropIfExists('bar_bar_tag');
     }
-}
+};

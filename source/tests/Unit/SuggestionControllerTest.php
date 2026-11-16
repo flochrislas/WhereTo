@@ -2,33 +2,35 @@
 
 namespace Tests\Unit;
 
-use Tests\TestCase;
-use Carbon\Carbon;
 use App\Http\Controllers\SuggestionController;
+use Carbon\Carbon;
+use PHPUnit\Framework\TestCase;
 
 class SuggestionControllerTest extends TestCase
 {
-    public function testLunchTime() : void
+    protected function tearDown(): void
     {
-        // Mock now
-        $lunchTimeNow = Carbon::create(2017, 3, 19, 11, 30);
-        Carbon::setTestNow($lunchTimeNow);
-        $this->assertTrue(
-            (new SuggestionController)->isLunchTime()
-        );
-        // Clear the mock
         Carbon::setTestNow();
+        parent::tearDown();
     }
 
-    public function testNotLunchTime() : void
+    public function test_lunch_time_starts_at_11_30_tokyo(): void
     {
-        // Mock now
-        $lunchTimeNow = Carbon::create(2017, 3, 19, 11 ,29);
-        Carbon::setTestNow($lunchTimeNow);
-        $this->assertNotTrue(
-            (new SuggestionController)->isLunchTime()
-        );
-        // Clear the mock
-        Carbon::setTestNow();
+        Carbon::setTestNow(Carbon::create(2017, 3, 19, 11, 30, 0, 'Asia/Tokyo'));
+        $this->assertTrue(SuggestionController::isLunchTime());
+    }
+
+    public function test_lunch_time_ends_at_14_00_tokyo(): void
+    {
+        Carbon::setTestNow(Carbon::create(2017, 3, 19, 14, 0, 0, 'Asia/Tokyo'));
+        $this->assertTrue(SuggestionController::isLunchTime());
+        Carbon::setTestNow(Carbon::create(2017, 3, 19, 14, 1, 0, 'Asia/Tokyo'));
+        $this->assertFalse(SuggestionController::isLunchTime());
+    }
+
+    public function test_not_lunch_time(): void
+    {
+        Carbon::setTestNow(Carbon::create(2017, 3, 19, 11, 29, 0, 'Asia/Tokyo'));
+        $this->assertFalse(SuggestionController::isLunchTime());
     }
 }

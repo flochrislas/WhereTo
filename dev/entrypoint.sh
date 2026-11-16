@@ -19,9 +19,9 @@ if ! grep -q '^APP_KEY=base64:' .env; then
   php artisan key:generate --force
 fi
 
-# Wait for PostgreSQL even though compose already gates on the healthcheck.
+# Wait for PostgreSQL (connection settings come from .env) even though compose gates on the healthcheck.
 i=0
-until php -r 'new PDO("pgsql:host=".getenv("DB_HOST").";port=".getenv("DB_PORT").";dbname=".getenv("DB_DATABASE"), getenv("DB_USERNAME"), getenv("DB_PASSWORD"));' 2>/dev/null; do
+until php artisan db:show >/dev/null 2>&1; do
   i=$((i+1)); [ "$i" -gt 30 ] && { echo "[entrypoint] database not reachable"; exit 1; }
   sleep 1
 done
