@@ -9,6 +9,14 @@
   <div id="selectedTags" aria-label="Selected tags">
   </div>
 
+  <!-- Operator between the selected tags: all of them (AND) or any of them (OR). Remembered in localStorage by the JavaScript -->
+  <div id="tagsOperator" role="group" aria-label="Match the selected tags">
+    <span>Match</span>
+    <button type="button" class="opButton" data-op="AND" aria-pressed="true" onclick="setTagsOperator('AND')">all</button>
+    <button type="button" class="opButton" data-op="OR" aria-pressed="false" onclick="setTagsOperator('OR')">any</button>
+    <span>of the selected tags</span>
+  </div>
+
   <p>Available options</p>
 </div>
 

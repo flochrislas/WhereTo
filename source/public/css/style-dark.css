@@ -400,6 +400,26 @@ td {
   flex: auto;
   margin: .6rem;
 }
+
+/* "Match [all] [any] of the selected tags" line */
+#tagsOperator {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: .35rem;
+  margin: .1rem .4rem .3rem;
+  font-size: .8rem;
+}
+
+.opButton {
+  font-size: .8rem;
+  padding: .3rem .7rem;
+}
+
+/* The operator in use */
+.opButton[aria-pressed="true"] {
+  border-color: var(--color-dst);
+}
 /*********************************************/
 /*            RESTAURANTS TAGS               */
 /*********************************************/

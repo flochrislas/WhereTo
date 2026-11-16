@@ -94,6 +94,18 @@ class PlacesTest extends TestCase
         $this->assertCount(2, $this->namesInOrder($html));
     }
 
+    /** op=OR: the place needs any of the tags, not all of them */
+    #[DataProvider('placeTypes')]
+    public function test_results_filtered_by_tags_with_or(string $plural, string $singular, string $model, string $tagModel): void
+    {
+        $this->seedTwo($model, $tagModel);
+        // Only "Near one" has tag b, but both have tag a: OR returns both
+        $html = $this->get("/$plural/results?op=OR&tags=a,b&orderBy=distance&position=null")->assertOk()->getContent();
+        $this->assertEqualsCanonicalizing(['Near one', 'Far one'], $this->namesInOrder($html));
+        // The filter page offers the choice
+        $this->get("/$plural")->assertOk()->assertSee('data-op="OR"', false);
+    }
+
     #[DataProvider('placeTypes')]
     public function test_details_fragment_and_single_page(string $plural, string $singular, string $model, string $tagModel): void
     {

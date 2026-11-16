@@ -281,11 +281,33 @@ function refreshResults(orderBy) {
   // Show which sort button is the current one
   markSortButton(orderBy);
 
-  // Operator between the tags. Other operators (OR, ANDNOT, ORNOT) exist server-side but are not exposed yet
-  const op = 'AND';
+  // Operator between the tags: AND (all of them) or OR (any of them), chosen with the "all / any" buttons.
+  // ANDNOT and ORNOT exist server-side but are not exposed.
+  const op = getTagsOperator();
 
   // AJAX request to update the results
   ajaxResults(op, tagsLabels, orderBy);
+}
+
+/** The operator between the selected tags, remembered in localStorage: "AND" (default) or "OR" */
+function getTagsOperator() {
+  return readStore("op") === "OR" ? "OR" : "AND";
+}
+
+/** "all" / "any" buttons: remember the operator, show it on the buttons, and refresh the results if tags are selected */
+function setTagsOperator(op) {
+  store("op", op);
+  markOperatorButton(op);
+  if (getSelectedTagsDiv().children.length > 0) {
+    refreshResults();
+  }
+}
+
+/** aria-pressed="true" on the button of the given operator, "false" on the other (buttons carry data-op) */
+function markOperatorButton(op) {
+  document.querySelectorAll('.opButton[data-op]').forEach(button => {
+    button.setAttribute('aria-pressed', button.dataset.op === op ? 'true' : 'false');
+  });
 }
 
 /** aria-pressed="true" on the sort button of the given order, "false" on the others (buttons carry data-order-by) */
@@ -495,8 +517,9 @@ function ajaxSuggestion() {
 // so the permission prompt does not appear before the visitor did anything.
 if (getResultsUrl() !== null) {
   startGeolocation();
-  // Show the remembered sort order on its button
+  // Show the remembered sort order and tag operator on their buttons
   markSortButton(readStore("orderBy") || "distance");
+  markOperatorButton(getTagsOperator());
 }
 
 // Keyboard: Enter or Space on an element with role="button" (the result names) acts like a click.

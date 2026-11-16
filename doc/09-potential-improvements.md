@@ -167,7 +167,7 @@ The UI is already responsive (viewport meta, one `@media` breakpoint at 680px, C
 Small features that the current data already supports.
 
 - **Results counter**: done (November 2026), a "N results" line above the list in the four `results-data` fragments.
-- **OR filter**: `whereTags()` already implements `OR`, `ANDNOT` and `ORNOT`; a single toggle next to the selected tags would expose it.
+- **OR filter**: done (November 2026), "Match all / any of the selected tags" buttons under the selected tags, remembered in `localStorage`.
 - **Opening hours and "open now"**: a `hours` JSON column per place and a filter that uses the same Tokyo clock as the lunch suggestion.
 - **Japanese UI**: Laravel localisation (`lang/ja.json`) with the browser language as default; the data already has Japanese names.
 - **Share and deep links**: the copy-URL button exists; add Open Graph tags to the details pages so a shared link shows the place name and type, and a `sitemap.xml` route for the details pages.
