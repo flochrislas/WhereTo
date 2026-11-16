@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Tools\GeoUtils;
+use App\Enums\OrderBy;
+use App\Enums\TagOperator;
+use App\Support\Position;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Log;
-use InvalidArgumentException;
 
 /**
  * If you have a Model class that describes a place (such as Restaurant.php or Karaoke.php),
@@ -20,6 +21,12 @@ abstract class PlaceController extends Controller
 {
     /** Shibuya Station from Google Maps, used when the visitor sends no position or is too far away. */
     private const STATION_POSITION = '35.658789, 139.701262';
+
+    /** The station as a Position object */
+    public static function station(): Position
+    {
+        return Position::fromString(self::STATION_POSITION);
+    }
 
     /** Beyond this distance (metres) from the station, the visitor's position is ignored. */
     private const MAX_DISTANCE_FROM_STATION = 2500;
@@ -50,34 +57,26 @@ abstract class PlaceController extends Controller
      * Detect if the user is in the area.
      * Fall back to Shibuya Station when the position is missing, invalid, or more than 2.5 km away.
      */
-    private function positionSpoofer(?string $position): string
+    private function positionSpoofer(?string $position): Position
     {
-        // The browser sends the string "null" when it has no position yet
-        if (empty($position) || $position === 'null') {
-            Log::debug('GPS position not set. Using Shibuya Station coordinates.');
+        // null when the browser sent nothing, "null" (no fix yet) or something that is not coordinates
+        $current = Position::tryFromString($position);
+        if ($current === null) {
+            Log::debug('GPS position not set or invalid. Using Shibuya Station coordinates.');
 
-            return self::STATION_POSITION;
-        }
-        // Parse "lat, lon" into two floats; throws when the string is not coordinates
-        try {
-            [$curLat, $curLon] = GeoUtils::toPositionArray($position);
-        } catch (InvalidArgumentException $e) {
-            Log::debug('Invalid GPS position. Using Shibuya Station coordinates.');
-
-            return self::STATION_POSITION;
+            return self::station();
         }
         // We check the distance from Shibuya Station
-        [$stationLat, $stationLon] = GeoUtils::toPositionArray(self::STATION_POSITION);
-        $distance = GeoUtils::distance($curLat, $curLon, $stationLat, $stationLon);
+        $distance = $current->distanceTo(self::station());
         Log::debug('Distance from Shibuya Station: '.$distance);
         if ($distance > self::MAX_DISTANCE_FROM_STATION) {
             Log::debug('Position is too far. Using Shibuya Station coordinates.');
 
-            return self::STATION_POSITION;
+            return self::station();
         }
-        Log::debug('GPS position set from user: '.$position);
+        Log::debug('GPS position set from user: '.$current);
 
-        return $position;
+        return $current;
     }
 
     /**
@@ -121,38 +120,38 @@ abstract class PlaceController extends Controller
      * Generate the key, read the cache, if not found then read the DB and fill the cache.
      *
      * @param  array<int, string>|null  $tags  used in the search
-     * @param  string|null  $op  operator used in the search (AND, OR, ANDNOT, ORNOT)
-     * @param  string|null  $orderBy  sorting used in the search (distance, ratings, cost)
+     * @param  TagOperator  $op  operator used in the search
+     * @param  OrderBy  $orderBy  sorting used in the search
      * @param  int  $limit  maximum number of results (0 for no limit)
      */
-    public function useCache(?array $tags, ?string $op, ?string $orderBy, int $limit = 0): Collection
+    public function useCache(?array $tags, TagOperator $op, OrderBy $orderBy, int $limit = 0): Collection
     {
         // The key needs to be made of all the used parameters except the coordinates
         $cacheKey = $this->cacheKey($op, $tags, $orderBy, $limit);
 
         // rememberForever returns the cached value, or runs the closure once and caches its result
         return Cache::rememberForever($cacheKey, function () use ($tags, $op, $orderBy, $limit) {
-            return $this->readFromDB($tags, $op ?? 'AND', $orderBy ?? 'distance', $limit);
+            return $this->readFromDB($tags, $op, $orderBy, $limit);
         });
     }
 
     /**
      * Generates the key used to put the main query into the cache.
      *
-     * @param  string|null  $op  used in the search
+     * @param  TagOperator  $op  used in the search
      * @param  array<int, string>|null  $tags  used in the search. Can be empty for ALL, or an array of actual tags
-     * @param  string|null  $orderBy  used in the search
+     * @param  OrderBy  $orderBy  used in the search
      * @param  int  $limit  used in the search
      * @return string the key
      */
-    public function cacheKey(?string $op, ?array $tags, ?string $orderBy, int $limit = 0): string
+    public function cacheKey(TagOperator $op, ?array $tags, OrderBy $orderBy, int $limit = 0): string
     {
         if (empty($tags)) {
             // No tag selected: e.g. 'All-Restaurant'
             $cacheKey = 'All-'.$this->getModelName();
         } else {
             // One hash per operator + tags combination, prefixed with the model so models never collide
-            $cacheKey = $this->getModelName().'-'.md5($op.','.implode(',', $tags));
+            $cacheKey = $this->getModelName().'-'.md5($op->value.','.implode(',', $tags));
         }
         if ($limit > 0) {
             // e.g. 'l100-All-Restaurant' for the 100 best restaurants
@@ -160,8 +159,8 @@ abstract class PlaceController extends Controller
         }
         // Only the "cost" order changes the SQL ordering (so the cached rows);
         // the other orders are applied in PHP after reading the cache
-        if ($orderBy === 'cost') {
-            $cacheKey = $orderBy.$cacheKey;
+        if ($orderBy === OrderBy::Cost) {
+            $cacheKey = $orderBy->value.$cacheKey;
         }
 
         return $cacheKey;
@@ -172,9 +171,9 @@ abstract class PlaceController extends Controller
      *
      * @param  array<int, string>|null  $tags
      */
-    public function readFromDB(?array $tags, string $op = 'AND', string $orderBy = 'distance', int $limit = 0): Collection
+    public function readFromDB(?array $tags, TagOperator $op = TagOperator::And, OrderBy $orderBy = OrderBy::Distance, int $limit = 0): Collection
     {
-        Log::debug('Hitting the DB with op '.$op.' orderBy '.$orderBy.' limit '.$limit);
+        Log::debug('Hitting the DB with op '.$op->value.' orderBy '.$orderBy->value.' limit '.$limit);
         // Start a query on the model's table, e.g. Restaurant::query()
         $class = $this->getModelClass();
         $query = $class::query();
@@ -196,10 +195,10 @@ abstract class PlaceController extends Controller
      * Sorting by distance happens outside the query (in PHP), so "distance" and "ratings" are the same here:
      * the best places on top. "cost" puts the price first when the kind has one.
      */
-    public function orderBy(Builder $query, string $orderBy = 'distance'): void
+    public function orderBy(Builder $query, OrderBy $orderBy = OrderBy::Distance): void
     {
         // Price first, only for the kinds that have a price column (restaurants: lunch_price)
-        if ($orderBy === 'cost' && $this->costColumn() !== null) {
+        if ($orderBy === OrderBy::Cost && $this->costColumn() !== null) {
             $query->orderBy($this->costColumn());
         }
         // Then the best places on top: one orderByDesc per rating column
@@ -212,11 +211,11 @@ abstract class PlaceController extends Controller
     /**
      * Add the tag filter to the query.
      * AND: has all the tags; OR: has any of them; ANDNOT: has none of them; ORNOT: has a tag outside the list.
-     * Unknown operators behave like AND (the legacy code applied no filter at all in that case; the UI only sends AND).
+     * (An unknown op in the URL became And in TagOperator::fromRequest.)
      *
      * @param  array<int, string>|null  $tags
      */
-    public function whereTags(Builder $query, ?array $tags, string $op = 'AND'): void
+    public function whereTags(Builder $query, ?array $tags, TagOperator $op = TagOperator::And): void
     {
         // No tags means no filter: all the places
         if (empty($tags)) {
@@ -226,13 +225,13 @@ abstract class PlaceController extends Controller
         $in = fn (Builder $q) => $q->whereIn('label', $tags);
         match ($op) {
             // whereHas: the place has at least one matching tag
-            'OR' => $query->whereHas('tags', $in),
+            TagOperator::Or => $query->whereHas('tags', $in),
             // whereDoesntHave: the place has no matching tag at all
-            'ANDNOT' => $query->whereDoesntHave('tags', $in),
+            TagOperator::AndNot => $query->whereDoesntHave('tags', $in),
             // the place has at least one tag that is NOT in the list
-            'ORNOT' => $query->whereHas('tags', fn (Builder $q) => $q->whereNotIn('label', $tags)),
+            TagOperator::OrNot => $query->whereHas('tags', fn (Builder $q) => $q->whereNotIn('label', $tags)),
             // AND: the number of matching tags must equal the number of tags asked
-            default => $query->whereHas('tags', $in, '=', count($tags)),
+            TagOperator::And => $query->whereHas('tags', $in, '=', count($tags)),
         };
     }
 
@@ -240,7 +239,7 @@ abstract class PlaceController extends Controller
      * Return the places sorted by distance from the given position.
      * Places without coordinates are dropped.
      */
-    public function sortByDistance(iterable $places, string $position): Collection
+    public function sortByDistance(iterable $places, Position $position): Collection
     {
         // Fill currentDistance on each place
         $this->generateCurrentDistances($places, $position);
@@ -256,13 +255,12 @@ abstract class PlaceController extends Controller
      * For all the given places, compute the distance from the given position.
      * Each result is stored in the place's model (currentDistance, in metres).
      */
-    public function generateCurrentDistances(iterable $places, string $position): void
+    public function generateCurrentDistances(iterable $places, Position $position): void
     {
-        [$curLat, $curLon] = GeoUtils::toPositionArray($position);
         foreach ($places as $place) {
             if ($place->lat !== null && $place->lon !== null) {
                 // The DB returns decimals as strings, hence the (float) casts
-                $place->currentDistance = GeoUtils::distance($curLat, $curLon, (float) $place->lat, (float) $place->lon);
+                $place->currentDistance = $position->distanceTo(new Position((float) $place->lat, (float) $place->lon));
             } else {
                 Log::debug('No coordinates for: '.$place->name);
             }
@@ -284,11 +282,11 @@ abstract class PlaceController extends Controller
      *
      * @return Collection the places, filled with distances
      */
-    public function handleDistances(Collection $places, ?string $position, ?string $orderBy): Collection
+    public function handleDistances(Collection $places, ?string $position, OrderBy $orderBy): Collection
     {
-        // Replace the position by Shibuya Station if needed
+        // Replace the position by Shibuya Station if needed (and turn the string into a Position)
         $position = $this->positionSpoofer($position);
-        if ($orderBy === 'distance') {
+        if ($orderBy === OrderBy::Distance) {
             return $this->sortByDistance($places, $position);
         }
         // We still need to fill the current distance of each place we show

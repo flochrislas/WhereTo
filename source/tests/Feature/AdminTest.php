@@ -19,6 +19,24 @@ class AdminTest extends TestCase
         $this->get('/register')->assertNotFound();
     }
 
+    /** The 'admin' gate: a user whose level is below 1 is logged in but not an admin */
+    public function test_users_without_level_are_forbidden(): void
+    {
+        $user = User::factory()->create(['level' => '0']);
+        $this->actingAs($user)->get('/admin')->assertForbidden();
+        $this->actingAs($user)->get('/admin/restaurants')->assertForbidden();
+        $this->actingAs(User::factory()->create(['level' => null]))->get('/admin')->assertForbidden();
+    }
+
+    /** The form request rejects bad values with the field errors, and the row is not created */
+    public function test_restaurant_form_is_validated(): void
+    {
+        $user = User::factory()->create();
+        $this->actingAs($user)->post('/admin/restaurants', ['name' => '', 'type' => 'Ramen', 'score_lunch' => 9, 'lunch_price' => 'cheap'])
+            ->assertSessionHasErrors(['name', 'score_lunch', 'lunch_price']);
+        $this->assertDatabaseCount('restaurants', 0);
+    }
+
     public function test_login_and_logout(): void
     {
         $user = User::factory()->create(['password' => 'secret']);

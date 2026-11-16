@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\RestaurantTypeRequest;
 use App\Models\RestaurantType;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 
 /**
@@ -33,13 +33,11 @@ class RestaurantTypeController extends Controller
     /**
      * Store a newly created type in the DB.
      */
-    public function store(Request $request)
+    public function store(RestaurantTypeRequest $request)
     {
-        // Validate the form data (redirects back with the errors when it fails)
-        $request->validate(['label' => 'required']);
-
-        // Insert the type (only the $fillable columns of the model are taken from the form)
-        RestaurantType::create($request->all());
+        // Validated by RestaurantTypeRequest (it redirected back with the errors otherwise):
+        // insert the type from the validated fields
+        RestaurantType::create($request->validated());
 
         // Drop the whole cache so the public pages see the change
         Cache::flush();
@@ -51,31 +49,27 @@ class RestaurantTypeController extends Controller
     /**
      * Display the specified type.
      */
-    public function show(int $id)
+    public function show(RestaurantType $restaurantType)
     {
-        // Fetch the type by id (404 when it does not exist) and load the view
-        return view('admin.restaurantType.details', ['restaurantType' => RestaurantType::findOrFail($id)]);
+        // Route model binding: Laravel loaded the type whose id is in the URL, or answered 404
+        return view('admin.restaurantType.details', compact('restaurantType'));
     }
 
     /**
      * Show the form for editing the specified type.
      */
-    public function edit(int $id)
+    public function edit(RestaurantType $restaurantType)
     {
-        // Fetch the type by id and load the form view
-        return view('admin.restaurantType.edit', ['restaurantType' => RestaurantType::findOrFail($id)]);
+        return view('admin.restaurantType.edit', compact('restaurantType'));
     }
 
     /**
      * Update the specified type in the DB.
      */
-    public function update(Request $request, int $id)
+    public function update(RestaurantTypeRequest $request, RestaurantType $restaurantType)
     {
-        // Validate the form data
-        $request->validate(['label' => 'required']);
-
-        // Update the type with the form data
-        RestaurantType::findOrFail($id)->update($request->all());
+        // Update the type with the validated fields
+        $restaurantType->update($request->validated());
 
         // Drop the whole cache so the public pages see the change
         Cache::flush();
@@ -87,10 +81,10 @@ class RestaurantTypeController extends Controller
     /**
      * Remove the specified type from the DB.
      */
-    public function destroy(int $id)
+    public function destroy(RestaurantType $restaurantType)
     {
         // Delete the type
-        RestaurantType::findOrFail($id)->delete();
+        $restaurantType->delete();
 
         // Drop the whole cache so the public pages see the change
         Cache::flush();

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\OrderBy;
+use App\Enums\TagOperator;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -62,10 +64,10 @@ class SuggestionController
         $restaurantController = new RestaurantController;
 
         // Read the cache or the DB: the 100 best restaurants by rating
-        $places = $restaurantController->useCache(null, 'AND', 'ratings', 100);
+        $places = $restaurantController->useCache(null, TagOperator::And, OrderBy::Ratings, 100);
 
         // Calculate the distances from the position, and sort by them (nearest first)
-        $places = $restaurantController->handleDistances($places, $position, 'distance');
+        $places = $restaurantController->handleDistances($places, $position, OrderBy::Distance);
         if ($places->isEmpty()) {
             return '';
         }

@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\OrderBy;
+use App\Enums\TagOperator;
+use App\Models\Restaurant;
 use Illuminate\Http\Request;
 
 class RestaurantController extends PlaceController
@@ -35,8 +38,8 @@ class RestaurantController extends PlaceController
         // -----------------------------------
         // Reads the request parameters (from the query string)
 
-        // Operator for the tags
-        $op = $request->query('op');
+        // Operator for the tags (AND unless the URL says OR, ANDNOT or ORNOT)
+        $op = TagOperator::fromRequest($request->query('op'));
 
         // Tags as a comma separated list, made into an array
         $tags = $this->formatTags($request->query('tags'));
@@ -44,8 +47,8 @@ class RestaurantController extends PlaceController
         // Current position from the client's GPS
         $position = $this->positionParam($request);
 
-        // The sorting order for the results list
-        $orderBy = $request->query('orderBy');
+        // The sorting order for the results list (distance unless the URL says ratings or cost)
+        $orderBy = OrderBy::fromRequest($request->query('orderBy'));
 
         // -----------------------------------
         // Reads from the cache or the DB
@@ -68,22 +71,17 @@ class RestaurantController extends PlaceController
     /**
      * Display the specified place in the one-page view (HTML fragment loaded by AJAX).
      */
-    public function details(int $id)
+    public function details(Restaurant $place)
     {
-        // findOrFail returns a 404 page when the id does not exist
-        $class = $this->getModelClass();
-        $place = $class::findOrFail($id);
-
+        // Route model binding: Laravel loaded the Restaurant whose id is in the URL ({place}), or answered 404
         return view($this->getModelDetailsView(), compact('place'));
     }
 
     /**
      * Display the specified place in an independent page (shareable URL).
      */
-    public function detailsSingle(int $id)
+    public function detailsSingle(Restaurant $place)
     {
-        $class = $this->getModelClass();
-        $place = $class::findOrFail($id);
 
         return view($this->getModelDetailsView(true), compact('place'));
     }

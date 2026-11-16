@@ -2,6 +2,7 @@
 
 namespace App\Traits;
 
+use App\Support\Position;
 use App\Tools\GeoUtils;
 use Illuminate\Support\Facades\Log;
 use InvalidArgumentException;
@@ -21,10 +22,10 @@ trait Location
     public function fillCoordinatesFromString(string $coordinates): void
     {
         try {
-            // Parse the string into [lat, lon]
-            $coord = GeoUtils::toPositionArray($coordinates);
-            $this->lat = $coord[0];
-            $this->lon = $coord[1];
+            // Parse the string into a Position (throws when it is not "lat, lon")
+            $position = Position::fromString($coordinates);
+            $this->lat = $position->lat;
+            $this->lon = $position->lon;
             // Write the model to the DB
             $this->save();
         } catch (InvalidArgumentException $e) {

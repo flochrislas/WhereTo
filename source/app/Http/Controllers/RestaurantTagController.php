@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\RestaurantTagRequest;
 use App\Models\RestaurantTag;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
@@ -80,13 +81,11 @@ class RestaurantTagController extends Controller
     /**
      * Store a newly created tag in the DB.
      */
-    public function store(Request $request)
+    public function store(RestaurantTagRequest $request)
     {
-        // Validate the form data (redirects back with the errors when it fails)
-        $request->validate(['label' => 'required']);
-
-        // Insert the tag (only the $fillable columns of the model are taken from the form)
-        RestaurantTag::create($request->all());
+        // Validated by RestaurantTagRequest (it redirected back with the errors otherwise):
+        // insert the tag from the validated fields
+        RestaurantTag::create($request->validated());
 
         // Drop the whole cache so the public pages see the new tag
         Cache::flush();
@@ -98,31 +97,27 @@ class RestaurantTagController extends Controller
     /**
      * Display the specified tag.
      */
-    public function show(int $id)
+    public function show(RestaurantTag $restaurantTag)
     {
-        // Fetch the tag by id (404 when it does not exist) and load the view
-        return view('admin.restaurantTag.show', ['restaurantTag' => RestaurantTag::findOrFail($id)]);
+        // Route model binding: Laravel loaded the tag whose id is in the URL, or answered 404
+        return view('admin.restaurantTag.show', compact('restaurantTag'));
     }
 
     /**
      * Show the form for editing the specified tag.
      */
-    public function edit(int $id)
+    public function edit(RestaurantTag $restaurantTag)
     {
-        // Fetch the tag by id and load the form view
-        return view('admin.restaurantTag.edit', ['restaurantTag' => RestaurantTag::findOrFail($id)]);
+        return view('admin.restaurantTag.edit', compact('restaurantTag'));
     }
 
     /**
      * Update the specified tag in the DB.
      */
-    public function update(Request $request, int $id)
+    public function update(RestaurantTagRequest $request, RestaurantTag $restaurantTag)
     {
-        // Validate the form data
-        $request->validate(['label' => 'required']);
-
-        // Update the tag with the form data
-        RestaurantTag::findOrFail($id)->update($request->all());
+        // Update the tag with the validated fields
+        $restaurantTag->update($request->validated());
 
         // Drop the whole cache so the public pages see the change
         Cache::flush();
@@ -134,10 +129,10 @@ class RestaurantTagController extends Controller
     /**
      * Remove the specified tag from the DB.
      */
-    public function destroy(int $id)
+    public function destroy(RestaurantTag $restaurantTag)
     {
         // Delete the tag (the pivot rows go with it, thanks to ON DELETE CASCADE)
-        RestaurantTag::findOrFail($id)->delete();
+        $restaurantTag->delete();
 
         // Drop the whole cache so the public pages see the change
         Cache::flush();

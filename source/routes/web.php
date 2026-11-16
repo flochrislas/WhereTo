@@ -52,24 +52,24 @@ Route::get('karaokes', [KaraokeTagController::class, 'viewAllTags'])->name('kara
 Route::middleware('cache.headers:etag;no_cache')->group(function () {
     // restaurants
     Route::get('restaurants/results', [RestaurantController::class, 'results'])->name('restaurants.results');
-    Route::get('restaurants/details/{id}', [RestaurantController::class, 'details'])->name('restaurants.details');
-    Route::get('restaurant/details/{id}', [RestaurantController::class, 'detailsSingle'])->name('restaurants.details.single');
+    Route::get('restaurants/details/{place}', [RestaurantController::class, 'details'])->name('restaurants.details');
+    Route::get('restaurant/details/{place}', [RestaurantController::class, 'detailsSingle'])->name('restaurants.details.single');
     Route::get('tags/autocomplete', [RestaurantTagController::class, 'autocomplete'])->name('tags.autocomplete');
 
     // stores
     Route::get('stores/results', [StoreController::class, 'results'])->name('stores.results');
-    Route::get('stores/details/{id}', [StoreController::class, 'details'])->name('stores.details');
-    Route::get('store/details/{id}', [StoreController::class, 'detailsSingle'])->name('stores.details.single');
+    Route::get('stores/details/{place}', [StoreController::class, 'details'])->name('stores.details');
+    Route::get('store/details/{place}', [StoreController::class, 'detailsSingle'])->name('stores.details.single');
 
     // bars
     Route::get('bars/results', [BarController::class, 'results'])->name('bars.results');
-    Route::get('bars/details/{id}', [BarController::class, 'details'])->name('bars.details');
-    Route::get('bar/details/{id}', [BarController::class, 'detailsSingle'])->name('bars.details.single');
+    Route::get('bars/details/{place}', [BarController::class, 'details'])->name('bars.details');
+    Route::get('bar/details/{place}', [BarController::class, 'detailsSingle'])->name('bars.details.single');
 
     // karaoke
     Route::get('karaokes/results', [KaraokeController::class, 'results'])->name('karaokes.results');
-    Route::get('karaokes/details/{id}', [KaraokeController::class, 'details'])->name('karaokes.details');
-    Route::get('karaoke/details/{id}', [KaraokeController::class, 'detailsSingle'])->name('karaokes.details.single');
+    Route::get('karaokes/details/{place}', [KaraokeController::class, 'details'])->name('karaokes.details');
+    Route::get('karaoke/details/{place}', [KaraokeController::class, 'detailsSingle'])->name('karaokes.details.single');
 });
 
 // ===============================================
@@ -90,8 +90,9 @@ Route::post('logout', [LoginController::class, 'logout'])->middleware('auth')->n
 // ADMIN SECTION =================================
 // ===============================================
 
-// 'auth' middleware: everything below requires a logged-in user; 'admin' prefix: all URLs start with /admin
-Route::middleware('auth')->prefix('admin')->group(function () {
+// 'auth': everything below requires a logged-in user; 'can:admin': and the 'admin' gate (users.level, see
+// AppServiceProvider) must allow them, else 403; 'admin' prefix: all URLs start with /admin
+Route::middleware(['auth', 'can:admin'])->prefix('admin')->group(function () {
     // Main page of the admin section (resources/views/admin/dashboard.blade.php)
     Route::view('/', 'admin.dashboard')->name('admin.dashboard');
 
@@ -103,12 +104,12 @@ Route::middleware('auth')->prefix('admin')->group(function () {
 
     // Restaurant types CRUD, with explicit routes (tutorial https://www.codexworld.com/laravel-tutorial-crud-add-edit-delete-operations/)
     Route::get('restaurantType', [RestaurantTypeController::class, 'index'])->name('restaurantType.index');
-    Route::get('restaurantType/details/{id}', [RestaurantTypeController::class, 'show'])->name('restaurantType.details');
+    Route::get('restaurantType/details/{restaurantType}', [RestaurantTypeController::class, 'show'])->name('restaurantType.details');
     Route::get('restaurantType/add', [RestaurantTypeController::class, 'create'])->name('restaurantType.add');
     Route::post('restaurantType/insert', [RestaurantTypeController::class, 'store'])->name('restaurantType.insert');
-    Route::get('restaurantType/edit/{id}', [RestaurantTypeController::class, 'edit'])->name('restaurantType.edit');
-    Route::put('restaurantType/update/{id}', [RestaurantTypeController::class, 'update'])->name('restaurantType.update');
-    Route::delete('restaurantType/delete/{id}', [RestaurantTypeController::class, 'destroy'])->name('restaurantType.delete');
+    Route::get('restaurantType/edit/{restaurantType}', [RestaurantTypeController::class, 'edit'])->name('restaurantType.edit');
+    Route::put('restaurantType/update/{restaurantType}', [RestaurantTypeController::class, 'update'])->name('restaurantType.update');
+    Route::delete('restaurantType/delete/{restaurantType}', [RestaurantTypeController::class, 'destroy'])->name('restaurantType.delete');
 
     // Restaurant tags CRUD (same 7 routes as the restaurants)
     Route::resource('restaurantTag', RestaurantTagController::class);

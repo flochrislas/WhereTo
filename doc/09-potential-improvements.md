@@ -92,13 +92,14 @@ The UI is already responsive (viewport meta, one `@media` breakpoint at 680px, C
 - **Why**: `PlaceController` holds the query building, the caching, the distance computation and the HTTP handling. `SuggestionController` instantiates `new RestaurantController` just to call `useCache()` and `handleDistances()`, which couples two HTTP controllers together.
 - **How**: an `App\Services\PlaceSearch` class (or one per kind, built from the enum of 3.1) with `search(tags, op, orderBy, limit): Collection` and `withDistances(Collection, ?Position): Collection`. Controllers become thin: read the request, call the service, return a view. Testing the search no longer needs HTTP requests.
 
-### 3.3 Use the framework's building blocks (S each)
+### 3.3 Use the framework's building blocks (S each) — done
 
 - **Form Requests** (`php artisan make:request StoreRestaurantRequest`) instead of inline `$request->validate()` arrays in the four admin controllers; the rules are then shared between `store()` and `update()`.
 - **Route model binding**: `Route::get('restaurant/details/{restaurant}')` with a `Restaurant $restaurant` parameter replaces the `findOrFail` calls, and gives the 404 for free.
 - **PHP enums** for `orderBy` (`distance`, `ratings`, `cost`) and `op` (`AND`, `OR`, `ANDNOT`, `ORNOT`), validated with `Rule::enum()` in the request instead of being passed around as free strings.
 - **A `Position` value object** (`lat`, `lon`, `fromString()`, `distanceTo()`) instead of the `"lat,lon"` string that goes through `positionSpoofer()`, `google2coord()` and the cache key logic. The `Location` trait would then take a `Position`.
 - **Authorization**: `users.level` exists but nothing reads it. A `Gate::define('admin', fn (User $u) => $u->level >= 10)` and `->can('admin')` on the admin route group would make the column meaningful.
+- **Done (November 2026)**: `RestaurantRequest`, `RestaurantTagRequest`, `RestaurantTypeRequest`; route model binding on the public details routes (`{place}`) and the admin controllers; `OrderBy` and `TagOperator` enums with `fromRequest()` defaults; `App\Support\Position`; the `admin` gate on `users.level >= 1` with `can:admin` on the admin group (the user factory now sets level 1).
 
 ### 3.4 Seed data as data, not as PHP (M)
 
@@ -187,4 +188,4 @@ The items that are an hour or two each and improve the phone experience the most
 6. ~~5.1 CI workflow~~ done
 7. ~~6 results counter~~ done
 
-1.1 (PWA) and 2.1 (JS to static files) are done. All the quick wins are done. 3.1 (one place set) was considered and declined for now, see the decision note there.
+1.1 (PWA) and 2.1 (JS to static files) are done. All the quick wins are done, plus the rating sort fix, the OR filter, the ETag and the framework building blocks. 3.1 (one place set) was considered and declined for now, see the decision note there.

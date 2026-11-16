@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\RestaurantRequest;
 use App\Models\Restaurant;
-use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Cache;
 
 /**
@@ -33,10 +34,9 @@ class RestaurantAdminController extends Controller
     /**
      * Store a newly created restaurant in the DB.
      */
-    public function store(Request $request)
+    public function store(RestaurantRequest $request)
     {
-        // Validate the form data (redirects back with the errors when it fails)
-        $request->validate(['name' => 'required', 'type' => 'required']);
+        // The RestaurantRequest already validated the form (it redirected back with the errors otherwise)
 
         // Fill a new model from the form and save it
         $this->save(new Restaurant, $request);
@@ -48,30 +48,29 @@ class RestaurantAdminController extends Controller
     /**
      * Display the specified restaurant.
      */
-    public function show(int $id)
+    public function show(Restaurant $restaurant)
     {
-        // findOrFail returns a 404 page when the id does not exist
-        return view('admin.restaurants.show', ['restaurant' => Restaurant::findOrFail($id)]);
+        // Route model binding: Laravel loaded the restaurant whose id is in the URL, or answered 404
+        return view('admin.restaurants.show', compact('restaurant'));
     }
 
     /**
      * Show the form for editing the specified restaurant.
      */
-    public function edit(int $id)
+    public function edit(Restaurant $restaurant)
     {
-        return view('admin.restaurants.edit', ['restaurant' => Restaurant::findOrFail($id)]);
+        return view('admin.restaurants.edit', compact('restaurant'));
     }
 
     /**
      * Update the specified restaurant in the DB.
      */
-    public function update(Request $request, int $id)
+    public function update(RestaurantRequest $request, Restaurant $restaurant)
     {
-        // Validate the form data
-        $request->validate(['name' => 'required', 'type' => 'required']);
+        // Validated by RestaurantRequest, loaded by route model binding
 
         // Fill the existing model from the form and save it
-        $this->save(Restaurant::findOrFail($id), $request);
+        $this->save($restaurant, $request);
 
         // Redirect to the list, with a status message in the session
         return redirect()->route('restaurants.index')->with('success', 'Restaurant updated successfully');
@@ -80,10 +79,10 @@ class RestaurantAdminController extends Controller
     /**
      * Remove the specified restaurant from the DB.
      */
-    public function destroy(int $id)
+    public function destroy(Restaurant $restaurant)
     {
         // Delete the restaurant (its pivot rows go with it, thanks to ON DELETE CASCADE)
-        Restaurant::findOrFail($id)->delete();
+        $restaurant->delete();
 
         // Drop the whole cache so the public pages see the change
         Cache::flush();
@@ -95,10 +94,10 @@ class RestaurantAdminController extends Controller
      * Fill the model from the form, parse the optional "lat, lon" field, save,
      * and drop the forever-cache so the public pages see the change.
      */
-    private function save(Restaurant $restaurant, Request $request): void
+    private function save(Restaurant $restaurant, RestaurantRequest $request): void
     {
-        // Copy the form fields into the model (only the $fillable columns); 'coord' is not a column
-        $restaurant->fill($request->except('coord'));
+        // Copy the validated fields into the model (only the ones with a rule); 'coord' is not a column
+        $restaurant->fill(Arr::except($request->validated(), ['coord']));
 
         // The coordinates come as one "lat, lon" text field
         $coord = trim((string) $request->input('coord', ''));

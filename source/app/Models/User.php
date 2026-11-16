@@ -11,7 +11,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
 /**
- * Admin user. Started from Laravel's own User model; 'level' is a WhereTo column (never read).
+ * Admin user. Started from Laravel's own User model; 'level' is a WhereTo column read by the 'admin' gate (AppServiceProvider).
  * The attributes below replace the $fillable (mass assignable) and $hidden (left out of JSON) properties.
  */
 #[Fillable(['name', 'email', 'password', 'level'])]

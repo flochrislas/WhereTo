@@ -28,7 +28,7 @@ Pivot tables `restaurant_restaurant_tag`, `store_store_tag`, `bar_bar_tag`, `kar
 | Table | Purpose |
 |---|---|
 | `restaurant_types` | Lookup list of cuisine labels, editable in admin. Not referenced by `restaurants.type`, which is free text. |
-| `users` | Laravel 13 users (`email_verified_at`, `remember_token`) plus a nullable `level` string column (filled with `'1'` by the seeder, never read). |
+| `users` | Laravel 13 users (`email_verified_at`, `remember_token`) plus a nullable `level` string column: `'1'` or more makes the user an admin (the `admin` gate in `AppServiceProvider`, checked by the `can:admin` middleware on the admin routes); the seeder sets `'1'`. |
 | `password_reset_tokens`, `sessions`, `cache`, `cache_locks`, `jobs`, `job_batches`, `failed_jobs` | Created by the skeleton migrations. Only `cache` is used. |
 | `user_restaurant` | Pivot "user visited restaurant" with a `comment` text column and timestamps. Declared on both models, never used by any page. |
 | `migrations` | Laravel bookkeeping. |

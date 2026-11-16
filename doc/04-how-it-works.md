@@ -49,15 +49,17 @@ The results and details routes run through `cache.headers:etag;no_cache` (`route
 ```
 GET /restaurants/results?op=&tags=&orderBy=&position=
   ──▶ RestaurantController@results
+        TagOperator::fromRequest(op), OrderBy::fromRequest(orderBy)   enums, defaults AND and distance
         formatTags()         "a,b" ──▶ ['a','b'] or null
         useCache()           key from (op, tags, orderBy, limit)
           └─ miss ──▶ readFromDB()
-                        whereTags()   whereHas('tags', whereIn label) having count = N  (AND)
-                        orderBy()     restaurants only:
-                                        ratings/distance ──▶ score_lunch, score_food, score_place desc, id
-                                        cost             ──▶ lunch_price asc, then scores, id
+                        whereTags()   AND: whereHas('tags', whereIn label) having count = N; OR: any
+                        orderBy()     per kind (ratingColumns / costColumn):
+                                        restaurants: ratings/distance ──▶ score_lunch, score_food, score_place desc, id
+                                                     cost             ──▶ lunch_price asc, then scores, id
+                                        bars: score, score_place, score_mingling; stores, karaoke: score
         handleDistances()
-          positionSpoofer()  null, invalid, or > 2.5 km from Shibuya Station ──▶ station coordinates
+          positionSpoofer()  null, invalid, or > 2.5 km from Shibuya Station ──▶ station Position
           orderBy == distance ──▶ sortByDistance()  (collection sortBy currentDistance, no coordinates ──▶ dropped)
           otherwise          ──▶ generateCurrentDistances()  (fills $place->currentDistance)
         ellipsis(points, 50)
@@ -97,7 +99,7 @@ Because the dataset is tiny and only changes through seeders, every query result
 ## 8. Authentication and admin
 
 - `GET /login` shows a form; `POST /login` (throttled to 5 attempts per minute per IP) calls `Auth::attempt()` and redirects to the intended URL or the dashboard; `POST /logout` ends the session. There is no registration and no password reset: admin users are created by the seeder or with `php artisan tinker`.
-- Everything under `/admin` requires a logged-in user (`auth` middleware, redirects guests to `/login`). The dashboard links to restaurant, tag and type management. Creating and editing restaurants works again (`$fillable` was restored); the form has a "lat, lon" field so a new place gets coordinates and shows up in distance-sorted results. Tag and type edit/delete use proper `PUT`/`DELETE` forms.
+- Everything under `/admin` requires a logged-in user (`auth` middleware, redirects guests to `/login`) whose `level` is 1 or more (`can:admin` middleware and the `admin` gate, 403 otherwise). The forms are validated by the form requests in `app/Http/Requests/`, and the `{restaurant}`, `{restaurantTag}` and `{restaurantType}` URL parameters are resolved to models by route model binding. The dashboard links to restaurant, tag and type management. Creating and editing restaurants works again (`$fillable` was restored); the form has a "lat, lon" field so a new place gets coordinates and shows up in distance-sorted results. Tag and type edit/delete use proper `PUT`/`DELETE` forms.
 - `POST /admin/debug?mode=on|off` toggles the Debugbar for the current process only, when the dev package is installed.
 
 ## 9. Environment flags that change behaviour

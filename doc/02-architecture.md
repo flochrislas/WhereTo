@@ -13,6 +13,9 @@ WhereTo/
     │   │                                Bar, BarTag, Karaoke, KaraokeTag, User
     │   ├── Traits/Location.php          lat/lon helpers shared by the place models
     │   ├── Tools/GeoUtils.php           distance maths, position / Google Maps URL parsing
+    │   ├── Enums/                       OrderBy (distance, ratings, cost) and TagOperator (AND, OR, ANDNOT, ORNOT)
+    │   ├── Support/Position.php         "lat, lon" value object (parsing, distance to another position)
+    │   ├── Http/Requests/               form requests: validation rules of the admin restaurant, tag and type forms
     │   ├── Http/Controllers/            see below
     │   └── Providers/AppServiceProvider.php
     ├── bootstrap/app.php, bootstrap/providers.php   application configuration (no Kernel classes)
@@ -43,9 +46,10 @@ The generic logic is in the abstract `App\Http\Controllers\PlaceController`:
 - `getModelName()` is abstract; the subclass returns `'Restaurant'`, `'Store'`, and so on. From that name the base class derives the model class (`App\Models\Restaurant`), the results partial (`restaurants.results-data`) and the details views (`restaurants.details`, `restaurants.details-single`).
 - `useCache()` / `cacheKey()` / `readFromDB()` run the tag query, with the result cached forever.
 - `whereTags()` builds the `AND`, `OR`, `ANDNOT`, `ORNOT` tag filters with `whereHas` on the `tags` relation.
-- `orderBy()` applies rating or cost ordering in SQL (restaurants only), with `id` as a tiebreaker so results are deterministic.
+- `orderBy()` applies rating or cost ordering in SQL, using the columns each kind declares through `ratingColumns()` and `costColumn()` (restaurants: lunch, food and place scores and the lunch price; bars: score, place, mingling; stores and karaoke: score), with `id` as a tiebreaker so results are deterministic. The order and the tag operator travel as the `OrderBy` and `TagOperator` enums, parsed from the query string with a default for unknown values.
 - `handleDistances()`, `sortByDistance()`, `generateCurrentDistances()` compute the distance from the visitor in PHP and optionally sort by it (places without coordinates are dropped when sorting by distance).
-- `positionSpoofer()` falls back to Shibuya Station when the visitor is further than 2.5 km away, sent no position, or sent an unparsable one.
+- `positionSpoofer()` turns the `position` query string into a `Position` and falls back to Shibuya Station when the visitor is further than 2.5 km away, sent no position, or sent an unparsable one.
+- The details routes use route model binding: `{place}` in the URL becomes a `Restaurant`, `Store`, `Bar` or `Karaoke` argument, or a 404. The admin controllers do the same with their models, and validate through the form requests in `app/Http/Requests/`.
 - `formatTags()` and `ellipsis()` are small helpers.
 
 The four concrete place controllers are near copies of each other and only define `results()`, `details()` and `detailsSingle()` (the last two return 404 for unknown ids).
