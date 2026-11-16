@@ -26,11 +26,12 @@ https://autoprefixer.github.io/
   font-family: 'Open Sans';
   font-style: normal;
   font-weight: 400;
+  /* Show the text with the fallback font right away, swap when the file arrives (no invisible text) */
+  font-display: swap;
+  /* WOFF2 only: every browser that runs the app's JavaScript (fetch, ES2015) supports it.
+     The ttf/woff/svg variants were removed in November 2026. */
   src: local('Open Sans Regular'), local('OpenSans-Regular'),
-       url('../fonts/open-sans-v15-latin-regular.woff2') format('woff2'), /* Super Modern Browsers */
-       url('../fonts/open-sans-v15-latin-regular.woff') format('woff'), /* Modern Browsers */
-       url('../fonts/open-sans-v15-latin-regular.ttf') format('truetype'), /* Safari, Android, iOS */
-       url('../fonts/open-sans-v15-latin-regular.svg#OpenSans') format('svg'); /* Legacy iOS */
+       url('../fonts/open-sans-v15-latin-regular.woff2') format('woff2');
 }
 
 

@@ -33,10 +33,11 @@ The UI is already responsive (viewport meta, one `@media` breakpoint at 680px, C
 - **Why**: the filter panel and the results panel are shown one at a time (`showFilter()` / `showResults()` toggle `display`). On a tablet or a PC there is room for both side by side, which removes the back-and-forth.
 - **How**: a second breakpoint (for example 900px) that lays `#mainFilter` and `#mainResults` out with CSS grid, and a check in `showResults()` / `showFilter()` that does nothing when both are visible. A third column could host the details instead of replacing the results.
 
-### 1.5 Ship only the WOFF2 font (S)
+### 1.5 Ship only the WOFF2 font (S) — done
 
 - **Why**: `public/fonts/` carries `.svg`, `.ttf`, `.woff` and `.woff2` versions of Open Sans. Every browser that can run the `fetch()` code can use WOFF2; the others are dead weight in the repository and the deploy.
 - **How**: delete the three other files and the matching `src:` entries in the `@font-face`; add `font-display: swap`.
+- **Done (November 2026)**.
 
 ### 1.6 Keep the position fresh and show it (S) — done
 
@@ -170,7 +171,7 @@ Small features that the current data already supports.
 The items that are an hour or two each and improve the phone experience the most:
 
 1. ~~1.2 phone polish in the stylesheet~~ done
-2. 1.5 WOFF2 only
+2. ~~1.5 WOFF2 only~~ done
 3. ~~1.6 position freshness~~ done
 4. 2.3 accessibility
 5. 4.1 production checklist
