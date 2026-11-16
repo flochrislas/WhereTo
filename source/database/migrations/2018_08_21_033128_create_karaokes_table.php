@@ -14,6 +14,7 @@ return new class extends Migration
             $table->string('name')->nullable();
             $table->string('area')->nullable();
             $table->string('location')->nullable();
+            // Coordinates with 7 decimals (about 1 cm); nullable because some places have none
             $table->decimal('lat', 10, 7)->nullable();
             $table->decimal('lon', 10, 7)->nullable();
             $table->text('points')->nullable();

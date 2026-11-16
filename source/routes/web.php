@@ -15,37 +15,50 @@ use App\Http\Controllers\StoreTagController;
 use App\Http\Controllers\SuggestionController;
 use Illuminate\Support\Facades\Route;
 
+/*
+|--------------------------------------------------------------------------
+| Web Routes
+|--------------------------------------------------------------------------
+|
+| Each line maps a URL to either a static view (Route::view) or a controller
+| method ([Controller::class, 'method']). The ->name() is used by the views
+| to build URLs: route('restaurants.results').
+|
+*/
+
 // ===============================================
 // PUBLIC PAGES ==================================
 // ===============================================
 
+// Static view for the home page (resources/views/home.blade.php)
 Route::view('/', 'home')->name('home');
+// Placeholder pages (resources/views/info/main.blade.php, vip/main.blade.php)
 Route::view('info/main', 'info.main')->name('info');
 Route::view('vip/main', 'vip.main')->name('vip');
 
 // Lunch suggestion (HTML fragment, loaded by AJAX from the home page)
 Route::get('suggestions', [SuggestionController::class, 'suggest'])->name('suggestions');
 
-// Restaurants
+// Public restaurants pages: filter page, results fragment, details fragment, standalone details page
 Route::get('restaurants', [RestaurantTagController::class, 'restaurantsFilter'])->name('restaurants.main');
 Route::get('restaurants/results', [RestaurantController::class, 'results'])->name('restaurants.results');
 Route::get('restaurants/details/{id}', [RestaurantController::class, 'details'])->name('restaurants.details');
 Route::get('restaurant/details/{id}', [RestaurantController::class, 'detailsSingle'])->name('restaurants.details.single');
 Route::get('tags/autocomplete', [RestaurantTagController::class, 'autocomplete'])->name('tags.autocomplete');
 
-// Stores
+// Public stores pages
 Route::get('stores', [StoreTagController::class, 'viewAllTags'])->name('stores.main');
 Route::get('stores/results', [StoreController::class, 'results'])->name('stores.results');
 Route::get('stores/details/{id}', [StoreController::class, 'details'])->name('stores.details');
 Route::get('store/details/{id}', [StoreController::class, 'detailsSingle'])->name('stores.details.single');
 
-// Bars
+// Public bars pages
 Route::get('bars', [BarTagController::class, 'viewAllTags'])->name('bars.main');
 Route::get('bars/results', [BarController::class, 'results'])->name('bars.results');
 Route::get('bars/details/{id}', [BarController::class, 'details'])->name('bars.details');
 Route::get('bar/details/{id}', [BarController::class, 'detailsSingle'])->name('bars.details.single');
 
-// Karaoke
+// Public karaoke pages
 Route::get('karaokes', [KaraokeTagController::class, 'viewAllTags'])->name('karaokes.main');
 Route::get('karaokes/results', [KaraokeController::class, 'results'])->name('karaokes.results');
 Route::get('karaokes/details/{id}', [KaraokeController::class, 'details'])->name('karaokes.details');
@@ -55,26 +68,32 @@ Route::get('karaoke/details/{id}', [KaraokeController::class, 'detailsSingle'])-
 // AUTHENTICATION (login only, no registration) ==
 // ===============================================
 
+// 'guest' middleware: only for visitors who are NOT logged in (others are sent to the dashboard)
 Route::middleware('guest')->group(function () {
+    // Show the form, then handle it; the name 'login' is where the 'auth' middleware redirects guests
     Route::get('login', [LoginController::class, 'showLoginForm'])->name('login');
+    // At most 5 attempts per minute per IP (brute-force protection)
     Route::post('login', [LoginController::class, 'login'])->middleware('throttle:5,1');
 });
+// Logout is a POST (with CSRF token) so a link on another site cannot log you out
 Route::post('logout', [LoginController::class, 'logout'])->middleware('auth')->name('logout');
 
 // ===============================================
 // ADMIN SECTION =================================
 // ===============================================
 
+// 'auth' middleware: everything below requires a logged-in user; 'admin' prefix: all URLs start with /admin
 Route::middleware('auth')->prefix('admin')->group(function () {
+    // Main page of the admin section (resources/views/admin/dashboard.blade.php)
     Route::view('/', 'admin.dashboard')->name('admin.dashboard');
 
-    // Debugbar on/off for the running process
+    // To switch the debug mode (Debugbar) ON or OFF
     Route::post('debug', [AdminPanelController::class, 'debugModeSwitch'])->name('debug.switch');
 
-    // Restaurants CRUD
+    // Restaurants CRUD: one line gives the 7 routes index/create/store/show/edit/update/destroy
     Route::resource('restaurants', RestaurantAdminController::class);
 
-    // Restaurant types CRUD
+    // Restaurant types CRUD, with explicit routes (tutorial https://www.codexworld.com/laravel-tutorial-crud-add-edit-delete-operations/)
     Route::get('restaurantType', [RestaurantTypeController::class, 'index'])->name('restaurantType.index');
     Route::get('restaurantType/details/{id}', [RestaurantTypeController::class, 'show'])->name('restaurantType.details');
     Route::get('restaurantType/add', [RestaurantTypeController::class, 'create'])->name('restaurantType.add');
@@ -83,6 +102,6 @@ Route::middleware('auth')->prefix('admin')->group(function () {
     Route::put('restaurantType/update/{id}', [RestaurantTypeController::class, 'update'])->name('restaurantType.update');
     Route::delete('restaurantType/delete/{id}', [RestaurantTypeController::class, 'destroy'])->name('restaurantType.delete');
 
-    // Restaurant tags CRUD
+    // Restaurant tags CRUD (same 7 routes as the restaurants)
     Route::resource('restaurantTag', RestaurantTagController::class);
 });

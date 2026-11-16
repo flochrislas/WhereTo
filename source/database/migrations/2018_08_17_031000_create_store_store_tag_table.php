@@ -8,7 +8,11 @@ return new class extends Migration
 {
     public function up(): void
     {
+        // Pivot table of the many-to-many relation between the places and their tags.
+        // http://laraveldaily.com/pivot-tables-and-many-to-many-relationships/
         Schema::create('store_store_tag', function (Blueprint $table) {
+            // Two foreign keys and nothing else. ON DELETE CASCADE: when a place or a tag is deleted,
+            // its pivot rows go with it, so we never need to detach from code.
             $table->foreignId('store_id')->constrained('stores')->cascadeOnDelete();
             $table->foreignId('store_tag_id')->constrained('store_tags')->cascadeOnDelete();
         });

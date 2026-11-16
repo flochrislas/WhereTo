@@ -10,15 +10,18 @@ use Illuminate\Support\Facades\Log;
 
 class Store extends Model
 {
+    // Uses a trait to get the localisation related stuff (currentDistance, fillCoordinates...)
     use Location;
 
+    // Accessible fields for mass update/create (Model::create($data), $model->update($data))
     protected $fillable = [
         'name', 'location', 'lat', 'lon', 'type', 'points', 'experience',
         'google_maps_link', 'official_website', 'score',
     ];
 
     /**
-     * The tags that belong to the place (read from the DB).
+     * The tags that belong to the store.
+     * Read from the DB, through the pivot table store_store_tag.
      */
     public function tags(): BelongsToMany
     {
@@ -26,22 +29,27 @@ class Store extends Model
     }
 
     /**
-     * The tags that belong to the place, cached forever.
-     * Cache key: <model>-<id>-tags. Flush the cache after changing tags.
+     * Returns the tags that belong to the store.
+     * Read from the cache (key: store-<id>-tags); flush the cache after changing tags.
+     * https://ctf0.wordpress.com/2017/08/19/how-to-cache-models-relationships-in-laravel/
      */
     public function tagsCached()
     {
+        // One key per place, e.g. 'restaurant-12-tags'
         $cacheKey = strtolower(class_basename($this)).'-'.$this->id.'-tags';
 
+        // Returns the cached tags, or runs the closure once (DB read) and caches its result
         return Cache::rememberForever($cacheKey, function () use ($cacheKey) {
             Log::debug('Caching tags from DB for '.$cacheKey);
 
+            // $this->tags (no parentheses) runs the tags() relation and returns the collection
             return $this->tags;
         });
     }
 
     /**
-     * Attach the given tags (that must already exist) to the place.
+     * Attach the given tags (that must already exist) to the store.
+     * attach() just associates existing records (inserts pivot rows): http://laraveldaily.com/pivot-tables-and-many-to-many-relationships/
      *
      * @param  array<int, string>  $labels
      */
@@ -50,7 +58,9 @@ class Store extends Model
         if (empty($labels)) {
             return;
         }
+        // Get the tags from the DB by their labels
         $tags = StoreTag::whereIn('label', $labels)->get();
+        // Attach them (writes the pivot rows)
         $this->tags()->attach($tags);
     }
 }

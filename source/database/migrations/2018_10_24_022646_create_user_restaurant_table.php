@@ -8,6 +8,7 @@ return new class extends Migration
 {
     public function up(): void
     {
+        // Pivot table "user visited restaurant", with a comment. Declared on both models, used by no page yet.
         Schema::create('user_restaurant', function (Blueprint $table) {
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->foreignId('restaurant_id')->constrained()->cascadeOnDelete();

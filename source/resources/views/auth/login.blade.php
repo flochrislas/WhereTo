@@ -1,3 +1,4 @@
+{{-- Login form, rendered by LoginController@showLoginForm and posted to LoginController@login --}}
 @extends('layouts.html')
 
 @section('title', 'Login')
@@ -8,15 +9,17 @@
         <div class="panel panel-default">
             <div class="panel-heading">Login</div>
             <div class="panel-body">
+                {{-- $errors holds the validation / login errors flashed by the controller --}}
                 @if ($errors->any())
                     <div class="alert alert-danger">{{ $errors->first() }}</div>
                 @endif
                 <form method="POST" action="{{ route('login') }}" class="form-horizontal">
+                    {{-- Hidden token, required by Laravel on every POST --}}
                     @csrf
                     <div class="form-group">
                         <label for="email" class="col-md-4 control-label">E-Mail</label>
                         <div class="col-md-6">
-                            <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" required autofocus>
+                            <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" required autofocus> {{-- old(): value kept after a failed attempt --}}
                         </div>
                     </div>
                     <div class="form-group">

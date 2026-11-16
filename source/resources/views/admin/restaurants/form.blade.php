@@ -1,6 +1,7 @@
-{{-- Fields of the restaurant form. $restaurant is null when creating. --}}
+{{-- Fields of the restaurant form, shared by create and edit. $restaurant is null when creating. --}}
 @php($r = $restaurant)
 <div class="row">
+    {{-- One input per field: name => [input type, label]. The loop below builds them all. --}}
     @foreach ([
         'name' => ['text', 'Name'],
         'location' => ['text', 'Location'],
@@ -21,6 +22,7 @@
     <div class="col-xs-12 col-sm-12 col-md-12">
         <div class="form-group">
             <strong>{{ $label }}:</strong>
+            {{-- old($field, ...) shows what the user typed if validation failed, else the current value ($r?->$field is null when creating) --}}
             @if ($kind === 'textarea')
                 <textarea name="{{ $field }}" placeholder="{{ $label }}" class="form-control" style="height:{{ $field === 'experience' ? 150 : 100 }}px">{{ old($field, $r?->$field) }}</textarea>
             @elseif ($kind === 'date')
@@ -33,6 +35,7 @@
     @endforeach
     <div class="col-xs-12 col-sm-12 col-md-12">
         <div class="form-group">
+            {{-- Not a column: parsed by RestaurantAdminController::save() into lat and lon --}}
             <strong>Coordinates (lat, lon):</strong>
             <input type="text" name="coord" placeholder="35.658789, 139.701262" class="form-control" value="{{ old('coord', $r?->lat !== null ? $r->lat.', '.$r->lon : '') }}">
         </div>

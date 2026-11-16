@@ -11,7 +11,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        // Nothing to register: the dev packages (Debugbar, IDE helper) register themselves through Composer auto-discovery
     }
 
     /**
@@ -19,6 +19,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        // Nothing to boot. Logging goes through the 'daily' channel set in .env (LOG_CHANNEL)
     }
 }

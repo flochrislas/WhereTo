@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class KaraokeTag extends Model
 {
+    // Accessible fields for mass update/create (the admin form posts these)
     protected $fillable = [
         'label',
         'type',
@@ -14,7 +15,7 @@ class KaraokeTag extends Model
     ];
 
     /**
-     * The places that carry this tag.
+     * The karaokes that carry this tag (other side of Karaoke::tags()).
      */
     public function karaokes(): BelongsToMany
     {

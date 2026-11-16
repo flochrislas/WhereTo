@@ -20,7 +20,8 @@ class SuggestionController
     private const TOP_N = 35;
 
     /**
-     * HTML fragment with a suggestion, or an empty string outside lunch time.
+     * Makes a suggestion, given as an HTML fragment.
+     * Reads the position from the request. Returns an empty string outside lunch time.
      */
     public function suggest(Request $request): string
     {
@@ -28,33 +29,51 @@ class SuggestionController
             return '';
         }
 
+        // Current position from the client's GPS (null when missing or not a plain value)
         $position = $request->query('position');
 
         return $this->suggestLunch(is_scalar($position) ? (string) $position : null);
     }
 
     /**
-     * True between 11:30 and 14:00 in Tokyo.
+     * Check the time in Tokyo (Shibuya) and if it is lunch time.
+     *
+     * @return bool true if it is time to have lunch in Shibuya
      */
     public static function isLunchTime(): bool
     {
+        // Carbon::parse understands "today 11:30am" and builds the date in the given timezone
         $lunchStart = Carbon::parse(self::LUNCH_START, self::TIMEZONE);
         $lunchEnd = Carbon::parse(self::LUNCH_END, self::TIMEZONE);
 
         return Carbon::now(self::TIMEZONE)->isBetween($lunchStart, $lunchEnd);
     }
 
+    /**
+     * Makes a suggestion about lunch.
+     *
+     * @param  string|null  $position  "lat, lon" of the visitor
+     */
     public function suggestLunch(?string $position): string
     {
+        // Get the best restaurants.
+        // The limit must be big because we don't know the location yet, and distances are important.
+        // Idea: adjust the max distance if too hot, too cold or raining (weather: https://openweathermap.org/price)
         $restaurantController = new RestaurantController;
-        // The 100 best restaurants, then the nearest TOP_N, then one at random.
+
+        // Read the cache or the DB: the 100 best restaurants by rating
         $places = $restaurantController->useCache(null, 'AND', 'ratings', 100);
+
+        // Calculate the distances from the position, and sort by them (nearest first)
         $places = $restaurantController->handleDistances($places, $position, 'distance');
         if ($places->isEmpty()) {
             return '';
         }
+
+        // Take the 35 nearest, and pick one randomly
         $selected = $places->take(self::TOP_N)->random();
 
+        // Render the sentence with the link to the restaurant page
         return view('suggestions.suggestion-text', ['place' => $selected])->render();
     }
 }

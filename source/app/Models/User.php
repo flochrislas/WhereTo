@@ -10,6 +10,10 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
+/**
+ * Admin user. Started from Laravel's own User model; 'level' is a WhereTo column (never read).
+ * The attributes below replace the $fillable (mass assignable) and $hidden (left out of JSON) properties.
+ */
 #[Fillable(['name', 'email', 'password', 'level'])]
 #[Hidden(['password', 'remember_token'])]
 class User extends Authenticatable
@@ -19,6 +23,7 @@ class User extends Authenticatable
 
     /**
      * Get the attributes that should be cast.
+     * 'hashed' means the password is hashed automatically when set, so the seeder and the tests can pass plain text.
      *
      * @return array<string, string>
      */
@@ -31,7 +36,7 @@ class User extends Authenticatable
     }
 
     /**
-     * The restaurants visited by the user (pivot: comment).
+     * The restaurants visited by the user (pivot table user_restaurant, with a comment column).
      */
     public function restaurants(): BelongsToMany
     {
