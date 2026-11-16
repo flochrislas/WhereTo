@@ -2,28 +2,23 @@
 
 namespace App\Http\Controllers;
 
-use App\StoreTag;
-use Illuminate\Http\Request;
+use App\Models\StoreTag;
 use Illuminate\Support\Facades\Cache;
 
 class StoreTagController extends Controller
 {
-  /**
-  * Get all the stores tags.
-  * Using cache.
-  */
-  public function viewAllTags(Request $request)
-  {
-      $cacheKey = "all_stores_tags";
-      $tags = Cache::rememberForever($cacheKey, function() {
-            return StoreTag::orderBy('type','desc')
-                              ->orderBy('weight','desc')
-                              ->orderBy('created_at','desc')
-                              ->get();
-      });
-      //pass tags data to view and load list view
-      return view('stores.main', ['tags' => $tags]);
-  }
+    /**
+     * Gets all the store tags for the filter page.
+     */
+    public function viewAllTags()
+    {
+        // Use the cache; the closure (reading the DB) only runs when the key is not cached yet
+        $tags = Cache::rememberForever('all_stores_tags', function () {
+            // Tag cloud order: tag family (type) first, then importance (weight), then newest
+            return StoreTag::orderByDesc('type')->orderByDesc('weight')->orderByDesc('created_at')->get();
+        });
 
-    // If ever in need of all the default functions, just copy paste from restaurant tags controller.
+        // Pass the tags to the view and load the page
+        return view('stores.main', ['tags' => $tags]);
+    }
 }

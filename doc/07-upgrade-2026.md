@@ -1,5 +1,7 @@
 # Upgrading to the November 2026 stack
 
+> **Done on 2026-11-16** (branch `upgrade-2026`): the app now runs on Laravel 13.42 / PHP 8.5.12 / PostgreSQL 18 with Composer 2, PHPUnit 12, Debugbar 4, ide-helper 3.8, Larastan 3.15. The note below is the plan that was followed; the "Outcome" section at the end records what was actually done and where it deviated.
+
 Written on 2026-11-16. The repository is on Laravel 5.8 (July 2019) and PHP 7.1+. This note explains where the ecosystem is today, which path to take, and every change the WhereTo code needs. The application is small (9 models, 13 controllers, about 60 views, 17 migrations, no queue, no mail, no JavaScript build), so the upgrade is mostly mechanical.
 
 ## Target versions
@@ -7,7 +9,7 @@ Written on 2026-11-16. The repository is on Laravel 5.8 (July 2019) and PHP 7.1+
 | Component | Today (Nov 2026) | Target | Remarks |
 |---|---|---|---|
 | PHP | 8.5.12 is the current stable release; 8.6.0 GA is scheduled for 19 Nov 2026; 8.2 reaches end of life on 31 Dec 2026 | **8.5** | Laravel 13 declares support for PHP 8.3 to 8.5. Move to 8.6 once Laravel and the packages add it to their matrices (usually a few weeks after GA). |
-| Laravel | 13.x (released 17 Mar 2026, latest patch 13.35); 12 is on security fixes only; 11 and older are end of life | **13.x** | Laravel 14 is due in Q1 2027. |
+| Laravel | 13.x (released 17 Mar 2026; 13.42 when the upgrade was done); 12 is on security fixes only; 11 and older are end of life | **13.x** | Laravel 14 is due in Q1 2027. |
 | PostgreSQL | 18.7; 19.0 GA is scheduled for 19 Nov 2026; 14 just received its last release | **18** | Nothing in the schema is version-specific. |
 | Node.js | 26 "Lithium" is Active LTS; 24 and 22 are Maintenance LTS | **26** only if you adopt Vite | Not required otherwise. |
 | Composer | 2.9 | 2.x | |
@@ -151,6 +153,28 @@ Compare the three saved HTML snapshots from step 0 with the upgraded output. The
 - Replace the stock auth with Fortify and remove open registration.
 - Use `Illuminate\Support\Number` / `Str` helpers instead of `number_format` and `mb_strimwidth`.
 - Add a GitHub Actions workflow running `composer install`, Pint, PHPStan and `php artisan test` on PHP 8.5.
+
+## Outcome (2026-11-16)
+
+Path taken: fresh `laravel/laravel ^13` skeleton created with Composer in the PHP 8.5 container, legacy files restored from `master` into it, then ported file by file. Decisions: port and fix only (no consolidation of the four place sets), no build step, hand-written login, forever-cache kept with `serializable_classes`, PHPUnit 12.
+
+What was verified against the legacy app (baseline captures in `dev/baseline/`, taken from the PHP 7.4 stack before the switch):
+
+- Seeded row counts identical for every table.
+- Tag clouds of the four filter pages identical.
+- 12 of the 16 captured result/details fragments byte-identical. The 4 others differ for understood reasons: two restaurant lists swap rows that have equal scores/prices (PostgreSQL returned ties in arbitrary order; the new code adds `id` as a tiebreaker), and the two bar lists show different walking minutes because the legacy `BarController` hard-coded an "office" position instead of using the visitor's (a debug leftover, now fixed).
+- `php artisan test`: 53 tests, 193 assertions, green. Pint and Larastan (level 5) clean.
+- `route:cache`, `config:cache`, `view:cache` work; the app boots with `composer install --no-dev`.
+
+Deviations from the plan above:
+
+- Migrations keep their original file names but were rewritten as anonymous classes with `id()`, `decimal(10,7)` coordinates and `foreignId()->constrained()->cascadeOnDelete()` pivots; the skeleton's users migration got the `level` column.
+- `GeoUtils::toPositionArray()` validates its input but still accepts a trailing third value, because several seed entries pass `'lat,lon,zoom'` strings (Ichiran would otherwise have fallen back to the Google link centre).
+- `sortByDistance()` now sorts a collection by `currentDistance` instead of a string-keyed map (no more collisions for places at the same distance).
+- The Debugbar package is `fruitcake/laravel-debugbar` 4.x; `AdminPanelController` only touches it when the container binding exists.
+- Pint reformatted the seeders (short array syntax, unused imports removed), so git shows them as new files rather than renames of `database/seeds/*`.
+- The skeleton's Vite files (`package.json`, `vite.config.js`, `.npmrc`, `resources/js`, `resources/css`), `AGENTS.md` and `welcome.blade.php` were deleted; `.env.example` is a WhereTo template (same keys as `dev/laravel.env`, empty secrets).
+- A code review of the port added: `throttle:5,1` on `POST /login` (the legacy trait had a lockout), a "lat, lon" field on the admin restaurant form and a cache flush in the three admin controllers (otherwise a new place never showed up), working `PUT`/`DELETE` forms for tag and type edit/delete (broken since 2019), `Pivot` in `cache.serializable_classes` with a test through the `file` store, and no more `DB_*` variables in `dev/compose.yaml` (Laravel reads `$_SERVER` before `$_ENV`, so they overrode `phpunit.xml` and the tests wrote a SQLite file named `whereto` into `source/`).
 
 ## References (consulted 2026-11-16)
 

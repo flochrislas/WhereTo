@@ -1,43 +1,32 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
-class CreateStoresTable extends Migration
+return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
-    public function up()
+    public function up(): void
     {
         Schema::create('stores', function (Blueprint $table) {
-            $table->increments('id');
+            $table->id();
             $table->timestamps();
-
             $table->string('name')->nullable();
             $table->string('location')->nullable();
-            $table->float('lat', 3, 7)->nullable();
-            $table->float('lon', 3, 7)->nullable();
+            // Coordinates with 7 decimals (about 1 cm); nullable because some places have none
+            $table->decimal('lat', 10, 7)->nullable();
+            $table->decimal('lon', 10, 7)->nullable();
             $table->string('type')->nullable();
             $table->text('points')->nullable();
             $table->text('experience')->nullable();
             $table->text('google_maps_link')->nullable();
             $table->string('official_website')->nullable();
             $table->smallInteger('score')->nullable();
-
         });
     }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
-    public function down()
+    public function down(): void
     {
         Schema::dropIfExists('stores');
     }
-}
+};

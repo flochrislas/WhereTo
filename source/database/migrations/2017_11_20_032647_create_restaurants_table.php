@@ -1,26 +1,21 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
-class CreateRestaurantsTable extends Migration
+return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
-    public function up()
+    public function up(): void
     {
         Schema::create('restaurants', function (Blueprint $table) {
-            $table->increments('id');
+            $table->id();
             $table->timestamps();
-
             $table->string('name')->nullable();
             $table->string('location')->nullable();
-            $table->float('lat', 3, 7)->nullable();
-            $table->float('lon', 3, 7)->nullable();
+            // Coordinates with 7 decimals (about 1 cm); nullable because some places have none
+            $table->decimal('lat', 10, 7)->nullable();
+            $table->decimal('lon', 10, 7)->nullable();
             $table->string('type')->nullable();
             $table->integer('lunch_price')->nullable();
             $table->text('points')->nullable();
@@ -35,17 +30,11 @@ class CreateRestaurantsTable extends Migration
             $table->smallInteger('score_food')->nullable();
             $table->smallInteger('score_price')->nullable();
             $table->smallInteger('score_date')->nullable();
-
         });
     }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
-    public function down()
+    public function down(): void
     {
         Schema::dropIfExists('restaurants');
     }
-}
+};

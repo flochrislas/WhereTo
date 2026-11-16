@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- viewport for responsive web design -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- CSRF Token -->
+    <meta name="csrf-token" content="I9sKCu74RnAwYM56HR6Y39c9Us5CGlbUAQBuuHQK">
+    <!-- SEO -->
+      <title>WhereTo - Karaoke in Shibuya</title>
+  <meta name="description" content="Quickly find the best karaoke for you in Shibuya.">
+    
+    <!-- Style -->
+    <link href="/css/style-dark.css" rel="stylesheet">
+    <!-- Scripts -->
+    <script>
+        window.Laravel = {"csrfToken":"I9sKCu74RnAwYM56HR6Y39c9Us5CGlbUAQBuuHQK"}    </script>
+</head>
+<body>
+     <div id="app">
+        <!-- HEADER -->
+        <nav id="header">
+  <!-- Branding Image -->
+  <div class="left">
+      <a class="title" href="http://127.0.0.1:8001">
+          WhereTo
+      </a>
+  </div>
+
+
+  <div class="right" style="font-size:.7rem">
+      <i>SHIBUYA beta version</i>
+  </div>
+
+  <!-- TODO: Implement this -->
+  <div class="right" style="display: none">
+      <a class="tap" href="http://127.0.0.1:8001/info/main"><strong>Info</strong></a>
+      <a class="tap" href="http://127.0.0.1:8001/vip/main"><strong>VIP</strong></a>
+  </div>
+
+  <!-- TODO: Decide what to do with those -->
+  <div class="right" style="display: none">
+          <a class="tap" href="http://127.0.0.1:8001/about"><strong>About</strong></a>
+      <a href="http://127.0.0.1:8001/login">Login</a>
+      <a href="http://127.0.0.1:8001/register">Register</a>
+      </div>
+
+</nav>
+        <!-- Geolocalisation messages (and possibly info) -->
+        <div id="position-report"></div>
+        <!-- CONTENT -->
+        <div id="content">
+
+  <div id="mainFilter">
+    <div id="tagsTop">
+  <div id="position-report"></div>
+
+  <div id="filterHeader">
+    <div id="filterHeaderTitle">What kind of place?</div>
+    <button id="filterHeaderButton" onclick="getResults()">Show All</button>
+  </div>
+
+  <!-- selected tags for active search -->
+  <div id="selectedTags">
+  </div>
+
+  <p>Available options</p>
+</div>
+
+<!-- showing available tags -->
+<div id="tags">
+        <div class="tag tagType200"
+            tagId="1"
+            id="tagShow1"
+            onClick="moveTag(event)">
+        DAM
+      </div>
+        <div class="tag tagType200"
+            tagId="2"
+            id="tagShow2"
+            onClick="moveTag(event)">
+        JOYSOUND
+      </div>
+        <div class="tag tagType100"
+            tagId="3"
+            id="tagShow3"
+            onClick="moveTag(event)">
+        private rooms
+      </div>
+        <div class="tag tagType100"
+            tagId="4"
+            id="tagShow4"
+            onClick="moveTag(event)">
+        public bar
+      </div>
+        <div class="tag tagType50"
+            tagId="5"
+            id="tagShow5"
+            onClick="moveTag(event)">
+        karaokekan
+      </div>
+        <div class="tag tagType50"
+            tagId="6"
+            id="tagShow6"
+            onClick="moveTag(event)">
+        big echo
+      </div>
+        <div class="tag tagType50"
+            tagId="7"
+            id="tagShow7"
+            onClick="moveTag(event)">
+        adores
+      </div>
+        <div class="tag tagType50"
+            tagId="8"
+            id="tagShow8"
+            onClick="moveTag(event)">
+        joysound
+      </div>
+        <div class="tag tagType50"
+            tagId="9"
+            id="tagShow9"
+            onClick="moveTag(event)">
+        shidax
+      </div>
+        <div class="tag tagType50"
+            tagId="10"
+            id="tagShow10"
+            onClick="moveTag(event)">
+        round 1
+      </div>
+        <div class="tag tagType50"
+            tagId="11"
+            id="tagShow11"
+            onClick="moveTag(event)">
+        karaoke no tetsujin
+      </div>
+        <div class="tag tagType50"
+            tagId="12"
+            id="tagShow12"
+            onClick="moveTag(event)">
+        king of system
+      </div>
+        <div class="tag tagType50"
+            tagId="13"
+            id="tagShow13"
+            onClick="moveTag(event)">
+        uta hiroba
+      </div>
+  </div>
+
+<!-- The Javascript to operate this filter -->
+<script>
+/** What happens when we click on a tag */
+function moveTag(event) {
+  // Refresh position (async and takes a while...)
+  getLocation();
+
+  // Move the tag in the proper div
+  if (event.target.parentNode.id == "selectedTags") {
+    document.getElementById("tags").appendChild(event.target);
+    // Check if any selectedTag left
+    if (getSelectedTagsDiv().children.length > 0) {
+      /* Run the search from the selectedTags immediately in the background */
+      refreshResults();
+    }
+    else {
+      // Reset the showResults button
+      resetFilterHeaderButton();
+    }
+  } else {
+    getSelectedTagsDiv().appendChild(event.target);
+    /* Run the search from the selectedTags immediately in the background */
+    refreshResults();
+  }
+}
+
+function resetFilterHeaderButton() {
+  setResultsLoading("none");
+  setResultsLoadingTime(0);
+  getFilterHeaderButtonDiv().disabled = false;
+  getFilterHeaderButtonDiv().innerHTML = "Show All";
+}
+
+/** Refreshes the list of results */
+function refreshResults(orderBy) {
+  // Default parameter doc: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Default_parameters
+  /* read all the div under selectedTags */
+  var tags = getSelectedTagsDiv().children;
+  /* make a list of all their ids or labels to send as parameters */
+  var tagsLabels = getTagsLabels(tags);
+
+  /* check for orderBy choice */
+  if (orderBy != null) {
+    // priority to the current parameter
+    store("orderBy", orderBy);
+  } else {
+    // if no param then try read store
+    let storeOrderBy = readStore("orderBy");
+    if (storeOrderBy != null) {
+      orderBy = storeOrderBy;
+    } else {
+      // if nothing in param or store use default value
+      orderBy = "distance";
+      store("orderBy", orderBy);
+    }
+  }
+
+  /* read order/operand/options parameters */
+  // We will implement that later
+  let op = 'AND';
+
+  /* AJAX request to update the results */
+  ajaxResults(op, tagsLabels, orderBy);
+}
+
+/** Actually send the request to the server */
+function ajaxResults(op, tags, orderBy) {
+  let xhr = new XMLHttpRequest();
+  let url = resultsUrl
+          + '?op=' + op
+          + '&tags=' + tags
+          + '&orderBy=' + orderBy
+          + '&position=' + getLocation();
+  xhr.open('GET', url);
+  console.info("GET: " + url);
+  let now = nowStamp();
+  setResultsLoadingTime(now);
+  setResultsLoading("tag");
+  xhr.onload = function() {
+      if (now < getResultsLoadingTime()) { // if a more recent request has been nameAndType
+          getResultsDiv().innerHTML = "Updating results...";
+      }
+      else {
+          if (xhr.status === 200) {
+              /* write results */
+              getResultsDiv().innerHTML = xhr.responseText;
+              /* update the show result button with the number of results */
+              refreshShowResultsButton();
+          }
+          else {
+              getResultsDiv().innerHTML = "Sorry, an error occurred during the search. Check your Internet connection and try again.";
+          }
+          if (now == getResultsLoadingTime()) {
+              setResultsLoading("none");
+          }
+      }
+  };
+  xhr.send();
+}
+
+/** From NodeList of tag div, get concatenated string of tags labels */
+function getTagsLabels(tags) {
+  let tagsLabels = "";
+  for (i = 0; i < tags.length; ++i) {
+    tagsLabels = tagsLabels + tags[i].innerHTML.trim() + ',';
+  }
+  // Slice removes the last comma
+  return tagsLabels.slice(0,-1);
+}
+
+/** From NodeList of tag div, get array of tags ids */
+function getTagsIdArray(op, tags) {
+  let tagsIds = [];
+  for (let i = 0; i < tags.length; ++i) {
+    tagsIds.push(tags[i].getAttribute("tagId"));
+  }
+  return tagsIds;
+}
+
+function refreshShowResultsButton() {
+  /* get number of results */
+  // var nbResults = document.getElementById("results").children.count();
+  // var nbResults = document.getElementById('resultsTable').rows.length;
+  let nbResults = document.getElementsByClassName("resultsCounter").length;
+  /* Change button label/text */
+  if (nbResults == 0) {
+    getFilterHeaderButtonDiv().innerHTML = "No result";
+    getFilterHeaderButtonDiv().disabled = true;
+  }
+  else {
+      getFilterHeaderButtonDiv().disabled = false;
+      getFilterHeaderButtonDiv().innerHTML = "Show " + nbResults + " results";
+  }
+
+}
+
+/** Store methods  TO MOVE IN A SUPERIOR CLASS */
+function store(key, value) {
+    // Look up for different options, chose the best
+    if (typeof(Storage) !== "undefined") {
+        // Code for localStorage/sessionStorage.
+        localStorage.setItem(key, value);
+        // sessionStorage.setItem(key value);
+    } else {
+        console.warn("No local storage support from the browser. Application's behavior may be affected.");
+    }
+}
+
+function readStore(key) {
+    return localStorage.getItem(key);
+}
+/** * * * * * * * * * * * * * * * * * * * * * *  */
+
+/**** Get important elements ****/
+function getFilterHeaderButtonDiv() {
+    return document.getElementById("filterHeaderButton");
+}
+function getSelectedTagsDiv() {
+    return document.getElementById("selectedTags");
+}
+
+</script>
+  </div>
+
+  <div id="mainResults" style="display: none">
+    <div id="resultsTop">
+
+  <!-- messages -->
+  <div id="position-report"></div>
+
+  <!-- buttons -->
+  <div id="resultsControl">
+    <button class="sortButton" onclick="refreshResults('ratings')">
+      Best<br>first</button>
+    <button class="sortButton" onclick="refreshResults('cost')">
+      Cost<br>first</button>
+    <button class="sortButton" onclick="refreshResults('distance')">
+      Near<br>first</button>
+    <button class="navButton" onclick="showFilter()">Show Filters</button>
+  </div>
+
+  <!-- fixed labels -->
+  <div class="resultTable">
+    <div class="resultRow header">
+      <div class="resultCell nameAndType">
+        <div class="label inline" style="color: var(--color-name);">Name</div>
+        <div class="label inline" style="color: var(--color-txt-default);">&</div>
+        <div class="label inline" style="color: var(--color-type);">Branch</div>
+      </div>
+      <div class="resultCell distance centerContent">
+        <div class="label distanceAdjust" style="color: var(--color-dst);">dst.</div>
+      </div>
+      <div class="resultCell nameAndType">
+        <div class="label">Description</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- data -->
+<div id="results" loading="none" time="0"></div>
+
+<!-- The Javascript to show details from results list -->
+<script>
+
+/** Actually send the request to the server */
+function ajaxDetails(url) {
+  getDetailsDiv().innerHTML = "Loading...";
+  let xhr = new XMLHttpRequest();
+  xhr.open('GET', url);
+  console.info("GET: " + url);
+  xhr.onload = function() {
+      if (xhr.status === 200) {
+          getDetailsDiv().innerHTML = xhr.responseText;
+      }
+      else {
+          getDetailsDiv().innerHTML = "Sorry, detailed data could not be retrieved. Check your Internet connection and try again.";
+      }
+  };
+  xhr.send();
+}
+
+function showDetails(url, placeId) {
+  if (placeId != getCurrentDetailsId()) {
+      ajaxDetails(url);
+  }
+  getDetailsDiv().style.display = "block";
+  //document.getElementById("content-unchained").style.display = "block";
+  document.getElementById("content").style.display = "none";
+}
+
+function hideDetails() {
+  getDetailsDiv().style.display = "none";
+  //document.getElementById("content-unchained").style.display = "none";
+  document.getElementById("content").style.display = "flex";
+}
+
+function getCurrentDetailsId() {
+  if (document.getElementById("detailName") == null) {
+    return null;
+  }
+  return document.getElementById("detailName").getAttribute("detailId");
+}
+
+</script>
+<!-- The Javascript for the details page -->
+<script>
+
+function copyStringToClipboard (str) {
+   console.info("copyStringToClipboard: " + str);
+   // Create new element
+   let el = document.createElement('textarea');
+   // Set value (string to be copied)
+   el.value = str;
+   // Set non-editable to avoid focus and move outside of view
+   el.setAttribute('readonly', '');
+   el.style = {position: 'absolute', left: '-9999px'};
+   document.body.appendChild(el);
+   // Select text inside element
+   el.select();
+   // Copy text to clipboard
+   document.execCommand('copy');
+   // Remove temporary element
+   document.body.removeChild(el);
+}
+
+</script>
+  </div>
+
+</div>
+
+<div id="mainDetails" class="content-unchained" style="display: none">
+</div>
+
+<script>
+  // To be used in ajax calls for reading results
+  var resultsUrl = "http://127.0.0.1:8001/karaokes/results";
+</script>
+<!-- Javascript for handling results and filters display -->
+<script>
+
+function showResults() {
+  getMainFilterDiv().style.display = "none";
+  getMainResultsDiv().style.display = "flex"; // was block
+}
+
+function showFilter() {
+  getMainFilterDiv().style.display = "flex"; // was block
+  getMainResultsDiv().style.display = "none";
+}
+
+function getResults() {
+  // This function should exist (maybe in parent/main)
+  showResults();
+  // Refresh position
+  getLocation();
+  // Get all if no places loaded
+  if (getResultsLoading() == "none" && getResultsLoadingTime() == 0) {
+    setResultsLoading("all");
+    getResultsDiv().innerHTML = "Loading ALL entries. Please wait or select a tag...";
+    let xhr = new XMLHttpRequest();
+    let url = resultsUrl
+            + '?position=' + getLocation()
+            + '&orderBy=distance';
+    console.info('calling: '+url),
+    xhr.open('GET', url);
+    xhr.onload = function() {
+        if (getResultsLoading() == "all") {
+            if (xhr.status === 200) {
+                getResultsDiv().innerHTML = xhr.responseText;
+                // We allow this query just once
+                setResultsLoadingTime(1);
+            }
+            else {
+                getResultsDiv().innerHTML = "Sorry, an error occured during the search. Check your Internet connection and try again.";
+            }
+            setResultsLoading("none");
+        }
+    };
+    xhr.send();
+  }
+}
+
+/** Where the results would be displayed */
+function getResultsDiv() {
+  return document.getElementById("results");
+}
+/** Could be none, all, tag */
+function getResultsLoading() {
+  // console.info('getResultsLoading: ' + getResultsDiv().getAttribute("loading"));
+  return getResultsDiv().getAttribute("loading");
+}
+/** State could be none, all, tag */
+function setResultsLoading(state) {
+  // console.info('setResultsLoading: ' + state);
+  return getResultsDiv().setAttribute("loading", state);
+}
+/** results loading time methods */
+function nowStamp() {
+  if (!Date.now) {
+      return new Date().getTime();
+  }
+  return Date.now();
+}
+function getResultsLoadingTime() {
+  return getResultsDiv().getAttribute("time");
+}
+function setResultsLoadingTime(time) {
+  return getResultsDiv().setAttribute("time", time);
+}
+
+/**** Get important elements ****/
+function getMainFilterDiv() {
+    return document.getElementById("mainFilter");
+}
+function getMainResultsDiv() {
+    return document.getElementById("mainResults");
+}
+/** Where the details would be displayed */
+function getDetailsDiv() {
+  return document.getElementById("mainDetails");
+}
+
+</script>
+
+        <!-- FOOTER -->
+        <nav id="footer">
+  <div class="copyright">
+      copyright 2017-2019
+  </div>
+</nav>
+    </div>
+
+    <!-- Javascript for geolocalisation -->
+<script>
+var geolocalisationMessage = document.getElementById("position-report");
+
+/** Options for getCurrentPosition. Time in ms */
+var getCurrentPositionOptions = {
+  enableHighAccuracy: true,
+  timeout: 5500,
+  maximumAge: 1500
+};
+
+function getLocation() {
+    if (navigator.geolocation) {
+        // This needs valid HTTPS age, or localhost, to work in Chrome!!!
+        // And beware the timeout or delay!!!
+        navigator.geolocation.getCurrentPosition(onSuccess, onError, getCurrentPositionOptions);
+        // it is also possible to get continuously updated coords from the method watchPosition()
+        // see https://www.w3schools.com/html/html5_geolocation.asp
+        // Console test:
+        // navigator.geolocation.getCurrentPosition(function(position){console.info(position.coords.latitude+', '+position.coords.longitude)},function(error){console.warn(error.code+': '+error.message)});
+        return readSessionStore("lastCoordinates");
+
+    } else {
+        geolocalisationMessage.innerHTML = "Geolocation is not supported by this browser.";
+        console.warn("Geolocation is not supported by this browser.");
+        return null;
+    }
+}
+
+/** getCurrentPosition success */
+function onSuccess(position) {
+    sessionStore("lastCoordinates", position.coords.latitude + "," + position.coords.longitude);
+    // For debugging purposes:
+    // console.info('Geolocalisation successfull: '+ position.coords.latitude +', '+ position.coords.longitude);
+    console.info('Geolocalisation successful: '+ position.coords.latitude + "," + position.coords.longitude);
+}
+
+/** getCurrentPosition failure */
+function onError(error) {
+    let additionalWarning = " Distances will be from the station."
+    switch(error.code) {
+        case error.PERMISSION_DENIED:
+            geolocalisationMessage.innerHTML = "User denied the request for Geolocation." + additionalWarning
+            break;
+        case error.POSITION_UNAVAILABLE:
+            geolocalisationMessage.innerHTML = "Location information is unavailable."
+            break;
+        case error.TIMEOUT:
+            geolocalisationMessage.innerHTML = "The request to get user location timed out."
+            break;
+        case error.UNKNOWN_ERROR:
+            geolocalisationMessage.innerHTML = "An unknown error occurred."
+            break;
+    }
+    if (location.protocol !== "https:") {
+      geolocalisationMessage.innerHTML = " Please use the HTTPS version of the service to enable geolocalisation."
+    }
+    else {
+      geolocalisationMessage.innerHTML = " Error" + error.code +": " + error.message;
+    }
+    geolocalisationMessage.innerHTML += additionalWarning;
+}
+
+/** TO MOVE IN A SUPERIOR CLASS */
+function sessionStore(key, value) {
+  if (typeof(Storage) !== "undefined") {
+    sessionStorage.setItem(key, value);
+  } else {
+      console.warn("No session storage support from the browser. Application's behavior may be affected.");
+  }
+}
+
+function readSessionStore(key) {
+    return sessionStorage.getItem(key);
+}
+</script>
+</body>
+</html>

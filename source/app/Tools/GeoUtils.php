@@ -2,186 +2,165 @@
 
 namespace App\Tools;
 
-use Illuminate\Support\Facades\Log;
+use InvalidArgumentException;
 
 /**
-* Tools for coordiantes, distances...
-* Some stuff might be put in Postgres : http://grokbase.com/t/postgresql/pgsql-general/1069rn3ca0/calculating-distance-between-longitude-and-latitude
-* or http://workshops.boundlessgeo.com/postgis-intro/
-*/
+ * Tools for coordinates, distances and conversions.
+ * Some of this could be done in PostgreSQL instead:
+ * http://grokbase.com/t/postgresql/pgsql-general/1069rn3ca0/calculating-distance-between-longitude-and-latitude
+ * or http://workshops.boundlessgeo.com/postgis-intro/
+ */
 class GeoUtils
 {
     /**
-    * The method used in the app for calculated the distance
-    * @return distance in meters
-    */
-    public static function distance(float $lat1, float $lon1, float $lat2, float $lon2) : float
+     * The method used in the app to calculate a distance.
+     *
+     * @return float distance in metres
+     */
+    public static function distance(float $lat1, float $lon1, float $lat2, float $lon2): float
     {
-        // returns meters
-        return GeoUtils::equirectangularApprox($lat1, $lon1, $lat2, $lon2) * 1000;
-    }
-
-    public static function formatDistance($distance) : string
-    {
-        if (!empty($distance) && $distance > 0) {
-          return number_format($distance, 2, '.', ',');
-        }  else {
-          return 'N/A';
-        }
+        // The approximation returns km, we want metres
+        return self::equirectangularApprox($lat1, $lon1, $lat2, $lon2) * 1000;
     }
 
     /**
-    * Fast distance calculation, in Km.
-    * Possibly wrong (to be checked).
-    */
-    public static function flatDistance(float $lat1, float $lon1, float $lat2, float $lon2) : float
+     * Distance for display: 2 decimals with a thousands separator, or N/A.
+     */
+    public static function formatDistance(?float $distance): string
     {
-        // The length of a degree of longitude
+        if (! empty($distance) && $distance > 0) {
+            return number_format($distance, 2, '.', ',');
+        }
+
+        return 'N/A';
+    }
+
+    /**
+     * Fast distance calculation, in km.
+     * Possibly wrong (to be checked). Unused, kept for reference.
+     */
+    public static function flatDistance(float $lat1, float $lon1, float $lat2, float $lon2): float
+    {
+        // The length of a degree of longitude, in km
         $deglen = 110.25;
         $x = $lat1 - $lat2;
         $y = ($lon1 - $lon2) * cos($lat2);
-        return $deglen * sqrt($x*$x + $y*$y);
+
+        return $deglen * sqrt($x * $x + $y * $y);
     }
 
     /**
-    * Fast distance calculation, from 1 to 2, in Km.
-    * lat lon must be in radians.
-    */
-    public static function equirectangularApprox(float $lat1, float $lon1, float $lat2, float $lon2) : float
+     * Fast distance calculation, from point 1 to point 2, in km (equirectangular approximation).
+     * Input in degrees; the formula converts to radians itself.
+     */
+    public static function equirectangularApprox(float $lat1, float $lon1, float $lat2, float $lon2): float
     {
-        $earthRadius = 6371; //km
-        $p1 = deg2rad($lon2 - $lon1) * cos( deg2rad($lat1+$lat2) / 2 );
+        $earthRadius = 6371; // km
+        // Longitude difference, scaled by the cosine of the mean latitude (meridians get closer near the poles)
+        $p1 = deg2rad($lon2 - $lon1) * cos(deg2rad($lat1 + $lat2) / 2);
+        // Latitude difference
         $p2 = deg2rad($lat1 - $lat2);
-        $distance = $earthRadius * sqrt($p1*$p1 + $p2*$p2);
-        return $distance;
+
+        // Pythagoras on the sphere's surface
+        return $earthRadius * sqrt($p1 * $p1 + $p2 * $p2);
     }
 
     /**
-    * Generate SQL string for finding points within distance
-    * TODO: make it faster by having a table with the results for the cosinus already
-    * or check http://grokbase.com/t/postgresql/pgsql-general/1069rn3ca0/calculating-distance-between-longitude-and-latitude
-    */
-    public static function withinDistanceSql(float $lat, float $lon, float $distance) : string
+     * Generate the SQL condition for finding points within a distance (km).
+     * Unused. TODO: this formula doesn't seem very correct.
+     */
+    public static function withinDistanceSql(float $lat, float $lon, float $distance): string
     {
-        // select lat, lon from points where
-        // TODO: this formula doesnt seem very correct
         return 'pow(lat-'.$lat.', 2) + pow((lon-'.$lon.')*cos(radians('.$lat.')), 2) < pow('.$distance.'/110.25, 2)';
     }
 
     /**
-    * Convert miles to km.
-    */
-    public static function miles2km(float $miles) : float
+     * Convert miles to km.
+     */
+    public static function miles2km(float $miles): float
     {
         return $miles * 1.609344;
     }
 
     /**
-    * Convert km to miles.
-    */
-    public static function km2miles(float $km) : float
+     * Convert km to miles.
+     */
+    public static function km2miles(float $km): float
     {
         return $km / 1.609344;
     }
 
     /**
-    * Estimate walking time. Distance in Km.
-    * Pace is slow walking 3Km/h by default.
-    * Result in minutes is rounded up.
-    */
-    public static function walkingTime(float $distance, float $pace = 3) : int
+     * Estimate the walking time. Distance in km.
+     * Pace is slow walking, 3 km/h by default.
+     * Result in minutes, rounded up.
+     */
+    public static function walkingTime(float $distance, float $pace = 3): int
     {
-        return ceil($distance / $pace * 60);
+        return (int) ceil($distance / $pace * 60);
     }
 
     /**
-    * Convert position string to array
-    * Originally a simple explode from lat,lon to array(lat, lon)
-    */
-    public static function toPositionArray(string $positionString) : array
+     * Convert a position string "lat, lon" to an array [lat, lon] of floats.
+     * Extra parts (e.g. a zoom level pasted from a URL, "lat,lon,15") are ignored.
+     *
+     * @return array{0: float, 1: float}
+     *
+     * @throws InvalidArgumentException when the string does not hold two numbers
+     */
+    public static function toPositionArray(string $positionString): array
     {
-        return explode(',',str_replace(' ', '', $positionString));
+        // Remove the spaces, then split on the commas
+        $parts = explode(',', str_replace(' ', '', $positionString));
+        if (count($parts) < 2 || ! is_numeric($parts[0]) || ! is_numeric($parts[1])) {
+            throw new InvalidArgumentException('Not a "lat, lon" string: '.$positionString);
+        }
+
+        return [(float) $parts[0], (float) $parts[1]];
     }
 
     /**
-    * Convert google URL to coordinates.
-    * Those are the coordinate sto the center of the map,
-    * NOT the one of the actual place/marker
-    * See: https://stackoverflow.com/questions/29335870/i-need-to-extract-lat-long-data-from-a-google-maps-url-that-uses-msa-and-msid
-    */
-    public static function google2coord(string $url) : array
+     * Convert a Google Maps URL to coordinates.
+     * Those are the coordinates of the centre of the map (the "/@lat,lon,zoomz/" part of the URL),
+     * NOT the ones of the actual place/marker.
+     * See: https://stackoverflow.com/questions/29335870/i-need-to-extract-lat-long-data-from-a-google-maps-url-that-uses-msa-and-msid
+     *
+     * @return array{0: float, 1: float}
+     *
+     * @throws InvalidArgumentException when the URL has no "/@lat,lon," part
+     */
+    public static function google2coord(string $url): array
     {
-        Log::debug($url);
-        $split1 = explode('/@', $url);
-        Log::debug($split1);
-        $split2 = explode('z/data', $split1[1]);
-        Log::debug($split2);
-        $coord = explode(',', $split2[0]);
-        Log::debug($coord);
-        return $coord;
+        // Regular expression: "/@" then two decimal numbers separated by a comma
+        if (! preg_match('#/@(-?\d+(?:\.\d+)?),(-?\d+(?:\.\d+)?),#', $url, $m)) {
+            throw new InvalidArgumentException('No coordinates in Google Maps URL: '.$url);
+        }
+
+        // $m[1] and $m[2] are the two captured numbers
+        return [(float) $m[1], (float) $m[2]];
     }
 
-
-    // Get real distance and time by foot (maybe using google api)
-
-    // Get real distance and time by transport (maybe using google api)
-
-
-    // Curisous functions
-
-// https://maps.googleapis.com/maps/api/geocode/json?latlng=40.714224,-73.961452&key=YOUR_API_KEY
-// https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=-33.8670,151.1957&radius=500&types=food&name=cruise&key=
-    function getCoordinates($address)
-    {
-        $address = str_replace(" ", "+", $address); // replace all the white space with "+" sign to match with google search pattern
-        $url = "http://maps.google.com/maps/api/geocode/json?sensor=false&address=$address";
-        $response = file_get_contents($url);
-        $json = json_decode($response,TRUE); //generate array object from the response from the web
-        return ($json['results'][0]['geometry']['location']['lat'].",".$json['results'][0]['geometry']['location']['lng']);
-    }
-
-    /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
-    /*::                                                                         :*/
-    /*::  This routine calculates the distance between two points (given the     :*/
-    /*::  latitude/longitude of those points). It is being used to calculate     :*/
-    /*::  the distance between two locations using GeoDataSource(TM) Products    :*/
-    /*::                                                                         :*/
-    /*::  Definitions:                                                           :*/
-    /*::    South latitudes are negative, east longitudes are positive           :*/
-    /*::                                                                         :*/
-    /*::  Passed to function:                                                    :*/
-    /*::    lat1, lon1 = Latitude and Longitude of point 1 (in decimal degrees)  :*/
-    /*::    lat2, lon2 = Latitude and Longitude of point 2 (in decimal degrees)  :*/
-    /*::    unit = the unit you desire for results                               :*/
-    /*::           where: 'M' is statute miles (default)                         :*/
-    /*::                  'K' is kilometers                                      :*/
-    /*::                  'N' is nautical miles                                  :*/
-    /*::  Worldwide cities and other features databases with latitude longitude  :*/
-    /*::  are available at https://www.geodatasource.com                         :*/
-    /*::                                                                         :*/
-    /*::  For enquiries, please contact sales@geodatasource.com                  :*/
-    /*::                                                                         :*/
-    /*::  Official Web site: https://www.geodatasource.com                       :*/
-    /*::                                                                         :*/
-    /*::         GeoDataSource.com (C) All Rights Reserved 2017		   		         :*/
-    /*::                                                                         :*/
-    /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
-    public static function geodatasourceDistance(float $lat1, float $lon1, float $lat2, float $lon2, string $unit) : float
+    /**
+     * Great-circle distance between two points, given their latitude/longitude in decimal degrees.
+     * South latitudes are negative, east longitudes are positive.
+     * Routine from GeoDataSource(TM), https://www.geodatasource.com (C) 2017. Unused by the app, covered by tests.
+     *
+     * @param  string  $unit  'M' statute miles (default), 'K' kilometres, 'N' nautical miles
+     */
+    public static function geodatasourceDistance(float $lat1, float $lon1, float $lat2, float $lon2, string $unit = 'M'): float
     {
         $theta = $lon1 - $lon2;
+        // Spherical law of cosines
         $dist = sin(deg2rad($lat1)) * sin(deg2rad($lat2)) + cos(deg2rad($lat1)) * cos(deg2rad($lat2)) * cos(deg2rad($theta));
-        $dist = acos($dist);
-        $dist = rad2deg($dist);
+        // Clamp to [-1, 1] before acos: rounding can push identical points slightly above 1
+        $dist = rad2deg(acos(min(1.0, max(-1.0, $dist))));
+        // 1 degree = 60 nautical miles = 60 * 1.1515 statute miles
         $miles = $dist * 60 * 1.1515;
-        $unit = strtoupper($unit);
 
-        if ($unit == "K") {
-          return ($miles * 1.609344);
-        } else if ($unit == "N") {
-          return ($miles * 0.8684);
-        } else {
-          return $miles;
-        }
+        return match (strtoupper($unit)) {
+            'K' => $miles * 1.609344,
+            'N' => $miles * 0.8684,
+            default => $miles,
+        };
     }
-
 }

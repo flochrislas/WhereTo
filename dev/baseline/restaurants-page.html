@@ -1,0 +1,1007 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- viewport for responsive web design -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- CSRF Token -->
+    <meta name="csrf-token" content="jFNCZbMtMTJufQWx7sZzrvHfGkuIiuLT0fImH7So">
+    <!-- SEO -->
+      <title>WhereTo - Restaurants for lunch in Shibuya</title>
+  <meta name="description" content="Quickly find the best restaurants for having lunch in Shibuya.">
+    
+    <!-- Style -->
+    <link href="/css/style-dark.css" rel="stylesheet">
+    <!-- Scripts -->
+    <script>
+        window.Laravel = {"csrfToken":"jFNCZbMtMTJufQWx7sZzrvHfGkuIiuLT0fImH7So"}    </script>
+</head>
+<body>
+     <div id="app">
+        <!-- HEADER -->
+        <nav id="header">
+  <!-- Branding Image -->
+  <div class="left">
+      <a class="title" href="http://127.0.0.1:8001">
+          WhereTo
+      </a>
+  </div>
+
+
+  <div class="right" style="font-size:.7rem">
+      <i>SHIBUYA beta version</i>
+  </div>
+
+  <!-- TODO: Implement this -->
+  <div class="right" style="display: none">
+      <a class="tap" href="http://127.0.0.1:8001/info/main"><strong>Info</strong></a>
+      <a class="tap" href="http://127.0.0.1:8001/vip/main"><strong>VIP</strong></a>
+  </div>
+
+  <!-- TODO: Decide what to do with those -->
+  <div class="right" style="display: none">
+          <a class="tap" href="http://127.0.0.1:8001/about"><strong>About</strong></a>
+      <a href="http://127.0.0.1:8001/login">Login</a>
+      <a href="http://127.0.0.1:8001/register">Register</a>
+      </div>
+
+</nav>
+        <!-- Geolocalisation messages (and possibly info) -->
+        <div id="position-report"></div>
+        <!-- CONTENT -->
+        <div id="content">
+
+  <div id="mainFilter">
+    <div id="tagsTop">
+  <div id="position-report"></div>
+
+  <div id="filterHeader">
+    <div id="filterHeaderTitle">What kind of place?</div>
+    <button id="filterHeaderButton" onclick="getResults()">Show All</button>
+  </div>
+
+  <!-- selected tags for active search -->
+  <div id="selectedTags">
+  </div>
+
+  <p>Available options</p>
+</div>
+
+<!-- showing available tags -->
+<div id="tags">
+        <div class="tag tagType100"
+            tagId="38"
+            id="tagShow38"
+            onClick="moveTag(event)">
+        japanese curry
+      </div>
+        <div class="tag tagType100"
+            tagId="44"
+            id="tagShow44"
+            onClick="moveTag(event)">
+        sushi
+      </div>
+        <div class="tag tagType100"
+            tagId="43"
+            id="tagShow43"
+            onClick="moveTag(event)">
+        curry
+      </div>
+        <div class="tag tagType100"
+            tagId="42"
+            id="tagShow42"
+            onClick="moveTag(event)">
+        pasta
+      </div>
+        <div class="tag tagType100"
+            tagId="41"
+            id="tagShow41"
+            onClick="moveTag(event)">
+        pizza
+      </div>
+        <div class="tag tagType100"
+            tagId="40"
+            id="tagShow40"
+            onClick="moveTag(event)">
+        burger
+      </div>
+        <div class="tag tagType100"
+            tagId="39"
+            id="tagShow39"
+            onClick="moveTag(event)">
+        ramen
+      </div>
+        <div class="tag tagType100"
+            tagId="45"
+            id="tagShow45"
+            onClick="moveTag(event)">
+        gapao
+      </div>
+        <div class="tag tagType100"
+            tagId="46"
+            id="tagShow46"
+            onClick="moveTag(event)">
+        omurice
+      </div>
+        <div class="tag tagType100"
+            tagId="47"
+            id="tagShow47"
+            onClick="moveTag(event)">
+        tenpura
+      </div>
+        <div class="tag tagType100"
+            tagId="49"
+            id="tagShow49"
+            onClick="moveTag(event)">
+        noodles
+      </div>
+        <div class="tag tagType100"
+            tagId="48"
+            id="tagShow48"
+            onClick="moveTag(event)">
+        soba
+      </div>
+        <div class="tag tagType100"
+            tagId="53"
+            id="tagShow53"
+            onClick="moveTag(event)">
+        karaage
+      </div>
+        <div class="tag tagType100"
+            tagId="51"
+            id="tagShow51"
+            onClick="moveTag(event)">
+        hamburg
+      </div>
+        <div class="tag tagType100"
+            tagId="50"
+            id="tagShow50"
+            onClick="moveTag(event)">
+        okonomiyaki
+      </div>
+        <div class="tag tagType100"
+            tagId="59"
+            id="tagShow59"
+            onClick="moveTag(event)">
+        sandwich
+      </div>
+        <div class="tag tagType100"
+            tagId="57"
+            id="tagShow57"
+            onClick="moveTag(event)">
+        quiche
+      </div>
+        <div class="tag tagType100"
+            tagId="56"
+            id="tagShow56"
+            onClick="moveTag(event)">
+        galette
+      </div>
+        <div class="tag tagType100"
+            tagId="55"
+            id="tagShow55"
+            onClick="moveTag(event)">
+        crepe
+      </div>
+        <div class="tag tagType100"
+            tagId="54"
+            id="tagShow54"
+            onClick="moveTag(event)">
+        green curry
+      </div>
+        <div class="tag tagType100"
+            tagId="52"
+            id="tagShow52"
+            onClick="moveTag(event)">
+        grill
+      </div>
+        <div class="tag tagType100"
+            tagId="58"
+            id="tagShow58"
+            onClick="moveTag(event)">
+        croque-monsieur
+      </div>
+        <div class="tag tagType100"
+            tagId="60"
+            id="tagShow60"
+            onClick="moveTag(event)">
+        gyoza
+      </div>
+        <div class="tag tagType100"
+            tagId="62"
+            id="tagShow62"
+            onClick="moveTag(event)">
+        katsu
+      </div>
+        <div class="tag tagType100"
+            tagId="61"
+            id="tagShow61"
+            onClick="moveTag(event)">
+        dumpling
+      </div>
+        <div class="tag tagType100"
+            tagId="63"
+            id="tagShow63"
+            onClick="moveTag(event)">
+        yakitori
+      </div>
+        <div class="tag tagType100"
+            tagId="64"
+            id="tagShow64"
+            onClick="moveTag(event)">
+        kushiage
+      </div>
+        <div class="tag tagType100"
+            tagId="65"
+            id="tagShow65"
+            onClick="moveTag(event)">
+        yakiniku
+      </div>
+        <div class="tag tagType100"
+            tagId="69"
+            id="tagShow69"
+            onClick="moveTag(event)">
+        teppanyaki
+      </div>
+        <div class="tag tagType100"
+            tagId="66"
+            id="tagShow66"
+            onClick="moveTag(event)">
+        sukiyaki
+      </div>
+        <div class="tag tagType100"
+            tagId="67"
+            id="tagShow67"
+            onClick="moveTag(event)">
+        shabushabu
+      </div>
+        <div class="tag tagType100"
+            tagId="68"
+            id="tagShow68"
+            onClick="moveTag(event)">
+        taco rice
+      </div>
+        <div class="tag tagType100"
+            tagId="70"
+            id="tagShow70"
+            onClick="moveTag(event)">
+        meat
+      </div>
+        <div class="tag tagType100"
+            tagId="75"
+            id="tagShow75"
+            onClick="moveTag(event)">
+        burrito
+      </div>
+        <div class="tag tagType100"
+            tagId="74"
+            id="tagShow74"
+            onClick="moveTag(event)">
+        kebab
+      </div>
+        <div class="tag tagType100"
+            tagId="73"
+            id="tagShow73"
+            onClick="moveTag(event)">
+        falafel
+      </div>
+        <div class="tag tagType100"
+            tagId="72"
+            id="tagShow72"
+            onClick="moveTag(event)">
+        hotdog
+      </div>
+        <div class="tag tagType100"
+            tagId="71"
+            id="tagShow71"
+            onClick="moveTag(event)">
+        desert
+      </div>
+        <div class="tag tagType100"
+            tagId="76"
+            id="tagShow76"
+            onClick="moveTag(event)">
+        tonkotsu
+      </div>
+        <div class="tag tagType100"
+            tagId="78"
+            id="tagShow78"
+            onClick="moveTag(event)">
+        organic
+      </div>
+        <div class="tag tagType100"
+            tagId="77"
+            id="tagShow77"
+            onClick="moveTag(event)">
+        miso
+      </div>
+        <div class="tag tagType80"
+            tagId="1"
+            id="tagShow1"
+            onClick="moveTag(event)">
+        japanese
+      </div>
+        <div class="tag tagType80"
+            tagId="2"
+            id="tagShow2"
+            onClick="moveTag(event)">
+        western
+      </div>
+        <div class="tag tagType80"
+            tagId="5"
+            id="tagShow5"
+            onClick="moveTag(event)">
+        thai
+      </div>
+        <div class="tag tagType80"
+            tagId="3"
+            id="tagShow3"
+            onClick="moveTag(event)">
+        italian
+      </div>
+        <div class="tag tagType80"
+            tagId="4"
+            id="tagShow4"
+            onClick="moveTag(event)">
+        indian
+      </div>
+        <div class="tag tagType80"
+            tagId="6"
+            id="tagShow6"
+            onClick="moveTag(event)">
+        chinese
+      </div>
+        <div class="tag tagType80"
+            tagId="8"
+            id="tagShow8"
+            onClick="moveTag(event)">
+        american
+      </div>
+        <div class="tag tagType80"
+            tagId="7"
+            id="tagShow7"
+            onClick="moveTag(event)">
+        french
+      </div>
+        <div class="tag tagType80"
+            tagId="10"
+            id="tagShow10"
+            onClick="moveTag(event)">
+        mexican
+      </div>
+        <div class="tag tagType80"
+            tagId="11"
+            id="tagShow11"
+            onClick="moveTag(event)">
+        spanish
+      </div>
+        <div class="tag tagType80"
+            tagId="9"
+            id="tagShow9"
+            onClick="moveTag(event)">
+        turk
+      </div>
+        <div class="tag tagType80"
+            tagId="14"
+            id="tagShow14"
+            onClick="moveTag(event)">
+        african
+      </div>
+        <div class="tag tagType80"
+            tagId="13"
+            id="tagShow13"
+            onClick="moveTag(event)">
+        indonesian
+      </div>
+        <div class="tag tagType80"
+            tagId="12"
+            id="tagShow12"
+            onClick="moveTag(event)">
+        vietnamese
+      </div>
+        <div class="tag tagType60"
+            tagId="24"
+            id="tagShow24"
+            onClick="moveTag(event)">
+        to-go
+      </div>
+        <div class="tag tagType60"
+            tagId="21"
+            id="tagShow21"
+            onClick="moveTag(event)">
+        filling
+      </div>
+        <div class="tag tagType60"
+            tagId="22"
+            id="tagShow22"
+            onClick="moveTag(event)">
+        small servings
+      </div>
+        <div class="tag tagType60"
+            tagId="23"
+            id="tagShow23"
+            onClick="moveTag(event)">
+        visa
+      </div>
+        <div class="tag tagType60"
+            tagId="31"
+            id="tagShow31"
+            onClick="moveTag(event)">
+        English menu
+      </div>
+        <div class="tag tagType60"
+            tagId="26"
+            id="tagShow26"
+            onClick="moveTag(event)">
+        all you can drink
+      </div>
+        <div class="tag tagType60"
+            tagId="27"
+            id="tagShow27"
+            onClick="moveTag(event)">
+        authentic
+      </div>
+        <div class="tag tagType60"
+            tagId="25"
+            id="tagShow25"
+            onClick="moveTag(event)">
+        all you can eat
+      </div>
+        <div class="tag tagType60"
+            tagId="29"
+            id="tagShow29"
+            onClick="moveTag(event)">
+        menu with calories
+      </div>
+        <div class="tag tagType60"
+            tagId="30"
+            id="tagShow30"
+            onClick="moveTag(event)">
+        menu with allergies
+      </div>
+        <div class="tag tagType60"
+            tagId="28"
+            id="tagShow28"
+            onClick="moveTag(event)">
+        vegetarian friendly
+      </div>
+        <div class="tag tagType60"
+            tagId="36"
+            id="tagShow36"
+            onClick="moveTag(event)">
+        smoking area
+      </div>
+        <div class="tag tagType60"
+            tagId="35"
+            id="tagShow35"
+            onClick="moveTag(event)">
+        no smoking
+      </div>
+        <div class="tag tagType60"
+            tagId="34"
+            id="tagShow34"
+            onClick="moveTag(event)">
+        smoking allowed
+      </div>
+        <div class="tag tagType60"
+            tagId="37"
+            id="tagShow37"
+            onClick="moveTag(event)">
+        open air space
+      </div>
+        <div class="tag tagType60"
+            tagId="33"
+            id="tagShow33"
+            onClick="moveTag(event)">
+        buffet
+      </div>
+        <div class="tag tagType60"
+            tagId="32"
+            id="tagShow32"
+            onClick="moveTag(event)">
+        customisable dishes
+      </div>
+        <div class="tag tagType40"
+            tagId="17"
+            id="tagShow17"
+            onClick="moveTag(event)">
+        bar
+      </div>
+        <div class="tag tagType40"
+            tagId="19"
+            id="tagShow19"
+            onClick="moveTag(event)">
+        izakaya
+      </div>
+        <div class="tag tagType40"
+            tagId="20"
+            id="tagShow20"
+            onClick="moveTag(event)">
+        bakery
+      </div>
+        <div class="tag tagType40"
+            tagId="15"
+            id="tagShow15"
+            onClick="moveTag(event)">
+        fast food
+      </div>
+        <div class="tag tagType40"
+            tagId="16"
+            id="tagShow16"
+            onClick="moveTag(event)">
+        cafe
+      </div>
+        <div class="tag tagType40"
+            tagId="18"
+            id="tagShow18"
+            onClick="moveTag(event)">
+        teishoku
+      </div>
+  </div>
+
+<!-- The Javascript to operate this filter -->
+<script>
+/** What happens when we click on a tag */
+function moveTag(event) {
+  // Refresh position (async and takes a while...)
+  getLocation();
+
+  // Move the tag in the proper div
+  if (event.target.parentNode.id == "selectedTags") {
+    document.getElementById("tags").appendChild(event.target);
+    // Check if any selectedTag left
+    if (getSelectedTagsDiv().children.length > 0) {
+      /* Run the search from the selectedTags immediately in the background */
+      refreshResults();
+    }
+    else {
+      // Reset the showResults button
+      resetFilterHeaderButton();
+    }
+  } else {
+    getSelectedTagsDiv().appendChild(event.target);
+    /* Run the search from the selectedTags immediately in the background */
+    refreshResults();
+  }
+}
+
+function resetFilterHeaderButton() {
+  setResultsLoading("none");
+  setResultsLoadingTime(0);
+  getFilterHeaderButtonDiv().disabled = false;
+  getFilterHeaderButtonDiv().innerHTML = "Show All";
+}
+
+/** Refreshes the list of results */
+function refreshResults(orderBy) {
+  // Default parameter doc: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Default_parameters
+  /* read all the div under selectedTags */
+  var tags = getSelectedTagsDiv().children;
+  /* make a list of all their ids or labels to send as parameters */
+  var tagsLabels = getTagsLabels(tags);
+
+  /* check for orderBy choice */
+  if (orderBy != null) {
+    // priority to the current parameter
+    store("orderBy", orderBy);
+  } else {
+    // if no param then try read store
+    let storeOrderBy = readStore("orderBy");
+    if (storeOrderBy != null) {
+      orderBy = storeOrderBy;
+    } else {
+      // if nothing in param or store use default value
+      orderBy = "distance";
+      store("orderBy", orderBy);
+    }
+  }
+
+  /* read order/operand/options parameters */
+  // We will implement that later
+  let op = 'AND';
+
+  /* AJAX request to update the results */
+  ajaxResults(op, tagsLabels, orderBy);
+}
+
+/** Actually send the request to the server */
+function ajaxResults(op, tags, orderBy) {
+  let xhr = new XMLHttpRequest();
+  let url = resultsUrl
+          + '?op=' + op
+          + '&tags=' + tags
+          + '&orderBy=' + orderBy
+          + '&position=' + getLocation();
+  xhr.open('GET', url);
+  console.info("GET: " + url);
+  let now = nowStamp();
+  setResultsLoadingTime(now);
+  setResultsLoading("tag");
+  xhr.onload = function() {
+      if (now < getResultsLoadingTime()) { // if a more recent request has been nameAndType
+          getResultsDiv().innerHTML = "Updating results...";
+      }
+      else {
+          if (xhr.status === 200) {
+              /* write results */
+              getResultsDiv().innerHTML = xhr.responseText;
+              /* update the show result button with the number of results */
+              refreshShowResultsButton();
+          }
+          else {
+              getResultsDiv().innerHTML = "Sorry, an error occurred during the search. Check your Internet connection and try again.";
+          }
+          if (now == getResultsLoadingTime()) {
+              setResultsLoading("none");
+          }
+      }
+  };
+  xhr.send();
+}
+
+/** From NodeList of tag div, get concatenated string of tags labels */
+function getTagsLabels(tags) {
+  let tagsLabels = "";
+  for (i = 0; i < tags.length; ++i) {
+    tagsLabels = tagsLabels + tags[i].innerHTML.trim() + ',';
+  }
+  // Slice removes the last comma
+  return tagsLabels.slice(0,-1);
+}
+
+/** From NodeList of tag div, get array of tags ids */
+function getTagsIdArray(op, tags) {
+  let tagsIds = [];
+  for (let i = 0; i < tags.length; ++i) {
+    tagsIds.push(tags[i].getAttribute("tagId"));
+  }
+  return tagsIds;
+}
+
+function refreshShowResultsButton() {
+  /* get number of results */
+  // var nbResults = document.getElementById("results").children.count();
+  // var nbResults = document.getElementById('resultsTable').rows.length;
+  let nbResults = document.getElementsByClassName("resultsCounter").length;
+  /* Change button label/text */
+  if (nbResults == 0) {
+    getFilterHeaderButtonDiv().innerHTML = "No result";
+    getFilterHeaderButtonDiv().disabled = true;
+  }
+  else {
+      getFilterHeaderButtonDiv().disabled = false;
+      getFilterHeaderButtonDiv().innerHTML = "Show " + nbResults + " results";
+  }
+
+}
+
+/** Store methods  TO MOVE IN A SUPERIOR CLASS */
+function store(key, value) {
+    // Look up for different options, chose the best
+    if (typeof(Storage) !== "undefined") {
+        // Code for localStorage/sessionStorage.
+        localStorage.setItem(key, value);
+        // sessionStorage.setItem(key value);
+    } else {
+        console.warn("No local storage support from the browser. Application's behavior may be affected.");
+    }
+}
+
+function readStore(key) {
+    return localStorage.getItem(key);
+}
+/** * * * * * * * * * * * * * * * * * * * * * *  */
+
+/**** Get important elements ****/
+function getFilterHeaderButtonDiv() {
+    return document.getElementById("filterHeaderButton");
+}
+function getSelectedTagsDiv() {
+    return document.getElementById("selectedTags");
+}
+
+</script>
+  </div>
+
+  <div id="mainResults" style="display: none">
+    <div id="resultsTop">
+
+  <!-- buttons -->
+  <div id="resultsControl">
+    <button class="sortButton" onclick="refreshResults('ratings')">
+      Best<br>first</button>
+    <button class="sortButton" onclick="refreshResults('cost')">
+      Cost<br>first</button>
+    <button class="sortButton" onclick="refreshResults('distance')">
+      Near<br>first</button>
+    <button class="navButton" onclick="showFilter()">Show Filters</button>
+  </div>
+
+  <!-- fixed labels -->
+    <div class="resultTable">
+      <div class="resultRow header">
+        <div class="resultCell nameAndType">
+          <div class="label inline" style="color: var(--color-name);">Name</div>
+          <div class="label inline" style="color: var(--color-txt-default);">&</div>
+          <div class="label inline" style="color: var(--color-type);">Type</div>
+        </div>
+        <div class="resultCell distance centerContent">
+          <div class="label distanceAdjust" style="color: var(--color-dst);">dst.</div>
+        </div>
+        <div class="resultCell centerContent">
+          <div class="label fourDigitsAdjust" style="color: var(--color-cost);">cost</div>
+        </div>
+        <div class="resultCell centerContent">
+          <div class="label" style="color: var(--color-lunch);">lunch</div>
+        </div>
+        <div class="resultCell centerContent">
+          <div class="label" style="color: var(--color-food);">food</div>
+        </div>
+        <div class="resultCell centerContent">
+          <div class="label" style="color: var(--color-place);">place</div>
+        </div>
+        <!--
+        <div class="resultCell centerContent">
+          <div class="label" style="color: var(--color-price);">price</div>
+        </div> -->
+        <!--
+        <div class="resultCell centerContent">
+          <div class="label" style="color: var(--color-date);">date</div>
+        </div> -->
+      </div>
+    </div>
+  </div>
+
+<!-- data -->
+<div id="results" loading="none" time="0"></div>
+
+<!-- The Javascript to show details from results list -->
+<script>
+
+/** Actually send the request to the server */
+function ajaxDetails(url) {
+  getDetailsDiv().innerHTML = "Loading...";
+  let xhr = new XMLHttpRequest();
+  xhr.open('GET', url);
+  console.info("GET: " + url);
+  xhr.onload = function() {
+      if (xhr.status === 200) {
+          getDetailsDiv().innerHTML = xhr.responseText;
+      }
+      else {
+          getDetailsDiv().innerHTML = "Sorry, detailed data could not be retrieved. Check your Internet connection and try again.";
+      }
+  };
+  xhr.send();
+}
+
+function showDetails(url, placeId) {
+  if (placeId != getCurrentDetailsId()) {
+      ajaxDetails(url);
+  }
+  getDetailsDiv().style.display = "block";
+  //document.getElementById("content-unchained").style.display = "block";
+  document.getElementById("content").style.display = "none";
+}
+
+function hideDetails() {
+  getDetailsDiv().style.display = "none";
+  //document.getElementById("content-unchained").style.display = "none";
+  document.getElementById("content").style.display = "flex";
+}
+
+function getCurrentDetailsId() {
+  if (document.getElementById("detailName") == null) {
+    return null;
+  }
+  return document.getElementById("detailName").getAttribute("detailId");
+}
+
+</script>
+<!-- The Javascript for the details page -->
+<script>
+
+function copyStringToClipboard (str) {
+   console.info("copyStringToClipboard: " + str);
+   // Create new element
+   let el = document.createElement('textarea');
+   // Set value (string to be copied)
+   el.value = str;
+   // Set non-editable to avoid focus and move outside of view
+   el.setAttribute('readonly', '');
+   el.style = {position: 'absolute', left: '-9999px'};
+   document.body.appendChild(el);
+   // Select text inside element
+   el.select();
+   // Copy text to clipboard
+   document.execCommand('copy');
+   // Remove temporary element
+   document.body.removeChild(el);
+}
+
+</script>
+  </div>
+
+</div>
+
+<div id="mainDetails" class="content-unchained" style="display: none">
+</div>
+
+<script>
+  // To be used in ajax calls for reading results
+  var resultsUrl = "http://127.0.0.1:8001/restaurants/results";
+</script>
+<!-- Javascript for handling results and filters display -->
+<script>
+
+function showResults() {
+  getMainFilterDiv().style.display = "none";
+  getMainResultsDiv().style.display = "flex"; // was block
+}
+
+function showFilter() {
+  getMainFilterDiv().style.display = "flex"; // was block
+  getMainResultsDiv().style.display = "none";
+}
+
+function getResults() {
+  // This function should exist (maybe in parent/main)
+  showResults();
+  // Refresh position
+  getLocation();
+  // Get all if no places loaded
+  if (getResultsLoading() == "none" && getResultsLoadingTime() == 0) {
+    setResultsLoading("all");
+    getResultsDiv().innerHTML = "Loading ALL entries. Please wait or select a tag...";
+    let xhr = new XMLHttpRequest();
+    let url = resultsUrl
+            + '?position=' + getLocation()
+            + '&orderBy=distance';
+    console.info('calling: '+url),
+    xhr.open('GET', url);
+    xhr.onload = function() {
+        if (getResultsLoading() == "all") {
+            if (xhr.status === 200) {
+                getResultsDiv().innerHTML = xhr.responseText;
+                // We allow this query just once
+                setResultsLoadingTime(1);
+            }
+            else {
+                getResultsDiv().innerHTML = "Sorry, an error occured during the search. Check your Internet connection and try again.";
+            }
+            setResultsLoading("none");
+        }
+    };
+    xhr.send();
+  }
+}
+
+/** Where the results would be displayed */
+function getResultsDiv() {
+  return document.getElementById("results");
+}
+/** Could be none, all, tag */
+function getResultsLoading() {
+  // console.info('getResultsLoading: ' + getResultsDiv().getAttribute("loading"));
+  return getResultsDiv().getAttribute("loading");
+}
+/** State could be none, all, tag */
+function setResultsLoading(state) {
+  // console.info('setResultsLoading: ' + state);
+  return getResultsDiv().setAttribute("loading", state);
+}
+/** results loading time methods */
+function nowStamp() {
+  if (!Date.now) {
+      return new Date().getTime();
+  }
+  return Date.now();
+}
+function getResultsLoadingTime() {
+  return getResultsDiv().getAttribute("time");
+}
+function setResultsLoadingTime(time) {
+  return getResultsDiv().setAttribute("time", time);
+}
+
+/**** Get important elements ****/
+function getMainFilterDiv() {
+    return document.getElementById("mainFilter");
+}
+function getMainResultsDiv() {
+    return document.getElementById("mainResults");
+}
+/** Where the details would be displayed */
+function getDetailsDiv() {
+  return document.getElementById("mainDetails");
+}
+
+</script>
+
+        <!-- FOOTER -->
+        <nav id="footer">
+  <div class="copyright">
+      copyright 2017-2019
+  </div>
+</nav>
+    </div>
+
+    <!-- Javascript for geolocalisation -->
+<script>
+var geolocalisationMessage = document.getElementById("position-report");
+
+/** Options for getCurrentPosition. Time in ms */
+var getCurrentPositionOptions = {
+  enableHighAccuracy: true,
+  timeout: 5500,
+  maximumAge: 1500
+};
+
+function getLocation() {
+    if (navigator.geolocation) {
+        // This needs valid HTTPS age, or localhost, to work in Chrome!!!
+        // And beware the timeout or delay!!!
+        navigator.geolocation.getCurrentPosition(onSuccess, onError, getCurrentPositionOptions);
+        // it is also possible to get continuously updated coords from the method watchPosition()
+        // see https://www.w3schools.com/html/html5_geolocation.asp
+        // Console test:
+        // navigator.geolocation.getCurrentPosition(function(position){console.info(position.coords.latitude+', '+position.coords.longitude)},function(error){console.warn(error.code+': '+error.message)});
+        return readSessionStore("lastCoordinates");
+
+    } else {
+        geolocalisationMessage.innerHTML = "Geolocation is not supported by this browser.";
+        console.warn("Geolocation is not supported by this browser.");
+        return null;
+    }
+}
+
+/** getCurrentPosition success */
+function onSuccess(position) {
+    sessionStore("lastCoordinates", position.coords.latitude + "," + position.coords.longitude);
+    // For debugging purposes:
+    // console.info('Geolocalisation successfull: '+ position.coords.latitude +', '+ position.coords.longitude);
+    console.info('Geolocalisation successful: '+ position.coords.latitude + "," + position.coords.longitude);
+}
+
+/** getCurrentPosition failure */
+function onError(error) {
+    let additionalWarning = " Distances will be from the station."
+    switch(error.code) {
+        case error.PERMISSION_DENIED:
+            geolocalisationMessage.innerHTML = "User denied the request for Geolocation." + additionalWarning
+            break;
+        case error.POSITION_UNAVAILABLE:
+            geolocalisationMessage.innerHTML = "Location information is unavailable."
+            break;
+        case error.TIMEOUT:
+            geolocalisationMessage.innerHTML = "The request to get user location timed out."
+            break;
+        case error.UNKNOWN_ERROR:
+            geolocalisationMessage.innerHTML = "An unknown error occurred."
+            break;
+    }
+    if (location.protocol !== "https:") {
+      geolocalisationMessage.innerHTML = " Please use the HTTPS version of the service to enable geolocalisation."
+    }
+    else {
+      geolocalisationMessage.innerHTML = " Error" + error.code +": " + error.message;
+    }
+    geolocalisationMessage.innerHTML += additionalWarning;
+}
+
+/** TO MOVE IN A SUPERIOR CLASS */
+function sessionStore(key, value) {
+  if (typeof(Storage) !== "undefined") {
+    sessionStorage.setItem(key, value);
+  } else {
+      console.warn("No session storage support from the browser. Application's behavior may be affected.");
+  }
+}
+
+function readSessionStore(key) {
+    return sessionStorage.getItem(key);
+}
+</script>
+</body>
+</html>

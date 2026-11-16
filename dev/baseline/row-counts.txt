@@ -1,0 +1,14 @@
+restaurants|239
+restaurant_tags|80
+restaurant_restaurant_tag|738
+stores|48
+store_tags|35
+store_store_tag|133
+bars|15
+bar_tags|13
+bar_bar_tag|30
+karaokes|4
+karaoke_tags|13
+karaoke_karaoke_tag|13
+restaurant_types|1
+users|2

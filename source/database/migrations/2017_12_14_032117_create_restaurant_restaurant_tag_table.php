@@ -1,44 +1,25 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
-/**
-* Pivot table
-* http://www.easylaravelbook.com/blog/2016/04/06/introducing-laravel-many-to-many-relations/
-* http://laraveldaily.com/pivot-tables-and-many-to-many-relationships/
-*/
-class CreateRestaurantRestaurantTagTable extends Migration
+return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
-    public function up()
+    public function up(): void
     {
+        // Pivot table of the many-to-many relation between the places and their tags.
+        // http://laraveldaily.com/pivot-tables-and-many-to-many-relationships/
         Schema::create('restaurant_restaurant_tag', function (Blueprint $table) {
-          // We use on cascade delete so if any entry is deleted,
-          // its relationships will as well, and we dont need to manually detach from code
-
-          $table->integer('restaurant_id')->unsigned()->nullable();
-          $table->foreign('restaurant_id')->references('id')
-                ->on('restaurants')->onDelete('cascade');
-
-          $table->integer('restaurant_tag_id')->unsigned()->nullable();
-          $table->foreign('restaurant_tag_id')->references('id')
-                ->on('restaurant_tags')->onDelete('cascade');
+            // Two foreign keys and nothing else. ON DELETE CASCADE: when a place or a tag is deleted,
+            // its pivot rows go with it, so we never need to detach from code.
+            $table->foreignId('restaurant_id')->constrained('restaurants')->cascadeOnDelete();
+            $table->foreignId('restaurant_tag_id')->constrained('restaurant_tags')->cascadeOnDelete();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
-    public function down()
+    public function down(): void
     {
         Schema::dropIfExists('restaurant_restaurant_tag');
     }
-}
+};

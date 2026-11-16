@@ -7,31 +7,18 @@ use Illuminate\Support\ServiceProvider;
 class AppServiceProvider extends ServiceProvider
 {
     /**
-     * Bootstrap any application services.
-     *
-     * @return void
+     * Register any application services.
      */
-    public function boot()
+    public function register(): void
     {
-        // Nothing originally
-
-        // Add setting to separate log files
-         // \Log::getMonolog()->popHandler();
-         // \Log::useDailyFiles(storage_path('/logs/').php_sapi_name().'-'.get_current_user().'.log');
-        // TODO: The above cannot be done above Laravel 5.5, check how to do, maybe just use daily log driver in config logging
-
+        // Nothing to register: the dev packages (Debugbar, IDE helper) register themselves through Composer auto-discovery
     }
 
     /**
-     * Register any application services.
-     *
-     * @return void
+     * Bootstrap any application services.
      */
-    public function register()
+    public function boot(): void
     {
-        // Helps PhpStorm and IDE (was in boot() before...)
-        if ($this->app->environment() !== 'production') {
-            $this->app->register(\Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class);
-        }
+        // Nothing to boot. Logging goes through the 'daily' channel set in .env (LOG_CHANNEL)
     }
 }

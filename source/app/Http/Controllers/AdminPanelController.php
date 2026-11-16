@@ -3,36 +3,28 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
+/**
+ * Admin dashboard actions.
+ */
 class AdminPanelController extends Controller
 {
     /**
-     * Turn on/off DEBUG mode
-     *
-     * @return \Illuminate\Http\Response
+     * Switch the Debugbar ON or OFF for the current process.
+     * The Debugbar is a dev dependency, so it may be absent (production).
      */
     public function debugModeSwitch(Request $request)
     {
-        $switch = request('mode');
-        if ($switch == 'on') {
-            $this->debugModeOn();
+        // The form sends mode=on or mode=off
+        $on = $request->input('mode') === 'on';
+        Log::debug('Debug mode '.($on ? 'ON' : 'OFF'));
+        // Only touch the Debugbar when the package is installed and registered
+        if (app()->bound('debugbar')) {
+            $on ? app('debugbar')->enable() : app('debugbar')->disable();
         }
-        else {
-            $this->debugModeOff();
-        }
-        // Redirect the user to where he was
+
+        // Back to the previous page (the dashboard)
         return back()->withInput();
-    }
-
-    private function debugModeOn() : void
-    {
-        \Log::debug('Debug mode ON!');
-        \Debugbar::enable();
-    }
-
-    private function debugModeOff() : void
-    {
-        \Log::debug('Debug mode OFF!');
-        \Debugbar::disable();
     }
 }

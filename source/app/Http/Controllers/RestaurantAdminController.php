@@ -2,26 +2,28 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Restaurant;
 use Illuminate\Http\Request;
-use App\Restaurant;
+use Illuminate\Support\Facades\Cache;
 
-class RestaurantAdminController
+/**
+ * Admin CRUD for restaurants.
+ * Route::resource('restaurants') maps the 7 methods below to the URLs under /admin/restaurants.
+ * Originally from the tutorial https://appdividend.com/2017/10/15/laravel-5-5-crud-example-tutorial/
+ */
+class RestaurantAdminController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * Display a listing of the restaurants.
      */
     public function index()
     {
-        $restaurants = Restaurant::orderBy('id', 'desc')->get();
-        return view('admin.restaurants.index', compact('restaurants'));
+        // All the restaurants, newest first; with('tags') loads the tags in one extra query instead of one per row
+        return view('admin.restaurants.index', ['restaurants' => Restaurant::with('tags')->orderByDesc('id')->get()]);
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
+     * Show the form for creating a new restaurant.
      */
     public function create()
     {
@@ -29,106 +31,86 @@ class RestaurantAdminController
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * Store a newly created restaurant in the DB.
      */
     public function store(Request $request)
     {
-        // From CRUD tuto https://appdividend.com/2017/10/15/laravel-5-5-crud-example-tutorial/
-        /*
-        $restaurant = new restaurant();
-        $data = $this->validate($request, [
-            'name'=>'required',
-            'type'=> 'required'
-        ]);
+        // Validate the form data (redirects back with the errors when it fails)
+        $request->validate(['name' => 'required', 'type' => 'required']);
 
-        $restaurant->saverestaurant($data);
-        return redirect('/restaurant-create')
-            ->with('success', 'New restaurant has been created! Wait sometime to get resolved');
-        */
-        ////////////////////////////////////////////////// VS
+        // Fill a new model from the form and save it
+        $this->save(new Restaurant, $request);
 
-        request()->validate([
-            'name'=>'required',
-            'type'=> 'required'
-        ]);
-
-        Restaurant::create($request->all());
-
-        return redirect()->route('restaurants.index')
-            ->with('success','Restaurant created successfully');
+        // Redirect to the list, with a status message in the session
+        return redirect()->route('restaurants.index')->with('success', 'Restaurant created successfully');
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * Display the specified restaurant.
      */
-    public function show($id)
+    public function show(int $id)
     {
-        $restaurant = Restaurant::find($id);
-        return view('admin.restaurants.show',compact('restaurant'));
+        // findOrFail returns a 404 page when the id does not exist
+        return view('admin.restaurants.show', ['restaurant' => Restaurant::findOrFail($id)]);
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * Show the form for editing the specified restaurant.
      */
-    public function edit($id)
+    public function edit(int $id)
     {
-        $restaurant = Restaurant::find($id);
-        return view('admin.restaurants.edit',compact('restaurant'));
+        return view('admin.restaurants.edit', ['restaurant' => Restaurant::findOrFail($id)]);
     }
 
     /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * Update the specified restaurant in the DB.
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, int $id)
     {
-        /*
-        $ticket = new Ticket();
-        $data = $this->validate($request, [
-            'name'=>'required',
-            'type'=> 'required'
-        ]);
-        $data['id'] = $id;
-        $ticket->updateTicket($data);
+        // Validate the form data
+        $request->validate(['name' => 'required', 'type' => 'required']);
 
-        return redirect('/restaurants-list')->with('success', 'The restaurant has been updated!');
-        */
-        ////////////////////////// VS
+        // Fill the existing model from the form and save it
+        $this->save(Restaurant::findOrFail($id), $request);
 
-        request()->validate([
-            'name'=>'required',
-            'type'=> 'required'
-        ]);
-
-        Restaurant::find($id)->update($request->all());
-
-        return redirect()->route('restaurants.index')
-            ->with('success','Restaurant updated successfully');
+        // Redirect to the list, with a status message in the session
+        return redirect()->route('restaurants.index')->with('success', 'Restaurant updated successfully');
     }
 
     /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * Remove the specified restaurant from the DB.
      */
-    public function destroy($id)
+    public function destroy(int $id)
     {
-        Restaurant::find($id)->delete();
-        return redirect()->route('restaurants.index')
-            ->with('success','Restaurant deleted successfully');
+        // Delete the restaurant (its pivot rows go with it, thanks to ON DELETE CASCADE)
+        Restaurant::findOrFail($id)->delete();
+
+        // Drop the whole cache so the public pages see the change
+        Cache::flush();
+
+        return redirect()->route('restaurants.index')->with('success', 'Restaurant deleted successfully');
     }
 
+    /**
+     * Fill the model from the form, parse the optional "lat, lon" field, save,
+     * and drop the forever-cache so the public pages see the change.
+     */
+    private function save(Restaurant $restaurant, Request $request): void
+    {
+        // Copy the form fields into the model (only the $fillable columns); 'coord' is not a column
+        $restaurant->fill($request->except('coord'));
+
+        // The coordinates come as one "lat, lon" text field
+        $coord = trim((string) $request->input('coord', ''));
+        if ($coord !== '') {
+            // Parses the string into lat and lon (and saves); invalid input is logged and ignored
+            $restaurant->fillCoordinatesFromString($coord);
+        }
+
+        // INSERT or UPDATE depending on whether the model already has an id
+        $restaurant->save();
+
+        // Drop the whole cache (results and tag lists) so the public pages see the change
+        Cache::flush();
+    }
 }

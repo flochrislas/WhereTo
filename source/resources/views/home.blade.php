@@ -16,7 +16,7 @@
     @include('suggestions.suggestion')
 
   <div class="grid">
-    <a class="giantButton" href="{{ route('restaurants.main') }}" onclick="getLocation()">
+    <a class="giantButton" href="{{ route('restaurants.main') }}" onclick="startGeolocation()">
       Lunch
       <br/>in<br/>Shibuya
     </a>

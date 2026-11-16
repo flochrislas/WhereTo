@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- viewport for responsive web design -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- CSRF Token -->
+    <meta name="csrf-token" content="kbhSybYZLVjLGSFis27HOeg51xV7gkKgdShriVgn">
+    <!-- SEO -->
+      <title>WhereTo - Find the best places in Shibuya</title>
+  <meta name="description" content="Quickly find the best places in Shibuya. Search for restaurants, izakaya, bars, pubs, karaoke, stores, malls, and more.">
+    
+    <!-- Style -->
+    <link href="/css/style-dark.css" rel="stylesheet">
+    <!-- Scripts -->
+    <script>
+        window.Laravel = {"csrfToken":"kbhSybYZLVjLGSFis27HOeg51xV7gkKgdShriVgn"}    </script>
+</head>
+<body>
+     <div id="app">
+        <!-- HEADER -->
+        <nav id="header">
+  <!-- Branding Image -->
+  <div class="left">
+      <a class="title" href="http://127.0.0.1:8001">
+          WhereTo
+      </a>
+  </div>
+
+
+  <div class="right" style="font-size:.7rem">
+      <i>SHIBUYA beta version</i>
+  </div>
+
+  <!-- TODO: Implement this -->
+  <div class="right" style="display: none">
+      <a class="tap" href="http://127.0.0.1:8001/info/main"><strong>Info</strong></a>
+      <a class="tap" href="http://127.0.0.1:8001/vip/main"><strong>VIP</strong></a>
+  </div>
+
+  <!-- TODO: Decide what to do with those -->
+  <div class="right" style="display: none">
+          <a class="tap" href="http://127.0.0.1:8001/about"><strong>About</strong></a>
+      <a href="http://127.0.0.1:8001/login">Login</a>
+      <a href="http://127.0.0.1:8001/register">Register</a>
+      </div>
+
+</nav>
+        <!-- Geolocalisation messages (and possibly info) -->
+        <div id="position-report"></div>
+        <!-- CONTENT -->
+        <div id="content">
+  
+    <div id="suggestion">
+        It's about lunch time! <div id="suggestButton" onclick="ajaxSuggestion()">Get a suggestion</div>
+    </div>
+
+<!-- The Javascript to show a suggestion -->
+<script>
+
+    function getSuggestionDiv() {
+        return document.getElementById("suggestion");
+    }
+
+    /**
+     * Actually send the request to the server
+     * use at the end of the page to load a suggestion
+     */
+    function ajaxSuggestion() {
+        let url = "http://127.0.0.1:8001/suggestions"
+                + '?position=' + getLocation();
+        let xhr = new XMLHttpRequest();
+        xhr.open('GET', url);
+        console.info("GET: " + url);
+        xhr.onload = function() {
+            if (xhr.status === 200) {
+                getSuggestionDiv().innerHTML = xhr.responseText + '<div id="suggestButton" onclick="ajaxSuggestion()">Try again</div>';
+            }
+            else {
+                getSuggestionDiv().innerHTML = "Err(or), nothing from the top of my head, sorry.";
+            }
+        };
+        xhr.send();
+    }
+
+</script>
+
+  <div class="grid">
+    <a class="giantButton" href="http://127.0.0.1:8001/restaurants" onclick="getLocation()">
+      Lunch
+      <br/>in<br/>Shibuya
+    </a>
+
+    <a class="giantButton locked" href="http://127.0.0.1:8001/stores">
+      Shopping
+      <br/>in<br/>Shibuya
+      <div class="alphaVersion">alpha version</div>
+    </a>
+
+    <a class="giantButton locked" href="http://127.0.0.1:8001/bars">
+      Drinking in<br/>Shibuya
+      <div class="alphaVersion">alpha version</div>
+    </a>
+
+    <a class="giantButton locked" href="http://127.0.0.1:8001/karaokes">
+      Karaoke
+      <br/>in<br/>Shibuya
+      <div class="alphaVersion">alpha version</div>
+    </a>
+
+    <a class="giantButton sns" href="https://facebook.com/enjoyShibuya/" target="_blank">
+      Facebook
+    </a>
+
+    <a class="giantButton sns" href="https://www.instagram.com/enjoyshibuya/" target="_blank">
+      Instagram
+    </a>
+
+  </div>
+  <div class="note"></div>
+</div>
+        <!-- FOOTER -->
+        <nav id="footer">
+  <div class="copyright">
+      copyright 2017-2019
+  </div>
+</nav>
+    </div>
+
+    <!-- Javascript for geolocalisation -->
+<script>
+var geolocalisationMessage = document.getElementById("position-report");
+
+/** Options for getCurrentPosition. Time in ms */
+var getCurrentPositionOptions = {
+  enableHighAccuracy: true,
+  timeout: 5500,
+  maximumAge: 1500
+};
+
+function getLocation() {
+    if (navigator.geolocation) {
+        // This needs valid HTTPS age, or localhost, to work in Chrome!!!
+        // And beware the timeout or delay!!!
+        navigator.geolocation.getCurrentPosition(onSuccess, onError, getCurrentPositionOptions);
+        // it is also possible to get continuously updated coords from the method watchPosition()
+        // see https://www.w3schools.com/html/html5_geolocation.asp
+        // Console test:
+        // navigator.geolocation.getCurrentPosition(function(position){console.info(position.coords.latitude+', '+position.coords.longitude)},function(error){console.warn(error.code+': '+error.message)});
+        return readSessionStore("lastCoordinates");
+
+    } else {
+        geolocalisationMessage.innerHTML = "Geolocation is not supported by this browser.";
+        console.warn("Geolocation is not supported by this browser.");
+        return null;
+    }
+}
+
+/** getCurrentPosition success */
+function onSuccess(position) {
+    sessionStore("lastCoordinates", position.coords.latitude + "," + position.coords.longitude);
+    // For debugging purposes:
+    // console.info('Geolocalisation successfull: '+ position.coords.latitude +', '+ position.coords.longitude);
+    console.info('Geolocalisation successful: '+ position.coords.latitude + "," + position.coords.longitude);
+}
+
+/** getCurrentPosition failure */
+function onError(error) {
+    let additionalWarning = " Distances will be from the station."
+    switch(error.code) {
+        case error.PERMISSION_DENIED:
+            geolocalisationMessage.innerHTML = "User denied the request for Geolocation." + additionalWarning
+            break;
+        case error.POSITION_UNAVAILABLE:
+            geolocalisationMessage.innerHTML = "Location information is unavailable."
+            break;
+        case error.TIMEOUT:
+            geolocalisationMessage.innerHTML = "The request to get user location timed out."
+            break;
+        case error.UNKNOWN_ERROR:
+            geolocalisationMessage.innerHTML = "An unknown error occurred."
+            break;
+    }
+    if (location.protocol !== "https:") {
+      geolocalisationMessage.innerHTML = " Please use the HTTPS version of the service to enable geolocalisation."
+    }
+    else {
+      geolocalisationMessage.innerHTML = " Error" + error.code +": " + error.message;
+    }
+    geolocalisationMessage.innerHTML += additionalWarning;
+}
+
+/** TO MOVE IN A SUPERIOR CLASS */
+function sessionStore(key, value) {
+  if (typeof(Storage) !== "undefined") {
+    sessionStorage.setItem(key, value);
+  } else {
+      console.warn("No session storage support from the browser. Application's behavior may be affected.");
+  }
+}
+
+function readSessionStore(key) {
+    return sessionStorage.getItem(key);
+}
+</script>
+</body>
+</html>

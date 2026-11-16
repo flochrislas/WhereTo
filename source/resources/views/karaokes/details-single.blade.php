@@ -1,8 +1,8 @@
 @extends('layouts.app')
 
 @section('metatags')
-  <title>{{config('app.name')}} - {{$place->name}} - Karaoke info & {{ str_limit($place->updated_at, $limit = 4, $end = '') }} review</title>
-  <meta name="description" content="Detailed information page for the karaoke {{$place->name}}, in Tokyo Shibuya. Full {{ str_limit($place->updated_at, $limit = 4, $end = '') }} review and ratings.">
+  <title>{{config('app.name')}} - {{$place->name}} - Karaoke info & {{ \Illuminate\Support\Str::limit($place->updated_at, 4, '') }} review</title>
+  <meta name="description" content="Detailed information page for the karaoke {{$place->name}}, in Tokyo Shibuya. Full {{ \Illuminate\Support\Str::limit($place->updated_at, 4, '') }} review and ratings.">
 @endsection
 
 @section('content')

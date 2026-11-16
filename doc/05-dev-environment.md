@@ -1,22 +1,20 @@
 # Development environment
 
-This note describes running the application **as it is committed** (Laravel 5.8, PHP 7.x). If you intend to modernise it, read 07-upgrade-2026.md first and set up PHP 8.5 instead; the old stack is only worth installing to take a snapshot of the working behaviour before upgrading.
+The app runs on Laravel 13 / PHP 8.5 / PostgreSQL 18. The podman compose environment in `dev/` provides exactly that stack; nothing needs to be installed on the host besides podman.
 
-## Requirements for the legacy stack
+## Requirements
 
 | Tool | Version | Why |
 |---|---|---|
-| PHP | 7.2, 7.3 or 7.4 | 7.1 is the declared minimum; 7.4 is the last version that runs Laravel 5.8 without patches. PHP 8 breaks Laravel 5.8 and its dependencies. |
-| PHP extensions | `pdo_pgsql`, `mbstring`, `openssl`, `tokenizer`, `xml`, `ctype`, `json`, `bcmath`, `fileinfo` | Laravel 5.8 requirements plus PostgreSQL |
-| Composer | **1.x** | Composer 2 changed the `installed.json` format and Laravel 5.8's `package:discover` crashes on it (`Undefined index: name`). Use Composer 1, or upgrade first. |
-| PostgreSQL | any supported version (18 today) | Default connection. SQLite also works for a quick look (`DB_CONNECTION=sqlite`). |
-| Node.js | not needed | The Mix build output is not referenced by any view |
-
-Because PHP 7.4 reached end of life in November 2022, do not install it on your workstation. Run it in a container instead.
+| PHP | 8.5 (8.3 minimum) | Laravel 13 requirement |
+| PHP extensions | `pdo_pgsql`, `mbstring`, `openssl`, `tokenizer`, `xml`, `ctype`, `fileinfo`, `bcmath`, `intl`, `zip` | Laravel requirements plus PostgreSQL and Composer |
+| Composer | 2.x | |
+| PostgreSQL | 18 (any supported version works) | Default connection. SQLite also works for a quick look. |
+| Node.js | not needed | No build step; the skeleton's Vite files were removed. |
 
 ## Option A: podman compose (recommended, ready to use)
 
-A complete environment is committed in `dev/`: PHP 7.4 app image, PostgreSQL 18, automatic `composer install`, `.env` creation, migrations and seeding on first start. See [`dev/README.md`](../dev/README.md).
+A complete environment is committed in `dev/`: PHP 8.5 app image, PostgreSQL 18, automatic `composer install`, `.env` creation, migrations and seeding on first start. See [`dev/README.md`](../dev/README.md).
 
 ```sh
 cd dev
@@ -28,42 +26,20 @@ Docker users can run the same `compose.yaml` with `docker compose`.
 
 ## Option B: native PHP on the host
 
-If you already have a PHP 7.4 (for example through `phpenv`, `phpbrew` or Ubuntu's `ondrej/php` PPA):
-
 ```sh
-sudo apt install php7.4-cli php7.4-pgsql php7.4-mbstring php7.4-xml php7.4-bcmath php7.4-curl php7.4-zip
+sudo apt install php8.5-cli php8.5-pgsql php8.5-mbstring php8.5-xml php8.5-bcmath php8.5-curl php8.5-zip php8.5-intl composer
 ```
 
-Then follow the steps below with `php7.4` instead of `php`.
+On Ubuntu the `php8.5` packages come from the `ppa:ondrej/php` repository. Then follow the steps below.
 
 ## First run
 
 All commands run from `source/`.
 
-1. Create the environment file. No `.env.example` is committed, so write one:
+1. Create the environment file from the dev template (`source/.env.example` has the same keys with empty values):
 
-   ```ini
-   APP_NAME=WhereTo
-   APP_ENV=local
-   APP_KEY=
-   APP_DEBUG=true
-   APP_URL=http://localhost:8000
-   APP_LOG=daily
-   APP_LOG_LEVEL=debug
-   POORLY_COPIED=nope
-
-   DB_CONNECTION=pgsql
-   DB_HOST=127.0.0.1
-   DB_PORT=5432
-   DB_DATABASE=whereto
-   DB_USERNAME=wheretouser
-   DB_PASSWORD=change-me
-
-   CACHE_DRIVER=database
-   SESSION_DRIVER=file
-   QUEUE_DRIVER=sync
-   MAIL_DRIVER=log
-   DEBUGBAR_ENABLED=true
+   ```sh
+   cp ../dev/laravel.env .env      # then set DB_HOST=127.0.0.1 and DB_PORT=5433 or your own values
    ```
 
    `.env` is git-ignored. For SQLite instead, set `DB_CONNECTION=sqlite`, `DB_DATABASE=/absolute/path/source/database/database.sqlite` and `touch` that file.
@@ -102,38 +78,31 @@ All commands run from `source/`.
 ## Day-to-day
 
 - Changed seed data: `php artisan db:seed` (it clears the cache). Changed only code: `php artisan cache:clear` if query results are involved.
-- Debugbar: enabled whenever `APP_DEBUG=true` and `DEBUGBAR_ENABLED` is not `false`; it shows queries, cache hits and the many `Log::debug` calls.
+- Debugbar: enabled whenever `APP_DEBUG=true` and `DEBUGBAR_ENABLED` is not `false` in `.env`; it shows queries, cache hits and the many `Log::debug` calls. It is injected into the AJAX fragments too, which inflates them a lot.
 - Logs: `storage/logs/laravel-YYYY-MM-DD.log`.
-- Tinker: `php artisan tinker`, for example `App\Restaurant::count()`.
+- Tinker: `php artisan tinker`, for example `App\Models\Restaurant::count()`.
+- Style and static analysis: `vendor/bin/pint` and `vendor/bin/phpstan analyse`.
 
 ## Tests
 
 ```sh
-vendor/bin/phpunit
+php artisan test          # or vendor/bin/phpunit
 ```
 
-`phpunit.xml` sets array cache and session drivers but does not override the database, so the tests that touch Eloquent hit the configured database. Result of the suite as committed, run on 2026-11-16 in the `dev/` containers: 19 tests, 12 pass, 7 fail. All failures are stale tests rather than environment problems:
+`phpunit.xml` uses an in-memory SQLite database and array cache/session drivers, so the suite is isolated from the dev database. State on 2026-11-16: 53 tests, 193 assertions, all passing.
 
-| Test | Result | Cause |
-|---|---|---|
-| `Unit/SuggestionControllerTest` (2) | pass | |
-| `Unit/GeoUtilsTest` other cases | pass | |
-| `Unit/GeoUtilsTest::testMiles`, `testN`, `testKm`, `testDistanceSmall` | fail | Expect kilometres but `GeoUtils::distance()` was changed to return metres (and the miles/nautical variants were dropped) after the tests were written |
-| `Unit/RestaurantControllerTest::testCreateFromName`, `testGenerateCurrentDistances` | error | `MassAssignmentException`: `Restaurant::$fillable` is commented out, so even `new Restaurant([...])` throws |
-| `Unit/RestaurantTagControllerTest::testAutocompleteDB` | fail | Asserts hard-coded tag ids (9, 21) that depend on an old seeding order; labels match |
-| `Feature/ExampleTest` | pass | GET `/` returns 200 |
-
-Composer note: the dev image ships Composer 1 because Laravel 5.8's `package:discover` fails with `Undefined index: name` under Composer 2.
-
-For an isolated run, add to `phpunit.xml`:
-
-```xml
-<env name="DB_CONNECTION" value="sqlite"/>
-<env name="DB_DATABASE" value=":memory:"/>
-```
-
-and use `RefreshDatabase` in the tests that need tables.
+| Suite | What it covers |
+|---|---|
+| `Unit/GeoUtilsTest` | distances in metres, unit conversions, position and Google URL parsing |
+| `Unit/RestaurantControllerTest` | distance computation and sorting, tag parsing, ellipsis, mass assignment |
+| `Unit/RestaurantTagControllerTest` | tag creation and autocomplete query |
+| `Unit/SuggestionControllerTest` | lunch-time window in Tokyo time |
+| `Feature/PlacesTest` | per place type: filter page, results by distance, AND tag filter, details fragment and standalone page, 404; restaurant ratings and cost order; home page |
+| `Feature/SuggestionTest` | empty outside lunch time, suggestion with link at lunch time |
+| `Feature/AdminTest` | login/logout and throttling, guest redirect, `/register` is 404, restaurant CRUD (coordinates field, new place visible in results), tag and type edit/delete |
+| `Feature/CacheSerializationTest` | forever-cache round trip through the `file` store, proving the `serializable_classes` allow-list is complete |
+| `Feature/ExampleTest`, `Unit/ExampleTest` | skeleton smoke tests |
 
 ## Front-end assets
 
-Nothing to build. Edit `public/css/style-dark.css` and the Blade partials under `resources/views/inline-javascript/` directly. If you want to revive Laravel Mix, note that `package.json` pins Mix 1.x which needs Node 8-10; replace it during the upgrade (07-upgrade-2026.md) rather than trying to run it.
+Nothing to build. Edit `public/css/style-dark.css` and `public/js/whereto.js` directly; the script tag's `?v=` query string is the file's modification time, so the browser picks up a new version on the next load. `node --check public/js/whereto.js` catches syntax errors. If you ever want a build step, re-add the Laravel 13 skeleton's Vite setup (`laravel/vite-plugin`, `package.json`, `vite.config.js`); those files were removed from this repository.

@@ -3,91 +3,77 @@
 namespace App\Http\Controllers;
 
 use Carbon\Carbon;
-use Illuminate\Support\Facades\Log;
+use Illuminate\Http\Request;
 
+/**
+ * Lunch suggestion: a random pick among the best restaurants close to the visitor.
+ */
 class SuggestionController
 {
     private const TIMEZONE = 'Asia/Tokyo';
+
     private const LUNCH_START = 'today 11:30am';
+
     private const LUNCH_END = 'today 2pm';
 
+    /** How many of the nearest best restaurants to pick from. */
+    private const TOP_N = 35;
+
     /**
-     * Makes a suggestions, given in a string
-     * Will read position from the request
-     * @return string
+     * Makes a suggestion, given as an HTML fragment.
+     * Reads the position from the request. Returns an empty string outside lunch time.
      */
-    public function suggest() : string {
-
-        // Current position from client's GPS
-        $position = request('position');
-
-        if ($this->isLunchTime()) {
-            return $this->suggestLunch($position);
+    public function suggest(Request $request): string
+    {
+        if (! self::isLunchTime()) {
+            return '';
         }
 
-        return "";
+        // Current position from the client's GPS (null when missing or not a plain value)
+        $position = $request->query('position');
+
+        return $this->suggestLunch(is_scalar($position) ? (string) $position : null);
     }
 
     /**
-     * Check time in Tokyo Shibuya and if it is lunch time
+     * Check the time in Tokyo (Shibuya) and if it is lunch time.
+     *
      * @return bool true if it is time to have lunch in Shibuya
      */
-    public static function isLunchTime() : bool {
-
+    public static function isLunchTime(): bool
+    {
+        // Carbon::parse understands "today 11:30am" and builds the date in the given timezone
         $lunchStart = Carbon::parse(self::LUNCH_START, self::TIMEZONE);
         $lunchEnd = Carbon::parse(self::LUNCH_END, self::TIMEZONE);
-        $now = Carbon::now(self::TIMEZONE);
 
-        if ($now->isBetween($lunchStart, $lunchEnd)) {
-            return true;
-        }
-        return false;
+        return Carbon::now(self::TIMEZONE)->isBetween($lunchStart, $lunchEnd);
     }
 
     /**
-     * Makes a suggestions about lunch
-     * @param string $position
-     * @return string
+     * Makes a suggestion about lunch.
+     *
+     * @param  string|null  $position  "lat, lon" of the visitor
      */
-    public function suggestLunch($position) : string {
-
-        $TOP_N = 35;
-
-        // Get best restaurants
-        // Limit must be big cause we dont know location, distances are important
-        // Adjust max distance if too hot or too cold or raining
-        // Weather : https://openweathermap.org/price direct api impl, or use some laravel composer package
-
+    public function suggestLunch(?string $position): string
+    {
+        // Get the best restaurants.
+        // The limit must be big because we don't know the location yet, and distances are important.
+        // Idea: adjust the max distance if too hot, too cold or raining (weather: https://openweathermap.org/price)
         $restaurantController = new RestaurantController;
-        // Read Cache or DB
+
+        // Read the cache or the DB: the 100 best restaurants by rating
         $places = $restaurantController->useCache(null, 'AND', 'ratings', 100);
 
-        // Use collection filter to remove places too close if its good weather, and too far if its cold hot or raining
-
-        // Calculate distances from position, and sort them
+        // Calculate the distances from the position, and sort by them (nearest first)
         $places = $restaurantController->handleDistances($places, $position, 'distance');
+        if ($places->isEmpty()) {
+            return '';
+        }
 
-        // take a chunk of the 35 bests
-        $topN = $places->chunk($TOP_N)[0];
-        // Log::debug('Top chunk $topN '.print_r($topN, true));
-        // DEBUG
-        /*
-        foreach ($topN as $candidate) {
-            Log::debug('Candidate  '. $candidate->name .' at '. $candidate->currentDistance);
-        }*/
+        // Take the 35 nearest, and pick one randomly
+        $selected = $places->take(self::TOP_N)->random();
 
-        // pick one randomly
-        $selected = $topN->get(rand(0, $TOP_N-1));
-        // Log::debug('Selected  '.print_r($selected, true));
-        $url = route('restaurants.details.single', $selected->id);
-        $aTagStart = '<a href="'.$url.'">';
-        $aTagEnd = '</a>';
-
-        $result = "How about a nice ";
-        $result .= strtolower($selected->type) . " restaurant, ";
-        $result .= $aTagStart . $selected->name . $aTagEnd . "?";
-
-        return $result;
+        // Render the sentence with the link to the restaurant page
+        return view('suggestions.suggestion-text', ['place' => $selected])->render();
     }
-
 }

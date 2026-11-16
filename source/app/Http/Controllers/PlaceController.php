@@ -2,325 +2,314 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Cache;
 use App\Tools\GeoUtils;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Log;
+use InvalidArgumentException;
 
 /**
-* If you have a Model class that describes a place (such as Restaurant.php or Karaoke.php),
-* you might want its Controller to extend this class
-*/
+ * If you have a Model class that describes a place (such as Restaurant.php or Karaoke.php),
+ * you want its controller to extend this class.
+ * Subclasses only provide the model name; the model class and the view names derive from it.
+ */
 abstract class PlaceController extends Controller
 {
-    // Force Extending class to define this method
-    abstract protected function getModelName();
+    /** Shibuya Station from Google Maps, used when the visitor sends no position or is too far away. */
+    private const STATION_POSITION = '35.658789, 139.701262';
 
-    /** Can force position for debug purposes */
-    private function positionSpoofer($position)
+    /** Beyond this distance (metres) from the station, the visitor's position is ignored. */
+    private const MAX_DISTANCE_FROM_STATION = 2500;
+
+    // Force the extending class to define this method
+    abstract protected function getModelName(): string;
+
+    /**
+     * Detect if the user is in the area.
+     * Fall back to Shibuya Station when the position is missing, invalid, or more than 2.5 km away.
+     */
+    private function positionSpoofer(?string $position): string
     {
-        // Office from google maps '35.656660, 139.699691'
-        // $position = '35.656660, 139.699691';
+        // The browser sends the string "null" when it has no position yet
+        if (empty($position) || $position === 'null') {
+            Log::debug('GPS position not set. Using Shibuya Station coordinates.');
 
-        // Detect if the user is in the area
-        // If more than 5Km from nearest stationLat
-        // Switches position from current to nearest station
-
-        // Shibuya Station from google maps is '35.658789, 139.701262'
-        $closestStationPosition = '35.658789, 139.701262';
-        if (!isset($position) || $position == "null") {
-          $position = $closestStationPosition;
-          Log::debug('GPS position not set. Using Shibuya Station coordinates.');
+            return self::STATION_POSITION;
         }
-        else {
-          // We check the distance from shibuya Station
-          $curCoords = GeoUtils::toPositionArray($position);
-          $curLat = $curCoords[0];
-          $curLon = $curCoords[1];
-          $stationCoords = GeoUtils::toPositionArray($closestStationPosition);
-          $stationLat = $stationCoords[0];
-          $stationLon = $stationCoords[1];
-          $distance = GeoUtils::distance($curLat, $curLon, $stationLat, $stationLon);
-          Log::debug('Distance from Shibuya Station: '.$distance);
-          if ($distance > 2500) {
-            $position = $closestStationPosition;
+        // Parse "lat, lon" into two floats; throws when the string is not coordinates
+        try {
+            [$curLat, $curLon] = GeoUtils::toPositionArray($position);
+        } catch (InvalidArgumentException $e) {
+            Log::debug('Invalid GPS position. Using Shibuya Station coordinates.');
+
+            return self::STATION_POSITION;
+        }
+        // We check the distance from Shibuya Station
+        [$stationLat, $stationLon] = GeoUtils::toPositionArray(self::STATION_POSITION);
+        $distance = GeoUtils::distance($curLat, $curLon, $stationLat, $stationLon);
+        Log::debug('Distance from Shibuya Station: '.$distance);
+        if ($distance > self::MAX_DISTANCE_FROM_STATION) {
             Log::debug('Position is too far. Using Shibuya Station coordinates.');
-          }
-          else {
-            Log::debug('GPS position set from user: '.$position);
-          }
+
+            return self::STATION_POSITION;
         }
+        Log::debug('GPS position set from user: '.$position);
+
         return $position;
     }
 
     /**
-     * Returns the Model class to use to read the data
-     * @return string Model's fully specified class name as a string
+     * Returns the Model class to use to read the data, e.g. App\Models\Restaurant.
+     *
+     * @return class-string<Model>
      */
-    public function getModelClass()
+    public function getModelClass(): string
     {
-        Log::debug('Auto-generated ModelClass name: '.'App\\'.$this->getModelName());
-        return 'App\\'.$this->getModelName();
+        return 'App\\Models\\'.$this->getModelName();
     }
 
     /**
-     * Returns the view's name for the place's details
-     * @param bool $single default is false, true if we want SINGLE details view (that can be shared),
-     * instead of the view that fits into the one page design
-     * @return string Model's details view name
+     * Returns the view name for the place's details.
+     *
+     * @param  bool  $single  false (default) for the view that fits into the one page design,
+     *                        true for the SINGLE details view (standalone page that can be shared)
      */
-    public function getModelDetailsView($single=false) : string
+    public function getModelDetailsView(bool $single = false): string
     {
+        // e.g. 'restaurants.details' for the Restaurant model
         $viewName = strtolower($this->getModelName()).'s.details';
         if ($single) {
-          $viewName .= '-single';
+            // e.g. 'restaurants.details-single'
+            $viewName .= '-single';
         }
-        Log::debug('Auto-generated ModelDetailsView name: '.$viewName);
+
         return $viewName;
     }
 
-    public function getModelResultsDataView()
+    /**
+     * Returns the view name for the rows of the results list, e.g. 'restaurants.results-data'.
+     */
+    public function getModelResultsDataView(): string
     {
-        Log::debug('Auto-generated ModelResultsDataView name: '.strtolower($this->getModelName()).'s.results-data');
         return strtolower($this->getModelName()).'s.results-data';
     }
 
     /**
      * Get search results from parameters by using the cache.
-     * Generate the key, read cache, if not found then read DB and fill cache
-     * @param $tags used in the search
-     * @param $op used in the search
-     * @param $orderBy used in the search
-     * @param int $limit used in the search
-     * @return mixed
+     * Generate the key, read the cache, if not found then read the DB and fill the cache.
+     *
+     * @param  array<int, string>|null  $tags  used in the search
+     * @param  string|null  $op  operator used in the search (AND, OR, ANDNOT, ORNOT)
+     * @param  string|null  $orderBy  sorting used in the search (distance, ratings, cost)
+     * @param  int  $limit  maximum number of results (0 for no limit)
      */
-    public function useCache($tags, $op, $orderBy, $limit = 0)
+    public function useCache(?array $tags, ?string $op, ?string $orderBy, int $limit = 0): Collection
     {
-        // key needs to be made of all the used parameters except coords
+        // The key needs to be made of all the used parameters except the coordinates
         $cacheKey = $this->cacheKey($op, $tags, $orderBy, $limit);
 
-        $places = Cache::rememberForever($cacheKey, function() use ($tags, $op, $orderBy, $limit) {
-            return $this->readFromDB($tags, $op, $orderBy, $limit);
+        // rememberForever returns the cached value, or runs the closure once and caches its result
+        return Cache::rememberForever($cacheKey, function () use ($tags, $op, $orderBy, $limit) {
+            return $this->readFromDB($tags, $op ?? 'AND', $orderBy ?? 'distance', $limit);
         });
-
-        return $places;
     }
 
     /**
-     * Generates the key to use for putting the main query into cache
-     * @param $op used in the search
-     * @param $tags used in the search. Can be empty for ALL, or an array of actual tags
-     * @param $orderBy used in the search
-     * @param int $limit used in the search
+     * Generates the key used to put the main query into the cache.
+     *
+     * @param  string|null  $op  used in the search
+     * @param  array<int, string>|null  $tags  used in the search. Can be empty for ALL, or an array of actual tags
+     * @param  string|null  $orderBy  used in the search
+     * @param  int  $limit  used in the search
      * @return string the key
      */
-    public function cacheKey($op, $tags, $orderBy, $limit = 0) : string
+    public function cacheKey(?string $op, ?array $tags, ?string $orderBy, int $limit = 0): string
     {
         if (empty($tags)) {
+            // No tag selected: e.g. 'All-Restaurant'
             $cacheKey = 'All-'.$this->getModelName();
-        } else if($tags == 'suggestion') {
-            $cacheKey = 'Suggestion-'.$this->getModelName();
         } else {
-            $cacheKey = md5($op .','. implode(',',$tags));
+            // One hash per operator + tags combination, prefixed with the model so models never collide
+            $cacheKey = $this->getModelName().'-'.md5($op.','.implode(',', $tags));
         }
         if ($limit > 0) {
+            // e.g. 'l100-All-Restaurant' for the 100 best restaurants
             $cacheKey = 'l'.$limit.'-'.$cacheKey;
         }
-        // The logic below is a bit dangerous, but currently
-        // only orderBy costs influence the cached results
-        if ($orderBy == 'cost') {
+        // Only the "cost" order changes the SQL ordering (so the cached rows);
+        // the other orders are applied in PHP after reading the cache
+        if ($orderBy === 'cost') {
             $cacheKey = $orderBy.$cacheKey;
         }
+
         return $cacheKey;
     }
 
     /**
-     * Read from the DB.
-     * No cache, just the DB.
-     * @param array $tags
-     * @param string $op
-     * @param string $orderBy
-     * @param integer $limit
-     * @return Illuminate\Database\Eloquent\Collection
+     * Read from the DB. No cache, just the DB.
+     *
+     * @param  array<int, string>|null  $tags
      */
-    public function readFromDB($tags, $op = 'AND', $orderBy = 'distance', $limit = 0)
+    public function readFromDB(?array $tags, string $op = 'AND', string $orderBy = 'distance', int $limit = 0): Collection
     {
-        Log::debug('Hitting the DB with mainDB with op '.$op.' orderBy '.$orderBy.' limit '.$limit);
+        Log::debug('Hitting the DB with op '.$op.' orderBy '.$orderBy.' limit '.$limit);
+        // Start a query on the model's table, e.g. Restaurant::query()
         $class = $this->getModelClass();
-        $query = (new $class)->newQuery();
+        $query = $class::query();
 
+        // Add the tag filter to the query
         $this->whereTags($query, $tags, $op);
-        if ($class == 'App\Restaurant') {
-          $this->orderBy($query, $orderBy);
+        // Only restaurants have the score columns used for sorting
+        if ($this->getModelName() === 'Restaurant') {
+            $this->orderBy($query, $orderBy);
         }
-
         if ($limit > 0) {
             $query->limit($limit);
         }
 
-        $places = $query->get();
-
-        return $places;
-    }
-
-    public function orderBy(&$query, $orderBy = 'distance') : void
-    {
-        Log::debug('orderBy: '.$orderBy);
-
-        if ($orderBy == 'distance' || $orderBy == 'ratings') {
-            // Sorting by distance will happens outside the query
-            // We still try to put best places on top (rating)
-            $query->orderBy('score_lunch', 'desc')
-                  ->orderBy('score_food', 'desc')
-                  ->orderBy('score_place', 'desc');
-        }
-
-        if ($orderBy == 'cost') {
-            // Price first, but we still try to put best places on top
-            $query->orderBy('lunch_price', 'asc')
-                  ->orderBy('score_lunch', 'desc')
-                  ->orderBy('score_food', 'desc')
-                  ->orderBy('score_place', 'desc');
-        }
-    }
-
-    public function whereTags(&$query, $tags, $op = 'AND') : void
-    {
-        Log::debug('whereTags: '.print_r($tags, true).'('.$op.')');
-        if (isset($tags) && !empty($tags)) {
-            if ($op == 'AND') {
-                $query->whereHas('tags', function ($query) use ($tags) {
-                      $query->whereIn('label', $tags);
-                }, '=', count($tags));
-            }
-
-            if ($op == 'OR') {
-                $query->whereHas('tags', function ($query) use ($tags) {
-                      $query->whereIn('label', $tags);
-                });
-            }
-
-            if ($op == 'ANDNOT') {
-                $query->whereDoesntHave('tags', function ($query) use ($tags) {
-                      $query->whereIn('label', $tags);
-                }, '=', count($tags));
-            }
-
-            if ($op == 'ORNOT') {
-                $query->whereHas('tags', function ($query) use ($tags) {
-                      $query->whereNotIn('label', $tags);
-                });
-            }
-        }
+        // Run the query and return the rows as model objects
+        return $query->get();
     }
 
     /**
-     * Return the places sorted by distance from given position
-     * @return array
+     * Add the ORDER BY clause to the query (restaurants only).
      */
-    public function sortByDistance($places, $position)
+    public function orderBy(Builder $query, string $orderBy = 'distance'): void
     {
-        Log::debug('sortByDistance from  '.$position.' for '.count($places).' places' );
-        // Log::debug('For places '.print_r($places, true));
-        // Map the places with their current distance
-        $curCoords = GeoUtils::toPositionArray($position);
-        $curLat = $curCoords[0];
-        $curLon = $curCoords[1];
-        $map = array();
-        foreach ($places as $place) {
-          if(!is_null($place->lat)) {
-            $distance = GeoUtils::distance($curLat, $curLon, $place->lat, $place->lon);
-            //Log::debug('Distance found: '.$distance);
-            $place->currentDistance = $distance;
-            /*
-            if (array_key_exists((string)$distance, $map)) {
-                Log::debug('UH OH, this distance is already there '.$distance.', byebye '.$map[$distance]);
-            }
-            if (isset($map[$distance]))
-            {
-              Log::debug('OOOOOOH, this distance is already there '.$distance.', byebye '.$map[$distance]);
-            }
-            */
-            // We must use a string or else the number will be truncated
-            // and easily collide with previous keys
-            $distanceAsString = (string)$distance;
-            $map[$distanceAsString] = $place;
-          }
-          else {
-            Log::debug('The following restaurant does NOT have coordinates: '.$place->name);
-          }
+        if ($orderBy === 'distance' || $orderBy === 'ratings') {
+            // Sorting by distance happens outside the query (in PHP).
+            // We still put the best places on top (rating).
+            $query->orderByDesc('score_lunch')
+                ->orderByDesc('score_food')
+                ->orderByDesc('score_place')
+                ->orderBy('id'); // deterministic order for ties
         }
-        // Sort the map by key
-        ksort($map);
-        // Log::debug('sortByDistance ksort the map '.print_r($map, true));
-        Log::debug('sortByDistance AFTER ksort the map with '.count($map).' elements');
-        // Return just the list of places
-        return array_values($map);
+        if ($orderBy === 'cost') {
+            // Price first, but we still try to put the best places on top
+            $query->orderBy('lunch_price')
+                ->orderByDesc('score_lunch')
+                ->orderByDesc('score_food')
+                ->orderByDesc('score_place')
+                ->orderBy('id');
+        }
     }
 
     /**
-     * For all the given places, compute the distance from the given position
-     * Each result is stored in the restaurant's model
-     * @return void
+     * Add the tag filter to the query.
+     * AND: has all the tags; OR: has any of them; ANDNOT: has none of them; ORNOT: has a tag outside the list.
+     * Unknown operators behave like AND (the legacy code applied no filter at all in that case; the UI only sends AND).
+     *
+     * @param  array<int, string>|null  $tags
      */
-    public function generateCurrentDistances($places, $position)
+    public function whereTags(Builder $query, ?array $tags, string $op = 'AND'): void
     {
-        Log::debug('generateCurrentDistances from  '.$position);
-        // Map the places with their current distance
-        $curCoords = GeoUtils::toPositionArray($position);
-        $curLat = $curCoords[0];
-        $curLon = $curCoords[1];
+        // No tags means no filter: all the places
+        if (empty($tags)) {
+            return;
+        }
+        // Sub-query on the tags relation: "tag label is one of the given ones"
+        $in = fn (Builder $q) => $q->whereIn('label', $tags);
+        match ($op) {
+            // whereHas: the place has at least one matching tag
+            'OR' => $query->whereHas('tags', $in),
+            // whereDoesntHave: the place has no matching tag at all
+            'ANDNOT' => $query->whereDoesntHave('tags', $in),
+            // the place has at least one tag that is NOT in the list
+            'ORNOT' => $query->whereHas('tags', fn (Builder $q) => $q->whereNotIn('label', $tags)),
+            // AND: the number of matching tags must equal the number of tags asked
+            default => $query->whereHas('tags', $in, '=', count($tags)),
+        };
+    }
+
+    /**
+     * Return the places sorted by distance from the given position.
+     * Places without coordinates are dropped.
+     */
+    public function sortByDistance(iterable $places, string $position): Collection
+    {
+        // Fill currentDistance on each place
+        $this->generateCurrentDistances($places, $position);
+
+        // Keep only the places with a distance, sort by it, and renumber the keys 0, 1, 2...
+        return Collection::make($places)
+            ->filter(fn ($place) => $place->currentDistance !== null)
+            ->sortBy('currentDistance')
+            ->values();
+    }
+
+    /**
+     * For all the given places, compute the distance from the given position.
+     * Each result is stored in the place's model (currentDistance, in metres).
+     */
+    public function generateCurrentDistances(iterable $places, string $position): void
+    {
+        [$curLat, $curLon] = GeoUtils::toPositionArray($position);
         foreach ($places as $place) {
-          if(!is_null($place->lat)) {
-            $distance = GeoUtils::distance($curLat, $curLon, $place->lat, $place->lon);
-            $place->currentDistance = $distance;
-          }
+            if ($place->lat !== null && $place->lon !== null) {
+                // The DB returns decimals as strings, hence the (float) casts
+                $place->currentDistance = GeoUtils::distance($curLat, $curLon, (float) $place->lat, (float) $place->lon);
+            } else {
+                Log::debug('No coordinates for: '.$place->name);
+            }
         }
     }
 
     /**
-    * Calculate distances from position, and sort them if required
-    * @return places (filled with distances)
-    */
-    public function handleDistances($places, $position, $orderBy)
+     * The "position" query parameter as a string (null when missing or not a scalar, e.g. position[]=x).
+     */
+    protected function positionParam(Request $request): ?string
     {
-        /** Can force position for debug purposes */
+        $position = $request->query('position');
+
+        return is_scalar($position) ? (string) $position : null;
+    }
+
+    /**
+     * Calculate distances from the position, and sort by them if required.
+     *
+     * @return Collection the places, filled with distances
+     */
+    public function handleDistances(Collection $places, ?string $position, ?string $orderBy): Collection
+    {
+        // Replace the position by Shibuya Station if needed
         $position = $this->positionSpoofer($position);
+        if ($orderBy === 'distance') {
+            return $this->sortByDistance($places, $position);
+        }
+        // We still need to fill the current distance of each place we show
+        $this->generateCurrentDistances($places, $position);
 
-        if ($orderBy == 'distance')
-        {
-          if (!empty($position)) {
-              $distanceSortedPlaces = $this->sortByDistance($places, $position);
-          }
-          $places = collect($distanceSortedPlaces);
-        }
-        else // we still need to fill the current distance data for each place we show
-        {
-          if (!empty($position)) {
-              $this->generateCurrentDistances($places, $position);
-          }
-        }
         return $places;
     }
 
     /**
-     * Make the tags into an array, if it is not already the case
-     * The reference is passed in parameter, so the function directly modifies the tags
-     * @return void
+     * Make the tags into an array, if it is not already the case.
+     * "ramen, noodles" becomes ['ramen', 'noodles']; empty input becomes null.
+     *
+     * @return array<int, string>|null
      */
-    public function formatTags(&$tags)
+    public function formatTags(mixed $tags): ?array
     {
         if (empty($tags)) {
-            $tags = null;
-        } elseif (!($tags instanceof Traversable)) {
-            Log::debug('tags is being transformed from: '.$tags);
-            $tags = explode(',',str_replace(', ', ',', $tags));
-            Log::debug('to this: '.print_r($tags, true));
+            return null;
         }
+        // Already a list (array or iterator): just make sure the keys are 0, 1, 2...
+        if (is_iterable($tags)) {
+            return array_values(is_array($tags) ? $tags : iterator_to_array($tags));
+        }
+
+        // Comma separated string: remove the spaces after the commas, then split
+        return explode(',', str_replace(', ', ',', (string) $tags));
     }
 
-    public function ellipsis($string, $length) {
-        $ellipsis = "&hellip;";
-        return mb_strimwidth($string, 0, $length, $ellipsis);
+    /**
+     * Shorten a string to the given width and end it with "…" (the HTML entity counts in the width).
+     */
+    public function ellipsis(?string $string, int $length): string
+    {
+        return mb_strimwidth($string ?? '', 0, $length, '&hellip;');
     }
-
 }

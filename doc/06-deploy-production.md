@@ -1,6 +1,6 @@
 # Production deployment
 
-Target: one Linux server (Ubuntu 24.04 LTS or Debian 12), Nginx, PHP-FPM, PostgreSQL, HTTPS through Let's Encrypt. The app is small and read-mostly, so a single small VM is plenty. The same steps work for the legacy stack (PHP 7.4, Laravel 5.8) and for the upgraded one (PHP 8.5, Laravel 13); differences are called out.
+Target: one Linux server (Ubuntu 24.04 LTS or Debian 12), Nginx, PHP-FPM, PostgreSQL, HTTPS through Let's Encrypt. The app is small and read-mostly, so a single small VM is plenty. These steps are for the upgraded app (PHP 8.5, Laravel 13).
 
 HTTPS is not optional: the browser geolocation API only works on secure origins, and the whole "near first" sorting depends on it.
 
@@ -9,9 +9,7 @@ HTTPS is not optional: the browser geolocation API only works on secure origins,
 ```sh
 sudo apt update
 sudo apt install nginx postgresql composer git unzip certbot python3-certbot-nginx
-# PHP: pick ONE line
-sudo apt install php8.5-fpm php8.5-pgsql php8.5-mbstring php8.5-xml php8.5-bcmath php8.5-curl php8.5-zip php8.5-intl   # upgraded app
-# or, for the legacy app, add the ondrej/php PPA (Ubuntu) and install the php7.4-* equivalents
+sudo apt install php8.5-fpm php8.5-pgsql php8.5-mbstring php8.5-xml php8.5-bcmath php8.5-curl php8.5-zip php8.5-intl
 ```
 
 On Ubuntu 24.04 the `php8.5` packages come from the `ppa:ondrej/php` repository; Debian users can use `packages.sury.org`.
@@ -38,10 +36,7 @@ cd /var/www/whereto/source
 composer install --no-dev --optimize-autoloader --no-interaction
 ```
 
-`--no-dev` leaves out Debugbar, ide-helper, PHPUnit and Faker. The app still boots because `AppServiceProvider` only registers ide-helper outside production, but `config/app.php` lists `Barryvdh\Debugbar\ServiceProvider` unconditionally and the models call `\Debugbar::debug()`. With `--no-dev` those classes are missing and the app crashes. Choose one:
-
-- keep `composer install` without `--no-dev` and set `DEBUGBAR_ENABLED=false` (simplest for the legacy app), or
-- remove the Debugbar provider and alias from `config/app.php` and the `\Debugbar::` calls from the four place models (done anyway during the upgrade).
+`--no-dev` leaves out Debugbar, ide-helper, Larastan, Pint and PHPUnit. The app does not reference any of them at runtime (verified with `php artisan about` on a `--no-dev` install).
 
 ## 4. Environment file
 
@@ -53,9 +48,9 @@ APP_ENV=production
 APP_KEY=                 # filled by key:generate below
 APP_DEBUG=false
 APP_URL=https://your.domain
-APP_LOG=daily
-APP_LOG_LEVEL=info       # the code logs at debug level everywhere; keep this at info or warning
-POORLY_COPIED=nope
+
+LOG_CHANNEL=daily
+LOG_LEVEL=info           # the code logs at debug level everywhere; keep this at info or warning
 
 DB_CONNECTION=pgsql
 DB_HOST=127.0.0.1
@@ -64,15 +59,13 @@ DB_DATABASE=whereto
 DB_USERNAME=wheretouser
 DB_PASSWORD=a-long-random-password
 
-CACHE_DRIVER=database    # or file; redis if you install it
-SESSION_DRIVER=file
+CACHE_STORE=database     # or file; redis if you install it
+SESSION_DRIVER=database  # the sessions table exists; file works too
 SESSION_SECURE_COOKIE=true
-QUEUE_DRIVER=sync
-MAIL_DRIVER=log          # set a real mailer only if you need password resets
+QUEUE_CONNECTION=sync
+MAIL_MAILER=log
 DEBUGBAR_ENABLED=false
 ```
-
-For Laravel 13 the variable names are `LOG_CHANNEL`, `LOG_LEVEL`, `CACHE_STORE`, `QUEUE_CONNECTION`, `MAIL_MAILER` (see 07-upgrade-2026.md).
 
 Then:
 
@@ -80,12 +73,8 @@ Then:
 php artisan key:generate --force
 php artisan migrate --force
 php artisan db:seed --force        # first deploy only, or whenever seed data changed
-php artisan config:cache
-php artisan route:cache            # fails on the legacy app because routes use closures; skip it there
-php artisan view:cache
+php artisan optimize                # config, routes, views and events cached in one go
 ```
-
-`route:cache` requires every route to point at a controller; the committed `routes/web.php` uses closures for the home, info, vip, about, test and admin pages, so on the legacy app only `config:cache` and `view:cache` apply.
 
 ## 5. Permissions
 
@@ -116,7 +105,7 @@ server {
 
     location ~ \.php$ {
         include snippets/fastcgi-php.conf;
-        fastcgi_pass unix:/run/php/php8.5-fpm.sock;   # php7.4-fpm.sock for the legacy app
+        fastcgi_pass unix:/run/php/php8.5-fpm.sock;
     }
 
     location ~ /\.(?!well-known).* { deny all; }
@@ -134,23 +123,28 @@ sudo nginx -t && sudo systemctl reload nginx
 sudo certbot --nginx -d your.domain        # obtains the certificate and adds the HTTPS server block + redirect
 ```
 
-Certbot installs a systemd timer for renewal. If you terminate TLS on a proxy or load balancer in front of Nginx instead, set `TrustProxies::$proxies` (or `trustProxies()` in `bootstrap/app.php` on Laravel 13) so that `url()` and `SESSION_SECURE_COOKIE` see the original scheme.
+Certbot installs a systemd timer for renewal. If you terminate TLS on a proxy or load balancer in front of Nginx instead, add `$middleware->trustProxies(at: '<proxy ip>')` in `bootstrap/app.php` so that `url()` and `SESSION_SECURE_COOKIE` see the original scheme.
 
 Apache users can keep the committed `public/.htaccess` with `mod_rewrite` and `AllowOverride All`.
 
 ## 7. Hardening checklist
 
-- `APP_DEBUG=false`. The admin layout prints config values when debug is on.
-- Registration is open at `/register`. Either remove `register` from `Auth::routes(['register' => false])` (Laravel 5.8 supports this option) or delete the route after creating your admin account.
-- Change the seeded users' passwords (`password`) or delete `user2@test.rt`:
+- `APP_DEBUG=false`.
+- There is no registration route any more; create the admin account with the seeder or `php artisan tinker`:
 
   ```sh
-  php artisan tinker --execute="App\User::where('email','user2@test.rt')->delete();"
+  php artisan tinker --execute="App\Models\User::create(['name'=>'Admin','email'=>'you@example.com','password'=>'a-strong-password']);"
   ```
 
-- The `/clubs*`, `/about`, `/admin/restaurants/import` and `export` routes point to missing code and return 500s. Harmless, but remove them if you care about clean logs.
-- Google Analytics uses a Universal Analytics id that no longer collects anything; remove `inline-javascript/google-analytics.blade.php` or replace it with a GA4 tag.
-- Keep `storage/logs` rotated: the `daily` channel already rotates by day; add `logrotate` or cron cleanup for old files.
+- Change the seeded users' passwords (`password`) or delete them if you ran `db:seed`:
+
+  ```sh
+  php artisan tinker --execute="App\Models\User::where('email','user2@test.rt')->delete();"
+  ```
+
+- `POST /login` is throttled to 5 attempts per minute per IP (`throttle:5,1` in `routes/web.php`).
+- `GET /up` is the framework health endpoint; restrict it at the proxy if you do not want it public.
+- Keep `storage/logs` rotated: the `daily` channel already rotates by day (14 days kept by default).
 
 ## 8. Updating a running deployment
 
@@ -161,7 +155,7 @@ composer install --no-dev --optimize-autoloader
 php artisan migrate --force
 php artisan db:seed --force      # only when seeders changed; it wipes and reloads every table
 php artisan cache:clear
-php artisan config:cache && php artisan view:cache && php artisan route:cache
+php artisan optimize
 sudo systemctl reload php8.5-fpm
 ```
 
@@ -180,5 +174,5 @@ Also keep `.env` somewhere safe; it holds the `APP_KEY` that encrypts sessions a
 ## 10. Alternative hosting
 
 - **Laravel Forge / Ploi**: point them at the repository with `source` as the project root; they generate the Nginx config, PHP-FPM pool, certbot and the deploy script above.
-- **Containers**: a `php:8.5-fpm-alpine` image plus an Nginx sidecar works; mount nothing writable except `storage`. Switch `CACHE_DRIVER` and `SESSION_DRIVER` to `database` or `redis` so that multiple replicas share state.
+- **Containers**: a `php:8.5-fpm-alpine` image plus an Nginx sidecar works (the `dev/Containerfile` shows the extensions needed); mount nothing writable except `storage`. Use `CACHE_STORE` and `SESSION_DRIVER` `database` or `redis` so that multiple replicas share state.
 - **Shared hosting with Apache**: upload `source/`, set the vhost document root to `source/public`, and run the artisan commands through SSH. The committed `.htaccess` handles the rewrite.

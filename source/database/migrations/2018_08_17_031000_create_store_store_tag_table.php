@@ -1,39 +1,25 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
-class CreateStoreStoreTagTable extends Migration
+return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
-    public function up()
+    public function up(): void
     {
+        // Pivot table of the many-to-many relation between the places and their tags.
+        // http://laraveldaily.com/pivot-tables-and-many-to-many-relationships/
         Schema::create('store_store_tag', function (Blueprint $table) {
-          // We use on cascade deelte so if any entry is deleted,
-          // its relationships will as well, and we dont need to manually detach from code
-
-          $table->integer('store_id')->unsigned()->nullable();
-          $table->foreign('store_id')->references('id')
-                ->on('stores')->onDelete('cascade');
-
-          $table->integer('store_tag_id')->unsigned()->nullable();
-          $table->foreign('store_tag_id')->references('id')
-                ->on('store_tags')->onDelete('cascade');
+            // Two foreign keys and nothing else. ON DELETE CASCADE: when a place or a tag is deleted,
+            // its pivot rows go with it, so we never need to detach from code.
+            $table->foreignId('store_id')->constrained('stores')->cascadeOnDelete();
+            $table->foreignId('store_tag_id')->constrained('store_tags')->cascadeOnDelete();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
-    public function down()
+    public function down(): void
     {
         Schema::dropIfExists('store_store_tag');
     }
-}
+};
