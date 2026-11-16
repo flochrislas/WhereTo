@@ -39,30 +39,38 @@ Route::view('vip/main', 'vip.main')->name('vip');
 // Lunch suggestion (HTML fragment, loaded by AJAX from the home page)
 Route::get('suggestions', [SuggestionController::class, 'suggest'])->name('suggestions');
 
-// Public restaurants pages: filter page, results fragment, details fragment, standalone details page
+// Public filter pages (tag cloud) of the four kinds of place
 Route::get('restaurants', [RestaurantTagController::class, 'restaurantsFilter'])->name('restaurants.main');
-Route::get('restaurants/results', [RestaurantController::class, 'results'])->name('restaurants.results');
-Route::get('restaurants/details/{id}', [RestaurantController::class, 'details'])->name('restaurants.details');
-Route::get('restaurant/details/{id}', [RestaurantController::class, 'detailsSingle'])->name('restaurants.details.single');
-Route::get('tags/autocomplete', [RestaurantTagController::class, 'autocomplete'])->name('tags.autocomplete');
-
-// Public stores pages
 Route::get('stores', [StoreTagController::class, 'viewAllTags'])->name('stores.main');
-Route::get('stores/results', [StoreController::class, 'results'])->name('stores.results');
-Route::get('stores/details/{id}', [StoreController::class, 'details'])->name('stores.details');
-Route::get('store/details/{id}', [StoreController::class, 'detailsSingle'])->name('stores.details.single');
-
-// Public bars pages
 Route::get('bars', [BarTagController::class, 'viewAllTags'])->name('bars.main');
-Route::get('bars/results', [BarController::class, 'results'])->name('bars.results');
-Route::get('bars/details/{id}', [BarController::class, 'details'])->name('bars.details');
-Route::get('bar/details/{id}', [BarController::class, 'detailsSingle'])->name('bars.details.single');
-
-// Public karaoke pages
 Route::get('karaokes', [KaraokeTagController::class, 'viewAllTags'])->name('karaokes.main');
-Route::get('karaokes/results', [KaraokeController::class, 'results'])->name('karaokes.results');
-Route::get('karaokes/details/{id}', [KaraokeController::class, 'details'])->name('karaokes.details');
-Route::get('karaoke/details/{id}', [KaraokeController::class, 'detailsSingle'])->name('karaokes.details.single');
+
+// Results fragments, details fragments and standalone details pages.
+// 'cache.headers:etag;no_cache': the response gets an ETag (a hash of its content) and the browser must ask again
+// each time (no_cache), but sends the ETag it has; when the content did not change the answer is an empty "304 Not
+// Modified" instead of the full HTML. Repeated searches cost almost no bandwidth.
+Route::middleware('cache.headers:etag;no_cache')->group(function () {
+    // restaurants
+    Route::get('restaurants/results', [RestaurantController::class, 'results'])->name('restaurants.results');
+    Route::get('restaurants/details/{id}', [RestaurantController::class, 'details'])->name('restaurants.details');
+    Route::get('restaurant/details/{id}', [RestaurantController::class, 'detailsSingle'])->name('restaurants.details.single');
+    Route::get('tags/autocomplete', [RestaurantTagController::class, 'autocomplete'])->name('tags.autocomplete');
+
+    // stores
+    Route::get('stores/results', [StoreController::class, 'results'])->name('stores.results');
+    Route::get('stores/details/{id}', [StoreController::class, 'details'])->name('stores.details');
+    Route::get('store/details/{id}', [StoreController::class, 'detailsSingle'])->name('stores.details.single');
+
+    // bars
+    Route::get('bars/results', [BarController::class, 'results'])->name('bars.results');
+    Route::get('bars/details/{id}', [BarController::class, 'details'])->name('bars.details');
+    Route::get('bar/details/{id}', [BarController::class, 'detailsSingle'])->name('bars.details.single');
+
+    // karaoke
+    Route::get('karaokes/results', [KaraokeController::class, 'results'])->name('karaokes.results');
+    Route::get('karaokes/details/{id}', [KaraokeController::class, 'details'])->name('karaokes.details');
+    Route::get('karaoke/details/{id}', [KaraokeController::class, 'detailsSingle'])->name('karaokes.details.single');
+});
 
 // ===============================================
 // AUTHENTICATION (login only, no registration) ==

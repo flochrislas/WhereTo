@@ -138,6 +138,18 @@ class PlacesTest extends TestCase
         $this->assertSame(['Far one', 'Near one'], $this->namesInOrder($html), 'cheapest first');
     }
 
+    /** The results fragment carries an ETag; asking again with it gives an empty 304 instead of the HTML */
+    #[DataProvider('placeTypes')]
+    public function test_results_fragment_revalidates_with_etag(string $plural, string $singular, string $model, string $tagModel): void
+    {
+        $this->seedTwo($model, $tagModel);
+        $first = $this->get("/$plural/results?op=AND&tags=a&orderBy=distance&position=null")->assertOk();
+        $etag = $first->headers->get('ETag');
+        $this->assertNotEmpty($etag);
+        $this->assertStringContainsString('no-cache', (string) $first->headers->get('Cache-Control'));
+        $this->get("/$plural/results?op=AND&tags=a&orderBy=distance&position=null", ['If-None-Match' => $etag])->assertStatus(304);
+    }
+
     public function test_home_page(): void
     {
         $this->get('/')->assertOk()->assertSee('Shibuya')

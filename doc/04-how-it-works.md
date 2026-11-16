@@ -44,6 +44,8 @@ Client behaviour (`public/js/whereto.js`, tag filter and results sections):
 
 ## 4. Results fragment
 
+The results and details routes run through `cache.headers:etag;no_cache` (`routes/web.php`): each response carries an ETag, and a repeated request with `If-None-Match` gets an empty `304 Not Modified` when the HTML did not change.
+
 ```
 GET /restaurants/results?op=&tags=&orderBy=&position=
   ──▶ RestaurantController@results

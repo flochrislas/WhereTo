@@ -120,10 +120,11 @@ The UI is already responsive (viewport meta, one `@media` breakpoint at 680px, C
 - `SESSION_DRIVER=database` or `redis` only if there are several web nodes; the file driver is fine for one server.
 - **Done (November 2026)** in `06-deploy-production.md`: gzip, HTTP/2, immutable one-year cache for the static files (the stylesheet link now carries a `?v=` like the script), an OPcache section, and a restart of PHP-FPM in the update steps. HTTP/3 and Brotli are left out: they need extra Nginx modules.
 
-### 4.2 Browser caching for the fragments (S)
+### 4.2 Browser caching for the fragments (S) — done
 
 - **Why**: the forever cache makes the server fast, but the client still downloads the same results fragment on every click.
 - **How**: an `ETag` built from the cache key plus the last admin flush time (store a `places.version` value in the cache and bump it in the `Cache::flush()` calls) lets the browser get a `304 Not Modified` for repeated searches. Laravel's `SetCacheHeaders` middleware (`cache.headers:etag;public;max_age=60`) does most of it.
+- **Done (November 2026)** with `cache.headers:etag;no_cache` on the results and details routes: the browser revalidates every time and gets a 304 when nothing changed, so an admin edit is visible at once and repeated searches cost almost nothing. The content hash makes the version stamp unnecessary.
 
 ### 4.3 Tagged cache instead of flushing everything (S)
 
