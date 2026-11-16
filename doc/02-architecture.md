@@ -91,10 +91,10 @@ Removed from the legacy routes: `/about`, `/test-html`, `/clubs*`, `/admin/larav
 
 ## Views
 
-- `layouts/app.blade.php` is the public layout: dark stylesheet, CSRF meta, `layouts.header`, `#position-report` for geolocation messages, content, `layouts.footer`, geolocation script.
+- `layouts/app.blade.php` is the public layout: dark stylesheet, CSRF meta, the `public/js/whereto.js` script tag (deferred, versioned by file modification time), `layouts.header`, `#position-report` for geolocation messages, content, `layouts.footer`.
 - `layouts/html.blade.php` is the Bootstrap layout used by the admin and login pages.
-- Each place folder has: `main` (page shell that includes `filter` and `results`, plus a `resultsUrl` JS variable), `filter` (tag cloud), `results` (sort buttons and column headers), `results-data` (the rows, returned by AJAX), `details` (fragment) and `details-single` (standalone page wrapping `details`).
-- `inline-javascript/` holds the JavaScript, one partial per concern: `main`, `filter`, `results` (clipboard), `details`, `geolocalisation`, `suggestion`. All requests use `fetch()`.
+- Each place folder has: `main` (page shell that includes `filter` and `results`; its `#content` div carries the `data-results-url` attribute the JavaScript reads), `filter` (tag cloud), `results` (sort buttons and column headers), `results-data` (the rows, returned by AJAX), `details` (fragment) and `details-single` (standalone page wrapping `details`).
+- The JavaScript is not in the views: it lives in `public/js/whereto.js`, one file with a section per concern (geolocation, panels, results, tag filter, details, suggestion). The views call its global functions from `onclick` attributes and pass it the two server URLs through `data-results-url` and `data-suggestion-url` attributes. All requests use `fetch()`.
 - `suggestions/suggestion.blade.php` renders the suggestion box only at lunch time; `suggestions/suggestion-text.blade.php` is the sentence returned by `/suggestions`.
 - `admin/` has the restaurant, tag and type CRUD screens and the dashboard. Restaurant forms are plain HTML (`admin/restaurants/form.blade.php` loops over a field list).
 - `auth/login.blade.php` is the login form.

@@ -105,4 +105,4 @@ php artisan test          # or vendor/bin/phpunit
 
 ## Front-end assets
 
-Nothing to build. Edit `public/css/style-dark.css` and the Blade partials under `resources/views/inline-javascript/` directly. If you ever want a build step, re-add the Laravel 13 skeleton's Vite setup (`laravel/vite-plugin`, `package.json`, `vite.config.js`); those files were removed from this repository.
+Nothing to build. Edit `public/css/style-dark.css` and `public/js/whereto.js` directly; the script tag's `?v=` query string is the file's modification time, so the browser picks up a new version on the next load. `node --check public/js/whereto.js` catches syntax errors. If you ever want a build step, re-add the Laravel 13 skeleton's Vite setup (`laravel/vite-plugin`, `package.json`, `vite.config.js`); those files were removed from this repository.

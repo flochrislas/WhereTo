@@ -11,12 +11,9 @@
     @yield('metatags')    
     <!-- Style -->
     <link href="/css/style-dark.css" rel="stylesheet">
-    <!-- Scripts -->
-    <script>
-        window.Laravel = <?php echo json_encode([
-            'csrfToken' => csrf_token(),
-        ]); ?>
-    </script>
+    <!-- Scripts: one static file, cached by the browser. "defer" runs it after the HTML is parsed.
+         The ?v= query string changes with the file, so a new version is not served from the cache. -->
+    <script src="{{ asset('js/whereto.js') }}?v={{ filemtime(public_path('js/whereto.js')) }}" defer></script>
 </head>
 <body>
      <div id="app">
@@ -29,7 +26,5 @@
         <!-- FOOTER -->
         @include('layouts.footer')
     </div>
-
-    @include('inline-javascript.geolocalisation')
 </body>
 </html>

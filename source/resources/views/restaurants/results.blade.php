@@ -48,6 +48,3 @@
 
 <!-- data -->
 <div id="results" loading="none" time="0"></div>
-
-@include('inline-javascript.results')
-@include('inline-javascript.details')

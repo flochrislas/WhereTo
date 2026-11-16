@@ -6,7 +6,8 @@
 @endsection
 
 @section('content')
-<div id="content">
+<!-- data-results-url: the URL the JavaScript calls to get the results fragment -->
+<div id="content" data-results-url="{{ route('stores.results') }}">
 
   <div id="mainFilter">
     @include('stores.filter')
@@ -20,11 +21,5 @@
 
 <div id="mainDetails" class="content-unchained" style="display: none">
 </div>
-
-<script>
-  // To be used in ajax calls for reading results
-  var resultsUrl = "{{ route('stores.results') }}";
-</script>
-@include('inline-javascript.main')
 
 @endsection

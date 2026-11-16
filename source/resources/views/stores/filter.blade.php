@@ -1,5 +1,4 @@
 <div id="tagsTop">
-  <div id="position-report"></div>
 
   <div id="filterHeader">
     <div id="filterHeaderTitle">What kind of place?</div>
@@ -25,4 +24,3 @@
   @endforeach
 </div>
 
-@include('inline-javascript.filter')

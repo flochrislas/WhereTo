@@ -6,17 +6,19 @@ The public site is a mostly single-page experience per place type. The server re
 
 ```
 GET /  ──▶ Route::view('/', 'home')
-            ├─ layouts.app  (header, #position-report, footer, geolocation JS)
+            ├─ layouts.app  (header, #position-report, footer, loads public/js/whereto.js)
             └─ suggestions.suggestion
                  @inject SuggestionController
                  if isLunchTime() (11:30–14:00 Asia/Tokyo) ──▶ show "Get a suggestion" button
 ```
 
-Clicking "Lunch in Shibuya" calls `getLocation()` first, which asks the browser for the GPS position and stores it in `sessionStorage` under `lastCoordinates`, then navigates to `/restaurants`. The other three buttons go to `/stores`, `/bars`, `/karaokes`.
+Clicking "Lunch in Shibuya" calls `startGeolocation()` first, so the browser asks for the GPS permission while navigating to `/restaurants`; the first fix is stored in `sessionStorage` under `lastCoordinates` and reused by the next page. The other three buttons go to `/stores`, `/bars`, `/karaokes`. The home page itself does not ask for the position until a button is clicked.
 
-## 2. Geolocation (client side, `inline-javascript/geolocalisation.blade.php`)
+## 2. Geolocation (client side, `public/js/whereto.js`, geolocation section)
 
-`getLocation()` is called at almost every interaction (tag click, sort, "Show All", suggestion). It is asynchronous: it triggers `navigator.geolocation.getCurrentPosition()` and immediately returns whatever is already in `sessionStorage`. The first request of a session therefore usually carries `position=null`, and the server falls back to Shibuya Station.
+On the place pages (the ones with a `data-results-url`), `startGeolocation()` runs as soon as the script loads and starts a single `navigator.geolocation.watchPosition()` for the page. Every fix is written to `sessionStorage` under `lastCoordinates`, and `getLocation()` simply returns that value (or `null` before the first fix) when a request is built. If results were already requested before the first fix arrived (they then carry `position=null` and the server measures from Shibuya Station), the first fix triggers one more request of the same results, with the position this time, so the distances and the "Near first" order are right. Later fixes update the stored value but do not refresh anything; the next click uses them.
+
+`#position-report` tells the visitor which distances they see: "Locating you... distances are from the station until then", then "Distances are from your position", or the failure reason.
 
 Failure messages are written into the `#position-report` div, including a hint to use HTTPS because browsers refuse geolocation on plain HTTP outside `localhost`.
 
@@ -33,12 +35,12 @@ GET /restaurants ──▶ RestaurantTagController@restaurantsFilter
 
 Stores, bars and karaoke do the same through `StoreTagController@viewAllTags` and so on.
 
-Client behaviour (`inline-javascript/filter.blade.php`):
+Client behaviour (`public/js/whereto.js`, tag filter and results sections):
 
 1. Clicking a tag moves its `<div>` between `#tags` and `#selectedTags` (`moveTag`).
 2. Any change calls `refreshResults()`, which reads the labels of the selected tags, picks the sort order (parameter, else `localStorage.orderBy`, else `distance`), hard-codes `op=AND`, and calls `ajaxResults()`.
 3. `ajaxResults()` requests `GET /restaurants/results?op=AND&tags=a,b&orderBy=distance&position=lat,lon` (parameters URL-encoded), stamps the request time in the `#results` `time` attribute so that stale responses are ignored, and injects the returned HTML into `#results`. The "Show All" button label becomes "Show N results" (N counted from `.resultsCounter` placeholders).
-4. "Show All" with no tag selected (`getResults()` in `main.blade.php`) loads every place once, sorted by distance, then switches to the results panel.
+4. "Show All" with no tag selected (`getResults()`) loads every place once, sorted by distance (`loadAllResults()`), then switches to the results panel.
 
 ## 4. Results fragment
 
@@ -84,7 +86,7 @@ GET /suggestions?position=lat,lon ──▶ SuggestionController@suggest
           render suggestions.suggestion-text: "How about a nice <type> restaurant, <a href=detailsSingle>name</a>?"
 ```
 
-The browser (`inline-javascript/suggestion.blade.php`) replaces the suggestion box with the text and a "Try again" button that repeats the call.
+The browser (`ajaxSuggestion()` in `public/js/whereto.js`, URL from the `data-suggestion-url` attribute of `#suggestion`) replaces the suggestion box with the text and a "Try again" button that repeats the call.
 
 ## 7. Caching strategy
 

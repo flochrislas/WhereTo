@@ -41,7 +41,7 @@ Unchanged in spirit: no build step, no framework.
 
 - Blade templates under `resources/views/`.
 - One stylesheet, `public/css/style-dark.css`, and self-hosted Open Sans in `public/fonts/`.
-- Vanilla JavaScript inlined in `resources/views/inline-javascript/`, now using `fetch()` and the Clipboard API (with a fallback for non-secure contexts).
+- Vanilla JavaScript in one static file, `public/js/whereto.js`, loaded once by the public layout with `defer` and a cache-busting `?v=` query string (the file's modification time). No build step. It uses `fetch()`, `navigator.geolocation.watchPosition()` and the Clipboard API (with a fallback for non-secure contexts).
 - The admin and login pages use `layouts/html.blade.php` with Bootstrap 3.4.1 and jQuery 3.7.1 from jsDelivr.
 - Google Analytics was removed (the Universal Analytics property was dead).
 

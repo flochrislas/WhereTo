@@ -62,7 +62,11 @@ class PlacesTest extends TestCase
     public function test_filter_page_lists_tags(string $plural, string $singular, string $model, string $tagModel): void
     {
         $this->seedTwo($model, $tagModel);
-        $this->get("/$plural")->assertOk()->assertSee('tagType10')->assertSee('tagType20');
+        $this->get("/$plural")->assertOk()->assertSee('tagType10')->assertSee('tagType20')
+            // The JavaScript reads the results URL from this attribute
+            ->assertSee('data-results-url="'.route("$plural.results").'"', false)
+            // One static script for all the public pages, with a cache-busting version
+            ->assertSee('src="'.asset('js/whereto.js').'?v=', false);
     }
 
     #[DataProvider('placeTypes')]
@@ -105,6 +109,7 @@ class PlacesTest extends TestCase
 
     public function test_home_page(): void
     {
-        $this->get('/')->assertOk()->assertSee('Shibuya');
+        $this->get('/')->assertOk()->assertSee('Shibuya')
+            ->assertSee('src="'.asset('js/whereto.js').'?v=', false);
     }
 }
