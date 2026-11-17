@@ -6,6 +6,7 @@
 WhereTo/
 ├── doc/                  this documentation
 ├── dev/                  podman compose dev environment + baseline captures
+├── e2e/                  browser tests (Playwright): package.json, playwright.config.js, tests/*.spec.js
 ├── README.md, LICENSE    GPL-3.0 licence
 └── source/               the Laravel 13 application
     ├── app/

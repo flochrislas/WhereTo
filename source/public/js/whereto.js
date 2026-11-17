@@ -230,6 +230,9 @@ function getResults() {
 /** Request every place of the page, sorted by distance (no tags parameter = all the places) */
 function loadAllResults() {
   setResultsLoading("all");
+  // Stamp the request now (not when it answers): a GPS fix arriving while it is in flight must see that
+  // something was requested, so that refreshResultsAfterFix() asks again with the position
+  setResultsLoadingTime(nowStamp());
   getResultsDiv().innerHTML = "Loading ALL entries. Please wait or select a tag...";
   const url = getResultsUrl() + '?position=' + getLocation() + '&orderBy=distance';
   console.info('GET: ' + url);
@@ -239,11 +242,11 @@ function loadAllResults() {
       // Only write if a tag search did not start in the meantime
       if (getResultsLoading() == "all") {
         getResultsDiv().innerHTML = html;
-        setResultsLoadingTime(1); // we allow this query just once
       }
     })
     .catch(() => {
       getResultsDiv().innerHTML = "Sorry, an error occurred during the search. Check your Internet connection and try again.";
+      setResultsLoadingTime(0); // nothing loaded: "Show All" may try again
     })
     .finally(() => {
       if (getResultsLoading() == "all") {

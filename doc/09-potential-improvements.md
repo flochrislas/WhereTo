@@ -155,10 +155,11 @@ The UI is already responsive (viewport meta, one `@media` breakpoint at 680px, C
 - **How**: `.github/workflows/ci.yml` with `shivammathur/setup-php` (PHP 8.5, `pdo_pgsql`), `composer install`, `vendor/bin/pint --test`, `vendor/bin/phpstan`, `php artisan test`. Add Dependabot or Renovate for Composer updates.
 - **Done (November 2026)**: `.github/workflows/ci.yml` (Pint, PHPStan, `node --check`, tests on SQLite and on a PostgreSQL 18 service) and `.github/dependabot.yml` (weekly, Composer updates grouped).
 
-### 5.2 Browser tests for the JavaScript (M)
+### 5.2 Browser tests for the JavaScript (M) — done
 
 - **Why**: the tests cover the HTTP layer only; nothing checks that a tag click updates the results or that the back button works.
 - **How**: Playwright (already used on this machine) against the `dev/` stack, with the geolocation faked (`context.grantPermissions(['geolocation'])`, `setGeolocation`). Five scenarios cover the whole UI: home, tag filter, each sort, details and back, suggestion with the clock set to lunch time. Laravel Dusk is the first-party alternative but it needs Chrome in the PHP image.
+- **Done (November 2026)**: `e2e/` (Playwright Test, Node, outside `source/` so the app keeps no build step), five spec files run as a phone and as a desktop, in CI after the PHP checks (`browser` job). The suggestion is not covered: its lunch-time window is the server's clock. Writing the offline scenario found a bug: a GPS fix arriving while the first "all results" request was in flight never re-requested them with the position (fixed in `loadAllResults()`).
 
 ### 5.3 Raise PHPStan to level 7 or 8 (M) — done
 

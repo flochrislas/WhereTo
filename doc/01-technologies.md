@@ -29,6 +29,7 @@ State after the November 2026 upgrade (branch `upgrade-2026`). Versions come fro
 |---|---|
 | `fruitcake/laravel-debugbar` `^4.4` | Debugbar (renamed from `barryvdh/laravel-debugbar` in 2026). Toggle with `DEBUGBAR_ENABLED`. |
 | `barryvdh/laravel-ide-helper` `^3.8` | IDE stubs (`php artisan ide-helper:generate`), auto-discovered, dev only |
+| `@playwright/test` `^1.57` (Node, in `e2e/`) | Browser tests of the public pages, see `05-dev-environment.md` |
 | `larastan/larastan` `^3.15` | PHPStan for Laravel, level 8 (the strictest), config in `phpstan.neon` |
 | `laravel/pint` | Code style (Laravel preset) |
 | `phpunit/phpunit` `^12.5`, `mockery/mockery`, `fakerphp/faker`, `laravel/pail`, `laravel/pao`, `nunomaduro/collision` | Skeleton defaults |

@@ -111,6 +111,23 @@ Dependabot (`.github/dependabot.yml`) opens a weekly pull request for Composer a
 | `Feature/CacheSerializationTest` | forever-cache round trip through the `file` store, proving the `serializable_classes` allow-list is complete |
 | `Feature/ExampleTest`, `Unit/ExampleTest` | skeleton smoke tests |
 
+## Browser tests
+
+The PHPUnit suite stops at the HTTP layer. The scenarios in `e2e/tests/` drive the real pages in Chromium with Playwright: home page and theme switch, tag filter with "all / any" and the keyboard, the three sort orders, details and BACK (and the details tags), the standalone page, and the service worker offline. They run twice, as a phone (Pixel 7) and as a desktop (1280px, three panels side by side), with the GPS faked near the station.
+
+They need Node 22 and the app running (the dev stack by default, `BASE_URL` for another):
+
+```sh
+cd e2e
+npm install                      # once: the Playwright test runner
+npx playwright install chromium  # once: the browser build the runner wants
+npm test                         # BASE_URL=http://localhost:8010 npm test to be explicit
+npm run test:headed              # watch the browser
+npx playwright show-trace test-results/<test>/trace.zip   # the trace of a failed test
+```
+
+CI runs them in a second job after the PHP checks, against a `php artisan serve` on the seeded PostgreSQL database, and keeps the HTML report as an artifact when something fails. `e2e/node_modules`, `test-results` and `playwright-report` are ignored by git.
+
 ## Front-end assets
 
 Nothing to build. Edit `public/css/style.css` and `public/js/whereto.js` directly; the script tag's `?v=` query string is the file's modification time, so the browser picks up a new version on the next load. `node --check public/js/whereto.js` (and `public/sw.js`) catches syntax errors.

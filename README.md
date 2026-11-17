@@ -13,7 +13,8 @@ Personal project, started in 2017, upgraded in November 2026 to Laravel 13 / PHP
 | [`source/`](source/) | The Laravel application |
 | [`dev/`](dev/) | Podman compose development environment (app on http://localhost:8010) |
 | [`doc/`](doc/) | Documentation: technologies, architecture, data model, request flows, dev setup, production deployment, upgrade notes, findings, potential improvements |
-| [`.github/`](.github/) | CI workflow (Pint, PHPStan, tests on SQLite and PostgreSQL 18) and Dependabot |
+| [`e2e/`](e2e/) | Browser tests (Playwright) of the public pages, on a phone and a desktop viewport |
+| [`.github/`](.github/) | CI workflow (Pint, PHPStan, tests on SQLite and PostgreSQL 18, then the browser tests) and Dependabot |
 
 ## Quick start
 
