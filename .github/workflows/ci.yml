@@ -150,7 +150,7 @@ jobs:
           curl -sf http://127.0.0.1:8000/up > /dev/null
 
       - name: Set up Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7
         with:
           node-version: '22'
           cache: npm
