@@ -154,9 +154,25 @@ class PlacesTest extends TestCase
         $this->get("/$plural/results?op=AND&tags=a&orderBy=distance&position=null", ['If-None-Match' => $etag])->assertStatus(304);
     }
 
+    #[DataProvider('placeTypes')]
+    public function test_fragments_are_noindex_and_pages_have_a_canonical_url(string $plural, string $singular, string $model, string $tagModel): void
+    {
+        $this->seedTwo($model, $tagModel);
+        $near = $model::where('name', 'Near one')->firstOrFail();
+        // The pieces loaded by AJAX must not be indexed...
+        $this->get("/$plural/results?position=null")->assertOk()->assertHeader('X-Robots-Tag', 'noindex');
+        $this->get("/$plural/details/{$near->id}")->assertOk()->assertHeader('X-Robots-Tag', 'noindex');
+        // ...the main page and the standalone page must, and each says its own URL
+        $this->get("/$plural")->assertOk()->assertHeaderMissing('X-Robots-Tag')
+            ->assertSee('<link rel="canonical" href="'.route("$plural.main").'">', false);
+        $this->get("/$singular/details/{$near->id}")->assertOk()->assertHeaderMissing('X-Robots-Tag')
+            ->assertSee('<link rel="canonical" href="'.route("$plural.details.single", $near->id).'">', false);
+    }
+
     public function test_home_page(): void
     {
         $this->get('/')->assertOk()->assertSee('Shibuya')
+            ->assertSee('<link rel="canonical" href="'.route('home').'">', false)
             ->assertSee('src="'.asset('js/whereto.js').'?v=', false)
             ->assertSee('href="'.asset('css/style.css').'?v=', false)
             // Dark and light themes: the browser is told about both, and the header has the switch

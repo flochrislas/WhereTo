@@ -99,6 +99,8 @@ The browser (`ajaxSuggestion()` in `public/js/whereto.js`, URL from the `data-su
 
 ## 7. Caching strategy
 
+The results and details fragments carry `X-Robots-Tag: noindex` (`NoIndex` middleware, `noindex` alias in `bootstrap/app.php`), and every page carries `<link rel="canonical">` with its own URL from the layout, so the search engines index the pages, never the fragments (`10-seo.md`).
+
 Because the dataset is tiny and only changes through seeders, every query result is cached forever in the `cache` table and keyed by the search parameters (see 03-data-model.md). Distances are computed per request on the cached collection. The seeder flushes the whole cache at the end; after a change made another way (SQL, tinker), run `php artisan cache:clear`.
 
 ## 8. No authentication, no admin

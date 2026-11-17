@@ -18,6 +18,7 @@ WhereTo/
     │   ├── Support/Position.php         "lat, lon" value object (parsing, distance to another position)
     │   ├── Services/                    PlaceSearch (tag query, forever cache, ordering, distances) and one subclass per kind
     │   ├── Http/Controllers/            see below
+    │   ├── Http/Middleware/NoIndex.php  X-Robots-Tag: noindex on the AJAX fragments
     │   └── Providers/AppServiceProvider.php
     ├── bootstrap/app.php, bootstrap/providers.php   application configuration (no Kernel classes)
     ├── config/, public/, storage/

@@ -35,7 +35,10 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- SEO -->
-    @yield('metatags')    
+    @yield('metatags')
+    <!-- The one URL of this page for the search engines (APP_URL + path, no query string): the same place is
+         also served as a fragment, this says which one is the page -->
+    <link rel="canonical" href="{{ url()->current() }}">    
     <!-- Style -->
     <!-- ?v= is the file modification time: a changed stylesheet has a new URL, so the browser cache cannot serve the old one -->
     <link href="{{ asset('css/style.css') }}?v={{ filemtime(public_path('css/style.css')) }}" rel="stylesheet">
