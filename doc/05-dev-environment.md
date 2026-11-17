@@ -58,8 +58,6 @@ All commands run from `source/`.
    php artisan db:seed      # deletes and reloads every table, then flushes the cache
    ```
 
-   The seeders create two users (`florent.redares@gmail.com` and `user2@test.rt`, password `password`) for the admin.
-
 4. Serve:
 
    ```sh
@@ -106,9 +104,8 @@ Dependabot (`.github/dependabot.yml`) opens a weekly pull request for Composer a
 | `Unit/RestaurantControllerTest` | distance computation and sorting, tag parsing, ellipsis, mass assignment |
 | `Unit/RestaurantTagControllerTest` | tag creation and autocomplete query |
 | `Unit/SuggestionControllerTest` | lunch-time window in Tokyo time |
-| `Feature/PlacesTest` | per place type: filter page, results by distance, AND tag filter, details fragment and standalone page, 404; restaurant ratings and cost order; home page |
+| `Feature/PlacesTest` | per place type: filter page, results by distance, AND tag filter, details fragment and standalone page, 404; restaurant ratings and cost order; home page; `/login` and `/admin` are 404 |
 | `Feature/SuggestionTest` | empty outside lunch time, suggestion with link at lunch time |
-| `Feature/AdminTest` | login/logout and throttling, guest redirect, `/register` is 404, restaurant CRUD (coordinates field, new place visible in results), tag and type edit/delete |
 | `Feature/CacheSerializationTest` | forever-cache round trip through the `file` store, proving the `serializable_classes` allow-list is complete |
 | `Feature/ExampleTest`, `Unit/ExampleTest` | skeleton smoke tests |
 

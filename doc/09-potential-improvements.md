@@ -69,10 +69,11 @@ The UI is already responsive (viewport meta, one `@media` breakpoint at 680px, C
 - Give the three sort buttons `aria-pressed` reflecting the stored `orderBy`.
 - **Done (November 2026)**: tags are `<button type="button">` with `aria-pressed`, the sort buttons carry `data-order-by` and `aria-pressed`, `#results`, `#position-report` and `#suggestion` are `aria-live="polite"`, the result name cells are `role="button" tabindex="0"` with Enter/Space handled in `whereto.js`, visible focus outlines, and the suggestion button is a real button.
 
-### 2.4 Admin pages on the same stack as the public pages (S)
+### 2.4 Admin pages on the same stack as the public pages (S) — done by removal
 
 - **Why**: `layouts/html.blade.php` loads Bootstrap 3.4 and jQuery from a CDN for the admin and login pages only. Bootstrap 3 is unmaintained and jQuery is unused by the app code.
 - **How**: either upgrade to Bootstrap 5.3 (no jQuery, has a built-in dark mode: `data-bs-theme="dark"`) or restyle the few admin tables and forms with `style-dark.css` and drop the CDN entirely. The second option also removes the only third-party requests the app makes.
+- **Done (November 2026)**: the admin and the login were removed altogether, with the users table, the gate and the form requests. The seeders are the source of truth and a redeploy overwrote any online edit anyway, so the admin was only an attack surface (a password in a public repo, an authenticated POST surface). The app now has no accounts, no POST route and no CDN request.
 
 ## 3. Back-end architecture
 
@@ -99,7 +100,7 @@ The UI is already responsive (viewport meta, one `@media` breakpoint at 680px, C
 - **PHP enums** for `orderBy` (`distance`, `ratings`, `cost`) and `op` (`AND`, `OR`, `ANDNOT`, `ORNOT`), validated with `Rule::enum()` in the request instead of being passed around as free strings.
 - **A `Position` value object** (`lat`, `lon`, `fromString()`, `distanceTo()`) instead of the `"lat,lon"` string that goes through `positionSpoofer()`, `google2coord()` and the cache key logic. The `Location` trait would then take a `Position`.
 - **Authorization**: `users.level` exists but nothing reads it. A `Gate::define('admin', fn (User $u) => $u->level >= 10)` and `->can('admin')` on the admin route group would make the column meaningful.
-- **Done (November 2026)**: `RestaurantRequest`, `RestaurantTagRequest`, `RestaurantTypeRequest`; route model binding on the public details routes (`{place}`) and the admin controllers; `OrderBy` and `TagOperator` enums with `fromRequest()` defaults; `App\Support\Position`; the `admin` gate on `users.level >= 1` with `can:admin` on the admin group (the user factory now sets level 1).
+- **Done (November 2026)**: `RestaurantRequest`, `RestaurantTagRequest`, `RestaurantTypeRequest`; route model binding on the public details routes (`{place}`) and the admin controllers; `OrderBy` and `TagOperator` enums with `fromRequest()` defaults; `App\Support\Position`; the `admin` gate on `users.level >= 1` with `can:admin` on the admin group (the user factory now sets level 1). The form requests, the admin bindings and the gate were removed again with the admin (see 2.4); the enums, `Position` and the public `{place}` binding stay.
 
 ### 3.4 Seed data as data, not as PHP (M)
 
@@ -129,7 +130,7 @@ The UI is already responsive (viewport meta, one `@media` breakpoint at 680px, C
 
 ### 4.3 Tagged cache instead of flushing everything (S)
 
-- **Why**: every admin write calls `Cache::flush()`, which also drops sessions if they ever share the store, and the next visitor pays for a full rebuild.
+- **Why**: the seeder calls `Cache::flush()`, which also drops sessions if they ever share the store, and the next visitor pays for a full rebuild.
 - **How**: with the `redis` or `database` cache store, `Cache::tags(['places'])->rememberForever(...)` and `Cache::tags(['places'])->flush()` only drop the place data. Not possible with the `file` store, so this comes together with moving the cache to Redis or the `cache` table.
 
 ### 4.4 FrankenPHP or Octane (M, optional)

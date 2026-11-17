@@ -159,4 +159,13 @@ class PlacesTest extends TestCase
             ->assertSee('rel="manifest" href="'.asset('manifest.json').'"', false)
             ->assertSee('rel="apple-touch-icon"', false);
     }
+
+    /** The site is read-only: the legacy login and admin are gone (404, not a redirect to a login page). */
+    public function test_login_and_admin_do_not_exist(): void
+    {
+        $this->get('/login')->assertNotFound();
+        $this->get('/admin')->assertNotFound();
+        $this->get('/admin/restaurants')->assertNotFound();
+        $this->post('/login', ['email' => 'a@b.c', 'password' => 'x'])->assertNotFound();
+    }
 }

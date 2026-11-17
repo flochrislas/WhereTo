@@ -64,12 +64,4 @@ class Restaurant extends Model
         // Attach them (writes the pivot rows)
         $this->tags()->attach($tags);
     }
-
-    /**
-     * The users who have visited the restaurant (pivot table user_restaurant, with a comment column).
-     */
-    public function users(): BelongsToMany
-    {
-        return $this->belongsToMany(User::class)->withPivot('comment');
-    }
 }

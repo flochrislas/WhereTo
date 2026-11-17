@@ -5,7 +5,7 @@
  * It lets the app be installed on the home screen and keep working with a bad connection:
  *   - static files (CSS, JS, fonts, icons) are served from the cache, and refreshed in the background;
  *   - pages and data fragments go to the network first, and fall back to the last copy seen when offline.
- * Only GET requests of this site are handled. The admin and login pages are left alone.
+ * Only GET requests of this site are handled. The Debugbar is left alone.
  *
  * Change CACHE_VERSION when the cached files change in a way the ?v= query strings do not cover:
  * the old cache is deleted on activation.
@@ -28,7 +28,7 @@ const PRECACHE = [
 ];
 
 /** Paths never touched by the worker (always straight to the network) */
-const BYPASS = ['/admin', '/login', '/logout', '/_debugbar'];
+const BYPASS = ['/_debugbar'];
 
 /** Install: fill the cache with the shell. skipWaiting: the new worker takes over without waiting for the tabs to close */
 self.addEventListener('install', event => {
@@ -53,7 +53,7 @@ self.addEventListener('fetch', event => {
   const request = event.request;
   const url = new URL(request.url);
 
-  // Only GET requests of this site; POST (login form) and other sites (CDN of the admin pages) go straight out
+  // Only GET requests of this site; anything else goes straight out
   if (request.method !== 'GET' || url.origin !== self.location.origin) {
     return;
   }
@@ -94,7 +94,7 @@ function staleWhileRevalidate(request) {
 }
 
 /**
- * Network-first: pages, results and details are fresh when online (the admin may have changed them),
+ * Network-first: pages, results and details are fresh when online (a deploy may have changed them),
  * and the last copy seen is shown when offline. A page never seen offline falls back to the home page.
  */
 function networkFirst(request) {

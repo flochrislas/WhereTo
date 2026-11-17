@@ -94,13 +94,11 @@ The browser (`ajaxSuggestion()` in `public/js/whereto.js`, URL from the `data-su
 
 ## 7. Caching strategy
 
-Because the dataset is tiny and only changes through seeders, every query result is cached forever in the `cache` table and keyed by the search parameters (see 03-data-model.md). Distances are computed per request on the cached collection. The admin controllers flush the whole cache after every create, update or delete; after a change made outside the admin (SQL, tinker), run `php artisan cache:clear`.
+Because the dataset is tiny and only changes through seeders, every query result is cached forever in the `cache` table and keyed by the search parameters (see 03-data-model.md). Distances are computed per request on the cached collection. The seeder flushes the whole cache at the end; after a change made another way (SQL, tinker), run `php artisan cache:clear`.
 
-## 8. Authentication and admin
+## 8. No authentication, no admin
 
-- `GET /login` shows a form; `POST /login` (throttled to 5 attempts per minute per IP) calls `Auth::attempt()` and redirects to the intended URL or the dashboard; `POST /logout` ends the session. There is no registration and no password reset: admin users are created by the seeder or with `php artisan tinker`.
-- Everything under `/admin` requires a logged-in user (`auth` middleware, redirects guests to `/login`) whose `level` is 1 or more (`can:admin` middleware and the `admin` gate, 403 otherwise). The forms are validated by the form requests in `app/Http/Requests/`, and the `{restaurant}`, `{restaurantTag}` and `{restaurantType}` URL parameters are resolved to models by route model binding. The dashboard links to restaurant, tag and type management. Creating and editing restaurants works again (`$fillable` was restored); the form has a "lat, lon" field so a new place gets coordinates and shows up in distance-sorted results. Tag and type edit/delete use proper `PUT`/`DELETE` forms.
-- `POST /admin/debug?mode=on|off` toggles the Debugbar for the current process only, when the dev package is installed.
+The site is read-only: every route is a `GET`, there is no login and no account. The legacy admin (restaurant, tag and type CRUD behind a login) was removed in November 2026: the seeders are the source of truth and a redeploy would have overwritten any online edit anyway, so the admin was only an attack surface. Edit the data in `database/seeders/` and run `php artisan db:seed`.
 
 ## 9. Environment flags that change behaviour
 
@@ -112,13 +110,13 @@ Because the dataset is tiny and only changes through seeders, every query result
 | `CACHE_STORE` | Defaults to `database`; `file` or `redis` work as well. |
 | `LOG_LEVEL` | Keep `info` or higher in production; the controllers log at `debug` level on every request. |
 
-## 8. Installable app and offline (service worker)
+## 10. Installable app and offline (service worker)
 
 `whereto.js` registers `public/sw.js` on every public page. The worker:
 
 1. On install, pre-caches the app shell: `/`, the four place pages, the stylesheet, the font, the icon and the manifest.
 2. For static files (`/css`, `/js`, `/fonts`, `/icons`, the manifest, the favicon): answers from the cache at once and refreshes the copy in the background ("stale-while-revalidate"). The script tag's `?v=` makes a new `whereto.js` a new URL, so it is fetched from the network.
 3. For pages, results and details fragments: network first, and the last copy seen when offline. An unknown page requested offline falls back to the cached home page.
-4. Never touches `/admin`, `/login`, `/logout`, `/_debugbar`, POST requests or other origins.
+4. Never touches `/_debugbar`, non-GET requests or other origins.
 
 `CACHE_VERSION` in `sw.js` names the cache; bumping it drops the previous cache on activation. The manifest (`public/manifest.json`) gives the name, colours and icons used by "Add to home screen"; the layout links it with `rel="manifest"` and an `apple-touch-icon` for iOS.

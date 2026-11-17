@@ -22,7 +22,7 @@ cd dev
 podman compose up -d        # builds the image, installs dependencies, migrates and seeds on first run
 ```
 
-Then open http://localhost:8010. The admin is at `/admin` with the seeded account (see [`dev/README.md`](dev/README.md)). To run without containers, follow [`doc/05-dev-environment.md`](doc/05-dev-environment.md).
+Then open http://localhost:8010. To run without containers, follow [`doc/05-dev-environment.md`](doc/05-dev-environment.md).
 
 Tests, code style and static analysis, from `source/`:
 

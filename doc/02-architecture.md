@@ -15,7 +15,6 @@ WhereTo/
     │   ├── Tools/GeoUtils.php           distance maths, position / Google Maps URL parsing
     │   ├── Enums/                       OrderBy (distance, ratings, cost) and TagOperator (AND, OR, ANDNOT, ORNOT)
     │   ├── Support/Position.php         "lat, lon" value object (parsing, distance to another position)
-    │   ├── Http/Requests/               form requests: validation rules of the admin restaurant, tag and type forms
     │   ├── Http/Controllers/            see below
     │   └── Providers/AppServiceProvider.php
     ├── bootstrap/app.php, bootstrap/providers.php   application configuration (no Kernel classes)
@@ -49,24 +48,20 @@ The generic logic is in the abstract `App\Http\Controllers\PlaceController`:
 - `orderBy()` applies rating or cost ordering in SQL, using the columns each kind declares through `ratingColumns()` and `costColumn()` (restaurants: lunch, food and place scores and the lunch price; bars: score, place, mingling; stores and karaoke: score), with `id` as a tiebreaker so results are deterministic. The order and the tag operator travel as the `OrderBy` and `TagOperator` enums, parsed from the query string with a default for unknown values.
 - `handleDistances()`, `sortByDistance()`, `generateCurrentDistances()` compute the distance from the visitor in PHP and optionally sort by it (places without coordinates are dropped when sorting by distance).
 - `positionSpoofer()` turns the `position` query string into a `Position` and falls back to Shibuya Station when the visitor is further than 2.5 km away, sent no position, or sent an unparsable one.
-- The details routes use route model binding: `{place}` in the URL becomes a `Restaurant`, `Store`, `Bar` or `Karaoke` argument, or a 404. The admin controllers do the same with their models, and validate through the form requests in `app/Http/Requests/`.
+- The details routes use route model binding: `{place}` in the URL becomes a `Restaurant`, `Store`, `Bar` or `Karaoke` argument, or a 404.
 - `formatTags()` and `ellipsis()` are small helpers.
 
 The four concrete place controllers are near copies of each other and only define `results()`, `details()` and `detailsSingle()` (the last two return 404 for unknown ids).
 
-The four `*TagController`s serve the filter page (all tags, cached). `RestaurantTagController` also has the admin CRUD and an `autocomplete()` endpoint.
+The four `*TagController`s serve the filter page (all tags, cached). `RestaurantTagController` also has an `autocomplete()` endpoint.
 
-Models are equally repetitive: each place model `use`s the `Location` trait, declares `$fillable`, and defines `tags()`, `tagsCached()` and `attachTags()`. `Restaurant` and `User` also have a many-to-many "visited" relation with a `comment` pivot column.
+Models are equally repetitive: each place model `use`s the `Location` trait, declares `$fillable`, and defines `tags()`, `tagsCached()` and `attachTags()`.
 
 ## Other controllers
 
 | Controller | Role |
 |---|---|
 | `SuggestionController` | Lunch suggestion. Plain class; `isLunchTime()` is static so Blade can call it through `@inject`. Renders `suggestions.suggestion-text`. |
-| `RestaurantAdminController` | Resource CRUD for restaurants behind `auth`; parses the "lat, lon" form field and flushes the cache after every write. |
-| `RestaurantTypeController` | Non-resourceful CRUD for the `restaurant_types` lookup table (`PUT` update, `DELETE` delete); flushes the cache after every write. |
-| `AdminPanelController` | `POST admin/debug` toggles the Debugbar when it is installed. |
-| `Auth\LoginController` | Hand-written login/logout (`Auth::attempt`). `POST /login` is throttled to 5 attempts per minute. No registration, no password reset. |
 
 ## Routes (`routes/web.php`)
 
@@ -87,22 +82,17 @@ Public:
 | same four for `/stores`, `/bars`, `/karaokes` | `Store*`, `Bar*`, `Karaoke*` | |
 | `GET /up` | framework | Health check |
 
-Auth: `GET /login` (named `login`), `POST /login`, `POST /logout` (named `logout`).
+Every route is a `GET`: the app has no login and no admin (removed in November 2026; the data is edited in the seeders and the site is read-only). There are no accounts, so there is nothing to brute-force and nothing to leak.
 
-Admin, under `/admin` with the `auth` middleware: dashboard view, `POST debug`, `Route::resource('restaurants')`, the seven `restaurantType/*` routes, `Route::resource('restaurantTag')`.
-
-Removed from the legacy routes: `/about`, `/test-html`, `/clubs*`, `/admin/laravel`, `/admin/restaurantsFiles`, restaurant import/export, `/register`, `/password/*`.
+Removed from the legacy routes: `/about`, `/test-html`, `/clubs*`, `/register`, `/password/*`, and the whole `/login`, `/logout` and `/admin/*` set (restaurant, tag and type CRUD, Debugbar switch, import/export).
 
 ## Views
 
 - `layouts/app.blade.php` is the public layout: dark stylesheet, CSRF meta, the `public/js/whereto.js` script tag (deferred, versioned by file modification time), `layouts.header`, `#position-report` for geolocation messages, content, `layouts.footer`.
-- `layouts/html.blade.php` is the Bootstrap layout used by the admin and login pages.
 - Each place folder has: `main` (page shell that includes `filter` and `results`; its `#content` div carries the `data-results-url` attribute the JavaScript reads), `filter` (tag cloud), `results` (sort buttons and column headers), `results-data` (the rows, returned by AJAX), `details` (fragment) and `details-single` (standalone page wrapping `details`).
 - `public/manifest.json`, `public/sw.js` (service worker) and `public/icons/` make the app installable on a phone's home screen and usable offline; see `04-how-it-works.md` section 8.
 - The JavaScript is not in the views: it lives in `public/js/whereto.js`, one file with a section per concern (geolocation, panels, results, tag filter, details, suggestion). The views call its global functions from `onclick` attributes and pass it the two server URLs through `data-results-url` and `data-suggestion-url` attributes. All requests use `fetch()`.
 - `suggestions/suggestion.blade.php` renders the suggestion box only at lunch time; `suggestions/suggestion-text.blade.php` is the sentence returned by `/suggestions`.
-- `admin/` has the restaurant, tag and type CRUD screens and the dashboard. Restaurant forms are plain HTML (`admin/restaurants/form.blade.php` loops over a field list).
-- `auth/login.blade.php` is the login form.
 
 
 ## Known gaps
@@ -111,5 +101,5 @@ See `08-findings.md` for the full checklist with what was fixed in the upgrade. 
 
 - The four place sets are copy-pasted (consolidation was explicitly left out of the upgrade).
 - Tag operators `OR`, `ANDNOT`, `ORNOT` exist server-side but the UI always sends `AND`.
-- `restaurant_types` and the `user_restaurant` pivot are not used by any page.
-- Hidden header links (Info, VIP, Login, Dashboard) are still `display: none`.
+- `restaurant_types` is seeded but not used by any page (`restaurants.type` is free text).
+- Hidden header links (Info, VIP) are still `display: none`.

@@ -12,7 +12,7 @@ Issues and surprises found while documenting the legacy code on 2026-11-16. Tick
 ## Security / exposure
 
 - [x] **Open registration.** *Only login/logout remain.* `Auth::routes()` exposes `/register`; any visitor can create an account and reach `/admin`. The `users.level` column is never checked. Use `Auth::routes(['register' => false])` or remove auth scaffolding.
-- [ ] **Seeded credentials.** (still seeded for dev; change in production) Two users with password `password`, one of them a real-looking email address. Change or delete before exposing.
+- [x] **Seeded credentials.** *Gone: the users table, the seeder and the login were removed with the admin (November 2026).* Two users with password `password`, one of them a real-looking email address. Change or delete before exposing.
 - [x] **Default database password in `config/database.php`** *Skeleton config, no password.* (`1234rewq`). Harmless if `.env` overrides it, but it is in git history.
 - [x] **Debug sidebar prints config** *Removed from the layout.* in `layouts/html.blade.php` when `APP_DEBUG=true`; keep debug off in production.
 - [x] **Autocomplete caches by raw term.** *Key is now `autocomplete-<md5>`.* `Cache::rememberForever($term, ...)` uses the user-supplied string as the cache key, so a term like `All-Restaurant` collides with the results cache. The endpoint is unused by the UI; delete it or prefix the key.
@@ -35,10 +35,10 @@ Issues and surprises found while documenting the legacy code on 2026-11-16. Tick
 - [x] `public/css/samples.css`, `tooltip-absolute.css`, `tooltip-overlay.css` are not referenced (tooltips were removed in August 2019).
 - [x] `config/app.php` declares an `Excel` alias for `Maatwebsite\Excel`, which is not installed.
 - [x] `routes/api.php` has the stock `auth:api` route; no API guard with tokens is configured.
-- [ ] `user_restaurant` pivot (visited restaurants with comments) is declared on both models and used nowhere.
-- [ ] `restaurant_types` table and its admin CRUD are not linked to `restaurants.type`, which is free text.
+- [x] `user_restaurant` pivot (visited restaurants with comments) is declared on both models and used nowhere. *Removed with the users table.*
+- [ ] `restaurant_types` table is not linked to `restaurants.type`, which is free text. *The CRUD is gone; the table and its seeder stay.*
 - [ ] Tag operators `OR`, `ANDNOT`, `ORNOT` are implemented but the UI hard-codes `AND`.
-- [ ] Header links (Info, VIP, About, Login, Dashboard) are present but `display: none`.
+- [ ] Header links (Info, VIP) are present but `display: none`. *Login and Dashboard are gone.*
 - [x] **Test suite is stale** *Rewritten and extended: 53 green tests on SQLite in-memory, including a serializing-cache round trip.*: 7 of 19 tests fail (verified 2026-11-16). `GeoUtilsTest` expects kilometres but `distance()` returns metres and the miles/nautical variants no longer exist; both `RestaurantControllerTest` cases hit the `$fillable` exception (even `new Restaurant([...])`); `RestaurantTagControllerTest::testAutocompleteDB` asserts tag ids from an older seeding order. Tests also run against the configured database instead of an isolated one.
 
 ## Operational notes

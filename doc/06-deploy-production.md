@@ -161,19 +161,7 @@ Together with `php artisan optimize` (configuration, routes, views and events co
 ## 8. Hardening checklist
 
 - `APP_DEBUG=false`.
-- There is no registration route any more; create the admin account with the seeder or `php artisan tinker`:
-
-  ```sh
-  php artisan tinker --execute="App\Models\User::create(['name'=>'Admin','email'=>'you@example.com','password'=>'a-strong-password']);"
-  ```
-
-- Change the seeded users' passwords (`password`) or delete them if you ran `db:seed`:
-
-  ```sh
-  php artisan tinker --execute="App\Models\User::where('email','user2@test.rt')->delete();"
-  ```
-
-- `POST /login` is throttled to 5 attempts per minute per IP (`throttle:5,1` in `routes/web.php`).
+- There is no login and no admin: the site is read-only and has no accounts. The data is changed by editing the seeders and redeploying (section 9).
 - `GET /up` is the framework health endpoint; restrict it at the proxy if you do not want it public.
 - Keep `storage/logs` rotated: the `daily` channel already rotates by day (14 days kept by default).
 
@@ -194,9 +182,11 @@ The stylesheet and the script are linked with their modification time, and the s
 
 Add `php artisan down` / `php artisan up` around it if the seeding takes more than a second or two.
 
+A database created before November 2026 has the `users`, `password_reset_tokens` and `user_restaurant` tables from migrations that no longer exist, and `migrate` would try to create `sessions` again. Rebuild it once with `php artisan migrate:fresh --seed --force` (nothing is lost: the seeders hold the data).
+
 ## 10. Backups
 
-The source of truth for the data is the seeders in git, so a database dump is only needed if you ever add content through the admin:
+The source of truth for the data is the seeders in git, so a database dump is not needed; the database can be rebuilt at any time with `php artisan migrate:fresh --seed --force`. If you still want one:
 
 ```sh
 pg_dump -U wheretouser -Fc whereto > whereto-$(date +%F).dump
