@@ -4,6 +4,9 @@ const { showResults, waitForResults, showFilter } = require('./helpers');
 test.describe('Tag filter', () => {
   test('selecting a tag filters the results, "all" and "any" change the count', async ({ page }) => {
     await page.goto('/restaurants');
+    // On a wide screen the unfiltered list loads by itself: note its size, the filtered counts must differ from it
+    const total = await showResults(page);
+    await showFilter(page);
     // Click "ramen": the button moves to the selected tags and is marked pressed
     const tags = page.locator('#tags');
     await tags.getByRole('button', { name: 'ramen', exact: true }).click();
@@ -13,7 +16,9 @@ test.describe('Tag filter', () => {
 
     // "all" (AND): places that have both tags; "any" (OR): places that have at least one. Any gives more.
     await page.locator('.opButton[data-op="AND"]').click();
-    const all = await showResults(page);
+    await showResults(page);
+    await expect(page.locator('#results .resultsCount')).not.toHaveText(`${total} results`);
+    const all = await waitForResults(page);
     await showFilter(page); // the "all / any" buttons are in the filter panel
     await page.locator('.opButton[data-op="OR"]').click();
     await expect(page.locator('.opButton[data-op="OR"]')).toHaveAttribute('aria-pressed', 'true');
@@ -43,6 +48,8 @@ test.describe('Tag filter', () => {
     await page.goto('/restaurants');
     const total = await showResults(page);
     expect(total).toBeGreaterThan(100);
+    // The shortened texts end with a real "…", never with the source of an HTML entity
+    await expect(page.locator('#results')).not.toContainText('&hellip;');
     // The tags are real buttons: Tab reaches them, Space presses them
     const first = page.locator('#tags .tag').first();
     const label = (await first.textContent()).trim();

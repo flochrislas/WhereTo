@@ -150,10 +150,11 @@ abstract class PlaceController extends Controller
     }
 
     /**
-     * Shorten a string to the given width and end it with "…" (the HTML entity counts in the width).
+     * Shorten a string to the given width and end it with "…" (the character itself, so the views can escape
+     * the text; the marker counts in the width).
      */
     public function ellipsis(?string $string, int $length): string
     {
-        return mb_strimwidth($string ?? '', 0, $length, '&hellip;');
+        return mb_strimwidth($string ?? '', 0, $length, '…');
     }
 }

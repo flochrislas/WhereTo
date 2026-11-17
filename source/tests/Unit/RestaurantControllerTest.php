@@ -30,6 +30,7 @@ class RestaurantControllerTest extends TestCase
     {
         $controller = new RestaurantController;
         $this->assertSame('', $controller->ellipsis(null, 10));
-        $this->assertSame('abcdefghijkl&hellip;', $controller->ellipsis('abcdefghijklmnopqrstuvwxyz', 20)); // the 8-char marker counts in the width
+        $this->assertSame('abcdefghijklmnopqrs…', $controller->ellipsis('abcdefghijklmnopqrstuvwxyz', 20)); // the marker counts in the width (20 columns)
+        $this->assertStringNotContainsString('&', $controller->ellipsis(str_repeat('x', 100), 50)); // a character, not an HTML entity: safe through {{ }}
     }
 }

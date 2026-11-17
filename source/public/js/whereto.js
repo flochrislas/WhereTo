@@ -251,7 +251,10 @@ function loadAllResults() {
     .catch(() => {
       if (now == getResultsLoadingTime()) {
         getResultsDiv().innerHTML = "Sorry, an error occurred during the search. Check your Internet connection and try again.";
-        setResultsLoadingTime(0); // nothing loaded: "Show All" may try again
+        // Nothing loaded: back to the initial state (no loading, no stamp) so that "Show All" tries again.
+        // The loading state first: the finally below only clears it while the stamp is still ours.
+        setResultsLoading("none");
+        setResultsLoadingTime(0);
       }
     })
     .finally(() => {
@@ -356,9 +359,8 @@ function ajaxResults(op, tags, orderBy) {
     // HTTP error (4xx, 5xx): jump to .catch()
     .then(response => response.ok ? response.text() : Promise.reject(response.status))
     .then(html => {
-      if (now < getResultsLoadingTime()) { // a more recent request is in flight: ignore this response
-        getResultsDiv().innerHTML = "Updating results...";
-        return;
+      if (now < getResultsLoadingTime()) {
+        return; // a more recent request was made (it may even have answered already): leave the list alone
       }
       // Write the results (HTML fragment from the server)
       getResultsDiv().innerHTML = html;
