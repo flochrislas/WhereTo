@@ -1,9 +1,7 @@
 @extends('layouts.app')
 
-@section('metatags')
-  <title>{{config('app.name')}} - Karaoke in Shibuya</title>
-  <meta name="description" content="Quickly find the best karaoke for you in Shibuya.">
-@endsection
+@section('title', 'Karaoke in Shibuya')
+@section('description', 'Quickly find the best karaoke for you in Shibuya.')
 
 @section('content')
 <!-- data-results-url: the URL the JavaScript calls to get the results fragment -->

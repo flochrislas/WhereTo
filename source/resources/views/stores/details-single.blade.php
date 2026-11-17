@@ -1,9 +1,8 @@
 @extends('layouts.app')
 
-@section('metatags')
-  <title>{{config('app.name')}} - {{$place->name}} - Store info & {{ \Illuminate\Support\Str::limit($place->updated_at, 4, '') }} review</title>
-  <meta name="description" content="Detailed information page for {{$place->name}}, in Tokyo Shibuya. Full {{ \Illuminate\Support\Str::limit($place->updated_at, 4, '') }} review and ratings.">
-@endsection
+@section('title', $place->name.' - Store info')
+@section('description', 'Detailed information page for '.$place->name.', in Tokyo Shibuya. Ratings and practical information.')
+@section('heading', $place->name)
 
 @section('content')
 <div id="content-unchained">

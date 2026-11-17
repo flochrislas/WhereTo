@@ -1,9 +1,7 @@
 @extends('layouts.app')
 
-@section('metatags')
-  <title>{{config('app.name')}} - Find the best places in Shibuya</title>
-  <meta name="description" content="Quickly find the best places in Shibuya. Search for restaurants, izakaya, bars, pubs, karaoke, stores, malls, and more.">
-@endsection
+@section('title', 'Find the best places in Shibuya')
+@section('description', 'Quickly find the best places in Shibuya. Search for restaurants, izakaya, bars, pubs, karaoke, stores, malls, and more.')
 
 @section('content')
 <div id="content">

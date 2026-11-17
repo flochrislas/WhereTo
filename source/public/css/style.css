@@ -1043,6 +1043,20 @@ td {
 /*            ACCESSIBILITY                  */
 /*********************************************/
 
+/* Read by screen readers and search engines, not shown (the page <h1>): the usual "clip" recipe */
+.visuallyHidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  border: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
 /* The visitor asked the OS for less motion: no transitions nor animations */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {

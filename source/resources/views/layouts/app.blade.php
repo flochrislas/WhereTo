@@ -34,11 +34,21 @@
     <link rel="apple-touch-icon" href="{{ asset('icons/icon-180.png') }}">
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <!-- SEO -->
-    @yield('metatags')
+    <!-- SEO: each view gives its 'title' and 'description' sections; everything below derives from them -->
+    <title>{{ config('app.name') }} - @yield('title')</title>
+    <meta name="description" content="@yield('description')">
     <!-- The one URL of this page for the search engines (APP_URL + path, no query string): the same place is
          also served as a fragment, this says which one is the page -->
-    <link rel="canonical" href="{{ url()->current() }}">    
+    <link rel="canonical" href="{{ url()->current() }}">
+    <!-- Open Graph and Twitter cards: what a link to this page shows when shared (Slack, LINE, Facebook, X...) -->
+    <meta property="og:site_name" content="{{ config('app.name') }}">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{ url()->current() }}">
+    <meta property="og:title" content="@yield('title')">
+    <meta property="og:description" content="@yield('description')">
+    <meta property="og:image" content="{{ asset('icons/icon-512.png') }}">
+    <meta property="og:locale" content="en_US">
+    <meta name="twitter:card" content="summary">
     <!-- Style -->
     <!-- ?v= is the file modification time: a changed stylesheet has a new URL, so the browser cache cannot serve the old one -->
     <link href="{{ asset('css/style.css') }}?v={{ filemtime(public_path('css/style.css')) }}" rel="stylesheet">
@@ -50,6 +60,13 @@
      <div id="app">
         <!-- HEADER -->
         @include('layouts.header')
+        <!-- The heading of the page for the search engines and the screen readers: the design shows the header's
+             logo instead, so it is visually hidden (style.css). A view may give a 'heading' section (the place name) -->
+        @hasSection('heading')
+            <h1 class="visuallyHidden">@yield('heading')</h1>
+        @else
+            <h1 class="visuallyHidden">@yield('title')</h1>
+        @endif
         <!-- Geolocalisation messages (and possibly info) -->
         <div id="position-report" aria-live="polite"></div>
         <!-- CONTENT -->

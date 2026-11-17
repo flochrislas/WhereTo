@@ -169,9 +169,35 @@ class PlacesTest extends TestCase
             ->assertSee('<link rel="canonical" href="'.route("$plural.details.single", $near->id).'">', false);
     }
 
+    #[DataProvider('placeTypes')]
+    public function test_pages_have_a_heading_and_sharing_tags(string $plural, string $singular, string $model, string $tagModel): void
+    {
+        $this->seedTwo($model, $tagModel);
+        $near = $model::where('name', 'Near one')->firstOrFail();
+        $page = $this->get("/$singular/details/{$near->id}")->assertOk()
+            ->assertSee('<h1 class="visuallyHidden">Near one</h1>', false)
+            ->assertSee('<meta property="og:title" content="Near one - ', false)
+            ->assertSee('<meta property="og:url" content="'.route("$plural.details.single", $near->id).'">', false)
+            ->assertSee('<meta property="og:image" content="'.asset('icons/icon-512.png').'">', false)
+            ->assertSee('<meta name="twitter:card" content="summary">', false);
+        // The review year is the visit date (none here), never the row's update time
+        $page->assertDontSee(date('Y').' review');
+        $this->get("/$plural")->assertOk()->assertSee('<h1 class="visuallyHidden">', false)->assertSee('<meta name="description" content="Quickly find', false);
+    }
+
+    public function test_restaurant_page_titles_carry_the_visit_year(): void
+    {
+        $this->seedTwo(Restaurant::class, RestaurantTag::class);
+        $near = Restaurant::where('name', 'Near one')->firstOrFail();
+        $near->update(['visited' => true, 'visit_date' => '2019-05-04 12:00:00']);
+        $this->get("/restaurant/details/{$near->id}")->assertOk()
+            ->assertSee('<title>'.config('app.name').' - Near one - Restaurant info &amp; 2019 review</title>', false);
+    }
+
     public function test_home_page(): void
     {
         $this->get('/')->assertOk()->assertSee('Shibuya')
+            ->assertSee('<h1 class="visuallyHidden">Find the best places in Shibuya</h1>', false)
             ->assertSee('<link rel="canonical" href="'.route('home').'">', false)
             ->assertSee('src="'.asset('js/whereto.js').'?v=', false)
             ->assertSee('href="'.asset('css/style.css').'?v=', false)
