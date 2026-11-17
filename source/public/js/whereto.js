@@ -509,8 +509,60 @@ function ajaxSuggestion() {
 }
 
 /* =========================================================================
+ * Theme (dark or light)
+ * The stylesheet has both palettes and reads data-theme on <html>. The layout sets it before the first paint
+ * from localStorage ("theme": "dark" or "light") or, without a choice, from the OS preference.
+ * ========================================================================= */
+
+/** The colour of the browser bar for each theme (same as the page background in the stylesheet) */
+const THEME_COLORS = { dark: "#141422", light: "#f4f4f8" };
+
+/** What the OS prefers: "light" or "dark" */
+function systemTheme() {
+  return window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
+}
+
+/** The theme shown now (set on <html> by the layout) */
+function currentTheme() {
+  return document.documentElement.dataset.theme || "dark";
+}
+
+/** Shows the given theme: <html> attribute, browser bar colour, and the icon/label of the header button */
+function applyTheme(theme) {
+  document.documentElement.dataset.theme = theme;
+  const meta = document.querySelector('meta[name="theme-color"]');
+  if (meta) {
+    meta.setAttribute("content", THEME_COLORS[theme]);
+  }
+  const button = document.getElementById("themeButton");
+  if (button) {
+    // The button shows what you get by pressing it: a sun on the dark theme, a moon on the light one
+    const next = theme === "dark" ? "light" : "dark";
+    button.textContent = theme === "dark" ? "\u2600\uFE0E" : "\u263E";
+    button.setAttribute("aria-label", "Switch to the " + next + " theme");
+    button.title = "Switch to the " + next + " theme";
+  }
+}
+
+/** The header button: switch to the other theme and remember it */
+function toggleTheme() {
+  const next = currentTheme() === "dark" ? "light" : "dark";
+  store("theme", next);
+  applyTheme(next);
+}
+
+/* =========================================================================
  * Page start
  * ========================================================================= */
+
+// Theme: the layout already set data-theme before the paint; this fills the button and the bar colour.
+// Without a stored choice, follow the OS when it changes (e.g. a phone switching to dark at sunset).
+applyTheme(readStore("theme") || systemTheme());
+window.matchMedia("(prefers-color-scheme: light)").addEventListener("change", () => {
+  if (!readStore("theme")) {
+    applyTheme(systemTheme());
+  }
+});
 
 // "defer" guarantees the HTML is parsed when this runs. On the place pages (the ones with a results URL)
 // start following the position right away; the home page starts it when a button is clicked instead,

@@ -8,6 +8,8 @@
 
   <div class="right" style="font-size:.7rem">
       <i>SHIBUYA beta version</i>
+      <!-- Dark/light switch; whereto.js fills the icon and the label for the current theme -->
+      <button id="themeButton" class="themeButton" type="button" onclick="toggleTheme()" aria-label="Switch theme">&#9790;</button>
   </div>
 
   <!-- TODO: Implement this -->

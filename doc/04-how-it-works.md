@@ -14,6 +14,8 @@ GET /  ──▶ Route::view('/', 'home')
 
 Clicking "Lunch in Shibuya" calls `startGeolocation()` first, so the browser asks for the GPS permission while navigating to `/restaurants`; the first fix is stored in `sessionStorage` under `lastCoordinates` and reused by the next page. The other three buttons go to `/stores`, `/bars`, `/karaokes`. The home page itself does not ask for the position until a button is clicked.
 
+The header's sun/moon button switches between the dark and the light theme on every page (`toggleTheme()` in `whereto.js`). The choice is stored in `localStorage` under `theme`; without one the OS preference applies, and the page follows the OS when it changes. The stylesheet is one file: the dark palette on `:root`, the light one on `:root[data-theme="light"]`, and the layout sets that attribute before the first paint so there is no flash.
+
 ## 2. Geolocation (client side, `public/js/whereto.js`, geolocation section)
 
 On the place pages (the ones with a `data-results-url`), `startGeolocation()` runs as soon as the script loads and starts a single `navigator.geolocation.watchPosition()` for the page. Every fix is written to `sessionStorage` under `lastCoordinates`, and `getLocation()` simply returns that value (or `null` before the first fix) when a request is built. If results were already requested before the first fix arrived (they then carry `position=null` and the server measures from Shibuya Station), the first fix triggers one more request of the same results, with the position this time, so the distances and the "Near first" order are right. Later fixes update the stored value but do not refresh anything; the next click uses them.

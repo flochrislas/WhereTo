@@ -12,7 +12,7 @@
  * See https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API
  */
 
-const CACHE_VERSION = 'whereto-v1';
+const CACHE_VERSION = 'whereto-v2'; // v2: style-dark.css became style.css (dark and light themes)
 
 /** Files put in the cache at install time: the app shell, enough to open the app offline */
 const PRECACHE = [
@@ -21,7 +21,7 @@ const PRECACHE = [
   '/stores',
   '/bars',
   '/karaokes',
-  '/css/style-dark.css',
+  '/css/style.css',
   '/fonts/open-sans-v15-latin-regular.woff2',
   '/icons/icon-192.png',
   '/manifest.json'

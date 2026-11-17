@@ -154,7 +154,11 @@ class PlacesTest extends TestCase
     {
         $this->get('/')->assertOk()->assertSee('Shibuya')
             ->assertSee('src="'.asset('js/whereto.js').'?v=', false)
-            ->assertSee('href="'.asset('css/style-dark.css').'?v=', false)
+            ->assertSee('href="'.asset('css/style.css').'?v=', false)
+            // Dark and light themes: the browser is told about both, and the header has the switch
+            ->assertSee('<meta name="color-scheme" content="dark light">', false)
+            ->assertSee('id="themeButton"', false)
+            ->assertSee("localStorage.getItem('theme')", false)
             // Progressive Web App: manifest and home screen icon
             ->assertSee('rel="manifest" href="'.asset('manifest.json').'"', false)
             ->assertSee('rel="apple-touch-icon"', false);

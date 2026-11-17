@@ -24,10 +24,11 @@ The UI is already responsive (viewport meta, one `@media` breakpoint at 680px, C
 - `prefers-reduced-motion` guard around any transition.
 - **Done (November 2026)**: all of the above in `layouts/app.blade.php` and `style-dark.css`, plus `color-scheme: dark`, `touch-action: manipulation` on the tappable elements (no double-tap zoom delay), no tap highlight, and no text inflation in landscape.
 
-### 1.3 Add a light theme and let the system choose (S)
+### 1.3 Add a light theme and let the system choose (S) — done
 
 - **Why**: `style-dark.css` is a dark theme only. Tablets and PCs are often used in daylight.
 - **How**: the colours are already CSS variables (`--color-name`, `--color-cost`, ...). Add a `@media (prefers-color-scheme: light)` block that overrides the variables, plus `color-scheme: light dark` on `:root`. Optionally a toggle stored in `localStorage`, like `orderBy` is today.
+- **Done (November 2026)**: `style-dark.css` became `style.css`; every colour is a variable, the light values sit under `:root[data-theme="light"]` (the tags keep their mid-tone backgrounds with black text in both themes). A tiny inline script in the layout sets `data-theme` before the first paint from `localStorage` or the OS preference, a sun/moon button in the header toggles it, and `whereto.js` follows the OS when nothing was chosen and updates the `theme-color` meta.
 
 ### 1.4 Use the width on tablets and PCs (M)
 
