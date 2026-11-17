@@ -4,7 +4,11 @@ namespace App\Services;
 
 use App\Models\Karaoke;
 
-/** The karaoke search: one score column, no price (the defaults of PlaceSearch) */
+/**
+ * @extends PlaceSearch<Karaoke>
+ *
+ * The karaoke search: one score column, no price (the defaults of PlaceSearch)
+ */
 class KaraokeSearch extends PlaceSearch
 {
     protected function modelClass(): string

@@ -10,7 +10,7 @@ WhereTo/
 └── source/               the Laravel 13 application
     ├── app/
     │   ├── Models/                      Restaurant, RestaurantTag, RestaurantType, Store, StoreTag,
-    │   │                                Bar, BarTag, Karaoke, KaraokeTag
+    │   │                                Bar, BarTag, Karaoke, KaraokeTag, and the Place interface the four kinds implement
     │   ├── Traits/Location.php          lat/lon helpers shared by the place models
     │   ├── Tools/GeoUtils.php           distance maths, position / Google Maps URL parsing
     │   ├── Enums/                       OrderBy (distance, ratings, cost) and TagOperator (AND, OR, ANDNOT, ORNOT)
@@ -60,7 +60,7 @@ The four concrete place controllers are near copies of each other and only defin
 
 The four `*TagController`s serve the filter page (all tags, cached). `RestaurantTagController` also has an `autocomplete()` endpoint.
 
-Models are equally repetitive: each place model `use`s the `Location` trait, declares `$fillable`, and defines `tags()`, `tagsCached()` and `attachTags()`.
+Models are equally repetitive: each place model `use`s the `Location` trait, implements the `Place` interface (`position()`, `currentDistance()`, `setCurrentDistance()`, provided by the trait; this is what `PlaceSearch` needs from a place), declares `$fillable`, and defines `tags()`, `tagsCached()` and `attachTags()`.
 
 ## Other controllers
 

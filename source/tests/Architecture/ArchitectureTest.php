@@ -4,6 +4,7 @@ namespace Tests\Architecture;
 
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\PlaceController;
+use App\Models\Place;
 use App\Traits\Location;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Routing\ViewController;
@@ -84,12 +85,16 @@ class ArchitectureTest extends TestCase
     public function test_models_live_in_app_models_and_place_models_share_the_location_trait(): void
     {
         foreach ($this->classesIn('Models') as $class) {
+            if (interface_exists($class)) {
+                continue; // Place: the interface the four kinds share
+            }
             $this->assertTrue(is_subclass_of($class, Model::class), "$class must be an Eloquent model");
         }
         foreach (['Restaurant', 'Store', 'Bar', 'Karaoke'] as $kind) {
             $class = 'App\\Models\\'.$kind;
             $reflection = new ReflectionClass($class);
             $this->assertContains(Location::class, $reflection->getTraitNames(), "$class must use the Location trait");
+            $this->assertTrue($reflection->implementsInterface(Place::class), "$class must implement Place (what PlaceSearch needs)");
             $this->assertTrue($reflection->hasMethod('tags'), "$class must have a tags() relation");
             $this->assertTrue($reflection->hasMethod('tagsCached'), "$class must have tagsCached()");
             // Mass assignment allow-list: the seeders and any future form rely on it (doc/08-findings.md)

@@ -4,7 +4,11 @@ namespace App\Services;
 
 use App\Models\Restaurant;
 
-/** The restaurant search: rated by lunch, food and place, priced by the lunch */
+/**
+ * @extends PlaceSearch<Restaurant>
+ *
+ * The restaurant search: rated by lunch, food and place, priced by the lunch
+ */
 class RestaurantSearch extends PlaceSearch
 {
     protected function modelClass(): string

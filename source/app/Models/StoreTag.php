@@ -16,6 +16,8 @@ class StoreTag extends Model
 
     /**
      * The stores that carry this tag (other side of Store::tags()).
+     *
+     * @return BelongsToMany<Store, $this>
      */
     public function stores(): BelongsToMany
     {

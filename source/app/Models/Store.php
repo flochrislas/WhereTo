@@ -3,12 +3,13 @@
 namespace App\Models;
 
 use App\Traits\Location;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Log;
 
-class Store extends Model
+class Store extends Model implements Place
 {
     // Uses a trait to get the localisation related stuff (currentDistance, fillCoordinates...)
     use Location;
@@ -22,6 +23,8 @@ class Store extends Model
     /**
      * The tags that belong to the store.
      * Read from the DB, through the pivot table store_store_tag.
+     *
+     * @return BelongsToMany<StoreTag, $this>
      */
     public function tags(): BelongsToMany
     {
@@ -32,8 +35,10 @@ class Store extends Model
      * Returns the tags that belong to the store.
      * Read from the cache (key: store-<id>-tags); flush the cache after changing tags.
      * https://ctf0.wordpress.com/2017/08/19/how-to-cache-models-relationships-in-laravel/
+     *
+     * @return Collection<int, StoreTag>
      */
-    public function tagsCached()
+    public function tagsCached(): Collection
     {
         // One key per place, e.g. 'restaurant-12-tags'
         $cacheKey = strtolower(class_basename($this)).'-'.$this->id.'-tags';

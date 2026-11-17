@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Karaoke;
 use App\Services\KaraokeSearch;
 use App\Services\PlaceSearch;
+use Illuminate\Contracts\View\View;
 
 class KaraokeController extends PlaceController
 {
@@ -16,7 +17,11 @@ class KaraokeController extends PlaceController
         return self::MODEL_NAME;
     }
 
-    /** The search of the karaokes: its model and score columns live in App\Services\KaraokeSearch */
+    /**
+     * The search of the karaokes: its model and score columns live in App\Services\KaraokeSearch
+     *
+     * @return KaraokeSearch
+     */
     protected function search(): PlaceSearch
     {
         return new KaraokeSearch;
@@ -25,7 +30,7 @@ class KaraokeController extends PlaceController
     /**
      * Display the specified place in the one-page view (HTML fragment loaded by AJAX).
      */
-    public function details(Karaoke $place)
+    public function details(Karaoke $place): View
     {
         // Route model binding: Laravel loaded the Karaoke whose id is in the URL ({place}), or answered 404
         return view($this->getModelDetailsView(), compact('place'));
@@ -34,7 +39,7 @@ class KaraokeController extends PlaceController
     /**
      * Display the specified place in an independent page (shareable URL).
      */
-    public function detailsSingle(Karaoke $place)
+    public function detailsSingle(Karaoke $place): View
     {
 
         return view($this->getModelDetailsView(true), compact('place'));

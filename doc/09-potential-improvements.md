@@ -160,9 +160,10 @@ The UI is already responsive (viewport meta, one `@media` breakpoint at 680px, C
 - **Why**: the tests cover the HTTP layer only; nothing checks that a tag click updates the results or that the back button works.
 - **How**: Playwright (already used on this machine) against the `dev/` stack, with the geolocation faked (`context.grantPermissions(['geolocation'])`, `setGeolocation`). Five scenarios cover the whole UI: home, tag filter, each sort, details and back, suggestion with the clock set to lunch time. Laravel Dusk is the first-party alternative but it needs Chrome in the PHP image.
 
-### 5.3 Raise PHPStan to level 7 or 8 (M)
+### 5.3 Raise PHPStan to level 7 or 8 (M) — done
 
 - Level 5 passes today. Going higher mostly means declaring array shapes and nullable returns, which doubles as documentation for someone learning PHP.
+- **Done (November 2026)**: level 8. Return types on every controller method, generic types on the relations (`BelongsToMany<RestaurantTag, $this>`) and on `PlaceSearch` (`@template TModel of Model&Place`, so a `RestaurantSearch` returns a `Collection<int, Restaurant>`), a `Place` interface for what the search reads from a model, and one documented ignore for the computed view names.
 
 ### 5.4 Architecture tests (S) — done
 

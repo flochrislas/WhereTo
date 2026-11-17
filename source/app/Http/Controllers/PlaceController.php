@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Enums\OrderBy;
 use App\Enums\TagOperator;
+use App\Models\Place;
 use App\Services\PlaceSearch;
+use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 
@@ -19,7 +21,11 @@ abstract class PlaceController extends Controller
     // Force the extending class to define this method
     abstract protected function getModelName(): string;
 
-    /** The search service of the kind, e.g. new RestaurantSearch */
+    /**
+     * The search service of the kind, e.g. new RestaurantSearch
+     *
+     * @return PlaceSearch<covariant Model&Place>
+     */
     abstract protected function search(): PlaceSearch;
 
     /**
@@ -29,7 +35,22 @@ abstract class PlaceController extends Controller
      */
     public function getModelClass(): string
     {
-        return 'App\\Models\\'.$this->getModelName();
+        /** @var class-string<Model> $class */
+        $class = 'App\\Models\\'.$this->getModelName();
+
+        return $class;
+    }
+
+    /**
+     * Marks a view name built from the model name as a "view-string" for PHPStan (which cannot check that
+     * a computed name is an existing view; the feature tests do).
+     *
+     * @return view-string
+     */
+    private function viewName(string $name): string
+    {
+        // @phpstan-ignore return.type
+        return $name;
     }
 
     /**
@@ -37,6 +58,7 @@ abstract class PlaceController extends Controller
      *
      * @param  bool  $single  false (default) for the view that fits into the one page design,
      *                        true for the SINGLE details view (standalone page that can be shared)
+     * @return view-string
      */
     public function getModelDetailsView(bool $single = false): string
     {
@@ -47,22 +69,24 @@ abstract class PlaceController extends Controller
             $viewName .= '-single';
         }
 
-        return $viewName;
+        return $this->viewName($viewName);
     }
 
     /**
      * Returns the view name for the rows of the results list, e.g. 'restaurants.results-data'.
+     *
+     * @return view-string
      */
     public function getModelResultsDataView(): string
     {
-        return strtolower($this->getModelName()).'s.results-data';
+        return $this->viewName(strtolower($this->getModelName()).'s.results-data');
     }
 
     /**
      * Get the list to display (HTML fragment loaded by AJAX).
      * Parameters: op (AND/OR/ANDNOT/ORNOT), tags (comma separated), position (lat,lon), orderBy (distance/ratings/cost).
      */
-    public function results(Request $request)
+    public function results(Request $request): View
     {
         // -----------------------------------
         // Reads the request parameters (from the query string)

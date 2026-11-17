@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\RestaurantTag;
+use Illuminate\Contracts\View\View;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Log;
@@ -15,7 +18,7 @@ class RestaurantTagController extends Controller
     /**
      * Gets all the restaurant tags for the public filter page.
      */
-    public function restaurantsFilter()
+    public function restaurantsFilter(): View
     {
         // Use the cache; the closure (reading the DB) only runs when the key is not cached yet
         $restaurantTags = Cache::rememberForever('all_restaurants_tags', function () {
@@ -30,7 +33,7 @@ class RestaurantTagController extends Controller
     /**
      * Method for the autocomplete (JSON). Caches the results per term.
      */
-    public function autocomplete(Request $request)
+    public function autocomplete(Request $request): JsonResponse
     {
         // The text typed by the user, from the query string (?term=...)
         $term = (string) $request->query('term', '');
@@ -42,8 +45,10 @@ class RestaurantTagController extends Controller
 
     /**
      * Method for the autocomplete query to the DB. No cache.
+     *
+     * @return Collection<int, RestaurantTag>
      */
-    public function autocompleteDB(string $term)
+    public function autocompleteDB(string $term): Collection
     {
         // Tags whose label contains the term; 'label as value' is the column name the widget expects
         $result = RestaurantTag::where('label', 'LIKE', '%'.$term.'%')->get(['id', 'label as value']);

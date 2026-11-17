@@ -16,6 +16,8 @@ class BarTag extends Model
 
     /**
      * The bars that carry this tag (other side of Bar::tags()).
+     *
+     * @return BelongsToMany<Bar, $this>
      */
     public function bars(): BelongsToMany
     {

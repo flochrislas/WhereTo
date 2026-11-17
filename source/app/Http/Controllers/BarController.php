@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Bar;
 use App\Services\BarSearch;
 use App\Services\PlaceSearch;
+use Illuminate\Contracts\View\View;
 
 class BarController extends PlaceController
 {
@@ -16,7 +17,11 @@ class BarController extends PlaceController
         return self::MODEL_NAME;
     }
 
-    /** The search of the bars: its model and score columns live in App\Services\BarSearch */
+    /**
+     * The search of the bars: its model and score columns live in App\Services\BarSearch
+     *
+     * @return BarSearch
+     */
     protected function search(): PlaceSearch
     {
         return new BarSearch;
@@ -25,7 +30,7 @@ class BarController extends PlaceController
     /**
      * Display the specified place in the one-page view (HTML fragment loaded by AJAX).
      */
-    public function details(Bar $place)
+    public function details(Bar $place): View
     {
         // Route model binding: Laravel loaded the Bar whose id is in the URL ({place}), or answered 404
         return view($this->getModelDetailsView(), compact('place'));
@@ -34,7 +39,7 @@ class BarController extends PlaceController
     /**
      * Display the specified place in an independent page (shareable URL).
      */
-    public function detailsSingle(Bar $place)
+    public function detailsSingle(Bar $place): View
     {
 
         return view($this->getModelDetailsView(true), compact('place'));

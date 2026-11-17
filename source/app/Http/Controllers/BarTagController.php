@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\BarTag;
+use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Cache;
 
 class BarTagController extends Controller
@@ -10,7 +11,7 @@ class BarTagController extends Controller
     /**
      * Gets all the bar tags for the filter page.
      */
-    public function viewAllTags()
+    public function viewAllTags(): View
     {
         // Use the cache; the closure (reading the DB) only runs when the key is not cached yet
         $tags = Cache::rememberForever('all_bars_tags', function () {

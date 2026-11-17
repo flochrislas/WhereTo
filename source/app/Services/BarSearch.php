@@ -4,7 +4,11 @@ namespace App\Services;
 
 use App\Models\Bar;
 
-/** The bar search: rated by the overall score, then the place, then how easy it is to mingle */
+/**
+ * @extends PlaceSearch<Bar>
+ *
+ * The bar search: rated by the overall score, then the place, then how easy it is to mingle
+ */
 class BarSearch extends PlaceSearch
 {
     protected function modelClass(): string

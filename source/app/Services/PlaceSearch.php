@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Enums\OrderBy;
 use App\Enums\TagOperator;
+use App\Models\Place;
 use App\Support\Position;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
@@ -15,6 +16,8 @@ use Illuminate\Support\Facades\Log;
  * The search of one kind of place: the tag query, its forever cache, the ordering, and the distances
  * from the visitor. One subclass per kind (RestaurantSearch, StoreSearch...) names the model and its
  * score columns. No HTTP here: the controllers read the request and call this.
+ *
+ * @template TModel of Model&Place  the model of the kind, e.g. Restaurant (used by PHPStan to type the collections)
  */
 abstract class PlaceSearch
 {
@@ -27,7 +30,7 @@ abstract class PlaceSearch
     /**
      * The model class of the kind, e.g. App\Models\Restaurant.
      *
-     * @return class-string<Model>
+     * @return class-string<TModel>
      */
     abstract protected function modelClass(): string;
 
@@ -70,6 +73,7 @@ abstract class PlaceSearch
      * @param  TagOperator  $op  operator used in the search
      * @param  OrderBy  $orderBy  sorting used in the search
      * @param  int  $limit  maximum number of results (0 for no limit)
+     * @return Collection<int, TModel>
      */
     public function find(?array $tags, TagOperator $op, OrderBy $orderBy, int $limit = 0): Collection
     {
@@ -117,6 +121,7 @@ abstract class PlaceSearch
      * Read from the DB. No cache, just the DB.
      *
      * @param  array<int, string>|null  $tags
+     * @return Collection<int, TModel>
      */
     public function readFromDB(?array $tags, TagOperator $op = TagOperator::And, OrderBy $orderBy = OrderBy::Distance, int $limit = 0): Collection
     {
@@ -141,6 +146,8 @@ abstract class PlaceSearch
      * Add the ORDER BY clause to the query.
      * Sorting by distance happens outside the query (in PHP), so "distance" and "ratings" are the same here:
      * the best places on top. "cost" puts the price first when the kind has one.
+     *
+     * @param  Builder<TModel>  $query
      */
     public function orderBy(Builder $query, OrderBy $orderBy = OrderBy::Distance): void
     {
@@ -160,6 +167,7 @@ abstract class PlaceSearch
      * AND: has all the tags; OR: has any of them; ANDNOT: has none of them; ORNOT: has a tag outside the list.
      * (An unknown op in the URL became And in TagOperator::fromRequest.)
      *
+     * @param  Builder<TModel>  $query
      * @param  array<int, string>|null  $tags
      */
     public function whereTags(Builder $query, ?array $tags, TagOperator $op = TagOperator::And): void
@@ -211,8 +219,9 @@ abstract class PlaceSearch
     /**
      * Fill the distance from the visitor on each place, and sort by it when the order asks for it.
      *
+     * @param  Collection<int, TModel>  $places
      * @param  string|null  $position  "lat, lon" from the browser, resolved with resolvePosition()
-     * @return Collection the places, filled with distances
+     * @return Collection<int, TModel> the places, filled with distances
      */
     public function withDistances(Collection $places, ?string $position, OrderBy $orderBy): Collection
     {
@@ -229,6 +238,9 @@ abstract class PlaceSearch
     /**
      * Return the places sorted by distance from the given position.
      * Places without coordinates are dropped.
+     *
+     * @param  iterable<TModel>  $places
+     * @return Collection<int, TModel>
      */
     public function sortByDistance(iterable $places, Position $position): Collection
     {
@@ -236,24 +248,32 @@ abstract class PlaceSearch
         $this->generateCurrentDistances($places, $position);
 
         // Keep only the places with a distance, sort by it, and renumber the keys 0, 1, 2...
-        return Collection::make($places)
-            ->filter(fn ($place) => $place->currentDistance !== null)
-            ->sortBy('currentDistance')
+        /** @var Collection<int, TModel> $collection */
+        $collection = Collection::make($places);
+
+        /** @var Collection<int, TModel> $sorted  (PHPStan loses the model type through sortBy) */
+        $sorted = $collection
+            ->filter(fn ($place) => $place->currentDistance() !== null)
+            ->sortBy(fn ($place) => $place->currentDistance())
             ->values();
+
+        return $sorted;
     }
 
     /**
      * For all the given places, compute the distance from the given position.
      * Each result is stored in the place's model (currentDistance, in metres).
+     *
+     * @param  iterable<TModel>  $places
      */
     public function generateCurrentDistances(iterable $places, Position $position): void
     {
         foreach ($places as $place) {
-            if ($place->lat !== null && $place->lon !== null) {
-                // The DB returns decimals as strings, hence the (float) casts
-                $place->currentDistance = $position->distanceTo(new Position((float) $place->lat, (float) $place->lon));
+            $placePosition = $place->position();
+            if ($placePosition !== null) {
+                $place->setCurrentDistance($position->distanceTo($placePosition));
             } else {
-                Log::debug('No coordinates for: '.$place->name);
+                Log::debug('No coordinates for: '.$place->getAttribute('name'));
             }
         }
     }

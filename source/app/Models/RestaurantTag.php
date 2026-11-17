@@ -16,6 +16,8 @@ class RestaurantTag extends Model
 
     /**
      * The restaurants that carry this tag (other side of Restaurant::tags()).
+     *
+     * @return BelongsToMany<Restaurant, $this>
      */
     public function restaurants(): BelongsToMany
     {

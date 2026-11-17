@@ -29,7 +29,7 @@ State after the November 2026 upgrade (branch `upgrade-2026`). Versions come fro
 |---|---|
 | `fruitcake/laravel-debugbar` `^4.4` | Debugbar (renamed from `barryvdh/laravel-debugbar` in 2026). Toggle with `DEBUGBAR_ENABLED`. |
 | `barryvdh/laravel-ide-helper` `^3.8` | IDE stubs (`php artisan ide-helper:generate`), auto-discovered, dev only |
-| `larastan/larastan` `^3.15` | PHPStan for Laravel, level 5, config in `phpstan.neon` |
+| `larastan/larastan` `^3.15` | PHPStan for Laravel, level 8 (the strictest), config in `phpstan.neon` |
 | `laravel/pint` | Code style (Laravel preset) |
 | `phpunit/phpunit` `^12.5`, `mockery/mockery`, `fakerphp/faker`, `laravel/pail`, `laravel/pao`, `nunomaduro/collision` | Skeleton defaults |
 
@@ -53,5 +53,5 @@ The Laravel 13 skeleton's Vite files (`package.json`, `vite.config.js`, `.npmrc`
 - `dev/`: podman compose environment (PHP 8.5 image, PostgreSQL 18, Composer 2), see `05-dev-environment.md`.
 - `phpunit.xml`: skeleton version, SQLite in-memory, array cache and session drivers. The database, cache and session entries carry `force="true"` so that variables exported into a container cannot override them.
 - `pint.json` is not needed (Laravel preset by default); run `vendor/bin/pint`.
-- `phpstan.neon`: Larastan level 5 over `app/`, `database/`, `routes/`.
+- `phpstan.neon`: Larastan level 8 over `app/`, `database/`, `routes/`. Every method has return types, the relations and collections carry their model type (`BelongsToMany<RestaurantTag, $this>`, `Collection<int, TModel>`), and the one thing PHPStan cannot check, that a computed view name exists, has a documented ignore in `PlaceController::viewName()`.
 - `public/.htaccess` and `public/index.php`: stock Laravel 13.

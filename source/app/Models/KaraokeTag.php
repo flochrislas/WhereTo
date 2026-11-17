@@ -16,6 +16,8 @@ class KaraokeTag extends Model
 
     /**
      * The karaokes that carry this tag (other side of Karaoke::tags()).
+     *
+     * @return BelongsToMany<Karaoke, $this>
      */
     public function karaokes(): BelongsToMany
     {
