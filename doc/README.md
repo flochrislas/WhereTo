@@ -15,3 +15,4 @@ The application code lives in `source/`. These notes were written in November 20
 | [07-upgrade-2026.md](07-upgrade-2026.md) | Upgrading from Laravel 5.8 / PHP 7.1 to Laravel 13 / PHP 8.5 and the rest of the 2026 stack |
 | [08-findings.md](08-findings.md) | Bugs, security issues, dead code and quirks found during the review, as a checklist |
 | [09-potential-improvements.md](09-potential-improvements.md) | Ideas for the future: mobile/tablet/PC experience, front-end and back-end architecture, performance, testing, product features |
+| [10-seo.md](10-seo.md) | How the app looks to search engines, and the changes that would make the place pages findable |

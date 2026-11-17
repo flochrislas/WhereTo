@@ -188,7 +188,7 @@ Small features that the current data already supports.
 - **OR filter**: done (November 2026), "Match all / any of the selected tags" buttons under the selected tags, remembered in `localStorage`.
 - **Opening hours and "open now"**: a `hours` JSON column per place and a filter that uses the same Tokyo clock as the lunch suggestion.
 - **Japanese UI**: Laravel localisation (`lang/ja.json`) with the browser language as default; the data already has Japanese names.
-- **Share and deep links**: the copy-URL button exists; add Open Graph tags to the details pages so a shared link shows the place name and type, and a `sitemap.xml` route for the details pages.
+- **Share and deep links**: the copy-URL button exists; add Open Graph tags to the details pages so a shared link shows the place name and type, and a `sitemap.xml` route for the details pages. See `10-seo.md` for the full assessment and plan (November 2026).
 - **Freshen ratings**: an artisan command that queries the Google Places API for each `google_maps_link` and updates `score_*` or a new `google_rating` column, run monthly. Requires an API key and a cost check.
 - **Second area**: the Shibuya Station fallback and the 100 best restaurants limit are hard-coded; an `areas` table (name, centre, radius) would make "enjoyShibuya" the first of several.
 
