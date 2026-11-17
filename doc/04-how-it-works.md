@@ -29,15 +29,16 @@ Failure messages are written into the `#position-report` div, including a hint t
 ## 3. Filter page
 
 ```
-GET /restaurants ──▶ RestaurantTagController@restaurantsFilter
-                      Cache 'all_restaurants_tags' ──▶ RestaurantTag ordered by type, weight, created_at
+GET /restaurants ──▶ RestaurantController@index
+                      RestaurantTag::allCached()   cache 'all_restaurants_tags', ordered by type, weight, created_at
+                      RestaurantSearch->find(null, And, Distance) + withDistances(null)   every place, from the station
                       view restaurants.main
                         ├─ restaurants.filter   (#tags cloud, #selectedTags, "Show All" button)
-                        ├─ restaurants.results  (hidden: sort buttons, headers, empty #results)
-                        └─ inline JS: main, filter, results, details
+                        └─ restaurants.results  (hidden on a phone: sort buttons, headers, and #results already
+                                                 filled with results-data: the default list, time="1")
 ```
 
-Stores, bars and karaoke do the same through `StoreTagController@viewAllTags` and so on.
+Stores, bars and karaoke do the same through `StoreController@index` and so on. The default list is in the HTML for the crawlers (see `10-seo.md`): each place name is a real link to its standalone page, and the JavaScript turns a click into the in-page details instead. Once the position is known, the script requests the list again with it (and at once when the remembered sort order is not "distance").
 
 Client behaviour (`public/js/whereto.js`, tag filter and results sections):
 

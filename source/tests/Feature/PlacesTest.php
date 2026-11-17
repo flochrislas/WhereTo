@@ -62,11 +62,15 @@ class PlacesTest extends TestCase
     public function test_filter_page_lists_tags(string $plural, string $singular, string $model, string $tagModel): void
     {
         $this->seedTwo($model, $tagModel);
+        $near = $model::where('name', 'Near one')->firstOrFail();
         $this->get("/$plural")->assertOk()->assertSee('tagType10')->assertSee('tagType20')
             // Tags are real buttons with a pressed state, the results div is a live region
             ->assertSee('<button type="button" class="tag tagType10"', false)
             ->assertSee('aria-pressed="false"', false)
-            ->assertSee('id="results" loading="none" time="0" aria-live="polite"', false)
+            ->assertSee('id="results" loading="none" time="1" aria-live="polite"', false)
+            // The default list is in the page, with a real link to each place (crawlable without JavaScript)
+            ->assertSee('Near one')
+            ->assertSee('href="'.route("$plural.details.single", $near->id).'"', false)
             // The JavaScript reads the results URL from this attribute
             ->assertSee('data-results-url="'.route("$plural.results").'"', false)
             // One static script for all the public pages, with a cache-busting version

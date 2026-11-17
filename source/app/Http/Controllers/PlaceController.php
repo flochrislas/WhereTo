@@ -83,6 +83,27 @@ abstract class PlaceController extends Controller
     }
 
     /**
+     * The main page of the kind: the tag filter, and the default list of places (every place, nearest to the
+     * station first) already in the HTML. The JavaScript then refreshes the list with the visitor's position,
+     * tags and sort order; a crawler, with no JavaScript, still finds every place and its link.
+     */
+    public function index(): View
+    {
+        // The tags of the kind, cached, e.g. RestaurantTag::allCached()
+        $tagClass = $this->getModelClass().'Tag';
+        $tags = $tagClass::allCached();
+
+        // The default list: all the places, distances from the station (no position yet), nearest first
+        $search = $this->search();
+        $places = $search->withDistances($search->find(null, TagOperator::And, OrderBy::Distance), null, OrderBy::Distance);
+        foreach ($places as $place) {
+            $place->setAttribute('points', $this->ellipsis($place->getAttribute('points'), 50));
+        }
+
+        return view($this->viewName(strtolower($this->getModelName()).'s.main'), compact('tags', 'places'));
+    }
+
+    /**
      * Get the list to display (HTML fragment loaded by AJAX).
      * Parameters: op (AND/OR/ANDNOT/ORNOT), tags (comma separated), position (lat,lon), orderBy (distance/ratings/cost).
      */

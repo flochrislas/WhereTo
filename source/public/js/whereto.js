@@ -474,8 +474,12 @@ function ajaxDetails(url) {
     });
 }
 
-/** Called when a result name is clicked: load the details (unless already loaded) and show them instead of the list */
-function showDetails(url, placeId) {
+/**
+ * Called when a result name (a link to the standalone page) is clicked: load the details fragment (unless already
+ * loaded) and show them in the page instead of following the link. Middle-click or "open in a new tab" still work.
+ */
+function showDetails(event, url, placeId) {
+  event.preventDefault();
   // Only fetch if a different place than the one currently displayed
   if (placeId != getCurrentDetailsId()) {
     ajaxDetails(url);
@@ -620,20 +624,17 @@ if (getResultsUrl() !== null) {
   // Show the remembered sort order and tag operator on their buttons
   markSortButton(readStore("orderBy") || "distance");
   markOperatorButton(getTagsOperator());
+  // The default list came with the page (nearest to the station first): show its size on the "Show All" button,
+  // and load it again in the remembered order when that is not the default one
+  refreshShowResultsButton();
+  if ((readStore("orderBy") || "distance") !== "distance") {
+    loadAllResults();
+  }
   // On a wide screen the results panel is visible from the start: fill it instead of waiting for "Show All"
   if (isWideLayout()) {
     getResults();
   }
 }
-
-// Keyboard: Enter or Space on an element with role="button" (the result names) acts like a click.
-// Real <button> elements do this by themselves.
-document.addEventListener("keydown", event => {
-  if ((event.key === "Enter" || event.key === " ") && event.target.getAttribute("role") === "button") {
-    event.preventDefault(); // Space would scroll the page
-    event.target.click();
-  }
-});
 
 // Register the service worker (public/sw.js): makes the app installable and usable offline.
 // Needs HTTPS or localhost, like geolocation. Browsers without support simply skip this.

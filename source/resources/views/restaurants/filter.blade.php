@@ -22,7 +22,7 @@
 
 <!-- showing available tags -->
 <div id="tags" role="group" aria-label="Available tags">
-  @foreach ($restaurantTags as $restaurantTag)
+  @foreach ($tags as $restaurantTag)
       <!-- A real button: works with the keyboard and screen readers. aria-pressed tells them if the tag is selected -->
       <button type="button" class="tag tagType{{$restaurantTag->type}}"
             tagId="{{$restaurantTag->id}}"

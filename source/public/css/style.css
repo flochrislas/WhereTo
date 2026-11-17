@@ -520,7 +520,7 @@ td {
 }
 
 /* Keyboard focus visible on the tags and the clickable result names */
-.tag:focus-visible, .resultCell[role="button"]:focus-visible {
+.tag:focus-visible, a.resultCell:focus-visible {
   outline: 2px solid var(--color-dst);
   outline-offset: 2px;
 }
@@ -682,6 +682,9 @@ td {
   text-align: left;
   margin-right: .1rem;
   cursor: pointer;
+  /* It is a link (to the standalone page): no underline, the name and type keep their own colours */
+  text-decoration: none;
+  color: inherit;
 }
 .resultCell.nameAndType a {
   text-decoration: none;

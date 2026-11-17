@@ -1,13 +1,10 @@
 <?php
 
 use App\Http\Controllers\BarController;
-use App\Http\Controllers\BarTagController;
 use App\Http\Controllers\KaraokeController;
-use App\Http\Controllers\KaraokeTagController;
 use App\Http\Controllers\RestaurantController;
 use App\Http\Controllers\RestaurantTagController;
 use App\Http\Controllers\StoreController;
-use App\Http\Controllers\StoreTagController;
 use App\Http\Controllers\SuggestionController;
 use Illuminate\Support\Facades\Route;
 
@@ -35,11 +32,11 @@ Route::view('vip/main', 'vip.main')->name('vip');
 // Lunch suggestion (HTML fragment, loaded by AJAX from the home page)
 Route::get('suggestions', [SuggestionController::class, 'suggest'])->name('suggestions');
 
-// Public filter pages (tag cloud) of the four kinds of place
-Route::get('restaurants', [RestaurantTagController::class, 'restaurantsFilter'])->name('restaurants.main');
-Route::get('stores', [StoreTagController::class, 'viewAllTags'])->name('stores.main');
-Route::get('bars', [BarTagController::class, 'viewAllTags'])->name('bars.main');
-Route::get('karaokes', [KaraokeTagController::class, 'viewAllTags'])->name('karaokes.main');
+// Main pages of the four kinds of place: the tag filter and the default list (every place, nearest to the station first)
+Route::get('restaurants', [RestaurantController::class, 'index'])->name('restaurants.main');
+Route::get('stores', [StoreController::class, 'index'])->name('stores.main');
+Route::get('bars', [BarController::class, 'index'])->name('bars.main');
+Route::get('karaokes', [KaraokeController::class, 'index'])->name('karaokes.main');
 
 // Results fragments, details fragments and standalone details pages.
 // 'cache.headers:etag;no_cache': the response gets an ETag (a hash of its content) and the browser must ask again

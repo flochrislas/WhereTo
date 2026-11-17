@@ -6,7 +6,7 @@ test.describe('Details', () => {
     await page.goto('/restaurants');
     await showResults(page);
     const firstName = (await page.locator('#results .rowName').first().textContent()).trim();
-    await page.locator('#results .resultCell[role="button"]').first().click();
+    await page.locator('#results a.resultCell').first().click();
 
     // The details show the place; on a phone they replace the list, on a wide screen they sit next to it
     await expect(page.locator('#detailName')).toHaveText(firstName);
@@ -30,11 +30,12 @@ test.describe('Details', () => {
   test('the standalone page of a place works without the one-page script', async ({ page }) => {
     await page.goto('/restaurants');
     await showResults(page);
-    const onclick = await page.locator('#results .resultCell[role="button"]').first().getAttribute('onclick');
-    const id = onclick.match(/details\/(\d+)/)[1];
+    // The name is a real link to the standalone page: follow it as a crawler or a new tab would
+    const href = await page.locator('#results a.resultCell').first().getAttribute('href');
+    expect(href).toMatch(/\/restaurant\/details\/\d+$/);
     const errors = [];
     page.on('pageerror', error => errors.push(error.message));
-    await page.goto(`/restaurant/details/${id}`);
+    await page.goto(href);
     await expect(page.locator('#detailName')).toBeVisible();
     // There is no filter on this page: a click on a tag does nothing, and throws nothing
     const tag = page.locator('button.tag').first();

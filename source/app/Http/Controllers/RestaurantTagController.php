@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\RestaurantTag;
-use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -11,25 +10,10 @@ use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Log;
 
 /**
- * Restaurant tags: the public filter page and the autocomplete.
+ * Restaurant tags: the autocomplete (the filter page is RestaurantController::index()).
  */
 class RestaurantTagController extends Controller
 {
-    /**
-     * Gets all the restaurant tags for the public filter page.
-     */
-    public function restaurantsFilter(): View
-    {
-        // Use the cache; the closure (reading the DB) only runs when the key is not cached yet
-        $restaurantTags = Cache::rememberForever('all_restaurants_tags', function () {
-            // Tag cloud order: tag family (type) first, then importance (weight), then newest
-            return RestaurantTag::orderByDesc('type')->orderByDesc('weight')->orderByDesc('created_at')->get();
-        });
-
-        // Pass the tags to the view and load the page
-        return view('restaurants.main', ['restaurantTags' => $restaurantTags]);
-    }
-
     /**
      * Method for the autocomplete (JSON). Caches the results per term.
      */

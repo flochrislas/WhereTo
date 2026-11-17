@@ -31,4 +31,8 @@
 
 <!-- data -->
 <!-- aria-live: screen readers announce the new results when they arrive -->
-<div id="results" loading="none" time="0" aria-live="polite"></div>
+<!-- The default list is already here (rendered by the server, distances from the station): time="1" tells the
+     JavaScript it does not need to load it, only to refresh it once the position is known -->
+<div id="results" loading="none" time="1" aria-live="polite">
+  @include('karaokes.results-data')
+</div>
