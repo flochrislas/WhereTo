@@ -4,6 +4,7 @@ use App\Http\Controllers\BarController;
 use App\Http\Controllers\KaraokeController;
 use App\Http\Controllers\RestaurantController;
 use App\Http\Controllers\RestaurantTagController;
+use App\Http\Controllers\SitemapController;
 use App\Http\Controllers\StoreController;
 use App\Http\Controllers\SuggestionController;
 use Illuminate\Support\Facades\Route;
@@ -28,6 +29,10 @@ Route::view('/', 'home')->name('home');
 // Placeholder pages (resources/views/info/main.blade.php, vip/main.blade.php)
 Route::view('info/main', 'info.main')->name('info');
 Route::view('vip/main', 'vip.main')->name('vip');
+
+// For the search engines: what to crawl, and the list of every page (see doc/10-seo.md)
+Route::get('robots.txt', [SitemapController::class, 'robots'])->name('robots');
+Route::get('sitemap.xml', [SitemapController::class, 'sitemap'])->name('sitemap');
 
 // Lunch suggestion (HTML fragment, loaded by AJAX from the home page)
 Route::get('suggestions', [SuggestionController::class, 'suggest'])->name('suggestions');

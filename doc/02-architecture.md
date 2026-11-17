@@ -68,6 +68,7 @@ Models are equally repetitive: each place model `use`s the `Location` trait, imp
 
 | Controller | Role |
 |---|---|
+| `SitemapController` | `robots.txt` (a route, so the sitemap line carries this deployment's URL) and `sitemap.xml` (cached forever, flushed by the seeder). |
 | `SuggestionController` | Lunch suggestion; reuses `RestaurantSearch`. `isLunchTime()` is static so Blade can call it through `@inject`. Renders `suggestions.suggestion-text`. |
 
 ## Routes (`routes/web.php`)
@@ -85,6 +86,7 @@ Public:
 | `GET /restaurants/results` | `RestaurantController@results` | HTML fragment with the result rows (AJAX) |
 | `GET /restaurants/details/{id}` | `RestaurantController@details` | HTML fragment with the details (AJAX) |
 | `GET /restaurant/details/{id}` | `RestaurantController@detailsSingle` | Full standalone details page, shareable URL |
+| `GET /robots.txt`, `GET /sitemap.xml` | `SitemapController` | For the crawlers: allow everything and list every page (home, main pages, standalone place pages with the visit date); the sitemap is cached forever |
 | `GET /tags/autocomplete` | `RestaurantTagController@autocomplete` | JSON for tag autocomplete (not used by the UI) |
 | same four for `/stores`, `/bars`, `/karaokes` | `Store*`, `Bar*`, `Karaoke*` | |
 | `GET /up` | framework | Health check |
