@@ -90,10 +90,11 @@ The UI is already responsive (viewport meta, one `@media` breakpoint at 680px, C
 - **How, full**: one `places` table with a `kind` column and nullable restaurant-only columns, one `tags` table with a `kind` column, one pivot. The queries become simpler and tags could even be shared across kinds. This needs a data migration from the four existing tables and changes the cache keys.
 - **Either way**: the admin CRUD, which today exists only for restaurants, becomes available for the other three kinds for free.
 
-### 3.2 Extract the search into a service class (M)
+### 3.2 Extract the search into a service class (M) — done
 
 - **Why**: `PlaceController` holds the query building, the caching, the distance computation and the HTTP handling. `SuggestionController` instantiates `new RestaurantController` just to call `useCache()` and `handleDistances()`, which couples two HTTP controllers together.
 - **How**: an `App\Services\PlaceSearch` class (or one per kind, built from the enum of 3.1) with `search(tags, op, orderBy, limit): Collection` and `withDistances(Collection, ?Position): Collection`. Controllers become thin: read the request, call the service, return a view. Testing the search no longer needs HTTP requests.
+- **Done (November 2026)**: `App\Services\PlaceSearch` (abstract) with `RestaurantSearch`, `StoreSearch`, `BarSearch`, `KaraokeSearch` naming the model and the score columns; `find()`, `withDistances()`, `resolvePosition()`. `PlaceController` keeps the request reading and the views, `SuggestionController` uses `RestaurantSearch`, and the architecture test's exception for it is gone. `tests/Unit/PlaceSearchTest.php` covers distances, the station fallback and the cache keys without HTTP.
 
 ### 3.3 Use the framework's building blocks (S each) — done
 
@@ -166,7 +167,7 @@ The UI is already responsive (viewport meta, one `@media` breakpoint at 680px, C
 ### 5.4 Architecture tests (S) — done
 
 - Pest's or PHPUnit's `arch()` style tests (via `pestphp/pest-plugin-arch`, or hand-written reflection checks) can enforce "controllers do not instantiate other controllers" and "models do not use the Request", which guards the refactors of section 3.
-- **Done (November 2026)**: `tests/Architecture/ArchitectureTest.php`, hand-written on PHPUnit (no extra package), eleven rules listed in `05-dev-environment.md`. The first run caught two things: `SuggestionController` was a plain class (it now extends `Controller`), and it builds a `RestaurantController` to reuse the search, which the test tolerates as a listed exception until 3.2 moves the search into a service.
+- **Done (November 2026)**: `tests/Architecture/ArchitectureTest.php`, hand-written on PHPUnit (no extra package), eleven rules listed in `05-dev-environment.md`. The first run caught two things: `SuggestionController` was a plain class (it now extends `Controller`), and it built a `RestaurantController` to reuse the search (gone with 3.2).
 
 ## 6. Product ideas
 

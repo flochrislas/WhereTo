@@ -75,13 +75,10 @@ class ArchitectureTest extends TestCase
     public function test_controllers_do_not_use_other_controllers_nor_the_database_facade(): void
     {
         $sources = $this->sourcesIn('Http/Controllers');
-        // Known debt: the suggestion reuses the restaurant search through its controller (doc/09, item 3.2 would
-        // move that search into a service). Listed here so that a second case fails the test.
-        unset($sources['SuggestionController.php']);
         // A controller answers one request; it must not build or call another controller
         $this->assertNoneContains('/new\s+\w*Controller\b|app\(\w*Controller::class\)/', $sources, 'controllers must not instantiate controllers');
-        // Data access goes through the models (and their cache), never through raw queries in a controller
-        $this->assertNoneContains('/\bDB::/', $sources, 'controllers must not use the DB facade');
+        // Data access goes through the search services and the models, never through raw queries in a controller
+        $this->assertNoneContains('/\bDB::|::query\(\)/', $sources, 'controllers must not build queries: use a service or a model method');
     }
 
     public function test_models_live_in_app_models_and_place_models_share_the_location_trait(): void
@@ -102,7 +99,7 @@ class ArchitectureTest extends TestCase
 
     public function test_models_and_support_classes_do_not_depend_on_http(): void
     {
-        foreach (['Models', 'Support', 'Enums', 'Tools', 'Traits'] as $folder) {
+        foreach (['Models', 'Services', 'Support', 'Enums', 'Tools', 'Traits'] as $folder) {
             $this->assertNoneContains('/Illuminate\\\\Http\\\\|\$request\b/', $this->sourcesIn($folder), "$folder must not know about the HTTP request");
         }
     }

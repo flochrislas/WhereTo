@@ -101,12 +101,13 @@ Dependabot (`.github/dependabot.yml`) opens a weekly pull request for Composer a
 | Suite | What it covers |
 |---|---|
 | `Unit/GeoUtilsTest` | distances in metres, unit conversions, position and Google URL parsing |
-| `Unit/RestaurantControllerTest` | distance computation and sorting, tag parsing, ellipsis, mass assignment |
+| `Unit/RestaurantControllerTest` | tag parsing, ellipsis, mass assignment |
+| `Unit/PlaceSearchTest` | distance computation and sorting, position fallback to the station, cache keys per kind and parameters |
 | `Unit/RestaurantTagControllerTest` | tag creation and autocomplete query |
 | `Unit/SuggestionControllerTest` | lunch-time window in Tokyo time |
 | `Feature/PlacesTest` | per place type: filter page, results by distance, AND tag filter, details fragment and standalone page, 404; restaurant ratings and cost order; home page; `/login` and `/admin` are 404 |
 | `Feature/SuggestionTest` | empty outside lunch time, suggestion with link at lunch time |
-| `Architecture/ArchitectureTest` | rules about the code's shape, checked with reflection and file scans: controllers extend `Controller` (place ones `PlaceController`) and never build another controller or use the `DB` facade; models and support classes ignore the HTTP request; enums are string-backed with `fromRequest()`; no `dd()`/`dump()`/Debugbar/`env()` outside `config/`; no `$request->all()`; every application route is a named `GET`; every `onclick` in the views names a function of `whereto.js`; only the layout has an inline `<script>`. Run alone with `php artisan test --testsuite=Architecture` |
+| `Architecture/ArchitectureTest` | rules about the code's shape, checked with reflection and file scans: controllers extend `Controller` (place ones `PlaceController`) and never build another controller or a query (the search services and the models do that); models, services and support classes ignore the HTTP request; enums are string-backed with `fromRequest()`; no `dd()`/`dump()`/Debugbar/`env()` outside `config/`; no `$request->all()`; every application route is a named `GET`; every `onclick` in the views names a function of `whereto.js`; only the layout has an inline `<script>`. Run alone with `php artisan test --testsuite=Architecture` |
 | `Feature/CacheSerializationTest` | forever-cache round trip through the `file` store, proving the `serializable_classes` allow-list is complete |
 | `Feature/ExampleTest`, `Unit/ExampleTest` | skeleton smoke tests |
 

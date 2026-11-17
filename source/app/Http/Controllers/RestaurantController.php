@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Enums\OrderBy;
-use App\Enums\TagOperator;
 use App\Models\Restaurant;
-use Illuminate\Http\Request;
+use App\Services\PlaceSearch;
+use App\Services\RestaurantSearch;
 
 class RestaurantController extends PlaceController
 {
@@ -17,55 +16,10 @@ class RestaurantController extends PlaceController
         return self::MODEL_NAME;
     }
 
-    /** The rating of a restaurant: lunch first, then food, then the place */
-    protected function ratingColumns(): array
+    /** The search of the restaurants: its model and score columns live in App\Services\RestaurantSearch */
+    protected function search(): PlaceSearch
     {
-        return ['score_lunch', 'score_food', 'score_place'];
-    }
-
-    /** The "cost" order uses the lunch price */
-    protected function costColumn(): ?string
-    {
-        return 'lunch_price';
-    }
-
-    /**
-     * Get the list to display (HTML fragment loaded by AJAX).
-     * Parameters: op (AND/OR/ANDNOT/ORNOT), tags (comma separated), position (lat,lon), orderBy (distance/ratings/cost).
-     */
-    public function results(Request $request)
-    {
-        // -----------------------------------
-        // Reads the request parameters (from the query string)
-
-        // Operator for the tags (AND unless the URL says OR, ANDNOT or ORNOT)
-        $op = TagOperator::fromRequest($request->query('op'));
-
-        // Tags as a comma separated list, made into an array
-        $tags = $this->formatTags($request->query('tags'));
-
-        // Current position from the client's GPS
-        $position = $this->positionParam($request);
-
-        // The sorting order for the results list (distance unless the URL says ratings or cost)
-        $orderBy = OrderBy::fromRequest($request->query('orderBy'));
-
-        // -----------------------------------
-        // Reads from the cache or the DB
-        $places = $this->useCache($tags, $op, $orderBy);
-
-        // -----------------------------------
-        // Calculates the distances from the position, and sorts by them if required
-        $places = $this->handleDistances($places, $position, $orderBy);
-
-        // -----------------------------------
-        // Shortens the points to display in the list
-        foreach ($places as $place) {
-            $place->setAttribute('points', $this->ellipsis($place->getAttribute('points'), 50));
-        }
-
-        // Returns the view with the resulting places
-        return view($this->getModelResultsDataView(), compact('places'));
+        return new RestaurantSearch;
     }
 
     /**

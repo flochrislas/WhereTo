@@ -55,15 +55,15 @@ GET /restaurants/results?op=&tags=&orderBy=&position=
   ──▶ RestaurantController@results
         TagOperator::fromRequest(op), OrderBy::fromRequest(orderBy)   enums, defaults AND and distance
         formatTags()         "a,b" ──▶ ['a','b'] or null
-        useCache()           key from (op, tags, orderBy, limit)
+        RestaurantSearch->find()   key from (op, tags, orderBy, limit)
           └─ miss ──▶ readFromDB()
                         whereTags()   AND: whereHas('tags', whereIn label) having count = N; OR: any
                         orderBy()     per kind (ratingColumns / costColumn):
                                         restaurants: ratings/distance ──▶ score_lunch, score_food, score_place desc, id
                                                      cost             ──▶ lunch_price asc, then scores, id
                                         bars: score, score_place, score_mingling; stores, karaoke: score
-        handleDistances()
-          positionSpoofer()  null, invalid, or > 2.5 km from Shibuya Station ──▶ station Position
+        withDistances()
+          resolvePosition()  null, invalid, or > 2.5 km from Shibuya Station ──▶ station Position
           orderBy == distance ──▶ sortByDistance()  (collection sortBy currentDistance, no coordinates ──▶ dropped)
           otherwise          ──▶ generateCurrentDistances()  (fills $place->currentDistance)
         ellipsis(points, 50)
@@ -88,8 +88,8 @@ Clicking a result name calls `showDetails(url, id)`: if the id differs from the 
 GET /suggestions?position=lat,lon ──▶ SuggestionController@suggest
   isLunchTime()?  no ──▶ ""  (empty body)
   yes ──▶ suggestLunch()
-          RestaurantController->useCache(null, 'AND', 'ratings', 100)   key 'l100-All-Restaurant'
-          handleDistances(..., 'distance')   nearest first
+          RestaurantSearch->find(null, And, Ratings, 100)   key 'l100-All-Restaurant'
+          withDistances(..., Distance)   nearest first
           take the first 35, pick one at random (empty string if there is no restaurant)
           render suggestions.suggestion-text: "How about a nice <type> restaurant, <a href=detailsSingle>name</a>?"
 ```

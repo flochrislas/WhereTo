@@ -15,6 +15,7 @@ WhereTo/
     │   ├── Tools/GeoUtils.php           distance maths, position / Google Maps URL parsing
     │   ├── Enums/                       OrderBy (distance, ratings, cost) and TagOperator (AND, OR, ANDNOT, ORNOT)
     │   ├── Support/Position.php         "lat, lon" value object (parsing, distance to another position)
+    │   ├── Services/                    PlaceSearch (tag query, forever cache, ordering, distances) and one subclass per kind
     │   ├── Http/Controllers/            see below
     │   └── Providers/AppServiceProvider.php
     ├── bootstrap/app.php, bootstrap/providers.php   application configuration (no Kernel classes)
@@ -39,18 +40,23 @@ The app handles four kinds of "places". Each one is a trio of model, tag model a
 | Bar | `App\Models\Bar` | `BarTag` | `BarController`, `BarTagController` | `resources/views/bars/` |
 | Karaoke | `App\Models\Karaoke` | `KaraokeTag` | `KaraokeController`, `KaraokeTagController` | `resources/views/karaokes/` |
 
-The generic logic is in the abstract `App\Http\Controllers\PlaceController`:
+The HTTP side is the abstract `App\Http\Controllers\PlaceController`:
 
 - `getModelName()` is abstract; the subclass returns `'Restaurant'`, `'Store'`, and so on. From that name the base class derives the model class (`App\Models\Restaurant`), the results partial (`restaurants.results-data`) and the details views (`restaurants.details`, `restaurants.details-single`).
-- `useCache()` / `cacheKey()` / `readFromDB()` run the tag query, with the result cached forever.
-- `whereTags()` builds the `AND`, `OR`, `ANDNOT`, `ORNOT` tag filters with `whereHas` on the `tags` relation.
-- `orderBy()` applies rating or cost ordering in SQL, using the columns each kind declares through `ratingColumns()` and `costColumn()` (restaurants: lunch, food and place scores and the lunch price; bars: score, place, mingling; stores and karaoke: score), with `id` as a tiebreaker so results are deterministic. The order and the tag operator travel as the `OrderBy` and `TagOperator` enums, parsed from the query string with a default for unknown values.
-- `handleDistances()`, `sortByDistance()`, `generateCurrentDistances()` compute the distance from the visitor in PHP and optionally sort by it (places without coordinates are dropped when sorting by distance).
-- `positionSpoofer()` turns the `position` query string into a `Position` and falls back to Shibuya Station when the visitor is further than 2.5 km away, sent no position, or sent an unparsable one.
+- `search()` is abstract too and returns the search service of the kind (`new RestaurantSearch`).
+- `results()` reads the query string (`op`, `tags`, `position`, `orderBy`; the order and the tag operator become the `OrderBy` and `TagOperator` enums, with a default for unknown values), calls the service, shortens the "points" text and renders the results partial.
 - The details routes use route model binding: `{place}` in the URL becomes a `Restaurant`, `Store`, `Bar` or `Karaoke` argument, or a 404.
 - `formatTags()` and `ellipsis()` are small helpers.
 
-The four concrete place controllers are near copies of each other and only define `results()`, `details()` and `detailsSingle()` (the last two return 404 for unknown ids).
+The search itself is the abstract `App\Services\PlaceSearch`, with one subclass per kind that names the model and its score columns (`RestaurantSearch`: lunch, food and place scores and the lunch price; `BarSearch`: score, place, mingling; `StoreSearch` and `KaraokeSearch`: the defaults, one `score` column and no price). It knows nothing about HTTP, so it is unit-tested without requests (`tests/Unit/PlaceSearchTest.php`) and the lunch suggestion reuses it:
+
+- `find()` / `cacheKey()` / `readFromDB()` run the tag query, with the result cached forever.
+- `whereTags()` builds the `AND`, `OR`, `ANDNOT`, `ORNOT` tag filters with `whereHas` on the `tags` relation.
+- `orderBy()` applies rating or cost ordering in SQL from `ratingColumns()` and `costColumn()`, with `id` as a tiebreaker so results are deterministic.
+- `withDistances()`, `sortByDistance()`, `generateCurrentDistances()` compute the distance from the visitor in PHP and optionally sort by it (places without coordinates are dropped when sorting by distance).
+- `resolvePosition()` turns the `position` query string into a `Position` and falls back to Shibuya Station when the visitor is further than 2.5 km away, sent no position, or sent an unparsable one.
+
+The four concrete place controllers are near copies of each other and only define `getModelName()`, `search()`, `details()` and `detailsSingle()` (the last two return 404 for unknown ids).
 
 The four `*TagController`s serve the filter page (all tags, cached). `RestaurantTagController` also has an `autocomplete()` endpoint.
 
@@ -60,7 +66,7 @@ Models are equally repetitive: each place model `use`s the `Location` trait, dec
 
 | Controller | Role |
 |---|---|
-| `SuggestionController` | Lunch suggestion; reuses the restaurant search through a `RestaurantController` (the one exception listed in the architecture tests). `isLunchTime()` is static so Blade can call it through `@inject`. Renders `suggestions.suggestion-text`. |
+| `SuggestionController` | Lunch suggestion; reuses `RestaurantSearch`. `isLunchTime()` is static so Blade can call it through `@inject`. Renders `suggestions.suggestion-text`. |
 
 ## Routes (`routes/web.php`)
 
