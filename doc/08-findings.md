@@ -37,7 +37,7 @@ Issues and surprises found while documenting the legacy code on 2026-11-16. Tick
 - [x] `routes/api.php` has the stock `auth:api` route; no API guard with tokens is configured.
 - [x] `user_restaurant` pivot (visited restaurants with comments) is declared on both models and used nowhere. *Removed with the users table.*
 - [ ] `restaurant_types` table is not linked to `restaurants.type`, which is free text. *The CRUD is gone; the table and its seeder stay.*
-- [ ] Tag operators `OR`, `ANDNOT`, `ORNOT` are implemented but the UI hard-codes `AND`.
+- [x] Tag operators `OR`, `ANDNOT`, `ORNOT` are implemented but the UI hard-codes `AND`. *The UI has "Match all / any" buttons since November 2026; `ANDNOT` and `ORNOT` stay server-side only.*
 - [ ] Header links (Info, VIP) are present but `display: none`. *Login and Dashboard are gone.*
 - [x] **Test suite is stale** *Rewritten and extended: 53 green tests on SQLite in-memory, including a serializing-cache round trip.*: 7 of 19 tests fail (verified 2026-11-16). `GeoUtilsTest` expects kilometres but `distance()` returns metres and the miles/nautical variants no longer exist; both `RestaurantControllerTest` cases hit the `$fillable` exception (even `new Restaurant([...])`); `RestaurantTagControllerTest::testAutocompleteDB` asserts tag ids from an older seeding order. Tests also run against the configured database instead of an isolated one.
 
