@@ -61,7 +61,7 @@ Models are equally repetitive: each place model `use`s the `Location` trait, dec
 
 | Controller | Role |
 |---|---|
-| `SuggestionController` | Lunch suggestion. Plain class; `isLunchTime()` is static so Blade can call it through `@inject`. Renders `suggestions.suggestion-text`. |
+| `SuggestionController` | Lunch suggestion; reuses the restaurant search through a `RestaurantController` (the one exception listed in the architecture tests). `isLunchTime()` is static so Blade can call it through `@inject`. Renders `suggestions.suggestion-text`. |
 
 ## Routes (`routes/web.php`)
 

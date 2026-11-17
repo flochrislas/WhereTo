@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 /**
  * Lunch suggestion: a random pick among the best restaurants close to the visitor.
  */
-class SuggestionController
+class SuggestionController extends Controller
 {
     private const TIMEZONE = 'Asia/Tokyo';
 

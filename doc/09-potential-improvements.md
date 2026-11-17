@@ -162,9 +162,10 @@ The UI is already responsive (viewport meta, one `@media` breakpoint at 680px, C
 
 - Level 5 passes today. Going higher mostly means declaring array shapes and nullable returns, which doubles as documentation for someone learning PHP.
 
-### 5.4 Architecture tests (S)
+### 5.4 Architecture tests (S) — done
 
 - Pest's or PHPUnit's `arch()` style tests (via `pestphp/pest-plugin-arch`, or hand-written reflection checks) can enforce "controllers do not instantiate other controllers" and "models do not use the Request", which guards the refactors of section 3.
+- **Done (November 2026)**: `tests/Architecture/ArchitectureTest.php`, hand-written on PHPUnit (no extra package), eleven rules listed in `05-dev-environment.md`. The first run caught two things: `SuggestionController` was a plain class (it now extends `Controller`), and it builds a `RestaurantController` to reuse the search, which the test tolerates as a listed exception until 3.2 moves the search into a service.
 
 ## 6. Product ideas
 
