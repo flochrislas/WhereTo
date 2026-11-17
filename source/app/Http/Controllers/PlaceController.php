@@ -157,9 +157,9 @@ abstract class PlaceController extends Controller
             // e.g. 'l100-All-Restaurant' for the 100 best restaurants
             $cacheKey = 'l'.$limit.'-'.$cacheKey;
         }
-        // Only the "cost" order changes the SQL ordering (so the cached rows);
-        // the other orders are applied in PHP after reading the cache
-        if ($orderBy === OrderBy::Cost) {
+        // Only the "cost" order changes the SQL ordering (so the cached rows), and only for the kinds that have
+        // a price column; the other orders are applied in PHP after reading the cache
+        if ($orderBy === OrderBy::Cost && $this->costColumn() !== null) {
             $cacheKey = $orderBy->value.$cacheKey;
         }
 

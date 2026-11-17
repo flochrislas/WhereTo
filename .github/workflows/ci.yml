@@ -3,6 +3,7 @@
 # and the test suite twice, on SQLite (the phpunit.xml default) and on PostgreSQL 18 (the production database).
 name: CI
 
+# A feature branch gets its runs through its pull request; a push without a pull request runs nothing.
 on:
   push:
     branches: [master]

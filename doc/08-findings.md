@@ -11,7 +11,7 @@ Issues and surprises found while documenting the legacy code on 2026-11-16. Tick
 
 ## Security / exposure
 
-- [x] **Open registration.** *Only login/logout remain.* `Auth::routes()` exposes `/register`; any visitor can create an account and reach `/admin`. The `users.level` column is never checked. Use `Auth::routes(['register' => false])` or remove auth scaffolding.
+- [x] **Open registration.** *Gone with the whole login and admin (November 2026).* `Auth::routes()` exposes `/register`; any visitor can create an account and reach `/admin`. The `users.level` column is never checked. Use `Auth::routes(['register' => false])` or remove auth scaffolding.
 - [x] **Seeded credentials.** *Gone: the users table, the seeder and the login were removed with the admin (November 2026).* Two users with password `password`, one of them a real-looking email address. Change or delete before exposing.
 - [x] **Default database password in `config/database.php`** *Skeleton config, no password.* (`1234rewq`). Harmless if `.env` overrides it, but it is in git history.
 - [x] **Debug sidebar prints config** *Removed from the layout.* in `layouts/html.blade.php` when `APP_DEBUG=true`; keep debug off in production.

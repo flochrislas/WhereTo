@@ -372,6 +372,15 @@ function getSelectedTagsDiv() {
 function moveTag(event) {
   // currentTarget: the button the handler is on (target could be something inside it)
   const tag = event.currentTarget;
+  // A tag shown in the details of a place (not in the filter): select its twin in the available tags, if any
+  if (tag.parentNode.id !== "selectedTags" && tag.parentNode.id !== "tags") {
+    const label = tag.textContent.trim();
+    const twin = Array.from(document.querySelectorAll("#tags .tag")).find(t => t.textContent.trim() === label);
+    if (twin) {
+      twin.click();
+    }
+    return;
+  }
   // Move the tag in the proper div
   if (tag.parentNode.id == "selectedTags") {
     // Was selected: back to the available tags
@@ -524,11 +533,13 @@ function systemTheme() {
 
 /** The theme shown now (set on <html> by the layout) */
 function currentTheme() {
-  return document.documentElement.dataset.theme || "dark";
+  return document.documentElement.dataset.theme === "light" ? "light" : "dark";
 }
 
 /** Shows the given theme: <html> attribute, browser bar colour, and the icon/label of the header button */
 function applyTheme(theme) {
+  // Anything but "light" (including a tampered localStorage value) is the dark theme
+  theme = theme === "light" ? "light" : "dark";
   document.documentElement.dataset.theme = theme;
   const meta = document.querySelector('meta[name="theme-color"]');
   if (meta) {
@@ -558,11 +569,15 @@ function toggleTheme() {
 // Theme: the layout already set data-theme before the paint; this fills the button and the bar colour.
 // Without a stored choice, follow the OS when it changes (e.g. a phone switching to dark at sunset).
 applyTheme(readStore("theme") || systemTheme());
-window.matchMedia("(prefers-color-scheme: light)").addEventListener("change", () => {
-  if (!readStore("theme")) {
-    applyTheme(systemTheme());
-  }
-});
+try {
+  window.matchMedia("(prefers-color-scheme: light)").addEventListener("change", () => {
+    if (!readStore("theme")) {
+      applyTheme(systemTheme());
+    }
+  });
+} catch (e) {
+  // Old Safari has no addEventListener on a media query: then the theme just does not follow the OS live
+}
 
 // "defer" guarantees the HTML is parsed when this runs. On the place pages (the ones with a results URL)
 // start following the position right away; the home page starts it when a button is clicked instead,

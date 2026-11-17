@@ -18,7 +18,9 @@
         (function () {
             try {
                 var theme = localStorage.getItem('theme') || (matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+                theme = theme === 'light' ? 'light' : 'dark'; // anything else is dark
                 document.documentElement.dataset.theme = theme;
+                document.querySelector('meta[name="theme-color"]').content = theme === 'light' ? '#f4f4f8' : '#141422';
             } catch (e) {}
         })();
     </script>

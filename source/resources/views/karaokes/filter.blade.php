@@ -6,7 +6,7 @@
   </div>
 
   <!-- selected tags for active search -->
-  <div id="selectedTags" aria-label="Selected tags">
+  <div id="selectedTags" role="group" aria-label="Selected tags">
   </div>
 
   <!-- Operator between the selected tags: all of them (AND) or any of them (OR). Remembered in localStorage by the JavaScript -->
@@ -21,7 +21,7 @@
 </div>
 
 <!-- showing available tags -->
-<div id="tags" aria-label="Available tags">
+<div id="tags" role="group" aria-label="Available tags">
   @foreach ($tags as $tag)
       <!-- A real button: works with the keyboard and screen readers. aria-pressed tells them if the tag is selected -->
       <button type="button" class="tag tagType{{$tag->type}}"

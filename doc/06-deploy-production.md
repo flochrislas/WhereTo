@@ -182,7 +182,7 @@ The stylesheet and the script are linked with their modification time, and the s
 
 Add `php artisan down` / `php artisan up` around it if the seeding takes more than a second or two.
 
-A database created before November 2026 has the `users`, `password_reset_tokens` and `user_restaurant` tables from migrations that no longer exist, and `migrate` would try to create `sessions` again. Rebuild it once with `php artisan migrate:fresh --seed --force` (nothing is lost: the seeders hold the data).
+A database created before November 2026 (when the admin and its `users` tables were removed) upgrades with the same commands: the sessions migration skips the table it already has, and a one-off migration drops `users`, `password_reset_tokens` and `user_restaurant`. Nothing is lost: the seeders hold the data.
 
 ## 10. Backups
 

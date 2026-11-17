@@ -127,7 +127,7 @@ The UI is already responsive (viewport meta, one `@media` breakpoint at 680px, C
 
 - **Why**: the forever cache makes the server fast, but the client still downloads the same results fragment on every click.
 - **How**: an `ETag` built from the cache key plus the last admin flush time (store a `places.version` value in the cache and bump it in the `Cache::flush()` calls) lets the browser get a `304 Not Modified` for repeated searches. Laravel's `SetCacheHeaders` middleware (`cache.headers:etag;public;max_age=60`) does most of it.
-- **Done (November 2026)** with `cache.headers:etag;no_cache` on the results and details routes: the browser revalidates every time and gets a 304 when nothing changed, so an admin edit is visible at once and repeated searches cost almost nothing. The content hash makes the version stamp unnecessary.
+- **Done (November 2026)** with `cache.headers:etag;no_cache` on the results and details routes: the browser revalidates every time and gets a 304 when nothing changed, so a reseed is visible at once and repeated searches cost almost nothing. The content hash makes the version stamp unnecessary.
 
 ### 4.3 Tagged cache instead of flushing everything (S)
 

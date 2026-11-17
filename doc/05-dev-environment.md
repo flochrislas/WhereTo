@@ -87,7 +87,7 @@ All commands run from `source/`.
 php artisan test          # or vendor/bin/phpunit
 ```
 
-`phpunit.xml` uses an in-memory SQLite database and array cache/session drivers, so the suite is isolated from the dev database. State on 2026-11-16: 53 tests, 222 assertions, all passing.
+`phpunit.xml` uses an in-memory SQLite database and array cache/session drivers, so the suite is isolated from the dev database. State on 2026-11-17: 74 tests, 534 assertions, all passing.
 
 The same checks run on GitHub for every push to `master` and every pull request (`.github/workflows/ci.yml`): Pint, PHPStan, `node --check` on the two scripts, and the suite twice, on SQLite and on a PostgreSQL 18 service. To run the suite against PostgreSQL locally, create a `whereto_test` database and export the `DB_*` variables; they win over `phpunit.xml`:
 

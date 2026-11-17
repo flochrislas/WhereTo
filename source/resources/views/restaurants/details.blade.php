@@ -68,12 +68,9 @@
 <div class="detailRow">
   <div class="detail">
   @foreach ($place->tagsCached() as $placeTag)
-      <div class="tag tagType{{$placeTag->type}}"
-            tagId="{{$placeTag->id}}"
-            id="tagShow{{$placeTag->id}}"
-            onClick="moveTag(event)">
+      <button type="button" class="tag tagType{{$placeTag->type}}" title="Add this tag to the filter" onclick="moveTag(event)">
         {{$placeTag->label}}
-      </div>
+      </button>
   @endforeach
   </div>
 </div>

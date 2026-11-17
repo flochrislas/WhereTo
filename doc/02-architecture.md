@@ -10,7 +10,7 @@ WhereTo/
 └── source/               the Laravel 13 application
     ├── app/
     │   ├── Models/                      Restaurant, RestaurantTag, RestaurantType, Store, StoreTag,
-    │   │                                Bar, BarTag, Karaoke, KaraokeTag, User
+    │   │                                Bar, BarTag, Karaoke, KaraokeTag
     │   ├── Traits/Location.php          lat/lon helpers shared by the place models
     │   ├── Tools/GeoUtils.php           distance maths, position / Google Maps URL parsing
     │   ├── Enums/                       OrderBy (distance, ratings, cost) and TagOperator (AND, OR, ANDNOT, ORNOT)
@@ -19,12 +19,11 @@ WhereTo/
     │   └── Providers/AppServiceProvider.php
     ├── bootstrap/app.php, bootstrap/providers.php   application configuration (no Kernel classes)
     ├── config/, public/, storage/
-    ├── database/migrations/             skeleton tables + 14 WhereTo tables
+    ├── database/migrations/             skeleton tables + 13 WhereTo tables (+ one that drops the old users tables)
     ├── database/seeders/                the actual data lives here (see 03-data-model.md)
-    ├── database/factories/UserFactory.php
     ├── resources/views/                 Blade templates
     ├── routes/web.php, routes/console.php
-    ├── tests/Unit, tests/Feature
+    ├── tests/Unit, tests/Feature, tests/Architecture
     ├── phpstan.neon, phpunit.xml
     └── composer.json
 ```

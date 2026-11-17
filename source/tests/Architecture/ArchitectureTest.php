@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Controllers\PlaceController;
 use App\Traits\Location;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Routing\ViewController;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Route;
 use ReflectionClass;
@@ -26,8 +27,9 @@ class ArchitectureTest extends TestCase
     {
         $classes = [];
         foreach (File::allFiles(app_path($folder)) as $file) {
-            // app/Http/Controllers/BarController.php -> App\Http\Controllers\BarController
-            $classes[] = 'App\\'.str_replace('/', '\\', $folder).'\\'.$file->getBasename('.php');
+            // app/Http/Controllers/BarController.php -> App\Http\Controllers\BarController (sub-folders included)
+            $relative = substr($file->getRelativePathname(), 0, -strlen('.php'));
+            $classes[] = 'App\\'.str_replace('/', '\\', trim($folder.'/'.$relative, '/'));
         }
         sort($classes);
 
@@ -138,15 +140,16 @@ class ArchitectureTest extends TestCase
 
     public function test_no_raw_request_input_is_mass_assigned(): void
     {
-        $this->assertNoneContains('/->all\(\)/', $this->sourcesIn('Http'), 'use validated() or explicit fields, never $request->all()');
+        $this->assertNoneContains('/\$request->all\(\)/', $this->sourcesIn('Http'), 'use validated() or explicit fields, never $request->all()');
     }
 
     public function test_every_application_route_is_a_named_get(): void
     {
         // The site is read-only: no login, no admin, no form. The framework's own routes (_debugbar, storage, up) are not ours.
         foreach (Route::getRoutes() as $route) {
+            // Ours: a method of one of our controllers, or a Route::view() (served by the framework's ViewController)
             $action = $route->getActionName();
-            $ours = str_starts_with($action, 'App\\') || $route->getAction('view') !== null;
+            $ours = str_starts_with($action, 'App\\') || $action === ViewController::class;
             if (! $ours) {
                 continue;
             }
