@@ -1,0 +1,178 @@
+# Continuous integration: runs on every push to master and on every pull request.
+# Same checks as the dev container (doc/05-dev-environment.md): Pint, PHPStan, the JavaScript syntax,
+# and the test suite twice, on SQLite (the phpunit.xml default) and on PostgreSQL 18 (the production database).
+# Then a second job drives the seeded app in a real browser (e2e/, Playwright).
+name: CI
+
+# A feature branch gets its runs through its pull request; a push without a pull request runs nothing.
+on:
+  push:
+    branches: [master]
+  pull_request:
+
+jobs:
+  checks:
+    name: Lint, analyse and test
+    runs-on: ubuntu-latest
+
+    # Every "run:" step starts in the Laravel project
+    defaults:
+      run:
+        working-directory: source
+
+    # A PostgreSQL 18 container next to the job, reachable on 127.0.0.1:5432
+    services:
+      postgres:
+        image: postgres:18
+        env:
+          POSTGRES_DB: whereto_test
+          POSTGRES_USER: whereto
+          POSTGRES_PASSWORD: whereto
+        ports:
+          - 5432:5432
+        # The job waits for the database to answer before the steps start
+        options: >-
+          --health-cmd "pg_isready -U whereto"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+
+    steps:
+      - name: Check out the code
+        uses: actions/checkout@v4
+
+      - name: Set up PHP 8.5
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.5'
+          extensions: pdo_pgsql, pgsql, pdo_sqlite, sqlite3, bcmath, intl, zip, mbstring
+          coverage: none
+          tools: composer:v2
+
+      # Composer downloads are kept between runs, keyed by the lock file
+      - name: Cache Composer packages
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/composer
+          key: composer-${{ hashFiles('source/composer.lock') }}
+          restore-keys: composer-
+
+      - name: Install dependencies
+        run: composer install --no-interaction --prefer-dist --no-progress
+
+      # The tests need an application key; the template env file gives the rest
+      - name: Prepare the environment file
+        run: cp .env.example .env && php artisan key:generate --no-interaction
+
+      - name: Code style (Pint)
+        run: vendor/bin/pint --test
+
+      - name: Static analysis (PHPStan)
+        run: vendor/bin/phpstan analyse --no-progress --memory-limit=1G
+
+      - name: JavaScript syntax
+        run: node --check public/js/whereto.js && node --check public/sw.js
+
+      - name: Tests on SQLite
+        run: php artisan test --compact
+
+      # Exported variables win over the phpunit.xml <env> entries (Laravel reads $_SERVER first),
+      # so the same suite runs against the PostgreSQL service
+      - name: Tests on PostgreSQL 18
+        run: php artisan test --compact
+        env:
+          DB_CONNECTION: pgsql
+          DB_HOST: 127.0.0.1
+          DB_PORT: 5432
+          DB_DATABASE: whereto_test
+          DB_USERNAME: whereto
+          DB_PASSWORD: whereto
+
+  browser:
+    name: Browser tests (Playwright)
+    runs-on: ubuntu-latest
+    # The PHP checks first: no point driving a browser against code that does not pass them
+    needs: checks
+
+    services:
+      postgres:
+        image: postgres:18
+        env:
+          POSTGRES_DB: whereto
+          POSTGRES_USER: whereto
+          POSTGRES_PASSWORD: whereto
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U whereto"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+
+    steps:
+      - name: Check out the code
+        uses: actions/checkout@v4
+
+      - name: Set up PHP 8.5
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.5'
+          extensions: pdo_pgsql, pgsql, bcmath, intl, zip, mbstring
+          coverage: none
+          tools: composer:v2
+
+      - name: Cache Composer packages
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/composer
+          key: composer-${{ hashFiles('source/composer.lock') }}
+          restore-keys: composer-
+
+      - name: Install dependencies
+        working-directory: source
+        run: composer install --no-interaction --prefer-dist --no-progress
+
+      # The database settings go in .env: "php artisan serve" does not forward environment variables to PHP
+      - name: Prepare the environment file and the seeded database
+        working-directory: source
+        run: |
+          cp .env.example .env
+          sed -i 's/^DB_USERNAME=.*/DB_USERNAME=whereto/; s/^DB_PASSWORD=.*/DB_PASSWORD=whereto/' .env
+          php artisan key:generate --no-interaction
+          php artisan migrate --seed --force --no-interaction
+
+      - name: Start the application
+        working-directory: source
+        run: |
+          php artisan serve --host=127.0.0.1 --port=8000 > "$RUNNER_TEMP/serve.log" 2>&1 &
+          # Wait for the server to answer (at most 30 s)
+          for i in $(seq 1 30); do curl -sf http://127.0.0.1:8000/up > /dev/null && break; sleep 1; done
+          curl -sf http://127.0.0.1:8000/up > /dev/null
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: e2e/package-lock.json
+
+      - name: Install Playwright and Chromium
+        working-directory: e2e
+        run: |
+          npm ci --no-fund --no-audit
+          npx playwright install --with-deps chromium
+
+      - name: Run the browser tests
+        working-directory: e2e
+        run: npx playwright test
+        env:
+          BASE_URL: http://127.0.0.1:8000
+
+      # The HTML report (with traces of the failed tests) is kept for a week when something failed
+      - name: Keep the report
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: e2e/playwright-report
+          retention-days: 7

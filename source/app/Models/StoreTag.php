@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class StoreTag extends Model
 {
-    // Accessible fields for mass update/create (the admin form posts these)
+    // Accessible fields for mass update/create (Model::create($data), used by the seeders)
     protected $fillable = [
         'label',
         'type',
@@ -16,6 +16,8 @@ class StoreTag extends Model
 
     /**
      * The stores that carry this tag (other side of Store::tags()).
+     *
+     * @return BelongsToMany<Store, $this>
      */
     public function stores(): BelongsToMany
     {

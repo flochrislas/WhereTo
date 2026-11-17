@@ -58,8 +58,6 @@ All commands run from `source/`.
    php artisan db:seed      # deletes and reloads every table, then flushes the cache
    ```
 
-   The seeders create two users (`florent.redares@gmail.com` and `user2@test.rt`, password `password`) for the admin.
-
 4. Serve:
 
    ```sh
@@ -89,20 +87,49 @@ All commands run from `source/`.
 php artisan test          # or vendor/bin/phpunit
 ```
 
-`phpunit.xml` uses an in-memory SQLite database and array cache/session drivers, so the suite is isolated from the dev database. State on 2026-11-16: 53 tests, 193 assertions, all passing.
+`phpunit.xml` uses an in-memory SQLite database and array cache/session drivers, so the suite is isolated from the dev database. State on 2026-11-17: 74 tests, 534 assertions, all passing.
+
+The same checks run on GitHub for every push to `master` and every pull request (`.github/workflows/ci.yml`): Pint, PHPStan, `node --check` on the two scripts, and the suite twice, on SQLite and on a PostgreSQL 18 service. To run the suite against PostgreSQL locally, create a `whereto_test` database and export the `DB_*` variables; they win over `phpunit.xml`:
+
+```sh
+podman compose exec db psql -U wheretouser -d whereto -c "CREATE DATABASE whereto_test;"
+podman compose exec -e DB_CONNECTION=pgsql -e DB_HOST=db -e DB_DATABASE=whereto_test -e DB_USERNAME=wheretouser -e DB_PASSWORD=whereto app php artisan test
+```
+
+Dependabot (`.github/dependabot.yml`) opens a weekly pull request for Composer and GitHub Actions updates.
 
 | Suite | What it covers |
 |---|---|
 | `Unit/GeoUtilsTest` | distances in metres, unit conversions, position and Google URL parsing |
-| `Unit/RestaurantControllerTest` | distance computation and sorting, tag parsing, ellipsis, mass assignment |
+| `Unit/RestaurantControllerTest` | tag parsing, ellipsis, mass assignment |
+| `Unit/PlaceSearchTest` | distance computation and sorting, position fallback to the station, cache keys per kind and parameters |
 | `Unit/RestaurantTagControllerTest` | tag creation and autocomplete query |
 | `Unit/SuggestionControllerTest` | lunch-time window in Tokyo time |
-| `Feature/PlacesTest` | per place type: filter page, results by distance, AND tag filter, details fragment and standalone page, 404; restaurant ratings and cost order; home page |
+| `Feature/PlacesTest` | per place type: filter page, results by distance, AND tag filter, details fragment and standalone page, 404; restaurant ratings and cost order; home page; `/login` and `/admin` are 404 |
 | `Feature/SuggestionTest` | empty outside lunch time, suggestion with link at lunch time |
-| `Feature/AdminTest` | login/logout and throttling, guest redirect, `/register` is 404, restaurant CRUD (coordinates field, new place visible in results), tag and type edit/delete |
+| `Architecture/ArchitectureTest` | rules about the code's shape, checked with reflection and file scans: controllers extend `Controller` (place ones `PlaceController`) and never build another controller or a query (the search services and the models do that); models, services and support classes ignore the HTTP request; enums are string-backed with `fromRequest()`; no `dd()`/`dump()`/Debugbar/`env()` outside `config/`; no `$request->all()`; every application route is a named `GET`; every `onclick` in the views names a function of `whereto.js`; only the layout has an inline `<script>`. Run alone with `php artisan test --testsuite=Architecture` |
 | `Feature/CacheSerializationTest` | forever-cache round trip through the `file` store, proving the `serializable_classes` allow-list is complete |
 | `Feature/ExampleTest`, `Unit/ExampleTest` | skeleton smoke tests |
 
+## Browser tests
+
+The PHPUnit suite stops at the HTTP layer. The scenarios in `e2e/tests/` drive the real pages in Chromium with Playwright: home page and theme switch, tag filter with "all / any" and the keyboard, the three sort orders, details and BACK (and the details tags), the standalone page, and the service worker offline. They run twice, as a phone (Pixel 7) and as a desktop (1280px, three panels side by side), with the GPS faked near the station.
+
+They need Node 22 and the app running (the dev stack by default, `BASE_URL` for another):
+
+```sh
+cd e2e
+npm install                      # once: the Playwright test runner
+npx playwright install chromium  # once: the browser build the runner wants
+npm test                         # BASE_URL=http://localhost:8010 npm test to be explicit
+npm run test:headed              # watch the browser
+npx playwright show-trace test-results/<test>/trace.zip   # the trace of a failed test
+```
+
+CI runs them in a second job after the PHP checks, against a `php artisan serve` on the seeded PostgreSQL database, and keeps the HTML report as an artifact when something fails. `e2e/node_modules`, `test-results` and `playwright-report` are ignored by git.
+
 ## Front-end assets
 
-Nothing to build. Edit `public/css/style-dark.css` and `public/js/whereto.js` directly; the script tag's `?v=` query string is the file's modification time, so the browser picks up a new version on the next load. `node --check public/js/whereto.js` catches syntax errors. If you ever want a build step, re-add the Laravel 13 skeleton's Vite setup (`laravel/vite-plugin`, `package.json`, `vite.config.js`); those files were removed from this repository.
+Nothing to build. Edit `public/css/style.css` and `public/js/whereto.js` directly; the script tag's `?v=` query string is the file's modification time, so the browser picks up a new version on the next load. `node --check public/js/whereto.js` (and `public/sw.js`) catches syntax errors.
+
+The service worker caches the static files: after editing the stylesheet, reload twice (the first reload serves the cached copy and fetches the new one), or tick "Update on reload" / "Bypass for network" in the browser's Application > Service Workers panel while developing. If you ever want a build step, re-add the Laravel 13 skeleton's Vite setup (`laravel/vite-plugin`, `package.json`, `vite.config.js`); those files were removed from this repository.

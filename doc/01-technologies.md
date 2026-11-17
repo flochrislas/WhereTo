@@ -29,20 +29,22 @@ State after the November 2026 upgrade (branch `upgrade-2026`). Versions come fro
 |---|---|
 | `fruitcake/laravel-debugbar` `^4.4` | Debugbar (renamed from `barryvdh/laravel-debugbar` in 2026). Toggle with `DEBUGBAR_ENABLED`. |
 | `barryvdh/laravel-ide-helper` `^3.8` | IDE stubs (`php artisan ide-helper:generate`), auto-discovered, dev only |
-| `larastan/larastan` `^3.15` | PHPStan for Laravel, level 5, config in `phpstan.neon` |
+| `@playwright/test` `^1.57` (Node, in `e2e/`) | Browser tests of the public pages, see `05-dev-environment.md` |
+| `larastan/larastan` `^3.15` | PHPStan for Laravel, level 8 (the strictest), config in `phpstan.neon` |
 | `laravel/pint` | Code style (Laravel preset) |
 | `phpunit/phpunit` `^12.5`, `mockery/mockery`, `fakerphp/faker`, `laravel/pail`, `laravel/pao`, `nunomaduro/collision` | Skeleton defaults |
 
-Removed during the upgrade: `laravelcollective/html` (abandoned; admin forms are plain HTML now), `fideloper/proxy` (built into the framework), `doctrine/dbal`, `fzaninotto/faker`, `filp/whoops`.
+Removed during the upgrade: `laravelcollective/html` (abandoned), `fideloper/proxy` (built into the framework), `doctrine/dbal`, `fzaninotto/faker`, `filp/whoops`.
 
 ## Front end
 
 Unchanged in spirit: no build step, no framework.
 
 - Blade templates under `resources/views/`.
-- One stylesheet, `public/css/style-dark.css`, and self-hosted Open Sans in `public/fonts/`.
+- One stylesheet, `public/css/style.css`, with a dark palette (default) and a light one as CSS variables, switched by `data-theme` on `<html>`, and a CSS grid from 900px that shows the filter, the results and the details side by side; self-hosted Open Sans (WOFF2 only) in `public/fonts/`.
+- Progressive Web App: `public/manifest.json` (name, icons from `public/icons/`, standalone display) and a service worker `public/sw.js` that pre-caches the app shell, serves static files from the cache and falls back to the last seen pages and results when offline. Registered by `whereto.js`; needs HTTPS or localhost.
 - Vanilla JavaScript in one static file, `public/js/whereto.js`, loaded once by the public layout with `defer` and a cache-busting `?v=` query string (the file's modification time). No build step. It uses `fetch()`, `navigator.geolocation.watchPosition()` and the Clipboard API (with a fallback for non-secure contexts).
-- The admin and login pages use `layouts/html.blade.php` with Bootstrap 3.4.1 and jQuery 3.7.1 from jsDelivr.
+- No third-party front-end library and no CDN: the admin and login pages, which loaded Bootstrap 3 and jQuery, were removed in November 2026 (the seeders are the only way to edit the data).
 - Google Analytics was removed (the Universal Analytics property was dead).
 
 The Laravel 13 skeleton's Vite files (`package.json`, `vite.config.js`, `.npmrc`, `resources/js`, `resources/css`) were deleted; no view calls `@vite`.
@@ -52,5 +54,5 @@ The Laravel 13 skeleton's Vite files (`package.json`, `vite.config.js`, `.npmrc`
 - `dev/`: podman compose environment (PHP 8.5 image, PostgreSQL 18, Composer 2), see `05-dev-environment.md`.
 - `phpunit.xml`: skeleton version, SQLite in-memory, array cache and session drivers. The database, cache and session entries carry `force="true"` so that variables exported into a container cannot override them.
 - `pint.json` is not needed (Laravel preset by default); run `vendor/bin/pint`.
-- `phpstan.neon`: Larastan level 5 over `app/`, `database/`, `routes/`.
+- `phpstan.neon`: Larastan level 8 over `app/`, `database/`, `routes/`. Every method has return types, the relations and collections carry their model type (`BelongsToMany<RestaurantTag, $this>`, `Collection<int, TModel>`), and the one thing PHPStan cannot check, that a computed view name exists, has a documented ignore in `PlaceController::viewName()`.
 - `public/.htaccess` and `public/index.php`: stock Laravel 13.

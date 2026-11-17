@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class RestaurantTag extends Model
 {
-    // Accessible fields for mass update/create (the admin form posts these)
+    // Accessible fields for mass update/create (Model::create($data), used by the seeders)
     protected $fillable = [
         'label',
         'type',
@@ -16,6 +16,8 @@ class RestaurantTag extends Model
 
     /**
      * The restaurants that carry this tag (other side of Restaurant::tags()).
+     *
+     * @return BelongsToMany<Restaurant, $this>
      */
     public function restaurants(): BelongsToMany
     {

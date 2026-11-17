@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <!-- WhereTo app icon: dark page background, the app's blue "W", a green pin dot (place found).
+       Everything stays inside the central 80% so the icon also works as a maskable (Android adaptive) icon. -->
+  <rect width="512" height="512" fill="#141422"/>
+  <text x="256" y="330" text-anchor="middle" font-family="DejaVu Sans, Open Sans, Arial, sans-serif" font-weight="bold" font-size="300" fill="#45C3EC">W</text>
+  <circle cx="400" cy="130" r="38" fill="#69e2b3"/>
+</svg>

@@ -2,6 +2,7 @@
 
 namespace App\Traits;
 
+use App\Support\Position;
 use App\Tools\GeoUtils;
 use Illuminate\Support\Facades\Log;
 use InvalidArgumentException;
@@ -15,16 +16,37 @@ trait Location
     /** Storing the calculated distance from the visitor, in metres. Computed per request, not a DB column. */
     public ?float $currentDistance = null;
 
+    /** The coordinates as a Position, or null when the place has none */
+    public function position(): ?Position
+    {
+        if ($this->lat === null || $this->lon === null) {
+            return null;
+        }
+
+        // The DB returns decimals as strings, hence the (float) casts
+        return new Position((float) $this->lat, (float) $this->lon);
+    }
+
+    public function currentDistance(): ?float
+    {
+        return $this->currentDistance;
+    }
+
+    public function setCurrentDistance(?float $distance): void
+    {
+        $this->currentDistance = $distance;
+    }
+
     /**
      * Simply fill lat and lon from a string holding both ("lat, lon"), then save.
      */
     public function fillCoordinatesFromString(string $coordinates): void
     {
         try {
-            // Parse the string into [lat, lon]
-            $coord = GeoUtils::toPositionArray($coordinates);
-            $this->lat = $coord[0];
-            $this->lon = $coord[1];
+            // Parse the string into a Position (throws when it is not "lat, lon")
+            $position = Position::fromString($coordinates);
+            $this->lat = $position->lat;
+            $this->lon = $position->lon;
             // Write the model to the DB
             $this->save();
         } catch (InvalidArgumentException $e) {

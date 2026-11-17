@@ -14,6 +14,10 @@ GET /  ──▶ Route::view('/', 'home')
 
 Clicking "Lunch in Shibuya" calls `startGeolocation()` first, so the browser asks for the GPS permission while navigating to `/restaurants`; the first fix is stored in `sessionStorage` under `lastCoordinates` and reused by the next page. The other three buttons go to `/stores`, `/bars`, `/karaokes`. The home page itself does not ask for the position until a button is clicked.
 
+On a tablet or a PC (900px and more) the filter, the results and the details are shown side by side and the results load at page start; the panel swaps described below only happen on narrower screens (`isWideLayout()` in `whereto.js`, "wide screens" section of `style.css`).
+
+The header's sun/moon button switches between the dark and the light theme on every page (`toggleTheme()` in `whereto.js`). The choice is stored in `localStorage` under `theme`; without one the OS preference applies, and the page follows the OS when it changes. The stylesheet is one file: the dark palette on `:root`, the light one on `:root[data-theme="light"]`, and the layout sets that attribute before the first paint so there is no flash.
+
 ## 2. Geolocation (client side, `public/js/whereto.js`, geolocation section)
 
 On the place pages (the ones with a `data-results-url`), `startGeolocation()` runs as soon as the script loads and starts a single `navigator.geolocation.watchPosition()` for the page. Every fix is written to `sessionStorage` under `lastCoordinates`, and `getLocation()` simply returns that value (or `null` before the first fix) when a request is built. If results were already requested before the first fix arrived (they then carry `position=null` and the server measures from Shibuya Station), the first fix triggers one more request of the same results, with the position this time, so the distances and the "Near first" order are right. Later fixes update the stored value but do not refresh anything; the next click uses them.
@@ -37,25 +41,29 @@ Stores, bars and karaoke do the same through `StoreTagController@viewAllTags` an
 
 Client behaviour (`public/js/whereto.js`, tag filter and results sections):
 
-1. Clicking a tag moves its `<div>` between `#tags` and `#selectedTags` (`moveTag`).
-2. Any change calls `refreshResults()`, which reads the labels of the selected tags, picks the sort order (parameter, else `localStorage.orderBy`, else `distance`), hard-codes `op=AND`, and calls `ajaxResults()`.
+1. Clicking a tag (a `<button>`) moves it between `#tags` and `#selectedTags` (`moveTag`), toggling its `aria-pressed` state.
+2. Any change calls `refreshResults()`, which reads the labels of the selected tags, picks the sort order (parameter, else `localStorage.orderBy`, else `distance`), reads the tag operator from `localStorage.op` (`AND` by default, `OR` when "any" is chosen with the buttons under the selected tags), and calls `ajaxResults()`.
 3. `ajaxResults()` requests `GET /restaurants/results?op=AND&tags=a,b&orderBy=distance&position=lat,lon` (parameters URL-encoded), stamps the request time in the `#results` `time` attribute so that stale responses are ignored, and injects the returned HTML into `#results`. The "Show All" button label becomes "Show N results" (N counted from `.resultsCounter` placeholders).
 4. "Show All" with no tag selected (`getResults()`) loads every place once, sorted by distance (`loadAllResults()`), then switches to the results panel.
 
 ## 4. Results fragment
 
+The results and details routes run through `cache.headers:etag;no_cache` (`routes/web.php`): each response carries an ETag, and a repeated request with `If-None-Match` gets an empty `304 Not Modified` when the HTML did not change.
+
 ```
 GET /restaurants/results?op=&tags=&orderBy=&position=
   ──▶ RestaurantController@results
+        TagOperator::fromRequest(op), OrderBy::fromRequest(orderBy)   enums, defaults AND and distance
         formatTags()         "a,b" ──▶ ['a','b'] or null
-        useCache()           key from (op, tags, orderBy, limit)
+        RestaurantSearch->find()   key from (op, tags, orderBy, limit)
           └─ miss ──▶ readFromDB()
-                        whereTags()   whereHas('tags', whereIn label) having count = N  (AND)
-                        orderBy()     restaurants only:
-                                        ratings/distance ──▶ score_lunch, score_food, score_place desc, id
-                                        cost             ──▶ lunch_price asc, then scores, id
-        handleDistances()
-          positionSpoofer()  null, invalid, or > 2.5 km from Shibuya Station ──▶ station coordinates
+                        whereTags()   AND: whereHas('tags', whereIn label) having count = N; OR: any
+                        orderBy()     per kind (ratingColumns / costColumn):
+                                        restaurants: ratings/distance ──▶ score_lunch, score_food, score_place desc, id
+                                                     cost             ──▶ lunch_price asc, then scores, id
+                                        bars: score, score_place, score_mingling; stores, karaoke: score
+        withDistances()
+          resolvePosition()  null, invalid, or > 2.5 km from Shibuya Station ──▶ station Position
           orderBy == distance ──▶ sortByDistance()  (collection sortBy currentDistance, no coordinates ──▶ dropped)
           otherwise          ──▶ generateCurrentDistances()  (fills $place->currentDistance)
         ellipsis(points, 50)
@@ -80,8 +88,8 @@ Clicking a result name calls `showDetails(url, id)`: if the id differs from the 
 GET /suggestions?position=lat,lon ──▶ SuggestionController@suggest
   isLunchTime()?  no ──▶ ""  (empty body)
   yes ──▶ suggestLunch()
-          RestaurantController->useCache(null, 'AND', 'ratings', 100)   key 'l100-All-Restaurant'
-          handleDistances(..., 'distance')   nearest first
+          RestaurantSearch->find(null, And, Ratings, 100)   key 'l100-All-Restaurant'
+          withDistances(..., Distance)   nearest first
           take the first 35, pick one at random (empty string if there is no restaurant)
           render suggestions.suggestion-text: "How about a nice <type> restaurant, <a href=detailsSingle>name</a>?"
 ```
@@ -90,13 +98,11 @@ The browser (`ajaxSuggestion()` in `public/js/whereto.js`, URL from the `data-su
 
 ## 7. Caching strategy
 
-Because the dataset is tiny and only changes through seeders, every query result is cached forever in the `cache` table and keyed by the search parameters (see 03-data-model.md). Distances are computed per request on the cached collection. The admin controllers flush the whole cache after every create, update or delete; after a change made outside the admin (SQL, tinker), run `php artisan cache:clear`.
+Because the dataset is tiny and only changes through seeders, every query result is cached forever in the `cache` table and keyed by the search parameters (see 03-data-model.md). Distances are computed per request on the cached collection. The seeder flushes the whole cache at the end; after a change made another way (SQL, tinker), run `php artisan cache:clear`.
 
-## 8. Authentication and admin
+## 8. No authentication, no admin
 
-- `GET /login` shows a form; `POST /login` (throttled to 5 attempts per minute per IP) calls `Auth::attempt()` and redirects to the intended URL or the dashboard; `POST /logout` ends the session. There is no registration and no password reset: admin users are created by the seeder or with `php artisan tinker`.
-- Everything under `/admin` requires a logged-in user (`auth` middleware, redirects guests to `/login`). The dashboard links to restaurant, tag and type management. Creating and editing restaurants works again (`$fillable` was restored); the form has a "lat, lon" field so a new place gets coordinates and shows up in distance-sorted results. Tag and type edit/delete use proper `PUT`/`DELETE` forms.
-- `POST /admin/debug?mode=on|off` toggles the Debugbar for the current process only, when the dev package is installed.
+The site is read-only: every route is a `GET`, there is no login and no account. The legacy admin (restaurant, tag and type CRUD behind a login) was removed in November 2026: the seeders are the source of truth and a redeploy would have overwritten any online edit anyway, so the admin was only an attack surface. Edit the data in `database/seeders/` and run `php artisan db:seed`.
 
 ## 9. Environment flags that change behaviour
 
@@ -107,3 +113,14 @@ Because the dataset is tiny and only changes through seeders, every query result
 | `DEBUGBAR_ENABLED` | Forces the Debugbar on or off. Note that `php artisan serve` only forwards a whitelist of environment variables to the server process, so put it in `.env`. |
 | `CACHE_STORE` | Defaults to `database`; `file` or `redis` work as well. |
 | `LOG_LEVEL` | Keep `info` or higher in production; the controllers log at `debug` level on every request. |
+
+## 10. Installable app and offline (service worker)
+
+`whereto.js` registers `public/sw.js` on every public page. The worker:
+
+1. On install, pre-caches the app shell: `/`, the four place pages, the stylesheet and the script with their `?v=` version (the page registers the worker as `/sw.js?css=<v>&js=<v>`, from data attributes of `<html>`, so a new file version is a new worker and a new cache), the font, the icon and the manifest.
+2. For static files (`/css`, `/js`, `/fonts`, `/icons`, the manifest, the favicon): answers from the cache at once and refreshes the copy in the background ("stale-while-revalidate"). The script tag's `?v=` makes a new `whereto.js` a new URL, so it is fetched from the network.
+3. For pages, results and details fragments: network first, and the last copy seen when offline. At most `MAX_FRAGMENTS` (20) such copies are kept, oldest out; the number is a constant at the top of `sw.js` with its reasoning. An unknown page requested offline falls back to the cached home page.
+4. Never touches `/_debugbar`, non-GET requests or other origins.
+
+`CACHE_VERSION` in `sw.js` names the cache; bumping it drops the previous cache on activation. The manifest (`public/manifest.json`) gives the name, colours and icons used by "Add to home screen"; the layout links it with `rel="manifest"` and an `apple-touch-icon` for iOS.

@@ -2,13 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\OrderBy;
+use App\Enums\TagOperator;
+use App\Services\RestaurantSearch;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 /**
  * Lunch suggestion: a random pick among the best restaurants close to the visitor.
  */
-class SuggestionController
+class SuggestionController extends Controller
 {
     private const TIMEZONE = 'Asia/Tokyo';
 
@@ -59,13 +62,13 @@ class SuggestionController
         // Get the best restaurants.
         // The limit must be big because we don't know the location yet, and distances are important.
         // Idea: adjust the max distance if too hot, too cold or raining (weather: https://openweathermap.org/price)
-        $restaurantController = new RestaurantController;
+        $search = new RestaurantSearch;
 
         // Read the cache or the DB: the 100 best restaurants by rating
-        $places = $restaurantController->useCache(null, 'AND', 'ratings', 100);
+        $places = $search->find(null, TagOperator::And, OrderBy::Ratings, 100);
 
         // Calculate the distances from the position, and sort by them (nearest first)
-        $places = $restaurantController->handleDistances($places, $position, 'distance');
+        $places = $search->withDistances($places, $position, OrderBy::Distance);
         if ($places->isEmpty()) {
             return '';
         }

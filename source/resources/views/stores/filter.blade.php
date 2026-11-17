@@ -6,21 +6,31 @@
   </div>
 
   <!-- selected tags for active search -->
-  <div id="selectedTags">
+  <div id="selectedTags" role="group" aria-label="Selected tags">
+  </div>
+
+  <!-- Operator between the selected tags: all of them (AND) or any of them (OR). Remembered in localStorage by the JavaScript -->
+  <div id="tagsOperator" role="group" aria-label="Match the selected tags">
+    <span>Match</span>
+    <button type="button" class="opButton" data-op="AND" aria-pressed="true" onclick="setTagsOperator('AND')">all</button>
+    <button type="button" class="opButton" data-op="OR" aria-pressed="false" onclick="setTagsOperator('OR')">any</button>
+    <span>of the selected tags</span>
   </div>
 
   <p>Available options</p>
 </div>
 
 <!-- showing available tags -->
-<div id="tags">
+<div id="tags" role="group" aria-label="Available tags">
   @foreach ($tags as $tag)
-      <div class="tag tagType{{$tag->type}}"
+      <!-- A real button: works with the keyboard and screen readers. aria-pressed tells them if the tag is selected -->
+      <button type="button" class="tag tagType{{$tag->type}}"
             tagId="{{$tag->id}}"
             id="tagShow{{$tag->id}}"
+            aria-pressed="false"
             onClick="moveTag(event)">
         {{$tag->label}}
-      </div>
+      </button>
   @endforeach
 </div>
 

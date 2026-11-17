@@ -168,14 +168,25 @@ function getResultsUrl() {
   return content?.dataset.resultsUrl ?? null;
 }
 
+/** Tablet or PC (900px and more): the panels are side by side (style.css, "wide screens"), nothing to swap */
+function isWideLayout() {
+  return window.matchMedia("(min-width: 900px)").matches;
+}
+
 /** Switch from the tags panel to the results panel */
 function showResults() {
+  if (isWideLayout()) {
+    return;
+  }
   getMainFilterDiv().style.display = "none";
   getMainResultsDiv().style.display = "flex";
 }
 
 /** Switch from the results panel back to the tags panel */
 function showFilter() {
+  if (isWideLayout()) {
+    return;
+  }
   getMainFilterDiv().style.display = "flex";
   getMainResultsDiv().style.display = "none";
 }
@@ -219,23 +230,36 @@ function getResults() {
 /** Request every place of the page, sorted by distance (no tags parameter = all the places) */
 function loadAllResults() {
   setResultsLoading("all");
+  // Stamp the request now (not when it answers): a GPS fix arriving while it is in flight must see that
+  // something was requested, so that refreshResultsAfterFix() asks again with the position. Two "all" requests
+  // can then be in flight (station, then position): only the latest one may write the list or clear the state.
+  const now = nowStamp();
+  setResultsLoadingTime(now);
   getResultsDiv().innerHTML = "Loading ALL entries. Please wait or select a tag...";
-  const url = getResultsUrl() + '?position=' + getLocation() + '&orderBy=distance';
+  // The remembered sort order, so the list matches the highlighted sort button
+  const orderBy = readStore("orderBy") || "distance";
+  const url = getResultsUrl() + '?position=' + getLocation() + '&orderBy=' + encodeURIComponent(orderBy);
   console.info('GET: ' + url);
   fetch(url)
     .then(response => response.ok ? response.text() : Promise.reject(response.status))
     .then(html => {
-      // Only write if a tag search did not start in the meantime
-      if (getResultsLoading() == "all") {
+      // Only write if no other request (a later "all" one, or a tag search) started in the meantime
+      if (now == getResultsLoadingTime()) {
         getResultsDiv().innerHTML = html;
-        setResultsLoadingTime(1); // we allow this query just once
       }
     })
     .catch(() => {
-      getResultsDiv().innerHTML = "Sorry, an error occurred during the search. Check your Internet connection and try again.";
+      if (now == getResultsLoadingTime()) {
+        getResultsDiv().innerHTML = "Sorry, an error occurred during the search. Check your Internet connection and try again.";
+        // Nothing loaded: back to the initial state (no loading, no stamp) so that "Show All" tries again.
+        // The loading state first: the finally below only clears it while the stamp is still ours.
+        setResultsLoading("none");
+        setResultsLoadingTime(0);
+      }
     })
     .finally(() => {
-      if (getResultsLoading() == "all") {
+      // Only the latest request clears the loading state
+      if (now == getResultsLoadingTime()) {
         setResultsLoading("none");
       }
     });
@@ -278,11 +302,43 @@ function refreshResults(orderBy) {
     }
   }
 
-  // Operator between the tags. Other operators (OR, ANDNOT, ORNOT) exist server-side but are not exposed yet
-  const op = 'AND';
+  // Show which sort button is the current one
+  markSortButton(orderBy);
+
+  // Operator between the tags: AND (all of them) or OR (any of them), chosen with the "all / any" buttons.
+  // ANDNOT and ORNOT exist server-side but are not exposed.
+  const op = getTagsOperator();
 
   // AJAX request to update the results
   ajaxResults(op, tagsLabels, orderBy);
+}
+
+/** The operator between the selected tags, remembered in localStorage: "AND" (default) or "OR" */
+function getTagsOperator() {
+  return readStore("op") === "OR" ? "OR" : "AND";
+}
+
+/** "all" / "any" buttons: remember the operator, show it on the buttons, and refresh the results if tags are selected */
+function setTagsOperator(op) {
+  store("op", op);
+  markOperatorButton(op);
+  if (getSelectedTagsDiv().children.length > 0) {
+    refreshResults();
+  }
+}
+
+/** aria-pressed="true" on the button of the given operator, "false" on the other (buttons carry data-op) */
+function markOperatorButton(op) {
+  document.querySelectorAll('.opButton[data-op]').forEach(button => {
+    button.setAttribute('aria-pressed', button.dataset.op === op ? 'true' : 'false');
+  });
+}
+
+/** aria-pressed="true" on the sort button of the given order, "false" on the others (buttons carry data-order-by) */
+function markSortButton(orderBy) {
+  document.querySelectorAll('.sortButton[data-order-by]').forEach(button => {
+    button.setAttribute('aria-pressed', button.dataset.orderBy === orderBy ? 'true' : 'false');
+  });
 }
 
 /** Request the results fragment. Responses older than the latest request are ignored. */
@@ -303,9 +359,8 @@ function ajaxResults(op, tags, orderBy) {
     // HTTP error (4xx, 5xx): jump to .catch()
     .then(response => response.ok ? response.text() : Promise.reject(response.status))
     .then(html => {
-      if (now < getResultsLoadingTime()) { // a more recent request is in flight: ignore this response
-        getResultsDiv().innerHTML = "Updating results...";
-        return;
+      if (now < getResultsLoadingTime()) {
+        return; // a more recent request was made (it may even have answered already): leave the list alone
       }
       // Write the results (HTML fragment from the server)
       getResultsDiv().innerHTML = html;
@@ -338,21 +393,38 @@ function getSelectedTagsDiv() {
 
 /** What happens when we click on a tag: it moves between the available and selected lists, then the results refresh */
 function moveTag(event) {
+  // currentTarget: the button the handler is on (target could be something inside it)
+  const tag = event.currentTarget;
+  // A tag shown in the details of a place (not in the filter): select its twin in the available tags, if any
+  if (tag.parentNode.id !== "selectedTags" && tag.parentNode.id !== "tags") {
+    const label = tag.textContent.trim();
+    const twin = Array.from(document.querySelectorAll("#tags .tag")).find(t => t.textContent.trim() === label);
+    if (twin) {
+      twin.click();
+    }
+    return;
+  }
   // Move the tag in the proper div
-  if (event.target.parentNode.id == "selectedTags") {
+  if (tag.parentNode.id == "selectedTags") {
     // Was selected: back to the available tags
-    document.getElementById("tags").appendChild(event.target);
+    document.getElementById("tags").appendChild(tag);
+    tag.setAttribute("aria-pressed", "false");
     // Check if any selected tag is left
     if (getSelectedTagsDiv().children.length > 0) {
       // Run the search from the selected tags immediately in the background
       refreshResults();
     } else {
-      // Reset the "Show All" button
+      // Reset the "Show All" button (on a phone the visitor presses it to see the unfiltered list again)
       resetFilterHeaderButton();
+      // On a wide screen the list is visible: refresh it now, without filter
+      if (isWideLayout()) {
+        loadAllResults();
+      }
     }
   } else {
     // Was available: add it to the selected tags
-    getSelectedTagsDiv().appendChild(event.target);
+    getSelectedTagsDiv().appendChild(tag);
+    tag.setAttribute("aria-pressed", "true");
     // Run the search from the selected tags immediately in the background
     refreshResults();
   }
@@ -408,13 +480,19 @@ function showDetails(url, placeId) {
   if (placeId != getCurrentDetailsId()) {
     ajaxDetails(url);
   }
-  // Swap the two panels
+  // Swap the two panels (on a phone; side by side on a wide screen)
+  if (isWideLayout()) {
+    return;
+  }
   getDetailsDiv().style.display = "block";
   getContentDiv().style.display = "none";
 }
 
 /** "BACK" button: swap the panels back */
 function hideDetails() {
+  if (isWideLayout()) {
+    return;
+  }
   getDetailsDiv().style.display = "none";
   getContentDiv().style.display = "flex";
 }
@@ -465,7 +543,7 @@ function ajaxSuggestion() {
     .then(response => response.ok ? response.text() : Promise.reject(response.status))
     .then(html => {
       // Replace the box content with the suggestion and a button to ask again
-      getSuggestionDiv().innerHTML = html + '<div id="suggestButton" onclick="ajaxSuggestion()">Try again</div>';
+      getSuggestionDiv().innerHTML = html + '<button type="button" id="suggestButton" onclick="ajaxSuggestion()">Try again</button>';
     })
     .catch(() => {
       getSuggestionDiv().innerHTML = "Err(or), nothing from the top of my head, sorry.";
@@ -473,12 +551,95 @@ function ajaxSuggestion() {
 }
 
 /* =========================================================================
+ * Theme (dark or light)
+ * The stylesheet has both palettes and reads data-theme on <html>. The layout sets it before the first paint
+ * from localStorage ("theme": "dark" or "light") or, without a choice, from the OS preference.
+ * ========================================================================= */
+
+/** The colour of the browser bar for each theme (same as the page background in the stylesheet) */
+const THEME_COLORS = { dark: "#141422", light: "#f4f4f8" };
+
+/** What the OS prefers: "light" or "dark" */
+function systemTheme() {
+  return window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
+}
+
+/** The theme shown now (set on <html> by the layout) */
+function currentTheme() {
+  return document.documentElement.dataset.theme === "light" ? "light" : "dark";
+}
+
+/** Shows the given theme: <html> attribute, browser bar colour, and the icon/label of the header button */
+function applyTheme(theme) {
+  // Anything but "light" (including a tampered localStorage value) is the dark theme
+  theme = theme === "light" ? "light" : "dark";
+  document.documentElement.dataset.theme = theme;
+  const meta = document.querySelector('meta[name="theme-color"]');
+  if (meta) {
+    meta.setAttribute("content", THEME_COLORS[theme]);
+  }
+  const button = document.getElementById("themeButton");
+  if (button) {
+    // The button shows what you get by pressing it: a sun on the dark theme, a moon on the light one
+    const next = theme === "dark" ? "light" : "dark";
+    button.textContent = theme === "dark" ? "\u2600\uFE0E" : "\u263E";
+    button.setAttribute("aria-label", "Switch to the " + next + " theme");
+    button.title = "Switch to the " + next + " theme";
+  }
+}
+
+/** The header button: switch to the other theme and remember it */
+function toggleTheme() {
+  const next = currentTheme() === "dark" ? "light" : "dark";
+  store("theme", next);
+  applyTheme(next);
+}
+
+/* =========================================================================
  * Page start
  * ========================================================================= */
+
+// Theme: the layout already set data-theme before the paint; this fills the button and the bar colour.
+// Without a stored choice, follow the OS when it changes (e.g. a phone switching to dark at sunset).
+applyTheme(readStore("theme") || systemTheme());
+try {
+  window.matchMedia("(prefers-color-scheme: light)").addEventListener("change", () => {
+    if (!readStore("theme")) {
+      applyTheme(systemTheme());
+    }
+  });
+} catch (e) {
+  // Old Safari has no addEventListener on a media query: then the theme just does not follow the OS live
+}
 
 // "defer" guarantees the HTML is parsed when this runs. On the place pages (the ones with a results URL)
 // start following the position right away; the home page starts it when a button is clicked instead,
 // so the permission prompt does not appear before the visitor did anything.
 if (getResultsUrl() !== null) {
   startGeolocation();
+  // Show the remembered sort order and tag operator on their buttons
+  markSortButton(readStore("orderBy") || "distance");
+  markOperatorButton(getTagsOperator());
+  // On a wide screen the results panel is visible from the start: fill it instead of waiting for "Show All"
+  if (isWideLayout()) {
+    getResults();
+  }
+}
+
+// Keyboard: Enter or Space on an element with role="button" (the result names) acts like a click.
+// Real <button> elements do this by themselves.
+document.addEventListener("keydown", event => {
+  if ((event.key === "Enter" || event.key === " ") && event.target.getAttribute("role") === "button") {
+    event.preventDefault(); // Space would scroll the page
+    event.target.click();
+  }
+});
+
+// Register the service worker (public/sw.js): makes the app installable and usable offline.
+// Needs HTTPS or localhost, like geolocation. Browsers without support simply skip this.
+if ('serviceWorker' in navigator) {
+  // The asset versions (data attributes of <html>) travel in the worker's URL: it pre-caches those exact files
+  const versions = document.documentElement.dataset;
+  navigator.serviceWorker.register('/sw.js?css=' + (versions.cssVersion || '') + '&js=' + (versions.jsVersion || ''))
+    .catch(e => console.warn('Service worker registration failed: ' + e));
 }

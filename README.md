@@ -1,5 +1,7 @@
 # WhereTo
 
+[![CI](https://github.com/flochrislas/WhereTo/actions/workflows/ci.yml/badge.svg)](https://github.com/flochrislas/WhereTo/actions/workflows/ci.yml)
+
 A small Laravel website that helps you pick a place in Shibuya, Tokyo: restaurants for lunch, stores, bars and karaoke. Places are tagged, scored and geolocated; the site filters by tag, sorts by rating, cost or walking distance from your position, and suggests a lunch spot around noon.
 
 Personal project, started in 2017, upgraded in November 2026 to Laravel 13 / PHP 8.5 / PostgreSQL 18.
@@ -10,7 +12,9 @@ Personal project, started in 2017, upgraded in November 2026 to Laravel 13 / PHP
 |---|---|
 | [`source/`](source/) | The Laravel application |
 | [`dev/`](dev/) | Podman compose development environment (app on http://localhost:8010) |
-| [`doc/`](doc/) | Documentation: technologies, architecture, data model, request flows, dev setup, production deployment, upgrade notes, findings |
+| [`doc/`](doc/) | Documentation: technologies, architecture, data model, request flows, dev setup, production deployment, upgrade notes, findings, potential improvements |
+| [`e2e/`](e2e/) | Browser tests (Playwright) of the public pages, on a phone and a desktop viewport |
+| [`.github/`](.github/) | CI workflow (Pint, PHPStan, tests on SQLite and PostgreSQL 18, then the browser tests) and Dependabot |
 
 ## Quick start
 
@@ -19,7 +23,7 @@ cd dev
 podman compose up -d        # builds the image, installs dependencies, migrates and seeds on first run
 ```
 
-Then open http://localhost:8010. The admin is at `/admin` with the seeded account (see [`dev/README.md`](dev/README.md)). To run without containers, follow [`doc/05-dev-environment.md`](doc/05-dev-environment.md).
+Then open http://localhost:8010. To run without containers, follow [`doc/05-dev-environment.md`](doc/05-dev-environment.md).
 
 Tests, code style and static analysis, from `source/`:
 

@@ -26,18 +26,17 @@
 <div class="detailRow">
     <div class="detail"
          overlay="Personal experience">
-      {!!html_entity_decode($place->experience)!!}
+      {{-- Raw on purpose: two store texts in the seeder carry an <a href> link. The seeders are the only source of this text (the architecture test allows the raw syntax in these two files only) --}}
+      {!! $place->experience !!}
     </div>
 </div>
 
 <div class="detailRow">
   <div class="detail">
   @foreach ($place->tagsCached() as $placeTag)
-      <div class="tag tagType{{$placeTag->type}}"
-            tagId="{{$placeTag->id}}"
-            id="tagShow{{$placeTag->id}}">
+      <button type="button" class="tag tagType{{$placeTag->type}}" title="Add this tag to the filter" onclick="moveTag(event)">
         {{$placeTag->label}}
-      </div>
+      </button>
   @endforeach
   </div>
 </div>

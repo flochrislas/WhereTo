@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\StoreTag;
+use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Cache;
 
 class StoreTagController extends Controller
@@ -10,7 +11,7 @@ class StoreTagController extends Controller
     /**
      * Gets all the store tags for the filter page.
      */
-    public function viewAllTags()
+    public function viewAllTags(): View
     {
         // Use the cache; the closure (reading the DB) only runs when the key is not cached yet
         $tags = Cache::rememberForever('all_stores_tags', function () {

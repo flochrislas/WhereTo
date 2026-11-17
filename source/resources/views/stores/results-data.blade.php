@@ -1,9 +1,10 @@
+<!-- Number of results. count() on the collection; Str::plural adds the "s" when needed -->
+<div class="resultsCount">{{ $places->count() }} {{ \Illuminate\Support\Str::plural('result', $places->count()) }}</div>
 <div class="resultTable">
-<!-- WE NEED A COUNTER HERE TO DISPLAY THE NUMBER OF RESULTS -->
 @foreach ($places as $store)
   <div class="resultsCounter"></div>
   <div class="resultRow">
-    <div class="resultCell nameAndType"
+    <div class="resultCell nameAndType" role="button" tabindex="0"
         onclick="showDetails('{{ route('stores.details',$store->id) }}','{{ $store->id }}')">
       <div class="rowName">{{ $store->name }}</div>
       <div class="rowType">{{ $store->type }}</div>
@@ -18,7 +19,7 @@
       </a>
     </div>
     <div class="resultCell description">
-        <div class="extract">{!! $store->points !!}</div>
+        <div class="extract">{{ $store->points }}</div>
     </div>
   </div>
 @endforeach

@@ -19,6 +19,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        // Nothing to boot. Logging goes through the 'daily' channel set in .env (LOG_CHANNEL)
+        // Logging goes through the 'daily' channel set in .env (LOG_CHANNEL); nothing else to boot
     }
 }

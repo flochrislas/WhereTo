@@ -4,11 +4,9 @@
 
   <!-- buttons -->
   <div id="resultsControl">
-    <button class="sortButton" onclick="refreshResults('ratings')">
+    <button class="sortButton" data-order-by="ratings" aria-pressed="false" onclick="refreshResults('ratings')">
       Best<br>first</button>
-    <button class="sortButton" onclick="refreshResults('cost')">
-      Cost<br>first</button>
-    <button class="sortButton" onclick="refreshResults('distance')">
+    <button class="sortButton" data-order-by="distance" aria-pressed="false" onclick="refreshResults('distance')">
       Near<br>first</button>
     <button class="navButton" onclick="showFilter()">Show Filters</button>
   </div>
@@ -32,4 +30,5 @@
 </div>
 
 <!-- data -->
-<div id="results" loading="none" time="0"></div>
+<!-- aria-live: screen readers announce the new results when they arrive -->
+<div id="results" loading="none" time="0" aria-live="polite"></div>

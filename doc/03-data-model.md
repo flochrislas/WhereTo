@@ -1,6 +1,6 @@
 # Data model
 
-The schema is defined by the migrations in `source/database/migrations/`. The real content of the app is in the seeders: there is no admin UI for stores, bars or karaoke, and restaurant data edits were committed as "data update" commits to the seeders.
+The schema is defined by the migrations in `source/database/migrations/`. The real content of the app is in the seeders: there is no admin UI (removed in November 2026), and data edits are committed as "data update" commits to the seeders.
 
 ## Tables
 
@@ -27,18 +27,14 @@ Pivot tables `restaurant_restaurant_tag`, `store_store_tag`, `bar_bar_tag`, `kar
 
 | Table | Purpose |
 |---|---|
-| `restaurant_types` | Lookup list of cuisine labels, editable in admin. Not referenced by `restaurants.type`, which is free text. |
-| `users` | Laravel 13 users (`email_verified_at`, `remember_token`) plus a nullable `level` string column (filled with `'1'` by the seeder, never read). |
-| `password_reset_tokens`, `sessions`, `cache`, `cache_locks`, `jobs`, `job_batches`, `failed_jobs` | Created by the skeleton migrations. Only `cache` is used. |
-| `user_restaurant` | Pivot "user visited restaurant" with a `comment` text column and timestamps. Declared on both models, never used by any page. |
+| `restaurant_types` | Lookup list of cuisine labels, seeded. Not referenced by `restaurants.type`, which is free text. |
+| `sessions`, `cache`, `cache_locks`, `jobs`, `job_batches`, `failed_jobs` | Created by the skeleton migrations. `cache` is used; `sessions` only with `SESSION_DRIVER=database`. There is no `users` table any more: the admin accounts went away with the admin (November 2026). |
 | `migrations` | Laravel bookkeeping. |
 
 ## Eloquent relationships
 
 ```
 Restaurant  belongsToMany RestaurantTag   (tags / tagsCached)
-Restaurant  belongsToMany User            (users, pivot comment)
-User        belongsToMany Restaurant      (restaurants, pivot comment)
 Store       belongsToMany StoreTag
 Bar         belongsToMany BarTag
 Karaoke     belongsToMany KaraokeTag
@@ -51,13 +47,11 @@ The `Location` trait adds `fillCoordinatesFromString('lat, lon')`, which parses 
 
 ## Seeders
 
-Seeders live in `database/seeders/` (namespace `Database\Seeders`). `DatabaseSeeder` runs, in order: users, restaurant types, restaurant tags, restaurants, store tags, stores, bar tags, bars, karaoke tags, karaokes, then flushes the cache. Every seeder starts with a `DELETE` on its table, so `php artisan db:seed` is the "reload the data" operation.
-
-`UsersTableSeeder` creates two accounts with the password `password`; change them before exposing the admin.
+Seeders live in `database/seeders/` (namespace `Database\Seeders`). `DatabaseSeeder` runs, in order: restaurant types, restaurant tags, restaurants, store tags, stores, bar tags, bars, karaoke tags, karaokes, then flushes the cache. Every seeder starts with a `DELETE` on its table, so `php artisan db:seed` is the "reload the data" operation.
 
 ## Cache keys
 
-Everything is cached with `rememberForever`. The admin controllers and the seeder flush the cache; any other data change (SQL, tinker) requires `php artisan cache:clear`. Laravel 13 refuses to unserialize cached objects unless their classes are listed in `cache.serializable_classes`; `config/cache.php` lists the eight place/tag models, the Eloquent `Collection` and the `Pivot` class that tags loaded through `belongsToMany` carry.
+Everything is cached with `rememberForever`. The seeder flushes the cache; any other data change (SQL, tinker) requires `php artisan cache:clear`. Laravel 13 refuses to unserialize cached objects unless their classes are listed in `cache.serializable_classes`; `config/cache.php` lists the eight place/tag models, the Eloquent `Collection` and the `Pivot` class that tags loaded through `belongsToMany` carry.
 
 | Key | Content |
 |---|---|

@@ -57,6 +57,6 @@ psql -h localhost -p 5433 -U wheretouser whereto    # password: whereto
 ## Notes
 
 - Geolocation works in the browser on `http://localhost`, so "near first" sorting can be tested without HTTPS. Non-localhost origins (another device) need HTTPS; the server falls back to Shibuya Station.
-- The admin is at http://localhost:8010/admin with `florent.redares@gmail.com` / `password` (seeded).
+- There is no admin and no login: edit the data in `source/database/seeders/` and run `podman compose exec app php artisan db:seed`.
 - Database settings live only in `source/.env`. Do not export `DB_*` variables into the container: Laravel reads `$_SERVER` before `$_ENV`, so they would override the `phpunit.xml` settings and the tests would write a SQLite file named after the database into `source/`.
 - With `APP_DEBUG=true` the Debugbar is injected into every response, including the AJAX fragments. Set `DEBUGBAR_ENABLED=false` in `source/.env` to see realistic payload sizes (an environment variable on `artisan serve` is not forwarded).

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\KaraokeTag;
+use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Cache;
 
 class KaraokeTagController extends Controller
@@ -10,7 +11,7 @@ class KaraokeTagController extends Controller
     /**
      * Gets all the karaoke tags for the filter page.
      */
-    public function viewAllTags()
+    public function viewAllTags(): View
     {
         // Use the cache; the closure (reading the DB) only runs when the key is not cached yet
         $tags = Cache::rememberForever('all_karaokes_tags', function () {

@@ -8,34 +8,39 @@ The order inside each section is a suggested priority. If only a few are done, t
 
 The UI is already responsive (viewport meta, one `@media` breakpoint at 680px, CSS variables, system-free dark theme). These are the things that make a web app feel like a native one on a phone and still look right on a large screen.
 
-### 1.1 Make it installable as a Progressive Web App (M)
+### 1.1 Make it installable as a Progressive Web App (M) — done
 
 - **Why**: a PWA can be added to the home screen on Android and iOS, opens full screen without the browser chrome, and keeps the page shell available offline. It is the cheapest way to be "an app" on every platform without app stores or a second code base.
 - **How**: add `public/manifest.webmanifest` (name, icons, `display: standalone`, `theme_color`, `background_color`), link it from `layouts/app.blade.php`, and add a small service worker in `public/sw.js` that pre-caches the shell (`/`, `/restaurants`, the CSS, the fonts) and uses network-first for `/*/results` and `/*/details/*`. Laravel needs no change; the files are static.
 - **Note**: geolocation already requires HTTPS, and so does a service worker, so the production deploy must be HTTPS anyway (see `06-deploy-production.md`).
+- **Done (November 2026)**: `public/manifest.json`, `public/sw.js`, icons generated from `public/icons/icon.svg` (also a real `favicon.ico`, the old one was an empty file), registration in `whereto.js`, Nginx rule for `sw.js` in the deploy doc. Described in `04-how-it-works.md` section 8.
 
-### 1.2 Finish the phone polish in the stylesheet (S)
+### 1.2 Finish the phone polish in the stylesheet (S) — done
 
 - `<meta name="theme-color">` so the Android status bar and the Safari tab match the dark theme.
 - `env(safe-area-inset-*)` padding on the header and footer for phones with a notch or a home bar; `viewport-fit=cover` in the viewport meta.
 - `100dvh` instead of `100vh` for full-height panels, so the address bar of mobile browsers does not hide the bottom of the results.
 - Touch targets of at least 44px for the tags and the sort buttons (`.tap`, `.sortButton`).
 - `prefers-reduced-motion` guard around any transition.
+- **Done (November 2026)**: all of the above in `layouts/app.blade.php` and `style-dark.css`, plus `color-scheme: dark`, `touch-action: manipulation` on the tappable elements (no double-tap zoom delay), no tap highlight, and no text inflation in landscape.
 
-### 1.3 Add a light theme and let the system choose (S)
+### 1.3 Add a light theme and let the system choose (S) — done
 
 - **Why**: `style-dark.css` is a dark theme only. Tablets and PCs are often used in daylight.
 - **How**: the colours are already CSS variables (`--color-name`, `--color-cost`, ...). Add a `@media (prefers-color-scheme: light)` block that overrides the variables, plus `color-scheme: light dark` on `:root`. Optionally a toggle stored in `localStorage`, like `orderBy` is today.
+- **Done (November 2026)**: `style-dark.css` became `style.css`; every colour is a variable, the light values sit under `:root[data-theme="light"]` (the tags keep their mid-tone backgrounds with black text in both themes). A tiny inline script in the layout sets `data-theme` before the first paint from `localStorage` or the OS preference, a sun/moon button in the header toggles it, and `whereto.js` follows the OS when nothing was chosen and updates the `theme-color` meta.
 
-### 1.4 Use the width on tablets and PCs (M)
+### 1.4 Use the width on tablets and PCs (M) — done
 
 - **Why**: the filter panel and the results panel are shown one at a time (`showFilter()` / `showResults()` toggle `display`). On a tablet or a PC there is room for both side by side, which removes the back-and-forth.
 - **How**: a second breakpoint (for example 900px) that lays `#mainFilter` and `#mainResults` out with CSS grid, and a check in `showResults()` / `showFilter()` that does nothing when both are visible. A third column could host the details instead of replacing the results.
+- **Done (November 2026)**: from 900px, `#app` becomes a CSS grid with the filter, the results and the details side by side (`style.css`, "wide screens"; `#content` is `display: contents` so its two panels are grid cells). `isWideLayout()` in `whereto.js` turns the panel swaps into no-ops, the results load at page start, and the "Show Filters" / "BACK" buttons are hidden. Below 900px nothing changes.
 
-### 1.5 Ship only the WOFF2 font (S)
+### 1.5 Ship only the WOFF2 font (S) — done
 
 - **Why**: `public/fonts/` carries `.svg`, `.ttf`, `.woff` and `.woff2` versions of Open Sans. Every browser that can run the `fetch()` code can use WOFF2; the others are dead weight in the repository and the deploy.
 - **How**: delete the three other files and the matching `src:` entries in the `@font-face`; add `font-display: swap`.
+- **Done (November 2026)**.
 
 ### 1.6 Keep the position fresh and show it (S) — done
 
@@ -59,38 +64,46 @@ The UI is already responsive (viewport meta, one `@media` breakpoint at 680px, C
 - **Option B**: return JSON (`PlaceResource` API resources) and render client-side with a small framework (Vue, Svelte or Alpine). This gives client-side sorting without a round trip and makes a native wrapper (Capacitor) easier later, but it needs Node and a build step, which the project decided against. Only worth it if the UI is going to grow a lot.
 - **Option C**: Livewire 4 (first-party Laravel). Interactivity written in PHP, no Node required, but every tag click goes through the server and the page weight grows. Good fit for the admin, less so for the public filter.
 
-### 2.3 Accessibility (S)
+### 2.3 Accessibility (S) — done
 
 - The tags are `<div>` elements with `onclick`; make them `<button type="button">` so they work with the keyboard and screen readers, and use `aria-pressed` for the selected state.
 - Put `aria-live="polite"` on `#results` and `#position-report` so updates are announced.
 - Give the three sort buttons `aria-pressed` reflecting the stored `orderBy`.
+- **Done (November 2026)**: tags are `<button type="button">` with `aria-pressed`, the sort buttons carry `data-order-by` and `aria-pressed`, `#results`, `#position-report` and `#suggestion` are `aria-live="polite"`, the result name cells are `role="button" tabindex="0"` with Enter/Space handled in `whereto.js`, visible focus outlines, and the suggestion button is a real button.
 
-### 2.4 Admin pages on the same stack as the public pages (S)
+### 2.4 Admin pages on the same stack as the public pages (S) — done by removal
 
 - **Why**: `layouts/html.blade.php` loads Bootstrap 3.4 and jQuery from a CDN for the admin and login pages only. Bootstrap 3 is unmaintained and jQuery is unused by the app code.
 - **How**: either upgrade to Bootstrap 5.3 (no jQuery, has a built-in dark mode: `data-bs-theme="dark"`) or restyle the few admin tables and forms with `style-dark.css` and drop the CDN entirely. The second option also removes the only third-party requests the app makes.
+- **Done (November 2026)**: the admin and the login were removed altogether, with the users table, the gate and the form requests. The seeders are the source of truth and a redeploy overwrote any online edit anyway, so the admin was only an attack surface (a password in a public repo, an authenticated POST surface). The app now has no accounts, no POST route and no CDN request.
 
 ## 3. Back-end architecture
 
 ### 3.1 Collapse the four copy-pasted place sets (L)
+
+> Two copy-paste bugs were found and fixed in November 2026 without merging: the "Best first" sort did nothing for stores, bars and karaoke (the rating columns were the restaurant ones), and the bar details printed a restaurant score column. The rating columns are now a per-kind hook in `PlaceController`.
+
+> **Decision (November 2026): not for now.** The duplication costs nothing at runtime thanks to the cache, and keeping the four kinds separate lets each evolve its own columns and views freely. Revisit only if the four sets start drifting in ways that have to be fixed four times.
 
 - **Why**: restaurants, stores, bars and karaokes each have their own model, tag model, pivot, migration pair, seeder pair, controller pair, and four views. `RestaurantController`, `StoreController`, `BarController` and `KaraokeController` are byte-for-byte identical apart from the model name. Any change has to be made four times. This was kept on purpose during the upgrade ("port and fix only") and is the biggest structural improvement left.
 - **How, least invasive**: keep the four tables, but have one `PlaceController` whose model is chosen from the route: `Route::get('{kind}/results', [PlaceController::class, 'results'])->whereIn('kind', ['restaurants', 'stores', 'bars', 'karaokes'])`, with a `PlaceKind` PHP enum mapping the URL segment to the model class, the tag model, the views and the route names. The views can be shared with `@include` and a `$kind` variable; only the restaurant row has the cost and lunch columns, which a `@if` handles.
 - **How, full**: one `places` table with a `kind` column and nullable restaurant-only columns, one `tags` table with a `kind` column, one pivot. The queries become simpler and tags could even be shared across kinds. This needs a data migration from the four existing tables and changes the cache keys.
 - **Either way**: the admin CRUD, which today exists only for restaurants, becomes available for the other three kinds for free.
 
-### 3.2 Extract the search into a service class (M)
+### 3.2 Extract the search into a service class (M) — done
 
 - **Why**: `PlaceController` holds the query building, the caching, the distance computation and the HTTP handling. `SuggestionController` instantiates `new RestaurantController` just to call `useCache()` and `handleDistances()`, which couples two HTTP controllers together.
 - **How**: an `App\Services\PlaceSearch` class (or one per kind, built from the enum of 3.1) with `search(tags, op, orderBy, limit): Collection` and `withDistances(Collection, ?Position): Collection`. Controllers become thin: read the request, call the service, return a view. Testing the search no longer needs HTTP requests.
+- **Done (November 2026)**: `App\Services\PlaceSearch` (abstract) with `RestaurantSearch`, `StoreSearch`, `BarSearch`, `KaraokeSearch` naming the model and the score columns; `find()`, `withDistances()`, `resolvePosition()`. `PlaceController` keeps the request reading and the views, `SuggestionController` uses `RestaurantSearch`, and the architecture test's exception for it is gone. `tests/Unit/PlaceSearchTest.php` covers distances, the station fallback and the cache keys without HTTP.
 
-### 3.3 Use the framework's building blocks (S each)
+### 3.3 Use the framework's building blocks (S each) — done
 
 - **Form Requests** (`php artisan make:request StoreRestaurantRequest`) instead of inline `$request->validate()` arrays in the four admin controllers; the rules are then shared between `store()` and `update()`.
 - **Route model binding**: `Route::get('restaurant/details/{restaurant}')` with a `Restaurant $restaurant` parameter replaces the `findOrFail` calls, and gives the 404 for free.
 - **PHP enums** for `orderBy` (`distance`, `ratings`, `cost`) and `op` (`AND`, `OR`, `ANDNOT`, `ORNOT`), validated with `Rule::enum()` in the request instead of being passed around as free strings.
 - **A `Position` value object** (`lat`, `lon`, `fromString()`, `distanceTo()`) instead of the `"lat,lon"` string that goes through `positionSpoofer()`, `google2coord()` and the cache key logic. The `Location` trait would then take a `Position`.
 - **Authorization**: `users.level` exists but nothing reads it. A `Gate::define('admin', fn (User $u) => $u->level >= 10)` and `->can('admin')` on the admin route group would make the column meaningful.
+- **Done (November 2026)**: `RestaurantRequest`, `RestaurantTagRequest`, `RestaurantTypeRequest`; route model binding on the public details routes (`{place}`) and the admin controllers; `OrderBy` and `TagOperator` enums with `fromRequest()` defaults; `App\Support\Position`; the `admin` gate on `users.level >= 1` with `can:admin` on the admin group (the user factory now sets level 1). The form requests, the admin bindings and the gate were removed again with the admin (see 2.4); the enums, `Position` and the public `{place}` binding stay.
 
 ### 3.4 Seed data as data, not as PHP (M)
 
@@ -104,21 +117,23 @@ The UI is already responsive (viewport meta, one `@media` breakpoint at 680px, C
 
 ## 4. Performance and operations
 
-### 4.1 Production checklist that costs nothing (S)
+### 4.1 Production checklist that costs nothing (S) — done
 
 - `php artisan optimize` after each deploy (config, routes, views, events cached). The upgrade removed all route closures, so `route:cache` works now.
 - OPcache with `opcache.validate_timestamps=0` in production (and `opcache.preload` if the host allows it).
 - Nginx: `gzip`/`brotli` on, `Cache-Control: public, max-age=31536000, immutable` for `/css`, `/js`, `/fonts`, HTTP/2 or HTTP/3.
 - `SESSION_DRIVER=database` or `redis` only if there are several web nodes; the file driver is fine for one server.
+- **Done (November 2026)** in `06-deploy-production.md`: gzip, HTTP/2, immutable one-year cache for the static files (the stylesheet link now carries a `?v=` like the script), an OPcache section, and a restart of PHP-FPM in the update steps. HTTP/3 and Brotli are left out: they need extra Nginx modules.
 
-### 4.2 Browser caching for the fragments (S)
+### 4.2 Browser caching for the fragments (S) — done
 
 - **Why**: the forever cache makes the server fast, but the client still downloads the same results fragment on every click.
 - **How**: an `ETag` built from the cache key plus the last admin flush time (store a `places.version` value in the cache and bump it in the `Cache::flush()` calls) lets the browser get a `304 Not Modified` for repeated searches. Laravel's `SetCacheHeaders` middleware (`cache.headers:etag;public;max_age=60`) does most of it.
+- **Done (November 2026)** with `cache.headers:etag;no_cache` on the results and details routes: the browser revalidates every time and gets a 304 when nothing changed, so a reseed is visible at once and repeated searches cost almost nothing. The content hash makes the version stamp unnecessary.
 
 ### 4.3 Tagged cache instead of flushing everything (S)
 
-- **Why**: every admin write calls `Cache::flush()`, which also drops sessions if they ever share the store, and the next visitor pays for a full rebuild.
+- **Why**: the seeder calls `Cache::flush()`, which also drops sessions if they ever share the store, and the next visitor pays for a full rebuild.
 - **How**: with the `redis` or `database` cache store, `Cache::tags(['places'])->rememberForever(...)` and `Cache::tags(['places'])->flush()` only drop the place data. Not possible with the `file` store, so this comes together with moving the cache to Redis or the `cache` table.
 
 ### 4.4 FrankenPHP or Octane (M, optional)
@@ -132,35 +147,48 @@ The UI is already responsive (viewport meta, one `@media` breakpoint at 680px, C
 - `LOG_CHANNEL=daily` with a retention, and a `LOG_STACK` that also ships to the host's journal.
 - Laravel Pulse or Telescope in the dev environment only, to see slow queries and cache hit rates when working on 3.5.
 
+### 4.6 Loose ends from the November 2026 code review (S each) — done
+
+Pre-existing behaviours the reviewer set aside as out of scope; each one is a small decision.
+
+- **Service worker cache growth**: `networkFirst()` in `sw.js` stores one copy of the results fragment per distinct URL, and the URL carries the visitor's exact position. Fragments are only requested when the visitor acts (a tag, a sort, "Show All", the first GPS fix), not while walking, so a visit stores a handful; still, nothing dropped them. Done: `MAX_FRAGMENTS = 20` in `sw.js`, the oldest fragments are dropped after each store (the pre-cached shell is not counted). Rounding the position in the key was considered and left out: it only helps a repeated search from a slightly different spot while offline, and would show walking times from a position up to 100 m off.
+- **Visitor coordinates in the log**: done, `PlaceSearch::resolvePosition()` logs the distance from the station instead of the coordinates, so even a debug day in production cannot leak a position.
+- **Unversioned pre-cache entry for the stylesheet**: fixed (November 2026, after a second review): the page registers the worker with the asset versions in its URL, and the pre-cache holds the versioned stylesheet and script. Before that, a reload offline right after the first visit gave an unstyled page without its script.
+- **Raw HTML from the seed data**: the results rows now escape `points` (plain text in the seeders). The store `experience` stays raw on purpose: two seeded texts (Shibuya Mark City, Mont-Bell) carry an `<a href>` link in the text itself. The architecture test now forbids `{!! !!}` everywhere but those two store views. To close it for good, move those two links to the `official_website` column and escape there too.
+
 ## 5. Quality, testing and delivery
 
-### 5.1 Continuous integration (S)
+### 5.1 Continuous integration (S) — done
 
 - **Why**: Pint, PHPStan and the 53 tests are run by hand in the container. A GitHub Actions workflow runs them on every push and on the pull request, with a PostgreSQL 18 service so the tests exercise the real database instead of SQLite.
 - **How**: `.github/workflows/ci.yml` with `shivammathur/setup-php` (PHP 8.5, `pdo_pgsql`), `composer install`, `vendor/bin/pint --test`, `vendor/bin/phpstan`, `php artisan test`. Add Dependabot or Renovate for Composer updates.
+- **Done (November 2026)**: `.github/workflows/ci.yml` (Pint, PHPStan, `node --check`, tests on SQLite and on a PostgreSQL 18 service) and `.github/dependabot.yml` (weekly, Composer updates grouped).
 
-### 5.2 Browser tests for the JavaScript (M)
+### 5.2 Browser tests for the JavaScript (M) — done
 
 - **Why**: the tests cover the HTTP layer only; nothing checks that a tag click updates the results or that the back button works.
 - **How**: Playwright (already used on this machine) against the `dev/` stack, with the geolocation faked (`context.grantPermissions(['geolocation'])`, `setGeolocation`). Five scenarios cover the whole UI: home, tag filter, each sort, details and back, suggestion with the clock set to lunch time. Laravel Dusk is the first-party alternative but it needs Chrome in the PHP image.
+- **Done (November 2026)**: `e2e/` (Playwright Test, Node, outside `source/` so the app keeps no build step), five spec files run as a phone and as a desktop, in CI after the PHP checks (`browser` job). The suggestion is not covered: its lunch-time window is the server's clock. Writing the offline scenario found a bug: a GPS fix arriving while the first "all results" request was in flight never re-requested them with the position (fixed in `loadAllResults()`).
 
-### 5.3 Raise PHPStan to level 7 or 8 (M)
+### 5.3 Raise PHPStan to level 7 or 8 (M) — done
 
 - Level 5 passes today. Going higher mostly means declaring array shapes and nullable returns, which doubles as documentation for someone learning PHP.
+- **Done (November 2026)**: level 8. Return types on every controller method, generic types on the relations (`BelongsToMany<RestaurantTag, $this>`) and on `PlaceSearch` (`@template TModel of Model&Place`, so a `RestaurantSearch` returns a `Collection<int, Restaurant>`), a `Place` interface for what the search reads from a model, and one documented ignore for the computed view names.
 
-### 5.4 Architecture tests (S)
+### 5.4 Architecture tests (S) — done
 
 - Pest's or PHPUnit's `arch()` style tests (via `pestphp/pest-plugin-arch`, or hand-written reflection checks) can enforce "controllers do not instantiate other controllers" and "models do not use the Request", which guards the refactors of section 3.
+- **Done (November 2026)**: `tests/Architecture/ArchitectureTest.php`, hand-written on PHPUnit (no extra package), eleven rules listed in `05-dev-environment.md`. The first run caught two things: `SuggestionController` was a plain class (it now extends `Controller`), and it built a `RestaurantController` to reuse the search (gone with 3.2).
 
 ## 6. Product ideas
 
 Small features that the current data already supports.
 
-- **Results counter**: the `WE NEED A COUNTER HERE` comment in `results-data.blade.php` is easy to resolve with `{{ $places->count() }}` in the header row.
-- **OR filter**: `whereTags()` already implements `OR`, `ANDNOT` and `ORNOT`; a single toggle next to the selected tags would expose it.
+- **Results counter**: done (November 2026), a "N results" line above the list in the four `results-data` fragments.
+- **OR filter**: done (November 2026), "Match all / any of the selected tags" buttons under the selected tags, remembered in `localStorage`.
 - **Opening hours and "open now"**: a `hours` JSON column per place and a filter that uses the same Tokyo clock as the lunch suggestion.
 - **Japanese UI**: Laravel localisation (`lang/ja.json`) with the browser language as default; the data already has Japanese names.
-- **Share and deep links**: the copy-URL button exists; add Open Graph tags to the details pages so a shared link shows the place name and type, and a `sitemap.xml` route for the details pages.
+- **Share and deep links**: the copy-URL button exists; add Open Graph tags to the details pages so a shared link shows the place name and type, and a `sitemap.xml` route for the details pages. See `10-seo.md` for the full assessment and plan (November 2026).
 - **Freshen ratings**: an artisan command that queries the Google Places API for each `google_maps_link` and updates `score_*` or a new `google_rating` column, run monthly. Requires an API key and a cost check.
 - **Second area**: the Shibuya Station fallback and the 100 best restaurants limit are hard-coded; an `areas` table (name, centre, radius) would make "enjoyShibuya" the first of several.
 
@@ -168,12 +196,12 @@ Small features that the current data already supports.
 
 The items that are an hour or two each and improve the phone experience the most:
 
-1. 1.2 phone polish in the stylesheet
-2. 1.5 WOFF2 only
+1. ~~1.2 phone polish in the stylesheet~~ done
+2. ~~1.5 WOFF2 only~~ done
 3. ~~1.6 position freshness~~ done
-4. 2.3 accessibility
-5. 4.1 production checklist
-6. 5.1 CI workflow
-7. 6 results counter
+4. ~~2.3 accessibility~~ done
+5. ~~4.1 production checklist~~ done
+6. ~~5.1 CI workflow~~ done
+7. ~~6 results counter~~ done
 
-Then 1.1 (PWA) as the first medium item (2.1, JS to static files, is done), and 3.1 (one place set) as the structural project if the app keeps evolving.
+1.1 (PWA) and 2.1 (JS to static files) are done. All the quick wins are done, plus the rating sort fix, the OR filter, the ETag and the framework building blocks. 3.1 (one place set) was considered and declined for now, see the decision note there.

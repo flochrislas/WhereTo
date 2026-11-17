@@ -45,8 +45,8 @@ class PlacesTest extends TestCase
     {
         $tagModel::create(['label' => 'a', 'type' => 10, 'weight' => 1]);
         $tagModel::create(['label' => 'b', 'type' => 20, 'weight' => 1]);
-        $near = $model::create(['name' => 'Near one', 'type' => 'T', 'lat' => 35.6586, 'lon' => 139.7016, 'points' => 'near', 'lunch_price' => 1200, 'score_lunch' => 1, 'score_food' => 1, 'score_place' => 1]);
-        $far = $model::create(['name' => 'Far one', 'type' => 'T', 'lat' => 35.6700, 'lon' => 139.7100, 'points' => 'far', 'lunch_price' => 800, 'score_lunch' => 3, 'score_food' => 3, 'score_place' => 3]);
+        $near = $model::create(['name' => 'Near one', 'type' => 'T', 'lat' => 35.6586, 'lon' => 139.7016, 'points' => 'near', 'lunch_price' => 1200, 'score_lunch' => 1, 'score_food' => 1, 'score_place' => 1, 'score' => 1]);
+        $far = $model::create(['name' => 'Far one', 'type' => 'T', 'lat' => 35.6700, 'lon' => 139.7100, 'points' => 'far', 'lunch_price' => 800, 'score_lunch' => 3, 'score_food' => 3, 'score_place' => 3, 'score' => 3]);
         $near->attachTags(['a', 'b']);
         $far->attachTags(['a']);
     }
@@ -63,6 +63,10 @@ class PlacesTest extends TestCase
     {
         $this->seedTwo($model, $tagModel);
         $this->get("/$plural")->assertOk()->assertSee('tagType10')->assertSee('tagType20')
+            // Tags are real buttons with a pressed state, the results div is a live region
+            ->assertSee('<button type="button" class="tag tagType10"', false)
+            ->assertSee('aria-pressed="false"', false)
+            ->assertSee('id="results" loading="none" time="0" aria-live="polite"', false)
             // The JavaScript reads the results URL from this attribute
             ->assertSee('data-results-url="'.route("$plural.results").'"', false)
             // One static script for all the public pages, with a cache-busting version
@@ -73,7 +77,9 @@ class PlacesTest extends TestCase
     public function test_results_sorted_by_distance(string $plural, string $singular, string $model, string $tagModel): void
     {
         $this->seedTwo($model, $tagModel);
-        $html = $this->get("/$plural/results?orderBy=distance&position=".self::STATION)->assertOk()->getContent();
+        $html = $this->get("/$plural/results?orderBy=distance&position=".self::STATION)->assertOk()
+            ->assertSee('2 results') // the counter line above the list
+            ->getContent();
         $this->assertSame(['Near one', 'Far one'], $this->namesInOrder($html));
         $this->assertStringContainsString('End of <strong>2</strong>', $html);
     }
@@ -88,14 +94,39 @@ class PlacesTest extends TestCase
         $this->assertCount(2, $this->namesInOrder($html));
     }
 
+    /** op=OR: the place needs any of the tags, not all of them */
+    #[DataProvider('placeTypes')]
+    public function test_results_filtered_by_tags_with_or(string $plural, string $singular, string $model, string $tagModel): void
+    {
+        $this->seedTwo($model, $tagModel);
+        // Only "Near one" has tag b, but both have tag a: OR returns both
+        $html = $this->get("/$plural/results?op=OR&tags=a,b&orderBy=distance&position=null")->assertOk()->getContent();
+        $this->assertEqualsCanonicalizing(['Near one', 'Far one'], $this->namesInOrder($html));
+        // The filter page offers the choice
+        $this->get("/$plural")->assertOk()->assertSee('data-op="OR"', false);
+    }
+
     #[DataProvider('placeTypes')]
     public function test_details_fragment_and_single_page(string $plural, string $singular, string $model, string $tagModel): void
     {
         $this->seedTwo($model, $tagModel);
         $id = $model::where('name', 'Near one')->value('id');
-        $this->get("/$plural/details/$id")->assertOk()->assertSee('Near one');
+        $details = $this->get("/$plural/details/$id")->assertOk()->assertSee('Near one');
+        if (in_array($plural, ['restaurants', 'bars'], true)) {
+            // These two show a grade out of 4; bars used to print the restaurant column, which they do not have
+            $details->assertSee('1/4');
+        }
         $this->get("/$singular/details/$id")->assertOk()->assertSee('Near one')->assertSee('<html', false);
         $this->get("/$plural/details/999")->assertNotFound();
+    }
+
+    /** Every kind sorts by its own score columns ("score" for stores and karaoke, several for restaurants and bars) */
+    #[DataProvider('placeTypes')]
+    public function test_results_sorted_by_ratings(string $plural, string $singular, string $model, string $tagModel): void
+    {
+        $this->seedTwo($model, $tagModel);
+        $html = $this->get("/$plural/results?orderBy=ratings&position=".self::STATION)->assertOk()->getContent();
+        $this->assertSame(['Far one', 'Near one'], $this->namesInOrder($html), 'best scores first');
     }
 
     public function test_restaurants_sorted_by_ratings_and_cost(): void
@@ -107,9 +138,41 @@ class PlacesTest extends TestCase
         $this->assertSame(['Far one', 'Near one'], $this->namesInOrder($html), 'cheapest first');
     }
 
+    /** The results fragment carries an ETag; asking again with it gives an empty 304 instead of the HTML */
+    #[DataProvider('placeTypes')]
+    public function test_results_fragment_revalidates_with_etag(string $plural, string $singular, string $model, string $tagModel): void
+    {
+        $this->seedTwo($model, $tagModel);
+        $first = $this->get("/$plural/results?op=AND&tags=a&orderBy=distance&position=null")->assertOk();
+        $etag = $first->headers->get('ETag');
+        $this->assertNotEmpty($etag);
+        $this->assertStringContainsString('no-cache', (string) $first->headers->get('Cache-Control'));
+        $this->get("/$plural/results?op=AND&tags=a&orderBy=distance&position=null", ['If-None-Match' => $etag])->assertStatus(304);
+    }
+
     public function test_home_page(): void
     {
         $this->get('/')->assertOk()->assertSee('Shibuya')
-            ->assertSee('src="'.asset('js/whereto.js').'?v=', false);
+            ->assertSee('src="'.asset('js/whereto.js').'?v=', false)
+            ->assertSee('href="'.asset('css/style.css').'?v=', false)
+            // Dark and light themes: the browser is told about both, and the header has the switch
+            ->assertSee('<meta name="color-scheme" content="dark light">', false)
+            ->assertSee('id="themeButton"', false)
+            // The service worker is registered with the asset versions (data attributes of <html>)
+            ->assertSee('data-css-version="'.filemtime(public_path('css/style.css')).'"', false)
+            ->assertSee('data-js-version="'.filemtime(public_path('js/whereto.js')).'"', false)
+            ->assertSee("localStorage.getItem('theme')", false)
+            // Progressive Web App: manifest and home screen icon
+            ->assertSee('rel="manifest" href="'.asset('manifest.json').'"', false)
+            ->assertSee('rel="apple-touch-icon"', false);
+    }
+
+    /** The site is read-only: the legacy login and admin are gone (404, not a redirect to a login page). */
+    public function test_login_and_admin_do_not_exist(): void
+    {
+        $this->get('/login')->assertNotFound();
+        $this->get('/admin')->assertNotFound();
+        $this->get('/admin/restaurants')->assertNotFound();
+        $this->post('/login', ['email' => 'a@b.c', 'password' => 'x'])->assertNotFound();
     }
 }
