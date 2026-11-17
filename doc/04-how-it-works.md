@@ -14,6 +14,8 @@ GET /  ──▶ Route::view('/', 'home')
 
 Clicking "Lunch in Shibuya" calls `startGeolocation()` first, so the browser asks for the GPS permission while navigating to `/restaurants`; the first fix is stored in `sessionStorage` under `lastCoordinates` and reused by the next page. The other three buttons go to `/stores`, `/bars`, `/karaokes`. The home page itself does not ask for the position until a button is clicked.
 
+On a tablet or a PC (900px and more) the filter, the results and the details are shown side by side and the results load at page start; the panel swaps described below only happen on narrower screens (`isWideLayout()` in `whereto.js`, "wide screens" section of `style.css`).
+
 The header's sun/moon button switches between the dark and the light theme on every page (`toggleTheme()` in `whereto.js`). The choice is stored in `localStorage` under `theme`; without one the OS preference applies, and the page follows the OS when it changes. The stylesheet is one file: the dark palette on `:root`, the light one on `:root[data-theme="light"]`, and the layout sets that attribute before the first paint so there is no flash.
 
 ## 2. Geolocation (client side, `public/js/whereto.js`, geolocation section)

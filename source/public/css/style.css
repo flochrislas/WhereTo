@@ -982,6 +982,61 @@ td {
 }
 
 /*********************************************/
+/*            WIDE SCREENS (tablet, PC)      */
+/*********************************************/
+
+/* From 900px the three panels are side by side: filter | results | details, instead of one at a time.
+   The JavaScript stops swapping them (isWideLayout() in whereto.js); the !important below wins over the
+   inline display styles the phone layout sets. Only the pages with panels (#mainResults), not the home page. */
+@media screen and (min-width: 900px) {
+  #app:has(#mainResults) {
+    max-width: 96rem;
+    display: grid;
+    /* Three columns that share the width; each one has a minimum so nothing gets squeezed */
+    grid-template-columns: minmax(16rem, 1fr) minmax(24rem, 1.5fr) minmax(16rem, 1.2fr);
+    /* The middle row takes the space left; minmax(0, ...) lets the panels scroll inside it */
+    grid-template-rows: auto auto minmax(0, 1fr) auto;
+    grid-template-areas:
+      "header header header"
+      "report report report"
+      "filter results details"
+      "footer footer footer";
+    column-gap: .2rem;
+  }
+  #app:has(#mainResults) #header { grid-area: header; }
+  #app:has(#mainResults) #position-report { grid-area: report; }
+  #app:has(#mainResults) #footer { grid-area: footer; }
+  /* #content is no longer a box: its two panels become cells of the grid themselves */
+  #app:has(#mainResults) #content { display: contents !important; }
+  #app:has(#mainResults) #mainFilter,
+  #app:has(#mainResults) #mainResults {
+    display: flex !important;
+    height: auto;
+    min-height: 0;
+    margin: .1rem;
+    /* What #content gave them before */
+    background-color: var(--bg-color-inner);
+    color: var(--color-txt-content);
+  }
+  #app:has(#mainResults) #mainFilter { grid-area: filter; }
+  #app:has(#mainResults) #mainResults { grid-area: results; }
+  #app:has(#mainResults) #mainDetails {
+    grid-area: details;
+    display: block !important;
+    min-height: 0;
+  }
+  /* Nothing to pick yet */
+  #app:has(#mainResults) #mainDetails:empty::before {
+    content: "Pick a place in the list to see its details here.";
+    display: block;
+    padding: 1rem;
+    font-style: italic;
+  }
+  /* The buttons that swap the panels on a phone ("Show Filters", "BACK") are useless here */
+  #app:has(#mainResults) .navButton { display: none; }
+}
+
+/*********************************************/
 /*            ACCESSIBILITY                  */
 /*********************************************/
 

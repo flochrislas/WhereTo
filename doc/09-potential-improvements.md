@@ -30,10 +30,11 @@ The UI is already responsive (viewport meta, one `@media` breakpoint at 680px, C
 - **How**: the colours are already CSS variables (`--color-name`, `--color-cost`, ...). Add a `@media (prefers-color-scheme: light)` block that overrides the variables, plus `color-scheme: light dark` on `:root`. Optionally a toggle stored in `localStorage`, like `orderBy` is today.
 - **Done (November 2026)**: `style-dark.css` became `style.css`; every colour is a variable, the light values sit under `:root[data-theme="light"]` (the tags keep their mid-tone backgrounds with black text in both themes). A tiny inline script in the layout sets `data-theme` before the first paint from `localStorage` or the OS preference, a sun/moon button in the header toggles it, and `whereto.js` follows the OS when nothing was chosen and updates the `theme-color` meta.
 
-### 1.4 Use the width on tablets and PCs (M)
+### 1.4 Use the width on tablets and PCs (M) — done
 
 - **Why**: the filter panel and the results panel are shown one at a time (`showFilter()` / `showResults()` toggle `display`). On a tablet or a PC there is room for both side by side, which removes the back-and-forth.
 - **How**: a second breakpoint (for example 900px) that lays `#mainFilter` and `#mainResults` out with CSS grid, and a check in `showResults()` / `showFilter()` that does nothing when both are visible. A third column could host the details instead of replacing the results.
+- **Done (November 2026)**: from 900px, `#app` becomes a CSS grid with the filter, the results and the details side by side (`style.css`, "wide screens"; `#content` is `display: contents` so its two panels are grid cells). `isWideLayout()` in `whereto.js` turns the panel swaps into no-ops, the results load at page start, and the "Show Filters" / "BACK" buttons are hidden. Below 900px nothing changes.
 
 ### 1.5 Ship only the WOFF2 font (S) — done
 

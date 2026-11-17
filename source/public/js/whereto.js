@@ -168,14 +168,25 @@ function getResultsUrl() {
   return content?.dataset.resultsUrl ?? null;
 }
 
+/** Tablet or PC (900px and more): the panels are side by side (style.css, "wide screens"), nothing to swap */
+function isWideLayout() {
+  return window.matchMedia("(min-width: 900px)").matches;
+}
+
 /** Switch from the tags panel to the results panel */
 function showResults() {
+  if (isWideLayout()) {
+    return;
+  }
   getMainFilterDiv().style.display = "none";
   getMainResultsDiv().style.display = "flex";
 }
 
 /** Switch from the results panel back to the tags panel */
 function showFilter() {
+  if (isWideLayout()) {
+    return;
+  }
   getMainFilterDiv().style.display = "flex";
   getMainResultsDiv().style.display = "none";
 }
@@ -453,13 +464,19 @@ function showDetails(url, placeId) {
   if (placeId != getCurrentDetailsId()) {
     ajaxDetails(url);
   }
-  // Swap the two panels
+  // Swap the two panels (on a phone; side by side on a wide screen)
+  if (isWideLayout()) {
+    return;
+  }
   getDetailsDiv().style.display = "block";
   getContentDiv().style.display = "none";
 }
 
 /** "BACK" button: swap the panels back */
 function hideDetails() {
+  if (isWideLayout()) {
+    return;
+  }
   getDetailsDiv().style.display = "none";
   getContentDiv().style.display = "flex";
 }
@@ -587,6 +604,10 @@ if (getResultsUrl() !== null) {
   // Show the remembered sort order and tag operator on their buttons
   markSortButton(readStore("orderBy") || "distance");
   markOperatorButton(getTagsOperator());
+  // On a wide screen the results panel is visible from the start: fill it instead of waiting for "Show All"
+  if (isWideLayout()) {
+    getResults();
+  }
 }
 
 // Keyboard: Enter or Space on an element with role="button" (the result names) acts like a click.
