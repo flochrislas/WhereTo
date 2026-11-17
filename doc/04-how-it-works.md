@@ -118,9 +118,9 @@ The site is read-only: every route is a `GET`, there is no login and no account.
 
 `whereto.js` registers `public/sw.js` on every public page. The worker:
 
-1. On install, pre-caches the app shell: `/`, the four place pages, the stylesheet, the font, the icon and the manifest.
+1. On install, pre-caches the app shell: `/`, the four place pages, the stylesheet and the script with their `?v=` version (the page registers the worker as `/sw.js?css=<v>&js=<v>`, from data attributes of `<html>`, so a new file version is a new worker and a new cache), the font, the icon and the manifest.
 2. For static files (`/css`, `/js`, `/fonts`, `/icons`, the manifest, the favicon): answers from the cache at once and refreshes the copy in the background ("stale-while-revalidate"). The script tag's `?v=` makes a new `whereto.js` a new URL, so it is fetched from the network.
-3. For pages, results and details fragments: network first, and the last copy seen when offline. An unknown page requested offline falls back to the cached home page.
+3. For pages, results and details fragments: network first, and the last copy seen when offline. At most `MAX_FRAGMENTS` (20) such copies are kept, oldest out; the number is a constant at the top of `sw.js` with its reasoning. An unknown page requested offline falls back to the cached home page.
 4. Never touches `/_debugbar`, non-GET requests or other origins.
 
 `CACHE_VERSION` in `sw.js` names the cache; bumping it drops the previous cache on activation. The manifest (`public/manifest.json`) gives the name, colours and icons used by "Add to home screen"; the layout links it with `rel="manifest"` and an `apple-touch-icon` for iOS.

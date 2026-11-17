@@ -147,6 +147,15 @@ The UI is already responsive (viewport meta, one `@media` breakpoint at 680px, C
 - `LOG_CHANNEL=daily` with a retention, and a `LOG_STACK` that also ships to the host's journal.
 - Laravel Pulse or Telescope in the dev environment only, to see slow queries and cache hit rates when working on 3.5.
 
+### 4.6 Loose ends from the November 2026 code review (S each) — done
+
+Pre-existing behaviours the reviewer set aside as out of scope; each one is a small decision.
+
+- **Service worker cache growth**: `networkFirst()` in `sw.js` stores one copy of the results fragment per distinct URL, and the URL carries the visitor's exact position. Fragments are only requested when the visitor acts (a tag, a sort, "Show All", the first GPS fix), not while walking, so a visit stores a handful; still, nothing dropped them. Done: `MAX_FRAGMENTS = 20` in `sw.js`, the oldest fragments are dropped after each store (the pre-cached shell is not counted). Rounding the position in the key was considered and left out: it only helps a repeated search from a slightly different spot while offline, and would show walking times from a position up to 100 m off.
+- **Visitor coordinates in the log**: done, `PlaceSearch::resolvePosition()` logs the distance from the station instead of the coordinates, so even a debug day in production cannot leak a position.
+- **Unversioned pre-cache entry for the stylesheet**: fixed (November 2026, after a second review): the page registers the worker with the asset versions in its URL, and the pre-cache holds the versioned stylesheet and script. Before that, a reload offline right after the first visit gave an unstyled page without its script.
+- **Raw HTML from the seed data**: the results rows now escape `points` (plain text in the seeders). The store `experience` stays raw on purpose: two seeded texts (Shibuya Mark City, Mont-Bell) carry an `<a href>` link in the text itself. The architecture test now forbids `{!! !!}` everywhere but those two store views. To close it for good, move those two links to the `official_website` column and escape there too.
+
 ## 5. Quality, testing and delivery
 
 ### 5.1 Continuous integration (S) — done

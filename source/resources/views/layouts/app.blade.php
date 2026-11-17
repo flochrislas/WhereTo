@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html lang="{{ app()->getLocale() }}">
+<!-- data-css-version / data-js-version: the ?v= of the two files below; whereto.js registers the service worker
+     with them, so the worker pre-caches the exact URLs the page uses (and a new version means a new worker) -->
+<html lang="{{ app()->getLocale() }}" data-css-version="{{ filemtime(public_path('css/style.css')) }}" data-js-version="{{ filemtime(public_path('js/whereto.js')) }}">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">

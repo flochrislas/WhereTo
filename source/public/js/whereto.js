@@ -231,25 +231,32 @@ function getResults() {
 function loadAllResults() {
   setResultsLoading("all");
   // Stamp the request now (not when it answers): a GPS fix arriving while it is in flight must see that
-  // something was requested, so that refreshResultsAfterFix() asks again with the position
-  setResultsLoadingTime(nowStamp());
+  // something was requested, so that refreshResultsAfterFix() asks again with the position. Two "all" requests
+  // can then be in flight (station, then position): only the latest one may write the list or clear the state.
+  const now = nowStamp();
+  setResultsLoadingTime(now);
   getResultsDiv().innerHTML = "Loading ALL entries. Please wait or select a tag...";
-  const url = getResultsUrl() + '?position=' + getLocation() + '&orderBy=distance';
+  // The remembered sort order, so the list matches the highlighted sort button
+  const orderBy = readStore("orderBy") || "distance";
+  const url = getResultsUrl() + '?position=' + getLocation() + '&orderBy=' + encodeURIComponent(orderBy);
   console.info('GET: ' + url);
   fetch(url)
     .then(response => response.ok ? response.text() : Promise.reject(response.status))
     .then(html => {
-      // Only write if a tag search did not start in the meantime
-      if (getResultsLoading() == "all") {
+      // Only write if no other request (a later "all" one, or a tag search) started in the meantime
+      if (now == getResultsLoadingTime()) {
         getResultsDiv().innerHTML = html;
       }
     })
     .catch(() => {
-      getResultsDiv().innerHTML = "Sorry, an error occurred during the search. Check your Internet connection and try again.";
-      setResultsLoadingTime(0); // nothing loaded: "Show All" may try again
+      if (now == getResultsLoadingTime()) {
+        getResultsDiv().innerHTML = "Sorry, an error occurred during the search. Check your Internet connection and try again.";
+        setResultsLoadingTime(0); // nothing loaded: "Show All" may try again
+      }
     })
     .finally(() => {
-      if (getResultsLoading() == "all") {
+      // Only the latest request clears the loading state
+      if (now == getResultsLoadingTime()) {
         setResultsLoading("none");
       }
     });
@@ -405,8 +412,12 @@ function moveTag(event) {
       // Run the search from the selected tags immediately in the background
       refreshResults();
     } else {
-      // Reset the "Show All" button
+      // Reset the "Show All" button (on a phone the visitor presses it to see the unfiltered list again)
       resetFilterHeaderButton();
+      // On a wide screen the list is visible: refresh it now, without filter
+      if (isWideLayout()) {
+        loadAllResults();
+      }
     }
   } else {
     // Was available: add it to the selected tags
@@ -625,6 +636,8 @@ document.addEventListener("keydown", event => {
 // Register the service worker (public/sw.js): makes the app installable and usable offline.
 // Needs HTTPS or localhost, like geolocation. Browsers without support simply skip this.
 if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('/sw.js')
+  // The asset versions (data attributes of <html>) travel in the worker's URL: it pre-caches those exact files
+  const versions = document.documentElement.dataset;
+  navigator.serviceWorker.register('/sw.js?css=' + (versions.cssVersion || '') + '&js=' + (versions.jsVersion || ''))
     .catch(e => console.warn('Service worker registration failed: ' + e));
 }

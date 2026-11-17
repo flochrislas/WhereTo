@@ -158,6 +158,9 @@ class PlacesTest extends TestCase
             // Dark and light themes: the browser is told about both, and the header has the switch
             ->assertSee('<meta name="color-scheme" content="dark light">', false)
             ->assertSee('id="themeButton"', false)
+            // The service worker is registered with the asset versions (data attributes of <html>)
+            ->assertSee('data-css-version="'.filemtime(public_path('css/style.css')).'"', false)
+            ->assertSee('data-js-version="'.filemtime(public_path('js/whereto.js')).'"', false)
             ->assertSee("localStorage.getItem('theme')", false)
             // Progressive Web App: manifest and home screen icon
             ->assertSee('rel="manifest" href="'.asset('manifest.json').'"', false)

@@ -211,7 +211,8 @@ abstract class PlaceSearch
 
             return self::station();
         }
-        Log::debug('GPS position set from user: '.$current);
+        // Not the coordinates themselves: the log must never hold where a visitor is
+        Log::debug('GPS position accepted, '.round($distance).' m from the station.');
 
         return $current;
     }

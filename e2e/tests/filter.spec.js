@@ -24,6 +24,20 @@ test.describe('Tag filter', () => {
     expect(all).toBeGreaterThan(0);
   });
 
+  test('removing the last tag shows every restaurant again', async ({ page }) => {
+    await page.goto('/restaurants');
+    const total = await showResults(page);
+    await showFilter(page);
+    await page.locator('#tags').getByRole('button', { name: 'ramen', exact: true }).click();
+    await showResults(page);
+    await expect(page.locator('#results .resultsCount')).not.toHaveText(`${total} results`);
+    // Remove it: the unfiltered list is back (at once on a wide screen, after "Show All" on a phone)
+    await showFilter(page);
+    await page.locator('#selectedTags').getByRole('button', { name: 'ramen', exact: true }).click();
+    await showResults(page);
+    await expect(page.locator('#results .resultsCount')).toHaveText(`${total} results`);
+  });
+
   test('"Show All" lists every restaurant and the keyboard reaches the tags', async ({ page, isMobile }) => {
     test.skip(isMobile, 'no keyboard on a phone');
     await page.goto('/restaurants');

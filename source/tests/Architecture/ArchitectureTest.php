@@ -172,6 +172,18 @@ class ArchitectureTest extends TestCase
         }
     }
 
+    public function test_views_escape_their_output(): void
+    {
+        // {!! !!} prints without escaping: only the store experience, whose seeded text carries links, may use it
+        $allowed = ['stores/details.blade.php', 'stores/details-single.blade.php'];
+        foreach (File::allFiles(resource_path('views')) as $view) {
+            if (in_array($view->getRelativePathname(), $allowed, true)) {
+                continue;
+            }
+            $this->assertStringNotContainsString('{!!', $view->getContents(), $view->getRelativePathname().': use {{ }} (escaped), not {!! !!}');
+        }
+    }
+
     public function test_only_the_layout_has_an_inline_script(): void
     {
         // The JavaScript lives in public/js/whereto.js; the one exception is the tiny theme snippet

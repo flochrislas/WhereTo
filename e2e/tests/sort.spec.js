@@ -8,6 +8,23 @@ async function column(page, selector) {
 }
 
 test.describe('Sort buttons', () => {
+  test('the remembered order is used by the first load, so the highlighted button is right', async ({ page }) => {
+    await page.goto('/restaurants');
+    await showResults(page);
+    await page.locator('.sortButton[data-order-by="cost"]').click();
+    await expect(page.locator('.sortButton[data-order-by="cost"]')).toHaveAttribute('aria-pressed', 'true');
+    // Reload: "Cost first" is still highlighted, and the list really is by cost
+    await page.reload();
+    await showResults(page);
+    await expect(page.locator('.sortButton[data-order-by="cost"]')).toHaveAttribute('aria-pressed', 'true');
+    await expect.poll(async () => {
+      const prices = (await column(page, '.fourDigits')).filter(p => !Number.isNaN(p));
+      return prices.length > 10 && prices.every((p, i) => i === 0 || p >= prices[i - 1]);
+    }).toBe(true);
+    // Back to the default for the other tests (localStorage is per test context, but be explicit)
+    await page.locator('.sortButton[data-order-by="distance"]').click();
+  });
+
   test('near, best and cost first', async ({ page }) => {
     await page.goto('/restaurants');
     await showResults(page);
