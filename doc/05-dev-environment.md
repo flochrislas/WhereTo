@@ -6,7 +6,7 @@ The app runs on Laravel 13 / PHP 8.5 / PostgreSQL 18. The podman compose environ
 
 | Tool | Version | Why |
 |---|---|---|
-| PHP | 8.5 (8.3 minimum) | Laravel 13 requirement |
+| PHP | 8.5 (8.4 minimum) | Laravel 13 needs 8.3; the test dependencies (PHPUnit 13) need 8.4 |
 | PHP extensions | `pdo_pgsql`, `mbstring`, `openssl`, `tokenizer`, `xml`, `ctype`, `fileinfo`, `bcmath`, `intl`, `zip` | Laravel requirements plus PostgreSQL and Composer |
 | Composer | 2.x | |
 | PostgreSQL | 18 (any supported version works) | Default connection. SQLite also works for a quick look. |

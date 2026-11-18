@@ -32,7 +32,7 @@ State after the November 2026 upgrade (branch `upgrade-2026`). Versions come fro
 | `@playwright/test` `^1.57` (Node, in `e2e/`) | Browser tests of the public pages, see `05-dev-environment.md` |
 | `larastan/larastan` `^3.15` | PHPStan for Laravel, level 8 (the strictest), config in `phpstan.neon` |
 | `laravel/pint` | Code style (Laravel preset) |
-| `phpunit/phpunit` `^12.5`, `mockery/mockery`, `fakerphp/faker`, `laravel/pail`, `laravel/pao`, `nunomaduro/collision` | Skeleton defaults |
+| `phpunit/phpunit` `^13.4`, `mockery/mockery`, `fakerphp/faker`, `laravel/pail`, `laravel/pao`, `nunomaduro/collision` | Skeleton defaults |
 
 Removed during the upgrade: `laravelcollective/html` (abandoned), `fideloper/proxy` (built into the framework), `doctrine/dbal`, `fzaninotto/faker`, `filp/whoops`.
 
