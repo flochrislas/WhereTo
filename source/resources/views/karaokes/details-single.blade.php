@@ -1,11 +1,11 @@
 @extends('layouts.app')
 
-@section('metatags')
-  <title>{{config('app.name')}} - {{$place->name}} - Karaoke info & {{ \Illuminate\Support\Str::limit($place->updated_at, 4, '') }} review</title>
-  <meta name="description" content="Detailed information page for the karaoke {{$place->name}}, in Tokyo Shibuya. Full {{ \Illuminate\Support\Str::limit($place->updated_at, 4, '') }} review and ratings.">
-@endsection
+@section('title', $place->name.' - Karaoke info'.($place->visit_date ? ' & '.substr($place->visit_date, 0, 4).' review' : ''))
+@section('description', 'Detailed information page for the karaoke '.$place->name.', in Tokyo Shibuya. '.($place->visit_date ? 'Full '.substr($place->visit_date, 0, 4).' review and ratings.' : 'Ratings and practical information.'))
+@section('heading', $place->name)
 
 @section('content')
+  <x-structured-data :data="$place->structuredData(\App\Support\PublicUrl::to(request()->path()))" />
 <div id="content-unchained">
 
   <div id="resultsControl">

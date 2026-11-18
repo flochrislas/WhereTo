@@ -47,7 +47,7 @@ APP_NAME=WhereTo
 APP_ENV=production
 APP_KEY=                 # filled by key:generate below
 APP_DEBUG=false
-APP_URL=https://your.domain
+APP_URL=https://your.domain   # also what sitemap.xml and robots.txt print
 
 LOG_CHANNEL=daily
 LOG_LEVEL=info           # the code logs at debug level everywhere; keep this at info or warning

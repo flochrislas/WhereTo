@@ -4,11 +4,12 @@
 @foreach ($places as $bar)
   <div class="resultsCounter"></div>
   <div class="resultRow">
-    <div class="resultCell nameAndType" role="button" tabindex="0"
-        onclick="showDetails('{{ route('bars.details',$bar->id) }}','{{ $bar->id }}')">
+    <!-- A real link to the standalone page (crawlers and new tabs); a click opens the details in the page instead -->
+    <a class="resultCell nameAndType" href="{{ route('bars.details.single', $bar->id) }}"
+        onclick="showDetails(event, '{{ route('bars.details', $bar->id) }}', '{{ $bar->id }}')">
       <div class="rowName">{{ $bar->name }}</div>
       <div class="rowType">{{ $bar->type }}</div>
-    </div>
+    </a>
     <div class="resultCell distance centerContent">
       <a target="_blank"
          href="{{ $bar->google_maps_link }}">

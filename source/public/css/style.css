@@ -520,7 +520,7 @@ td {
 }
 
 /* Keyboard focus visible on the tags and the clickable result names */
-.tag:focus-visible, .resultCell[role="button"]:focus-visible {
+.tag:focus-visible, a.resultCell:focus-visible {
   outline: 2px solid var(--color-dst);
   outline-offset: 2px;
 }
@@ -682,6 +682,9 @@ td {
   text-align: left;
   margin-right: .1rem;
   cursor: pointer;
+  /* It is a link (to the standalone page): no underline, the name and type keep their own colours */
+  text-decoration: none;
+  color: inherit;
 }
 .resultCell.nameAndType a {
   text-decoration: none;
@@ -1039,6 +1042,20 @@ td {
 /*********************************************/
 /*            ACCESSIBILITY                  */
 /*********************************************/
+
+/* Read by screen readers and search engines, not shown (the page <h1>): the usual "clip" recipe */
+.visuallyHidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  border: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
 
 /* The visitor asked the OS for less motion: no transitions nor animations */
 @media (prefers-reduced-motion: reduce) {

@@ -19,6 +19,14 @@ interface Place
     public function setCurrentDistance(?float $distance): void;
 
     /**
+     * The JSON-LD data of the standalone page of this place (schema.org vocabulary), built by App\Support\StructuredData
+     *
+     * @param  string  $url  the canonical URL of the page
+     * @return array<string, mixed>
+     */
+    public function structuredData(string $url): array;
+
+    /**
      * Any attribute of the model, e.g. getAttribute('name') (Illuminate\Database\Eloquent\Model)
      *
      * @param  string  $key

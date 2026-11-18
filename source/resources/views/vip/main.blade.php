@@ -1,8 +1,7 @@
 @extends('layouts.app')
 
-@section('metatags')
-  <title>{{ config('app.name') }} - VIP</title>
-@endsection
+@section('title', 'VIP')
+@section('description', 'VIP area of '.config('app.name').', coming later.')
 
 @section('content')
 <div id="content">

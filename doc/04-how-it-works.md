@@ -29,15 +29,16 @@ Failure messages are written into the `#position-report` div, including a hint t
 ## 3. Filter page
 
 ```
-GET /restaurants ──▶ RestaurantTagController@restaurantsFilter
-                      Cache 'all_restaurants_tags' ──▶ RestaurantTag ordered by type, weight, created_at
+GET /restaurants ──▶ RestaurantController@index
+                      RestaurantTag::allCached()   cache 'all_restaurants_tags', ordered by type, weight, created_at
+                      RestaurantSearch->find(null, And, Distance) + withDistances(null)   every place, from the station
                       view restaurants.main
                         ├─ restaurants.filter   (#tags cloud, #selectedTags, "Show All" button)
-                        ├─ restaurants.results  (hidden: sort buttons, headers, empty #results)
-                        └─ inline JS: main, filter, results, details
+                        └─ restaurants.results  (hidden on a phone: sort buttons, headers, and #results already
+                                                 filled with results-data: the default list, time="1")
 ```
 
-Stores, bars and karaoke do the same through `StoreTagController@viewAllTags` and so on.
+Stores, bars and karaoke do the same through `StoreController@index` and so on. The default list is in the HTML for the crawlers (see `10-seo.md`): each place name is a real link to its standalone page, and the JavaScript turns a click into the in-page details instead. Once the position is known, the script requests the list again with it (and at once when the remembered sort order is not "distance").
 
 Client behaviour (`public/js/whereto.js`, tag filter and results sections):
 
@@ -97,6 +98,10 @@ GET /suggestions?position=lat,lon ──▶ SuggestionController@suggest
 The browser (`ajaxSuggestion()` in `public/js/whereto.js`, URL from the `data-suggestion-url` attribute of `#suggestion`) replaces the suggestion box with the text and a "Try again" button that repeats the call.
 
 ## 7. Caching strategy
+
+The results and details fragments carry `X-Robots-Tag: noindex` (`NoIndex` middleware, `noindex` alias in `bootstrap/app.php`), and every page carries `<link rel="canonical">` with its own URL built on `APP_URL` (`App\Support\PublicUrl`, also used for `og:url`, the sitemap and the JSON-LD) from the layout, so the search engines index the pages, never the fragments (`10-seo.md`).
+
+Each standalone place page also carries a JSON-LD block (`components/structured-data.blade.php`): the place as a schema.org `Restaurant`, `Store`, `BarOrPub` or `EntertainmentBusiness`, with its name, a `PostalAddress` (Shibuya, Tokyo, JP: the `location` column is a neighbourhood label, not a street, so it stays out of the markup), coordinates, Google Maps / Tabelog / website links, the lunch price and our score as a single `Review`. Each model builds its array in `structuredData()` on top of `App\Support\StructuredData`; the JSON is encoded with `<`, `>` and `&` escaped so no text from the seeders can break out of the script tag.
 
 Because the dataset is tiny and only changes through seeders, every query result is cached forever in the `cache` table and keyed by the search parameters (see 03-data-model.md). Distances are computed per request on the cached collection. The seeder flushes the whole cache at the end; after a change made another way (SQL, tinker), run `php artisan cache:clear`.
 
