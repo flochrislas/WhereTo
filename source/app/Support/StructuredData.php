@@ -13,7 +13,7 @@ use App\Models\Place;
 final class StructuredData
 {
     /**
-     * The fields every kind of place has: type, name, url, address text, coordinates and the known links.
+     * The fields every kind of place has: type, name, url, the ward as address, coordinates and the known links.
      *
      * @param  string  $type  the schema.org type, e.g. 'Restaurant' or 'BarOrPub'
      * @param  string  $url  the canonical URL of the page
@@ -29,14 +29,11 @@ final class StructuredData
             'url' => $url,
         ];
 
-        // Google wants a PostalAddress for a local business. Every place is in Shibuya, Tokyo (the premise of the
-        // app); the free text of the seeders ("Center Gai", "2-3-4 Dogenzaka") is the closest thing to a street address
-        $address = ['@type' => 'PostalAddress'];
-        $location = $place->getAttribute('location');
-        if (is_string($location) && $location !== '') {
-            $address['streetAddress'] = $location;
-        }
-        $data['address'] = $address + ['addressLocality' => 'Shibuya', 'addressRegion' => 'Tokyo', 'addressCountry' => 'JP'];
+        // Google wants a PostalAddress for a local business. Every place is in Shibuya ward, Tokyo (the premise of
+        // the app), so that much is always true. No street line: the "location" column is a neighbourhood label
+        // ("Shibuya, Dogenzaka", "near Stream"), not an address; the coordinates below give the exact spot.
+        // A real street address would need its own column (doc/10-seo.md, item 7).
+        $data['address'] = ['@type' => 'PostalAddress', 'addressLocality' => 'Shibuya', 'addressRegion' => 'Tokyo', 'addressCountry' => 'JP'];
 
         if ($position = $place->position()) {
             $data['geo'] = ['@type' => 'GeoCoordinates', 'latitude' => $position->lat, 'longitude' => $position->lon];

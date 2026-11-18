@@ -220,7 +220,7 @@ class PlacesTest extends TestCase
         $this->assertSame('Near one', $data['name']);
         $this->assertSame($url, $data['url']);
         $this->assertSame(['@type' => 'GeoCoordinates', 'latitude' => 35.6586, 'longitude' => 139.7016], $data['geo']);
-        // No location text in the seed: a PostalAddress with the town only; no links: the key is absent
+        // The address is the ward only (the location column is a neighbourhood label, never a street); no links: the key is absent
         $this->assertSame(['@type' => 'PostalAddress', 'addressLocality' => 'Shibuya', 'addressRegion' => 'Tokyo', 'addressCountry' => 'JP'], $data['address']);
         $this->assertArrayNotHasKey('sameAs', $data);
         // The fragment (one-page view) has no structured data: only the real page describes the place
@@ -242,7 +242,8 @@ class PlacesTest extends TestCase
 
         $this->assertSame('Restaurant', $data['@type']);
         $this->assertSame('Sushi <b>& co</b>', $data['name']);
-        $this->assertSame('1-2-3 Dogenzaka', $data['address']['streetAddress']);
+        // The location text is not an address: it never becomes a street line
+        $this->assertArrayNotHasKey('streetAddress', $data['address']);
         $this->assertSame('JP', $data['address']['addressCountry']);
         $this->assertSame('¥900', $data['priceRange']);
         // The empty website is left out
