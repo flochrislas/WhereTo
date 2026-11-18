@@ -1,0 +1,191 @@
+import { test } from 'node:test';
+import assert from 'node:assert/strict';
+import { readFileSync, writeFileSync, mkdtempSync, cpSync } from 'node:fs';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
+import { parseSeeder, readSeeder, editSeederText, applySeederEdits, planSeederEdits } from '../lib/seeders.js';
+
+const FIXTURES = new URL('./fixtures/', import.meta.url).pathname;
+const restoText = readFileSync(join(FIXTURES, 'RestaurantsTableSeeder.php'), 'utf8');
+
+// Copies the fixtures to a fresh temporary folder, so a test can edit them.
+function tempFixtures() {
+    const dir = mkdtempSync(join(tmpdir(), 'freshness-'));
+    cpSync(FIXTURES, dir, { recursive: true });
+    return dir;
+}
+
+test('the reader finds every active block and skips the commented-out ones', () => {
+    const places = parseSeeder(restoText, 'restaurants');
+    assert.equal(places.length, 13);
+    assert.deepEqual(places[0], {
+        kind: 'restaurants',
+        name: 'Hakata Furyu',
+        businessStatus: null,
+        googlePlaceId: null,
+        lat: 35.658545,
+        lon: 139.698468,
+        line: 30,
+    });
+    assert.ok(!places.some((p) => p.name === 'M-SPO cafe dining' || p.name === 'xxxx'));
+});
+
+test('the reader unescapes quotes and reads an already closed place', () => {
+    const places = parseSeeder(restoText, 'restaurants');
+    assert.equal(places.filter((p) => p.name === "Mc Donald's").length, 2);
+    const kindenmaru = places.find((p) => p.name === 'Kindenmaru');
+    assert.equal(kindenmaru.businessStatus, 'CLOSED_PERMANENTLY');
+    assert.equal(kindenmaru.googlePlaceId, 'ChIJclosedKindenmaru');
+    assert.equal(places.find((p) => p.name === 'Il Ritrovo').googlePlaceId, 'ChIJknownRitrovo');
+});
+
+test('the reader reads a string that spans several lines', () => {
+    const places = parseSeeder(restoText, 'restaurants');
+    assert.ok(places.some((p) => p.name === 'Sushi Zanmai'));
+    // The editor still inserts after the name line, never inside the string.
+    const out = editSeederText(restoText, 'restaurants', { name: 'Sushi Zanmai' }, { googlePlaceId: 'ChIJsushi' });
+    assert.ok(out.includes("'name' => 'Sushi Zanmai',\n            'google_place_id' => 'ChIJsushi',\n"));
+});
+
+test('the reader ignores a zoom level after the coordinates, like the app', () => {
+    const krung = parseSeeder(restoText, 'restaurants').find((p) => p.name === 'Krung Siam');
+    assert.deepEqual([krung.lat, krung.lon], [35.6578, 139.7012]);
+});
+
+test('the reader stops when a block cannot be read', () => {
+    const broken = restoText.replace("'lunch_price' => 900,", "'lunch_price' => 900 + 1,");
+    assert.throws(() => parseSeeder(broken, 'restaurants'), /line 34/);
+});
+
+test('the reader stops when a ::create( is not a block it understands', () => {
+    const odd = restoText.replace("$resto = Restaurant::create([\n            'name' => 'Usagi',", "$resto = Restaurant::create(['name' => 'Usagi',");
+    assert.throws(() => parseSeeder(odd, 'restaurants'), /create/);
+});
+
+test('the reader rejects an unknown business_status, naming the file, line and place', () => {
+    const dir = tempFixtures();
+    const file = join(dir, 'RestaurantsTableSeeder.php');
+    writeFileSync(file, restoText.replace("'business_status' => 'CLOSED_PERMANENTLY',", "'business_status' => 'CLOSED',"));
+    assert.throws(() => readSeeder(file, 'restaurants'), (error) => {
+        assert.ok(error.message.startsWith(file));
+        assert.match(error.message, /line 48: unknown business_status 'CLOSED' for the place 'Kindenmaru'/);
+        return true;
+    });
+});
+
+test('the reader stops when a block has no coordinates', () => {
+    const noCoords = restoText.replace("        $resto->fillCoordinatesFromString('35.660500, 139.698500');\n", '');
+    assert.throws(() => parseSeeder(noCoords, 'restaurants'), /Pancho.*coordinates/);
+});
+
+test('the editor inserts both keys right after the name line', () => {
+    const out = editSeederText(restoText, 'restaurants', { name: 'Go Go Curry' }, {
+        businessStatus: 'CLOSED_PERMANENTLY',
+        googlePlaceId: 'ChIJgogo',
+    });
+    assert.ok(out.includes(
+        "            'name' => 'Go Go Curry',\n" +
+        "            'business_status' => 'CLOSED_PERMANENTLY',\n" +
+        "            'google_place_id' => 'ChIJgogo',\n" +
+        "            'location' => 'Shibuya',\n",
+    ));
+    // Two lines added, nothing else touched.
+    assert.equal(out.split('\n').length, restoText.split('\n').length + 2);
+    const removed = out.replace("            'business_status' => 'CLOSED_PERMANENTLY',\n            'google_place_id' => 'ChIJgogo',\n", '');
+    assert.equal(removed, restoText);
+});
+
+test('the editor inserts the place id after an existing status', () => {
+    const out = editSeederText(restoText, 'restaurants', { name: 'Tengu Sakaba' }, { googlePlaceId: 'ChIJtengu' });
+    assert.ok(out.includes(
+        "            'name' => 'Tengu Sakaba',\n" +
+        "            'business_status' => 'CLOSED_TEMPORARILY',\n" +
+        "            'google_place_id' => 'ChIJtengu',\n",
+    ));
+});
+
+test('the editor updates existing lines in place', () => {
+    const out = editSeederText(restoText, 'restaurants', { name: 'Kindenmaru' }, {
+        businessStatus: 'REPLACED',
+        googlePlaceId: 'ChIJother',
+    });
+    assert.equal(out.split('\n').length, restoText.split('\n').length);
+    assert.ok(out.includes("'name' => 'Kindenmaru',\n            'business_status' => 'REPLACED',\n            'google_place_id' => 'ChIJother',\n"));
+});
+
+test('the editor is idempotent', () => {
+    const fields = { businessStatus: 'CLOSED_PERMANENTLY', googlePlaceId: 'ChIJgogo' };
+    const once = editSeederText(restoText, 'restaurants', { name: 'Go Go Curry' }, fields);
+    const twice = editSeederText(once, 'restaurants', { name: 'Go Go Curry' }, fields);
+    assert.equal(twice, once);
+});
+
+test('the editor removes the status line when the place is operational again', () => {
+    const out = editSeederText(restoText, 'restaurants', { name: 'Tengu Sakaba' }, { businessStatus: 'OPERATIONAL' });
+    assert.ok(!out.includes('CLOSED_TEMPORARILY'));
+    assert.equal(out.split('\n').length, restoText.split('\n').length - 1);
+});
+
+test('the editor tells two places of the same name apart by their coordinates', () => {
+    const target = { name: "Mc Donald's", lat: 35.661, lon: 139.698 };
+    const out = editSeederText(restoText, 'restaurants', target, { businessStatus: 'CLOSED_PERMANENTLY' });
+    const places = parseSeeder(out, 'restaurants').filter((p) => p.name === "Mc Donald's");
+    assert.deepEqual(places.map((p) => p.businessStatus), [null, 'CLOSED_PERMANENTLY']);
+    // Without coordinates, the name alone is ambiguous.
+    assert.throws(() => editSeederText(restoText, 'restaurants', { name: "Mc Donald's" }, { businessStatus: 'REPLACED' }), /2 places/);
+});
+
+test('the editor edits both copies of a place that is in the seeder twice', () => {
+    const target = { name: 'Usagi', lat: 35.662, lon: 139.7005 };
+    const out = editSeederText(restoText, 'restaurants', target, { businessStatus: 'CLOSED_PERMANENTLY', googlePlaceId: 'ChIJusagi' });
+    const usagis = parseSeeder(out, 'restaurants').filter((p) => p.name === 'Usagi');
+    assert.equal(usagis.length, 2);
+    for (const u of usagis) assert.deepEqual([u.businessStatus, u.googlePlaceId], ['CLOSED_PERMANENTLY', 'ChIJusagi']);
+    assert.equal(out.split('\n').length, restoText.split('\n').length + 4);
+});
+
+test('the editor refuses an unknown place, status or id', () => {
+    assert.throws(() => editSeederText(restoText, 'restaurants', { name: 'Nowhere' }, { businessStatus: 'REPLACED' }), /No place/);
+    assert.throws(() => editSeederText(restoText, 'restaurants', { name: 'Usagi' }, { businessStatus: 'GONE' }), /status/);
+    assert.throws(() => editSeederText(restoText, 'restaurants', { name: 'Usagi' }, { googlePlaceId: "x'); evil();" }), /place id/);
+});
+
+test('applySeederEdits writes the file once and the reader reads back the new values', () => {
+    const dir = tempFixtures();
+    const file = join(dir, 'RestaurantsTableSeeder.php');
+    const edits = [
+        { target: { name: 'Go Go Curry' }, fields: { businessStatus: 'CLOSED_PERMANENTLY', googlePlaceId: 'ChIJgogo' } },
+        { target: { name: 'Hakata Furyu' }, fields: { googlePlaceId: 'ChIJhakata' } },
+    ];
+    assert.equal(applySeederEdits(file, 'restaurants', edits), true);
+    const places = readSeeder(file, 'restaurants');
+    assert.equal(places.length, 13);
+    assert.equal(places.find((p) => p.name === 'Go Go Curry').businessStatus, 'CLOSED_PERMANENTLY');
+    assert.equal(places.find((p) => p.name === 'Hakata Furyu').googlePlaceId, 'ChIJhakata');
+    // A second run changes nothing.
+    const before = readFileSync(file, 'utf8');
+    assert.equal(applySeederEdits(file, 'restaurants', edits), false);
+    assert.equal(readFileSync(file, 'utf8'), before);
+});
+
+test('applySeederEdits keeps Windows line endings if the file has them', () => {
+    const dir = tempFixtures();
+    const file = join(dir, 'RestaurantsTableSeeder.php');
+    writeFileSync(file, restoText.replaceAll('\n', '\r\n'));
+    applySeederEdits(file, 'restaurants', [{ target: { name: 'Go Go Curry' }, fields: { googlePlaceId: 'ChIJgogo' } }]);
+    const out = readFileSync(file, 'utf8');
+    assert.ok(out.includes("'name' => 'Go Go Curry',\r\n            'google_place_id' => 'ChIJgogo',\r\n"));
+    assert.ok(!/[^\r]\n/.test(out));
+});
+
+test('planSeederEdits verifies in memory and writes nothing', () => {
+    const dir = tempFixtures();
+    const file = join(dir, 'RestaurantsTableSeeder.php');
+    const plan = planSeederEdits(file, 'restaurants', [{ target: { name: 'Go Go Curry' }, fields: { businessStatus: 'REPLACED' } }]);
+    assert.equal(plan.changed, true);
+    assert.ok(plan.after.includes("'business_status' => 'REPLACED',"));
+    assert.equal(readFileSync(file, 'utf8'), restoText);
+    // A failing edit throws before anything is written.
+    assert.throws(() => planSeederEdits(file, 'restaurants', [{ target: { name: 'Nowhere' }, fields: { businessStatus: 'REPLACED' } }]), /No place/);
+    assert.equal(readFileSync(file, 'utf8'), restoText);
+});
