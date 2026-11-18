@@ -44,4 +44,17 @@ test.describe('Details', () => {
     }
     expect(errors).toEqual([]);
   });
+
+  test('a Ctrl-click on a result opens the standalone page in a new tab', async ({ page, context, isMobile }) => {
+    test.skip(isMobile, 'no modifier keys on a phone');
+    await page.goto('/restaurants');
+    await showResults(page);
+    const link = page.locator('#results a.resultCell').first();
+    const href = await link.getAttribute('href');
+    // The modified click is left to the browser: a new tab with the standalone page, and no in-page details
+    const [newPage] = await Promise.all([context.waitForEvent('page'), link.click({ modifiers: ['ControlOrMeta'] })]);
+    await newPage.waitForLoadState();
+    expect(newPage.url()).toContain(href);
+    await expect(page.locator('#detailName')).toHaveCount(0);
+  });
 });

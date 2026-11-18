@@ -17,6 +17,7 @@ WhereTo/
     │   ├── Enums/                       OrderBy (distance, ratings, cost) and TagOperator (AND, OR, ANDNOT, ORNOT)
     │   ├── Support/Position.php         "lat, lon" value object (parsing, distance to another position)
     │   ├── Support/StructuredData.php   the JSON-LD (schema.org) block of a place page, common fields and our review
+    │   ├── Support/PublicUrl.php        absolute URLs on APP_URL for the sitemap, canonical, Open Graph and JSON-LD
     │   ├── Services/                    PlaceSearch (tag query, forever cache, ordering, distances) and one subclass per kind
     │   ├── Http/Controllers/            see below
     │   ├── Http/Middleware/NoIndex.php  X-Robots-Tag: noindex on the AJAX fragments

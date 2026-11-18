@@ -476,9 +476,13 @@ function ajaxDetails(url) {
 
 /**
  * Called when a result name (a link to the standalone page) is clicked: load the details fragment (unless already
- * loaded) and show them in the page instead of following the link. Middle-click or "open in a new tab" still work.
+ * loaded) and show them in the page instead of following the link. A modified click (Ctrl, Cmd, Shift, Alt) or a
+ * non-primary button is left to the browser: it opens the standalone page in a new tab or window, as any link.
  */
 function showDetails(event, url, placeId) {
+  if (event.ctrlKey || event.metaKey || event.shiftKey || event.altKey || event.button !== 0) {
+    return;
+  }
   event.preventDefault();
   // Only fetch if a different place than the one currently displayed
   if (placeId != getCurrentDetailsId()) {

@@ -29,10 +29,14 @@ final class StructuredData
             'url' => $url,
         ];
 
-        // The address is a free text in the seeders ("2-3-4 Dogenzaka, Shibuya"); schema.org accepts a string
-        if (is_string($place->getAttribute('location')) && $place->getAttribute('location') !== '') {
-            $data['address'] = $place->getAttribute('location');
+        // Google wants a PostalAddress for a local business. Every place is in Shibuya, Tokyo (the premise of the
+        // app); the free text of the seeders ("Center Gai", "2-3-4 Dogenzaka") is the closest thing to a street address
+        $address = ['@type' => 'PostalAddress'];
+        $location = $place->getAttribute('location');
+        if (is_string($location) && $location !== '') {
+            $address['streetAddress'] = $location;
         }
+        $data['address'] = $address + ['addressLocality' => 'Shibuya', 'addressRegion' => 'Tokyo', 'addressCountry' => 'JP'];
 
         if ($position = $place->position()) {
             $data['geo'] = ['@type' => 'GeoCoordinates', 'latitude' => $position->lat, 'longitude' => $position->lon];

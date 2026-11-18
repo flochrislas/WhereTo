@@ -5,7 +5,7 @@
 @section('heading', $place->name)
 
 @section('content')
-  <x-structured-data :data="$place->structuredData(url()->current())" />
+  <x-structured-data :data="$place->structuredData(\App\Support\PublicUrl::to(request()->path()))" />
 <div id="content-unchained">
 
   <div id="resultsControl">

@@ -8,6 +8,7 @@ use App\Services\BarSearch;
 use App\Services\KaraokeSearch;
 use App\Services\RestaurantSearch;
 use App\Services\StoreSearch;
+use App\Support\PublicUrl;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Cache;
 
@@ -28,14 +29,14 @@ class SitemapController extends Controller
 
     /**
      * robots.txt: everything may be crawled (the fragments say "noindex" themselves), and here is the sitemap.
-     * A route rather than a static file because the sitemap line needs the absolute URL of this deployment.
+     * A route rather than a static file because the sitemap line needs the absolute URL of this deployment (APP_URL).
      */
     public function robots(): Response
     {
         $lines = [
             'User-agent: *',
             'Disallow:',
-            'Sitemap: '.route('sitemap'),
+            'Sitemap: '.PublicUrl::to(route('sitemap', absolute: false)),
         ];
 
         return response(implode("\n", $lines)."\n", 200, ['Content-Type' => 'text/plain; charset=UTF-8']);
@@ -43,7 +44,8 @@ class SitemapController extends Controller
 
     /**
      * sitemap.xml: the home page, the four main pages, and every place's standalone page.
-     * Cached forever like the rest of the data (the seeder flushes the cache).
+     * Cached forever like the rest of the data (the seeder flushes the cache), so the URLs are built on APP_URL,
+     * not on the hostname of whichever request came first.
      */
     public function sitemap(): Response
     {
@@ -55,14 +57,14 @@ class SitemapController extends Controller
     /** The XML itself: one <url> per page, with <lastmod> when the place has a visit date */
     private function buildSitemap(): string
     {
-        $urls = [[route('home'), null]];
+        $urls = [[PublicUrl::to(route('home', absolute: false)), null]];
         foreach (self::KINDS as $mainRoute => [$searchClass, $singleRoute]) {
-            $urls[] = [route($mainRoute), null];
+            $urls[] = [PublicUrl::to(route($mainRoute, absolute: false)), null];
             // Every place of the kind, through the same cached search as the main page ("All-Restaurant" and so on)
             foreach ((new $searchClass)->find(null, TagOperator::And, OrderBy::Distance) as $place) {
                 // visit_date is the date of the review (the stores have no such column: null)
                 $visited = $place->getAttribute('visit_date');
-                $urls[] = [route($singleRoute, $place->getAttribute('id')), $visited ? substr((string) $visited, 0, 10) : null];
+                $urls[] = [PublicUrl::to(route($singleRoute, $place->getAttribute('id'), false)), $visited ? substr((string) $visited, 0, 10) : null];
             }
         }
 

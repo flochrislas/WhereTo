@@ -220,8 +220,8 @@ class PlacesTest extends TestCase
         $this->assertSame('Near one', $data['name']);
         $this->assertSame($url, $data['url']);
         $this->assertSame(['@type' => 'GeoCoordinates', 'latitude' => 35.6586, 'longitude' => 139.7016], $data['geo']);
-        // No address and no links in the seed: the keys are absent rather than null
-        $this->assertArrayNotHasKey('address', $data);
+        // No location text in the seed: a PostalAddress with the town only; no links: the key is absent
+        $this->assertSame(['@type' => 'PostalAddress', 'addressLocality' => 'Shibuya', 'addressRegion' => 'Tokyo', 'addressCountry' => 'JP'], $data['address']);
         $this->assertArrayNotHasKey('sameAs', $data);
         // The fragment (one-page view) has no structured data: only the real page describes the place
         $this->assertStringNotContainsString('ld+json', $this->get(route("$plural.details", $id))->getContent());
@@ -242,7 +242,8 @@ class PlacesTest extends TestCase
 
         $this->assertSame('Restaurant', $data['@type']);
         $this->assertSame('Sushi <b>& co</b>', $data['name']);
-        $this->assertSame('1-2-3 Dogenzaka', $data['address']);
+        $this->assertSame('1-2-3 Dogenzaka', $data['address']['streetAddress']);
+        $this->assertSame('JP', $data['address']['addressCountry']);
         $this->assertSame('¥900', $data['priceRange']);
         // The empty website is left out
         $this->assertSame(['https://maps.google.com/?q=sushi', 'https://tabelog.com/x/'], $data['sameAs']);
@@ -250,6 +251,19 @@ class PlacesTest extends TestCase
         $this->assertSame(['@type' => 'Rating', 'ratingValue' => 3, 'bestRating' => 4, 'worstRating' => 0], $data['review']['reviewRating']);
         $this->assertSame('2018-05-01', $data['review']['datePublished']);
         $this->assertSame(config('app.name'), $data['review']['author']['name']);
+    }
+
+    public function test_public_urls_come_from_app_url_not_from_the_request_host(): void
+    {
+        config(['app.url' => 'https://whereto.example']);
+        $restaurant = Restaurant::create(['name' => 'Anywhere', 'lat' => 35.6586, 'lon' => 139.7016]);
+
+        // Requested through another hostname: the canonical, og:url and JSON-LD still name the public page
+        $html = $this->get('http://192.0.2.1/restaurant/details/'.$restaurant->id)->assertOk()->getContent();
+        $this->assertStringContainsString('<link rel="canonical" href="https://whereto.example/restaurant/details/'.$restaurant->id.'">', $html);
+        $this->assertStringContainsString('<meta property="og:url" content="https://whereto.example/restaurant/details/'.$restaurant->id.'">', $html);
+        $this->assertSame('https://whereto.example/restaurant/details/'.$restaurant->id, $this->structuredData($html)['url']);
+        $this->assertStringContainsString('<link rel="canonical" href="https://whereto.example/">', $this->get('http://192.0.2.1/')->getContent());
     }
 
     public function test_unscored_places_have_no_review(): void
@@ -265,7 +279,7 @@ class PlacesTest extends TestCase
     {
         $this->get('/')->assertOk()->assertSee('Shibuya')
             ->assertSee('<h1 class="visuallyHidden">Find the best places in Shibuya</h1>', false)
-            ->assertSee('<link rel="canonical" href="'.route('home').'">', false)
+            ->assertSee('<link rel="canonical" href="'.route('home').'/">', false)
             ->assertSee('src="'.asset('js/whereto.js').'?v=', false)
             ->assertSee('href="'.asset('css/style.css').'?v=', false)
             // Dark and light themes: the browser is told about both, and the header has the switch

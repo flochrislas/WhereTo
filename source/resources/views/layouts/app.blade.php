@@ -39,11 +39,12 @@
     <meta name="description" content="@yield('description')">
     <!-- The one URL of this page for the search engines (APP_URL + path, no query string): the same place is
          also served as a fragment, this says which one is the page -->
-    <link rel="canonical" href="{{ url()->current() }}">
+    {{-- The canonical page is the one on APP_URL, whatever hostname this request used --}}
+    <link rel="canonical" href="{{ \App\Support\PublicUrl::to(request()->path()) }}">
     <!-- Open Graph and Twitter cards: what a link to this page shows when shared (Slack, LINE, Facebook, X...) -->
     <meta property="og:site_name" content="{{ config('app.name') }}">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="{{ url()->current() }}">
+    <meta property="og:url" content="{{ \App\Support\PublicUrl::to(request()->path()) }}">
     <meta property="og:title" content="@yield('title')">
     <meta property="og:description" content="@yield('description')">
     <meta property="og:image" content="{{ asset('icons/icon-512.png') }}">

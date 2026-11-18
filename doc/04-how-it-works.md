@@ -99,9 +99,9 @@ The browser (`ajaxSuggestion()` in `public/js/whereto.js`, URL from the `data-su
 
 ## 7. Caching strategy
 
-The results and details fragments carry `X-Robots-Tag: noindex` (`NoIndex` middleware, `noindex` alias in `bootstrap/app.php`), and every page carries `<link rel="canonical">` with its own URL from the layout, so the search engines index the pages, never the fragments (`10-seo.md`).
+The results and details fragments carry `X-Robots-Tag: noindex` (`NoIndex` middleware, `noindex` alias in `bootstrap/app.php`), and every page carries `<link rel="canonical">` with its own URL built on `APP_URL` (`App\Support\PublicUrl`, also used for `og:url`, the sitemap and the JSON-LD) from the layout, so the search engines index the pages, never the fragments (`10-seo.md`).
 
-Each standalone place page also carries a JSON-LD block (`components/structured-data.blade.php`): the place as a schema.org `Restaurant`, `Store`, `BarOrPub` or `EntertainmentBusiness`, with its name, address text, coordinates, Google Maps / Tabelog / website links, the lunch price and our score as a single `Review`. Each model builds its array in `structuredData()` on top of `App\Support\StructuredData`; the JSON is encoded with `<`, `>` and `&` escaped so no text from the seeders can break out of the script tag.
+Each standalone place page also carries a JSON-LD block (`components/structured-data.blade.php`): the place as a schema.org `Restaurant`, `Store`, `BarOrPub` or `EntertainmentBusiness`, with its name, a `PostalAddress` (the location text as the street, then Shibuya, Tokyo, JP), coordinates, Google Maps / Tabelog / website links, the lunch price and our score as a single `Review`. Each model builds its array in `structuredData()` on top of `App\Support\StructuredData`; the JSON is encoded with `<`, `>` and `&` escaped so no text from the seeders can break out of the script tag.
 
 Because the dataset is tiny and only changes through seeders, every query result is cached forever in the `cache` table and keyed by the search parameters (see 03-data-model.md). Distances are computed per request on the cached collection. The seeder flushes the whole cache at the end; after a change made another way (SQL, tinker), run `php artisan cache:clear`.
 
