@@ -5,6 +5,7 @@
 @section('heading', $place->name)
 
 @section('content')
+  <x-structured-data :data="$place->structuredData(url()->current())" />
   <div id="content-unchained">
     @include('restaurants.details')
   </div>

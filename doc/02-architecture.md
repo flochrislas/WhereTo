@@ -16,6 +16,7 @@ WhereTo/
     │   ├── Tools/GeoUtils.php           distance maths, position / Google Maps URL parsing
     │   ├── Enums/                       OrderBy (distance, ratings, cost) and TagOperator (AND, OR, ANDNOT, ORNOT)
     │   ├── Support/Position.php         "lat, lon" value object (parsing, distance to another position)
+    │   ├── Support/StructuredData.php   the JSON-LD (schema.org) block of a place page, common fields and our review
     │   ├── Services/                    PlaceSearch (tag query, forever cache, ordering, distances) and one subclass per kind
     │   ├── Http/Controllers/            see below
     │   ├── Http/Middleware/NoIndex.php  X-Robots-Tag: noindex on the AJAX fragments
@@ -99,7 +100,7 @@ Removed from the legacy routes: `/about`, `/test-html`, `/clubs*`, `/register`, 
 ## Views
 
 - `layouts/app.blade.php` is the public layout: `<title>`, meta description, canonical URL, Open Graph and Twitter tags all built from the `title` and `description` sections each view declares (and a visually hidden `<h1>` from the `heading` section, else the title); the stylesheet (dark by default, light with `data-theme="light"` on `<html>`, set before the first paint by a tiny inline script), the theme-color and color-scheme metas, CSRF meta, the `public/js/whereto.js` script tag (deferred, versioned by file modification time), `layouts.header`, `#position-report` for geolocation messages, content, `layouts.footer`.
-- Each place folder has: `main` (page shell that includes `filter` and `results`; its `#content` div carries the `data-results-url` attribute the JavaScript reads), `filter` (tag cloud), `results` (sort buttons and column headers), `results-data` (the rows, returned by AJAX), `details` (fragment) and `details-single` (standalone page wrapping `details`).
+- Each place folder has: `main` (page shell that includes `filter` and `results`; its `#content` div carries the `data-results-url` attribute the JavaScript reads), `filter` (tag cloud), `results` (sort buttons and column headers), `results-data` (the rows, returned by AJAX), `details` (fragment) and `details-single` (standalone page wrapping `details`, plus the `<x-structured-data>` component: the JSON-LD block built by the model's `structuredData()`).
 - `public/manifest.json`, `public/sw.js` (service worker) and `public/icons/` make the app installable on a phone's home screen and usable offline; see `04-how-it-works.md` section 8.
 - The JavaScript is not in the views: it lives in `public/js/whereto.js`, one file with a section per concern (geolocation, panels, results, tag filter, details, suggestion). The views call its global functions from `onclick` attributes and pass it the two server URLs through `data-results-url` and `data-suggestion-url` attributes. All requests use `fetch()`.
 - `suggestions/suggestion.blade.php` renders the suggestion box only at lunch time; `suggestions/suggestion-text.blade.php` is the sentence returned by `/suggestions`.

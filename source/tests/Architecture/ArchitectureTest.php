@@ -174,8 +174,9 @@ class ArchitectureTest extends TestCase
 
     public function test_views_escape_their_output(): void
     {
-        // {!! !!} prints without escaping: only the store experience, whose seeded text carries links, may use it
-        $allowed = ['stores/details.blade.php', 'stores/details-single.blade.php'];
+        // {!! !!} prints without escaping: only the store experience, whose seeded text carries links, and the
+        // JSON-LD component (JSON must not be HTML-escaped; StructuredData::json() encodes < > & itself) may use it
+        $allowed = ['stores/details.blade.php', 'stores/details-single.blade.php', 'components/structured-data.blade.php'];
         foreach (File::allFiles(resource_path('views')) as $view) {
             if (in_array($view->getRelativePathname(), $allowed, true)) {
                 continue;
@@ -186,11 +187,13 @@ class ArchitectureTest extends TestCase
 
     public function test_only_the_layout_has_an_inline_script(): void
     {
-        // The JavaScript lives in public/js/whereto.js; the one exception is the tiny theme snippet
-        // that must run before the first paint (resources/views/layouts/app.blade.php)
+        // The JavaScript lives in public/js/whereto.js; the exceptions are the tiny theme snippet that must run
+        // before the first paint (layouts/app.blade.php) and the JSON-LD data block, which is not code
+        // (components/structured-data.blade.php)
+        $exceptions = ['layouts/app.blade.php', 'components/structured-data.blade.php'];
         foreach (File::allFiles(resource_path('views')) as $view) {
             $inline = preg_match_all('/<script(?![^>]*\bsrc=)/', $view->getContents());
-            $allowed = $view->getRelativePathname() === 'layouts/app.blade.php' ? 1 : 0;
+            $allowed = in_array($view->getRelativePathname(), $exceptions, true) ? 1 : 0;
             $this->assertSame($allowed, $inline, $view->getRelativePathname().': no inline <script>, the code goes in whereto.js');
         }
     }

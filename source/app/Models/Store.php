@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Support\StructuredData;
 use App\Traits\Location;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
@@ -67,5 +68,16 @@ class Store extends Model implements Place
         $tags = StoreTag::whereIn('label', $labels)->get();
         // Attach them (writes the pivot rows)
         $this->tags()->attach($tags);
+    }
+
+    /**
+     * The JSON-LD data of the standalone page (doc/10-seo.md, item 5)
+     *
+     * @return array<string, mixed>
+     */
+    public function structuredData(string $url): array
+    {
+        // A store: no review, its score has no documented scale
+        return StructuredData::place($this, 'Store', $url);
     }
 }

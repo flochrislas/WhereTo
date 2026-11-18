@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Support\StructuredData;
 use App\Traits\Location;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
@@ -68,5 +69,19 @@ class Restaurant extends Model implements Place
         $tags = RestaurantTag::whereIn('label', $labels)->get();
         // Attach them (writes the pivot rows)
         $this->tags()->attach($tags);
+    }
+
+    /**
+     * The JSON-LD data of the standalone page (doc/10-seo.md, item 5)
+     *
+     * @return array<string, mixed>
+     */
+    public function structuredData(string $url): array
+    {
+        // A Restaurant with its lunch price and our lunch score (out of 4) as the review
+        return StructuredData::place($this, 'Restaurant', $url, array_merge(
+            $this->lunch_price !== null ? ['priceRange' => '¥'.$this->lunch_price] : [],
+            StructuredData::review($this, 'score_lunch', 4),
+        ));
     }
 }

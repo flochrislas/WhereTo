@@ -194,6 +194,73 @@ class PlacesTest extends TestCase
             ->assertSee('<title>'.config('app.name').' - Near one - Restaurant info &amp; 2019 review</title>', false);
     }
 
+    /**
+     * The JSON-LD block of a standalone page, decoded.
+     *
+     * @return array<string, mixed>
+     */
+    private function structuredData(string $html): array
+    {
+        $this->assertSame(1, preg_match('#<script type="application/ld\+json">(.+?)</script>#s', $html, $m), 'the page has one JSON-LD block');
+
+        return json_decode($m[1], true, 512, JSON_THROW_ON_ERROR);
+    }
+
+    #[DataProvider('placeTypes')]
+    public function test_single_page_carries_structured_data(string $plural, string $singular, string $model, string $tagModel): void
+    {
+        $this->seedTwo($model, $tagModel);
+        $id = $model::where('name', 'Near one')->value('id');
+        $url = route("$plural.details.single", $id);
+
+        $data = $this->structuredData($this->get($url)->assertOk()->getContent());
+
+        $this->assertSame('https://schema.org', $data['@context']);
+        $this->assertContains($data['@type'], ['Restaurant', 'Store', 'BarOrPub', 'EntertainmentBusiness']);
+        $this->assertSame('Near one', $data['name']);
+        $this->assertSame($url, $data['url']);
+        $this->assertSame(['@type' => 'GeoCoordinates', 'latitude' => 35.6586, 'longitude' => 139.7016], $data['geo']);
+        // No address and no links in the seed: the keys are absent rather than null
+        $this->assertArrayNotHasKey('address', $data);
+        $this->assertArrayNotHasKey('sameAs', $data);
+        // The fragment (one-page view) has no structured data: only the real page describes the place
+        $this->assertStringNotContainsString('ld+json', $this->get(route("$plural.details", $id))->getContent());
+    }
+
+    public function test_restaurant_structured_data_has_price_links_and_review(): void
+    {
+        $restaurant = Restaurant::create([
+            'name' => 'Sushi <b>& co</b>', 'location' => '1-2-3 Dogenzaka', 'lat' => 35.6586, 'lon' => 139.7016,
+            'lunch_price' => 900, 'score_lunch' => 3, 'visited' => true, 'visit_date' => '2018-05-01',
+            'google_maps_link' => 'https://maps.google.com/?q=sushi', 'tabelog_link' => 'https://tabelog.com/x/', 'official_website' => '',
+        ]);
+
+        $html = $this->get(route('restaurants.details.single', $restaurant->id))->assertOk()->getContent();
+        // The dangerous characters are encoded (no < > & in the script), and the JSON still decodes to the name
+        $this->assertStringContainsString('\\u003Cb\\u003E', $html);
+        $data = $this->structuredData($html);
+
+        $this->assertSame('Restaurant', $data['@type']);
+        $this->assertSame('Sushi <b>& co</b>', $data['name']);
+        $this->assertSame('1-2-3 Dogenzaka', $data['address']);
+        $this->assertSame('¥900', $data['priceRange']);
+        // The empty website is left out
+        $this->assertSame(['https://maps.google.com/?q=sushi', 'https://tabelog.com/x/'], $data['sameAs']);
+        $this->assertSame('Review', $data['review']['@type']);
+        $this->assertSame(['@type' => 'Rating', 'ratingValue' => 3, 'bestRating' => 4, 'worstRating' => 0], $data['review']['reviewRating']);
+        $this->assertSame('2018-05-01', $data['review']['datePublished']);
+        $this->assertSame(config('app.name'), $data['review']['author']['name']);
+    }
+
+    public function test_unscored_places_have_no_review(): void
+    {
+        $restaurant = Restaurant::create(['name' => 'Unknown', 'lat' => 35.6586, 'lon' => 139.7016]);
+        $data = $this->structuredData($this->get(route('restaurants.details.single', $restaurant->id))->getContent());
+
+        $this->assertArrayNotHasKey('review', $data);
+        $this->assertArrayNotHasKey('priceRange', $data);
+    }
+
     public function test_home_page(): void
     {
         $this->get('/')->assertOk()->assertSee('Shibuya')
