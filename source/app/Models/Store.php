@@ -19,6 +19,7 @@ class Store extends Model implements Place
     protected $fillable = [
         'name', 'location', 'lat', 'lon', 'type', 'points', 'experience',
         'google_maps_link', 'official_website', 'score',
+        'business_status', 'google_place_id',
     ];
 
     /**

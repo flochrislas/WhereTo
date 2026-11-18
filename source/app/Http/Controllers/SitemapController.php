@@ -43,7 +43,7 @@ class SitemapController extends Controller
     }
 
     /**
-     * sitemap.xml: the home page, the four main pages, and every place's standalone page.
+     * sitemap.xml: the home page, the four main pages, and the standalone page of every place still in business.
      * Cached forever like the rest of the data (the seeder flushes the cache), so the URLs are built on APP_URL,
      * not on the hostname of whichever request came first.
      */
@@ -60,7 +60,9 @@ class SitemapController extends Controller
         $urls = [[PublicUrl::to(route('home', absolute: false)), null]];
         foreach (self::KINDS as $mainRoute => [$searchClass, $singleRoute]) {
             $urls[] = [PublicUrl::to(route($mainRoute, absolute: false)), null];
-            // Every place of the kind, through the same cached search as the main page ("All-Restaurant" and so on)
+            // Every place of the kind, through the same cached search as the main page ("All-Restaurant" and so on).
+            // The search keeps only the places still in business (PlaceSearch::readFromDB, open() scope): a closed
+            // place's page stays reachable but is not offered to the search engines
             foreach ((new $searchClass)->find(null, TagOperator::And, OrderBy::Distance) as $place) {
                 // visit_date is the date of the review (the stores have no such column: null)
                 $visited = $place->getAttribute('visit_date');

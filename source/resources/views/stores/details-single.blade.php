@@ -1,11 +1,12 @@
 @extends('layouts.app')
 
-@section('title', $place->name.' - Store info')
-@section('description', 'Detailed information page for '.$place->name.', in Tokyo Shibuya. Ratings and practical information.')
+@section('title', $place->nameWithStatus().' - Store info')
+@section('description', 'Detailed information page for '.$place->nameWithStatus().', in Tokyo Shibuya. Ratings and practical information.')
 @section('heading', $place->name)
 
 @section('content')
-  <x-structured-data :data="$place->structuredData(\App\Support\PublicUrl::to(request()->path()))" />
+  <x-structured-data :place="$place" />
+  <x-business-status :place="$place" />
 <div id="content-unchained">
 
   <div id="resultsControl">

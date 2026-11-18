@@ -2,13 +2,17 @@
 
 namespace App\Traits;
 
+use App\Enums\BusinessStatus;
 use App\Support\Position;
 use App\Tools\GeoUtils;
+use Illuminate\Database\Eloquent\Attributes\Scope;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Log;
 use InvalidArgumentException;
 
 /**
- * Localisation related stuff shared by the place models (restaurants, stores, bars, karaoke).
+ * Localisation related stuff shared by the place models (restaurants, stores, bars, karaoke),
+ * and their business status (open or closed, doc/11-data-freshness.md).
  * A trait is a set of methods and properties copied into every class that "use"s it.
  */
 trait Location
@@ -25,6 +29,38 @@ trait Location
 
         // The DB returns decimals as strings, hence the (float) casts
         return new Position((float) $this->lat, (float) $this->lon);
+    }
+
+    /**
+     * Local scope: only the places still in business. #[Scope] makes it callable on a query as ->open(),
+     * e.g. Restaurant::query()->open(). Local, not global: the standalone page still loads a closed place.
+     *
+     * @param  Builder<static>  $query
+     */
+    #[Scope]
+    protected function open(Builder $query): void
+    {
+        $query->where('business_status', BusinessStatus::Operational->value);
+    }
+
+    /**
+     * Is the place still in business. Read from the raw column value, not through a cast: an unknown value (a typo
+     * such as 'CLOSED' in a seeder) must not break the page. Such a value counts as Operational here, so the page shows
+     * the place as open, while the open() scope (business_status = 'OPERATIONAL') hides it from the lists.
+     * A place created in PHP without the key (a test) has no value at all until reloaded: Operational too.
+     */
+    public function businessStatus(): BusinessStatus
+    {
+        // getAttributes(): the raw column values, before any cast or accessor
+        return BusinessStatus::fromRequest($this->getAttributes()['business_status'] ?? null);
+    }
+
+    /** The name, followed by the status when the place is not operational, e.g. "Kindenmaru, permanently closed" */
+    public function nameWithStatus(): string
+    {
+        $status = $this->businessStatus();
+
+        return $status->isOpen() ? (string) $this->getAttribute('name') : $this->getAttribute('name').', '.$status->label();
     }
 
     public function currentDistance(): ?float

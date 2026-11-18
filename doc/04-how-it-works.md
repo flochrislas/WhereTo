@@ -58,6 +58,7 @@ GET /restaurants/results?op=&tags=&orderBy=&position=
         formatTags()         "a,b" ──▶ ['a','b'] or null
         RestaurantSearch->find()   key from (op, tags, orderBy, limit)
           └─ miss ──▶ readFromDB()
+                        scopes('open')  business_status = OPERATIONAL (closed places are never listed)
                         whereTags()   AND: whereHas('tags', whereIn label) having count = N; OR: any
                         orderBy()     per kind (ratingColumns / costColumn):
                                         restaurants: ratings/distance ──▶ score_lunch, score_food, score_place desc, id
@@ -82,6 +83,10 @@ Tag operators `OR`, `ANDNOT` and `ORNOT` are implemented server-side but the UI 
 Clicking a result name calls `showDetails(url, id)`: if the id differs from the one currently loaded it fetches `GET /restaurants/details/{id}` and puts the fragment into `#mainDetails`, then hides `#content`. "BACK" simply toggles the two divs. The fragment shows links (Google Maps, Tabelog, website), the scores with tooltips, `points`, `experience`, and the place's tags from `tagsCached()`.
 
 "Copy URL" copies the standalone route `GET /restaurant/details/{id}` (`detailsSingle`), which wraps the same fragment in the full layout with SEO meta tags. That is the shareable, crawlable page.
+
+### Closed places
+
+A place that is no longer in business (`business_status` other than `OPERATIONAL`, see `03-data-model.md` and `11-data-freshness.md`) stays in the database but is never listed. The `open()` local scope (`#[Scope]` method of the `Location` trait, `business_status = 'OPERATIONAL'`) is applied once, in `PlaceSearch::readFromDB()`, before the result is cached; every list goes through that search, so the results fragment, the default list of the filter page, the lunch suggestion and `sitemap.xml` all leave the closed places out. It is a local scope, not a global one, so the route model binding of the details actions (`detailsSingle(Restaurant $place)`) still loads a closed place. Its standalone page renders as usual, with the `business-status` Blade component under the heading: a banner with the status ("Permanently closed", "Temporarily closed", "Replaced by another business"), the status appended to the name in the `<title>` and the descriptions (`nameWithStatus()`, e.g. "Kindenmaru, permanently closed"), and, for the permanently closed and replaced ones only, a `<meta name="robots" content="noindex">` pushed to the layout's `head` stack and no JSON-LD (the `structured-data` component skips it: the markup would describe a live business with our review). The Google Maps link stays. A temporarily closed place keeps its indexing and its JSON-LD but, like every non-operational place, leaves `sitemap.xml`, which lists open places only: a mixed signal accepted on purpose (the page is still worth finding, it is just not offered to the crawlers). An unknown stored status (a typo such as `CLOSED`) is shown as open on the page and hidden from the lists, since `open()` compares with `OPERATIONAL` exactly. The fragment is only reached from the list, so it never shows a closed place.
 
 ## 6. Lunch suggestion
 
