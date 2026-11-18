@@ -19,6 +19,7 @@ class Karaoke extends Model implements Place
     protected $fillable = [
         'name', 'area', 'location', 'lat', 'lon', 'points', 'experience',
         'visited', 'visit_date', 'google_maps_link', 'official_website', 'score',
+        'business_status', 'google_place_id',
     ];
 
     /**

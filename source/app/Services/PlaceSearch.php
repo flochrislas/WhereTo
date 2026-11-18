@@ -130,6 +130,10 @@ abstract class PlaceSearch
         $class = $this->modelClass();
         $query = $class::query();
 
+        // Only the places still in business: a closed one is never listed. scopes('open') runs the open() scope of the
+        // Location trait on this query (same as ->open(), which PHPStan cannot see on the generic TModel)
+        $query->scopes('open');
+
         // Add the tag filter to the query
         $this->whereTags($query, $tags, $op);
         // Add the ORDER BY clause (the columns depend on the kind of place)

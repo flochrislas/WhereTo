@@ -6,7 +6,9 @@ The schema is defined by the migrations in `source/database/migrations/`. The re
 
 ### Places
 
-All four place tables share the same core: `id`, `created_at`, `updated_at`, `name`, `location` (a free-text area name such as "Shibuya"), `lat`, `lon` (nullable `decimal(10,7)`; they were floats before the upgrade), `points` (short summary shown in the list, truncated to 50 characters), `experience` (long personal review), `google_maps_link`, `official_website`.
+All four place tables share the same core: `id`, `created_at`, `updated_at`, `name`, `location` (a free-text area name such as "Shibuya"), `lat`, `lon` (nullable `decimal(10,7)`; they were floats before the upgrade), `points` (short summary shown in the list, truncated to 50 characters), `experience` (long personal review), `google_maps_link`, `official_website`, `business_status`, `google_place_id`.
+
+`business_status` (string, not null, default `OPERATIONAL`) says whether the place is still in business. The `App\Enums\BusinessStatus` enum gives its meaning, through `businessStatus()` of the `Location` trait (no Eloquent cast: the method reads the raw value and turns an unknown one into `OPERATIONAL`, so a typo in a seeder never breaks a page; the `open()` scope still hides such a place from the lists): `OPERATIONAL`, `CLOSED_TEMPORARILY`, `CLOSED_PERMANENTLY` (Google's Places API values) or `REPLACED` (another business is at the address). `isOpen()` is true for `OPERATIONAL` only, `label()` gives the wording of the page ("permanently closed", "temporarily closed", "replaced by another business", empty for an open place), `isGone()` is true for the two statuses that take the page out of the search engines. `google_place_id` (string, nullable) is Google's id of the place. Both are written into the seeders by the freshness tool (`11-data-freshness.md`); an open place has no `business_status` key in its seeder and gets the column default. Both columns come from the migration `2026_11_18_000000_add_business_status_to_places` and are in `$fillable`.
 
 | Table | Extra columns |
 |---|---|
@@ -51,12 +53,12 @@ Seeders live in `database/seeders/` (namespace `Database\Seeders`). `DatabaseSee
 
 ## Cache keys
 
-Everything is cached with `rememberForever`. The seeder flushes the cache; any other data change (SQL, tinker) requires `php artisan cache:clear`. Laravel 13 refuses to unserialize cached objects unless their classes are listed in `cache.serializable_classes`; `config/cache.php` lists the eight place/tag models, the Eloquent `Collection` and the `Pivot` class that tags loaded through `belongsToMany` carry.
+Everything is cached with `rememberForever`. The seeder flushes the cache; any other data change (SQL, tinker) requires `php artisan cache:clear`. Laravel 13 refuses to unserialize cached objects unless their classes are listed in `cache.serializable_classes`; `config/cache.php` lists the eight place/tag models, the Eloquent `Collection` and the `Pivot` class that tags loaded through `belongsToMany` carry (`business_status` is stored as a plain string in the cached models, so the enum needs no entry).
 
 | Key | Content |
 |---|---|
 | `all_restaurants_tags`, `all_stores_tags`, ... | Tag cloud for the filter page |
-| `All-Restaurant`, `All-Store`, ... | Unfiltered results |
+| `All-Restaurant`, `All-Store`, ... | Unfiltered results (open places only, like every results key) |
 | `<Model>-md5(op + ',' + tags)` | Results for a given tag combination, prefixed with `cost` when sorted by cost and `l<N>-` when limited |
 | `l100-All-Restaurant` | The 100 best restaurants used by the suggestion |
 | `restaurant-<id>-tags`, `bar-<id>-tags`, ... | Tags of one place, for the details view |

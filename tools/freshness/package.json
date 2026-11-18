@@ -1,0 +1,17 @@
+{
+  "name": "whereto-freshness",
+  "private": true,
+  "description": "Checks the WhereTo places against Google Places and marks the closed ones in the seeders. See README.md.",
+  "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "check": "node check.js",
+    "apply": "node apply.js",
+    "test": "node --test"
+  },
+  "dependencies": {
+    "@inquirer/checkbox": "^5.3.0"
+  }
+}

@@ -290,6 +290,19 @@ td {
   overflow-y: auto;
 }
 
+/* The banner of a place no longer in business, above its standalone page (components/business-status.blade.php).
+   The orange of the theme (dark and light variants come from the variables) */
+.businessStatus {
+  flex: 0 0 auto; /* a flex item of #app: keeps its height, the content below takes the rest */
+  margin: .1rem;
+  padding: .4rem .6rem;
+  border: .12rem solid var(--color-orange);
+  background-color: var(--bg-color-cell);
+  color: var(--color-orange);
+  font-weight: 600;
+  text-align: center;
+}
+
 .content-unchained {
   background-color:  var(--bg-color-inner) ; /* almost black */
   margin: .1rem;

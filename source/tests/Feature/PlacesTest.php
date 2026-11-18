@@ -2,6 +2,9 @@
 
 namespace Tests\Feature;
 
+use App\Enums\BusinessStatus;
+use App\Enums\OrderBy;
+use App\Enums\TagOperator;
 use App\Models\Bar;
 use App\Models\BarTag;
 use App\Models\Karaoke;
@@ -10,7 +13,10 @@ use App\Models\Restaurant;
 use App\Models\RestaurantTag;
 use App\Models\Store;
 use App\Models\StoreTag;
+use App\Services\RestaurantSearch;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\DB;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Tests\TestCase;
 
@@ -274,6 +280,131 @@ class PlacesTest extends TestCase
 
         $this->assertArrayNotHasKey('review', $data);
         $this->assertArrayNotHasKey('priceRange', $data);
+    }
+
+    /**
+     * A third place, closed, with the tag a and the best scores (it would come first in every list if it were listed).
+     *
+     * @param  class-string  $model
+     */
+    private function seedClosed(string $model, string $status = 'CLOSED_PERMANENTLY'): int
+    {
+        $closed = $model::create(['name' => 'Gone one', 'business_status' => $status, 'type' => 'T', 'lat' => 35.6587, 'lon' => 139.7015, 'points' => 'gone', 'lunch_price' => 500, 'score_lunch' => 4, 'score_food' => 4, 'score_place' => 4, 'score' => 4]);
+        $closed->attachTags(['a']);
+
+        return $closed->id;
+    }
+
+    /** A closed place is in the database (the seeders keep it) but never in a list: the open() scope of the search */
+    #[DataProvider('placeTypes')]
+    public function test_closed_places_are_not_listed(string $plural, string $singular, string $model, string $tagModel): void
+    {
+        $this->seedTwo($model, $tagModel);
+        $this->seedClosed($model);
+        // The results fragment, with and without a tag filter, and in every order
+        foreach (['', '&op=AND&tags=a', '&op=OR&tags=a,b'] as $filter) {
+            foreach (['distance', 'ratings', 'cost'] as $orderBy) {
+                $html = $this->get("/$plural/results?orderBy=$orderBy&position=null$filter")->assertOk()->getContent();
+                $this->assertNotContains('Gone one', $this->namesInOrder($html), "$filter $orderBy");
+            }
+        }
+        $this->get("/$plural/results?position=null")->assertSee('2 results');
+        // The default list rendered in the filter page
+        $this->get("/$plural")->assertOk()->assertSee('Near one')->assertDontSee('Gone one');
+    }
+
+    /** @return array<string, array{string, string, bool}> */
+    public static function closedStatuses(): array
+    {
+        return [
+            // status => [label shown on the page, noindex expected]
+            'permanently closed' => ['CLOSED_PERMANENTLY', 'Permanently closed', true],
+            'replaced' => ['REPLACED', 'Replaced by another business', true],
+            'temporarily closed' => ['CLOSED_TEMPORARILY', 'Temporarily closed', false],
+        ];
+    }
+
+    /** The page of a closed place still renders, says what became of it, and leaves the index when it is gone for good */
+    #[DataProvider('closedStatuses')]
+    public function test_closed_place_page_shows_the_status(string $status, string $label, bool $noindex): void
+    {
+        foreach (self::placeTypes() as [$plural, $singular, $model, $tagModel]) {
+            $this->seedTwo($model, $tagModel);
+            $id = $this->seedClosed($model, $status);
+            $page = $this->get("/$singular/details/$id")->assertOk()
+                ->assertSee('<p class="businessStatus">'.$label.'</p>', false)
+                // The heading is the name alone, the title and the descriptions carry the status
+                ->assertSee('<h1 class="visuallyHidden">Gone one</h1>', false)
+                ->assertSee('<title>'.config('app.name').' - Gone one, '.lcfirst($label).' - ', false)
+                ->assertSee('<meta property="og:title" content="Gone one, '.lcfirst($label).' - ', false)
+                ->assertSee('Gone one, '.lcfirst($label).', in Tokyo Shibuya.', false)
+                // The visit and the notes are still there, and so is the Google Maps link (Maps shows the same status)
+                ->assertSee('gone');
+            if ($noindex) {
+                // Gone for good: out of the index, and no JSON-LD (it would describe a live business with a review)
+                $page->assertSee('<meta name="robots" content="noindex">', false)->assertDontSee('ld+json', false);
+            } else {
+                // Temporarily closed: still indexed, and still described
+                $page->assertDontSee('name="robots"', false);
+                $this->assertSame('Gone one', $this->structuredData($page->getContent())['name']);
+            }
+        }
+    }
+
+    /**
+     * A hand-typed unknown status (here 'CLOSED') must not break the page: it is shown as open. The open() scope
+     * compares with 'OPERATIONAL', so the place is out of the lists all the same.
+     */
+    #[DataProvider('placeTypes')]
+    public function test_unknown_status_shows_the_page_as_open(string $plural, string $singular, string $model, string $tagModel): void
+    {
+        $this->seedTwo($model, $tagModel);
+        $near = $model::where('name', 'Near one')->firstOrFail();
+        // Straight into the table, as a seeder typo would end up
+        DB::table((new $model)->getTable())->where('id', $near->id)->update(['business_status' => 'CLOSED']);
+
+        $this->get("/$singular/details/{$near->id}")->assertOk()
+            ->assertDontSee('businessStatus')
+            ->assertDontSee('name="robots"', false)
+            ->assertSee('ld+json', false);
+        $this->get("/$plural")->assertOk()->assertDontSee('Near one');
+    }
+
+    /** The lists are cached forever: what comes back from a serializing cache store must still say who is open */
+    public function test_cached_results_keep_the_open_places_only(): void
+    {
+        config(['cache.default' => 'file']); // the array store of the tests does not serialize
+        Cache::flush();
+        try {
+            $this->seedTwo(Restaurant::class, RestaurantTag::class);
+            $this->seedClosed(Restaurant::class);
+            $search = new RestaurantSearch;
+            $search->find(null, TagOperator::And, OrderBy::Distance); // fills the cache
+
+            $cached = Cache::get($search->cacheKey(TagOperator::And, null, OrderBy::Distance));
+            $this->assertEqualsCanonicalizing(['Near one', 'Far one'], $cached->pluck('name')->all());
+            $this->assertInstanceOf(Restaurant::class, $cached->first());
+            $this->assertSame(BusinessStatus::Operational, $cached->first()->businessStatus());
+        } finally {
+            Cache::flush();
+        }
+    }
+
+    #[DataProvider('placeTypes')]
+    public function test_operational_place_page_has_no_status_banner(string $plural, string $singular, string $model, string $tagModel): void
+    {
+        $this->seedTwo($model, $tagModel);
+        // One created without the key (the column default) and one with it written explicitly, as the tool may do
+        $near = $model::where('name', 'Near one')->firstOrFail();
+        $far = $model::where('name', 'Far one')->firstOrFail();
+        $far->update(['business_status' => 'OPERATIONAL', 'google_place_id' => 'ChIJtest']);
+        foreach ([$near, $far] as $place) {
+            $this->get("/$singular/details/{$place->id}")->assertOk()
+                ->assertDontSee('businessStatus')
+                ->assertDontSee('name="robots"', false)
+                ->assertSee('<title>'.config('app.name').' - '.$place->name.' - ', false);
+        }
+        $this->assertSame('ChIJtest', $far->fresh()?->google_place_id);
     }
 
     public function test_home_page(): void

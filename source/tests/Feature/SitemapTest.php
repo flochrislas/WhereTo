@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Models\Bar;
+use App\Models\Karaoke;
 use App\Models\Restaurant;
 use App\Models\Store;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -46,5 +47,24 @@ class SitemapTest extends TestCase
         $this->assertStringContainsString('<loc>https://whereto.example/</loc>', $xml);
         $this->assertStringContainsString('<loc>https://whereto.example/restaurants</loc>', $xml);
         $this->assertStringNotContainsString('192.0.2.1', $xml);
+    }
+
+    /** The page of a closed place stays reachable, but is not offered to the search engines */
+    public function test_sitemap_leaves_out_the_closed_places(): void
+    {
+        $open = Restaurant::create(['name' => 'Still there']);
+        $closed = [
+            Restaurant::create(['name' => 'Gone', 'business_status' => 'CLOSED_PERMANENTLY']),
+            Store::create(['name' => 'Gone', 'business_status' => 'REPLACED']),
+            Bar::create(['name' => 'Gone', 'business_status' => 'CLOSED_TEMPORARILY']),
+            Karaoke::create(['name' => 'Gone', 'business_status' => 'CLOSED_PERMANENTLY']),
+        ];
+        $kinds = ['restaurants', 'stores', 'bars', 'karaokes'];
+
+        $xml = $this->get('/sitemap.xml')->assertOk()->getContent();
+        $this->assertStringContainsString('<loc>'.route('restaurants.details.single', $open->id).'</loc>', $xml);
+        foreach ($closed as $i => $place) {
+            $this->assertStringNotContainsString('<loc>'.route($kinds[$i].'.details.single', $place->id).'</loc>', $xml);
+        }
     }
 }

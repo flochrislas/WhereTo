@@ -50,6 +50,9 @@
     <meta property="og:image" content="{{ asset('icons/icon-512.png') }}">
     <meta property="og:locale" content="en_US">
     <meta name="twitter:card" content="summary">
+    {{-- Anything a view pushes to the 'head' stack, e.g. the noindex of a closed place (components/business-status).
+         A Blade comment, not an HTML one: Blade would run a directive written inside an HTML comment --}}
+    @stack('head')
     <!-- Style -->
     <!-- ?v= is the file modification time: a changed stylesheet has a new URL, so the browser cache cannot serve the old one -->
     <link href="{{ asset('css/style.css') }}?v={{ filemtime(public_path('css/style.css')) }}" rel="stylesheet">

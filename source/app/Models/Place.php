@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\BusinessStatus;
 use App\Support\Position;
 
 /**
@@ -17,6 +18,12 @@ interface Place
     public function currentDistance(): ?float;
 
     public function setCurrentDistance(?float $distance): void;
+
+    /** Is the place still in business (the business_status column, Operational when unset) */
+    public function businessStatus(): BusinessStatus;
+
+    /** The name, followed by the status when the place is not operational, e.g. "Kindenmaru, permanently closed" */
+    public function nameWithStatus(): string;
 
     /**
      * The JSON-LD data of the standalone page of this place (schema.org vocabulary), built by App\Support\StructuredData
