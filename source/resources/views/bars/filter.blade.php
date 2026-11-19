@@ -1,35 +1,45 @@
 <div id="tagsTop">
 
   <div id="filterHeader">
-    <div id="filterHeaderTitle">What kind of place?</div>
-    <button id="filterHeaderButton" onclick="getResults()">Show All</button>
+    <div id="filterHeaderTitle">{{ __('What kind of place?') }}</div>
+    <button id="filterHeaderButton" onclick="getResults()">{{ __('Show All') }}</button>
   </div>
 
   <!-- selected tags for active search -->
-  <div id="selectedTags" role="group" aria-label="Selected tags">
+  <div id="selectedTags" role="group" aria-label="{{ __('Selected tags') }}">
   </div>
 
   <!-- Operator between the selected tags: all of them (AND) or any of them (OR). Remembered in localStorage by the JavaScript -->
-  <div id="tagsOperator" role="group" aria-label="Match the selected tags">
-    <span>Match</span>
-    <button type="button" class="opButton" data-op="AND" aria-pressed="true" onclick="setTagsOperator('AND')">all</button>
-    <button type="button" class="opButton" data-op="OR" aria-pressed="false" onclick="setTagsOperator('OR')">any</button>
-    <span>of the selected tags</span>
+  {{-- One sentence with the two buttons as placeholders ("Match :all or :any"): each language puts the buttons where
+       its word order wants them ("[すべてのタグ] か [いずれかのタグ] に一致"). preg_split cuts the sentence at the
+       placeholders and keeps them (DELIM_CAPTURE), so the loop prints the text parts and a button for each placeholder --}}
+  <div id="tagsOperator" role="group" aria-label="{{ __('Match the selected tags') }}">
+    @foreach (preg_split('/(:all|:any)/', __('Match :all or :any'), -1, PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY) as $part)
+      @if ($part === ':all')
+        <button type="button" class="opButton" data-op="AND" aria-pressed="true" onclick="setTagsOperator('AND')">{{ __('all tags') }}</button>
+      @elseif ($part === ':any')
+        <button type="button" class="opButton" data-op="OR" aria-pressed="false" onclick="setTagsOperator('OR')">{{ __('any tag') }}</button>
+      @elseif (trim($part) !== '')
+        <span>{{ trim($part) }}</span>
+      @endif
+    @endforeach
   </div>
 
-  <p>Available options</p>
+  <p>{{ __('Available options') }}</p>
 </div>
 
 <!-- showing available tags -->
-<div id="tags" role="group" aria-label="Available tags">
+<div id="tags" role="group" aria-label="{{ __('Available tags') }}">
   @foreach ($tags as $tag)
-      <!-- A real button: works with the keyboard and screen readers. aria-pressed tells them if the tag is selected -->
+      <!-- A real button: works with the keyboard and screen readers. aria-pressed tells them if the tag is selected.
+           data-tag: the English label, what the search uses; the text is the label in the page's language -->
       <button type="button" class="tag tagType{{$tag->type}}"
             tagId="{{$tag->id}}"
             id="tagShow{{$tag->id}}"
+            data-tag="{{$tag->label}}"
             aria-pressed="false"
             onClick="moveTag(event)">
-        {{$tag->label}}
+        {{ tag_label($tag->label) }}
       </button>
   @endforeach
 </div>

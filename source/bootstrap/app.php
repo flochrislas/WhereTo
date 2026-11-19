@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Middleware\NoIndex;
+use App\Http\Middleware\SetLocale;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -14,7 +15,8 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware): void {
         // 'noindex' in routes/web.php: the fragments loaded by AJAX must not appear in the search engines
-        $middleware->alias(['noindex' => NoIndex::class]);
+        // 'locale:ja' in routes/web.php: the pages of a language group are rendered in that language
+        $middleware->alias(['noindex' => NoIndex::class, 'locale' => SetLocale::class]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         $exceptions->shouldRenderJsonWhen(

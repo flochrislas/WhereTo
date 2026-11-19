@@ -212,6 +212,53 @@ td {
   touch-action: manipulation;
 }
 
+/* The language switch of the header: the name of the other language ("日本語", "English") */
+#header a.langSwitch {
+  color: var(--color-type);
+  font-size: .8rem;
+  /* usual minimum tap target */
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  /* "日本語" on one line: the header is narrow on a phone, and Japanese may break between any two characters */
+  white-space: nowrap;
+}
+/* The Japanese words of the header stay whole ("渋谷 ベータ版" breaks at its space only) */
+#header .right:lang(ja) {
+  word-break: keep-all;
+}
+
+/* The one-line suggestion to read the page in the browser's language (whereto.js, language banner).
+   [hidden] keeps it out of the layout until the script fills it */
+#languageBanner {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: .5rem;
+  margin: 0 .1rem .4rem;
+  padding: .2rem .6rem;
+  border: 2px solid var(--color-type);
+  border-radius: 1rem;
+  font-size: .9rem;
+}
+#languageBanner[hidden] {
+  display: none;
+}
+#languageBanner a {
+  color: var(--color-type);
+  font-weight: 600;
+}
+.languageBannerClose {
+  background: none;
+  border: none;
+  color: inherit;
+  font-size: 1.3rem;
+  min-width: 44px;
+  min-height: 44px;
+  cursor: pointer;
+}
+
 .tap {
   background-color: var(--tag-bg);
   border-color: var(--tag-border);
@@ -382,6 +429,11 @@ td {
   border-radius: 1rem;
   text-decoration: none;
   white-space: wrap;
+}
+/* Japanese has no spaces between words, so a browser may break a line anywhere: keep the words whole and break
+   only at the spaces the translation puts in the labels ("渋谷で ランチ", lang/ja.json) */
+.giantButton:lang(ja) {
+  word-break: keep-all;
 }
 .locked {
   background-color: #7e7e7e;
@@ -602,11 +654,18 @@ td {
 
 .sortButton {
   flex: initial;
+  /* As narrow as the longest word: "Best first" and "Google maps" go on two lines, whatever the language
+     (the labels are whole sentences of lang/<locale>.json, without <br>) */
+  width: min-content;
   font-size: .82rem;
   font-weight: 600;
   line-height: 1.37;
   padding: .59rem .44rem;
   margin: 0 .25rem;
+}
+/* Japanese has no spaces: keep each word whole ("評価順"), instead of one character per line */
+.sortButton:lang(ja) {
+  word-break: keep-all;
 }
 
 .navButton {
@@ -678,6 +737,10 @@ td {
   align-items: stretch;
   justify-content: flex-start;
   margin-bottom: .2rem;
+}
+/* The labels of the score columns are the words of the details ("Lunch", "Place"), shown in lower case here */
+.resultRow.header .centerContent .label {
+  text-transform: lowercase;
 }
 .resultRow.header {
   /*max-height: 3rem;*/
@@ -1011,15 +1074,17 @@ td {
     /* Three columns that share the width; each one has a minimum so nothing gets squeezed */
     grid-template-columns: minmax(16rem, 1fr) minmax(24rem, 1.5fr) minmax(16rem, 1.2fr);
     /* The middle row takes the space left; minmax(0, ...) lets the panels scroll inside it */
-    grid-template-rows: auto auto minmax(0, 1fr) auto;
+    grid-template-rows: auto auto auto minmax(0, 1fr) auto;
     grid-template-areas:
       "header header header"
+      "banner banner banner"
       "report report report"
       "filter results details"
       "footer footer footer";
     column-gap: .2rem;
   }
   #app:has(#mainResults) #header { grid-area: header; }
+  #app:has(#mainResults) #languageBanner { grid-area: banner; }
   #app:has(#mainResults) #position-report { grid-area: report; }
   #app:has(#mainResults) #footer { grid-area: footer; }
   /* #content is no longer a box: its two panels become cells of the grid themselves */

@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <!-- data-css-version / data-js-version: the ?v= of the two files below; whereto.js registers the service worker
-     with them, so the worker pre-caches the exact URLs the page uses (and a new version means a new worker) -->
-<html lang="{{ app()->getLocale() }}" data-css-version="{{ filemtime(public_path('css/style.css')) }}" data-js-version="{{ filemtime(public_path('js/whereto.js')) }}">
+     with them, so the worker pre-caches the exact URLs the page uses (and a new version means a new worker).
+     data-locale-prefixes: the languages under a prefix ("ja"), so the worker also pre-caches /ja/restaurants... -->
+<html lang="{{ app()->getLocale() }}" data-css-version="{{ filemtime(public_path('css/style.css')) }}" data-js-version="{{ filemtime(public_path('js/whereto.js')) }}" data-locale-prefixes="{{ implode(',', \App\Support\LocaleUrl::prefixed()) }}">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -48,11 +49,49 @@
     <meta property="og:title" content="@yield('title')">
     <meta property="og:description" content="@yield('description')">
     <meta property="og:image" content="{{ asset('icons/icon-512.png') }}">
-    <meta property="og:locale" content="en_US">
+    {{-- The language of this page in the Open Graph form (ja_JP), and the other languages of the site --}}
+    <meta property="og:locale" content="{{ \App\Support\LocaleUrl::ogLocale(app()->getLocale()) }}">
+    @foreach (\App\Support\LocaleUrl::locales() as $locale)
+        @if ($locale !== app()->getLocale())
+            <meta property="og:locale:alternate" content="{{ \App\Support\LocaleUrl::ogLocale($locale) }}">
+        @endif
+    @endforeach
     <meta name="twitter:card" content="summary">
     {{-- Anything a view pushes to the 'head' stack, e.g. the noindex of a closed place (components/business-status).
          A Blade comment, not an HTML one: Blade would run a directive written inside an HTML comment --}}
     @stack('head')
+    {{-- The messages whereto.js writes in the page, in the language of the page (lang/<locale>.json); whereto.js
+         reads them with t('key'). The JSON_HEX flags escape < > & ' " so no text can close the script tag;
+         JSON_UNESCAPED_UNICODE keeps the Japanese readable in the page source instead of \uXXXX. The array is built
+         in a variable first: @json cannot take an array written over several lines. (A Blade comment: Blade would
+         run the directive inside an HTML comment.) --}}
+    @php
+        $strings = [
+            'geolocationUnsupported' => __('Geolocation is not supported by this browser. Distances are from the station.'),
+            'locating' => __('Locating you... distances are from the station until then.'),
+            'fromPosition' => __('Distances are from your position.'),
+            'geolocationDenied' => __('You denied the request for geolocation.'),
+            'geolocationUnavailable' => __('Location information is unavailable.'),
+            'geolocationTimeout' => __('The request to get your location timed out.'),
+            'geolocationUnknown' => __('An unknown geolocation error occurred (:error).'),
+            'geolocationHttps' => __('Please use the HTTPS version of the service to enable geolocation.'),
+            'fromStation' => __('Distances are from the station.'),
+            'loadingAll' => __('Loading ALL entries. Please wait or select a tag...'),
+            'searchError' => __('Sorry, an error occurred during the search. Check your Internet connection and try again.'),
+            'showAll' => __('Show All'),
+            'noResult' => __('No result'),
+            'showResults' => __('Show :count results'),
+            'loading' => __('Loading...'),
+            'detailsError' => __('Sorry, detailed data could not be retrieved. Check your Internet connection and try again.'),
+            'tryAgain' => __('Try again'),
+            'suggestionError' => __('Err(or), nothing from the top of my head, sorry.'),
+            'switchToLight' => __('Switch to the light theme'),
+            'switchToDark' => __('Switch to the dark theme'),
+        ];
+    @endphp
+    <script>
+        window.whereToStrings = @json($strings, JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_AMP | JSON_HEX_QUOT);
+    </script>
     <!-- Style -->
     <!-- ?v= is the file modification time: a changed stylesheet has a new URL, so the browser cache cannot serve the old one -->
     <link href="{{ asset('css/style.css') }}?v={{ filemtime(public_path('css/style.css')) }}" rel="stylesheet">
@@ -64,6 +103,8 @@
      <div id="app">
         <!-- HEADER -->
         @include('layouts.header')
+        <!-- The suggestion to read the page in the browser's language, filled by whereto.js (language banner section) -->
+        <div id="languageBanner" hidden></div>
         <!-- The heading of the page for the search engines and the screen readers: the design shows the header's
              logo instead, so it is visually hidden (style.css). A view may give a 'heading' section (the place name) -->
         @hasSection('heading')

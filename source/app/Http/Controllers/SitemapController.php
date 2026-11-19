@@ -8,6 +8,7 @@ use App\Services\BarSearch;
 use App\Services\KaraokeSearch;
 use App\Services\RestaurantSearch;
 use App\Services\StoreSearch;
+use App\Support\LocaleUrl;
 use App\Support\PublicUrl;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Cache;
@@ -43,30 +44,43 @@ class SitemapController extends Controller
     }
 
     /**
-     * sitemap.xml: the home page, the four main pages, and the standalone page of every place still in business.
-     * Cached forever like the rest of the data (the seeder flushes the cache), so the URLs are built on APP_URL,
-     * not on the hostname of whichever request came first.
+     * sitemap.xml: the home page and the four main pages in every language, and the standalone page of every place
+     * still in business in the languages it is indexable in (doc/12-multilingual-ui.md: English only until the
+     * places get a Japanese name). Cached forever like the rest of the data (the seeder flushes the cache), so the
+     * URLs are built on APP_URL, not on the hostname of whichever request came first. The languages are part of the
+     * cache key ("sitemap-en-ja"): adding one cannot serve the sitemap of before.
      */
     public function sitemap(): Response
     {
-        $xml = Cache::rememberForever('sitemap', fn () => $this->buildSitemap());
+        $xml = Cache::rememberForever('sitemap-'.implode('-', LocaleUrl::locales()), fn () => $this->buildSitemap());
 
         return response($xml, 200, ['Content-Type' => 'application/xml; charset=UTF-8']);
     }
 
-    /** The XML itself: one <url> per page, with <lastmod> when the place has a visit date */
+    /** The XML itself: one <url> per page and language, with <lastmod> when the place has a visit date */
     private function buildSitemap(): string
     {
-        $urls = [[PublicUrl::to(route('home', absolute: false)), null]];
+        $urls = [];
+        foreach (LocaleUrl::locales() as $locale) {
+            // e.g. /ja for the Japanese home page (absolute: false gives the path, PublicUrl adds APP_URL)
+            $urls[] = [PublicUrl::to(LocaleUrl::route('home', [], false, $locale)), null];
+        }
         foreach (self::KINDS as $mainRoute => [$searchClass, $singleRoute]) {
-            $urls[] = [PublicUrl::to(route($mainRoute, absolute: false)), null];
+            foreach (LocaleUrl::locales() as $locale) {
+                $urls[] = [PublicUrl::to(LocaleUrl::route($mainRoute, [], false, $locale)), null];
+            }
             // Every place of the kind, through the same cached search as the main page ("All-Restaurant" and so on).
             // The search keeps only the places still in business (PlaceSearch::readFromDB, open() scope): a closed
             // place's page stays reachable but is not offered to the search engines
             foreach ((new $searchClass)->find(null, TagOperator::And, OrderBy::Distance) as $place) {
                 // visit_date is the date of the review (the stores have no such column: null)
                 $visited = $place->getAttribute('visit_date');
-                $urls[] = [PublicUrl::to(route($singleRoute, $place->getAttribute('id'), false)), $visited ? substr((string) $visited, 0, 10) : null];
+                foreach (LocaleUrl::locales() as $locale) {
+                    // Only the languages the place has content in (Place::isIndexableIn): English for now
+                    if ($place->isIndexableIn($locale)) {
+                        $urls[] = [PublicUrl::to(LocaleUrl::route($singleRoute, $place->getAttribute('id'), false, $locale)), $visited ? substr((string) $visited, 0, 10) : null];
+                    }
+                }
             }
         }
 

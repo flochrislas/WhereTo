@@ -3,6 +3,7 @@
 namespace App\Traits;
 
 use App\Enums\BusinessStatus;
+use App\Support\LocaleUrl;
 use App\Support\Position;
 use App\Tools\GeoUtils;
 use Illuminate\Database\Eloquent\Attributes\Scope;
@@ -60,7 +61,28 @@ trait Location
     {
         $status = $this->businessStatus();
 
-        return $status->isOpen() ? (string) $this->getAttribute('name') : $this->getAttribute('name').', '.$status->label();
+        // ":name, :status" is a sentence of lang/<locale>.json, so a language can write it its own way
+        return $status->isOpen() ? (string) $this->getAttribute('name') : __(':name, :status', ['name' => (string) $this->getAttribute('name'), 'status' => $status->label()]);
+    }
+
+    /**
+     * Does the place have its own content in this language (doc/12-multilingual-ui.md): always in the default
+     * language (the names and notes are English). There is no name_ja yet, so no other language has any; when
+     * the seeders get one, this becomes e.g. "|| ($locale === 'ja' && $this->getAttribute('name_ja'))".
+     */
+    public function hasContentIn(string $locale): bool
+    {
+        return $locale === LocaleUrl::default();
+    }
+
+    /**
+     * Should the search engines index the page of the place in this language: not when the place is gone for good
+     * (permanently closed, replaced: nothing left to rank, in any language), nor in a language it has no content in
+     * (the page would be a thin copy of the English one). The page is then noindex and in no hreflang list.
+     */
+    public function isIndexableIn(string $locale): bool
+    {
+        return ! $this->businessStatus()->isGone() && $this->hasContentIn($locale);
     }
 
     public function currentDistance(): ?float

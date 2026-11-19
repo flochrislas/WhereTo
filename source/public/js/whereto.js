@@ -7,10 +7,32 @@
  *
  * Values that come from the server are read from data-* attributes:
  *   - #content[data-results-url]      URL of the results fragment, e.g. /restaurants/results
+ *   - #content[data-details-url]      URL of a details fragment, PLACE_ID standing for the id of the place
  *   - #suggestion[data-suggestion-url] URL of the lunch suggestion
+ *   - a.langSwitch[data-twin-base]    the same page in another language (header), e.g. /ja/restaurants
+ * The URLs are in the language of the page (/ja/... on a Japanese page): the script never builds a path itself.
+ * The messages it writes in the page come from window.whereToStrings, printed by the layout in the page's language.
  *
- * Sections: geolocation, panels (filter/results/details), tag filter, results, details, suggestion.
+ * Sections: messages, geolocation, panels (filter/results/details), tag filter, results, details, state in the
+ * address bar, suggestion, theme, language banner.
  */
+
+/* =========================================================================
+ * Messages (in the language of the page)
+ * ========================================================================= */
+
+/**
+ * The message of the given key in the language of the page (window.whereToStrings, printed by the layout from
+ * lang/<locale>.json), with its :placeholders replaced, e.g. t("showResults", { count: 12 }).
+ * An unknown key gives the key itself, so a missing message shows up without breaking anything.
+ */
+function t(key, replacements) {
+  let message = (window.whereToStrings || {})[key] || key;
+  for (const name in replacements || {}) {
+    message = message.replace(":" + name, replacements[name]);
+  }
+  return message;
+}
 
 /* =========================================================================
  * Geolocation
@@ -43,11 +65,11 @@ function startGeolocation() {
     return; // already watching
   }
   if (!navigator.geolocation) {
-    reportPosition("Geolocation is not supported by this browser. Distances are from the station.");
+    reportPosition(t("geolocationUnsupported"));
     console.warn("Geolocation is not supported by this browser.");
     return;
   }
-  reportPosition("Locating you... distances are from the station until then.");
+  reportPosition(t("locating"));
   // watchPosition calls onPositionSuccess every time the position changes, onPositionError when it fails
   // See https://developer.mozilla.org/en-US/docs/Web/API/Geolocation/watchPosition
   geolocationWatchId = navigator.geolocation.watchPosition(onPositionSuccess, onPositionError, geolocationOptions);
@@ -67,7 +89,7 @@ function onPositionSuccess(position) {
   const coordinates = position.coords.latitude + "," + position.coords.longitude;
   sessionStore("lastCoordinates", coordinates);
   console.info("Geolocation: " + coordinates);
-  reportPosition("Distances are from your position.");
+  reportPosition(t("fromPosition"));
 
   if (!geolocationHasFix) {
     geolocationHasFix = true;
@@ -82,23 +104,25 @@ function onPositionError(error) {
   let message;
   switch (error.code) {
     case error.PERMISSION_DENIED:
-      message = "You denied the request for geolocation.";
+      message = t("geolocationDenied");
       break;
     case error.POSITION_UNAVAILABLE:
-      message = "Location information is unavailable.";
+      message = t("geolocationUnavailable");
       break;
     case error.TIMEOUT:
-      message = "The request to get your location timed out.";
+      message = t("geolocationTimeout");
       break;
     default:
-      message = "An unknown geolocation error occurred (" + error.code + ": " + error.message + ").";
+      message = t("geolocationUnknown", { error: error.code + ": " + error.message });
   }
   // Browsers refuse geolocation on plain HTTP (except localhost)
   if (location.protocol !== "https:" && location.hostname !== "localhost") {
-    message = "Please use the HTTPS version of the service to enable geolocation.";
+    message = t("geolocationHttps");
   }
   console.warn("Geolocation error " + error.code + ": " + error.message);
-  reportPosition(message + " Distances are from the station.");
+  // Japanese sentences are not separated by a space
+  const separator = document.documentElement.lang === "ja" ? "" : " ";
+  reportPosition(message + separator + t("fromStation"));
 }
 
 /** Write a message in the position report div (if the page has one) */
@@ -235,9 +259,10 @@ function loadAllResults() {
   // can then be in flight (station, then position): only the latest one may write the list or clear the state.
   const now = nowStamp();
   setResultsLoadingTime(now);
-  getResultsDiv().innerHTML = "Loading ALL entries. Please wait or select a tag...";
-  // The remembered sort order, so the list matches the highlighted sort button
-  const orderBy = readStore("orderBy") || "distance";
+  // textContent, not innerHTML: a message is text, never markup
+  getResultsDiv().textContent = t("loadingAll");
+  // The current sort order, so the list matches the highlighted sort button
+  const orderBy = getOrderBy();
   const url = getResultsUrl() + '?position=' + getLocation() + '&orderBy=' + encodeURIComponent(orderBy);
   console.info('GET: ' + url);
   fetch(url)
@@ -250,7 +275,7 @@ function loadAllResults() {
     })
     .catch(() => {
       if (now == getResultsLoadingTime()) {
-        getResultsDiv().innerHTML = "Sorry, an error occurred during the search. Check your Internet connection and try again.";
+        getResultsDiv().textContent = t("searchError");
         // Nothing loaded: back to the initial state (no loading, no stamp) so that "Show All" tries again.
         // The loading state first: the finally below only clears it while the stamp is still ours.
         setResultsLoading("none");
@@ -288,18 +313,11 @@ function refreshResults(orderBy) {
   // Read all the divs under selectedTags and make a comma separated list of their labels
   const tagsLabels = getTagsLabels(getSelectedTagsDiv().children);
 
-  // Check for the orderBy choice
+  // A sort button was clicked: that order from now on; otherwise the current one
   if (orderBy != null) {
-    // Priority to the parameter (a sort button was clicked): remember it
-    store("orderBy", orderBy);
+    setOrderBy(orderBy);
   } else {
-    // No parameter: try the stored choice
-    orderBy = readStore("orderBy");
-    if (orderBy == null) {
-      // Nothing in the parameter nor the store: use the default value
-      orderBy = "distance";
-      store("orderBy", orderBy);
-    }
+    orderBy = getOrderBy();
   }
 
   // Show which sort button is the current one
@@ -311,19 +329,52 @@ function refreshResults(orderBy) {
 
   // AJAX request to update the results
   ajaxResults(op, tagsLabels, orderBy);
+  // The address bar and the language switch follow the sort order
+  syncState();
 }
 
-/** The operator between the selected tags, remembered in localStorage: "AND" (default) or "OR" */
+/**
+ * The sort order and the tag operator of the page. They live here, in the page: localStorage only remembers them
+ * for the next visit, and may be unavailable (private mode, storage disabled), in which case the page still
+ * keeps what the visitor chose or what the address said.
+ */
+const state = { orderBy: null, op: null };
+
+/** The current sort order: distance (default) | ratings | cost, the remembered one at first */
+function getOrderBy() {
+  if (state.orderBy === null) {
+    const remembered = readStore("orderBy");
+    state.orderBy = ["distance", "ratings", "cost"].includes(remembered) ? remembered : DEFAULT_ORDER_BY;
+  }
+  return state.orderBy;
+}
+
+/** A new sort order: in the page, and remembered for the next visit */
+function setOrderBy(orderBy) {
+  state.orderBy = orderBy;
+  store("orderBy", orderBy);
+}
+
+/** The operator between the selected tags: "AND" (default) or "OR", the remembered one at first */
 function getTagsOperator() {
-  return readStore("op") === "OR" ? "OR" : "AND";
+  if (state.op === null) {
+    state.op = readStore("op") === "OR" ? "OR" : DEFAULT_OP;
+  }
+  return state.op;
+}
+
+/** A new operator: in the page, and remembered for the next visit */
+function rememberTagsOperator(op) {
+  state.op = op;
+  store("op", op);
 }
 
 /** "all" / "any" buttons: remember the operator, show it on the buttons, and refresh the results if tags are selected */
 function setTagsOperator(op) {
-  store("op", op);
+  rememberTagsOperator(op);
   markOperatorButton(op);
   if (getSelectedTagsDiv().children.length > 0) {
-    refreshResults();
+    refreshResults(); // which also updates the address bar
   }
 }
 
@@ -369,7 +420,7 @@ function ajaxResults(op, tags, orderBy) {
     })
     .catch(() => {
       if (now >= getResultsLoadingTime()) {
-        getResultsDiv().innerHTML = "Sorry, an error occurred during the search. Check your Internet connection and try again.";
+        getResultsDiv().textContent = t("searchError");
       }
     })
     .finally(() => {
@@ -395,10 +446,10 @@ function getSelectedTagsDiv() {
 function moveTag(event) {
   // currentTarget: the button the handler is on (target could be something inside it)
   const tag = event.currentTarget;
-  // A tag shown in the details of a place (not in the filter): select its twin in the available tags, if any
+  // A tag shown in the details of a place (not in the filter): select its twin in the available tags, if any.
+  // Found by data-tag, the English label both carry (the text may be a translation)
   if (tag.parentNode.id !== "selectedTags" && tag.parentNode.id !== "tags") {
-    const label = tag.textContent.trim();
-    const twin = Array.from(document.querySelectorAll("#tags .tag")).find(t => t.textContent.trim() === label);
+    const twin = findFilterTag(tag.dataset.tag);
     if (twin) {
       twin.click();
     }
@@ -428,6 +479,13 @@ function moveTag(event) {
     // Run the search from the selected tags immediately in the background
     refreshResults();
   }
+  // The address bar and the language switch follow the selected tags
+  syncState();
+}
+
+/** The button of the given tag (data-tag, the English label) among the available tags, or undefined */
+function findFilterTag(label) {
+  return Array.from(document.querySelectorAll("#tags .tag")).find(button => button.dataset.tag === label);
 }
 
 /** Back to the initial state of the results panel and its button */
@@ -435,13 +493,14 @@ function resetFilterHeaderButton() {
   setResultsLoading("none");
   setResultsLoadingTime(0);
   getFilterHeaderButtonDiv().disabled = false;
-  getFilterHeaderButtonDiv().innerHTML = "Show All";
+  getFilterHeaderButtonDiv().textContent = t("showAll");
 }
 
-/** From a NodeList of tag divs, the comma separated tag labels */
+/** From a NodeList of tag buttons, the comma separated tag labels */
 function getTagsLabels(tags) {
-  // NodeList -> array -> labels (the text of each div) -> "a,b,c"
-  return Array.from(tags).map(tag => tag.innerHTML.trim()).join(',');
+  // NodeList -> array -> labels -> "a,b,c". The label is data-tag, the English one the search knows: the text
+  // shown may be a translation ("ラーメン" for data-tag="ramen")
+  return Array.from(tags).map(tag => tag.dataset.tag).join(',');
 }
 
 /** Update the "Show All" button with the number of results */
@@ -450,11 +509,11 @@ function refreshShowResultsButton() {
   const nbResults = document.getElementsByClassName("resultsCounter").length;
   // Change the button label/text
   if (nbResults == 0) {
-    getFilterHeaderButtonDiv().innerHTML = "No result";
+    getFilterHeaderButtonDiv().textContent = t("noResult");
     getFilterHeaderButtonDiv().disabled = true;
   } else {
     getFilterHeaderButtonDiv().disabled = false;
-    getFilterHeaderButtonDiv().innerHTML = "Show " + nbResults + " results";
+    getFilterHeaderButtonDiv().textContent = t("showResults", { count: nbResults });
   }
 }
 
@@ -462,17 +521,36 @@ function refreshShowResultsButton() {
  * Details of one place
  * ========================================================================= */
 
+/** Number of the latest details request: an older one answering late may neither fill nor close the panel */
+let detailsRequest = 0;
+
 /** Fetch the details fragment (e.g. /restaurants/details/12) and put it in the details div */
 function ajaxDetails(url) {
-  getDetailsDiv().innerHTML = "Loading...";
+  const request = ++detailsRequest;
+  getDetailsDiv().textContent = t("loading");
   console.info("GET: " + url);
   fetch(url)
     .then(response => response.ok ? response.text() : Promise.reject(response.status))
-    .then(html => { getDetailsDiv().innerHTML = html; })
-    .catch(() => {
-      getDetailsDiv().innerHTML = "Sorry, detailed data could not be retrieved. Check your Internet connection and try again.";
+    .then(html => {
+      if (request === detailsRequest) {
+        getDetailsDiv().innerHTML = html;
+      }
+    })
+    .catch(status => {
+      if (request !== detailsRequest) {
+        return; // another place was asked for since: its answer decides
+      }
+      getDetailsDiv().textContent = t("detailsError");
+      // 404: no such place (an old shared address, ?place=999). Forget it: out of the address bar, and on a phone
+      // back to the list instead of an error panel
+      if (status === 404) {
+        closeDetails();
+      }
     });
 }
+
+/** The id of the place open in the details panel, null when none (kept for the address bar: ?place=12) */
+var shownPlaceId = null;
 
 /**
  * Called when a result name (a link to the standalone page) is clicked: load the details fragment (unless already
@@ -484,10 +562,17 @@ function showDetails(event, url, placeId) {
     return;
   }
   event.preventDefault();
+  openDetails(url, placeId);
+}
+
+/** Show the details of a place in the page: fetch them (unless already there), swap the panels on a phone */
+function openDetails(url, placeId) {
   // Only fetch if a different place than the one currently displayed
   if (placeId != getCurrentDetailsId()) {
     ajaxDetails(url);
   }
+  shownPlaceId = String(placeId);
+  syncState();
   // Swap the two panels (on a phone; side by side on a wide screen)
   if (isWideLayout()) {
     return;
@@ -496,9 +581,25 @@ function showDetails(event, url, placeId) {
   getContentDiv().style.display = "none";
 }
 
-/** "BACK" button: swap the panels back */
+/** The URL of the details fragment of a place, from the template the page gives (data-details-url), or null */
+function getDetailsUrl(placeId) {
+  const template = getContentDiv()?.dataset.detailsUrl;
+  return template ? template.replace("PLACE_ID", encodeURIComponent(placeId)) : null;
+}
+
+/** "BACK" button: swap the panels back (on a wide screen the details stay next to the list) */
 function hideDetails() {
   if (isWideLayout()) {
+    return;
+  }
+  closeDetails();
+}
+
+/** No place open any more: it leaves the address bar, and on a phone the list comes back */
+function closeDetails() {
+  shownPlaceId = null;
+  syncState();
+  if (isWideLayout() || getContentDiv() === null) {
     return;
   }
   getDetailsDiv().style.display = "none";
@@ -532,6 +633,105 @@ function copyStringToClipboard(str) {
 }
 
 /* =========================================================================
+ * State of a filter page in the address bar (doc/12-multilingual-ui.md)
+ * The selected tags, the operator, the sort order and the open place live in the page. They are also written in
+ * the query string (?tags=ramen,noodles&op=OR&orderBy=cost&place=12), so that the address bar can be shared or
+ * bookmarked, and so that the language switch opens the other language in the same state. A page opened with
+ * such a query string starts in that state (restoreState).
+ * ========================================================================= */
+
+/** The defaults, left out of the query string so that a plain page keeps its plain address */
+const DEFAULT_OP = "AND";
+const DEFAULT_ORDER_BY = "distance";
+
+/** The names of the state parameters: the only ones the page writes or removes in the address */
+const STATE_PARAMS = ["tags", "op", "orderBy", "place"];
+
+/** The state of the page as URLSearchParams (tags, op, orderBy, place; only those that differ from the default) */
+function stateParams() {
+  // URLSearchParams builds a query string and encodes the values (a tag with a space or an "&" stays intact)
+  const params = new URLSearchParams();
+  const tags = getTagsLabels(getSelectedTagsDiv().children);
+  if (tags !== "") {
+    params.set("tags", tags);
+    // The operator only matters with tags
+    if (getTagsOperator() !== DEFAULT_OP) {
+      params.set("op", getTagsOperator());
+    }
+  }
+  const orderBy = getOrderBy();
+  if (orderBy !== DEFAULT_ORDER_BY) {
+    params.set("orderBy", orderBy);
+  }
+  if (shownPlaceId !== null) {
+    params.set("place", shownPlaceId);
+  }
+  return params;
+}
+
+/** A query string ("?tags=ramen&place=12") from URLSearchParams, "" when empty */
+function queryString(params) {
+  // The commas between the tags stay readable (%2C is a comma, decoded the same way)
+  const query = params.toString().replace(/%2C/gi, ",");
+  return query === "" ? "" : "?" + query;
+}
+
+/**
+ * Write the state of the page in the address bar and in the language switch links. Called on every change: tag,
+ * operator, sort order, place opened or closed. replaceState changes the address without a new history entry
+ * (the back button still leaves the page) and without loading anything.
+ */
+function syncState() {
+  if (getResultsUrl() === null) {
+    return; // not a filter page: the address and the switch links are already right
+  }
+  const state = stateParams();
+  // Only the state parameters change in the address: the others (a campaign tag, say) and the #anchor stay
+  const url = new URL(location.href);
+  STATE_PARAMS.forEach(name => url.searchParams.delete(name));
+  state.forEach((value, name) => url.searchParams.set(name, value));
+  history.replaceState(history.state, "", url.pathname + queryString(url.searchParams) + url.hash);
+  // The switch links: the twin page (data-twin-base, printed by the server) with the same state
+  const query = queryString(state);
+  document.querySelectorAll("a[data-twin-base]").forEach(link => {
+    link.href = link.dataset.twinBase + query;
+  });
+}
+
+/**
+ * Start in the state the query string gives, if any: select the tags, set the operator and the sort order (they
+ * are also remembered, as if chosen on the buttons). Without any of them the remembered choices stay.
+ * Returns the place to open (its id as a string) or null, and whether tags were selected.
+ */
+function restoreState() {
+  const params = new URLSearchParams(location.search);
+  const known = STATE_PARAMS.some(name => params.has(name));
+  if (!known) {
+    return { tags: false, place: null };
+  }
+  // A shared address carries the whole state: what it leaves out is the default, not this browser's last choice.
+  // The operator is only in the address with tags (stateQuery): without tags, keep the remembered one
+  if (params.has("tags")) {
+    rememberTagsOperator(params.get("op") === "OR" ? "OR" : DEFAULT_OP);
+  }
+  const orderBy = params.get("orderBy");
+  setOrderBy(["distance", "ratings", "cost"].includes(orderBy) ? orderBy : DEFAULT_ORDER_BY);
+  let selected = false;
+  (params.get("tags") || "").split(",").forEach(label => {
+    const tag = findFilterTag(label.trim());
+    if (tag) {
+      // As moveTag does, without a search per tag: the caller searches once
+      getSelectedTagsDiv().appendChild(tag);
+      tag.setAttribute("aria-pressed", "true");
+      selected = true;
+    }
+  });
+  // Digits only: the id goes into a URL
+  const place = /^\d+$/.test(params.get("place") || "") ? params.get("place") : null;
+  return { tags: selected, place: place };
+}
+
+/* =========================================================================
  * Lunch suggestion (home page)
  * ========================================================================= */
 
@@ -551,10 +751,16 @@ function ajaxSuggestion() {
     .then(response => response.ok ? response.text() : Promise.reject(response.status))
     .then(html => {
       // Replace the box content with the suggestion and a button to ask again
-      getSuggestionDiv().innerHTML = html + '<button type="button" id="suggestButton" onclick="ajaxSuggestion()">Try again</button>';
+      getSuggestionDiv().innerHTML = html;
+      const again = document.createElement("button");
+      again.type = "button";
+      again.id = "suggestButton";
+      again.textContent = t("tryAgain");
+      again.onclick = ajaxSuggestion;
+      getSuggestionDiv().appendChild(again);
     })
     .catch(() => {
-      getSuggestionDiv().innerHTML = "Err(or), nothing from the top of my head, sorry.";
+      getSuggestionDiv().textContent = t("suggestionError");
     });
 }
 
@@ -591,8 +797,9 @@ function applyTheme(theme) {
     // The button shows what you get by pressing it: a sun on the dark theme, a moon on the light one
     const next = theme === "dark" ? "light" : "dark";
     button.textContent = theme === "dark" ? "\u2600\uFE0E" : "\u263E";
-    button.setAttribute("aria-label", "Switch to the " + next + " theme");
-    button.title = "Switch to the " + next + " theme";
+    const label = t(next === "light" ? "switchToLight" : "switchToDark");
+    button.setAttribute("aria-label", label);
+    button.title = label;
   }
 }
 
@@ -601,6 +808,81 @@ function toggleTheme() {
   const next = currentTheme() === "dark" ? "light" : "dark";
   store("theme", next);
   applyTheme(next);
+}
+
+/* =========================================================================
+ * Language banner
+ * When the browser prefers another language of the site than the page's, a one-line banner offers it ("日本語で見る").
+ * Shown once per browser: following it or closing it remembers the answer (localStorage). No redirection, no cookie:
+ * the page is the same for everyone, the banner is built here from the header's language switch links.
+ * ========================================================================= */
+
+/** The localStorage key of the answer */
+const LANGUAGE_BANNER_KEY = "languageBannerDismissed";
+
+/**
+ * The switch link to show in the banner: the first language of the browser (navigator.languages, most preferred
+ * first) that the site has; none when that language is the page's own, or none is available.
+ */
+function preferredLanguageLink() {
+  const pageLanguage = document.documentElement.lang;
+  const links = Array.from(document.querySelectorAll("a.langSwitch[hreflang]"));
+  const browserLanguages = navigator.languages && navigator.languages.length ? navigator.languages : [navigator.language || ""];
+  for (const browserLanguage of browserLanguages) {
+    // "ja-JP" -> "ja": the site has one version per language, not per country
+    const language = browserLanguage.toLowerCase().split("-")[0];
+    if (language === pageLanguage) {
+      return null; // the visitor reads the page in a language they prefer
+    }
+    const link = links.find(a => a.hreflang === language);
+    if (link) {
+      return link;
+    }
+  }
+  return null;
+}
+
+/** A visitor who picks a language in the header has answered: no banner from then on (as closing it) */
+function rememberLanguageSwitch() {
+  document.querySelectorAll("a.langSwitch").forEach(link => {
+    link.addEventListener("click", () => store(LANGUAGE_BANNER_KEY, "1"));
+  });
+}
+
+/** Show the banner when the browser prefers another language of the site and the visitor has not answered yet */
+function showLanguageBanner() {
+  const banner = document.getElementById("languageBanner");
+  if (banner === null || readStore(LANGUAGE_BANNER_KEY)) {
+    return;
+  }
+  const link = preferredLanguageLink();
+  if (link === null) {
+    return;
+  }
+  const dismiss = () => store(LANGUAGE_BANNER_KEY, "1");
+  // The link: the words of the banner in that language (data-banner), going where the switch link goes now
+  const offer = document.createElement("a");
+  offer.textContent = link.dataset.banner;
+  offer.lang = link.lang;
+  offer.hreflang = link.hreflang;
+  offer.href = link.href;
+  // The switch link may have changed since (the state of a filter page): take its address at the last moment
+  offer.addEventListener("click", () => {
+    offer.href = link.href;
+    dismiss();
+  });
+  const close = document.createElement("button");
+  close.type = "button";
+  close.className = "languageBannerClose";
+  close.textContent = "\u00D7"; // the multiplication sign, a common "close" icon
+  close.setAttribute("aria-label", link.dataset.close);
+  close.lang = link.lang;
+  close.addEventListener("click", () => {
+    dismiss();
+    banner.hidden = true;
+  });
+  banner.replaceChildren(offer, close);
+  banner.hidden = false;
 }
 
 /* =========================================================================
@@ -625,26 +907,46 @@ try {
 // so the permission prompt does not appear before the visitor did anything.
 if (getResultsUrl() !== null) {
   startGeolocation();
+  // A shared address (?tags=...&place=12): select its tags, operator and sort order first
+  const restored = restoreState();
   // Show the remembered sort order and tag operator on their buttons
-  markSortButton(readStore("orderBy") || "distance");
+  markSortButton(getOrderBy());
   markOperatorButton(getTagsOperator());
-  // The default list came with the page (nearest to the station first): show its size on the "Show All" button,
-  // and load it again in the remembered order when that is not the default one
+  // The default list came with the page (nearest to the station first): show its size on the "Show All" button
   refreshShowResultsButton();
-  if ((readStore("orderBy") || "distance") !== "distance") {
-    loadAllResults();
+  if (restored.tags) {
+    // Tags from the address: search them, and on a phone show the list they give
+    refreshResults();
+    showResults();
+  } else {
+    // Load the list again in the remembered order when that is not the default one
+    if (getOrderBy() !== DEFAULT_ORDER_BY) {
+      loadAllResults();
+    }
+    // On a wide screen the results panel is visible from the start: fill it instead of waiting for "Show All"
+    if (isWideLayout()) {
+      getResults();
+    }
   }
-  // On a wide screen the results panel is visible from the start: fill it instead of waiting for "Show All"
-  if (isWideLayout()) {
-    getResults();
+  // The place of the address, in the details panel
+  if (restored.place !== null && getDetailsUrl(restored.place) !== null) {
+    openDetails(getDetailsUrl(restored.place), restored.place);
   }
+  // The switch links get the state the page started with
+  syncState();
 }
+
+// The suggestion to read the page in the browser's language (first visit only)
+rememberLanguageSwitch();
+showLanguageBanner();
 
 // Register the service worker (public/sw.js): makes the app installable and usable offline.
 // Needs HTTPS or localhost, like geolocation. Browsers without support simply skip this.
 if ('serviceWorker' in navigator) {
   // The asset versions (data attributes of <html>) travel in the worker's URL: it pre-caches those exact files
+  // The languages under a prefix travel there too: the worker pre-caches their pages (/ja/restaurants...)
   const versions = document.documentElement.dataset;
-  navigator.serviceWorker.register('/sw.js?css=' + (versions.cssVersion || '') + '&js=' + (versions.jsVersion || ''))
+  navigator.serviceWorker.register('/sw.js?css=' + (versions.cssVersion || '') + '&js=' + (versions.jsVersion || '')
+      + '&locales=' + encodeURIComponent(versions.localePrefixes || ''))
     .catch(e => console.warn('Service worker registration failed: ' + e));
 }

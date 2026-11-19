@@ -86,6 +86,20 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Languages of the site (doc/12-multilingual-ui.md)
+    |--------------------------------------------------------------------------
+    |
+    | The first one is the default: served at the plain URLs (/restaurants),
+    | it must be the same as 'locale' above. Every other one is served under
+    | its own prefix (/ja/restaurants) and needs lang/<locale>.json and
+    | lang/<locale>/tags.php (the translation tests list what is missing).
+    |
+    */
+
+    'locales' => ['en', 'ja'],
+
+    /*
+    |--------------------------------------------------------------------------
     | Encryption Key
     |--------------------------------------------------------------------------
     |

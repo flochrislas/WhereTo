@@ -7,6 +7,7 @@ use App\Models\Karaoke;
 use App\Models\Restaurant;
 use App\Models\Store;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Cache;
 use Tests\TestCase;
 
 /** robots.txt and sitemap.xml, the two files the search engines read first (doc/10-seo.md) */
@@ -47,6 +48,20 @@ class SitemapTest extends TestCase
         $this->assertStringContainsString('<loc>https://whereto.example/</loc>', $xml);
         $this->assertStringContainsString('<loc>https://whereto.example/restaurants</loc>', $xml);
         $this->assertStringNotContainsString('192.0.2.1', $xml);
+    }
+
+    /** The home and main pages in every language; the place pages in English only while no place has a Japanese name */
+    public function test_sitemap_lists_the_pages_in_every_language_and_the_places_where_indexable(): void
+    {
+        $restaurant = Restaurant::create(['name' => 'Reviewed']);
+        $xml = $this->get('/sitemap.xml')->assertOk()->getContent();
+        foreach (['/ja', '/ja/restaurants', '/ja/stores', '/ja/bars', '/ja/karaokes'] as $path) {
+            $this->assertStringContainsString('<loc>'.url($path).'</loc>', $xml);
+        }
+        $this->assertStringContainsString('<loc>'.route('restaurants.details.single', $restaurant->id).'</loc>', $xml);
+        $this->assertStringNotContainsString(route('ja.restaurants.details.single', $restaurant->id), $xml);
+        // Cached under a key that names the languages: a new language cannot be served the old sitemap
+        $this->assertTrue(Cache::has('sitemap-en-ja'));
     }
 
     /** The page of a closed place stays reachable, but is not offered to the search engines */

@@ -25,6 +25,12 @@ interface Place
     /** The name, followed by the status when the place is not operational, e.g. "Kindenmaru, permanently closed" */
     public function nameWithStatus(): string;
 
+    /** Does the place have its own content (name, notes) in this language: always in English, see the Location trait */
+    public function hasContentIn(string $locale): bool;
+
+    /** Should its page be indexed in this language: not gone for good, and content in that language */
+    public function isIndexableIn(string $locale): bool;
+
     /**
      * The JSON-LD data of the standalone page of this place (schema.org vocabulary), built by App\Support\StructuredData
      *

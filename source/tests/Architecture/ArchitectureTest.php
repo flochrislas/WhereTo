@@ -5,6 +5,7 @@ namespace Tests\Architecture;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\PlaceController;
 use App\Models\Place;
+use App\Support\LocaleUrl;
 use App\Traits\Location;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Routing\ViewController;
@@ -160,6 +161,40 @@ class ArchitectureTest extends TestCase
         }
     }
 
+    public function test_routes_can_be_cached(): void
+    {
+        // "php artisan route:cache" (part of optimize, in the deploy) cannot store a closure: every route points at
+        // a controller method or a view. The language loop of routes/web.php registers routes, it is not one.
+        // The framework's own routes (local storage, health check, Debugbar) are not ours
+        foreach (Route::getRoutes() as $route) {
+            if (preg_match('#^(storage/|up$|_debugbar)#', $route->uri())) {
+                continue;
+            }
+            $this->assertNotInstanceOf(\Closure::class, $route->getAction('uses'), $route->uri().' must not be a closure');
+        }
+    }
+
+    public function test_every_page_exists_in_every_language(): void
+    {
+        // The default language at the plain names, every other one under its prefix with the same names
+        $names = array_filter(array_map(fn ($route) => $route->getName(), iterator_to_array(Route::getRoutes())));
+        foreach (LocaleUrl::prefixed() as $locale) {
+            foreach (['home', 'restaurants.main', 'restaurants.results', 'restaurants.details', 'restaurants.details.single', 'suggestions'] as $name) {
+                $this->assertContains($name, $names);
+                $this->assertContains($locale.'.'.$name, $names);
+            }
+        }
+    }
+
+    public function test_views_build_urls_in_the_page_language(): void
+    {
+        // route('x') always gives the English page: the views use LocaleUrl::route('x') (doc/12-multilingual-ui.md)
+        foreach (File::allFiles(resource_path('views')) as $view) {
+            $this->assertDoesNotMatchRegularExpression('/(?<![\w:>])route\(/', $view->getContents(), $view->getRelativePathname().': use LocaleUrl::route(), not route()');
+            $this->assertStringNotContainsString("url('/')", $view->getContents(), $view->getRelativePathname().": use LocaleUrl::route('home')");
+        }
+    }
+
     public function test_views_only_call_functions_that_exist_in_the_script(): void
     {
         $script = File::get(public_path('js/whereto.js'));
@@ -187,13 +222,14 @@ class ArchitectureTest extends TestCase
 
     public function test_only_the_layout_has_an_inline_script(): void
     {
-        // The JavaScript lives in public/js/whereto.js; the exceptions are the tiny theme snippet that must run
-        // before the first paint (layouts/app.blade.php) and the JSON-LD data block, which is not code
-        // (components/structured-data.blade.php)
-        $exceptions = ['layouts/app.blade.php', 'components/structured-data.blade.php'];
+        // The JavaScript lives in public/js/whereto.js; the exceptions, with how many inline scripts each may have:
+        // the layout's tiny theme snippet that must run before the first paint, and its window.whereToStrings, the
+        // messages of whereto.js in the page's language (data printed by the server, doc/12-multilingual-ui.md);
+        // the JSON-LD data block, which is not code (components/structured-data.blade.php)
+        $exceptions = ['layouts/app.blade.php' => 2, 'components/structured-data.blade.php' => 1];
         foreach (File::allFiles(resource_path('views')) as $view) {
             $inline = preg_match_all('/<script(?![^>]*\bsrc=)/', $view->getContents());
-            $allowed = in_array($view->getRelativePathname(), $exceptions, true) ? 1 : 0;
+            $allowed = $exceptions[$view->getRelativePathname()] ?? 0;
             $this->assertSame($allowed, $inline, $view->getRelativePathname().': no inline <script>, the code goes in whereto.js');
         }
     }

@@ -8,7 +8,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Tells the search engines not to index the response (X-Robots-Tag header).
- * For the HTML fragments the page loads by AJAX (results, details, autocomplete): they are pieces of a page,
+ * For the HTML fragments the page loads by AJAX (results, details): they are pieces of a page,
  * not pages, and the standalone place pages carry the same content with a title, a canonical URL and links.
  * See doc/10-seo.md.
  */

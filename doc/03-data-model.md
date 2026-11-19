@@ -62,6 +62,6 @@ Everything is cached with `rememberForever`. The seeder flushes the cache; any o
 | `<Model>-md5(op + ',' + tags)` | Results for a given tag combination, prefixed with `cost` when sorted by cost and `l<N>-` when limited |
 | `l100-All-Restaurant` | The 100 best restaurants used by the suggestion |
 | `restaurant-<id>-tags`, `bar-<id>-tags`, ... | Tags of one place, for the details view |
-| `autocomplete-<md5(term)>` | Autocomplete results |
+| `sitemap-en-ja` | The sitemap XML; the key names the languages (`config('app.locales')`) so a new one rebuilds it |
 
 Distances are never cached because they depend on the visitor's position.

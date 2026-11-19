@@ -3,6 +3,9 @@
 @section('title', 'Info')
 
 @section('content')
+    {{-- English only (a placeholder text, not translated): noindex in the other languages, and marked as English --}}
+    <x-indexing :languages="[\App\Support\LocaleUrl::default()]" />
+    <div lang="en">
     <div>Disclaimer</div>
     All content is by me from my personal experience, judgement and opinion.
     Naturally, individual experience, or taste, may differ.
@@ -73,6 +76,5 @@
           Mostly sunny, clear and cold weather. Gets really cold around February.
         Srping
           Good weather alternates with shitty weather... It is a mix of warm blue sky and grey cold rainy days.
-    @include('payments.donations')
-    @include('ads.baner')
+    </div>
 @endsection
