@@ -20,12 +20,18 @@ WhereTo/
     │   ├── Support/Position.php         "lat, lon" value object (parsing, distance to another position)
     │   ├── Support/StructuredData.php   the JSON-LD (schema.org) block of a place page, common fields and our review
     │   ├── Support/PublicUrl.php        absolute URLs on APP_URL for the sitemap, canonical, Open Graph and JSON-LD
+    │   ├── Support/LocaleUrl.php        URLs in the page's language: route() for the current locale, twin() for the
+    │   │                                same page in another one, the hreflang alternates (12-multilingual-ui.md)
+    │   ├── Support/Tags.php             a tag label in the page's language (lang/<locale>/tags.php, English fallback)
+    │   ├── helpers.php                  global view helpers, loaded by Composer ("files"): tag_label()
     │   ├── Services/                    PlaceSearch (tag query, forever cache, ordering, distances) and one subclass per kind
     │   ├── Http/Controllers/            see below
     │   ├── Http/Middleware/NoIndex.php  X-Robots-Tag: noindex on the AJAX fragments
+    │   ├── Http/Middleware/SetLocale.php sets the language of a route group ('locale:ja')
     │   └── Providers/AppServiceProvider.php
     ├── bootstrap/app.php, bootstrap/providers.php   application configuration (no Kernel classes)
-    ├── config/, public/, storage/
+    ├── config/, public/, storage/       config/app.php 'locales' lists the languages, the default one first
+    ├── lang/ja.json, lang/ja/tags.php   the Japanese sentences (keyed by the English sentence) and tag labels
     ├── database/migrations/             skeleton tables + 13 WhereTo tables (+ one that drops the old users tables)
     ├── database/seeders/                the actual data lives here (see 03-data-model.md)
     ├── resources/views/                 Blade templates
@@ -41,7 +47,7 @@ The app handles four kinds of "places". Each one is a trio of model, tag model a
 
 | Place | Model | Tag model | Public controllers | Views |
 |---|---|---|---|---|
-| Restaurant | `App\Models\Restaurant` | `RestaurantTag` | `RestaurantController` (+ `RestaurantTagController` for the autocomplete) | `resources/views/restaurants/` |
+| Restaurant | `App\Models\Restaurant` | `RestaurantTag` | `RestaurantController` | `resources/views/restaurants/` |
 | Store | `App\Models\Store` | `StoreTag` | `StoreController` | `resources/views/stores/` |
 | Bar | `App\Models\Bar` | `BarTag` | `BarController` | `resources/views/bars/` |
 | Karaoke | `App\Models\Karaoke` | `KaraokeTag` | `KaraokeController` | `resources/views/karaokes/` |
@@ -65,9 +71,9 @@ The search itself is the abstract `App\Services\PlaceSearch`, with one subclass 
 
 The four concrete place controllers are near copies of each other and only define `getModelName()`, `search()`, `details()` and `detailsSingle()` (`index()` and `results()` are in the base class) (the last two return 404 for unknown ids).
 
-`RestaurantTagController` only has the `autocomplete()` endpoint; the tag lists of the four kinds are `allCached()` static methods on the tag models.
+The tag lists of the four kinds are `allCached()` static methods on the tag models (the old `RestaurantTagController` and its unused autocomplete route were removed in November 2026).
 
-Models are equally repetitive: each place model `use`s the `Location` trait, implements the `Place` interface (`position()`, `currentDistance()`, `setCurrentDistance()`, provided by the trait; this is what `PlaceSearch` needs from a place), declares `$fillable`, and defines `tags()`, `tagsCached()` and `attachTags()`.
+Models are equally repetitive: each place model `use`s the `Location` trait, implements the `Place` interface (`position()`, `currentDistance()`, `setCurrentDistance()`, provided by the trait; this is what `PlaceSearch` needs from a place; also `hasContentIn($locale)` and `isIndexableIn($locale)`, the language rule of the search engines, see `12-multilingual-ui.md`), declares `$fillable`, and defines `tags()`, `tagsCached()` and `attachTags()`.
 
 ## Other controllers
 
@@ -80,6 +86,8 @@ Models are equally repetitive: each place model `use`s the `Location` trait, imp
 
 All routes point at controller classes or `Route::view`, so `route:cache` works.
 
+The public pages are registered once per language (`12-multilingual-ui.md`): a function in `routes/web.php` holds them, called for the default language (English) with no prefix and the plain route names, then for every other language of `config('app.locales')` under its prefix, with names prefixed by the language: `/ja/restaurants` is `ja.restaurants.main`. Each group carries the `locale:<code>` middleware (`App\Http\Middleware\SetLocale`). `robots.txt` and `sitemap.xml` exist once. The views never call `route()` (it would always give the English page): they call `App\Support\LocaleUrl::route()`, and an architecture test checks it.
+
 Public:
 
 | Method and path | Handler | Purpose |
@@ -91,9 +99,9 @@ Public:
 | `GET /restaurants/results` | `RestaurantController@results` | HTML fragment with the result rows (AJAX) |
 | `GET /restaurants/details/{id}` | `RestaurantController@details` | HTML fragment with the details (AJAX) |
 | `GET /restaurant/details/{id}` | `RestaurantController@detailsSingle` | Full standalone details page, shareable URL |
-| `GET /robots.txt`, `GET /sitemap.xml` | `SitemapController` | For the crawlers: allow everything and list every page (home, main pages, standalone place pages with the visit date); the sitemap is cached forever |
-| `GET /tags/autocomplete` | `RestaurantTagController@autocomplete` | JSON for tag autocomplete (not used by the UI) |
+| `GET /robots.txt`, `GET /sitemap.xml` | `SitemapController` | For the crawlers: allow everything and list every page (home and main pages in every language, standalone place pages in the languages they are indexable in, with the visit date); the sitemap is cached forever |
 | same four for `/stores`, `/bars`, `/karaokes` | `Store*`, `Bar*`, `Karaoke*` | |
+| every path above but robots and sitemap, under `/ja` | same handlers | The Japanese version (`/ja`, `/ja/restaurants`, `/ja/restaurant/details/{id}`...) |
 | `GET /up` | framework | Health check |
 
 Every route is a `GET`: the app has no login and no admin (removed in November 2026; the data is edited in the seeders and the site is read-only). There are no accounts, so there is nothing to brute-force and nothing to leak.
@@ -102,10 +110,12 @@ Removed from the legacy routes: `/about`, `/test-html`, `/clubs*`, `/register`, 
 
 ## Views
 
-- `layouts/app.blade.php` is the public layout: `<title>`, meta description, canonical URL, Open Graph and Twitter tags all built from the `title` and `description` sections each view declares (and a visually hidden `<h1>` from the `heading` section, else the title); the stylesheet (dark by default, light with `data-theme="light"` on `<html>`, set before the first paint by a tiny inline script), the theme-color and color-scheme metas, CSRF meta, the `public/js/whereto.js` script tag (deferred, versioned by file modification time), `layouts.header`, `#position-report` for geolocation messages, content, `layouts.footer`.
-- Each place folder has: `main` (page shell that includes `filter` and `results`; its `#content` div carries the `data-results-url` attribute the JavaScript reads), `filter` (tag cloud), `results` (sort buttons and column headers), `results-data` (the rows, returned by AJAX), `details` (fragment) and `details-single` (standalone page wrapping `details`, plus the `<x-structured-data>` component: the JSON-LD block built by the model's `structuredData()`).
+- The visible text goes through `__('English sentence')`; `lang/ja.json` holds the Japanese sentence for each one (no `lang/en.json`: the English is the key). Tags print `data-tag="{{ $tag->label }}"` (the English label the search uses) and `{{ tag_label($tag->label) }}` (the label in the page's language). Two tests (`tests/Architecture/TranslationCoverageTest.php`) list every `__()` literal of the views and `app/` and every tag label and restaurant type of the seeders without a translation (the lunch suggestion shows the restaurant type through `tag_label()`), and the entries nobody uses any more.
+- `layouts/app.blade.php` is the public layout: `<html lang>` and `og:locale` from the page's language, `<title>`, meta description, canonical URL, Open Graph and Twitter tags all built from the `title` and `description` sections each view declares (and a visually hidden `<h1>` from the `heading` section, else the title); the stylesheet (dark by default, light with `data-theme="light"` on `<html>`, set before the first paint by a tiny inline script), the theme-color and color-scheme metas, CSRF meta, the `public/js/whereto.js` script tag (deferred, versioned by file modification time), `window.whereToStrings` (the messages of `whereto.js` in the page's language, a second small inline script), `layouts.header` (with the language switch links), `#languageBanner` (filled by the script), `#position-report` for geolocation messages, content, `layouts.footer`.
+- `components/indexing.blade.php` (`<x-indexing />` on the home and main pages, `<x-indexing :place="$place" />` on the standalone pages) pushes into the `<head>` either the `hreflang` links of the languages the page is indexable in, or a robots `noindex` when it is not indexable in its own language.
+- Each place folder has: `main` (page shell that includes `filter` and `results`; its `#content` div carries the `data-results-url` and `data-details-url` attributes the JavaScript reads), `filter` (tag cloud), `results` (sort buttons and column headers), `results-data` (the rows, returned by AJAX), `details` (fragment) and `details-single` (standalone page wrapping `details`, plus the `<x-structured-data>` component: the JSON-LD block built by the model's `structuredData()`).
 - `public/manifest.json`, `public/sw.js` (service worker) and `public/icons/` make the app installable on a phone's home screen and usable offline; see `04-how-it-works.md` section 8.
-- The JavaScript is not in the views: it lives in `public/js/whereto.js`, one file with a section per concern (geolocation, panels, results, tag filter, details, suggestion). The views call its global functions from `onclick` attributes and pass it the two server URLs through `data-results-url` and `data-suggestion-url` attributes. All requests use `fetch()`.
+- The JavaScript is not in the views: it lives in `public/js/whereto.js`, one file with a section per concern (geolocation, panels, results, tag filter, details, suggestion). The views call its global functions from `onclick` attributes and pass it the server URLs, in the page's language, through `data-results-url`, `data-details-url`, `data-suggestion-url` and the switch links' `data-twin-base` attributes. All requests use `fetch()`.
 - `suggestions/suggestion.blade.php` renders the suggestion box only at lunch time; `suggestions/suggestion-text.blade.php` is the sentence returned by `/suggestions`.
 
 

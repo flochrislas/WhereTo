@@ -2,6 +2,12 @@
 
 The public site is a mostly single-page experience per place type. The server renders a page shell with all the tags, and the browser then fetches HTML fragments (results, details, suggestion) with `fetch()` and injects them into the page. There is no JSON API for the UI; every AJAX endpoint returns rendered Blade HTML.
 
+## 0. Languages: the locale is in the URL
+
+Every page exists in English at its usual URL and in Japanese under `/ja` (`/ja/restaurants`, `/ja/restaurant/details/12`, and the fragments `/ja/restaurants/results`...); the design is in `12-multilingual-ui.md`. The route group of a language sets it (`SetLocale` middleware), so `__()` reads `lang/ja.json`, `tag_label()` reads `lang/ja/tags.php`, and every URL a view prints goes through `LocaleUrl::route()` and stays in the same language, including the ones the script fetches. The tags are submitted with their English label (`data-tag`), so the search, its cache and the URLs do not depend on the language; the place names and notes stay English (`lang="en"`). The header's switch link goes to the same page in the other language (`LocaleUrl::twin()`). Nothing depends on the visitor: no cookie, no `Accept-Language` handling, no redirection. A 404 under `/ja` (an unknown place id, `/ja/restaurant/details/999`) renders in English: the route model binding fails before the `SetLocale` middleware of the group runs, so the error page sees the default language.
+
+On the first visit, when the browser prefers another language of the site than the page's (`navigator.languages`), `whereto.js` shows a one-line banner ("日本語で見る") built from the switch link (its `data-banner` and `data-close` texts are in the offered language). Following it or closing it stores `languageBannerDismissed` in `localStorage`: the banner never shows again in that browser.
+
 ## 1. Home page
 
 ```
@@ -46,6 +52,10 @@ Client behaviour (`public/js/whereto.js`, tag filter and results sections):
 2. Any change calls `refreshResults()`, which reads the labels of the selected tags, picks the sort order (parameter, else `localStorage.orderBy`, else `distance`), reads the tag operator from `localStorage.op` (`AND` by default, `OR` when "any" is chosen with the buttons under the selected tags), and calls `ajaxResults()`.
 3. `ajaxResults()` requests `GET /restaurants/results?op=AND&tags=a,b&orderBy=distance&position=lat,lon` (parameters URL-encoded), stamps the request time in the `#results` `time` attribute so that stale responses are ignored, and injects the returned HTML into `#results`. The "Show All" button label becomes "Show N results" (N counted from `.resultsCounter` placeholders).
 4. "Show All" with no tag selected (`getResults()`) loads every place once, sorted by distance (`loadAllResults()`), then switches to the results panel.
+
+### The state in the query string
+
+The selected tags, the operator, the sort order and the place open in the details panel are also written in the address bar: `/restaurants?tags=ramen,noodles&op=OR&orderBy=cost&place=12` (the defaults, `AND` and `distance`, are left out). `stateQuery()` serialises the state; `syncState()` runs on every change (tag, operator, sort, place opened, BACK on a phone), calls `history.replaceState()` with it (no new history entry) and sets the `href` of each switch link to its `data-twin-base` plus the same query, so switching language keeps the place and the filters. A page opened with such a query starts in that state (`restoreState()`, at page start): the tags are selected, the operator and sort order are applied and remembered, the search runs once (on a phone the results panel shows), and the place opens in the details panel through `data-details-url`. A filtered list can thus be shared or bookmarked. Without any of these parameters the page uses the remembered sort order and operator as before.
 
 ## 4. Results fragment
 
@@ -128,9 +138,9 @@ The site is read-only: every route is a `GET`, there is no login and no account.
 
 `whereto.js` registers `public/sw.js` on every public page. The worker:
 
-1. On install, pre-caches the app shell: `/`, the four place pages, the stylesheet and the script with their `?v=` version (the page registers the worker as `/sw.js?css=<v>&js=<v>`, from data attributes of `<html>`, so a new file version is a new worker and a new cache), the font, the icon and the manifest.
+1. On install, pre-caches the app shell: `/`, the four place pages, the same five under each language prefix (`/ja`, `/ja/restaurants`...; the page passes the prefixes as `&locales=ja` in the worker URL, from `data-locale-prefixes` on `<html>`), the stylesheet and the script with their `?v=` version (the page registers the worker as `/sw.js?css=<v>&js=<v>`, from data attributes of `<html>`, so a new file version is a new worker and a new cache), the font, the icon and the manifest.
 2. For static files (`/css`, `/js`, `/fonts`, `/icons`, the manifest, the favicon): answers from the cache at once and refreshes the copy in the background ("stale-while-revalidate"). The script tag's `?v=` makes a new `whereto.js` a new URL, so it is fetched from the network.
-3. For pages, results and details fragments: network first, and the last copy seen when offline. At most `MAX_FRAGMENTS` (20) such copies are kept, oldest out; the number is a constant at the top of `sw.js` with its reasoning. An unknown page requested offline falls back to the cached home page.
+3. For pages, results and details fragments: network first, and the last copy seen when offline. At most `MAX_FRAGMENTS` (20) such copies are kept, oldest out; the number is a constant at the top of `sw.js` with its reasoning. A page requested offline with a query string (the state of a filter page) falls back to the same page without it, where the script restores the state from the address; an unknown page falls back to the cached home page of its language (`/ja` for `/ja/...`).
 4. Never touches `/_debugbar`, non-GET requests or other origins.
 
 `CACHE_VERSION` in `sw.js` names the cache; bumping it drops the previous cache on activation. The manifest (`public/manifest.json`) gives the name, colours and icons used by "Add to home screen"; the layout links it with `rel="manifest"` and an `apple-touch-icon` for iOS.
