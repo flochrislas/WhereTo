@@ -106,6 +106,26 @@ test.describe('Languages', () => {
     await expect(page.locator('.opButton[data-op="OR"]')).toHaveAttribute('aria-pressed', 'true');
   });
 
+  test('the state of the address survives a browser without localStorage', async ({ page }) => {
+    // Storage disabled (private mode, settings): every access throws
+    await page.addInitScript(() => {
+      Object.defineProperty(window, 'localStorage', { get() { throw new Error('storage disabled'); } });
+    });
+    // The search must carry the operator and the order of the address, not the defaults
+    const search = page.waitForRequest(request => /\/restaurants\/results\?/.test(request.url()) && /tags=/.test(request.url()));
+    await page.goto('/restaurants?tags=ramen,noodles&op=OR&orderBy=cost');
+    const url = new URL((await search).url());
+    expect(url.searchParams.get('op')).toBe('OR');
+    expect(url.searchParams.get('orderBy')).toBe('cost');
+    await waitForResults(page); // (shown by the page itself on a phone, as the address has tags)
+    await expect(page).toHaveURL(/\/restaurants\?tags=ramen,noodles&op=OR&orderBy=cost$/);
+    await expect(page.locator('.opButton[data-op="OR"]')).toHaveAttribute('aria-pressed', 'true');
+    await expect(page.locator('.sortButton[data-order-by="cost"]')).toHaveAttribute('aria-pressed', 'true');
+    // A choice made on the page is kept too
+    await page.locator('.sortButton[data-order-by="ratings"]').click();
+    await expect(page).toHaveURL(/\/restaurants\?tags=ramen,noodles&op=OR&orderBy=ratings$/);
+  });
+
   test('an address with an unknown place drops it and shows the list', async ({ page }) => {
     await page.goto('/restaurants?tags=ramen&place=999999');
     await expect(page).toHaveURL(/\/restaurants\?tags=ramen$/);
@@ -115,5 +135,43 @@ test.describe('Languages', () => {
       await expect(page.locator('#results')).toBeVisible();
     }
     await expect(page.locator('#selectedTags .tag[data-tag="ramen"]')).toHaveAttribute('aria-pressed', 'true');
+  });
+});
+
+test.describe('Details requests answering out of order', () => {
+  // The service worker would answer the details itself, out of reach of page.route(): without it for this test
+  test.use({ serviceWorkers: 'block' });
+
+  test('a late answer for a place opened earlier neither replaces nor closes the current place', async ({ page }) => {
+    await page.goto('/restaurants');
+    await showResults(page);
+    const rows = page.locator('#results a.resultCell');
+    const ids = await Promise.all([0, 1].map(async i => (await rows.nth(i).getAttribute('href')).match(/\/(\d+)$/)[1]));
+    const names = await Promise.all([0, 1].map(async i => (await rows.nth(i).locator('.rowName').textContent()).trim()));
+    // The first place answers late, with a 404 the first time (as a place removed meanwhile) and late with its
+    // page the second time; the second place answers at once
+    let firstAnswers = 0;
+    await page.route(new RegExp(`/restaurants/details/${ids[0]}$`), async route => {
+      firstAnswers++;
+      await new Promise(resolve => setTimeout(resolve, 1500));
+      return firstAnswers === 1 ? route.fulfill({ status: 404, body: 'gone' }) : route.continue();
+    });
+    for (let round = 0; round < 2; round++) {
+      // Open the first place, then the second before the first answers (a dispatched click, as on a phone the
+      // list is behind the details panel at that moment and a real click would wait for it)
+      await rows.nth(0).dispatchEvent('click');
+      await rows.nth(1).dispatchEvent('click');
+      await expect(page.locator('#detailName')).toHaveText(names[1]);
+      // The late answer of the first place (a 404, then its page) changes nothing
+      await page.waitForTimeout(2500);
+      await expect(page.locator('#detailName')).toHaveText(names[1]);
+      await expect(page).toHaveURL(new RegExp(`\\?place=${ids[1]}$`));
+      await expect(page.locator('a.langSwitch[hreflang="ja"]')).toHaveAttribute('href', new RegExp(`/ja/restaurants\\?place=${ids[1]}$`));
+      if (!(await isWide(page))) {
+        await expect(page.locator('#mainDetails')).toBeVisible();
+        await page.locator('#mainDetails .navButton').click();
+      }
+    }
+    expect(firstAnswers).toBe(2);
   });
 });

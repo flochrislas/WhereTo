@@ -261,8 +261,8 @@ function loadAllResults() {
   setResultsLoadingTime(now);
   // textContent, not innerHTML: a message is text, never markup
   getResultsDiv().textContent = t("loadingAll");
-  // The remembered sort order, so the list matches the highlighted sort button
-  const orderBy = readStore("orderBy") || "distance";
+  // The current sort order, so the list matches the highlighted sort button
+  const orderBy = getOrderBy();
   const url = getResultsUrl() + '?position=' + getLocation() + '&orderBy=' + encodeURIComponent(orderBy);
   console.info('GET: ' + url);
   fetch(url)
@@ -313,18 +313,11 @@ function refreshResults(orderBy) {
   // Read all the divs under selectedTags and make a comma separated list of their labels
   const tagsLabels = getTagsLabels(getSelectedTagsDiv().children);
 
-  // Check for the orderBy choice
+  // A sort button was clicked: that order from now on; otherwise the current one
   if (orderBy != null) {
-    // Priority to the parameter (a sort button was clicked): remember it
-    store("orderBy", orderBy);
+    setOrderBy(orderBy);
   } else {
-    // No parameter: try the stored choice
-    orderBy = readStore("orderBy");
-    if (orderBy == null) {
-      // Nothing in the parameter nor the store: use the default value
-      orderBy = "distance";
-      store("orderBy", orderBy);
-    }
+    orderBy = getOrderBy();
   }
 
   // Show which sort button is the current one
@@ -340,14 +333,45 @@ function refreshResults(orderBy) {
   syncState();
 }
 
-/** The operator between the selected tags, remembered in localStorage: "AND" (default) or "OR" */
+/**
+ * The sort order and the tag operator of the page. They live here, in the page: localStorage only remembers them
+ * for the next visit, and may be unavailable (private mode, storage disabled), in which case the page still
+ * keeps what the visitor chose or what the address said.
+ */
+const state = { orderBy: null, op: null };
+
+/** The current sort order: distance (default) | ratings | cost, the remembered one at first */
+function getOrderBy() {
+  if (state.orderBy === null) {
+    const remembered = readStore("orderBy");
+    state.orderBy = ["distance", "ratings", "cost"].includes(remembered) ? remembered : DEFAULT_ORDER_BY;
+  }
+  return state.orderBy;
+}
+
+/** A new sort order: in the page, and remembered for the next visit */
+function setOrderBy(orderBy) {
+  state.orderBy = orderBy;
+  store("orderBy", orderBy);
+}
+
+/** The operator between the selected tags: "AND" (default) or "OR", the remembered one at first */
 function getTagsOperator() {
-  return readStore("op") === "OR" ? "OR" : "AND";
+  if (state.op === null) {
+    state.op = readStore("op") === "OR" ? "OR" : DEFAULT_OP;
+  }
+  return state.op;
+}
+
+/** A new operator: in the page, and remembered for the next visit */
+function rememberTagsOperator(op) {
+  state.op = op;
+  store("op", op);
 }
 
 /** "all" / "any" buttons: remember the operator, show it on the buttons, and refresh the results if tags are selected */
 function setTagsOperator(op) {
-  store("op", op);
+  rememberTagsOperator(op);
   markOperatorButton(op);
   if (getSelectedTagsDiv().children.length > 0) {
     refreshResults(); // which also updates the address bar
@@ -497,14 +521,25 @@ function refreshShowResultsButton() {
  * Details of one place
  * ========================================================================= */
 
+/** Number of the latest details request: an older one answering late may neither fill nor close the panel */
+let detailsRequest = 0;
+
 /** Fetch the details fragment (e.g. /restaurants/details/12) and put it in the details div */
 function ajaxDetails(url) {
+  const request = ++detailsRequest;
   getDetailsDiv().textContent = t("loading");
   console.info("GET: " + url);
   fetch(url)
     .then(response => response.ok ? response.text() : Promise.reject(response.status))
-    .then(html => { getDetailsDiv().innerHTML = html; })
+    .then(html => {
+      if (request === detailsRequest) {
+        getDetailsDiv().innerHTML = html;
+      }
+    })
     .catch(status => {
+      if (request !== detailsRequest) {
+        return; // another place was asked for since: its answer decides
+      }
       getDetailsDiv().textContent = t("detailsError");
       // 404: no such place (an old shared address, ?place=999). Forget it: out of the address bar, and on a phone
       // back to the list instead of an error panel
@@ -621,7 +656,7 @@ function stateQuery() {
       params.set("op", getTagsOperator());
     }
   }
-  const orderBy = readStore("orderBy") || DEFAULT_ORDER_BY;
+  const orderBy = getOrderBy();
   if (orderBy !== DEFAULT_ORDER_BY) {
     params.set("orderBy", orderBy);
   }
@@ -664,10 +699,10 @@ function restoreState() {
   // A shared address carries the whole state: what it leaves out is the default, not this browser's last choice.
   // The operator is only in the address with tags (stateQuery): without tags, keep the remembered one
   if (params.has("tags")) {
-    store("op", params.get("op") === "OR" ? "OR" : DEFAULT_OP);
+    rememberTagsOperator(params.get("op") === "OR" ? "OR" : DEFAULT_OP);
   }
   const orderBy = params.get("orderBy");
-  store("orderBy", ["distance", "ratings", "cost"].includes(orderBy) ? orderBy : DEFAULT_ORDER_BY);
+  setOrderBy(["distance", "ratings", "cost"].includes(orderBy) ? orderBy : DEFAULT_ORDER_BY);
   let selected = false;
   (params.get("tags") || "").split(",").forEach(label => {
     const tag = findFilterTag(label.trim());
@@ -855,7 +890,7 @@ if (getResultsUrl() !== null) {
   // A shared address (?tags=...&place=12): select its tags, operator and sort order first
   const restored = restoreState();
   // Show the remembered sort order and tag operator on their buttons
-  markSortButton(readStore("orderBy") || "distance");
+  markSortButton(getOrderBy());
   markOperatorButton(getTagsOperator());
   // The default list came with the page (nearest to the station first): show its size on the "Show All" button
   refreshShowResultsButton();
@@ -865,7 +900,7 @@ if (getResultsUrl() !== null) {
     showResults();
   } else {
     // Load the list again in the remembered order when that is not the default one
-    if ((readStore("orderBy") || "distance") !== "distance") {
+    if (getOrderBy() !== DEFAULT_ORDER_BY) {
       loadAllResults();
     }
     // On a wide screen the results panel is visible from the start: fill it instead of waiting for "Show All"
