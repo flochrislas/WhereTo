@@ -59,7 +59,8 @@ class PlacesTest extends TestCase
 
     private function namesInOrder(string $html): array
     {
-        preg_match_all('/class="rowName">([^<]+)</', $html, $m);
+        // [^>]*: the div also carries lang="en" (the names are English on every page)
+        preg_match_all('/class="rowName"[^>]*>([^<]+)</', $html, $m);
 
         return $m[1];
     }
