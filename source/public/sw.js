@@ -7,10 +7,11 @@
  *   - pages and data fragments go to the network first, and fall back to the last copy seen when offline.
  * Only GET requests of this site are handled. The Debugbar is left alone.
  *
- * The page registers this file as /sw.js?css=<version>&js=<version> (whereto.js, from the data attributes of
- * <html>): the versions are the ?v= query strings the page uses for its stylesheet and script, so the pre-cache
- * holds the exact URLs the page asks for. A new version of either file is a new worker URL, hence a new install
- * and a new cache; the old cache is deleted on activation.
+ * The page registers this file as /sw.js?css=<version>&js=<version>&locales=<prefixes> (whereto.js, from the data
+ * attributes of <html>): the versions are the ?v= query strings the page uses for its stylesheet and script, so the
+ * pre-cache holds the exact URLs the page asks for; the prefixes are the languages served under a prefix ("ja"),
+ * whose pages are pre-cached too (doc/12-multilingual-ui.md). A new version of either file, or a new language, is
+ * a new worker URL, hence a new install and a new cache; the old cache is deleted on activation.
  * Bump the "whereto-vN" part when the cached files change in a way the versions do not cover.
  * See https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API
  */
@@ -19,16 +20,26 @@
 const PARAMS = new URL(self.location.href).searchParams;
 const CSS_VERSION = PARAMS.get('css') || '';
 const JS_VERSION = PARAMS.get('js') || '';
+/** The path prefixes of the languages other than the default one, e.g. ['/ja'] (the default one has none) */
+const LOCALE_PREFIXES = (PARAMS.get('locales') || '').split(',').filter(locale => /^[a-z]{2,3}$/.test(locale)).map(locale => '/' + locale);
 
-const CACHE_VERSION = 'whereto-v3-' + CSS_VERSION + '-' + JS_VERSION; // v3: versioned assets in the pre-cache
+// v4: the pages of every language in the pre-cache
+const CACHE_VERSION = 'whereto-v4-' + CSS_VERSION + '-' + JS_VERSION + '-' + LOCALE_PREFIXES.join('');
 
-/** Files put in the cache at install time: the app shell, enough to open the app offline */
+/** The pages of the app shell in the default language; the same ones exist under each language prefix */
+const SHELL_PAGES = ['/', '/restaurants', '/stores', '/bars', '/karaokes'];
+
+/** The home page of the language of a path: '/ja' for '/ja/restaurants', '/' for '/restaurants' */
+function homeOf(pathname) {
+  const prefix = LOCALE_PREFIXES.find(prefix => pathname === prefix || pathname.startsWith(prefix + '/'));
+  return prefix || '/';
+}
+
+/** Files put in the cache at install time: the app shell in every language, enough to open the app offline */
 const PRECACHE = [
-  '/',
-  '/restaurants',
-  '/stores',
-  '/bars',
-  '/karaokes',
+  ...SHELL_PAGES,
+  // The same pages under each prefix: '/ja' (the home page, no trailing slash), '/ja/restaurants'...
+  ...LOCALE_PREFIXES.flatMap(prefix => SHELL_PAGES.map(page => page === '/' ? prefix : prefix + page)),
   '/css/style.css' + (CSS_VERSION ? '?v=' + CSS_VERSION : ''),
   '/js/whereto.js' + (JS_VERSION ? '?v=' + JS_VERSION : ''),
   '/fonts/open-sans-v15-latin-regular.woff2',
@@ -126,9 +137,12 @@ function trimFragments(cache) {
 
 /**
  * Network-first: pages, results and details are fresh when online (a deploy may have changed them),
- * and the last copy seen is shown when offline. A page never seen offline falls back to the home page.
+ * and the last copy seen is shown when offline. A page opened with the state of a filter page in its query string
+ * (/restaurants?tags=ramen&place=12) falls back to the same page without it: the script restores the state from
+ * the address. A page never seen falls back to the home page of its language (/ja for /ja/...).
  */
 function networkFirst(request) {
+  const url = new URL(request.url);
   return caches.open(CACHE_VERSION).then(cache =>
     fetch(request)
       .then(response => {
@@ -142,11 +156,13 @@ function networkFirst(request) {
           if (cached) {
             return cached;
           }
-          // Navigation to an unknown page while offline: open the app shell instead of the browser's error page
-          if (request.mode === 'navigate') {
-            return cache.match('/');
+          if (request.mode !== 'navigate') {
+            return new Response('Offline', { status: 503, statusText: 'Offline' });
           }
-          return new Response('Offline', { status: 503, statusText: 'Offline' });
+          // Navigation while offline: the same page without its query string, or else the app shell of the
+          // page's language, instead of the browser's error page
+          return cache.match(request, { ignoreSearch: true })
+            .then(page => page || cache.match(homeOf(url.pathname)));
         })
       )
   );
