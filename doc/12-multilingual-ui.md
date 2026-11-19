@@ -54,7 +54,7 @@ On a standalone place page the switch is the server-rendered twin (`/ja/restaura
 
 ### The banner
 
-The layout prints the available locales and the twin URLs as data (the switch links). On load, `whereto.js` compares `navigator.languages` with the available locales and the page's locale; when the browser prefers another available language and `localStorage` holds no dismissal, it shows a one-line banner with the twin link and a close button. Both the link and the close store the dismissal, so the banner shows once per browser, whichever way it is answered. No cookie, no server-side matching, no page variant.
+The layout prints the available locales and the twin URLs as data (the switch links). On load, `whereto.js` compares `navigator.languages` with the available locales and the page's locale; when the browser prefers another available language and `localStorage` holds no dismissal, it shows a one-line banner with the twin link and a close button. The link, the close button and a click on a language in the header all store the dismissal, so the banner shows once per browser, whichever way the visitor answers (a visitor who picked a language in the header has answered too). No cookie, no server-side matching, no page variant.
 
 ### Search engines
 

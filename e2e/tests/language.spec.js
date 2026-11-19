@@ -126,6 +126,19 @@ test.describe('Languages', () => {
     await expect(page).toHaveURL(/\/restaurants\?tags=ramen,noodles&op=OR&orderBy=ratings$/);
   });
 
+  test('the anchor and the other parameters of the address stay when the state changes', async ({ page }) => {
+    await page.goto('/restaurants?utm_source=newsletter#mainFilter');
+    // The script wrote the address (the switch link carries the twin page) without touching it
+    await expect(page.locator('a.langSwitch[hreflang="ja"]')).toHaveAttribute('href', /\/ja\/restaurants$/);
+    await expect(page).toHaveURL(/\/restaurants\?utm_source=newsletter#mainFilter$/);
+    await page.locator('#tags').getByRole('button', { name: 'ramen', exact: true }).click();
+    await expect(page).toHaveURL(/\/restaurants\?utm_source=newsletter&tags=ramen#mainFilter$/);
+    // The switch link carries the state only
+    await expect(page.locator('a.langSwitch[hreflang="ja"]')).toHaveAttribute('href', /\/ja\/restaurants\?tags=ramen$/);
+    await page.locator('#selectedTags').getByRole('button', { name: 'ramen', exact: true }).click();
+    await expect(page).toHaveURL(/\/restaurants\?utm_source=newsletter#mainFilter$/);
+  });
+
   test('an address with an unknown place drops it and shows the list', async ({ page }) => {
     await page.goto('/restaurants?tags=ramen&place=999999');
     await expect(page).toHaveURL(/\/restaurants\?tags=ramen$/);
@@ -148,12 +161,14 @@ test.describe('Details requests answering out of order', () => {
     const rows = page.locator('#results a.resultCell');
     const ids = await Promise.all([0, 1].map(async i => (await rows.nth(i).getAttribute('href')).match(/\/(\d+)$/)[1]));
     const names = await Promise.all([0, 1].map(async i => (await rows.nth(i).locator('.rowName').textContent()).trim()));
-    // The first place answers late, with a 404 the first time (as a place removed meanwhile) and late with its
-    // page the second time; the second place answers at once
+    // The first place answers only when the test says so: with a 404 the first time (as a place removed
+    // meanwhile) and with its page the second time; the second place answers at once
+    const firstUrl = new RegExp(`/restaurants/details/${ids[0]}$`);
     let firstAnswers = 0;
-    await page.route(new RegExp(`/restaurants/details/${ids[0]}$`), async route => {
+    let release;
+    await page.route(firstUrl, async route => {
       firstAnswers++;
-      await new Promise(resolve => setTimeout(resolve, 1500));
+      await new Promise(resolve => { release = resolve; });
       return firstAnswers === 1 ? route.fulfill({ status: 404, body: 'gone' }) : route.continue();
     });
     for (let round = 0; round < 2; round++) {
@@ -162,8 +177,11 @@ test.describe('Details requests answering out of order', () => {
       await rows.nth(0).dispatchEvent('click');
       await rows.nth(1).dispatchEvent('click');
       await expect(page.locator('#detailName')).toHaveText(names[1]);
-      // The late answer of the first place (a 404, then its page) changes nothing
-      await page.waitForTimeout(2500);
+      // Now the first place answers (a 404, then its page): once the answer is in, nothing has changed
+      await expect.poll(() => firstAnswers).toBe(round + 1);
+      const answered = page.waitForResponse(response => firstUrl.test(response.url()));
+      release();
+      await answered;
       await expect(page.locator('#detailName')).toHaveText(names[1]);
       await expect(page).toHaveURL(new RegExp(`\\?place=${ids[1]}$`));
       await expect(page.locator('a.langSwitch[hreflang="ja"]')).toHaveAttribute('href', new RegExp(`/ja/restaurants\\?place=${ids[1]}$`));

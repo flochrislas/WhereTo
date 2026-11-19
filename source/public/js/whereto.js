@@ -644,8 +644,11 @@ function copyStringToClipboard(str) {
 const DEFAULT_OP = "AND";
 const DEFAULT_ORDER_BY = "distance";
 
-/** The state of the page as a query string ("?tags=ramen&place=12"), or "" for the default state */
-function stateQuery() {
+/** The names of the state parameters: the only ones the page writes or removes in the address */
+const STATE_PARAMS = ["tags", "op", "orderBy", "place"];
+
+/** The state of the page as URLSearchParams (tags, op, orderBy, place; only those that differ from the default) */
+function stateParams() {
   // URLSearchParams builds a query string and encodes the values (a tag with a space or an "&" stays intact)
   const params = new URLSearchParams();
   const tags = getTagsLabels(getSelectedTagsDiv().children);
@@ -663,6 +666,11 @@ function stateQuery() {
   if (shownPlaceId !== null) {
     params.set("place", shownPlaceId);
   }
+  return params;
+}
+
+/** A query string ("?tags=ramen&place=12") from URLSearchParams, "" when empty */
+function queryString(params) {
   // The commas between the tags stay readable (%2C is a comma, decoded the same way)
   const query = params.toString().replace(/%2C/gi, ",");
   return query === "" ? "" : "?" + query;
@@ -677,9 +685,14 @@ function syncState() {
   if (getResultsUrl() === null) {
     return; // not a filter page: the address and the switch links are already right
   }
-  const query = stateQuery();
-  history.replaceState(history.state, "", location.pathname + query);
+  const state = stateParams();
+  // Only the state parameters change in the address: the others (a campaign tag, say) and the #anchor stay
+  const url = new URL(location.href);
+  STATE_PARAMS.forEach(name => url.searchParams.delete(name));
+  state.forEach((value, name) => url.searchParams.set(name, value));
+  history.replaceState(history.state, "", url.pathname + queryString(url.searchParams) + url.hash);
   // The switch links: the twin page (data-twin-base, printed by the server) with the same state
+  const query = queryString(state);
   document.querySelectorAll("a[data-twin-base]").forEach(link => {
     link.href = link.dataset.twinBase + query;
   });
@@ -692,7 +705,7 @@ function syncState() {
  */
 function restoreState() {
   const params = new URLSearchParams(location.search);
-  const known = ["tags", "op", "orderBy", "place"].some(name => params.has(name));
+  const known = STATE_PARAMS.some(name => params.has(name));
   if (!known) {
     return { tags: false, place: null };
   }
@@ -829,6 +842,13 @@ function preferredLanguageLink() {
   return null;
 }
 
+/** A visitor who picks a language in the header has answered: no banner from then on (as closing it) */
+function rememberLanguageSwitch() {
+  document.querySelectorAll("a.langSwitch").forEach(link => {
+    link.addEventListener("click", () => store(LANGUAGE_BANNER_KEY, "1"));
+  });
+}
+
 /** Show the banner when the browser prefers another language of the site and the visitor has not answered yet */
 function showLanguageBanner() {
   const banner = document.getElementById("languageBanner");
@@ -917,6 +937,7 @@ if (getResultsUrl() !== null) {
 }
 
 // The suggestion to read the page in the browser's language (first visit only)
+rememberLanguageSwitch();
 showLanguageBanner();
 
 // Register the service worker (public/sw.js): makes the app installable and usable offline.

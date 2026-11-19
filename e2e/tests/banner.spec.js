@@ -47,4 +47,16 @@ test.describe('Language banner for an English browser', () => {
     await page.goto('/ja/restaurants');
     await expect(page.locator('#languageBanner').getByRole('link')).toHaveText('Read this page in English');
   });
+
+  test('choosing 日本語 in the header is an answer: no banner offering English afterwards', async ({ page, isMobile }) => {
+    test.skip(!isMobile, 'the scenario runs on the phone project');
+    await page.goto('/restaurants');
+    await page.locator('a.langSwitch[hreflang="ja"]').click();
+    await expect(page).toHaveURL(/\/ja\/restaurants$/);
+    // The script has run (the theme button got its label) and decided: no banner
+    await expect(page.locator('#themeButton')).toHaveAttribute('aria-label', /切り替え/);
+    await expect(page.locator('#languageBanner')).toBeHidden();
+    await page.goto('/ja');
+    await expect(page.locator('#languageBanner')).toBeHidden();
+  });
 });
