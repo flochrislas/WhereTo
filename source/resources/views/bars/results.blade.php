@@ -5,25 +5,25 @@
   <!-- buttons -->
   <div id="resultsControl">
     <button class="sortButton" data-order-by="ratings" aria-pressed="false" onclick="refreshResults('ratings')">
-      Best<br>first</button>
+      {{ __('Best first') }}</button>
     <button class="sortButton" data-order-by="distance" aria-pressed="false" onclick="refreshResults('distance')">
-      Near<br>first</button>
-    <button class="navButton" onclick="showFilter()">Show Filters</button>
+      {{ __('Near first') }}</button>
+    <button class="navButton" onclick="showFilter()">{{ __('Show Filters') }}</button>
   </div>
 
   <!-- fixed labels -->
   <div class="resultTable">
     <div class="resultRow header">
       <div class="resultCell nameAndType">
-        <div class="label inline" style="color: var(--color-name);">Name</div>
+        <div class="label inline" style="color: var(--color-name);">{{ __('Name') }}</div>
         <div class="label inline" style="color: var(--color-txt-default);">&</div>
-        <div class="label inline" style="color: var(--color-type);">Branch</div>
+        <div class="label inline" style="color: var(--color-type);">{{ __('Branch') }}</div>
       </div>
       <div class="resultCell distance centerContent">
-        <div class="label distanceAdjust" style="color: var(--color-dst);">dst.</div>
+        <div class="label distanceAdjust" style="color: var(--color-dst);">{{ __('dst.') }}</div>
       </div>
       <div class="resultCell description">
-        <div class="label">Description</div>
+        <div class="label">{{ __('Description') }}</div>
       </div>
     </div>
   </div>

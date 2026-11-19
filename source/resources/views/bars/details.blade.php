@@ -1,47 +1,48 @@
   <div id="resultsControl">
     <button class="sortButton"
       onclick="window.open('{{ $place->google_maps_link }}', '_blank')">
-      Google<br>maps</button>
+      {{ __('Google maps') }}</button>
     <button class="sortButton"
       onclick="window.open('{{ $place->official_website }}', '_blank')">
-      Website</button>
+      {{ __('Website') }}</button>
     <button class="sortButton"
-      onclick="copyStringToClipboard('{{ route('bars.details.single',$place->id) }}')">
-      Copy<br>URL</button>
-    <button class="navButton" onclick="hideDetails()">BACK</button>
+      onclick="copyStringToClipboard('{{ \App\Support\LocaleUrl::route('bars.details.single',$place->id) }}')">
+      {{ __('Copy URL') }}</button>
+    <button class="navButton" onclick="hideDetails()">{{ __('BACK') }}</button>
   </div>
 
   <div id="detailTitle" class="detailRow">
-      <div id="detailName" class="detail" detailId="{{ $place->id }}"><div>{{ $place->name }}</div></div>
-      <div id="detailType" class="detail"><div>{{ $place->type }}</div></div>
-      <div id="detailLocation" class="detail"><div>{{ $place->location }}</div></div>
+      <div id="detailName" class="detail" detailId="{{ $place->id }}" lang="en"><div>{{ $place->name }}</div></div>
+      <div id="detailType" class="detail" lang="en"><div>{{ $place->type }}</div></div>
+      <div id="detailLocation" class="detail" lang="en"><div>{{ $place->location }}</div></div>
   </div>
 
   <div class="detailRow">
       <div class="detail score lunch">
-        <div class="label">Grade</div>
+        <div class="label">{{ __('Grade') }}</div>
         <div class="grade">{{ $place->score }}/4</div>
       </div>
   </div>
 
   <div class="detailRow">
       <div class="detail border15"
-           overlay="Main point">
-      {{ $place->points }}</div>
+           overlay="{{ __('Main point') }}">
+      <span lang="en">{{ $place->points }}</span></div>
   </div>
 
   <div class="detailRow">
       <div class="detail"
-           overlay="Personal experience">
-        {{ $place->experience }}
+           overlay="{{ __('Personal experience') }}">
+        <span lang="en">{{ $place->experience }}</span>
       </div>
   </div>
 
   <div class="detailRow">
     <div class="detail">
     @foreach ($place->tagsCached() as $placeTag)
-        <button type="button" class="tag tagType{{$placeTag->type}}" title="Add this tag to the filter" onclick="moveTag(event)">
-          {{$placeTag->label}}
+        {{-- data-tag: the English label, to find the same tag in the filter (whereto.js, moveTag) --}}
+        <button type="button" class="tag tagType{{$placeTag->type}}" data-tag="{{$placeTag->label}}" title="{{ __('Add this tag to the filter') }}" onclick="moveTag(event)">
+          {{ tag_label($placeTag->label) }}
         </button>
     @endforeach
     </div>

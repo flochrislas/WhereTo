@@ -3,36 +3,37 @@
   <!-- buttons -->
   <div id="resultsControl">
     <button class="sortButton" data-order-by="ratings" aria-pressed="false" onclick="refreshResults('ratings')">
-      Best<br>first</button>
+      {{ __('Best first') }}</button>
     <button class="sortButton" data-order-by="cost" aria-pressed="false" onclick="refreshResults('cost')">
-      Cost<br>first</button>
+      {{ __('Cost first') }}</button>
     <button class="sortButton" data-order-by="distance" aria-pressed="false" onclick="refreshResults('distance')">
-      Near<br>first</button>
-    <button class="navButton" onclick="showFilter()">Show Filters</button>
+      {{ __('Near first') }}</button>
+    <button class="navButton" onclick="showFilter()">{{ __('Show Filters') }}</button>
   </div>
 
-  <!-- fixed labels -->
+  <!-- fixed labels. The score columns use the same words as the details ("Lunch", "Place"), in lower case by the
+       stylesheet: one translation per meaning ("Place" is the score of the place, 雰囲気, not a location) -->
     <div class="resultTable">
       <div class="resultRow header">
         <div class="resultCell nameAndType">
-          <div class="label inline" style="color: var(--color-name);">Name</div>
+          <div class="label inline" style="color: var(--color-name);">{{ __('Name') }}</div>
           <div class="label inline" style="color: var(--color-txt-default);">&</div>
-          <div class="label inline" style="color: var(--color-type);">Type</div>
+          <div class="label inline" style="color: var(--color-type);">{{ __('Type') }}</div>
         </div>
         <div class="resultCell distance centerContent">
-          <div class="label distanceAdjust" style="color: var(--color-dst);">dst.</div>
+          <div class="label distanceAdjust" style="color: var(--color-dst);">{{ __('dst.') }}</div>
         </div>
         <div class="resultCell centerContent">
-          <div class="label fourDigitsAdjust" style="color: var(--color-cost);">cost</div>
+          <div class="label fourDigitsAdjust" style="color: var(--color-cost);">{{ __('cost') }}</div>
         </div>
         <div class="resultCell centerContent">
-          <div class="label" style="color: var(--color-lunch);">lunch</div>
+          <div class="label" style="color: var(--color-lunch);">{{ __('Lunch') }}</div>
         </div>
         <div class="resultCell centerContent">
-          <div class="label" style="color: var(--color-food);">food</div>
+          <div class="label" style="color: var(--color-food);">{{ __('Food') }}</div>
         </div>
         <div class="resultCell centerContent">
-          <div class="label" style="color: var(--color-place);">place</div>
+          <div class="label" style="color: var(--color-place);">{{ __('Place') }}</div>
         </div>
         <!--
         <div class="resultCell centerContent">

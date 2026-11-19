@@ -3,8 +3,9 @@
 namespace Tests\Unit;
 
 use App\Enums\BusinessStatus;
-use PHPUnit\Framework\TestCase;
+use Tests\TestCase;
 
+/** Tests\TestCase (the application), not PHPUnit's: the labels are translated with __() */
 class BusinessStatusTest extends TestCase
 {
     public function test_only_operational_is_open(): void
@@ -21,6 +22,10 @@ class BusinessStatusTest extends TestCase
         $this->assertSame('temporarily closed', BusinessStatus::ClosedTemporarily->label());
         $this->assertSame('permanently closed', BusinessStatus::ClosedPermanently->label());
         $this->assertSame('replaced by another business', BusinessStatus::Replaced->label());
+        // In the language of the page
+        app()->setLocale('ja');
+        $this->assertSame('閉店', BusinessStatus::ClosedPermanently->label());
+        app()->setLocale('en');
         // Gone for good (noindex): permanently closed and replaced only
         $this->assertSame([BusinessStatus::ClosedPermanently, BusinessStatus::Replaced], array_values(array_filter(BusinessStatus::cases(), fn ($s) => $s->isGone())));
     }

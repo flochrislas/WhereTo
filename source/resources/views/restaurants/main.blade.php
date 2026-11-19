@@ -1,11 +1,15 @@
 @extends('layouts.app')
 
-@section('title', 'Restaurants for lunch in Shibuya')
-@section('description', 'Quickly find the best restaurants for having lunch in Shibuya.')
+@section('title', __('Restaurants for lunch in Shibuya'))
+@section('description', __('Quickly find the best restaurants for having lunch in Shibuya.'))
 
 @section('content')
-<!-- data-results-url: the URL the JavaScript calls to get the results fragment -->
-<div id="content" data-results-url="{{ route('restaurants.results') }}">
+<x-indexing />
+<!-- data-results-url: the URL the JavaScript calls to get the results fragment.
+     data-details-url: the URL of the details fragment of a place, PLACE_ID standing for its id (the JavaScript opens
+     the place of a shared link, ?place=12, with it) -->
+<div id="content" data-results-url="{{ \App\Support\LocaleUrl::route('restaurants.results') }}"
+     data-details-url="{{ \App\Support\LocaleUrl::route('restaurants.details', 'PLACE_ID') }}">
 
   <div id="mainFilter">
     @include('restaurants.filter')

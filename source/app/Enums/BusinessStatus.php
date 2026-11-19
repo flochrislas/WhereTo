@@ -33,15 +33,18 @@ enum BusinessStatus: string
         return $this === self::Operational;
     }
 
-    /** What the page says about the place, lower case ('' for an operational place: nothing to say) */
+    /**
+     * What the page says about the place, lower case ('' for an operational place: nothing to say), in the language
+     * of the page (__() reads lang/<locale>.json)
+     */
     public function label(): string
     {
         // match returns the value of the first arm whose case is identical (===) to $this
         return match ($this) {
             self::Operational => '',
-            self::ClosedTemporarily => 'temporarily closed',
-            self::ClosedPermanently => 'permanently closed',
-            self::Replaced => 'replaced by another business',
+            self::ClosedTemporarily => __('temporarily closed'),
+            self::ClosedPermanently => __('permanently closed'),
+            self::Replaced => __('replaced by another business'),
         };
     }
 

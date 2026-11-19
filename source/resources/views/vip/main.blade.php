@@ -1,10 +1,10 @@
 @extends('layouts.app')
 
-@section('title', 'VIP')
-@section('description', 'VIP area of '.config('app.name').', coming later.')
+@section('title', __('VIP'))
+@section('description', __('VIP area of :app, coming later.', ['app' => config('app.name')]))
 
 @section('content')
 <div id="content">
-  <div class="note">VIP area: coming later.</div>
+  <div class="note">{{ __('VIP area: coming later.') }}</div>
 </div>
 @endsection
