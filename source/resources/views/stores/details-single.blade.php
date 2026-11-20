@@ -2,7 +2,14 @@
 
 @section('title', __(':name - Store info', ['name' => $place->nameWithStatus()]))
 @section('description', __('Detailed information page for :name, in Tokyo Shibuya. Ratings and practical information.', ['name' => $place->nameWithStatus()]))
-@section('heading', $place->name)
+{{-- The visually hidden h1 (layouts/app): the Japanese name first on a Japanese page, when the place has one --}}
+@if ($place->translatedName(app()->getLocale()) === null)
+  @section('heading', $place->name)
+@else
+  @section('heading')
+    {{ $place->translatedName(app()->getLocale()) }} <span lang="en">{{ $place->name }}</span>
+  @endsection
+@endif
 
 @section('content')
   <x-structured-data :place="$place" />
@@ -21,7 +28,13 @@
   </div>
 
   <div id="detailTitle" class="detailRow">
-      <div id="detailName" class="detail" lang="en"><div>{{ $place->name }}</div></div>
+      {{-- On a Japanese page, the Japanese name first when the place has one; only the English name is lang="en" --}}
+      @php($translatedName = $place->translatedName(app()->getLocale()))
+      @if ($translatedName === null)
+        <div id="detailName" class="detail" lang="en"><div>{{ $place->name }}</div></div>
+      @else
+        <div id="detailName" class="detail"><div>{{ $translatedName }} <span lang="en">{{ $place->name }}</span></div></div>
+      @endif
       <div id="detailType" class="detail" lang="en"><div>{{ $place->type }}</div></div>
       <div id="detailLocation" class="detail" lang="en"><div>{{ $place->location }}</div></div>
   </div>

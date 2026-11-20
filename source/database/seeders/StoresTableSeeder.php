@@ -129,6 +129,7 @@ class StoresTableSeeder extends Seeder
 
         $store = Store::create([
             'name' => 'ABC Mart',
+            'name_ja' => 'ABCマート',
             'location' => 'Shibuya',
             'type' => 'Shoes',
             'points' => 'Various sneakers from popular brands.',
@@ -194,6 +195,7 @@ class StoresTableSeeder extends Seeder
 
         $store = Store::create([
             'name' => 'Yamaya',
+            'name_ja' => 'やまや',
             'location' => 'Shibuya',
             'type' => 'World liquor',
             'points' => 'Lots of Japanese and imported beverages. Some snacks, sweet, and other imported condiments as well.',
@@ -220,6 +222,7 @@ class StoresTableSeeder extends Seeder
 
         $store = Store::create([
             'name' => 'Daiso',
+            'name_ja' => 'ダイソー',
             'location' => 'Shibuya',
             'type' => '100yen shop',
             'points' => 'All items are sold for 100 yen (+tax), and there is a lot of stuff.',
@@ -233,6 +236,7 @@ class StoresTableSeeder extends Seeder
 
         $store = Store::create([
             'name' => 'Can Do',
+            'name_ja' => 'キャンドゥ',
             'location' => 'Shibuya',
             'type' => '100yen shop',
             'points' => 'All items are sold for 100 yen (+tax), and there is a lot of stuff.',
@@ -289,6 +293,7 @@ class StoresTableSeeder extends Seeder
 
         $store = Store::create([
             'name' => 'Janpara',
+            'name_ja' => 'じゃんぱら',
             'location' => 'Shibuya, Dogenzaka',
             'type' => 'Used Electronics',
             'points' => 'Small shop. Buy and sell second hand smartphones and electronics..',
@@ -468,6 +473,7 @@ class StoresTableSeeder extends Seeder
 
         $store = Store::create([
             'name' => 'Technique',
+            'name_ja' => 'テクニーク',
             'location' => 'Shibuya, Udagawacho',
             'type' => 'Records',
             'points' => 'Great for electronic music on vinyl.',
@@ -481,6 +487,7 @@ class StoresTableSeeder extends Seeder
 
         $store = Store::create([
             'name' => 'Manhattan Records',
+            'name_ja' => 'マンハッタンレコード',
             'location' => 'Shibuya, Udagawacho',
             'type' => 'Records',
             'points' => 'Awesome for rap and hip-hop.',
@@ -507,6 +514,7 @@ class StoresTableSeeder extends Seeder
 
         $store = Store::create([
             'name' => 'Tower Records Shibuya',
+            'name_ja' => 'タワーレコード',
             'location' => 'Shibuya, Jinnan',
             'type' => 'Records',
             'points' => 'Biggest records store in Japan.',
@@ -641,6 +649,7 @@ class StoresTableSeeder extends Seeder
 
         $store = Store::create([
             'name' => 'Megane Ichiba',
+            'name_ja' => '眼鏡市場',
             'location' => 'Shibuya, Udagawacho',
             'type' => 'Glasses',
             'points' => 'Very decent choice, some sunglasses, decent prices.',

@@ -22,10 +22,16 @@ interface Place
     /** Is the place still in business (the business_status column, Operational when unset) */
     public function businessStatus(): BusinessStatus;
 
-    /** The name, followed by the status when the place is not operational, e.g. "Kindenmaru, permanently closed" */
+    /** The name in the page's language, followed by the status when the place is not operational, e.g. "Kindenmaru, permanently closed" */
     public function nameWithStatus(): string;
 
-    /** Does the place have its own content (name, notes) in this language: always in English, see the Location trait */
+    /** The name of the place in this language (name_ja for 'ja'), or null when it has only its English name */
+    public function translatedName(string $locale): ?string;
+
+    /** The name to use alone in this language: the translated one when there is one, else the English one */
+    public function nameIn(string $locale): string;
+
+    /** Does the place have its own content in this language: always in English, in Japanese with a name_ja (Location trait) */
     public function hasContentIn(string $locale): bool;
 
     /** Should its page be indexed in this language: not gone for good, and content in that language */

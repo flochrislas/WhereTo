@@ -19,6 +19,7 @@ class KaraokesTableSeeder extends Seeder
 
         $karaoke = Karaoke::create([
             'name' => 'Karaoke-kan',
+            'name_ja' => 'カラオケ館',
             'area' => 'Shibuya',
             'location' => 'Center Gai',
             'points' => 'Biggest karaoke chain in Tokyo, but not the cheapest.',

@@ -287,6 +287,7 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'Jonathan\'s',
+            'name_ja' => 'ジョナサン',
             'location' => 'Shibuya',
             'type' => 'Family restaurant',
             'lunch_price' => 900,
@@ -416,6 +417,7 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'Matsuya',
+            'name_ja' => '松屋',
             'location' => 'Shibuya, Sakuragaokacho',
             'type' => 'Japanese fast-food',
             'lunch_price' => 600,
@@ -479,6 +481,7 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'Kin no torikara',
+            'name_ja' => '金のとりから',
             'location' => 'Shibuya, Udagawacho',
             'type' => 'Fried chicken to go',
             'lunch_price' => 400,
@@ -678,6 +681,7 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'Mos Burger',
+            'name_ja' => 'モスバーガー',
             'location' => 'Shibuya, Dogenzaka',
             'type' => 'Burger',
             'lunch_price' => 1000,
@@ -762,6 +766,7 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'Fujisoba',
+            'name_ja' => '富士そば',
             'location' => 'Shibuya',
             'type' => 'Japanese fast-food',
             'lunch_price' => 750,
@@ -1035,6 +1040,7 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'Lotteria',
+            'name_ja' => 'ロッテリア',
             'location' => 'Shibuya, Dogenzaka',
             'type' => 'Burger',
             'lunch_price' => 900,
@@ -1161,6 +1167,7 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'Texmex Factory',
+            'name_ja' => 'テクスメクスファクトリー',
             'location' => 'Shibuya',
             'type' => 'Mexican',
             'lunch_price' => 1280,
@@ -1287,6 +1294,7 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'Hacienda del Cielo',
+            'name_ja' => 'アシエンダ デル シエロ',
             'location' => 'Daikanyama',
             'type' => 'Mexican',
             'lunch_price' => 1200,
@@ -1455,6 +1463,7 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'Fujisoba',
+            'name_ja' => '富士そば',
             'location' => 'Shibuya',
             'type' => 'Japanese fast-food',
             'lunch_price' => 750,
@@ -1770,6 +1779,7 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'Moyan',
+            'name_ja' => 'もうやんカレー',
             'location' => 'Shibuya',
             'type' => 'Curry',
             'lunch_price' => 1080,
@@ -1812,6 +1822,7 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'Kua \'Aina',
+            'name_ja' => 'クア・アイナ',
             'location' => 'Shibuya',
             'type' => 'Burger',
             'lunch_price' => 1500,
@@ -1980,6 +1991,7 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'Hanoi no Hoi San',
+            'name_ja' => 'ハノイのホイさん',
             'location' => 'Shibuya, Sakuragaokacho',
             'type' => 'Vietnamese',
             'lunch_price' => 950,
@@ -2274,6 +2286,7 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'Gusto',
+            'name_ja' => 'ガスト',
             'location' => 'Shibuya, Dogenzaka',
             'type' => 'Family',
             'lunch_price' => 850,
@@ -2316,6 +2329,7 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'Hayashi',
+            'name_ja' => 'らーめん　はやし',
             'location' => 'Shibuya',
             'type' => 'Ramen',
             'lunch_price' => 1100,
@@ -2400,6 +2414,7 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'Katsuya',
+            'name_ja' => 'かつや',
             'location' => 'Shibuya',
             'type' => 'Katsu',
             'lunch_price' => 850,
@@ -2505,6 +2520,7 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'Sushi Zanmai',
+            'name_ja' => 'すしざんまい',
             'location' => 'Shibuya',
             'type' => 'Sushi',
             'lunch_price' => 1200,
@@ -2547,6 +2563,7 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'Ringer Hut',
+            'name_ja' => 'リンガーハット',
             'location' => 'Shibuya, Dogenzaka',
             'type' => 'Noodles',
             'lunch_price' => 1200,
@@ -2568,6 +2585,7 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'Smokehouse',
+            'name_ja' => 'スモークハウス',
             'location' => 'Harajuku',
             'type' => 'Meat',
             'lunch_price' => 1800,
@@ -2652,6 +2670,7 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'Tengu Sakaba',
+            'name_ja' => 'テング酒場',
             'location' => 'Shibuya, Center Gai',
             'type' => 'Izakaya',
             'lunch_price' => 550,
@@ -2673,6 +2692,7 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'Usagi',
+            'name_ja' => 'うさぎ',
             'location' => 'Shibuya',
             'type' => 'Ramen',
             'lunch_price' => 950,
@@ -3495,6 +3515,7 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'Kamukura',
+            'name_ja' => '神座',
             'location' => 'Shibuya, center gai',
             'type' => 'Ramen',
             'lunch_price' => 1000,
@@ -3663,6 +3684,7 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'Tare Katsu',
+            'name_ja' => '新潟カツ丼 タレカツ 渋谷店',
             'location' => 'Shibuya, Dogenzaka',
             'type' => 'Katsu',
             'lunch_price' => 1000,
@@ -3747,6 +3769,7 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'Dalian',
+            'name_ja' => '大連餃子基地DALIAN 渋谷ストリーム店',
             'location' => 'Shibuya, Stream',
             'type' => 'Chinese',
             'lunch_price' => 980,
@@ -3789,6 +3812,7 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'Suju Indigo',
+            'name_ja' => '酢重 Indigo',
             'location' => 'Shibuya, Stream',
             'type' => 'Soba',
             'lunch_price' => 1200,
@@ -3810,6 +3834,7 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'Freshness Burger',
+            'name_ja' => 'フレッシュネスバーガー',
             'location' => 'Shibuya, Dogenzaka',
             'type' => 'Burger',
             'lunch_price' => 1200,
@@ -3936,6 +3961,7 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'Mc Donald\'s',
+            'name_ja' => 'マクドナルド',
             'location' => 'Shibuya, 1chome',
             'type' => 'Burger',
             'lunch_price' => 900,
@@ -3957,6 +3983,7 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'Mc Donald\'s',
+            'name_ja' => 'マクドナルド',
             'location' => 'Shibuya, Jinnan',
             'type' => 'Burger',
             'lunch_price' => 900,
@@ -4104,6 +4131,7 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'Kasugatei',
+            'name_ja' => '油そば 春日亭',
             'location' => 'Shibuya',
             'type' => 'Abura soba',
             'lunch_price' => 980,
@@ -4443,6 +4471,7 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'Nepalico',
+            'name_ja' => 'ネパリコ',
             'location' => 'Shibuya',
             'type' => 'Curry',
             'lunch_price' => 875,
@@ -4611,6 +4640,7 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'Kiraku',
+            'name_ja' => '喜楽',
             'location' => 'Shibuya',
             'type' => 'Wonton',
             'lunch_price' => 950,
@@ -4863,6 +4893,7 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'Kenyan',
+            'name_ja' => 'Kenyan 紅茶の店',
             'location' => 'Shibuya, Jinnan',
             'type' => 'Tea Salon',
             'lunch_price' => 1000,
@@ -4907,6 +4938,7 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'Nagi Shokudo',
+            'name_ja' => 'なぎ食堂',
             'location' => 'Shibuya',
             'type' => 'Vegetarian',
             'lunch_price' => 1000,

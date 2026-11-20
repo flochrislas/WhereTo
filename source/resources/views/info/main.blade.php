@@ -77,4 +77,8 @@
         Srping
           Good weather alternates with shitty weather... It is a mix of warm blue sky and grey cold rainy days.
     </div>
+    {{-- Required by the licence of OpenStreetMap (ODbL), where the Japanese place names come from
+         (doc/11-data-freshness.md, section 8). Outside the English block: the label is translated, the credit stays
+         in the exact wording the OpenStreetMap Foundation asks for, in every language --}}
+    <p class="attribution">{{ __('Japanese place names:') }} <a href="https://www.openstreetmap.org/copyright" lang="en">© OpenStreetMap contributors</a></p>
 @endsection

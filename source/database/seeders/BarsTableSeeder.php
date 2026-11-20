@@ -133,6 +133,7 @@ class BarsTableSeeder extends Seeder
 
         $bar = Bar::create([
             'name' => 'Hobgoblin',
+            'name_ja' => 'ホブゴブリン',
             'location' => 'Shibuya, Dogenzaka',
             'type' => 'British Pub',
             'points' => 'Small chain of British pubs. No table charge.',

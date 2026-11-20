@@ -20,7 +20,7 @@ class Bar extends Model implements Place
         'name', 'location', 'lat', 'lon', 'type', 'points', 'experience',
         'visited', 'visit_date', 'google_maps_link', 'tabelog_link', 'official_website',
         'score', 'score_place', 'score_mingling', 'score_price',
-        'business_status', 'google_place_id',
+        'business_status', 'google_place_id', 'name_ja',
     ];
 
     /**

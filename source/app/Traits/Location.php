@@ -56,23 +56,48 @@ trait Location
         return BusinessStatus::fromRequest($this->getAttributes()['business_status'] ?? null);
     }
 
-    /** The name, followed by the status when the place is not operational, e.g. "Kindenmaru, permanently closed" */
+    /**
+     * The name in the language of the page, followed by the status when the place is not operational, e.g.
+     * "Kindenmaru, permanently closed". On a Japanese page, a place with a Japanese name gets it in front of the
+     * English one: "博多風龍 Hakata Furyu（閉店）". For the title and description of the standalone page.
+     */
     public function nameWithStatus(): string
     {
         $status = $this->businessStatus();
+        $english = (string) $this->getAttribute('name');
+        $translated = $this->translatedName(app()->getLocale());
+        // The two names side by side, as the heading and the list rows show them
+        $name = $translated === null ? $english : $translated.' '.$english;
 
         // ":name, :status" is a sentence of lang/<locale>.json, so a language can write it its own way
-        return $status->isOpen() ? (string) $this->getAttribute('name') : __(':name, :status', ['name' => (string) $this->getAttribute('name'), 'status' => $status->label()]);
+        return $status->isOpen() ? $name : __(':name, :status', ['name' => $name, 'status' => $status->label()]);
+    }
+
+    /**
+     * The name of the place in this language when it has one of its own, else null (the English name is then the
+     * only one). Only Japanese has a column so far: name_ja (doc/11-data-freshness.md, section 8).
+     */
+    public function translatedName(string $locale): ?string
+    {
+        $name = $locale === 'ja' ? $this->getAttribute('name_ja') : null;
+
+        // An empty or blank value in a seeder counts as no name
+        return is_string($name) && trim($name) !== '' ? $name : null;
+    }
+
+    /** The name to use alone in this language: the translated one when the place has it, else the English one */
+    public function nameIn(string $locale): string
+    {
+        return $this->translatedName($locale) ?? (string) $this->getAttribute('name');
     }
 
     /**
      * Does the place have its own content in this language (doc/12-multilingual-ui.md): always in the default
-     * language (the names and notes are English). There is no name_ja yet, so no other language has any; when
-     * the seeders get one, this becomes e.g. "|| ($locale === 'ja' && $this->getAttribute('name_ja'))".
+     * language (the names and notes are English); in another one, when the place has a name in it (name_ja).
      */
     public function hasContentIn(string $locale): bool
     {
-        return $locale === LocaleUrl::default();
+        return $locale === LocaleUrl::default() || $this->translatedName($locale) !== null;
     }
 
     /**

@@ -76,7 +76,7 @@ class SitemapController extends Controller
                 // visit_date is the date of the review (the stores have no such column: null)
                 $visited = $place->getAttribute('visit_date');
                 foreach (LocaleUrl::locales() as $locale) {
-                    // Only the languages the place has content in (Place::isIndexableIn): English for now
+                    // Only the languages the place has content in (Place::isIndexableIn): English, and Japanese with a name_ja
                     if ($place->isIndexableIn($locale)) {
                         $urls[] = [PublicUrl::to(LocaleUrl::route($singleRoute, $place->getAttribute('id'), false, $locale)), $visited ? substr((string) $visited, 0, 10) : null];
                     }
