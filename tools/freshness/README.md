@@ -1,6 +1,6 @@
 # Freshness: find the places that closed
 
-A small Node tool, run by hand on the dev machine from time to time. It checks every open or temporarily closed place of the seeders against Google Places, shows what closed, reopened or was replaced, and writes the confirmed changes into `source/database/seeders/*TableSeeder.php`. A second command fills the Japanese names of the places (`name_ja`) from OpenStreetMap, and `check --names` has Google confirm them. The design is in [`doc/11-data-freshness.md`](../../doc/11-data-freshness.md) (sections 6 and 8).
+A small Node tool, run by hand on the dev machine from time to time. It checks every open or temporarily closed place of the seeders against Google Places, shows what closed, reopened or was replaced, and writes the confirmed changes into `source/database/seeders/*TableSeeder.php`. A second command fills the Japanese names of the places (`name_ja`) from OpenStreetMap, and `check --names` has Google confirm them. A third one, `edit`, opens a local page to edit any field of the places with a report next to each row. The design is in [`doc/11-data-freshness.md`](../../doc/11-data-freshness.md) (sections 6, 8 and 9).
 
 It is not part of the Laravel app: it is never built into the image nor deployed, and the app does not know it exists. The only contract between the two is the shape of the seeders.
 
@@ -118,7 +118,7 @@ npm run names                    # 1. one request to OpenStreetMap, a checkbox p
 npm run check                    # 2. the status pass; the name_ja is a second search key when the English name finds nothing nearby
 npm run apply                    # 3. the status changes (permanently closed and replaced places keep their name_ja, their pages are not indexed)
 npm run check -- --names         # 4. the verification: every name_ja against Google's Japanese name
-# 5. fix by hand, in the seeders, the names the report disputes or could not fill, with Google Maps open
+npm run edit                     # 5. fix by hand the names the report disputes or could not fill: the page, with the report loaded (section 7)
 git diff source/database/seeders ; cd dev && podman compose exec app php artisan db:seed ; git commit ; git push ; deploy
 ```
 
@@ -180,6 +180,17 @@ With `--names` (and only then), every place that has a `name_ja` and was found b
 
 The verdict goes into each result of the report as `nameJa` (`null` for a place without `name_ja`) and into a `Japanese name` column of the table; the disputed places are listed together at the end with their Google Maps link (also in the report, as `googleMapsLink`), which is where the hand check happens. A disputed name does not change the status verdict, and `apply` ignores `nameJa`. Without the flag: no extra request, no `nameJa` field, the same output as before.
 
+## 7. Edit the seeders: `npm run edit`
+
+A local page to edit the places without opening the PHP files: filter them, click a row, change any field (it saves when you leave it), the tags and the coordinates. Load a report of `check` or `names` from the selector to see each verdict next to its place, with buttons for what the report suggests (closed, closed for now, replaced, open, keep Google's id, use the OpenStreetMap name). Google's name and address are shown, never written: only the id is (Google's terms).
+
+```sh
+npm run edit                 # http://127.0.0.1:8020/ ; Ctrl+C stops it
+npm run edit -- --port 8030  # another port
+```
+
+The page only answers on this machine. Every save re-reads the seeder and refuses an edit made from a page that saw an older text ("changed on disk": the page reloads and marks in red the edits to enter again). Review with `git diff source/database/seeders` or the Diff button; undo a line by hand or with `git checkout -p source/database/seeders`. The page's own tests are in `e2e/tests/editor.spec.js` (Playwright, they start the server themselves).
+
 ## Files
 
 | File | Role |
@@ -187,10 +198,12 @@ The verdict goes into each result of the report as `nameJa` (`null` for a place 
 | `check.js` | the `check` command (and `--names`) |
 | `apply.js` | the `apply` command |
 | `names.js` | the `names` command |
-| `lib/seeders.js` | reads the places from the seeders, and edits a place: the `name_ja`, `business_status` and `google_place_id` keys for `apply` and `names` (prepare and verify in memory, then write) |
+| `edit.js`, `editor/index.html` | the `edit` command: the server and the page |
+| `lib/seeders.js` | reads the places from the seeders, and edits a place: the `name_ja`, `business_status` and `google_place_id` keys for `apply` and `names`, any key, the tags and the coordinates for `edit` (prepare and verify in memory, then write) |
 | `lib/classify.js` | the verdict: name comparison (near misses, the Japanese comparison), distance (haversine), rules above |
 | `lib/names.js` | the OpenStreetMap matcher (and the Japanese comparison, re-exported from `lib/classify.js`) |
 | `lib/overpass.js` | the Overpass request, with its daily cache |
 | `lib/places-api.js` | the Google calls, with the key, the field masks and the throttling |
 | `lib/cli.js` | small shared helpers (`.env`, dates, the text table, the checkbox prompt, writing the seeders: `php -l` on a copy, then the rename) |
+| `lib/editor.js` | the editor's pure part: the type of each key, the validation of an edit, the mapping of a report to the places |
 | `test/` | `node --test` tests, on fixture seeders in `test/fixtures/` with a fake `fetch`; one test also reads the four real seeders (read-only) |

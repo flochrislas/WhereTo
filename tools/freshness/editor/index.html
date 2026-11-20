@@ -1,0 +1,378 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>WhereTo seeder editor</title>
+<style>
+  /* Dark only: the page is a tool for one person on one laptop. */
+  :root { color-scheme: dark; }
+  body { font: 14px system-ui, sans-serif; margin: 0; color: #d8d8d8; background: #1b1b1f; }
+  a { color: #7cb7ff; }
+  header { position: sticky; top: 0; background: #232328; border-bottom: 1px solid #3a3a42; padding: 8px 12px; display: flex; gap: 8px; flex-wrap: wrap; align-items: center; z-index: 1; }
+  header input[type=search] { width: 20em; }
+  input, select, textarea, button { font: inherit; color: #e6e6e6; background: #2a2a31; border: 1px solid #4a4a55; border-radius: 3px; padding: 3px 6px; }
+  button { cursor: pointer; }
+  button:hover { background: #363640; }
+  main { padding: 0 12px 40px; }
+  table { border-collapse: collapse; width: 100%; }
+  th, td { text-align: left; vertical-align: top; padding: 4px 8px; border-bottom: 1px solid #2e2e35; }
+  th { color: #a9a9b3; }
+  tr.row { cursor: pointer; }
+  tr.row:hover { background: #26262c; }
+  tr.open { background: #2d2a1f; }
+  .form td { background: #26241c; }
+  .fields { display: grid; grid-template-columns: 12em 1fr; gap: 4px 8px; align-items: start; }
+  .fields label { padding-top: 4px; color: #a9a9b3; }
+  .fields input[type=text], .fields input[type=number], .fields textarea, .fields select { width: 100%; box-sizing: border-box; }
+  .fields textarea { min-height: 5em; }
+  .state { margin-left: 6px; font-size: 12px; }
+  .state.saved { color: #5fd38d; }
+  .state.error { color: #ff7b7b; }
+  .badge { display: inline-block; padding: 1px 6px; border-radius: 3px; font-size: 12px; color: #111; }
+  .badge.operational, .badge.confirmed, .badge.matched { background: #5fd38d; }
+  .badge.closed_permanently, .badge.closed_temporarily { background: #ff7b7b; }
+  .badge.replaced, .badge.not_found_nearby, .badge.disputed, .badge.nearest { background: #f0a24b; }
+  .badge.unsure, .badge.reopened, .badge.unchecked, .badge.none { background: #9a9aa6; }
+  .report { font-size: 12px; color: #bdbdc7; }
+  .report button { margin: 2px 4px 0 0; }
+  .muted { color: #8a8a96; }
+  pre { background: #121215; color: #cfcfd6; padding: 8px; white-space: pre-wrap; }
+  #diff { display: none; }
+</style>
+</head>
+<body>
+<header>
+  <input type="search" id="q" placeholder="name, Japanese name, location, type, tag">
+  <select id="kind"><option value="">all kinds</option><option>restaurants</option><option>stores</option><option>bars</option><option>karaokes</option></select>
+  <select id="status"><option value="">any status</option><option value="OPERATIONAL">open</option><option value="CLOSED_TEMPORARILY">temporarily closed</option><option value="CLOSED_PERMANENTLY">permanently closed</option><option value="REPLACED">replaced</option></select>
+  <select id="report"><option value="">no report</option></select>
+  <select id="verdict" hidden><option value="">any verdict</option></select>
+  <select id="nameja" hidden><option value="">any Japanese name verdict</option><option>confirmed</option><option>disputed</option><option>unchecked</option></select>
+  <span id="count"></span>
+  <button id="showDiff">Diff</button>
+  <button id="reload">Reload</button>
+</header>
+<main>
+  <pre id="diff"></pre>
+  <p id="notice" class="state error"></p>
+  <p id="unmatched" class="muted" hidden></p>
+  <table><thead><tr><th>kind</th><th>name</th><th>Japanese</th><th>location</th><th>type</th><th>status</th><th>tags</th><th>report</th><th></th></tr></thead><tbody id="rows"></tbody></table>
+</main>
+<script>
+'use strict';
+// The page's state: the places and revisions from the server, the loaded report, the open row.
+// types: the type of each key, from the server (one table for both sides); saving: per kind, the
+// chain of saves; generation: per kind, bumped on a 409 so the saves queued before it are dropped;
+// lost: the edits dropped that way, to show; added: per place id, the keys added to its form, unsaved.
+const state = { places: [], revisions: {}, keys: {}, types: {}, report: null, open: null, saving: {}, generation: {}, lost: [], added: {}, loading: null };
+const $ = (id) => document.getElementById(id);
+const field = (p, key) => p.fields.find((f) => f.key === key)?.value;
+const esc = (s) => String(s ?? '').replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+const mapsLink = (p) => field(p, 'google_maps_link') || `https://www.google.com/maps/search/?api=1&query=${p.lat},${p.lon}`;
+const placeLink = (id) => `https://www.google.com/maps/place/?q=place_id:${encodeURIComponent(id)}`;
+
+async function api(path, options = {}) {
+    const response = await fetch(path, { ...options, headers: { 'Content-Type': 'application/json' }, body: options.body && JSON.stringify(options.body) });
+    const body = await response.json().catch(() => ({ error: `HTTP ${response.status}` }));
+    if (!response.ok) { const e = new Error(body.error || `HTTP ${response.status}`); e.status = response.status; e.body = body; throw e; }
+    return body;
+}
+
+// Reloads everything. Saves are refused meanwhile, and the new places and revisions are installed
+// together, in one step, just before the rows are redrawn: the old form must never send an edit
+// with the new revisions (its block index belongs to the old text). Two reloads at once are one:
+// the second returns the promise of the first, so `loading` only clears once the rows are redrawn.
+function load() {
+    if (!state.loading) state.loading = reload().finally(() => { state.loading = null; });
+    return state.loading;
+}
+
+async function reload() {
+    const open = state.places.find((p) => p.id === state.open); // the open place, to find again by name
+    const data = await api('/api/places');
+    const reports = (await api('/api/reports')).reports;
+    // A seeder whose text changed makes the saves queued before this reload wrong (their block
+    // index belongs to the old text): bump its generation, they are dropped when their turn comes.
+    for (const kind of Object.keys(data.revisions)) {
+        if (state.revisions[kind] !== undefined && state.revisions[kind] !== data.revisions[kind]) state.generation[kind] = (state.generation[kind] ?? 0) + 1;
+    }
+    Object.assign(state, { places: data.places, revisions: data.revisions, keys: data.keys, types: data.types });
+    // The form follows its place, found again by name and coordinates: its position may have changed.
+    const same = open && state.places.find((p) => p.kind === open.kind && p.name === open.name && p.lat === open.lat && p.lon === open.lon);
+    state.open = same ? same.id : null;
+    const select = $('report');
+    const current = select.value;
+    select.innerHTML = '<option value="">no report</option>' + reports.map((r) => `<option value="${esc(r.file)}">${esc(r.date)} ${r.kind}</option>`).join('');
+    if (reports.some((r) => r.file === current)) select.value = current;
+    if (!select.value) { state.report = null; return render(); }
+    try {
+        await loadReport(select.value);
+    } catch (error) {
+        // The new places and revisions are installed already: the rows must show them, report or not.
+        select.value = '';
+        $('notice').textContent = `The report could not be loaded: ${error.message}`;
+        await loadReport('');
+    }
+}
+
+async function loadReport(file) {
+    if (!file) { state.report = null; $('verdict').hidden = true; $('nameja').hidden = true; $('unmatched').hidden = true; return render(); }
+    const report = await api(`/api/reports/${encodeURIComponent(file)}`);
+    state.report = report;
+    const verdicts = [...new Set(Object.values(report.byId).map((r) => r.verdict ?? r.match))].sort();
+    $('verdict').innerHTML = '<option value="">any verdict</option>' + verdicts.map((v) => `<option>${esc(v)}</option>`).join('');
+    $('verdict').hidden = false;
+    $('nameja').hidden = !(report.kind === 'check' && Object.values(report.byId).some((r) => typeof r.nameJa === 'string'));
+    $('unmatched').hidden = !report.unmatched.length;
+    $('unmatched').textContent = `${report.unmatched.length} result(s) of the report match no place (renamed or moved since): ${report.unmatched.map((r) => r.name).join(', ')}`;
+    render();
+}
+
+// The result of the loaded report for a place, or undefined.
+const resultOf = (p) => state.report?.byId[p.id];
+
+function visible(p) {
+    const q = $('q').value.trim().toLowerCase();
+    const hay = [p.name, field(p, 'name_ja'), field(p, 'location'), field(p, 'type'), ...(p.tags ?? [])].join(' ').toLowerCase();
+    if (q && !hay.includes(q)) return false;
+    if ($('kind').value && p.kind !== $('kind').value) return false;
+    const status = field(p, 'business_status') ?? 'OPERATIONAL';
+    if ($('status').value && status !== $('status').value) return false;
+    if (state.report) {
+        const r = resultOf(p);
+        if ($('verdict').value && (r?.verdict ?? r?.match) !== $('verdict').value) return false;
+        if (!$('nameja').hidden && $('nameja').value && r?.nameJa !== $('nameja').value) return false;
+    }
+    return true;
+}
+
+function reportCell(p) {
+    const r = resultOf(p);
+    if (!state.report) return '';
+    if (!r) return '<span class="muted">not in the report</span>';
+    // A button carries the name of its action only; the value is read from the report when clicked.
+    const btn = (label, action) => `<button data-action="${action}">${label}</button>`;
+    if (state.report.kind === 'names') {
+        const name = r.nameJa ? `<b>${esc(r.nameJa)}</b> (${esc(r.elementName)}, ${r.distance} m)` : '';
+        const link = r.element ? ` <a href="https://www.openstreetmap.org/${esc(r.element)}" target="_blank">OSM</a>` : '';
+        const use = r.nameJa ? btn('Use this name', 'useName') : '';
+        return `<span class="badge ${esc(r.match)}">${esc(r.match)}</span> ${name}${link}<br><span class="muted">${esc(r.reason)}</span><br>${use}`;
+    }
+    const g = r.google;
+    const found = g ? `"${esc(g.name)}", ${esc(g.address ?? 'no address')} (${esc(g.status ?? 'no status')}, ${r.distance} m)` : 'nothing found';
+    const links = `<a href="${esc(r.googleMapsLink ?? mapsLink(p))}" target="_blank">ours</a>${g?.id ? ` · <a href="${placeLink(g.id)}" target="_blank">Google's</a>` : ''}`;
+    const nameJa = typeof r.nameJa === 'string' ? ` <span class="badge ${esc(r.nameJa)}">name_ja ${esc(r.nameJa)}</span>` : '';
+    const temporary = r.verdict === 'closed_temporarily';
+    const buttons = [
+        temporary ? btn('Closed for now', 'temporary') : '',
+        btn('Closed', 'closed'),
+        temporary ? '' : btn('Closed for now', 'temporary'),
+        btn('Replaced', 'replaced'),
+        btn('Open', 'open'),
+        g?.id ? btn('Keep id', 'keepId') : '',
+    ].join('');
+    return `<span class="badge ${esc(r.verdict)}">${esc(r.verdict)}</span>${nameJa} <span class="muted">${esc(r.reason)}</span><br>${found} · ${links}<br>${buttons}`;
+}
+
+function render() {
+    const rows = state.places.filter(visible);
+    $('count').textContent = `${rows.length} of ${state.places.length}`;
+    $('rows').innerHTML = rows.map((p) => `
+        <tr class="row${state.open === p.id ? ' open' : ''}" data-id="${p.id}">
+          <td>${p.kind}</td><td><b>${esc(p.name)}</b></td><td lang="ja">${esc(field(p, 'name_ja'))}</td>
+          <td>${esc(field(p, 'location'))}</td><td>${esc(field(p, 'type') ?? field(p, 'area'))}</td>
+          <td>${esc(field(p, 'business_status') ?? '')}</td><td>${esc((p.tags ?? []).join(', '))}</td>
+          <td class="report">${reportCell(p)}</td>
+          <td><a href="${esc(mapsLink(p))}" target="_blank">Maps</a></td>
+        </tr>${state.open === p.id ? `<tr class="form" data-id="${p.id}"><td colspan="9">${form(p)}</td></tr>` : ''}`).join('');
+}
+
+const STATUSES = ['OPERATIONAL', 'CLOSED_TEMPORARILY', 'CLOSED_PERMANENTLY', 'REPLACED'];
+// The type of a key: the server's table (lib/editor.js), or, for a key it does not know, its value.
+function keyInfo(key, value) {
+    if (Object.hasOwn(state.types, key)) return state.types[key];
+    if (typeof value === 'number') return { type: 'number', nullable: true };
+    if (typeof value === 'boolean') return { type: 'boolean', nullable: true };
+    return { type: 'text', nullable: true };
+}
+const keyType = (key, value) => keyInfo(key, value).type;
+const nullable = (key, value) => keyInfo(key, value).nullable;
+
+// The input of one key, from its type.
+function input(key, value) {
+    const type = keyType(key, value);
+    const name = `data-key="${esc(key)}"`;
+    if (type === 'status') return `<select ${name}>${STATUSES.map((s) => `<option${(value ?? 'OPERATIONAL') === s ? ' selected' : ''}>${s}</option>`).join('')}</select>`;
+    if (type === 'boolean') return `<input type="checkbox" ${name} data-type="boolean"${value ? ' checked' : ''}>`;
+    if (type === 'number') return `<input type="number" step="any" ${name} data-type="number" data-nullable="${nullable(key, value)}" value="${value ?? ''}">`;
+    if (type === 'longtext') return `<textarea ${name} data-type="text">${esc(value)}</textarea>`;
+    return `<input type="text" ${name} data-type="text" data-nullable="${nullable(key, value)}" value="${esc(value)}"${type === 'datetime' ? ' placeholder="YYYY-MM-DD HH:MM:SS"' : ''}>`;
+}
+
+function form(p) {
+    const added = (state.added[p.id] ?? []).filter((k) => !p.fields.some((f) => f.key === k));
+    const present = new Set([...p.fields.map((f) => f.key), ...added]);
+    const addable = (state.keys[p.kind] ?? []).filter((k) => !present.has(k));
+    const shown = [...p.fields, ...added.map((key) => ({ key, value: key === 'business_status' ? null : '' }))];
+    const rows = shown.map(({ key, value }) => `<label>${esc(key)}</label><div>${input(key, value)}<span class="state"></span></div>`).join('');
+    return `<div class="fields">${rows}
+        <label>tags</label><div><input type="text" data-tags value="${esc((p.tags ?? []).join(', '))}"><span class="state"></span></div>
+        <label>coordinates</label><div><input type="text" data-coords value="${p.lat}, ${p.lon}" placeholder="lat, lon"><span class="state"></span></div>
+        <label>add a key</label><div><select data-add><option value="">…</option>${addable.map((k) => `<option>${esc(k)}</option>`).join('')}</select></div>
+      </div><p class="muted">Line ${p.line} of ${p.kind}. A field saves when you leave it.</p>`;
+}
+
+// The value an input gives: null for an emptied nullable field, a number for a number box.
+// Throws when a number box holds no number (empty and not nullable, or text the box cannot parse):
+// Number('') would be 0, and a wrong score must not land in the seeder with a green "saved".
+function valueOf(el) {
+    if (el.dataset.type === 'boolean') return el.checked;
+    if (el.tagName === 'SELECT') return el.value === 'OPERATIONAL' ? null : el.value;
+    const text = el.value;
+    if (el.dataset.nullable === 'true' && text.trim() === '' && !el.validity.badInput) return null;
+    if (el.dataset.type === 'number') {
+        if (el.validity.badInput || text.trim() === '' || !Number.isFinite(Number(text))) throw new Error('must be a number');
+        return Number(text);
+    }
+    return text;
+}
+
+// An edit in words, for the notice of the edits lost on a 409: "location = First", "tags = a, b".
+function describeEdit(edit) {
+    if (edit.fields) return Object.entries(edit.fields).map(([k, v]) => `${k} = ${v === null ? 'empty' : v}`).join(', ');
+    if (edit.tags) return `tags = ${edit.tags.join(', ')}`;
+    return `coordinates = ${edit.lat}, ${edit.lon}`;
+}
+
+// The notice: what the seeder change on disk cost, or nothing.
+function showLost(message) {
+    const lost = state.lost.map((l) => `${l.placeName}: ${describeEdit(l.edit)}`).join('; ');
+    $('notice').textContent = lost ? `${message} Not saved, enter again: ${lost}.` : '';
+}
+
+// Reloads everything after a 409; the lost edits stay in the notice (load's reload keeps the form
+// on the same place).
+async function reloadAfterConflict() {
+    await load();
+    showLost('The seeder changed on disk.');
+}
+
+// The edit a report button makes, from the report's result of the place (never from the HTML).
+function actionEdit(action, result) {
+    switch (action) {
+        case 'closed': return { fields: { business_status: 'CLOSED_PERMANENTLY' } };
+        case 'temporary': return { fields: { business_status: 'CLOSED_TEMPORARILY' } };
+        case 'replaced': return { fields: { business_status: 'REPLACED' } };
+        case 'open': return { fields: { business_status: null } };
+        case 'keepId': return result?.google?.id ? { fields: { google_place_id: result.google.id } } : null;
+        case 'useName': return result?.nameJa ? { fields: { name_ja: result.nameJa } } : null;
+        default: return null;
+    }
+}
+
+const setState = (el, className, text) => { if (el) { el.className = `state ${className}`; el.textContent = text; } };
+
+// Saves are queued per kind: each PATCH uses the revision the previous one answered. A 409 bumps the
+// kind's generation: the saves queued before it are dropped unsent (their block index may be wrong
+// now), marked "not saved", and the page reloads.
+function save(id, edit, stateEl) {
+    const [kind, index] = id.split('/');
+    const generation = (state.generation[kind] ??= 0);
+    const placeName = state.places.find((p) => p.id === id)?.name ?? id;
+    if (state.loading) { setState(stateEl, 'error', 'not saved: the page is reloading, enter it again'); return Promise.resolve(); }
+    setState(stateEl, '', 'saving…');
+    const lose = (message) => {
+        state.lost.push({ placeName, edit });
+        setState(stateEl, 'error', 'not saved: the seeder changed, enter it again');
+        showLost(message);
+    };
+    const run = async () => {
+        if (state.generation[kind] !== generation) { lose('The seeder changed on disk.'); return; }
+        try {
+            const { place, revision } = await api(`/api/places/${kind}/${index}`, { method: 'PATCH', body: { revision: state.revisions[kind], ...edit } });
+            // A reload meanwhile superseded this snapshot: the write went to the right block (the server
+            // checked the revision), but the page already holds newer places; touch nothing.
+            if (state.generation[kind] !== generation) { setState(stateEl, 'saved', 'saved'); return; }
+            state.revisions[kind] = revision;
+            state.places[state.places.findIndex((p) => p.id === id)] = place;
+            state.lost = [];
+            showLost('');
+            if (stateEl) setState(stateEl, 'saved', 'saved'); else render();
+        } catch (error) {
+            if (state.generation[kind] !== generation && error.status !== 409) { setState(stateEl, 'error', error.message); return; } // superseded: report only
+            if (error.status === 409) {
+                state.generation[kind]++;
+                lose(`${error.message}.`);
+                await reloadAfterConflict();
+                return;
+            }
+            if (stateEl) setState(stateEl, 'error', error.message); else alert(error.message);
+        }
+    };
+    state.saving[kind] = (state.saving[kind] ?? Promise.resolve()).then(run, run);
+    return state.saving[kind];
+}
+
+$('rows').addEventListener('click', (event) => {
+    const button = event.target.closest('button[data-action]');
+    if (button) {
+        const id = button.closest('tr').dataset.id;
+        const edit = actionEdit(button.dataset.action, resultOf(state.places.find((p) => p.id === id)));
+        if (edit) save(id, edit);
+        return;
+    }
+    if (event.target.closest('a, input, select, textarea, label')) return;
+    const row = event.target.closest('tr.row');
+    if (!row) return;
+    state.open = state.open === row.dataset.id ? null : row.dataset.id;
+    render();
+});
+
+$('rows').addEventListener('change', (event) => {
+    const el = event.target;
+    const tr = el.closest('tr.form');
+    if (!tr) return;
+    const id = tr.dataset.id;
+    const stateEl = el.parentElement.querySelector('.state');
+    if (el.dataset.key !== undefined) {
+        let value;
+        try {
+            value = valueOf(el);
+        } catch (error) {
+            return setState(stateEl, 'error', error.message); // nothing sent
+        }
+        return save(id, { fields: { [el.dataset.key]: value } }, stateEl);
+    }
+    if (el.dataset.tags !== undefined) return save(id, { tags: el.value.split(',').map((t) => t.trim()).filter(Boolean) }, stateEl);
+    if (el.dataset.coords !== undefined) {
+        // Two numbers, a pasted zoom level ignored; an empty part is not a zero.
+        const parts = el.value.split(',').map((n) => n.trim());
+        const [lat, lon] = parts.map((n) => (n === '' ? NaN : Number(n)));
+        if (parts.length < 2 || !Number.isFinite(lat) || !Number.isFinite(lon)) return setState(stateEl, 'error', 'two numbers: lat, lon');
+        return save(id, { lat, lon }, stateEl);
+    }
+    if (el.dataset.add !== undefined && el.value) {
+        // Only the form gets the key: its line is written when the new input is left with a value.
+        (state.added[id] ??= []).push(el.value);
+        render();
+        document.querySelector(`tr.form[data-id="${CSS.escape(id)}"] [data-key="${CSS.escape(el.value)}"]`)?.focus();
+    }
+});
+
+$('rows').addEventListener('keydown', (event) => {
+    if (event.key === 'Enter' && event.target.matches('input')) event.target.blur();
+});
+
+for (const id of ['q', 'kind', 'status', 'verdict', 'nameja']) $(id).addEventListener('input', render);
+$('report').addEventListener('change', (e) => loadReport(e.target.value));
+$('reload').addEventListener('click', load);
+$('showDiff').addEventListener('click', async () => {
+    const pre = $('diff');
+    if (pre.style.display === 'block') { pre.style.display = 'none'; return; }
+    pre.textContent = (await (await fetch('/api/diff')).text()) || 'No change in the seeders.';
+    pre.style.display = 'block';
+});
+load().catch((e) => alert(e.message));
+</script>
+</body>
+</html>

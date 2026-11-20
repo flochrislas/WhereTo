@@ -1,6 +1,6 @@
 # Data freshness: a tool to find the places that closed
 
-Design note, November 2026. Implemented in November 2026 (steps 1 to 7 of section 7, then 9 to 11 of section 8); the first real runs (steps 8 and 12) are pending.
+Design note, November 2026. Implemented in November 2026 (steps 1 to 7 of section 7, then 9 to 11 of section 8); the first real runs (steps 8 and 12) are pending. Section 9 adds a seeder editor (steps 13 to 17, done November 2026).
 
 ## 1. The problem
 
@@ -148,7 +148,7 @@ Added November 2026, after the Japanese UI (`12-multilingual-ui.md`, step 8). A 
 npm run names                    # 1. one request to OpenStreetMap, a checkbox prompt, name_ja written in the seeders
 npm run check && npm run apply   # 2. the status pass; a place not found under its English name is searched under its name_ja too
 npm run check -- --names         # 3. the status pass again, this time also checking every name_ja against Google
-# 4. fix by hand, in the seeders, the names the report disputes or could not fill, with Google Maps open
+npm run edit                     # 4. fix by hand what the report disputes or could not fill, on the page with the report loaded (section 9)
 cd dev && podman compose exec app php artisan db:seed ; git commit ; git push ; deploy
 ```
 
@@ -213,3 +213,88 @@ The report gets a `nameJa` field with that verdict (`null` for a place without `
 | 11 | **Done (November 2026).** Japanese name comparison in `check --names` (second Details call, verdict, report and table), tests | `tools/freshness/` | S |
 | 12 | The flow above, by hand: status pass, `names`, `check --names`, manual fixes, reseed, commit, deploy | you | |
 
+## 9. The seeder editor: `npm run edit`
+
+Added November 2026. Editing three hundred places in four PHP files is slow: finding a block, keeping the quotes right, checking the result. And the reports of `check` and `names` are read in a terminal, away from the data they talk about. The editor is a local page that lists the places, filters them, edits any field of one in place, and shows the results of a report next to each row, with one-click buttons for what the report suggests. It is the hand part of the flow in section 8, made fast.
+
+**What it is not.** Not a part of the Laravel app (the app's admin writes to the database, which the next reseed wipes; the seeders are the source of truth). Not a database: it writes the seeder files, one line at a time, through the same reader and line editor as `apply` and `names`. Not deployed: it listens on the laptop only. It does not add or delete places: a block is still written by hand in the seeder.
+
+### The command
+
+```sh
+cd tools/freshness && npm run edit        # prints http://127.0.0.1:8020/ ; Ctrl+C stops it
+```
+
+`edit.js` starts a server with Node's `http` module (no new dependency), bound to `127.0.0.1` only, port `8020` (`--port` to change it). It serves one page, `editor/index.html` (plain HTML and JavaScript, no framework, no build, as the app's own client), and a small JSON API. Nothing is cached: every request reads the seeders again, so an edit made in a text editor at the same time is seen by the next request.
+
+### The places and their id
+
+The reader of `lib/seeders.js` reads every key of a block but only exposes five. It gets a second, full shape, `readSeederFull`: every key with its typed value (string, number, boolean, null; a multi-line string stays one value with newlines), the tags of the `attachTags([...])` line, the coordinates, and the line of the block. The short shape used by `check`, `apply` and `names` does not change.
+
+**Id.** The editor identifies a place by its kind and its position among the blocks of its seeder, zero-based: `restaurants/12`. The editor never adds or removes blocks, so the position does not move during a session, whereas the line number moves when a line is inserted, and the name and the coordinates are precisely what the editor lets you change. Every edit targets an id; the server resolves it by reading the file again at that moment. Two places with the same name (the two Joysound karaokes) have two ids.
+
+**Revision.** The position only holds while nobody adds, removes or comments out a block in a text editor meanwhile; then the same index would silently point at another place. So every answer that lists places carries, per seeder, a revision: the SHA-1 of the file's text. A `PATCH` must send the revision it was built from; the server reads the file, compares, and answers `409 Conflict` with "the seeder changed on disk, reload the page" when it differs, writing nothing. A successful `PATCH` answers the place and the revision of the text it wrote (not of the file as it is a moment later: an outside save right after the write must make the next edit a 409). While the page reloads, a save from the still-visible old form is refused unsent, and the new places and revisions are installed together just before the rows are redrawn; a reload that brings a changed seeder also drops the saves queued before it (their block index belongs to the old text), and the answer of a save that was in flight across a reload updates nothing; two reloads at once are one reload, and saves stay refused until its rows are redrawn; when the selected report cannot be fetched during a reload, the rows are redrawn without it and the error is shown, and every reload keeps the open form on its place, found again by name and coordinates. The page queues its saves per seeder so that each one uses the revision returned by the previous one (two quick blurs on two fields do not race each other). A 409 empties that queue: the edits still waiting are never sent, since their block index may be wrong now; the page reloads, lists the lost edits in a notice ("Hakata Furyu: location = First") and marks their fields, and the open form follows its place, found again by name and coordinates, not its position. Each operation of the server reads a seeder once: the places and the revision of an answer come from the same text, and an edit is built from the very text whose revision was checked.
+
+### Editing
+
+A field saves when you leave it (blur, or Enter in a single-line field); the row then shows "saved", or the server's error in red and the old value back. No save button: the review is `git diff`, as for the other commands, and the page has a "Diff" button that shows the current diff of the seeders without leaving it. Undo is a hand edit, or reverting the hunk in a diff tool (`git checkout -p source/database/seeders` asks hunk by hunk): the seeders usually carry other uncommitted changes, from `apply` or `names`, that a whole-file checkout would discard too.
+
+The line editor of `lib/seeders.js` generalises from its three known keys to any key:
+
+- an existing key rewrites its line (or its lines, for a multi-line string), keeping the indentation;
+- a new key is inserted before the closing `]);`, except `name_ja`, `business_status` and `google_place_id`, which keep their places after `name` (section 8);
+- the type of a key is decided by the key, not by the current value, because a value may be `null` (`official_website`, `visit_date` are in some blocks): `lib/editor.js` holds, per kind, the known keys with their type: text, long text (`points`, `experience`, `description`), number (`lunch_price`, the scores; `lunch_price` nullable, `0` distinct from `null`), boolean (`visited`), date and time (`visit_date`, `'2017-09-05 13:00:00'`, kept as the text it is, no time zone conversion, no time dropped), URL (`google_maps_link`, `tabelog_link`, `official_website`), status (`business_status`), id (`google_place_id`). An unknown key takes the type of its value, or text. The page takes that table from the server (`GET /api/places` carries it), so the two sides cannot drift, and offers the matching input; an emptied input writes `null` for a nullable key (dates, URLs, `name_ja`, `google_place_id`, `lunch_price`) and `''` for the other text keys; an emptied or unparseable number box for a key that cannot be null is refused on the page, nothing sent. `name_ja` and `google_place_id` cleared remove their line instead (absent is their null, section 8); `business_status` is a selector whose `OPERATIONAL` deletes the line, as today. The "add a key" list of a row always offers `name_ja`, `business_status` and `google_place_id`, plus the other known keys of the kind the block lacks;
+- the tags rewrite the `attachTags([...])` line from a comma-separated list (trimmed, case kept as `JOYSOUND` shows, empty ones dropped; the line is added after the block when the place had none);
+- the coordinates rewrite the `fillCoordinatesFromString('lat, lon')` line (a pasted "lat, lon, zoom" keeps only the first two numbers; both must be numbers, an empty part is refused on the page, an explicit 0 is a number);
+- `name` must stay a non-empty string; `business_status` one of the known values; a Google id letters, digits, `-` and `_`; a string must not contain control characters other than newlines. Anything else is refused with a message and nothing is written.
+
+Every write goes through `planSeederEdits`: the file is edited in memory, read back with the reader, and compared with what was expected before the disk is touched. Then, unlike `apply` today (which writes first and lints after), the editor writes the new text to a sibling temporary file, runs `php -l` on it when `php` is installed, and only then renames it over the seeder; a lint failure deletes the temporary file and leaves the original byte for byte as it was. A text editor can save while `php -l` runs: the writer reads the seeder once, builds the new text from exactly those bytes, and just before the rename reads the seeder again and compares it with them; a difference is a 409 too, nothing is replaced, the outside edit is kept. The reader reads each `'key' => value` line on its own and accepts a missing comma after the last key, which is how a block whose last line has no comma could read back fine and still be broken PHP: the writer, when it inserts a line in such a block, adds the missing comma on the last key's line (a comment may sit between it and the closing). `apply` and `names` move to the same temporary-file write (`writePlans` in `lib/cli.js`).
+
+### The page
+
+- **Filter bar:** a text box searched in the name, the Japanese name, the location, the type and the tags; a kind selector (all, restaurants, stores, bars, karaokes); a status selector (all, open, temporarily closed, permanently closed, replaced). When a report is loaded, a verdict selector too. The count of rows shown is displayed.
+- **Rows:** one line per place: kind, name, Japanese name, location, type, status, tags, a Maps link (our `google_maps_link`, or a search at our coordinates). Clicking a row opens it as a form with every key of the block in the seeder's order, plus the tags and the coordinates. Fields are editable right there; a key the block does not have yet can be added from a list of the keys the other blocks of that kind use.
+- **Report columns** (see below) between the name and the fields, and the one-click buttons.
+- No login, no CSRF: the server only listens on the loopback address. The page refuses to load from another origin (the API checks the `Host` header and the `Origin` of state-changing requests), and refuses to be framed (`X-Frame-Options: DENY`), so a web page open in the same browser can neither edit the seeders nor steer clicks onto the buttons.
+
+### Reports
+
+A selector lists the files of `reports/`, newest first, `check` and `names` reports alike (the file name says which). Loading one maps each result to a place once, by kind, name and coordinates, all three (a same-name place at another spot, or one moved since the report, gets no result and no button), and attaches it to the place's id; the mapping is kept in the page, so a renamed place keeps its report columns. A place without a result shows "not in the report"; a result without a place (renamed since) is counted at the top.
+
+For a `check` report, each row gets: the verdict as a coloured badge (operational green, closed red, replaced and not found orange, unsure grey), the reason, what Google found (its name, address, status, distance), and two links: our place on Maps and Google's place (by its id). When the report was made with `--names`, a fifth column shows the Japanese name verdict (confirmed, disputed, unchecked), disputed in orange, and it is a filter too: an operational place with a disputed name is precisely a row to open and fix. Buttons: **Closed** (writes `business_status` `CLOSED_PERMANENTLY`), **Closed for now** (`CLOSED_TEMPORARILY`, offered first when the verdict is `closed_temporarily`), **Replaced**, **Open** (removes the status), **Keep id** (writes `google_place_id` from the result, for a place found under a name the matcher did not pair; the next `check` then looks it up by id). Google's name and address are shown to be read while you type, never written by a button: Google's terms (section 3). A button carries only the name of its action; the value it writes is taken from the report held in the page, not from the HTML.
+
+For a `names` report, each row gets the OpenStreetMap candidate (its Japanese name, its English name, the distance, the match kind and the reason, a link to the element) and one button: **Use this name** (writes `name_ja`), shown only when the result carries a name: a `none` result has no candidate, and the button would otherwise erase a name typed by hand after the report was loaded. The same rule for **Keep id**: shown only when Google's result has an id. OpenStreetMap's data may be copied (section 8).
+
+### Files
+
+- `tools/freshness/edit.js`: the server, the routes (`GET /` the page, `GET /api/places`, `PATCH /api/places/:kind/:index` with `{ revision, fields?, tags?, lat?, lon? }` (409 on a stale revision), `GET /api/reports`, `GET /api/reports/:file`, `GET /api/diff`), `--port`.
+- `tools/freshness/editor/index.html`: the page.
+- `tools/freshness/lib/seeders.js`: `readSeederFull`, the general line editor, the tags and coordinates lines.
+- `tools/freshness/lib/editor.js`: pure functions: the report mapping (results to ids), the validation of an edit, the known keys per kind with their types.
+- `tools/freshness/lib/cli.js`: `writePlans` lints a temporary file before renaming it over the seeder (shared with `apply` and `names`).
+- `package.json`: the `edit` script. README: a section. This note: this section.
+
+### Tests (`node --test`)
+
+On a copy of a small seeder in a temporary folder:
+
+- the full reader: every key with its type, a multi-line string, the tags, the coordinates, a block in a comment skipped, two places with the same name get two ids;
+- the editor: rewrite a string, a number, a boolean; add a key at the end; the three known keys keep their places; remove `name_ja` and `google_place_id`; set and remove the status; a multi-line string written back and read back; tags rewritten, tags added to a place without; coordinates rewritten from "lat, lon" and from "lat, lon, zoom"; a refused value leaves the file untouched; idempotent (the same edit twice changes nothing);
+- the report mapping: a `check` and a `names` report against a list of places, a result with no place, two places with the same name told apart by coordinates;
+- the routes, with the server started on a free port in the test: the page is served, the places are listed, an edit is written and read back, a bad edit answers 400 with the message and writes nothing, a request from another origin is refused;
+- the revision: a `PATCH` with a stale revision answers 409 and writes nothing; a block inserted in the file between the load of a report and the press of its button is detected (409), and neither place changes;
+- the write: a `php -l` failure (fake `run`) leaves the original byte for byte, and a key inserted after a last line without a comma gives that line its comma;
+- the types: `official_website` `null` to a URL and back to `null`; a date cleared; a number refused when not a number;
+- **regression:** load a report, rename a place, change its latitude, check that both edits land in the same block, and that a report button still writes to that block.
+
+The page gets three Playwright tests in `e2e/tests/editor.spec.js`, which start the server on a copy of the fixtures (the app does not need to run): a field saved on blur with no `reports/` folder yet; two queued edits with a block inserted on disk in between (the first answers 409, the second is never sent, nothing is written); a report button whose value holds an apostrophe. The rest is checked by hand (filter, open a row, load today's report, see the diff).
+
+### Order of work
+
+| # | Step | Where | Size |
+|---|---|---|---|
+| 13 | **Done (November 2026).** Full reader and general line editor in `lib/seeders.js`, tags and coordinates, the trailing comma, the lint-then-rename write, tests | `tools/freshness/lib/` | M |
+| 14 | **Done (November 2026).** `lib/editor.js`: report mapping, key types and validation, tests | `tools/freshness/lib/` | S |
+| 15 | **Done (November 2026).** `edit.js`: server, routes, revisions, tests including the regression | `tools/freshness/` | M |
+| 16 | **Done (November 2026).** `editor/index.html`: the page, its Playwright tests, a hand check | `tools/freshness/editor/`, `e2e/tests/` | M |
+| 17 | **Done (November 2026).** README section, `package.json` script | `tools/freshness/` | S |

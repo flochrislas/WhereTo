@@ -10,6 +10,7 @@
     "check": "node check.js",
     "apply": "node apply.js",
     "names": "node names.js",
+    "edit": "node edit.js",
     "test": "node --test"
   },
   "dependencies": {
