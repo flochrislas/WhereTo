@@ -1,9 +1,10 @@
 const { test, expect } = require('@playwright/test');
 const { showResults, showFilter, waitForResults, isWide } = require('./helpers');
 
-/** The names of the listed places, top to bottom */
+/** The English names of the listed places, top to bottom (a Japanese row shows its name_ja first, then the English name in a lang="en" span) */
 async function names(page) {
-  return (await page.locator('#results .rowName').allTextContents()).map(name => name.trim());
+  return page.locator('#results .rowName').evaluateAll(rows =>
+    rows.map(row => (row.matches('[lang="en"]') ? row : row.querySelector('[lang="en"]')).textContent.trim()));
 }
 
 test.describe('Languages', () => {

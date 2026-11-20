@@ -5,27 +5,38 @@
 
 import { readdirSync, readFileSync } from 'node:fs';
 import { join, relative, resolve } from 'node:path';
-import { spawnSync } from 'node:child_process';
 import { parseArgs } from 'node:util';
-import { planSeederEdits, writeSeederEdits, KINDS, DEFAULT_SEEDERS_DIR } from './lib/seeders.js';
+import { planSeederEdits, KINDS, DEFAULT_SEEDERS_DIR } from './lib/seeders.js';
 import { VERDICT_STATUS } from './lib/classify.js';
-import { isMain, DEFAULT_REPORTS_DIR, REPO_ROOT } from './lib/cli.js';
+import { isMain, checkboxPrompt, runCommand, writePlans, DEFAULT_REPORTS_DIR, REPO_ROOT } from './lib/cli.js';
 
 // The order and wording of the groups in the prompt. `checked`: ticked by default, and kept by
-// --yes. "Replaced" hides a place on a guess (another name on our spot), so it is opt-in.
+// --yes. `status`: the business_status a ticked place gets. "Replaced" hides a place on a guess
+// (another name on our spot), and "not found nearby" closes it on an absence, so both are opt-in.
 const GROUPS = [
     { verdict: 'closed_permanently', label: 'Permanently closed', checked: true },
     { verdict: 'closed_temporarily', label: 'Temporarily closed', checked: true },
     { verdict: 'reopened', label: 'Reopened (was temporarily closed)', checked: true },
     { verdict: 'replaced', label: 'Replaced by another business (unchecked: tick only after a look on Maps)', checked: false },
-];
+    {
+        verdict: 'not_found_nearby',
+        label: 'Not found within 200 m (unchecked: a ticked place is written permanently closed; look on Maps first)',
+        checked: false,
+        status: 'CLOSED_PERMANENTLY',
+    },
+].map((g) => ({ ...g, status: g.status ?? VERDICT_STATUS[g.verdict] }));
 
-// The latest report. The names start with the date and time (2026-11-18T0930-all.json), so the
-// last in alphabetical order is the newest.
+// The business_status a verdict writes when its place is ticked (undefined: not a status change).
+const statusOf = (verdict) => GROUPS.find((g) => g.verdict === verdict)?.status;
+
+// The latest report of check. The names start with the date and time (2026-11-18T0930-all.json), so
+// the last in alphabetical order is the newest. The reports of names (...-names.json) are not for apply.
 export function latestReport(reportsDir) {
     let files = [];
     try {
-        files = readdirSync(reportsDir).filter((f) => /^\d{4}-\d{2}-\d{2}T\d{4}-[a-z+]+\.json$/.test(f)).sort();
+        files = readdirSync(reportsDir)
+            .filter((f) => /^\d{4}-\d{2}-\d{2}T\d{4}-[a-z+]+\.json$/.test(f) && !f.endsWith('-names.json'))
+            .sort();
     } catch (error) {
         if (error.code !== 'ENOENT') throw error;
     }
@@ -33,37 +44,24 @@ export function latestReport(reportsDir) {
     return join(reportsDir, files.at(-1));
 }
 
-// One line of the prompt for a result: ours, then what Google has there.
-function describe(r) {
+// One line of the prompt for a result: ours, then what Google has there. For a place not found
+// nearby: what Google found instead, and our Google Maps link, to look at it.
+export function describe(r) {
+    if (r.verdict === 'not_found_nearby') {
+        const instead = r.google ? `Google found "${r.google.name}" ${r.distance} m away instead` : 'Google found nothing';
+        return `${r.kind.padEnd(11)} ${r.name} -> ${instead}; ${r.googleMapsLink ?? 'no Google Maps link'}`;
+    }
     const google = r.google
         ? ` -> Google: "${r.google.name}", ${r.google.address ?? 'no address'} (${r.google.status ?? 'no status'}, ${r.distance} m)`
         : '';
     return `${r.kind.padEnd(11)} ${r.name}${google}`;
 }
 
-// The real prompt: a checkbox list, everything checked. Space unchecks, Enter confirms.
-// Imported only when needed, so the tests (and --yes) never load the terminal library.
-async function checkboxPrompt(groups) {
-    const { default: checkbox, Separator } = await import('@inquirer/checkbox');
-    const choices = groups.flatMap((g) => [
-        new Separator(`--- ${g.label} (${g.results.length}) ---`),
-        ...g.results.map((r) => ({ name: describe(r), value: r, checked: g.checked })),
-    ]);
-    return checkbox({
-        message: 'Status changes to write into the seeders (space: uncheck, enter: confirm)',
-        choices,
-        pageSize: 25,
-        loop: false,
-    });
-}
-
-// Runs a command; returns null when the program is not installed, the spawnSync result otherwise.
-function runCommand(command, args, options = {}) {
-    const result = spawnSync(command, args, { encoding: 'utf8', ...options });
-    if (result.error?.code === 'ENOENT') return null;
-    if (result.error) throw result.error;
-    return result;
-}
+// The real prompt: a checkbox list, grouped by verdict. Space toggles, Enter confirms.
+const statusPrompt = (groups) => checkboxPrompt(groups, {
+    message: 'Status changes to write into the seeders (space: uncheck, enter: confirm)',
+    describe,
+});
 
 // Runs apply. Every dependency is a parameter so the tests can fake the prompt and the commands.
 // Returns { reportPath, confirmed, edits, changedFiles }.
@@ -74,7 +72,7 @@ export async function runApply({
     repoRoot = REPO_ROOT,
     yes = false,
     partial = false,
-    prompt = checkboxPrompt,
+    prompt = statusPrompt,
     run = runCommand,
     log = console.log,
 }) {
@@ -87,24 +85,25 @@ export async function runApply({
 
     // 1. The status changes, grouped by verdict, and which ones to keep. A verdict that gives the
     //    status the place already has (still temporarily closed) is no change.
-    const isChange = (r) => r.verdict in VERDICT_STATUS && VERDICT_STATUS[r.verdict] !== (r.businessStatus ?? 'OPERATIONAL');
+    const isChange = (r) => statusOf(r.verdict) !== undefined && statusOf(r.verdict) !== (r.businessStatus ?? 'OPERATIONAL');
     const groups = GROUPS
         .map((g) => ({ ...g, results: report.results.filter((r) => r.verdict === g.verdict && isChange(r)) }))
         .filter((g) => g.results.length);
     const changes = groups.flatMap((g) => g.results);
     let confirmed = [];
     if (changes.length) {
-        // --yes keeps the groups checked by default only (never "replaced").
+        // --yes keeps the groups checked by default only (never "replaced" nor "not found nearby").
         confirmed = yes ? groups.filter((g) => g.checked).flatMap((g) => g.results) : await prompt(groups);
     }
     log(`${confirmed.length} of ${changes.length} status changes confirmed.`);
 
     // 2. The edits, per kind. A Google id is only written when it is surely our place (idTrusted:
-    //    exact name, or found by id) and the place is not replaced (the id would be the new business's).
+    //    exact name, or found by id) and the place is not replaced (the id would be the new business's;
+    //    a place not found nearby never has a trusted id either).
     const edits = Object.fromEntries(Object.keys(KINDS).map((kind) => [kind, []]));
     const newId = (r) => (r.idTrusted && r.google?.id && r.google.id !== r.knownPlaceId ? r.google.id : undefined);
     for (const r of confirmed) {
-        const fields = { businessStatus: VERDICT_STATUS[r.verdict] };
+        const fields = { businessStatus: statusOf(r.verdict) };
         if (r.verdict !== 'replaced' && newId(r)) fields.googlePlaceId = newId(r);
         edits[r.kind].push({ target: { name: r.name, lat: r.lat, lon: r.lon }, fields });
     }
@@ -116,22 +115,8 @@ export async function runApply({
     //    then write them all, then check the PHP syntax.
     const plans = Object.entries(edits)
         .filter(([, list]) => list.length)
-        .map(([kind, list]) => planSeederEdits(join(seedersDir, KINDS[kind]), kind, list))
-        .filter((plan) => plan.changed);
-    const changedFiles = [];
-    for (const plan of plans) {
-        writeSeederEdits(plan);
-        changedFiles.push(plan.filePath);
-        log(`Written: ${plan.filePath}`);
-    }
-    for (const file of changedFiles) {
-        const result = run('php', ['-l', file]);
-        if (result === null) break; // php is not installed here: skip the syntax check
-        if (result.status !== 0) {
-            throw new Error(`php -l failed on ${file}:\n${result.stdout}${result.stderr}\n`
-                + 'The seeders were already written. Undo with: git checkout source/database/seeders');
-        }
-    }
+        .map(([kind, list]) => planSeederEdits(join(seedersDir, KINDS[kind]), kind, list));
+    const changedFiles = writePlans(plans, { run, log });
 
     const unsure = report.results.filter((r) => r.verdict === 'unsure');
     if (unsure.length) log(`${unsure.length} places are unsure (not changed): look at them by hand, see the report.`);
@@ -146,7 +131,7 @@ export async function runApply({
     if (diff?.status === 0 && diff.stdout.trim()) log('\n' + diff.stdout.trimEnd());
     const count = (...verdicts) => confirmed.filter((r) => verdicts.includes(r.verdict)).length;
     const summary = [
-        `${count('closed_permanently', 'closed_temporarily')} closed`,
+        `${count('closed_permanently', 'closed_temporarily', 'not_found_nearby')} closed`,
         `${count('replaced')} replaced`,
         ...(count('reopened') ? [`${count('reopened')} reopened`] : []),
     ].join(', ');

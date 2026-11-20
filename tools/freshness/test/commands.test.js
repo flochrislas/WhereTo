@@ -5,7 +5,7 @@ import { readFileSync, writeFileSync, mkdtempSync, cpSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { runCheck } from '../check.js';
-import { runApply, latestReport } from '../apply.js';
+import { runApply, latestReport, describe as describeChange } from '../apply.js';
 import { readSeeder } from '../lib/seeders.js';
 
 const FIXTURES = new URL('./fixtures/', import.meta.url).pathname;
@@ -42,6 +42,13 @@ const SEARCH = {
 const DETAILS = {
     ChIJknownRitrovo: gplace('ChIJknownRitrovo', 'Il Ritrovo', 'CLOSED_TEMPORARILY', 35.6601, 139.6971, 4),
 };
+// What the fake Google answers to a Place Details in Japanese (languageCode=ja), per id.
+const JAPANESE = {
+    ChIJhakata: '博多風龍 渋谷店',
+    ChIJgogo: 'Go! Go! Curry', // Google only knows a Latin name
+    ChIJknownRitrovo: 'イル・リトロヴォ',
+    ChIJkrung: 'ソムタムダー',
+};
 
 // A fake fetch that answers like Google from the tables above and records every call.
 function fakeGoogle() {
@@ -52,6 +59,10 @@ function fakeGoogle() {
         if (url.endsWith('places:searchText')) {
             const query = JSON.parse(options.body).textQuery;
             body = { places: SEARCH[query] ?? [] };
+        } else if (url.endsWith('?languageCode=ja')) {
+            const id = decodeURIComponent(url.split('/places/')[1].split('?')[0]);
+            if (!JAPANESE[id]) return new Response('{}', { status: 404 });
+            body = { displayName: { text: JAPANESE[id], languageCode: 'ja' } };
         } else {
             const id = decodeURIComponent(url.split('/places/')[1].split('?')[0]);
             if (!DETAILS[id]) return new Response('{}', { status: 404 });
@@ -102,7 +113,7 @@ test('check queries every open place once and writes the report', async () => {
         "Mc Donald's@35.661": 'operational',
         'Il Ritrovo@35.6601': 'closed_temporarily',
         'Bistro Shibuya@35.656': 'replaced',
-        'Sushi Zanmai@35.6595': 'unsure',
+        'Sushi Zanmai@35.6595': 'not_found_nearby',
         'Pancho@35.6605': 'operational',
         'Tengu Sakaba@35.6588': 'reopened',
         'Krung Siam@35.6578': 'operational',
@@ -223,6 +234,7 @@ test('apply shows the changes grouped by verdict, "replaced" unchecked, and keep
         ['closed_temporarily', true, ['Il Ritrovo']],
         ['reopened', true, ['Tengu Sakaba']],
         ['replaced', false, ['Bistro Shibuya']],
+        ['not_found_nearby', false, ['Sushi Zanmai']],
     ]);
     const places = readSeeder(join(ws.seedersDir, 'RestaurantsTableSeeder.php'), 'restaurants');
     // Replaced, and no id: the one found belongs to the new business.
@@ -270,8 +282,11 @@ test('apply runs php -l on each edited file and git diff --stat, and stops if ph
 
     const ws2 = workspace();
     await check(ws2);
+    const file2 = join(ws2.seedersDir, 'RestaurantsTableSeeder.php');
+    const before2 = readFileSync(file2, 'utf8');
     const failing = (command) => (command === 'php' ? { status: 255, stdout: 'Parse error', stderr: '' } : { status: 0, stdout: '' });
-    await assert.rejects(runApply({ ...ws2, yes: true, run: failing, log: () => {} }), /php -l failed.*\n.*Parse error[\s\S]*git checkout source\/database\/seeders/);
+    await assert.rejects(runApply({ ...ws2, yes: true, run: failing, log: () => {} }), /php -l failed[\s\S]*Parse error[\s\S]*nothing was written/i);
+    assert.equal(readFileSync(file2, 'utf8'), before2); // the lint runs on a copy: the seeder is untouched
 });
 
 test('apply without a report asks to run check first, and picks the latest report', async () => {
@@ -301,4 +316,143 @@ test('check searches again when Google has retired a stored id', async () => {
     } finally {
         delete SEARCH['Il Ritrovo'];
     }
+});
+
+// Gives a few fixture places a name_ja, in the workspace copy.
+function withJapaneseNames(ws) {
+    const file = join(ws.seedersDir, 'RestaurantsTableSeeder.php');
+    let text = readFileSync(file, 'utf8');
+    for (const [name, ja] of [['Hakata Furyu', '博多風龍'], ['Go Go Curry', 'ゴーゴーカレー'], ['Il Ritrovo', 'イル リトロヴォ'], ['Sushi Zanmai', 'すし三昧'], ['Krung Siam', 'クルンサイアム']]) {
+        text = text.replace(`'name' => '${name}',`, `'name' => '${name}',\n            'name_ja' => '${ja}',`);
+    }
+    writeFileSync(file, text);
+}
+
+test('check without --names makes no Japanese request and writes no nameJa field', async () => {
+    const ws = workspace();
+    withJapaneseNames(ws);
+    const lines = [];
+    const { report, reportPath, calls } = await check(ws, { all: true, log: (l) => lines.push(l) });
+    // 11, plus the second search with Sushi Zanmai's name_ja (found nothing in English): a search,
+    // not the Japanese Details request of --names.
+    assert.equal(calls.length, 12);
+    assert.ok(!calls.some((u) => u.includes('languageCode=ja')));
+    assert.equal(report.results.find((r) => r.name === 'Sushi Zanmai').lookup, 'search+ja');
+    assert.ok(report.results.every((r) => !('nameJa' in r)));
+    // The Maps link is only there for the places to look at by hand (here: not found nearby).
+    assert.deepEqual(report.results.filter((r) => 'googleMapsLink' in r).map((r) => r.verdict), ['not_found_nearby']);
+    assert.doesNotMatch(readFileSync(reportPath, 'utf8'), /nameJa/);
+    assert.doesNotMatch(lines.join('\n'), /Japanese name/);
+});
+
+test('check --names compares every name_ja with Google, and never shows Google\'s Japanese name', async () => {
+    const ws = workspace();
+    withJapaneseNames(ws);
+    const lines = [];
+    const { report, reportPath, calls } = await check(ws, { names: true, log: (l) => lines.push(l) });
+    // One more Details call, in Japanese, per place with a name_ja that was found (Sushi Zanmai was not).
+    const japanese = calls.filter((u) => u.endsWith('?languageCode=ja'));
+    assert.deepEqual(japanese.map((u) => u.split('/places/')[1].split('?')[0]).sort(), ['ChIJgogo', 'ChIJhakata', 'ChIJknownRitrovo', 'ChIJkrung']);
+    assert.equal(calls.length, 11 + 1 + 4); // + the name_ja search for Sushi Zanmai
+
+    const verdict = Object.fromEntries(report.results.map((r) => [`${r.name}@${r.lat}`, r.nameJa]));
+    assert.deepEqual(verdict, {
+        'Hakata Furyu@35.658545': 'confirmed', // the branch 渋谷店 is dropped
+        'Go Go Curry@35.657333': 'disputed', // Google's name is in Latin only
+        "Mc Donald's@35.659": null, // no name_ja: nothing to check
+        "Mc Donald's@35.661": null,
+        'Il Ritrovo@35.6601': 'confirmed', // found by its id; the middle dot and the space do not count
+        'Bistro Shibuya@35.656': null,
+        'Sushi Zanmai@35.6595': 'unchecked', // not found
+        'Pancho@35.6605': null,
+        'Tengu Sakaba@35.6588': null,
+        'Krung Siam@35.6578': 'disputed', // another name
+        'Usagi@35.662': null,
+    });
+    // The status verdicts do not change.
+    assert.equal(report.results.find((r) => r.name === 'Krung Siam').verdict, 'operational');
+    assert.equal(report.results.find((r) => r.name === 'Krung Siam').googleMapsLink, 'https://www.google.com/maps/place/9');
+
+    // Google's Japanese names are nowhere: not in the report, not on the screen.
+    const text = lines.join('\n');
+    for (const google of Object.values(JAPANESE).filter((n) => /[^\x00-\x7f]/.test(n))) {
+        assert.ok(!readFileSync(reportPath, 'utf8').includes(google), `${google} is in the report`);
+        assert.ok(!text.includes(google), `${google} is printed`);
+    }
+    // The table gets the column; the disputed places are listed at the end with their Maps link.
+    assert.match(text, /verdict\s+reason\s+Japanese name/);
+    assert.match(text, /Sushi Zanmai\s+-\s+-\s+-\s+not_found_nearby\s+no match within 200 m, nothing found\s+unchecked/);
+    assert.match(text, /Japanese names: confirmed: 2, disputed: 2, unchecked: 1/);
+    assert.match(text, /disputed by Google[^\n]*\n\s+restaurants\s+Go Go Curry: https:\/\/www\.google\.com\/maps\/place\/2\n\s+restaurants\s+Krung Siam: https:\/\/www\.google\.com\/maps\/place\/9/);
+});
+
+test('check --names stops on a fatal error of the Japanese request, keeping a partial report', async () => {
+    const ws = workspace();
+    withJapaneseNames(ws);
+    const google = fakeGoogle();
+    const fetch = async (url, options) => (url.endsWith('?languageCode=ja')
+        ? new Response(JSON.stringify({ error: { message: 'Quota exceeded' } }), { status: 429 })
+        : google.fetch(url, options));
+    await assert.rejects(
+        runCheck({ apiKey: 'KEY', fetch, minIntervalMs: 0, today: TODAY, log: () => {}, kinds: ['restaurants'], names: true, ...ws }),
+        /429/,
+    );
+    const report = JSON.parse(readFileSync(join(ws.reportsDir, '2026-11-18T0930-restaurants.json'), 'utf8'));
+    assert.equal(report.partial, true);
+    assert.deepEqual(report.results.map((r) => r.name), []); // Hakata Furyu, the first place, has a name_ja
+});
+
+test('check searches again with the name_ja when the English search finds nothing nearby', async () => {
+    const ws = workspace();
+    withJapaneseNames(ws);
+    // Google knows Sushi Zanmai under its Japanese name only.
+    SEARCH['すし三昧'] = [gplace('ChIJsushi', 'すし三昧 渋谷店', 'CLOSED_PERMANENTLY', 35.6595, 139.6995, 6)];
+    try {
+        const { report, calls } = await check(ws);
+        const searches = calls.filter((u) => u.endsWith('places:searchText'));
+        assert.equal(searches.length, 10 + 1); // one per searched place, plus the name_ja one
+        const sushi = report.results.find((r) => r.name === 'Sushi Zanmai');
+        // The Japanese name confirmed counts as an exact name: Google's status is believed, the id is ours.
+        assert.deepEqual([sushi.lookup, sushi.verdict, sushi.idTrusted, sushi.google.id], ['search+ja', 'closed_permanently', true, 'ChIJsushi']);
+        // A place whose English search matched is not searched again.
+        assert.equal(report.results.find((r) => r.name === 'Hakata Furyu').lookup, 'search');
+    } finally {
+        delete SEARCH['すし三昧'];
+    }
+});
+
+test('check prints the reason after the verdict, ordered by verdict then reason', async () => {
+    const lines = [];
+    await check(workspace(), { log: (l) => lines.push(l) });
+    const table = lines.find((l) => l.includes('verdict'));
+    assert.match(table, /verdict\s+reason\n/);
+    const verdicts = table.trim().split('\n').slice(2).map((row) => row.match(/(closed_permanently|closed_temporarily|reopened|replaced|not_found_nearby|unsure)/)[1]);
+    assert.deepEqual(verdicts, ['closed_permanently', 'closed_temporarily', 'reopened', 'replaced', 'not_found_nearby']);
+    assert.match(table, /Go Go Curry.*closed_permanently\s+Google says permanently closed/);
+    assert.match(lines.join('\n'), /6 operational \(not listed/);
+});
+
+test('apply lists the places not found nearby unchecked, with what Google found and the Maps link', async () => {
+    const ws = workspace();
+    await check(ws);
+    let shown;
+    const prompt = async (groups) => {
+        shown = groups.find((g) => g.verdict === 'not_found_nearby');
+        return shown.results; // tick them
+    };
+    // --yes leaves them out.
+    const yes = await runApply({ ...ws, yes: true, run: noCommands, log: () => {} });
+    assert.ok(!yes.confirmed.some((r) => r.verdict === 'not_found_nearby'));
+    const file = join(ws.seedersDir, 'RestaurantsTableSeeder.php');
+    assert.equal(readSeeder(file, 'restaurants').find((p) => p.name === 'Sushi Zanmai').businessStatus, null);
+
+    await runApply({ ...ws, prompt, run: noCommands, log: () => {} });
+    assert.equal(shown.checked, false);
+    assert.deepEqual(shown.results.map((r) => r.name), ['Sushi Zanmai']);
+    assert.equal(describeChange(shown.results[0]), 'restaurants Sushi Zanmai -> Google found nothing; https://www.google.com/maps/place/7');
+    const sushi = readSeeder(file, 'restaurants').find((p) => p.name === 'Sushi Zanmai');
+    assert.deepEqual([sushi.businessStatus, sushi.googlePlaceId], ['CLOSED_PERMANENTLY', null]);
+
+    const found = { kind: 'bars', name: 'Hobgoblin', verdict: 'not_found_nearby', distance: 2090, google: { name: 'GOBLIN' }, googleMapsLink: 'https://maps/x' };
+    assert.equal(describeChange(found), 'bars        Hobgoblin -> Google found "GOBLIN" 2090 m away instead; https://maps/x');
 });

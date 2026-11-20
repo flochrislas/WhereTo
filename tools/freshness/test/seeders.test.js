@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { readFileSync, writeFileSync, mkdtempSync, cpSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
-import { parseSeeder, readSeeder, editSeederText, applySeederEdits, planSeederEdits } from '../lib/seeders.js';
+import { parseSeeder, readSeeder, editSeederText, applySeederEdits, planSeederEdits, phpString } from '../lib/seeders.js';
 
 const FIXTURES = new URL('./fixtures/', import.meta.url).pathname;
 const restoText = readFileSync(join(FIXTURES, 'RestaurantsTableSeeder.php'), 'utf8');
@@ -21,8 +21,10 @@ test('the reader finds every active block and skips the commented-out ones', () 
     assert.deepEqual(places[0], {
         kind: 'restaurants',
         name: 'Hakata Furyu',
+        nameJa: null,
         businessStatus: null,
         googlePlaceId: null,
+        googleMapsLink: 'https://www.google.com/maps/place/0',
         lat: 35.658545,
         lon: 139.698468,
         line: 30,
@@ -188,4 +190,72 @@ test('planSeederEdits verifies in memory and writes nothing', () => {
     // A failing edit throws before anything is written.
     assert.throws(() => planSeederEdits(file, 'restaurants', [{ target: { name: 'Nowhere' }, fields: { businessStatus: 'REPLACED' } }]), /No place/);
     assert.equal(readFileSync(file, 'utf8'), restoText);
+});
+
+test('phpString writes a single-quoted PHP string, Japanese and quotes included', () => {
+    assert.equal(phpString('博多風龍'), "'博多風龍'");
+    assert.equal(phpString("ジョニーズ・バー 'Johnny's'"), "'ジョニーズ・バー \\'Johnny\\'s\\''");
+    assert.equal(phpString('a\\b'), "'a\\\\b'");
+});
+
+test('the reader reads name_ja, and rejects an empty one', () => {
+    const named = restoText.replace("'name' => 'Go Go Curry',", "'name' => 'Go Go Curry',\n            'name_ja' => 'ゴーゴーカレー',");
+    assert.equal(parseSeeder(named, 'restaurants').find((p) => p.name === 'Go Go Curry').nameJa, 'ゴーゴーカレー');
+    const empty = restoText.replace("'name' => 'Go Go Curry',", "'name' => 'Go Go Curry',\n            'name_ja' => '',");
+    assert.throws(() => parseSeeder(empty, 'restaurants'), /name_ja must be a non-empty string for the place 'Go Go Curry'/);
+});
+
+test('the editor inserts name_ja right after the name line, before the status and the id', () => {
+    const out = editSeederText(restoText, 'restaurants', { name: 'Kindenmaru' }, { nameJa: "金田丸 '本店'" });
+    assert.ok(out.includes(
+        "            'name' => 'Kindenmaru',\n" +
+        "            'name_ja' => '金田丸 \\'本店\\'',\n" +
+        "            'business_status' => 'CLOSED_PERMANENTLY',\n" +
+        "            'google_place_id' => 'ChIJclosedKindenmaru',\n",
+    ));
+    assert.equal(out.split('\n').length, restoText.split('\n').length + 1);
+    // Read back, unescaped; a second run changes nothing; a new value replaces the line.
+    assert.equal(parseSeeder(out, 'restaurants').find((p) => p.name === 'Kindenmaru').nameJa, "金田丸 '本店'");
+    assert.equal(editSeederText(out, 'restaurants', { name: 'Kindenmaru' }, { nameJa: "金田丸 '本店'" }), out);
+    const renamed = editSeederText(out, 'restaurants', { name: 'Kindenmaru' }, { nameJa: '金田丸' });
+    assert.equal(renamed.split('\n').length, out.split('\n').length);
+    assert.ok(renamed.includes("'name' => 'Kindenmaru',\n            'name_ja' => '金田丸',\n"));
+});
+
+test('a status and an id added later go after name_ja', () => {
+    const named = editSeederText(restoText, 'restaurants', { name: 'Go Go Curry' }, { nameJa: 'ゴーゴーカレー' });
+    const out = editSeederText(named, 'restaurants', { name: 'Go Go Curry' }, { businessStatus: 'CLOSED_PERMANENTLY', googlePlaceId: 'ChIJgogo' });
+    assert.ok(out.includes(
+        "            'name' => 'Go Go Curry',\n" +
+        "            'name_ja' => 'ゴーゴーカレー',\n" +
+        "            'business_status' => 'CLOSED_PERMANENTLY',\n" +
+        "            'google_place_id' => 'ChIJgogo',\n",
+    ));
+});
+
+test('the editor refuses an empty or multi-line Japanese name', () => {
+    assert.throws(() => editSeederText(restoText, 'restaurants', { name: 'Usagi', lat: 35.662, lon: 139.7005 }, { nameJa: ' ' }), /Japanese name/);
+    assert.throws(() => editSeederText(restoText, 'restaurants', { name: 'Usagi', lat: 35.662, lon: 139.7005 }, { nameJa: 'うさぎ\n' }), /Japanese name/);
+});
+
+test('applySeederEdits writes name_ja in both copies of a duplicated place and reads it back', () => {
+    const dir = tempFixtures();
+    const file = join(dir, 'RestaurantsTableSeeder.php');
+    const edits = [{ target: { name: 'Usagi', lat: 35.662, lon: 139.7005 }, fields: { nameJa: 'うさぎ' } }];
+    assert.equal(applySeederEdits(file, 'restaurants', edits), true);
+    assert.deepEqual(readSeeder(file, 'restaurants').filter((p) => p.name === 'Usagi').map((p) => p.nameJa), ['うさぎ', 'うさぎ']);
+    assert.equal(applySeederEdits(file, 'restaurants', edits), false);
+});
+
+test('two places of the same name get two different Japanese names, told apart by their coordinates', () => {
+    const dir = tempFixtures();
+    const file = join(dir, 'RestaurantsTableSeeder.php');
+    assert.equal(applySeederEdits(file, 'restaurants', [
+        { target: { name: "Mc Donald's", lat: 35.659, lon: 139.7 }, fields: { nameJa: "マクドナルド 'センター街'" } },
+        { target: { name: "Mc Donald's", lat: 35.661, lon: 139.698 }, fields: { nameJa: 'マクドナルド 道玄坂店' } },
+    ]), true);
+    const text = readFileSync(file, 'utf8');
+    assert.ok(text.includes("'name' => 'Mc Donald\\'s',\n            'name_ja' => 'マクドナルド \\'センター街\\'',\n"));
+    const mcs = readSeeder(file, 'restaurants').filter((p) => p.name === "Mc Donald's");
+    assert.deepEqual(mcs.map((p) => [p.lat, p.nameJa]), [[35.659, "マクドナルド 'センター街'"], [35.661, 'マクドナルド 道玄坂店']]);
 });
