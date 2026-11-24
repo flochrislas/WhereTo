@@ -20,6 +20,8 @@ class KaraokesTableSeeder extends Seeder
         $karaoke = Karaoke::create([
             'name' => 'Karaoke-kan',
             'name_ja' => 'カラオケ館',
+            'business_status' => 'OPERATIONAL',
+            'google_place_id' => 'ChIJx8UupqmMGGARkAX1Psqztek',
             'area' => 'Shibuya',
             'location' => 'Center Gai',
             'points' => 'Biggest karaoke chain in Tokyo, but not the cheapest.',
@@ -35,6 +37,7 @@ class KaraokesTableSeeder extends Seeder
 
         $karaoke = Karaoke::create([
             'name' => 'Joysound',
+            'business_status' => 'OPERATIONAL',
             'area' => 'Shibuya',
             'location' => 'Sation\'s south exit',
             'points' => 'One of the main systems maker',
@@ -50,6 +53,7 @@ class KaraokesTableSeeder extends Seeder
 
         $karaoke = Karaoke::create([
             'name' => 'Joysound',
+            'business_status' => 'OPERATIONAL',
             'area' => 'Shibuya',
             'location' => 'Dogenzaka',
             'points' => 'One of the main systems maker',
@@ -65,6 +69,8 @@ class KaraokesTableSeeder extends Seeder
 
         $karaoke = Karaoke::create([
             'name' => 'Uta hiroba',
+            'business_status' => 'OPERATIONAL',
+            'google_place_id' => 'ChIJO2REtKmMGGAR7a_a2JJIOm4',
             'area' => 'Shibuya, Udagawacho',
             'location' => 'Center Gai',
             'points' => 'Probably the cheapest karaoke chain',

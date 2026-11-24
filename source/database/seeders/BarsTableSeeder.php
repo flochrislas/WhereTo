@@ -19,6 +19,7 @@ class BarsTableSeeder extends Seeder
 
         $bar = Bar::create([
             'name' => 'Tatsu Ichi',
+            'business_status' => 'OPERATIONAL',
             'location' => 'Shibuya, Center Gai',
             'type' => 'Standing Bar',
             'points' => 'A standing bar where it is easy to mingle with people. Quite cheap, no table charge.',
@@ -38,6 +39,8 @@ class BarsTableSeeder extends Seeder
 
         $bar = Bar::create([
             'name' => 'Coins bar',
+            'business_status' => 'CLOSED_PERMANENTLY',
+            'google_place_id' => 'ChIJoyRZQamMGGARxPz1Gjcb8LE',
             'location' => 'Shibuya, Udagawacho',
             'type' => 'Bar',
             'points' => 'Everthing is 300 yen. No table charge.',
@@ -57,6 +60,8 @@ class BarsTableSeeder extends Seeder
 
         $bar = Bar::create([
             'name' => 'Hub',
+            'business_status' => 'OPERATIONAL',
+            'google_place_id' => 'ChIJZfDY26mMGGARdFF_TnRLQXQ',
             'location' => 'Shibuya, Dogenzaka',
             'type' => 'British Pub',
             'points' => 'Big chain of British pubs. No table charge.',
@@ -76,6 +81,8 @@ class BarsTableSeeder extends Seeder
 
         $bar = Bar::create([
             'name' => 'Hub',
+            'business_status' => 'OPERATIONAL',
+            'google_place_id' => 'ChIJD8GkI6iMGGAR5uBU7SUamg0',
             'location' => 'Shibuya, Center Gai',
             'type' => 'British Pub',
             'points' => 'Big chain of British pubs. No table charge.',
@@ -95,6 +102,8 @@ class BarsTableSeeder extends Seeder
 
         $bar = Bar::create([
             'name' => 'Hub',
+            'business_status' => 'OPERATIONAL',
+            'google_place_id' => 'ChIJzVRwIKmMGGARwZ8F_QFVLZE',
             'location' => 'Shibuya, Udagawacho',
             'type' => 'British Pub',
             'points' => 'Big chain of British pubs. No table charge.',
@@ -114,6 +123,8 @@ class BarsTableSeeder extends Seeder
 
         $bar = Bar::create([
             'name' => 'Hub',
+            'business_status' => 'OPERATIONAL',
+            'google_place_id' => 'ChIJK2jWTKiMGGARhHCkOOxNNOk',
             'location' => 'Shibuya, Udagawacho',
             'type' => 'British Pub',
             'points' => 'Big chain of British pubs. No table charge.',
@@ -134,6 +145,7 @@ class BarsTableSeeder extends Seeder
         $bar = Bar::create([
             'name' => 'Hobgoblin',
             'name_ja' => 'ホブゴブリン',
+            'business_status' => 'CLOSED_PERMANENTLY',
             'location' => 'Shibuya, Dogenzaka',
             'type' => 'British Pub',
             'points' => 'Small chain of British pubs. No table charge.',
@@ -153,6 +165,7 @@ class BarsTableSeeder extends Seeder
 
         $bar = Bar::create([
             'name' => 'The Dubliners',
+            'business_status' => 'CLOSED_PERMANENTLY',
             'location' => 'Shibuya, Dogenzaka',
             'type' => 'Irish Pub',
             'points' => 'Nice pub with an open air section.',
@@ -172,6 +185,7 @@ class BarsTableSeeder extends Seeder
 
         $bar = Bar::create([
             'name' => 'Pres',
+            'business_status' => 'OPERATIONAL',
             'location' => 'Shibuya, Center Gai',
             'type' => 'Jazz Bar',
             'points' => 'Small, dark, peaceful bar with jazz music.',
@@ -191,6 +205,8 @@ class BarsTableSeeder extends Seeder
 
         $bar = Bar::create([
             'name' => 'Start bar',
+            'business_status' => 'OPERATIONAL',
+            'google_place_id' => 'ChIJq6qGWFeLGGARplWemxZ64co',
             'location' => 'Shibuya, Sakuragaokacho',
             'type' => 'Bar',
             'points' => 'No table charge.',
@@ -210,6 +226,7 @@ class BarsTableSeeder extends Seeder
 
         $bar = Bar::create([
             'name' => 'The Wine',
+            'business_status' => 'OPERATIONAL',
             'location' => 'Shibuya',
             'type' => 'Izakaya',
             'points' => 'Very cheap, and good wine. 500 yen table charge.',
@@ -286,6 +303,8 @@ class BarsTableSeeder extends Seeder
 
         $bar = Bar::create([
             'name' => 'Tavern Bach',
+            'business_status' => 'CLOSED_PERMANENTLY',
+            'google_place_id' => 'ChIJvwIva1aLGGAROhahP84QKxI',
             'location' => 'Shibuya',
             'type' => 'Izakaya',
             'points' => 'Feels like a very cheap izakaya, but actually not cheap.',
