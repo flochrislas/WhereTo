@@ -44,6 +44,8 @@ const COORDS_RE = /^\s*\$(\w+)->fillCoordinatesFromString\('\s*(-?[\d.]+)\s*,\s*
 const END_RE = /^\s*\]\);$/;
 // `$resto->attachTags(['ramen', 'japanese']);` -> variable name, the list between the brackets.
 const TAGS_RE = /^\s*\$(\w+)->attachTags\(\[(.*)\]\);$/;
+// Any attachTags call, on one line or the start of several.
+const TAGS_CALL_RE = /^\s*\$(\w+)->attachTags\(/;
 // The single-quoted strings of a PHP list: 'ramen', 'it\'s' -> their texts.
 const quotedStrings = (list) => [...list.matchAll(/'((?:[^'\\]|\\.)*)'/g)].map((m) => m[1].replace(/\\(['\\])/g, '$1'));
 
@@ -179,10 +181,14 @@ function parseBlocks(lines, label) {
             if (last && last.lat === undefined) fail(last.start, `the place '${last.values.name}' has no coordinates (fillCoordinatesFromString)`);
             // keyLines / keyEnds: the first and last line of each key (they differ for a multi-line string).
             // keyOrder: the keys as they appear; end: the `]);` line; lineIndent: the indentation of the block's own lines.
-            block = { start: index, variable: create[2], lineIndent: create[1], values: {}, keyLines: {}, keyEnds: {}, keyOrder: [], indent: undefined, tags: undefined, tagsLine: undefined, coordsLine: undefined };
+            block = { start: index, variable: create[2], lineIndent: create[1], values: {}, keyLines: {}, keyEnds: {}, keyOrder: [], indent: undefined, tags: undefined, tagsLine: undefined, tagsCalls: 0, coordsLine: undefined };
             return;
         }
 
+        // Every attachTags call of the block is counted, whatever its form: only the first one, when
+        // it fits on a line, is read, and an edit of the tags must not leave the others behind.
+        const tagsCall = line.match(TAGS_CALL_RE);
+        if (tagsCall && last && tagsCall[1] === last.variable) last.tagsCalls += 1;
         const tags = line.match(TAGS_RE);
         if (tags && last && tags[1] === last.variable && last.tags === undefined) {
             last.tags = quotedStrings(tags[2]);
@@ -443,6 +449,9 @@ function editLinesAt(lines, kind, index, edit) {
 
     if (tags !== undefined) {
         const block = find();
+        if (block.tagsCalls > (block.tagsLine === undefined ? 0 : 1)) {
+            throw new Error(`the tags of '${block.values.name}' are written in several attachTags calls, or over several lines: edit them in the seeder`);
+        }
         const clean = tags.map((t) => t.trim()).filter(Boolean);
         const wanted = `${block.lineIndent}$${block.variable}->attachTags([${clean.map(phpString).join(', ')}]);`;
         if (block.tagsLine !== undefined) lines[block.tagsLine] = wanted;

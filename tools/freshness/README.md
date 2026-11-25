@@ -54,7 +54,7 @@ It sends about 5 requests per second, then classifies each place:
 
 | Verdict | When | What `apply` does |
 |---|---|---|
-| `operational` | Google says `OPERATIONAL` for our name within 50 m; or for our name 50 to 200 m away (reason "same name 97 m away": coordinates a bit off, or another branch of a chain) | `business_status` `OPERATIONAL` (confirmed open: a place without a status line was never checked), and the `google_place_id` if the id is surely ours (see below; never for a result 50 to 200 m away) |
+| `operational` | Google says `OPERATIONAL` for our name within 50 m; or for our name 50 to 200 m away (reason "same name 97 m away": coordinates a bit off, or another branch of a chain) | `business_status` `OPERATIONAL` (confirmed open: a place without a status line was never checked), within 50 m or by its id; 50 to 200 m away only if you tick it (it may be another branch while ours has closed). And the `google_place_id` if the id is surely ours (see below; never for a result 50 to 200 m away) |
 | `closed_permanently` | Google says `CLOSED_PERMANENTLY` for our name | `business_status` `CLOSED_PERMANENTLY` (+ id) |
 | `closed_temporarily` | Google says `CLOSED_TEMPORARILY` for our name | `business_status` `CLOSED_TEMPORARILY` (+ id) |
 | `reopened` | our place is `CLOSED_TEMPORARILY` and Google says `OPERATIONAL` for our name | `business_status` `OPERATIONAL` (+ id) |
@@ -73,11 +73,11 @@ A bad key, a disabled API or an exhausted quota (HTTP 400, 401, 403 or 429) stop
 ```sh
 npm run apply                               # the latest report
 npm run apply -- reports/2026-11-18T0930-all.json   # a given report
-npm run apply -- --yes                              # no prompt: keep the checked groups (never "replaced" nor "not found nearby")
+npm run apply -- --yes                              # no prompt: keep the checked groups (never "replaced", "not found nearby", nor open 50 to 200 m away)
 npm run apply -- --partial                          # accept a partial report (refused otherwise)
 ```
 
-The places whose verdict changes the status are shown in a checkbox list, grouped by verdict, with Google's name and address on each line. Permanently closed, temporarily closed and reopened are checked; **replaced and not found nearby are unchecked**: tick a place only after looking at it on Maps. A not-found-nearby line shows what Google found instead (name and distance) and the place's Google Maps link from the seeder; a ticked one is written `CLOSED_PERMANENTLY`, without an id. Space toggles, Enter confirms, Ctrl+C cancels without writing anything.
+The places whose verdict changes the status are shown in a checkbox list, grouped by verdict, with Google's name and address on each line. Confirmed open (within 50 m, or found by its id), permanently closed, temporarily closed and reopened are checked; **replaced, not found nearby, and open under our name but 50 to 200 m away are unchecked**: tick a place only after looking at it on Maps. A not-found-nearby line shows what Google found instead (name and distance) and the place's Google Maps link from the seeder; a ticked one is written `CLOSED_PERMANENTLY`, without an id. Space toggles, Enter confirms, Ctrl+C cancels without writing anything.
 
 The tool then edits the seeders in place, one line per key, right after the `'name'` line of the place, with the same indentation:
 

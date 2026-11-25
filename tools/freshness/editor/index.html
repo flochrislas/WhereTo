@@ -150,6 +150,7 @@ function reportCell(p) {
     const r = resultOf(p);
     if (!state.report) return '';
     if (!r) return '<span class="muted">not in the report</span>';
+    if (r.moved) return '<span class="muted">moved since the report: its verdict was for the old coordinates</span>';
     // A button carries the name of its action only; the value is read from the report when clicked.
     const btn = (label, action) => `<button data-action="${action}">${label}</button>`;
     if (state.report.kind === 'names') {
@@ -210,7 +211,8 @@ function input(key, value) {
     if (type === 'status') return `<select ${name}><option value=""${value == null ? ' selected' : ''}>(none)</option>${STATUSES.map((s) => `<option${value === s ? ' selected' : ''}>${s}</option>`).join('')}</select>`;
     if (type === 'boolean') return `<input type="checkbox" ${name} data-type="boolean"${value ? ' checked' : ''}>`;
     if (type === 'number') return `<input type="number" step="any" ${name} data-type="number" data-nullable="${nullable(key, value)}" value="${value ?? ''}">`;
-    if (type === 'longtext') return `<textarea ${name} data-type="text">${esc(value)}</textarea>`;
+    // (A newline first: the HTML parser drops one right after the tag, and it would eat the value's own.)
+    if (type === 'longtext') return `<textarea ${name} data-type="text">\n${esc(value)}</textarea>`;
     return `<input type="text" ${name} data-type="text" data-nullable="${nullable(key, value)}" value="${esc(value)}"${type === 'datetime' ? ' placeholder="YYYY-MM-DD HH:MM:SS"' : ''}>`;
 }
 
@@ -300,7 +302,18 @@ function save(id, edit, stateEl) {
             // checked the revision), but the page already holds newer places; touch nothing.
             if (state.generation[kind] !== generation) { setState(stateEl, 'saved', 'saved'); return; }
             state.revisions[kind] = revision;
-            state.places[state.places.findIndex((p) => p.id === id)] = place;
+            const at = state.places.findIndex((p) => p.id === id);
+            const before = state.places[at];
+            state.places[at] = place;
+            // A report judges a spot: once the place has other coordinates, its verdict is about the old
+            // ones, and its buttons (closed, replaced, keep id, use this name) go until the next check.
+            const moved = before && (before.lat !== place.lat || before.lon !== place.lon);
+            if (moved && state.report?.byId[id]) {
+                state.report.byId[id] = { ...state.report.byId[id], moved: true };
+                // Only the cell: a full render would rebuild the open form under the user's hands.
+                const cell = document.querySelector(`tr.row[data-id="${CSS.escape(id)}"] td.report`);
+                if (cell) cell.innerHTML = reportCell(place);
+            }
             state.lost = [];
             showLost('');
             if (stateEl) setState(stateEl, 'saved', 'saved'); else render();

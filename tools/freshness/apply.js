@@ -7,14 +7,24 @@ import { readdirSync, readFileSync } from 'node:fs';
 import { join, relative, resolve } from 'node:path';
 import { parseArgs } from 'node:util';
 import { planSeederEdits, KINDS, DEFAULT_SEEDERS_DIR } from './lib/seeders.js';
-import { VERDICT_STATUS } from './lib/classify.js';
+import { VERDICT_STATUS, SEARCH_RADIUS_METRES } from './lib/classify.js';
 import { isMain, checkboxPrompt, runCommand, writePlans, DEFAULT_REPORTS_DIR, REPO_ROOT } from './lib/cli.js';
 
 // The order and wording of the groups in the prompt. `checked`: ticked by default, and kept by
 // --yes. `status`: the business_status a ticked place gets. "Replaced" hides a place on a guess
 // (another name on our spot), and "not found nearby" closes it on an absence, so both are opt-in.
+// `only`: the results of the verdict that go in the group (all of them without it). An open place
+// is confirmed on our spot (within 50 m, or found by its id); our name 50 to 200 m away may be
+// another branch of a chain while ours has closed, so that one is opt-in too.
+const onOurSpot = (r) => r.idTrusted || (typeof r.distance === 'number' && r.distance <= SEARCH_RADIUS_METRES);
 const GROUPS = [
-    { verdict: 'operational', label: 'Confirmed open (business_status OPERATIONAL; a blank status means not checked)', checked: true },
+    { verdict: 'operational', only: onOurSpot, label: 'Confirmed open (business_status OPERATIONAL; a blank status means not checked)', checked: true },
+    {
+        verdict: 'operational',
+        only: (r) => !onOurSpot(r),
+        label: `Open under our name, but ${SEARCH_RADIUS_METRES} to 200 m away (unchecked: maybe another branch; tick only after a look on Maps)`,
+        checked: false,
+    },
     { verdict: 'closed_permanently', label: 'Permanently closed', checked: true },
     { verdict: 'closed_temporarily', label: 'Temporarily closed', checked: true },
     { verdict: 'reopened', label: 'Reopened (was temporarily closed)', checked: true },
@@ -89,12 +99,13 @@ export async function runApply({
     //    place without a status line gets its OPERATIONAL written (confirmed, as against not checked).
     const isChange = (r) => statusOf(r.verdict) !== undefined && statusOf(r.verdict) !== r.businessStatus;
     const groups = GROUPS
-        .map((g) => ({ ...g, results: report.results.filter((r) => r.verdict === g.verdict && isChange(r)) }))
+        .map((g) => ({ ...g, results: report.results.filter((r) => r.verdict === g.verdict && (g.only?.(r) ?? true) && isChange(r)) }))
         .filter((g) => g.results.length);
     const changes = groups.flatMap((g) => g.results);
     let confirmed = [];
     if (changes.length) {
-        // --yes keeps the groups checked by default only (never "replaced" nor "not found nearby").
+        // --yes keeps the groups checked by default only (never "replaced", "not found nearby", nor an
+        // open place found farther than 50 m).
         confirmed = yes ? groups.filter((g) => g.checked).flatMap((g) => g.results) : await prompt(groups);
     }
     log(`${confirmed.length} of ${changes.length} status changes confirmed.`);
@@ -137,6 +148,7 @@ export async function runApply({
         `${count('closed_permanently', 'closed_temporarily', 'not_found_nearby')} closed`,
         `${count('replaced')} replaced`,
         ...(count('reopened') ? [`${count('reopened')} reopened`] : []),
+        ...(count('operational') ? [`${count('operational')} confirmed open`] : []),
     ].join(', ');
     log(`
 Next steps:

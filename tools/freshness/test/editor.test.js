@@ -43,6 +43,12 @@ test('validateEdit checks the type of each key, then the low-level rules', () =>
     assert.throws(() => validateEdit({ fields: { official_website: 'not a url' } }), /official_website.*http/);
     assert.throws(() => validateEdit({ fields: { location: null } }), /location.*cannot be null/);
     assert.throws(() => validateEdit({ fields: { name: '' } }), /name/); // from checkPlaceEdit
+    // The whole-number columns: a score is a smallint, the price an integer.
+    assert.doesNotThrow(() => validateEdit({ fields: { score_food: 5, score: 0, lunch_price: 40000 } }));
+    assert.throws(() => validateEdit({ fields: { score_food: 40000 } }), /score_food.*whole number from -32768 to 32767/);
+    assert.throws(() => validateEdit({ fields: { score: 2.5 } }), /score.*whole number/);
+    assert.throws(() => validateEdit({ fields: { lunch_price: 900.5 } }), /lunch_price.*whole number/);
+    assert.throws(() => validateEdit({ fields: { lunch_price: 3e9 } }), /lunch_price.*whole number/);
 });
 
 test('reportKind tells a names report from a check report', () => {

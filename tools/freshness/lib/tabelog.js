@@ -22,9 +22,9 @@ const VERDICTS = {
 // The words of the title bracket and of the status alert, Japanese pages (the seeders' links)
 // and English pages (tabelog.com/en/), in the order to test them.
 const STATUS_WORDS = [
-    ['closed', /閉店|permanently closed/],
-    ['temporarily_closed', /休業|temporarily closed/],
-    ['moved', /移転|moved/],
+    ['closed', /閉店|permanently closed/i],
+    ['temporarily_closed', /休業|temporarily closed/i],
+    ['moved', /移転|moved/i],
 ];
 
 // 'closed', 'temporarily_closed', 'moved' or 'open', from the HTML of a Tabelog restaurant page.

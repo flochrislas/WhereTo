@@ -119,9 +119,13 @@ export function createEditorServer({
                 .filter((f) => REPORT_RE.test(f))
                 .sort()
                 .reverse()
-                .map((file) => {
-                    const report = JSON.parse(readFileSync(join(reportsDir, file), 'utf8'));
-                    return { file, kind: reportKind(report), date: report.date, label: reportLabel(file, report) };
+                .flatMap((file) => {
+                    try {
+                        const report = JSON.parse(readFileSync(join(reportsDir, file), 'utf8'));
+                        return [{ file, kind: reportKind(report), date: report.date, label: reportLabel(file, report) }];
+                    } catch {
+                        return []; // a report cut short or edited by hand: not offered, the page still loads
+                    }
                 });
             return { json: { reports } };
         },

@@ -249,3 +249,10 @@ test('pickCandidate prefers a matching name within 50 m, then within 200 m, then
     assert.equal(pickCandidate(ours, [far, near]).id, 'near');
     assert.equal(pickCandidate(ours, []), null);
 });
+
+test('a near miss never differs in its digits', () => {
+    assert.equal(nearMiss('karaokekan1', 'karaokekan2'), false);
+    assert.equal(nearMiss('shibuya109', 'shibuya108'), false);
+    assert.equal(nameMatch('Bar 109 Lounge', 'Bar 108 Lounge'), null);
+    assert.equal(nearMiss('shibuya109', 'shibuia109'), true); // the same digits, one letter apart
+});

@@ -10,7 +10,7 @@ import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
 import { basename, join } from 'node:path';
 import { parseArgs } from 'node:util';
 import { readAllSeeders, KINDS, DEFAULT_SEEDERS_DIR } from './lib/seeders.js';
-import { fetchTabelogStatus, tabelogVerdict } from './lib/tabelog.js';
+import { fetchTabelogStatus, tabelogVerdict, tabelogJapaneseLink } from './lib/tabelog.js';
 import { latestReport } from './apply.js';
 import { isMain, reportStamp, formatTable, DEFAULT_REPORTS_DIR } from './lib/cli.js';
 
@@ -55,14 +55,17 @@ export async function runTabelog({
     for (const r of input.results) {
         const link = links.get(placeKey(r)) ?? null;
         if (!FLAGGED.includes(r.verdict) || !link) {
-            results.push({ ...r, tabelog: null });
+            // A report that already went through this pass keeps what Tabelog said then: the link
+            // and the status behind a closed verdict.
+            results.push({ ...r, tabelog: r.tabelog ?? null });
             continue;
         }
         if (checked > 0) await sleep(minIntervalMs);
         checked += 1;
         let tabelog;
         try {
-            tabelog = { link, status: await fetchTabelogStatus(link, { fetch }) };
+            // The Japanese page, whatever the language of the link: its wording is the one we know.
+            tabelog = { link, status: await fetchTabelogStatus(tabelogJapaneseLink(link) ?? link, { fetch }) };
         } catch (e) {
             tabelog = { link, status: 'error', error: e.message }; // one bad page: note it and go on
         }

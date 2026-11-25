@@ -244,3 +244,36 @@ test('fetchTabelogNames reads each page once, keeps the answers of the day, and 
     assert.equal(second.pages.get('https://tabelog.com/1/').name, '博多風龍 渋谷店');
     assert.equal((await run({ refresh: true })).fetched, 2);
 });
+
+test('a second pass on a +tabelog report keeps what the first pass read, and reads the Japanese page of an /en/ link', async () => {
+    const { seedersDir, reportsDir } = workspace();
+    const file = join(seedersDir, 'RestaurantsTableSeeder.php');
+    const places = readSeeder(file, 'restaurants');
+    const place = (name) => places.find((p) => p.name === name);
+    const row = (p, verdict, extra = {}) => ({ kind: 'restaurants', name: p.name, lat: p.lat, lon: p.lon, line: p.line, verdict, reason: 'x', ...extra });
+    // Give Go Go Curry an English link.
+    const text = readFileSync(file, 'utf8');
+    const at = text.indexOf("'name' => 'Go Go Curry',");
+    const key = text.indexOf("'tabelog_link' =>", at);
+    writeFileSync(file, text.slice(0, key) + "'tabelog_link' => 'https://tabelog.com/en/tokyo/A1303/A130301/9/'," + text.slice(text.indexOf('\n', key)));
+
+    const evidence = { link: 'https://tabelog.com/tokyo/A1303/A130301/1/', status: 'closed' };
+    const results = [
+        row(place('Hakata Furyu'), 'closed_permanently', { tabelog: evidence }), // settled by the first pass
+        row(place('Go Go Curry'), 'unsure', { tabelog: { link: 'x', status: 'error', error: 'HTTP 503' } }), // still flagged: read again
+    ];
+    const inputPath = join(reportsDir, '2026-11-20T0900-all+tabelog.json');
+    writeFileSync(inputPath, JSON.stringify({ date: '2026-11-19', generatedAt: 'x', kinds: ['restaurants'], tabelog: { from: '2026-11-19T2001-all.json' }, results }));
+    const calls = [];
+    const fetch = async (url) => { calls.push(url); return new Response(CLOSED, { status: 200 }); };
+    const { report } = await runTabelog({ reportsDir, seedersDir, fetch, minIntervalMs: 0, today: TODAY, log: () => {} });
+    assert.deepEqual(calls, ['https://tabelog.com/tokyo/A1303/A130301/9/']);
+    assert.deepEqual(report.results[0].tabelog, evidence);
+    assert.equal(report.results[1].verdict, 'closed_permanently');
+    assert.deepEqual(report.results[1].tabelog, { link: 'https://tabelog.com/en/tokyo/A1303/A130301/9/', status: 'closed' }); // the seeder's link
+});
+
+test('the English words of a Tabelog page are read whatever their case', () => {
+    assert.equal(tabelogStatus('<title>【Permanently Closed】Furyu</title>'), 'closed');
+    assert.equal(tabelogStatus('<div class="rst-status-alert">This restaurant is Temporarily Closed.</div>'), 'temporarily_closed');
+});

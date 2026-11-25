@@ -235,4 +235,40 @@ test.describe('Seeder editor', () => {
     await expect(row.locator('td').nth(2)).toHaveText("博多風龍 'テスト'");
     expect(seeder()).toContain("'name_ja' => '博多風龍 \\'テスト\\'',");
   });
+
+  test('a place moved after the report was loaded loses the report buttons, a renamed one keeps them', async ({ page }) => {
+    mkdirSync(join(dir, 'reports'));
+    const result = { kind: 'restaurants', name: 'Hakata Furyu', lat: 35.658545, lon: 139.698468, verdict: 'closed_permanently', reason: 'Google says permanently closed', google: { id: 'ChIJx', name: 'Furyu', address: 'Tokyo', status: 'CLOSED_PERMANENTLY' }, distance: 2 };
+    writeFileSync(join(dir, 'reports', '2026-11-18T0930-all.json'), JSON.stringify({ date: '2026-11-18', results: [result] }));
+    await page.goto(base + '/');
+    await page.locator('#report').selectOption('2026-11-18T0930-all.json');
+    const row = page.locator('tr.row[data-id="restaurants/0"]');
+    await row.locator('td').first().click();
+    const form = page.locator('tr.form');
+    // A new name: the same spot, the verdict still stands
+    await form.locator('[data-key="name"]').fill('Hakata Fūryū');
+    await form.locator('[data-key="name"]').blur();
+    await expect(form.locator('[data-key="name"] + .state')).toHaveText('saved');
+    await expect(row.getByRole('button', { name: 'Keep id' })).toBeVisible();
+    // New coordinates: the verdict was for the old ones
+    await form.locator('[data-coords]').fill('35.66, 139.70');
+    await form.locator('[data-coords]').blur();
+    await expect(form.locator('[data-coords] + .state')).toHaveText('saved');
+    await expect(row.locator('td.report')).toHaveText(/moved since the report/);
+    await expect(row.locator('td.report button')).toHaveCount(0);
+    await expect(form).toBeVisible(); // the open form was not rebuilt
+  });
+
+  test('a long text that starts with a newline keeps it when the text is edited', async ({ page }) => {
+    writeFileSync(seederPath(), seeder().replace("'points' => 'A line with", "'points' => '\nA line with"));
+    await page.goto(base + '/');
+    await page.locator('tr.row[data-id="restaurants/0"] td').first().click();
+    const points = page.locator('tr.form [data-key="points"]');
+    await expect(points).toHaveValue(/^\nA line with/);
+    await points.press('Control+End');
+    await points.pressSequentially(' More.');
+    await points.blur();
+    await expect(page.locator('tr.form [data-key="points"] + .state')).toHaveText('saved');
+    expect(seeder()).toContain("'points' => '\nA line with \\'quotes\\', commas, and => arrows inside. More.',");
+  });
 });

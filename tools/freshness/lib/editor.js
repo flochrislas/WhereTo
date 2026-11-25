@@ -32,6 +32,10 @@ export const KEY_TYPES = {
     score_mingling: { type: 'number', nullable: false },
 };
 
+// The range of the whole-number columns (PostgreSQL smallint and integer).
+const SMALLINT = [-32768, 32767];
+const INTEGER_RANGES = { lunch_price: [-2147483648, 2147483647] };
+
 // The keys a block may lack: offered to every row (section 8: absent is their null).
 export const OPTIONAL_KEYS = ['name_ja', 'business_status', 'google_place_id'];
 
@@ -65,6 +69,10 @@ export function validateEdit(edit) {
             continue;
         }
         if (type === 'number' && typeof value !== 'number') throw new Error(`'${key}' must be a number`);
+        // The columns are whole numbers (smallint for the scores, integer for the price): PHP would lint
+        // 40000 or 2.5, and the seeding would fail or round.
+        const range = INTEGER_RANGES[key] ?? (key.startsWith('score') ? SMALLINT : null);
+        if (range && (!Number.isInteger(value) || value < range[0] || value > range[1])) throw new Error(`'${key}' must be a whole number from ${range[0]} to ${range[1]}`);
         if (type === 'boolean' && typeof value !== 'boolean') throw new Error(`'${key}' must be true or false`);
         if (['text', 'longtext', 'datetime', 'url', 'status', 'id'].includes(type) && typeof value !== 'string') throw new Error(`'${key}' must be text`);
         // Kept as the text it is: no time zone, no Date object, the seconds included.

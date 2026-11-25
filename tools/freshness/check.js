@@ -11,6 +11,9 @@ import { parseArgs } from 'node:util';
 import { readAllSeeders, KINDS, DEFAULT_SEEDERS_DIR } from './lib/seeders.js';
 import { classify, pickCandidate, hasNearbyMatch, SEARCH_RADIUS_METRES } from './lib/classify.js';
 import { japaneseNameVerdict } from './lib/names.js';
+
+// The verdicts that say the Google result judged is not our place.
+const NOT_OUR_PLACE = ['replaced', 'not_found_nearby'];
 import { createPlacesClient } from './lib/places-api.js';
 import { loadEnv, isMain, isoDate, reportStamp, uniquePlaces, kindsAndLimit, formatTable, DEFAULT_REPORTS_DIR } from './lib/cli.js';
 
@@ -106,11 +109,13 @@ export async function runCheck({
         const retiredNote = retired ? `stored id retired by Google, searched again; ${reason}` : reason;
 
         // --names: one more Details call, in Japanese, for a place that has a name_ja and whose result
-        // is within 50 m (farther, it is not our place). Google's name is compared, then dropped.
+        // is within 50 m (farther, it is not our place), unless the verdict says that result is another
+        // business (replaced, not found nearby: its name would dispute ours for nothing). Google's name
+        // is compared, then dropped.
         let nameJa = null; // null: no name_ja to check
         if (names && place.nameJa !== null) {
             nameJa = 'unchecked';
-            if (google && distance !== null && distance <= SEARCH_RADIUS_METRES) {
+            if (google && distance !== null && distance <= SEARCH_RADIUS_METRES && !NOT_OUR_PLACE.includes(verdict)) {
                 try {
                     nameJa = japaneseNameVerdict(place.nameJa, await client.getJapaneseName(google.id));
                 } catch (e) {

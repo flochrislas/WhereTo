@@ -69,7 +69,9 @@ export function editDistance(a, b) {
 
 // A near miss: a spelling variant of the same name ("tatsuichi" / "tasuichi", "yasube" / "yasubee").
 // One letter apart for names of 6 characters or more, two for names of 10 or more (the shorter decides).
+// Letters only: a different digit is another place ("karaokekan1" / "karaokekan2", "bar109" / "bar108").
 export function nearMiss(a, b) {
+    if (a.replace(/\P{N}/gu, '') !== b.replace(/\P{N}/gu, '')) return false;
     const shorter = Math.min(a.length, b.length);
     const d = Math.abs(a.length - b.length) > 2 ? 3 : editDistance(a, b);
     return (shorter >= 6 && d <= 1) || (shorter >= 10 && d <= 2);

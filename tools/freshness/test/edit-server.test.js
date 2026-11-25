@@ -184,6 +184,7 @@ test('lists the reports newest first and maps one to the places', async () => {
     writeFileSync(join(ws.reportsDir, '2026-11-18T0930-all.json'), JSON.stringify({ date: '2026-11-18', results: [result] }));
     writeFileSync(join(ws.reportsDir, '2026-11-19T2000-names.json'), JSON.stringify({ date: '2026-11-19', source: 'OpenStreetMap', results: [{ ...result, match: 'matched', nameJa: '博多風龍', element: 'node/1' }] }));
     writeFileSync(join(ws.reportsDir, 'notes.txt'), 'not a report');
+    writeFileSync(join(ws.reportsDir, '2026-11-20T1918-all.json'), '{"date": "2026-11-20", "resul'); // cut short: not listed, the others are
     const list = await ws.api('/api/reports');
     assert.deepEqual(list.body.reports, [
         { file: '2026-11-19T2000-names.json', kind: 'names', date: '2026-11-19', label: '2026-11-19 20:00  names' },

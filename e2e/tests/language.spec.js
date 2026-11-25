@@ -37,6 +37,8 @@ test.describe('Languages', () => {
     await expect(page.locator('#results .resultsCount')).toHaveText(/件$/);
     const first = page.locator('#results a.resultCell').first();
     const name = (await first.locator('.rowName').textContent()).trim();
+    // The English page shows the English name only: the row carries it in a lang="en" span, after the name_ja
+    const englishName = (await names(page))[0];
     await first.click();
     await expect(page.locator('#detailName')).toHaveText(name);
     // The address bar carries the state
@@ -46,7 +48,7 @@ test.describe('Languages', () => {
     await page.locator('a.langSwitch[hreflang="en"]').click();
     await expect(page).toHaveURL(/\/restaurants\?tags=ramen&place=\d+$/);
     await expect(page.locator('html')).toHaveAttribute('lang', 'en');
-    await expect(page.locator('#detailName')).toHaveText(name);
+    await expect(page.locator('#detailName')).toHaveText(englishName);
     // (By data-tag, not by role: on a phone the filter is hidden behind the details, and roles skip hidden elements)
     await expect(page.locator('#selectedTags .tag[data-tag="ramen"]')).toHaveAttribute('aria-pressed', 'true');
     // On a phone the place is on screen; BACK shows the filtered list, and the place leaves the address bar

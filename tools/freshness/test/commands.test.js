@@ -463,3 +463,52 @@ test('apply lists the places not found nearby unchecked, with what Google found 
     const found = { kind: 'bars', name: 'Hobgoblin', verdict: 'not_found_nearby', distance: 2090, google: { name: 'GOBLIN' }, googleMapsLink: 'https://maps/x' };
     assert.equal(describeChange(found), 'bars        Hobgoblin -> Google found "GOBLIN" 2090 m away instead; https://maps/x');
 });
+
+test('check --names does not compare our name_ja with a business the verdict says is not our place', async () => {
+    const ws = workspace();
+    const file = join(ws.seedersDir, 'RestaurantsTableSeeder.php');
+    writeFileSync(file, readFileSync(file, 'utf8').replace("'name' => 'Bistro Shibuya',", "'name' => 'Bistro Shibuya',\n            'name_ja' => 'ビストロ渋谷',"));
+    const { report, calls } = await check(ws, { names: true });
+    const bistro = report.results.find((r) => r.name === 'Bistro Shibuya');
+    assert.equal(bistro.verdict, 'replaced'); // Ichiran, 5 m away
+    assert.equal(bistro.nameJa, 'unchecked'); // Ichiran's Japanese name says nothing about ours
+    assert.ok(!calls.some((u) => u.includes('ChIJramen') && u.endsWith('?languageCode=ja')));
+});
+
+test('the commit summary of apply counts the places confirmed open', async () => {
+    const ws = workspace();
+    const { reportPath } = await check(ws);
+    const lines = [];
+    const run = (command) => ({ status: 0, stdout: command === 'git' ? ' RestaurantsTableSeeder.php | 12 ++++\n' : 'No syntax errors', stderr: '' });
+    const { confirmed } = await runApply({ ...ws, reportPath, yes: true, run, log: (l) => lines.push(l) });
+    const open = confirmed.filter((r) => r.verdict === 'operational').length;
+    assert.ok(open > 0);
+    assert.match(lines.join('\n'), new RegExp(`Places checked on 2026-11-18: 2 closed, 0 replaced, 1 reopened, ${open} confirmed open"`));
+});
+
+test('apply offers an open place found 50 to 200 m away unticked, and --yes does not write it', async () => {
+    const ws = workspace();
+    const { reportPath, report } = await check(ws);
+    // Hakata Furyu found 97 m away under its name (another branch, maybe), Usagi 120 m away but by its id.
+    const far = (name, extra) => Object.assign(report.results.find((r) => r.name === name), { verdict: 'operational', ...extra });
+    far('Hakata Furyu', { reason: 'same name 97 m away', distance: 97, idTrusted: false });
+    far('Usagi', { reason: 'open', distance: 120, idTrusted: true });
+    writeFileSync(reportPath, JSON.stringify(report));
+
+    let shown;
+    let labels;
+    const prompt = async (groups) => {
+        shown = groups.filter((g) => g.verdict === 'operational').map((g) => [g.checked, g.results.map((r) => r.name)]);
+        labels = groups.filter((g) => g.verdict === 'operational').map((g) => g.label);
+        return [];
+    };
+    await runApply({ ...ws, reportPath, prompt, run: noCommands, log: () => {} });
+    assert.deepEqual(shown, [[true, ["Mc Donald's", "Mc Donald's", 'Pancho', 'Krung Siam', 'Usagi']], [false, ['Hakata Furyu']]]);
+    assert.match(labels[1], /50 to 200 m away \(unchecked/);
+
+    await runApply({ ...ws, reportPath, yes: true, run: noCommands, log: () => {} });
+    const status = (name) => readSeeder(join(ws.seedersDir, 'RestaurantsTableSeeder.php'), 'restaurants').filter((p) => p.name === name).map((p) => p.businessStatus);
+    assert.deepEqual(status('Hakata Furyu'), [null]); // not confirmed: for a look
+    assert.deepEqual(status('Pancho'), ['OPERATIONAL']);
+    assert.deepEqual(status('Usagi'), ['OPERATIONAL', 'OPERATIONAL']);
+});

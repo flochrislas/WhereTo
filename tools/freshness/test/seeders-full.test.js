@@ -204,3 +204,14 @@ test('a key from the prototype chain, or fields that are not a plain object, are
     assert.throws(() => checkPlaceEdit({ fields: 'ab' }), /fields/);
     assert.throws(() => checkPlaceEdit({ fields: ['a'] }), /fields/);
 });
+
+test('tags written in a second attachTags call, or over several lines, are not edited: the others would stay', () => {
+    const one = "        $resto->attachTags(['ramen', 'japanese']);\n";
+    const second = restoText.replace(one, one + "        $resto->attachTags(['cheap']);\n");
+    assert.throws(() => editPlaceText(second, 'restaurants', 0, { tags: ['udon'] }), /several attachTags calls/);
+    const multiLine = restoText.replace(one, "        $resto->attachTags([\n            'ramen',\n        ]);\n");
+    assert.throws(() => editPlaceText(multiLine, 'restaurants', 0, { tags: ['udon'] }), /several attachTags calls/);
+    // The other edits of such a place still work, and so do the tags of the next place.
+    assert.equal(field(reread(editPlaceText(second, 'restaurants', 0, { fields: { location: 'Ebisu' } }), 0), 'location'), 'Ebisu');
+    assert.deepEqual(reread(editPlaceText(second, 'restaurants', 1, { tags: ['udon'] }), 1).tags, ['udon']);
+});
