@@ -45,7 +45,7 @@ npm run check -- --names             # also check every name_ja against Google (
 
 (`--` passes the options through npm to the script.)
 
-For each place without a `business_status` in its seeder, or with `CLOSED_TEMPORARILY` (it may have reopened), the tool asks Google (the permanently closed and replaced places are not checked again):
+For each place without a `business_status` in its seeder, or with `CLOSED_TEMPORARILY` (it may have reopened), the tool asks Google (the permanently closed, replaced and relocated places are not checked again):
 
 - **Place Details** when the place already has a `google_place_id` (written by a previous `apply`): no search, no ambiguity. If Google has retired that id (HTTP 404), the tool searches by name again and the report says so (`retiredPlaceId`); `apply` then stores the new id;
 - **Text Search** otherwise: our name, biased to a 50 m circle around our coordinates, in English. When the place has a `name_ja` in its seeder (from `npm run names`, section 6) and no result with our name is within 200 m, a second Text Search with the `name_ja` (same circle, still in English), and the place is judged over both lists; the report says `lookup: "search+ja"`. This one is on by default: it only reads our own seeder, and costs one more request for those places only.
@@ -54,10 +54,10 @@ It sends about 5 requests per second, then classifies each place:
 
 | Verdict | When | What `apply` does |
 |---|---|---|
-| `operational` | Google says `OPERATIONAL` for our name within 50 m; or for our name 50 to 200 m away (reason "same name 97 m away": coordinates a bit off, or another branch of a chain) | writes the `google_place_id` if the id is surely ours (see below; never for a result 50 to 200 m away) |
+| `operational` | Google says `OPERATIONAL` for our name within 50 m; or for our name 50 to 200 m away (reason "same name 97 m away": coordinates a bit off, or another branch of a chain) | `business_status` `OPERATIONAL` (confirmed open: a place without a status line was never checked), and the `google_place_id` if the id is surely ours (see below; never for a result 50 to 200 m away) |
 | `closed_permanently` | Google says `CLOSED_PERMANENTLY` for our name | `business_status` `CLOSED_PERMANENTLY` (+ id) |
 | `closed_temporarily` | Google says `CLOSED_TEMPORARILY` for our name | `business_status` `CLOSED_TEMPORARILY` (+ id) |
-| `reopened` | our place is `CLOSED_TEMPORARILY` and Google says `OPERATIONAL` for our name | removes the `business_status` line (+ id) |
+| `reopened` | our place is `CLOSED_TEMPORARILY` and Google says `OPERATIONAL` for our name | `business_status` `OPERATIONAL` (+ id) |
 | `replaced` | all of: no result with our name within 200 m, the result within 15 m has another name, it is `OPERATIONAL`, and our name is nowhere in the search results, even far away | `business_status` `REPLACED`, only if you tick it (no id: the one found is the new business's) |
 | `not_found_nearby` | no result with our name within 200 m, and not replaced: nothing found ("no match within 200 m, nothing found"), our name only farther ("..., nearest same name 1745 m away"), another business on our spot that is closed or not sure enough to be a replacement ("..., other businesses on the spot"), or another name 15 m or more away ("..., nearest result 30 m away") | `business_status` `CLOSED_PERMANENTLY`, only if you tick it after a look on Maps (no id) |
 | `unsure` | anything else: a partial name within 50 m when Google says closed, our name 50 to 200 m away but not open, a name in another script within 50 m (Japanese only, and no `name_ja` that confirms it), no status, a network error | nothing: look by hand |
@@ -133,6 +133,8 @@ npm run names -- --limit 10          # the first 10 places only
 npm run names -- --dry-run           # the table only: no report, no seeder written
 npm run names -- --yes               # no prompt: keep the English matches only
 npm run names -- --refresh           # ask OpenStreetMap again even if today's answer is cached
+npm run names -- --tabelog           # the names from the Tabelog pages instead (below)
+npm run names -- --closed            # the permanently closed, replaced and relocated places too
 ```
 
 1. **One request to the Overpass API** for all the places: every node and way with an `amenity`, `shop`, `leisure` or `craft` tag, in the box around the places plus 100 m (a few thousand elements for Shibuya; the unnamed ones are dropped on our side: a `name` filter on the server made the query time out). The query, with the box filled in:
@@ -168,6 +170,34 @@ npm run names -- --refresh           # ask OpenStreetMap again even if today's a
        'business_status' => 'CLOSED_TEMPORARILY',
    ```
 
+### `npm run names -- --tabelog`
+
+OpenStreetMap knows few of our places. Most restaurants and bars have a `tabelog_link`, and the Tabelog page shows the Japanese name. With `--tabelog`, `names` reads the page of every place without `name_ja` that has a link (the same places as above; add `--closed` for the closed ones, whose pages Tabelog keeps), one page a second, and proposes the name **without its branch**:
+
+```sh
+npm run names -- --tabelog --dry-run            # the table only: our name, the name proposed, the name on Tabelog
+npm run names -- --tabelog                      # the report, the checkbox prompt, name_ja written in the seeders
+npm run names -- --tabelog --closed --yes       # every place with a link, no prompt: the names with kana or kanji only
+```
+
+1. **The page**: the Japanese one. A link to a translated page (`tabelog.com/en/...`, also `cn`, `tw`, `kr`) is read without its language folder; the seeder keeps its link. A `tabelog_link` that is not a Tabelog address is listed, not read.
+2. **The name**: the `name` of the page's structured data (the same text as the heading, `h2.display-name`).
+3. **The branch** is dropped from the end of the name, as long as something is left before it. What counts as a branch is decided with the places the page itself gives: the ward and town of its address, the area of its title, the areas and the station of its breadcrumb.
+
+   | Dropped | Example |
+   |---|---|
+   | a last word ending in 店 (but a kind of shop: 珈琲店, 飯店, 商店...) | 博多風龍 **渋谷店**, 麻布茶房 **西武渋谷店**, ドゥ マゴ **フードショー店** |
+   | a last word starting with a place of the page | カオサン **渋谷宮益坂**, 庄や **渋谷店はなれ** |
+   | a place of the page ending a word, with what follows it up to 店 | バルッチャ**道玄坂**, 一蘭**渋谷スペイン坂店** |
+   | 本店, 総本店, 支店, 別館, 新館, 2号店 | 上等カレー 渋谷**本店** |
+
+   The first word always stays, so a place at the start is part of the name: 渋谷 ガパオ食堂, 渋谷トンテキ. Known misses: a building before the place, without 店 (シナグロ **西武**渋谷 keeps 西武), and a place written in Latin letters (and people **udagawa**).
+4. **The prompt**: the names with kana or kanji are ticked; the names without any (a Latin brand: `CONA`, `HUB`) are listed unticked, since they usually say what our English name already says. Each line shows the name on Tabelog next to the name proposed. `--yes` keeps the ticked group.
+
+The table and the report (`"source": "Tabelog (tabelog.com)"`, each result with its `link` and the name on Tabelog as `elementName`) have the same shape as the OpenStreetMap ones, so `npm run edit` loads them, with a "Use this name" button. The name and the place names read today are kept in `cache/tabelog-<YYYY-MM-DD>.json` (never the page), so a second run that day reads only the pages that failed; `--refresh` reads them all again.
+
+Tabelog does not say that the page is still our place: when the restaurant was replaced, the link may now show its successor. Look at the two names in the prompt, and run `npm run check -- --names` afterwards as for any `name_ja`.
+
 ### `npm run check -- --names`
 
 With `--names` (and only then), every place that has a `name_ja` and was found by the status pass (by its id or by a search, within 50 m) gets one more Place Details request, in Japanese, for its name only (same Pro SKU: a full run is then about 600 requests, still inside the 5,000 free ones). The two names are compared after folding the width (ＡＢＣ to ABC, half-width katakana to full width), dropping spaces (full-width ones too), punctuation and middle dots (・), and dropping a trailing branch from both: a last word ending in 店 or starting with 渋谷, or for a name without spaces a trailing 渋谷…店 ("ラーメン二郎 渋谷店", "ラーメン二郎渋谷店" and "ラーメン二郎（渋谷店）" are all "ラーメン二郎": brackets separate words). A last word ending in 商店, 飯店, 酒店, 書店 or 売店 is part of the name, not a branch ("らーめん 山田商店" is not "らーめん 渋谷店"). When Google's name has no kana or kanji (a Latin brand), the two are compared like the status pass compares names instead: "JOYSOUND 渋谷店" against "JOYSOUND" is confirmed, "ゴーゴーカレー" against "Go! Go! Curry" disputed.
@@ -182,7 +212,7 @@ The verdict goes into each result of the report as `nameJa` (`null` for a place 
 
 ## 7. Edit the seeders: `npm run edit`
 
-A local page to edit the places without opening the PHP files: filter them, click a row, change any field (it saves when you leave it), the tags and the coordinates. Load a report of `check` or `names` from the selector to see each verdict next to its place, with buttons for what the report suggests (closed, closed for now, replaced, open, keep Google's id, use the OpenStreetMap name). Google's name and address are shown, never written: only the id is (Google's terms).
+A local page to edit the places without opening the PHP files: filter them, click a row, change any field (it saves when you leave it), the tags and the coordinates. Load a report of `check`, `tabelog` or `names` from the selector to see each verdict next to its place, with buttons for what the report suggests (closed, closed for now, replaced, relocated, open, keep Google's id, use the OpenStreetMap name). Google's name and address are shown, never written: only the id is (Google's terms).
 
 ```sh
 npm run edit                 # http://127.0.0.1:8020/ ; Ctrl+C stops it
@@ -191,18 +221,33 @@ npm run edit -- --port 8030  # another port
 
 The page only answers on this machine. Every save re-reads the seeder and refuses an edit made from a page that saw an older text ("changed on disk": the page reloads and marks in red the edits to enter again). Review with `git diff source/database/seeders` or the Diff button; undo a line by hand or with `git checkout -p source/database/seeders`. The page's own tests are in `e2e/tests/editor.spec.js` (Playwright, they start the server themselves).
 
+## 8. A second opinion from Tabelog: `npm run tabelog`
+
+Google forgets a closed place after a while: the check then says `not_found_nearby` (the same chain elsewhere, or another business on the spot) or `unsure`. Tabelog keeps the page of a closed restaurant, with 【閉店】 in the title and a warning under the name ("このお店は現在閉店しております。"). `tabelog` reads the Tabelog page of every unsure or not-found place that has a `tabelog_link` in its seeder (restaurants and bars; stores and karaokes have none), one page a second, and keeps the status only: `closed`, `temporarily_closed` (休業), `moved` (移転), `open`, or `error`.
+
+```sh
+npm run tabelog                                   # on the newest check report
+npm run tabelog -- reports/2026-11-19T2001-all.json
+```
+
+It writes a new report next to the input, `reports/<now>-<kinds>+tabelog.json`, with the same rows plus a `tabelog` field on each (`null` when the place was not read), and a `tabelog` header (`from`, `checkedAt`, `checked`). A `closed` page changes the row's verdict to `closed_permanently`, a `temporarily_closed` page to `closed_temporarily`, with the reason "Tabelog says permanently closed; Google: ..."; `moved`, `open` and `error` leave Google's verdict for a look by hand. The input report is untouched. Since the new report is the newest, `npm run apply` takes it (the closed places are ticked by default) and the editor lists it; the editor shows the Tabelog link and status next to the Google ones. A names report is refused.
+
+Nothing on the page is kept but the status; the pass is a read of a public page, at a polite pace, for the maintainer's own review.
+
 ## Files
 
 | File | Role |
 |---|---|
 | `check.js` | the `check` command (and `--names`) |
 | `apply.js` | the `apply` command |
-| `names.js` | the `names` command |
+| `names.js` | the `names` command, from OpenStreetMap or (`--tabelog`) from the Tabelog pages |
 | `edit.js`, `editor/index.html` | the `edit` command: the server and the page |
+| `tabelog.js` | the `tabelog` command: the second opinion on the unsure and not-found places |
 | `lib/seeders.js` | reads the places from the seeders, and edits a place: the `name_ja`, `business_status` and `google_place_id` keys for `apply` and `names`, any key, the tags and the coordinates for `edit` (prepare and verify in memory, then write) |
 | `lib/classify.js` | the verdict: name comparison (near misses, the Japanese comparison), distance (haversine), rules above |
 | `lib/names.js` | the OpenStreetMap matcher (and the Japanese comparison, re-exported from `lib/classify.js`) |
 | `lib/overpass.js` | the Overpass request, with its daily cache |
+| `lib/tabelog.js` | the status read from a Tabelog page, and the verdict it gives; the Japanese name of the page without its branch, with its daily cache |
 | `lib/places-api.js` | the Google calls, with the key, the field masks and the throttling |
 | `lib/cli.js` | small shared helpers (`.env`, dates, the text table, the checkbox prompt, writing the seeders: `php -l` on a copy, then the rename) |
 | `lib/editor.js` | the editor's pure part: the type of each key, the validation of an edit, the mapping of a report to the places |

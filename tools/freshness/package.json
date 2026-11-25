@@ -11,6 +11,7 @@
     "apply": "node apply.js",
     "names": "node names.js",
     "edit": "node edit.js",
+    "tabelog": "node tabelog.js",
     "test": "node --test"
   },
   "dependencies": {

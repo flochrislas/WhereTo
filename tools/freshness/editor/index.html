@@ -44,7 +44,7 @@
 <header>
   <input type="search" id="q" placeholder="name, Japanese name, location, type, tag">
   <select id="kind"><option value="">all kinds</option><option>restaurants</option><option>stores</option><option>bars</option><option>karaokes</option></select>
-  <select id="status"><option value="">any status</option><option value="OPERATIONAL">open</option><option value="CLOSED_TEMPORARILY">temporarily closed</option><option value="CLOSED_PERMANENTLY">permanently closed</option><option value="REPLACED">replaced</option></select>
+  <select id="status"><option value="">any status</option><option value="none">no status (not checked)</option><option value="OPERATIONAL">open</option><option value="CLOSED_TEMPORARILY">temporarily closed</option><option value="CLOSED_PERMANENTLY">permanently closed</option><option value="REPLACED">replaced</option><option value="RELOCATED">relocated</option></select>
   <select id="report"><option value="">no report</option></select>
   <select id="verdict" hidden><option value="">any verdict</option></select>
   <select id="nameja" hidden><option value="">any Japanese name verdict</option><option>confirmed</option><option>disputed</option><option>unchecked</option></select>
@@ -102,7 +102,7 @@ async function reload() {
     state.open = same ? same.id : null;
     const select = $('report');
     const current = select.value;
-    select.innerHTML = '<option value="">no report</option>' + reports.map((r) => `<option value="${esc(r.file)}">${esc(r.date)} ${r.kind}</option>`).join('');
+    select.innerHTML = '<option value="">no report</option>' + reports.map((r) => `<option value="${esc(r.file)}">${esc(r.label ?? `${r.date} ${r.kind}`)}</option>`).join('');
     if (reports.some((r) => r.file === current)) select.value = current;
     if (!select.value) { state.report = null; return render(); }
     try {
@@ -136,7 +136,7 @@ function visible(p) {
     const hay = [p.name, field(p, 'name_ja'), field(p, 'location'), field(p, 'type'), ...(p.tags ?? [])].join(' ').toLowerCase();
     if (q && !hay.includes(q)) return false;
     if ($('kind').value && p.kind !== $('kind').value) return false;
-    const status = field(p, 'business_status') ?? 'OPERATIONAL';
+    const status = field(p, 'business_status') ?? 'none'; // no line: the place was not checked
     if ($('status').value && status !== $('status').value) return false;
     if (state.report) {
         const r = resultOf(p);
@@ -153,14 +153,18 @@ function reportCell(p) {
     // A button carries the name of its action only; the value is read from the report when clicked.
     const btn = (label, action) => `<button data-action="${action}">${label}</button>`;
     if (state.report.kind === 'names') {
-        const name = r.nameJa ? `<b>${esc(r.nameJa)}</b> (${esc(r.elementName)}, ${r.distance} m)` : '';
-        const link = r.element ? ` <a href="https://www.openstreetmap.org/${esc(r.element)}" target="_blank">OSM</a>` : '';
+        // A Tabelog result carries the link of its page and no distance; an OpenStreetMap one its element.
+        const from = r.link ? `Tabelog: ${esc(r.elementName)}` : `${esc(r.elementName)}, ${r.distance} m`;
+        const name = r.nameJa ? `<b>${esc(r.nameJa)}</b> (${from})` : '';
+        const link = r.link ? ` <a href="${esc(r.link)}" target="_blank">Tabelog</a>`
+            : r.element ? ` <a href="https://www.openstreetmap.org/${esc(r.element)}" target="_blank">OSM</a>` : '';
         const use = r.nameJa ? btn('Use this name', 'useName') : '';
         return `<span class="badge ${esc(r.match)}">${esc(r.match)}</span> ${name}${link}<br><span class="muted">${esc(r.reason)}</span><br>${use}`;
     }
     const g = r.google;
     const found = g ? `"${esc(g.name)}", ${esc(g.address ?? 'no address')} (${esc(g.status ?? 'no status')}, ${r.distance} m)` : 'nothing found';
-    const links = `<a href="${esc(r.googleMapsLink ?? mapsLink(p))}" target="_blank">ours</a>${g?.id ? ` · <a href="${placeLink(g.id)}" target="_blank">Google's</a>` : ''}`;
+    const links = `<a href="${esc(r.googleMapsLink ?? mapsLink(p))}" target="_blank">ours</a>${g?.id ? ` · <a href="${placeLink(g.id)}" target="_blank">Google's</a>` : ''}`
+        + (r.tabelog?.link ? ` · <a href="${esc(r.tabelog.link)}" target="_blank">Tabelog: ${esc(r.tabelog.status)}</a>` : '');
     const nameJa = typeof r.nameJa === 'string' ? ` <span class="badge ${esc(r.nameJa)}">name_ja ${esc(r.nameJa)}</span>` : '';
     const temporary = r.verdict === 'closed_temporarily';
     const buttons = [
@@ -168,6 +172,7 @@ function reportCell(p) {
         btn('Closed', 'closed'),
         temporary ? '' : btn('Closed for now', 'temporary'),
         btn('Replaced', 'replaced'),
+        btn('Relocated', 'relocated'),
         btn('Open', 'open'),
         g?.id ? btn('Keep id', 'keepId') : '',
     ].join('');
@@ -187,7 +192,7 @@ function render() {
         </tr>${state.open === p.id ? `<tr class="form" data-id="${p.id}"><td colspan="9">${form(p)}</td></tr>` : ''}`).join('');
 }
 
-const STATUSES = ['OPERATIONAL', 'CLOSED_TEMPORARILY', 'CLOSED_PERMANENTLY', 'REPLACED'];
+const STATUSES = ['OPERATIONAL', 'CLOSED_TEMPORARILY', 'CLOSED_PERMANENTLY', 'REPLACED', 'RELOCATED'];
 // The type of a key: the server's table (lib/editor.js), or, for a key it does not know, its value.
 function keyInfo(key, value) {
     if (Object.hasOwn(state.types, key)) return state.types[key];
@@ -202,7 +207,7 @@ const nullable = (key, value) => keyInfo(key, value).nullable;
 function input(key, value) {
     const type = keyType(key, value);
     const name = `data-key="${esc(key)}"`;
-    if (type === 'status') return `<select ${name}>${STATUSES.map((s) => `<option${(value ?? 'OPERATIONAL') === s ? ' selected' : ''}>${s}</option>`).join('')}</select>`;
+    if (type === 'status') return `<select ${name}><option value=""${value == null ? ' selected' : ''}>(none)</option>${STATUSES.map((s) => `<option${value === s ? ' selected' : ''}>${s}</option>`).join('')}</select>`;
     if (type === 'boolean') return `<input type="checkbox" ${name} data-type="boolean"${value ? ' checked' : ''}>`;
     if (type === 'number') return `<input type="number" step="any" ${name} data-type="number" data-nullable="${nullable(key, value)}" value="${value ?? ''}">`;
     if (type === 'longtext') return `<textarea ${name} data-type="text">${esc(value)}</textarea>`;
@@ -227,7 +232,7 @@ function form(p) {
 // Number('') would be 0, and a wrong score must not land in the seeder with a green "saved".
 function valueOf(el) {
     if (el.dataset.type === 'boolean') return el.checked;
-    if (el.tagName === 'SELECT') return el.value === 'OPERATIONAL' ? null : el.value;
+    if (el.tagName === 'SELECT') return el.value === '' ? null : el.value; // (none) removes the status line
     const text = el.value;
     if (el.dataset.nullable === 'true' && text.trim() === '' && !el.validity.badInput) return null;
     if (el.dataset.type === 'number') {
@@ -263,7 +268,8 @@ function actionEdit(action, result) {
         case 'closed': return { fields: { business_status: 'CLOSED_PERMANENTLY' } };
         case 'temporary': return { fields: { business_status: 'CLOSED_TEMPORARILY' } };
         case 'replaced': return { fields: { business_status: 'REPLACED' } };
-        case 'open': return { fields: { business_status: null } };
+        case 'relocated': return { fields: { business_status: 'RELOCATED' } };
+        case 'open': return { fields: { business_status: 'OPERATIONAL' } };
         case 'keepId': return result?.google?.id ? { fields: { google_place_id: result.google.id } } : null;
         case 'useName': return result?.nameJa ? { fields: { name_ja: result.nameJa } } : null;
         default: return null;

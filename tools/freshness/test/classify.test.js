@@ -233,6 +233,7 @@ test('a place looked up by its stored id trusts the status, whatever the name', 
 
 test('the verdicts that change the status map to the app values', () => {
     assert.deepEqual(VERDICT_STATUS, {
+        operational: 'OPERATIONAL',
         reopened: 'OPERATIONAL',
         closed_permanently: 'CLOSED_PERMANENTLY',
         closed_temporarily: 'CLOSED_TEMPORARILY',

@@ -69,6 +69,7 @@ class KaraokesTableSeeder extends Seeder
 
         $karaoke = Karaoke::create([
             'name' => 'Uta hiroba',
+            'name_ja' => '歌広場',
             'business_status' => 'OPERATIONAL',
             'google_place_id' => 'ChIJO2REtKmMGGAR7a_a2JJIOm4',
             'area' => 'Shibuya, Udagawacho',

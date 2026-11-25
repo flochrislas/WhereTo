@@ -74,8 +74,28 @@ export function validateEdit(edit) {
     checkPlaceEdit(edit);
 }
 
-// A names report carries its source (OpenStreetMap); a check report does not.
+// A names report carries its source (OpenStreetMap or Tabelog); a check report does not.
 export const reportKind = (report) => (report.source ? 'names' : 'check');
+
+// The text of a report in the page's selector, from its file name and header: the time of the
+// run, the kinds, the type, the Tabelog pass and the check it was run on, partial.
+// "2026-11-20 19:18  all  check + Tabelog (on the 2026-11-19 20:01 check)".
+export function reportLabel(file, report) {
+    const stamp = (name) => {
+        const m = name.match(/^(\d{4}-\d{2}-\d{2})T(\d{2})(\d{2})-([a-z]+)/);
+        return m ? { when: `${m[1]} ${m[2]}:${m[3]}`, kinds: m[4] } : null;
+    };
+    const own = stamp(file);
+    const kind = reportKind(report);
+    const parts = own ? [own.when, ...(kind === 'check' ? [own.kinds] : [])] : [file];
+    let type = kind === 'names' && /^Tabelog/.test(report.source) ? 'names from Tabelog' : kind;
+    if (report.tabelog) {
+        const from = typeof report.tabelog.from === 'string' ? stamp(report.tabelog.from) : null;
+        type += ` + Tabelog${from ? ` (on the ${from.when} check)` : ''}`;
+    }
+    if (report.partial) type += ', partial';
+    return [...parts, type].join('  ');
+}
 
 // The key the reports identify a place by (the same as check, apply and names), to 6 decimals.
 const placeKey = (p) => `${p.kind}|${p.name}|${Number(p.lat).toFixed(6)}|${Number(p.lon).toFixed(6)}`;

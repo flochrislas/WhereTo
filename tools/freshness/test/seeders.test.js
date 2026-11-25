@@ -25,6 +25,7 @@ test('the reader finds every active block and skips the commented-out ones', () 
         businessStatus: null,
         googlePlaceId: null,
         googleMapsLink: 'https://www.google.com/maps/place/0',
+        tabelogLink: null,
         lat: 35.658545,
         lon: 139.698468,
         line: 30,
@@ -122,10 +123,14 @@ test('the editor is idempotent', () => {
     assert.equal(twice, once);
 });
 
-test('the editor removes the status line when the place is operational again', () => {
+test('the editor writes OPERATIONAL when the place is operational again, and null removes the line', () => {
     const out = editSeederText(restoText, 'restaurants', { name: 'Tengu Sakaba' }, { businessStatus: 'OPERATIONAL' });
     assert.ok(!out.includes('CLOSED_TEMPORARILY'));
-    assert.equal(out.split('\n').length, restoText.split('\n').length - 1);
+    assert.ok(out.includes("'business_status' => 'OPERATIONAL',"));
+    assert.equal(out.split('\n').length, restoText.split('\n').length);
+    const removed = editSeederText(restoText, 'restaurants', { name: 'Tengu Sakaba' }, { businessStatus: null });
+    assert.ok(!removed.includes('CLOSED_TEMPORARILY'));
+    assert.equal(removed.split('\n').length, restoText.split('\n').length - 1);
 });
 
 test('the editor tells two places of the same name apart by their coordinates', () => {

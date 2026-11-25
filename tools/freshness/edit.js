@@ -11,7 +11,7 @@ import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { parseArgs } from 'node:util';
 import { parseSeederFull, revisionOf, planPlaceEdit, KINDS, DEFAULT_SEEDERS_DIR } from './lib/seeders.js';
-import { validateEdit, mapReport, knownKeys, reportKind, KEY_TYPES } from './lib/editor.js';
+import { validateEdit, mapReport, knownKeys, reportKind, KEY_TYPES, reportLabel } from './lib/editor.js';
 import { writePlanSafely, SeederChangedError, runCommand, isMain, DEFAULT_REPORTS_DIR, REPO_ROOT } from './lib/cli.js';
 
 const DEFAULT_PAGE = fileURLToPath(new URL('./editor/index.html', import.meta.url));
@@ -121,7 +121,7 @@ export function createEditorServer({
                 .reverse()
                 .map((file) => {
                     const report = JSON.parse(readFileSync(join(reportsDir, file), 'utf8'));
-                    return { file, kind: reportKind(report), date: report.date };
+                    return { file, kind: reportKind(report), date: report.date, label: reportLabel(file, report) };
                 });
             return { json: { reports } };
         },

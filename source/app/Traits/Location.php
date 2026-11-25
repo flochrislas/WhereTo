@@ -102,7 +102,7 @@ trait Location
 
     /**
      * Should the search engines index the page of the place in this language: not when the place is gone for good
-     * (permanently closed, replaced: nothing left to rank, in any language), nor in a language it has no content in
+     * (permanently closed, replaced, relocated: nothing left to rank, in any language), nor in a language it has no content in
      * (the page would be a thin copy of the English one). The page is then noindex and in no hreflang list.
      */
     public function isIndexableIn(string $locale): bool

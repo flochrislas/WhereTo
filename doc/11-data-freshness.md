@@ -37,10 +37,10 @@ Two new keys in the seeders, and the matching nullable columns on the four place
 
 | Key / column | Type | Meaning |
 |---|---|---|
-| `business_status` | string, default `OPERATIONAL` | `OPERATIONAL`, `CLOSED_TEMPORARILY`, `CLOSED_PERMANENTLY` or `REPLACED` (another business is at the address) |
+| `business_status` | string, default `OPERATIONAL` | `OPERATIONAL`, `CLOSED_TEMPORARILY`, `CLOSED_PERMANENTLY`, `REPLACED` (another business is at the address) or `RELOCATED` (the place moved to another address; set by hand in the editor, no verdict of `check` writes it) |
 | `google_place_id` | string, nullable | Google's id of the place, written by the tool on its first run, so later runs skip the search |
 
-An open place does not carry `business_status` in its seeder (the column defaults to `OPERATIONAL`), so the seeders only change for the places that have a story. A closed one reads:
+A place that was never checked carries no `business_status` in its seeder (the column defaults to `OPERATIONAL`, so the app treats it as open); `apply` writes `OPERATIONAL` for a place Google confirmed open, so that a blank status reads "not checked" and a written one "confirmed" (changed in November 2026: at first the open places kept no line, and the two could not be told apart in the editor). A closed one reads:
 
 ```php
 $resto = Restaurant::create([
@@ -51,7 +51,7 @@ $resto = Restaurant::create([
     ...
 ```
 
-In the app, a `BusinessStatus` enum backs the column (as `OrderBy` and `TagOperator` back the query parameters), with a `label()` for the page ("permanently closed", "temporarily closed", "replaced by another business") and an `isOpen()`.
+In the app, a `BusinessStatus` enum backs the column (as `OrderBy` and `TagOperator` back the query parameters), with a `label()` for the page ("permanently closed", "temporarily closed", "replaced by another business", "moved to another address") and an `isOpen()`.
 
 Closed places stay in the seeders: they are the record of the visit, their page stays reachable, and the tool must know about them to avoid checking them again.
 
@@ -59,7 +59,7 @@ Closed places stay in the seeders: they are the record of the visit, their page 
 
 **Lists, tag counts and sitemap: open places only.** A local scope `open()` (`business_status = 'OPERATIONAL'`) on the four models, applied in `PlaceSearch::find()` and in the sitemap. A local scope rather than a global one: two call sites, both explicit, and the standalone page keeps loading every place without an exception to the rule. The tag lists are cached forever and the cache is flushed by the seeder, so a reseed refreshes the counts.
 
-**Standalone page: the place existed, and here is what became of it.** The page of a non-operational place still renders (the visit and the notes are the content), with a banner under the heading: "Permanently closed (checked November 2026)" or the temporary / replaced wording, the status in the `<title>` ("Kindenmaru, permanently closed"), and `noindex` for the permanently closed and replaced ones (there is nothing to rank; the temporarily closed keep their indexing). The Google Maps link stays: Maps shows the same status. The one-page fragment (`/restaurants/details/{id}`) is only reached from the list, so it never shows a closed place; no change there.
+**Standalone page: the place existed, and here is what became of it.** The page of a non-operational place still renders (the visit and the notes are the content), with a banner under the heading: "Permanently closed (checked November 2026)" or the temporary / replaced / relocated wording, the status in the `<title>` ("Kindenmaru, permanently closed"), and `noindex` for the permanently closed, replaced and relocated ones (there is nothing to rank; the temporarily closed keep their indexing). The Google Maps link stays: Maps shows the same status. The one-page fragment (`/restaurants/details/{id}`) is only reached from the list, so it never shows a closed place; no change there.
 
 The "checked" month comes from the seeder's git history, not from a column: `git log -1 --format=%cs -- the seeder` is too coarse per place, so the banner simply says "closed" and the SEO description says the same. If a per-place date turns out to matter, it is one more key, later.
 
@@ -77,7 +77,7 @@ Two commands, so the API calls and the decision can happen at different times:
 
 ### `npm run check` (`check.js`)
 
-1. Reads the places to check from the seeders: the open ones, and the temporarily closed ones (they may have reopened). The permanently closed and replaced places are not checked again.
+1. Reads the places to check from the seeders: the open ones, and the temporarily closed ones (they may have reopened). The permanently closed, replaced and relocated places are not checked again.
 2. For each: Place Details when `google_place_id` is known (and Text Search again if Google has retired that id, which the report notes), Text Search otherwise. Throttled (a few requests per second), with `--kind restaurants` and `--limit N` for partial runs.
 3. Classifies each place with a pure function (status, Google's name, distance between the two coordinates → verdict):
    - **operational**: `OPERATIONAL`, same name. Names are compared without case, spaces, punctuation, and without a "Shibuya" word and what follows it (Google adds the branch: "HUB Shibuya Center-gai" is "Hub"; "Shibuya109" is a name, not a branch). A partial match also counts: our name as whole words of Google's ("Hakata Furyu" in "Hakata Furyu Center Gai"), Google's as whole words of ours ("Deux Magots" in "Les deux magots"), or a near miss of one letter on names of six letters or more, two on ten or more ("Yasube" / "Yasubee", "Tatsu Ichi" / "TASUICHI"). A partial match only confirms an open place: when it would change our status, the verdict is unsure. When the place has a `name_ja` (section 8) and Google's name is Japanese, the two Japanese names are compared instead (the comparison of section 8), and "confirmed" counts as an exact match. Among the results within 50 m, an exact name is preferred to a partial one, then the nearest; the same name 50 to 200 m away (our coordinates or Google's pin a little off) is still operational, with the place id not trusted (a chain may have another branch there).
@@ -95,7 +95,7 @@ An error that would fail for every place (a bad key, the API not enabled, the qu
 
 1. Reads the latest report (or the one given as argument). A partial report is refused unless `--partial` is given.
 2. Shows every place whose verdict is a status change in a checkbox prompt, grouped by verdict, with Google's name and address on each line. Closed permanently, closed temporarily and reopened are checked; **replaced and not found nearby are unchecked**, to tick only after a look on Maps. Space toggles, Enter confirms. `--yes` skips the prompt and keeps the checked groups only, never the unchecked ones.
-3. For each confirmed place, edits its seeder in place: inserts or updates the `'business_status' => '...',` line right after the `'name'` line of its block (for a reopened place, removes it: `OPERATIONAL` is the default), and the `'google_place_id' => '...',` line when the id is surely ours: found by its id, or a name that is exactly ours once normalised (operational places included, so the next run is Place Details only). Never for a replaced place: the id found is the new business's. Two places of the same name in a kind (the two "Joysound") are told apart by their coordinates. Every edited file is prepared and checked in memory first (the tool re-reads the new text with its own reader: every block still there, with the expected values), and only then are the files written, so an error leaves no seeder half done. The tool also runs `php -l` on a temporary copy of each file when `php` is on the PATH, and renames the copy over the seeder only when it passes (a failure, or a seeder changed on disk meanwhile, leaves the file as it was); without PHP the check is skipped.
+3. For each confirmed place, edits its seeder in place: inserts or updates the `'business_status' => '...',` line right after the `'name'` line of its block (`OPERATIONAL` for an operational or reopened place; only the editor's "(none)" removes the line), and the `'google_place_id' => '...',` line when the id is surely ours: found by its id, or a name that is exactly ours once normalised (operational places included, so the next run is Place Details only). Never for a replaced place: the id found is the new business's. Two places of the same name in a kind (the two "Joysound") are told apart by their coordinates. Every edited file is prepared and checked in memory first (the tool re-reads the new text with its own reader: every block still there, with the expected values), and only then are the files written, so an error leaves no seeder half done. The tool also runs `php -l` on a temporary copy of each file when `php` is on the PATH, and renames the copy over the seeder only when it passes (a failure, or a seeder changed on disk meanwhile, leaves the file as it was); without PHP the check is skipped.
 4. Prints `git diff --stat source/database/seeders` and the next steps.
 
 ### What you do next
@@ -182,6 +182,14 @@ Written by the tool, edited by hand when the tool is wrong: the diff of the seed
    - The Japanese name is `name:ja` when it contains kana or kanji, else `name` when it does; an element without one is skipped. It is kept as written (branch suffixes such as 渋谷店 are part of the name on the sign).
 3. Writes `reports/<date>T<time>-names.json` (the naming of `check`; `apply` ignores these reports) and prints the table: kind, name, Japanese name, source element, distance, match. Then the checkbox prompt as `apply`: matched names checked, nearest ones unchecked (the first real run, November 2026, showed the guess wrong far more often than right in Shibuya: a dentist, a bank, a parking lot for a restaurant; 43 matched, 23 nearest of which 2 right), `--yes` keeps the matched ones only. For each confirmed place, inserts the `'name_ja' => '...',` line after the `'name'` line of its block, with the same in-memory check, write and `php -l` as `apply`. `--kind` and `--limit` as for `check`; `--dry-run` prints the table and writes neither report nor seeder (the Overpass cache is still written, so a real run right after costs no request).
 
+### `npm run names -- --tabelog`: the names from the Tabelog pages
+
+Added on 2026-11-25: OpenStreetMap named 43 places, and about 200 restaurants and bars were left without `name_ja`, nearly all of them with a `tabelog_link`. The Tabelog page of a place carries its Japanese name, so `--tabelog` replaces step 1 and 2 above: one page per place (the Japanese page, whatever the language of the link), one a second, the name taken from the page's structured data.
+
+The name on Tabelog ends with the branch (博多風龍 渋谷店, バルッチャ道玄坂), which we do not want in `name_ja`: the site shows one place, not a chain. The branch is dropped by `withoutBranch` (`lib/tabelog.js`), a pure function of the name and of the place names the page gives (address, title, breadcrumb), so nothing about Shibuya is written in the code. Its rules and its known misses are in `tools/freshness/README.md`, section 6. A name left without kana or kanji is its own match kind, `latin`, unticked in the prompt.
+
+The rest is unchanged: the same report shape (so the editor loads it), the same prompt, the same safe write, and `check --names` afterwards. `--closed` (both sources) also names the permanently closed, replaced and relocated places, whose pages are not indexed but still show a name. Only the name and the place names of a page are kept (`cache/tabelog-<date>.json`), as for the status pass of section 10.
+
 ### What changes in `npm run check`, with `--names` only
 
 Without the flag, nothing: no extra request, no new column, the report as before. With `--names`, for every place that has a `name_ja` and whose Google result is within 50 m, the status pass makes one more Place Details request with `languageCode=ja` and the mask `displayName` (the same Pro SKU: a full run becomes about 600 requests, still well inside the 5,000 free ones). The two Japanese names are compared after folding the width (ＡＢＣ to ABC, half-width katakana to full), dropping spaces, brackets, punctuation and middle dots, and dropping a trailing branch (a last word ending in 店, except the usual name endings 商店, 飯店, 酒店, 書店, 売店, or starting with 渋谷) from both sides:
@@ -252,7 +260,7 @@ Every write goes through `planSeederEdits`: the file is edited in memory, read b
 
 ### The page
 
-- **Filter bar:** a text box searched in the name, the Japanese name, the location, the type and the tags; a kind selector (all, restaurants, stores, bars, karaokes); a status selector (all, open, temporarily closed, permanently closed, replaced). When a report is loaded, a verdict selector too. The count of rows shown is displayed.
+- **Filter bar:** a text box searched in the name, the Japanese name, the location, the type and the tags; a kind selector (all, restaurants, stores, bars, karaokes); a status selector (all, open, temporarily closed, permanently closed, replaced, relocated). When a report is loaded, a verdict selector too. The count of rows shown is displayed.
 - **Rows:** one line per place: kind, name, Japanese name, location, type, status, tags, a Maps link (our `google_maps_link`, or a search at our coordinates). Clicking a row opens it as a form with every key of the block in the seeder's order, plus the tags and the coordinates. Fields are editable right there; a key the block does not have yet can be added from a list of the keys the other blocks of that kind use.
 - **Report columns** (see below) between the name and the fields, and the one-click buttons.
 - No login, no CSRF: the server only listens on the loopback address. The page refuses to load from another origin (the API checks the `Host` header and the `Origin` of state-changing requests), and refuses to be framed (`X-Frame-Options: DENY`), so a web page open in the same browser can neither edit the seeders nor steer clicks onto the buttons.
@@ -261,7 +269,7 @@ Every write goes through `planSeederEdits`: the file is edited in memory, read b
 
 A selector lists the files of `reports/`, newest first, `check` and `names` reports alike (the file name says which). Loading one maps each result to a place once, by kind, name and coordinates, all three (a same-name place at another spot, or one moved since the report, gets no result and no button), and attaches it to the place's id; the mapping is kept in the page, so a renamed place keeps its report columns. A place without a result shows "not in the report"; a result without a place (renamed since) is counted at the top.
 
-For a `check` report, each row gets: the verdict as a coloured badge (operational green, closed red, replaced and not found orange, unsure grey), the reason, what Google found (its name, address, status, distance), and two links: our place on Maps and Google's place (by its id). When the report was made with `--names`, a fifth column shows the Japanese name verdict (confirmed, disputed, unchecked), disputed in orange, and it is a filter too: an operational place with a disputed name is precisely a row to open and fix. Buttons: **Closed** (writes `business_status` `CLOSED_PERMANENTLY`), **Closed for now** (`CLOSED_TEMPORARILY`, offered first when the verdict is `closed_temporarily`), **Replaced**, **Open** (removes the status), **Keep id** (writes `google_place_id` from the result, for a place found under a name the matcher did not pair; the next `check` then looks it up by id). Google's name and address are shown to be read while you type, never written by a button: Google's terms (section 3). A button carries only the name of its action; the value it writes is taken from the report held in the page, not from the HTML.
+For a `check` report, each row gets: the verdict as a coloured badge (operational green, closed red, replaced and not found orange, unsure grey), the reason, what Google found (its name, address, status, distance), and two links: our place on Maps and Google's place (by its id). When the report was made with `--names`, a fifth column shows the Japanese name verdict (confirmed, disputed, unchecked), disputed in orange, and it is a filter too: an operational place with a disputed name is precisely a row to open and fix. Buttons: **Closed** (writes `business_status` `CLOSED_PERMANENTLY`), **Closed for now** (`CLOSED_TEMPORARILY`, offered first when the verdict is `closed_temporarily`), **Replaced**, **Relocated** (`RELOCATED`: the place moved to another address), **Open** (removes the status), **Keep id** (writes `google_place_id` from the result, for a place found under a name the matcher did not pair; the next `check` then looks it up by id). Google's name and address are shown to be read while you type, never written by a button: Google's terms (section 3). A button carries only the name of its action; the value it writes is taken from the report held in the page, not from the HTML.
 
 For a `names` report, each row gets the OpenStreetMap candidate (its Japanese name, its English name, the distance, the match kind and the reason, a link to the element) and one button: **Use this name** (writes `name_ja`), shown only when the result carries a name: a `none` result has no candidate, and the button would otherwise erase a name typed by hand after the report was loaded. The same rule for **Keep id**: shown only when Google's result has an id. OpenStreetMap's data may be copied (section 8).
 
@@ -298,3 +306,31 @@ The page gets three Playwright tests in `e2e/tests/editor.spec.js`, which start 
 | 15 | **Done (November 2026).** `edit.js`: server, routes, revisions, tests including the regression | `tools/freshness/` | M |
 | 16 | **Done (November 2026).** `editor/index.html`: the page, its Playwright tests, a hand check | `tools/freshness/editor/`, `e2e/tests/` | M |
 | 17 | **Done (November 2026).** README section, `package.json` script | `tools/freshness/` | S |
+
+## 10. A second opinion from Tabelog: `npm run tabelog`
+
+Added November 2026. The first real run of `check` (section 7) left 127 places unsure or not found nearby, a third of the restaurants: Google does not keep a closed place for long, and answers with the same chain elsewhere or another business on the spot. Each of those needed a look on Maps. Tabelog, the Japanese restaurant guide, keeps the page of a closed restaurant and marks it: 【閉店】 before the name in the title, and a warning block under the name (class `rst-status-alert`, "このお店は現在閉店しております。"); 【休業中】 for a temporary closure, 【移転】 for a move. Most restaurants and bars of the seeders carry a `tabelog_link` (107 of the 127 flagged places). So one page read settles most of what Google could not.
+
+### The command
+
+```sh
+cd tools/freshness && npm run tabelog [-- reports/2026-11-19T2001-all.json]
+```
+
+`tabelog.js` reads a check report (the newest by default, a names report is refused), takes the rows whose verdict is `unsure` or `not_found_nearby`, finds each place's `tabelog_link` in the seeders (matched by kind, name and coordinates, like the editor's report mapping), and fetches the page, one a second, with the tool's user agent. `lib/tabelog.js` reads the status from the title bracket and the alert block only (the "report a closure" button on every page says the same words and is ignored), in Japanese and in English (the `/en/` pages): `closed`, `temporarily_closed`, `moved`, else `open`; a non-200 answer or a network error gives `error` for that place and the run goes on.
+
+### What changes in the report
+
+A new file, `reports/<now>-<kinds>+tabelog.json`, next to the input, which stays as it was. The header keeps the input's `date` (`apply` prints it) and adds `tabelog: { from, checkedAt, checked }`. The rows are the input's, in order, each with a `tabelog` field: `null` when not read, else `{ link, status }` (`error` adds the message). A `closed` page changes the verdict to `closed_permanently`, a `temporarily_closed` page to `closed_temporarily`, and the reason becomes "Tabelog says permanently closed; Google: <Google's reason>". `moved`, `open` and `error` leave the verdict: Google's doubt stands, for a look by hand (a moved restaurant is a closed one for the app, but the editor decides that).
+
+Nothing else changes: `apply` reads the new report as any check report (it is the newest, so it is the default; the closed places are ticked), the editor lists it and shows the Tabelog link and status next to the Google links. No Google id is written for a place closed by Tabelog (`idTrusted` is false on those rows). Only the status is kept from Tabelog, never a name, a rating or an address.
+
+### Tests (`node --test`)
+
+`test/tabelog.test.js`: the status from two saved pages (`test/fixtures/tabelog-closed.html`, `tabelog-open.html`, trimmed to the title and the alert block as Tabelog writes them) and from their variants (temporary closure, move, English); the fetch (user agent, non-200); the command end to end on a copy of the fixture seeders with links added, a hand-made check report and a fake fetch: which pages are read and in what order, the new file name, the untouched input, the changed and unchanged rows, the summary; the default report and the refusal of a names report; a row that is not in the seeders any more.
+
+### Order of work
+
+| # | Step | Where | Size |
+|---|---|---|---|
+| 18 | **Done (November 2026).** `lib/tabelog.js`, `tabelog.js`, tests, README section, the link in the editor | `tools/freshness/` | S |

@@ -30,7 +30,7 @@ export const KINDS = {
 export const DEFAULT_SEEDERS_DIR = fileURLToPath(new URL('../../../source/database/seeders/', import.meta.url));
 
 // The values the app accepts in the business_status column.
-export const BUSINESS_STATUSES = ['OPERATIONAL', 'CLOSED_TEMPORARILY', 'CLOSED_PERMANENTLY', 'REPLACED'];
+export const BUSINESS_STATUSES = ['OPERATIONAL', 'CLOSED_TEMPORARILY', 'CLOSED_PERMANENTLY', 'REPLACED', 'RELOCATED'];
 
 // `$resto = Restaurant::create([` -> indentation, variable name.
 const CREATE_RE = /^(\s*)\$(\w+) = \w+::create\(\[$/;
@@ -218,6 +218,7 @@ function toPlace(block, kind) {
         businessStatus: block.values.business_status ?? null,
         googlePlaceId: block.values.google_place_id ?? null,
         googleMapsLink: block.values.google_maps_link ?? null,
+        tabelogLink: block.values.tabelog_link ?? null,
         lat: block.lat,
         lon: block.lon,
         line: block.start + 1,
@@ -287,7 +288,7 @@ function findBlocks(blocks, target, label) {
 }
 
 // Checks the fields before they are written into PHP code. null on any of the three means "no line"
-// (the editor's way to remove a Japanese name or an id, or to set a place back to OPERATIONAL).
+// (the editor's way to remove a Japanese name, an id, or a status: a place not checked yet).
 function checkFields(fields) {
     // A Japanese name is free text, but on one line (the reader reads one key per line) and not empty.
     if (fields.nameJa !== undefined && fields.nameJa !== null && (typeof fields.nameJa !== 'string' || !fields.nameJa.trim() || /[\p{Cc}]/u.test(fields.nameJa))) {
@@ -328,13 +329,14 @@ function editBlock(lines, kind, find, fields) {
         }
     }
 
-    // business_status: OPERATIONAL is the default, so an open place carries no line at all (null too).
+    // business_status: OPERATIONAL is written like the other statuses (a confirmed open place);
+    // null removes the line (no line: the place was not checked, the column defaults to OPERATIONAL).
     if (fields.businessStatus !== undefined) {
         const block = find(); // the name_ja line may have moved the others
         const existing = block.keyLines.business_status;
-        const status = fields.businessStatus ?? 'OPERATIONAL';
-        const wanted = `${indent}'business_status' => ${phpString(status)},`;
-        if (status === 'OPERATIONAL') {
+        const status = fields.businessStatus;
+        const wanted = status === null ? null : `${indent}'business_status' => ${phpString(status)},`;
+        if (status === null) {
             if (existing !== undefined) lines.splice(existing, 1);
         } else if (existing !== undefined) {
             lines[existing] = wanted;
@@ -464,7 +466,7 @@ export function editPlaceText(text, kind, index, edit) {
 function expectedAfter(place, edit) {
     const values = Object.fromEntries(place.fields.map((f) => [f.key, f.value]));
     for (const [key, value] of Object.entries(edit.fields ?? {})) {
-        if (key in KNOWN_KEYS && (value === null || (key === 'business_status' && value === 'OPERATIONAL'))) delete values[key];
+        if (key in KNOWN_KEYS && value === null) delete values[key];
         else values[key] = value;
     }
     const tags = edit.tags === undefined ? place.tags : edit.tags.map((t) => t.trim()).filter(Boolean);
@@ -521,7 +523,7 @@ export function planSeederEdits(filePath, kind, edits) {
         for (const block of findBlocks(blocksAfter, target, filePath)) {
             const index = blocksAfter.indexOf(block);
             if (fields.businessStatus !== undefined) {
-                expected[index].businessStatus = fields.businessStatus === 'OPERATIONAL' ? null : fields.businessStatus;
+                expected[index].businessStatus = fields.businessStatus;
             }
             if (fields.googlePlaceId !== undefined) expected[index].googlePlaceId = fields.googlePlaceId;
             if (fields.nameJa !== undefined) expected[index].nameJa = fields.nameJa;

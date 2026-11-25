@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { parseSeederFull } from '../lib/seeders.js';
-import { keyType, knownKeys, validateEdit, reportKind, mapReport, OPTIONAL_KEYS } from '../lib/editor.js';
+import { keyType, knownKeys, validateEdit, reportKind, mapReport, OPTIONAL_KEYS, reportLabel } from '../lib/editor.js';
 
 const FIXTURES = new URL('./fixtures/', import.meta.url).pathname;
 const places = parseSeederFull(readFileSync(join(FIXTURES, 'RestaurantsTableSeeder.php'), 'utf8'), 'restaurants');
@@ -69,4 +69,14 @@ test('mapReport attaches each result to a place id, by kind, name and coordinate
     assert.equal(byId['restaurants/11'].name, 'Usagi');
     assert.equal(byId['restaurants/12'].name, 'Usagi');
     assert.deepEqual(unmatched.map((r) => `${r.kind}/${r.name}`), ['restaurants/Go Go Curry', 'restaurants/Nowhere', 'karaokes/Hakata Furyu']);
+});
+
+test('reportLabel tells the reports apart: time, kinds, type, Tabelog, partial', () => {
+    assert.equal(reportLabel('2026-11-19T2001-all.json', { date: '2026-11-19' }), '2026-11-19 20:01  all  check');
+    assert.equal(reportLabel('2026-11-19T1916-restaurants.json', { date: '2026-11-19' }), '2026-11-19 19:16  restaurants  check');
+    assert.equal(reportLabel('2026-11-19T2000-names.json', { date: '2026-11-19', source: 'OpenStreetMap' }), '2026-11-19 20:00  names');
+    assert.equal(reportLabel('2026-11-25T1700-names.json', { date: '2026-11-25', source: 'Tabelog (tabelog.com)' }), '2026-11-25 17:00  names from Tabelog');
+    assert.equal(reportLabel('2026-11-20T1918-all+tabelog.json', { date: '2026-11-19', tabelog: { from: '2026-11-19T2001-all.json' } }), '2026-11-20 19:18  all  check + Tabelog (on the 2026-11-19 20:01 check)');
+    assert.equal(reportLabel('2026-11-18T0930-bars.json', { date: '2026-11-18', partial: true }), '2026-11-18 09:30  bars  check, partial');
+    assert.equal(reportLabel('odd.json', { date: '2026-11-18' }), 'odd.json  check'); // a name the tool did not write
 });

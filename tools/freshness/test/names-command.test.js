@@ -4,7 +4,7 @@ import assert from 'node:assert/strict';
 import { readFileSync, writeFileSync, mkdtempSync, cpSync, existsSync, readdirSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
-import { runNames, describe } from '../names.js';
+import { runNames, describe, tabelogName, TABELOG_SOURCE } from '../names.js';
 import { latestReport } from '../apply.js';
 import { readSeeder } from '../lib/seeders.js';
 
@@ -193,4 +193,97 @@ test('the prompt line shows the OpenStreetMap name, or the Japanese name when th
     assert.match(describe({ ...r, elementName: 'Spaghetti Pancho' }), /Pancho -> パンチョ \(node\/3, "Spaghetti Pancho", 5 m\)/);
     assert.doesNotMatch(describe({ ...r, elementName: null }), /null/);
     assert.match(describe({ ...r, elementName: null }), /"パンチョ"/);
+});
+
+// --tabelog: the names from the Tabelog pages.
+
+// Gives a tabelog_link to the first block of each name of `links` ({ name: link }) in the workspace's restaurants.
+function withTabelogLinks(ws, links) {
+    const file = join(ws.seedersDir, 'RestaurantsTableSeeder.php');
+    let text = readFileSync(file, 'utf8');
+    for (const [name, link] of Object.entries(links)) {
+        const at = text.indexOf(`'name' => '${name}',`);
+        const key = text.indexOf("'tabelog_link' => null,", at);
+        assert.ok(at >= 0 && key >= 0, name);
+        text = text.slice(0, key) + `'tabelog_link' => '${link}',` + text.slice(key + "'tabelog_link' => null,".length);
+    }
+    writeFileSync(file, text);
+    return file;
+}
+
+// A fake Tabelog: the page of each id (the last folder of the link), 404 for the others. Counts the calls.
+function fakeTabelog(names) {
+    const server = { calls: [] };
+    server.fetch = async (url) => {
+        server.calls.push(url);
+        const name = names[url.match(/\/(\d+)\/$/)?.[1]];
+        if (!name) return new Response('', { status: 404 });
+        const data = { '@type': 'Restaurant', name, address: { streetAddress: '道玄坂2-8-8', addressLocality: '渋谷区', addressRegion: '東京都' } };
+        return new Response(`<title>${name} - 渋谷/ラーメン | 食べログ</title><script type="application/ld+json">${JSON.stringify(data)}</script>`, { status: 200 });
+    };
+    return server;
+}
+
+test('names --tabelog reads the Japanese page of the places with a Tabelog link and writes the name without its branch', async () => {
+    const ws = workspace();
+    const file = withTabelogLinks(ws, {
+        'Hakata Furyu': 'https://tabelog.com/en/tokyo/A1303/A130301/1/', // the English page: the Japanese one is read
+        Kindenmaru: 'https://tabelog.com/tokyo/A1303/A130301/2/', // permanently closed: not read without --closed
+        'Go Go Curry': 'https://tabelog.com/tokyo/A1303/A130301/3/',
+        'Il Ritrovo': 'https://tabelog.com/tokyo/A1303/A130301/4/', // a Latin name on Tabelog
+        Pancho: 'https://tabelog.com/tokyo/A1303/A130301/404/',
+        'Krung Siam': 'not a link',
+    });
+    const server = fakeTabelog({ 1: '博多風龍 渋谷店', 2: 'らーめん金伝丸 渋谷道玄坂店', 3: 'ゴーゴーカレー 渋谷警察署前スタジアム', 4: 'IL RITROVO 渋谷店' });
+    const lines = [];
+    const { report, reportPath, changedFiles } = await names(ws, server, { tabelog: true, yes: true, minIntervalMs: 0, log: (l) => lines.push(l) });
+
+    assert.deepEqual(server.calls, ['https://tabelog.com/tokyo/A1303/A130301/1/', 'https://tabelog.com/tokyo/A1303/A130301/3/', 'https://tabelog.com/tokyo/A1303/A130301/4/', 'https://tabelog.com/tokyo/A1303/A130301/404/']);
+    assert.equal(reportPath, join(ws.reportsDir, '2026-11-18T0930-names.json'));
+    assert.equal(report.source, TABELOG_SOURCE);
+    assert.equal(report.tabelogCache, join(ws.cacheDir, 'tabelog-2026-11-18.json'));
+    // Only the places with a link, and not the permanently closed one.
+    assert.deepEqual(report.results.map((r) => [r.name, r.match, r.nameJa, r.elementName, r.reason]), [
+        ['Hakata Furyu', 'matched', '博多風龍', '博多風龍 渋谷店', 'Tabelog name, branch dropped'],
+        ['Go Go Curry', 'matched', 'ゴーゴーカレー', 'ゴーゴーカレー 渋谷警察署前スタジアム', 'Tabelog name, branch dropped'],
+        ['Il Ritrovo', 'latin', 'IL RITROVO', 'IL RITROVO 渋谷店', 'Tabelog name, branch dropped'],
+        ['Pancho', 'none', null, null, 'Tabelog: HTTP 404'],
+        ['Krung Siam', 'none', null, null, 'the tabelog_link is not a Tabelog page'],
+    ]);
+    assert.equal(report.results[0].link, 'https://tabelog.com/tokyo/A1303/A130301/1/');
+
+    // --yes writes the names with kana or kanji only.
+    assert.deepEqual(changedFiles, [file]);
+    const nameJa = (name) => readSeeder(file, 'restaurants').filter((p) => p.name === name).map((p) => p.nameJa);
+    assert.deepEqual(nameJa('Hakata Furyu'), ['博多風龍']);
+    assert.deepEqual(nameJa('Go Go Curry'), ['ゴーゴーカレー']);
+    assert.deepEqual(nameJa('Il Ritrovo'), [null]);
+    assert.deepEqual(nameJa('Kindenmaru'), [null]);
+    const text = lines.join('\n');
+    assert.match(text, /matched: 2, latin: 1, none: 2\. Names read on Tabelog\./);
+    assert.match(text, /Pancho: Tabelog: HTTP 404/);
+
+    // --closed reads the permanently closed place too; the pages of the day come from the cache.
+    const before = server.calls.length;
+    const again = await names(ws, server, { tabelog: true, closed: true, dryRun: true, minIntervalMs: 0 });
+    assert.deepEqual(server.calls.slice(before), ['https://tabelog.com/tokyo/A1303/A130301/2/', 'https://tabelog.com/tokyo/A1303/A130301/404/']);
+    assert.deepEqual(again.report.results.map((r) => [r.name, r.nameJa]), [['Kindenmaru', 'らーめん金伝丸'], ['Il Ritrovo', 'IL RITROVO'], ['Pancho', null], ['Krung Siam', null]]);
+});
+
+test('names --tabelog offers the Latin names unchecked, and has nothing to do without a link', async () => {
+    const ws = workspace();
+    const none = await names(ws, fakeTabelog({}), { tabelog: true, yes: true });
+    assert.equal(none.report, null);
+
+    withTabelogLinks(ws, { 'Hakata Furyu': 'https://tabelog.com/tokyo/A1303/A130301/1/', 'Il Ritrovo': 'https://tabelog.com/tokyo/A1303/A130301/4/' });
+    let groups;
+    await names(ws, fakeTabelog({ 1: '博多風龍', 4: 'IL RITROVO 渋谷店' }), { tabelog: true, minIntervalMs: 0, prompt: async (g) => { groups = g; return []; } });
+    assert.deepEqual(groups.map((g) => [g.match, g.checked, g.results.map((r) => r.nameJa)]), [['matched', true, ['博多風龍']], ['latin', false, ['IL RITROVO']]]);
+    assert.equal(describe(groups[0].results[0]), 'restaurants Hakata Furyu -> 博多風龍');
+    assert.equal(describe(groups[1].results[0]), 'restaurants Il Ritrovo -> IL RITROVO (Tabelog: "IL RITROVO 渋谷店")');
+});
+
+test('tabelogName: a page without a name, or not read, gives none', () => {
+    assert.equal(tabelogName('https://tabelog.com/1/', { name: null, places: [] }).reason, 'no name found on the Tabelog page');
+    assert.equal(tabelogName('https://tabelog.com/1/', undefined).match, 'none');
 });

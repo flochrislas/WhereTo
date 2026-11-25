@@ -14,6 +14,7 @@ import { isMain, checkboxPrompt, runCommand, writePlans, DEFAULT_REPORTS_DIR, RE
 // --yes. `status`: the business_status a ticked place gets. "Replaced" hides a place on a guess
 // (another name on our spot), and "not found nearby" closes it on an absence, so both are opt-in.
 const GROUPS = [
+    { verdict: 'operational', label: 'Confirmed open (business_status OPERATIONAL; a blank status means not checked)', checked: true },
     { verdict: 'closed_permanently', label: 'Permanently closed', checked: true },
     { verdict: 'closed_temporarily', label: 'Temporarily closed', checked: true },
     { verdict: 'reopened', label: 'Reopened (was temporarily closed)', checked: true },
@@ -84,8 +85,9 @@ export async function runApply({
     log(`Report: ${reportPath} (${report.results.length} places checked on ${report.date}${report.partial ? ', PARTIAL' : ''})`);
 
     // 1. The status changes, grouped by verdict, and which ones to keep. A verdict that gives the
-    //    status the place already has (still temporarily closed) is no change.
-    const isChange = (r) => statusOf(r.verdict) !== undefined && statusOf(r.verdict) !== (r.businessStatus ?? 'OPERATIONAL');
+    //    status the place already has (still temporarily closed, still open) is no change; an open
+    //    place without a status line gets its OPERATIONAL written (confirmed, as against not checked).
+    const isChange = (r) => statusOf(r.verdict) !== undefined && statusOf(r.verdict) !== r.businessStatus;
     const groups = GROUPS
         .map((g) => ({ ...g, results: report.results.filter((r) => r.verdict === g.verdict && isChange(r)) }))
         .filter((g) => g.results.length);
@@ -107,7 +109,8 @@ export async function runApply({
         if (r.verdict !== 'replaced' && newId(r)) fields.googlePlaceId = newId(r);
         edits[r.kind].push({ target: { name: r.name, lat: r.lat, lon: r.lon }, fields });
     }
-    for (const r of report.results.filter((x) => x.verdict === 'operational' && newId(x))) {
+    // An operational place left unticked (or already OPERATIONAL) still gets its new id.
+    for (const r of report.results.filter((x) => x.verdict === 'operational' && newId(x) && !confirmed.includes(x))) {
         edits[r.kind].push({ target: { name: r.name, lat: r.lat, lon: r.lon }, fields: { googlePlaceId: newId(r) } });
     }
 

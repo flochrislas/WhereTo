@@ -35,6 +35,7 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'Hakata Furyu',
+            'name_ja' => '博多風龍',
             'business_status' => 'OPERATIONAL',
             'google_place_id' => 'ChIJpV8yKVaLGGARVrjJ-tZr61k',
             'location' => 'Shibuya',
@@ -58,6 +59,7 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'Kindenmaru',
+            'name_ja' => 'らーめん金伝丸',
             'business_status' => 'OPERATIONAL',
             'google_place_id' => 'ChIJVVWC16mMGGARDB_x8Ltd3MQ',
             'location' => 'Shibuya',
@@ -81,6 +83,7 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'Hikarihishio',
+            'name_ja' => '光醤',
             'business_status' => 'OPERATIONAL',
             'google_place_id' => 'ChIJ2yRkLFaLGGARsICCwEgaWLI',
             'location' => 'Shibuya',
@@ -104,6 +107,7 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'Nanashi tonkotsuhen',
+            'name_ja' => '七志 とんこつ編',
             'business_status' => 'CLOSED_PERMANENTLY',
             'location' => 'Shibuya',
             'type' => 'Ramen',
@@ -126,6 +130,7 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'Denzo',
+            'name_ja' => '味噌麺処 伝蔵',
             'business_status' => 'CLOSED_PERMANENTLY',
             'location' => 'Shibuya',
             'type' => 'Ramen',
@@ -148,6 +153,7 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'Ippudo',
+            'name_ja' => 'イップウドウ シロマル ベース',
             'business_status' => 'CLOSED_PERMANENTLY',
             'location' => 'Shibuya, Udagawacho',
             'type' => 'Ramen',
@@ -170,6 +176,7 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'Burger King',
+            'name_ja' => 'バーガーキング',
             'business_status' => 'OPERATIONAL',
             'location' => 'Shibuya, Udagawacho',
             'type' => 'Burger',
@@ -192,6 +199,7 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'Wendy\'s first kitchen',
+            'name_ja' => 'ウェンディーズ・ファーストキッチン',
             'business_status' => 'CLOSED_PERMANENTLY',
             'location' => 'Shibuya, Udagawacho',
             'type' => 'Burger',
@@ -214,6 +222,7 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'Taco Bell',
+            'name_ja' => 'タコ ベル',
             'business_status' => 'OPERATIONAL',
             'google_place_id' => 'ChIJf5ULvqmMGGARGFULU9fYTaM',
             'location' => 'Shibuya, Dogenzaka',
@@ -237,6 +246,7 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'Kebab Cafe',
+            'name_ja' => 'ケバブカフェ',
             'business_status' => 'OPERATIONAL',
             'google_place_id' => 'ChIJUTbpm6mMGGAR2VuGBpsiHEY',
             'location' => 'Shibuya',
@@ -260,6 +270,7 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'Coco Ichibanya',
+            'name_ja' => 'CoCo壱番屋',
             'business_status' => 'CLOSED_PERMANENTLY',
             'location' => 'Shibuya, Sakuragaokacho',
             'type' => 'Japanese curry',
@@ -282,6 +293,7 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'Coco Ichibanya',
+            'name_ja' => 'カレーハウス CoCo壱番屋',
             'business_status' => 'CLOSED_PERMANENTLY',
             'location' => 'Shibuya, Udagawacho',
             'type' => 'Japanese curry',
@@ -327,8 +339,10 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'Standing pizza bar Cona',
+            'name_ja' => 'コナ',
             'business_status' => 'OPERATIONAL',
-            'location' => 'not far from ramen street',
+            'google_place_id' => 'ChIJD-F7K1aLGGARqHyGjpTr3gU',
+            'location' => 'Shibuya, Dogenzaka',
             'type' => 'Pizzeria',
             'lunch_price' => 500,
             'points' => 'Standing at the counter (no chairs). Very cheap, light pizza.',
@@ -349,6 +363,7 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'Ayung Teras',
+            'business_status' => 'CLOSED_PERMANENTLY',
             'location' => 'Shibuya',
             'type' => 'Indonesian',
             'points' => 'Nice table, nie restaurant, decent food and drinks',
@@ -393,6 +408,7 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'Go Go Curry',
+            'name_ja' => 'ゴーゴーカレー',
             'business_status' => 'OPERATIONAL',
             'google_place_id' => 'ChIJadnanlmLGGARLwISAPfLUQ0',
             'location' => 'Shibuya',
@@ -417,6 +433,7 @@ class RestaurantsTableSeeder extends Seeder
         // TODO: complete this
         $resto = Restaurant::create([
             'name' => 'Il Ritrovo',
+            'name_ja' => 'イルリトローボ',
             'business_status' => 'OPERATIONAL',
             'google_place_id' => 'ChIJ095oE6mMGGARdtkpIkLXPiQ',
             'location' => 'Shibuya, Udagawacho',
@@ -463,6 +480,7 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'Mazesoba Shichi',
+            'name_ja' => 'まぜそば七',
             'business_status' => 'OPERATIONAL',
             'google_place_id' => 'ChIJaw8uYVeLGGARyvfzNQ-2nBI',
             'location' => 'Shibuya',
@@ -531,6 +549,7 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'Khao Man Gai',
+            'name_ja' => '渋谷カオマンガイ',
             'business_status' => 'OPERATIONAL',
             'location' => 'Shibuya',
             'type' => 'Thai',
@@ -552,7 +571,10 @@ class RestaurantsTableSeeder extends Seeder
         $resto->fillCoordinatesFromString('35.655904, 139.705592');
 
         $resto = Restaurant::create([
-            'name' => 'Tokumasa curry',
+            'name' => 'Joto curry',
+            'name_ja' => '上等カレー',
+            'business_status' => 'OPERATIONAL',
+            'google_place_id' => 'ChIJw7WmnVmLGGAR4Wsx5HEgkok',
             'location' => 'Shibuya, 3Chome',
             'type' => 'Japanese curry',
             'lunch_price' => 800,
@@ -574,6 +596,9 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'Ramen and Tsukemen',
+            'name_ja' => 'ラーメン・つけ麺 桜ん坊',
+            'business_status' => 'OPERATIONAL',
+            'google_place_id' => 'ChIJ85rhXFeLGGARBj05brrUP-w',
             'location' => 'Shibuya, Sakuragaokacho',
             'type' => 'Ramen',
             'lunch_price' => 800,
@@ -735,6 +760,7 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'Kura',
+            'name_ja' => 'KURA',
             'business_status' => 'OPERATIONAL',
             'google_place_id' => 'ChIJ2Umo8KeMGGAR1y1xt1BiXWM',
             'location' => 'Shibuya',
@@ -758,6 +784,7 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'Khao San',
+            'name_ja' => 'バンコク屋台 カオサン',
             'business_status' => 'CLOSED_PERMANENTLY',
             'location' => 'Shibuya, Miyamasuzaka',
             'type' => 'Thai',
@@ -780,6 +807,7 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'On the corner (No.8 Bear Pond)',
+            'name_ja' => 'オンザコーナー',
             'business_status' => 'CLOSED_PERMANENTLY',
             'location' => 'Shibuya',
             'type' => 'American',
@@ -826,6 +854,7 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'Pizza Slice',
+            'name_ja' => 'ピザ スライス',
             'business_status' => 'OPERATIONAL',
             'google_place_id' => 'ChIJQ9wNFVuLGGARwWj00x_zdGc',
             'location' => 'Shibuya, Sakuragaokacho',
@@ -849,6 +878,7 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'iBeer',
+            'name_ja' => 'アイビアー ルサンパーム',
             'business_status' => 'CLOSED_PERMANENTLY',
             'location' => 'Shibuya, Hikarie 7F',
             'type' => 'Italian',
@@ -871,6 +901,7 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'Avatar',
+            'name_ja' => 'アヴァタール',
             'business_status' => 'OPERATIONAL',
             'google_place_id' => 'ChIJlSEhFFqLGGARp9SCHA3O260',
             'location' => 'Shibuya, Sakuragaokacho',
@@ -894,6 +925,7 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'Guzman y Gomez',
+            'name_ja' => 'グズマン イー ゴメズ',
             'business_status' => 'OPERATIONAL',
             'google_place_id' => 'ChIJleoxgaiMGGARvQKWC2UTFhE',
             'location' => 'Shibuya, Jinnan',
@@ -917,6 +949,7 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'Il Fiume',
+            'name_ja' => 'イル フューメ',
             'business_status' => 'OPERATIONAL',
             'google_place_id' => 'ChIJnwQUeVyLGGAR2SYrSfgTod0',
             'location' => 'Shibuya, 3Chome',
@@ -962,6 +995,8 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'Gapao Shokudō',
+            'name_ja' => '渋谷 ガパオ食堂',
+            'business_status' => 'OPERATIONAL',
             'location' => 'Shibuya, Sakuragaokacho',
             'type' => 'Thai',
             'lunch_price' => 980,
@@ -1005,10 +1040,12 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'Salasa',
+            'name_ja' => '立ち呑み屋 サラサ',
+            'business_status' => 'OPERATIONAL',
             'location' => 'Shibuya - Udagawacho',
             'type' => 'Izakaya',
             'lunch_price' => 1050,
-            'points' => 'Various Japanese teishoku (lunch sets). Izakaya style. Small. Smallest tables ever. TV broadcasting news chanel. Slow service. Very good teishoku (lunch set)',
+            'points' => 'Various Japanese teishoku (lunch sets). Izakaya style. Small. Smallest tables ever. TV broadcasting news chanel. Slow service. Very good teishoku (lunch set).',
             'experience' => 'The chef cooks your lunch from scratch apparently, so it takes up to 20 minutes of wait time. I was surprised because, in Japan, the service is usually very fast. But it was worth the wait as it was quite delicious. I ordered the cheese/porc fried rolls for 1050yen, and it came with pickles, miso soup, rice, and cabage. It was very good and I was fully satisfied.',
             'visited' => true,
             'visit_date' => '2017-11-28 13:00:00',
@@ -1070,6 +1107,7 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'Uogashi Nihonichi',
+            'name_ja' => '魚がし日本一 立喰寿司',
             'business_status' => 'OPERATIONAL',
             'google_place_id' => 'ChIJh79i16mMGGARN1HObiQvcVA',
             'location' => 'Shibuya',
@@ -1092,8 +1130,10 @@ class RestaurantsTableSeeder extends Seeder
         $resto->fillCoordinatesFromString('35.658972, 139.698201');
 
         $resto = Restaurant::create([
-            'name' => 'Lotteria',
-            'name_ja' => 'ロッテリア',
+            'name' => 'Zetteria',
+            'name_ja' => 'ゼッテリア',
+            'business_status' => 'OPERATIONAL',
+            'google_place_id' => 'ChIJ7aXn1qmMGGARCoTboyofDbA',
             'location' => 'Shibuya, Dogenzaka',
             'type' => 'Burger',
             'lunch_price' => 900,
@@ -1115,6 +1155,9 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'TGIF',
+            'name_ja' => 'TGI FRIDAYS Shibuya-Jinnan',
+            'business_status' => 'OPERATIONAL',
+            'google_place_id' => 'ChIJa3cs7aiMGGAR6na0YBYaTts',
             'location' => 'Shibuya',
             'type' => 'American',
             'lunch_price' => 900,
@@ -1136,6 +1179,7 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'Ankara',
+            'name_ja' => 'アンカラ',
             'business_status' => 'CLOSED_PERMANENTLY',
             'location' => 'Shibuya',
             'type' => 'Turk',
@@ -1158,6 +1202,7 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'Ajigen',
+            'name_ja' => '味源',
             'business_status' => 'CLOSED_PERMANENTLY',
             'location' => 'Shibuya',
             'type' => 'Ramen',
@@ -1180,6 +1225,7 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'Pancho',
+            'name_ja' => 'スパゲッティーのパンチョ',
             'business_status' => 'OPERATIONAL',
             'location' => 'Shibuya, Dogenzaka',
             'type' => 'Pasta',
@@ -1202,6 +1248,7 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'Murugi',
+            'name_ja' => 'ムルギー',
             'business_status' => 'OPERATIONAL',
             'location' => 'Shibuya, Dogenzaka',
             'type' => 'Curry',
@@ -1248,6 +1295,9 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'Paku Mori',
+            'name_ja' => 'カレー屋 パクパクもりもり',
+            'business_status' => 'OPERATIONAL',
+            'google_place_id' => 'ChIJf7OL_qmMGGARCBS5r6ZxPm8',
             'location' => 'Shibuya',
             'type' => 'Curry',
             'lunch_price' => 980,
@@ -1269,6 +1319,7 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'Shakey\'s',
+            'name_ja' => 'シェーキーズ',
             'business_status' => 'CLOSED_PERMANENTLY',
             'location' => 'Shibuya',
             'type' => 'Pizza',
@@ -1291,6 +1342,7 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'Kevelos',
+            'name_ja' => 'ピッツァ ケベロス',
             'business_status' => 'OPERATIONAL',
             'location' => 'Harajuku',
             'type' => 'Pizza',
@@ -1313,6 +1365,7 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'La Soffita',
+            'name_ja' => 'ピッツェリア ラ・ソフィッタ',
             'business_status' => 'OPERATIONAL',
             'location' => 'Shibuya',
             'type' => 'Pizza',
@@ -1380,6 +1433,9 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'Pomme No Ki',
+            'name_ja' => 'ポムの樹',
+            'business_status' => 'OPERATIONAL',
+            'google_place_id' => 'ChIJq6p6q6mMGGARrIiuxRIBo0w',
             'location' => 'Shibuya',
             'type' => 'Omurice',
             'lunch_price' => 1000,
@@ -1424,6 +1480,7 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'Acceso',
+            'name_ja' => '渋谷アチェーゾ',
             'business_status' => 'OPERATIONAL',
             'location' => 'Shibuya',
             'type' => 'Italian',
@@ -1469,6 +1526,7 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'Hagare',
+            'name_ja' => 'ハガレ',
             'business_status' => 'OPERATIONAL',
             'google_place_id' => 'ChIJ8VVbBFiLGGARMY14pt0gxK8',
             'location' => 'Shibuya',
@@ -1492,6 +1550,7 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'Concombre',
+            'name_ja' => 'コンコンブル',
             'business_status' => 'CLOSED_PERMANENTLY',
             'location' => 'Shibuya',
             'type' => 'French',
@@ -1561,6 +1620,9 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'Ti Rolande',
+            'name_ja' => 'ティロランド',
+            'business_status' => 'OPERATIONAL',
+            'google_place_id' => 'ChIJtwyMq6uMGGARWGrqx9YE3ic',
             'location' => 'Shibuya, Seibu B2F',
             'type' => 'French',
             'lunch_price' => 1300,
@@ -1582,6 +1644,7 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'Miami Patio',
+            'name_ja' => 'マイアミパティオ',
             'business_status' => 'OPERATIONAL',
             'google_place_id' => 'ChIJS6FETViLGGARzfzzoHpOczc',
             'location' => 'Shibuya',
@@ -1626,6 +1689,7 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'Adenia',
+            'name_ja' => 'アデニア',
             'business_status' => 'OPERATIONAL',
             'location' => 'Shibuya',
             'type' => 'Western',
@@ -1648,6 +1712,7 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'Pota Pasta',
+            'name_ja' => 'ポタ パスタ',
             'business_status' => 'CLOSED_PERMANENTLY',
             'location' => 'Shibuya, Dogenzaka',
             'type' => 'Pasta',
@@ -1670,6 +1735,8 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'Curry House Chili Tiri',
+            'name_ja' => 'カレーハウス チリチリ',
+            'business_status' => 'RELOCATED',
             'location' => 'Shibuya',
             'type' => 'Curry',
             'lunch_price' => 950,
@@ -1691,6 +1758,7 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'Tomboy',
+            'name_ja' => 'トムボーイ 106 モアイカフェ',
             'business_status' => 'OPERATIONAL',
             'location' => 'Shibuya, Dogenzaka',
             'type' => 'Indian',
@@ -1713,6 +1781,7 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'Chelsea Cafe',
+            'name_ja' => 'チェルシーカフェ',
             'business_status' => 'CLOSED_PERMANENTLY',
             'location' => 'Shibuya, Mark City',
             'type' => 'Cafe',
@@ -1735,6 +1804,7 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'Napoli',
+            'name_ja' => 'ピッツェリア バール ナポリ',
             'business_status' => 'OPERATIONAL',
             'location' => 'Shibuya, 1Chome',
             'type' => 'Italian',
@@ -1757,6 +1827,7 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'Curry Kailas',
+            'name_ja' => 'カリー カイラス',
             'business_status' => 'OPERATIONAL',
             'location' => 'Shibuya',
             'type' => 'Curry',
@@ -1779,6 +1850,7 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'Whoopi Goldburger',
+            'name_ja' => 'ウーピーバーガー',
             'business_status' => 'CLOSED_PERMANENTLY',
             'location' => 'Shibuya',
             'type' => 'Burger',
@@ -1801,6 +1873,7 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'Aoyama Gapao Cafeteria',
+            'name_ja' => '青山ガパオ食堂',
             'business_status' => 'OPERATIONAL',
             'google_place_id' => 'ChIJTU6EI1-LGGARni58BWYoy6E',
             'location' => 'Shibuya',
@@ -1824,6 +1897,7 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'Napolimania',
+            'name_ja' => 'ナポリマニア',
             'business_status' => 'OPERATIONAL',
             'google_place_id' => 'ChIJ1wfSIV-LGGARKPRheN0Qwy0',
             'location' => 'Shibuya',
@@ -1847,6 +1921,8 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'Usagi',
+            'name_ja' => 'ウサギ',
+            'business_status' => 'RELOCATED',
             'location' => 'Shibuya',
             'type' => 'Western Japanese',
             'lunch_price' => 950,
@@ -1890,7 +1966,10 @@ class RestaurantsTableSeeder extends Seeder
         $resto->fillCoordinatesFromString('35.6608075,139.7061413,21');
 
         $resto = Restaurant::create([
-            'name' => 'Yousyu Syonin',
+            'name' => 'Chinese Ramen Yoshu-Shonin',
+            'name_ja' => '中国ラーメン揚州商人',
+            'business_status' => 'OPERATIONAL',
+            'google_place_id' => 'ChIJd0syZamMGGARMmqLBKWaHHw',
             'location' => 'Shibuya',
             'type' => 'Chinese',
             'lunch_price' => 920,
@@ -1935,6 +2014,8 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'Ichiran',
+            'name_ja' => '一蘭',
+            'business_status' => 'OPERATIONAL',
             'location' => 'Shibuya, Spain-zaka',
             'type' => 'Ramen',
             'lunch_price' => 900,
@@ -1956,6 +2037,7 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'Hakata tenjin',
+            'name_ja' => '博多天神',
             'business_status' => 'OPERATIONAL',
             'google_place_id' => 'ChIJs2bQuVeLGGARO6icGce6iw4',
             'location' => 'Shibuya',
@@ -1979,6 +2061,7 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'Tinun',
+            'name_ja' => 'ティーヌン・ダイニング',
             'business_status' => 'CLOSED_PERMANENTLY',
             'location' => 'Shibuya',
             'type' => 'Thai',
@@ -2022,6 +2105,7 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'Nataraj',
+            'name_ja' => 'ミラン・ナタラジ',
             'business_status' => 'OPERATIONAL',
             'location' => 'Shibuya',
             'type' => 'Indian curry',
@@ -2044,6 +2128,7 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'Los barbados',
+            'name_ja' => 'ロス・バルバドス',
             'business_status' => 'OPERATIONAL',
             'google_place_id' => 'ChIJqQcDEqyMGGARerFdc3v4z70',
             'location' => 'Shibuya, Udagawacho',
@@ -2067,6 +2152,7 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'Thai Garden',
+            'name_ja' => 'タイガーデン',
             'business_status' => 'OPERATIONAL',
             'google_place_id' => 'ChIJv4DMR6iMGGARWUu4CTqFhks',
             'location' => 'Shibuya',
@@ -2114,6 +2200,9 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'C.C. Curry Shop',
+            'name_ja' => 'カレーショップ C&C',
+            'business_status' => 'OPERATIONAL',
+            'google_place_id' => 'ChIJZRFo0leLGGARtccEfilyOyU',
             'location' => 'Shibuya',
             'type' => 'Curry',
             'lunch_price' => 600,
@@ -2135,6 +2224,7 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'Ramen Shibuhide',
+            'name_ja' => 'らあめん渋英',
             'location' => 'Shibuya',
             'type' => 'Ramen',
             'lunch_price' => 950,
@@ -2156,6 +2246,7 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'Tapas & Tapas',
+            'name_ja' => 'タパス＆タパス',
             'business_status' => 'OPERATIONAL',
             'google_place_id' => 'ChIJ07ROb1iLGGAR9N4vbPrqKHI',
             'location' => 'Shibuya, icchome',
@@ -2179,6 +2270,7 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'Tharros',
+            'name_ja' => 'タロス',
             'business_status' => 'OPERATIONAL',
             'google_place_id' => 'ChIJNxw_uFeLGGARRsmQXRlyU4k',
             'location' => 'Shibuya',
@@ -2202,6 +2294,7 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'Sgrosso',
+            'name_ja' => 'エス グロッソ',
             'business_status' => 'OPERATIONAL',
             'location' => 'Shibuya, Dogenzaka',
             'type' => 'Italian',
@@ -2224,6 +2317,7 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'Fatburger',
+            'name_ja' => 'ファットバーガー',
             'business_status' => 'CLOSED_PERMANENTLY',
             'location' => 'Shibuya, 109men',
             'type' => 'Burger',
@@ -2246,6 +2340,7 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'Village Vanguard Diner',
+            'name_ja' => 'ヴィレッジヴァンガード ダイナー',
             'business_status' => 'CLOSED_PERMANENTLY',
             'location' => 'Harajuku',
             'type' => 'Burger',
@@ -2268,6 +2363,7 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'Lowline',
+            'name_ja' => '肉バル Lowline',
             'business_status' => 'CLOSED_PERMANENTLY',
             'location' => 'Shibuya',
             'type' => 'Hamburg',
@@ -2290,6 +2386,7 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'Cento Anni',
+            'name_ja' => 'チェントアンニ',
             'business_status' => 'CLOSED_PERMANENTLY',
             'location' => 'Shibuya',
             'type' => 'Italian',
@@ -2312,6 +2409,7 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'Katsu midori sushi',
+            'name_ja' => '回し寿司 活 活美登利',
             'business_status' => 'CLOSED_PERMANENTLY',
             'location' => 'Shibuya',
             'type' => 'Sushi',
@@ -2334,6 +2432,7 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'Nagi Ramen',
+            'name_ja' => 'すごい煮干ラーメン凪',
             'business_status' => 'CLOSED_PERMANENTLY',
             'location' => 'Shibuya',
             'type' => 'Ramen',
@@ -2356,6 +2455,7 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'Taiyou no tomato men',
+            'name_ja' => '太陽のトマト麺',
             'business_status' => 'CLOSED_PERMANENTLY',
             'location' => 'Shibuya',
             'type' => 'Ramen',
@@ -2378,6 +2478,7 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'Mistu-Fuji Dining',
+            'name_ja' => 'ミツフジダイニング',
             'business_status' => 'CLOSED_PERMANENTLY',
             'location' => 'Shibuya',
             'type' => 'Izakaya',
@@ -2424,6 +2525,7 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'Belle Mare Cafe',
+            'name_ja' => 'ベルマーレカフェ',
             'business_status' => 'OPERATIONAL',
             'location' => 'Shibuya',
             'type' => 'Italian',
@@ -2469,6 +2571,7 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'Mushi-sho tsutsumi gyoza',
+            'name_ja' => 'むし焼包餃子',
             'business_status' => 'CLOSED_PERMANENTLY',
             'location' => 'Shibuya',
             'type' => 'Chinese',
@@ -2491,6 +2594,7 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'Sushi go round',
+            'name_ja' => '回転寿司 みさき',
             'business_status' => 'OPERATIONAL',
             'location' => 'Shibuya',
             'type' => 'Sushi',
@@ -2513,6 +2617,7 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'Segafredo Zanetti',
+            'name_ja' => 'セガフレード・ザネッティ',
             'business_status' => 'CLOSED_PERMANENTLY',
             'location' => 'Shibuya',
             'type' => 'Cafe',
@@ -2579,6 +2684,7 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'Madrid',
+            'name_ja' => 'マドリード',
             'business_status' => 'CLOSED_PERMANENTLY',
             'location' => 'Shibuya',
             'type' => 'Spanish',
@@ -2601,6 +2707,9 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'Roccoman',
+            'name_ja' => 'ギョーザ ロッコマン',
+            'business_status' => 'OPERATIONAL',
+            'google_place_id' => 'ChIJf3Gq-KmMGGARVh8rP-Rli0g',
             'location' => 'Shibuya, Dogenzaka',
             'type' => 'Gyoza',
             'lunch_price' => 680,
@@ -2622,6 +2731,7 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'Kindenmaru Ramen',
+            'name_ja' => '金伝丸',
             'business_status' => 'OPERATIONAL',
             'location' => 'Shibuya, Center Gai',
             'type' => 'Ramen',
@@ -2668,6 +2778,7 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'Brasserie Viron',
+            'name_ja' => 'ブラッスリー・ヴィロン',
             'business_status' => 'OPERATIONAL',
             'google_place_id' => 'ChIJZSSqcKmMGGARylOWxFCMqgE',
             'location' => 'Shibuya',
@@ -2739,6 +2850,7 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'Excelsior Cafe',
+            'name_ja' => 'エクセルシオールカフェ',
             'business_status' => 'OPERATIONAL',
             'location' => 'Shibuya, Mark City',
             'type' => 'Cafe',
@@ -2761,6 +2873,7 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'Tsukemen Tetsu',
+            'name_ja' => 'つけめんTETSU',
             'business_status' => 'CLOSED_PERMANENTLY',
             'location' => 'Shibuya, Dogenzaka',
             'type' => 'Ramen',
@@ -2783,6 +2896,7 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'Shinbu Sakiya',
+            'name_ja' => '炙り味噌らーめん 麺匠 真武咲弥',
             'business_status' => 'OPERATIONAL',
             'location' => 'Shibuya, Dogenzaka',
             'type' => 'Ramen',
@@ -2851,6 +2965,7 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'Moriva Coffee',
+            'name_ja' => 'モリバコーヒー',
             'business_status' => 'CLOSED_PERMANENTLY',
             'location' => 'Shibuya',
             'type' => 'Cafe',
@@ -2873,7 +2988,10 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'Manmosu',
-            'location' => 'Shibuya',
+            'name_ja' => 'マンモス',
+            'business_status' => 'OPERATIONAL',
+            'google_place_id' => 'ChIJHceZBlaLGGAR1ezdqkbboHI',
+            'location' => 'Shibuya, Dogenzaka',
             'type' => 'Ramen',
             'lunch_price' => 900,
             'points' => 'Small ramen restaurant with narrow counters. Very decent tsukemen with "original" noodles.',
@@ -2894,6 +3012,7 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'Ramen kokuu',
+            'name_ja' => 'らーめん 穀雨',
             'business_status' => 'OPERATIONAL',
             'google_place_id' => 'ChIJ3_O2L1eLGGAREwZ0Tsyd4ZA',
             'location' => 'Shibuya',
@@ -2917,6 +3036,7 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'Hooters',
+            'name_ja' => 'フーターズ',
             'business_status' => 'CLOSED_PERMANENTLY',
             'location' => 'Shibuya',
             'type' => 'Western',
@@ -2939,6 +3059,7 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'Mandala',
+            'name_ja' => 'ネパール料理&BAR MANDALA',
             'business_status' => 'OPERATIONAL',
             'location' => 'Shibuya',
             'type' => 'Indian',
@@ -2961,6 +3082,7 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'Ramen King',
+            'name_ja' => 'ラーメン王 後楽本舗',
             'business_status' => 'OPERATIONAL',
             'location' => 'Shibuya',
             'type' => 'Ramen',
@@ -2983,6 +3105,7 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'Demode Queen',
+            'name_ja' => 'デモデクイーン',
             'business_status' => 'OPERATIONAL',
             'location' => 'Shibubya, Udagawamachi',
             'type' => 'Grill',
@@ -3005,6 +3128,7 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'Sushi Zanmai',
+            'name_ja' => 'すしざんまい',
             'business_status' => 'CLOSED_PERMANENTLY',
             'location' => 'Shibuya, Dogenzaka',
             'type' => 'Sushi',
@@ -3027,6 +3151,9 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'Choco Cro',
+            'name_ja' => 'サンマルクカフェ',
+            'business_status' => 'OPERATIONAL',
+            'google_place_id' => 'ChIJ8Wi_xKmMGGARI-nhivZard4',
             'location' => 'Shibuya, Dogenzaka',
             'type' => 'Cafe',
             'lunch_price' => 680,
@@ -3048,6 +3175,9 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'Habana Cafe',
+            'name_ja' => 'カフェハバナ',
+            'business_status' => 'OPERATIONAL',
+            'google_place_id' => 'ChIJsUwYGFuLGGARslQ2L2kaYQM',
             'location' => 'Shibuya',
             'type' => 'Cuban',
             'lunch_price' => 900,
@@ -3069,6 +3199,7 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'Asian Spice King',
+            'name_ja' => 'アジアンスパイスキング',
             'business_status' => 'OPERATIONAL',
             'google_place_id' => 'ChIJz5KfPVuLGGARpaaATcrRRFk',
             'location' => 'Shibuya, Sarugakucho',
@@ -3114,6 +3245,7 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'Plaloma',
+            'name_ja' => 'プラーローマー',
             'location' => 'Shibuya',
             'type' => 'Thai',
             'lunch_price' => 1000,
@@ -3135,6 +3267,7 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'Shibuya Parlor',
+            'name_ja' => 'シブヤパーラー',
             'business_status' => 'CLOSED_PERMANENTLY',
             'location' => 'Shibuya crossing',
             'type' => 'Cafe',
@@ -3181,6 +3314,7 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'Sathaban Wijai Ahan Thai',
+            'name_ja' => 'タイ料理研究所',
             'business_status' => 'OPERATIONAL',
             'google_place_id' => 'ChIJ245JQleLGGARl_5FYjJ8Wgg',
             'location' => 'Shibuya, Sakuragaokacho',
@@ -3204,6 +3338,7 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'Fields',
+            'name_ja' => 'フィールズ',
             'business_status' => 'OPERATIONAL',
             'google_place_id' => 'ChIJgY1h4VmLGGARRI-_tVTxNEc',
             'location' => 'Shibuya, Sakuragaokacho',
@@ -3227,6 +3362,7 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'Pancho',
+            'name_ja' => 'スパゲッティーのパンチョ',
             'business_status' => 'CLOSED_PERMANENTLY',
             'location' => 'Shibuya, 3Chome',
             'type' => 'Pasta',
@@ -3249,6 +3385,7 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'Daylight Kitchen',
+            'name_ja' => 'デイライトキッチン',
             'business_status' => 'CLOSED_PERMANENTLY',
             'google_place_id' => 'ChIJS-e0P1eLGGARzUalEgvJN58',
             'location' => 'Shibuya, Sakuragaokacho',
@@ -3272,6 +3409,7 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'Bel Mare',
+            'name_ja' => 'ベルマーレ',
             'business_status' => 'OPERATIONAL',
             'google_place_id' => 'ChIJ0fxwZVeLGGAR_LODWTAn_OI',
             'location' => 'Shibuya, Sakuragaokacho',
@@ -3295,6 +3433,7 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'La cocorico',
+            'name_ja' => 'ラ ココリコ',
             'business_status' => 'OPERATIONAL',
             'google_place_id' => 'ChIJP1QWx1uLGGARJBvoq_oLt9g',
             'location' => 'Shibuya',
@@ -3318,6 +3457,7 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'Tora uma',
+            'name_ja' => '虎うま',
             'business_status' => 'OPERATIONAL',
             'location' => 'Shibuya, Sakuragaokacho',
             'type' => 'Izakaya',
@@ -3340,6 +3480,7 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'Saray',
+            'name_ja' => 'サライ',
             'business_status' => 'CLOSED_PERMANENTLY',
             'location' => 'Shibuya',
             'type' => 'Turk',
@@ -3362,6 +3503,7 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'Gochiso soba sora',
+            'name_ja' => 'ご馳走そば そら',
             'business_status' => 'CLOSED_PERMANENTLY',
             'location' => 'Shibuya, 109men',
             'type' => 'Soba',
@@ -3384,6 +3526,7 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'Cinagro',
+            'name_ja' => 'シナグロ 西武',
             'business_status' => 'CLOSED_PERMANENTLY',
             'location' => 'Shibuya, Seibu',
             'type' => 'Organic',
@@ -3406,6 +3549,7 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'Oshima ramen',
+            'name_ja' => '大島ラーメン',
             'business_status' => 'CLOSED_PERMANENTLY',
             'location' => 'Shibuya, Dogenzaka',
             'type' => 'Ramen',
@@ -3449,7 +3593,10 @@ class RestaurantsTableSeeder extends Seeder
         $resto->fillCoordinatesFromString('35.659753, 139.702670');
 
         $resto = Restaurant::create([
-            'name' => 'Antica Forneria, by Elio',
+            'name' => 'Elio Antica Forneria',
+            'name_ja' => 'エリオ・アンティカ・フォルネリア',
+            'business_status' => 'OPERATIONAL',
+            'google_place_id' => 'ChIJSa5ngG-MGGARnITsw09NGao',
             'location' => 'Shibuya, Stream',
             'type' => 'Italian',
             'lunch_price' => 1600,
@@ -3515,6 +3662,7 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'Spice Lip',
+            'name_ja' => 'タイ料理＆アジアンダイニング スパイスリップ',
             'business_status' => 'CLOSED_PERMANENTLY',
             'location' => 'Shibuya, Stream',
             'type' => 'Thai',
@@ -3537,6 +3685,7 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'Shoutaian',
+            'name_ja' => '肉バル SHOUTAIAN',
             'business_status' => 'OPERATIONAL',
             'location' => 'Shibuya, Sakuragaokacho',
             'type' => 'Beef',
@@ -3559,6 +3708,7 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'OreRyu Shio Ramen',
+            'name_ja' => '俺流塩らーめん',
             'business_status' => 'OPERATIONAL',
             'location' => 'Shibuya, Nanpeidaicho',
             'type' => 'Ramen',
@@ -3581,6 +3731,7 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'Kyoto Katsugyu',
+            'name_ja' => '牛カツ京都勝牛',
             'business_status' => 'OPERATIONAL',
             'location' => 'Shibuya, Dogenzaka',
             'type' => 'Katsu',
@@ -3603,6 +3754,7 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'Bar a vin CROISEE',
+            'name_ja' => 'ビストロ レストラン 大宮',
             'business_status' => 'CLOSED_PERMANENTLY',
             'google_place_id' => 'ChIJxWN3MNeLGGAR9PRT3G-0SyA',
             'location' => 'Shibuya, Stream',
@@ -3649,6 +3801,7 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'The Dubliners',
+            'name_ja' => 'ダブリナーズ カフェ＆パブ',
             'business_status' => 'CLOSED_PERMANENTLY',
             'location' => 'Shibuya, Dogenzaka',
             'type' => 'Pub',
@@ -3715,12 +3868,14 @@ class RestaurantsTableSeeder extends Seeder
         $resto->fillCoordinatesFromString('35.660569, 139.698298');
 
         $resto = Restaurant::create([
-            'name' => 'Wine no Ruisuke',
+            'name' => 'Pizza&Italian Leo',
+            'name_ja' => 'Pizza&Italian Leo',
+            'business_status' => 'OPERATIONAL',
             'location' => 'Shibuya, Stream',
             'type' => 'Grill',
             'lunch_price' => 950,
             'points' => 'Grilled chicken. Decent place in Stream building.',
-            'experience' => 'Decent place. I tried the chicken burger for 750 yen, with an extra 200 yen for French fries. It took forever to come, like 10 or 15 minutes. The fries were kind of cold, and the amount similar to a McDo S size. The burger was very good. The bread was tasty, and the chicken was not dry at all and quiet delicious.',
+            'experience' => 'Decent place. I tried the chicken burger for 750 yen, with an extra 200 yen for French fries. It took forever to come, like 10 or 15 minutes. The fries were kind of cold, and the amount similar to a McDo S size. The burger was very good. The bread was tasty, and the chicken was not dry at all and quiet delicious. That place was previously named ""Wine no Ruisuke".',
             'visited' => true,
             'visit_date' => '2018-10-09 13:00:00',
             'google_maps_link' => 'https://www.google.com/maps/place/Wine+no+Ruisuke/@35.6580377,139.7013155,17z/data=!4m8!1m2!2m1!1swine+no+ruisuke!3m4!1s0x0:0x2d18362c1a6a58a2!8m2!3d35.6569699!4d139.703462',
@@ -3737,6 +3892,9 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'Maita',
+            'name_ja' => '食べ放題 まいた',
+            'business_status' => 'OPERATIONAL',
+            'google_place_id' => 'ChIJlY34bsSLGGAR397pgt71taQ',
             'location' => 'Shibuya, 2Chome',
             'type' => 'Indian',
             'lunch_price' => 860,
@@ -3758,6 +3916,7 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'Glorious Chain Cafe',
+            'name_ja' => 'グロリアス チェーン カフェ',
             'business_status' => 'CLOSED_PERMANENTLY',
             'location' => 'Shibuya, 1Chome',
             'type' => 'Cafe',
@@ -3780,6 +3939,7 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'Curry Udon Senkichi',
+            'name_ja' => 'せんきち',
             'business_status' => 'CLOSED_PERMANENTLY',
             'location' => 'Shibuya, Dogenzaka',
             'type' => 'Japanese Curry',
@@ -3802,6 +3962,7 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'Shibuya Tonteki',
+            'name_ja' => '渋谷トンテキ',
             'business_status' => 'CLOSED_PERMANENTLY',
             'location' => 'Shibuya, Dogenzaka',
             'type' => 'Meat',
@@ -3846,6 +4007,7 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'Shoya',
+            'name_ja' => '庄や',
             'business_status' => 'CLOSED_PERMANENTLY',
             'location' => 'Shibuya, center gai',
             'type' => 'Izakaya',
@@ -3892,6 +4054,7 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'Guykatsu Motomura',
+            'name_ja' => '牛かつもと村',
             'business_status' => 'OPERATIONAL',
             'location' => 'Shibuya, 2Chome',
             'type' => 'Guykatsu',
@@ -3914,6 +4077,7 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'Les deux magots',
+            'name_ja' => 'ドゥ マゴ',
             'business_status' => 'OPERATIONAL',
             'location' => 'Shibuya, Mark City',
             'type' => 'Bakery',
@@ -3936,6 +4100,7 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'Kuumba du falafel',
+            'name_ja' => 'クンバ ドゥ ファラフェル',
             'business_status' => 'OPERATIONAL',
             'google_place_id' => 'ChIJg_-6NlXzGGARUOHe7asqSYM',
             'location' => 'Shibuya, Shinsencho',
@@ -3983,6 +4148,7 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'Crossroads bakery',
+            'name_ja' => 'クロスロードベーカリー',
             'business_status' => 'CLOSED_PERMANENTLY',
             'location' => 'Shibuya, Hikarie',
             'type' => 'Bakery',
@@ -4052,6 +4218,7 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'Jeff\'s Kitchen Curry',
+            'name_ja' => 'シェフズキッチンカレー厨房',
             'business_status' => 'CLOSED_PERMANENTLY',
             'location' => 'Shibuya, Station',
             'type' => 'Japanese Curry',
@@ -4074,6 +4241,7 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'Krung Siam',
+            'name_ja' => 'タイの食卓 クルン・サイアム',
             'business_status' => 'CLOSED_PERMANENTLY',
             'location' => 'Shibuya, Dogenzaka',
             'type' => 'Thai',
@@ -4096,6 +4264,7 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'OreRyu Shio Ramen',
+            'name_ja' => '俺流塩らーめん',
             'business_status' => 'OPERATIONAL',
             'location' => 'Shibuya, Maruyamacho',
             'type' => 'Ramen',
@@ -4210,6 +4379,7 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'Mad Burger',
+            'name_ja' => 'マッドバーガー',
             'business_status' => 'CLOSED_PERMANENTLY',
             'location' => 'Shibuya',
             'type' => 'Burger',
@@ -4232,6 +4402,7 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'Kirin City',
+            'name_ja' => 'キリンシティ',
             'business_status' => 'CLOSED_PERMANENTLY',
             'location' => 'Shibuya, Sakuragaokacho',
             'type' => 'Pub',
@@ -4276,6 +4447,7 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'Double Tall',
+            'name_ja' => 'ダブルトールカフェ',
             'business_status' => 'CLOSED_PERMANENTLY',
             'location' => 'Shibuya',
             'type' => 'Cafe',
@@ -4298,6 +4470,7 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'Menya Itadori',
+            'name_ja' => '麺屋虎杖',
             'business_status' => 'CLOSED_PERMANENTLY',
             'location' => 'Shibuya',
             'type' => 'Ramen',
@@ -4320,6 +4493,9 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'R',
+            'name_ja' => 'アール',
+            'business_status' => 'OPERATIONAL',
+            'google_place_id' => 'ChIJUbw0XFmLGGARtliCkb9ereo',
             'location' => 'Shibuya',
             'type' => 'Cafe bar',
             'lunch_price' => 950,
@@ -4365,6 +4541,7 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'Ichikakuya',
+            'name_ja' => '壱角家',
             'business_status' => 'OPERATIONAL',
             'google_place_id' => 'ChIJnzrG2amMGGAR98vg18iT27o',
             'location' => 'Shibuya',
@@ -4388,6 +4565,7 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'Gabulicious',
+            'name_ja' => 'ワイン酒場 GabuLicious',
             'business_status' => 'OPERATIONAL',
             'location' => 'Shibuya',
             'type' => 'Cafe bar',
@@ -4432,12 +4610,13 @@ class RestaurantsTableSeeder extends Seeder
         $resto->fillCoordinatesFromString('35.660576, 139.699281');
 
         $resto = Restaurant::create([
-            'name' => 'Wine&Cafe Sai',
+            'name' => 'Pointo Ten',
+            'name_ja' => 'ぽいんとてん',
             'location' => 'Shibuya',
             'type' => 'Cafe bar',
             'lunch_price' => 1000,
             'points' => 'Cosy wine bar restaurant with smoking and non smoking tables. Food quality seems above average.',
-            'experience' => 'Despite having a counter and some tables with people smoking, and could not smell any smoke at all, in the non-smoking area. The place seems rather popular and is busy. The menu for lunch had napolitan pasta, hamburg steak, omurice, shogayaki, and chicken curry... I tried the napolitan pasta for 1000yen, and it took forever to come to my table, but it was the best napolitan pasta I ever had. Prices go from 1000 to 1300 and include a drink.',
+            'experience' => 'Despite having a counter and some tables with people smoking, and could not smell any smoke at all, in the non-smoking area. The place seems rather popular and is busy. The menu for lunch had napolitan pasta, hamburg steak, omurice, shogayaki, and chicken curry... I tried the napolitan pasta for 1000yen, and it took forever to come to my table, but it was the best napolitan pasta I ever had. Prices go from 1000 to 1300 and include a drink. Previously named "Wine&Cafe Sai".',
             'visited' => true,
             'visit_date' => '2019-01-23 13:00:00',
             'google_maps_link' => 'https://www.google.com/maps/place/Wine%26Cafe+Sai/@35.6579771,139.6976704,17z/data=!4m8!1m2!2m1!1sshibuya+sai!3m4!1s0x60188b57c88afa95:0x574cf43d3c5eafdd!8m2!3d35.6582123!4d139.6993619',
@@ -4454,7 +4633,9 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'Baluccha',
-            'location' => 'Shibuya',
+            'name_ja' => 'イタリアン バルッチャ',
+            'business_status' => 'OPERATIONAL',
+            'location' => 'Shibuya, Dogenzaka',
             'type' => 'Italian',
             'lunch_price' => 1000,
             'points' => 'Delicious food in a cosy place for a decent price.',
@@ -4475,6 +4656,8 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'Tandoor',
+            'name_ja' => 'タンドゥール',
+            'business_status' => 'OPERATIONAL',
             'location' => 'Shibuya, Seibu',
             'type' => 'Indian curry',
             'lunch_price' => 1480,
@@ -4542,6 +4725,7 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'Bokkokukaitentori QueRico',
+            'name_ja' => '墨国回転鶏酒場',
             'business_status' => 'CLOSED_PERMANENTLY',
             'location' => 'Shibuya, near Stream',
             'type' => 'Mexican',
@@ -4564,6 +4748,7 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'Hobishuka',
+            'name_ja' => '中国家庭料理 鳳美酒家',
             'business_status' => 'CLOSED_PERMANENTLY',
             'location' => 'Shibuya, Dogenzaka',
             'type' => 'Chinese',
@@ -4608,6 +4793,7 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'Spice Magic',
+            'name_ja' => 'スパイスマジック',
             'business_status' => 'CLOSED_PERMANENTLY',
             'location' => 'Shibuya, Udagawacho',
             'type' => 'Exotic',
@@ -4654,6 +4840,7 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'Bahama kitchen',
+            'name_ja' => 'バハマキッチン',
             'business_status' => 'OPERATIONAL',
             'google_place_id' => 'ChIJQR5hcGaNGGARxaH_WPvruIw',
             'location' => 'Shibuya, Udagawacho',
@@ -4677,6 +4864,7 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'Le Sun Palm',
+            'name_ja' => 'ルサンパーム',
             'business_status' => 'CLOSED_PERMANENTLY',
             'location' => 'Shibuya, Mark City',
             'type' => 'Cafe Restaurant',
@@ -4723,6 +4911,7 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'Yasube',
+            'name_ja' => 'つけ麺屋 やすべえ',
             'business_status' => 'OPERATIONAL',
             'location' => 'Shibuya',
             'type' => 'Tsukemen',
@@ -4745,6 +4934,7 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'AzabuSabo',
+            'name_ja' => '麻布茶房',
             'business_status' => 'CLOSED_PERMANENTLY',
             'location' => 'Shibuya, Seibu',
             'type' => 'Teishoku',
@@ -4789,6 +4979,7 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'Kinniku shokudo',
+            'name_ja' => '筋肉食堂',
             'business_status' => 'CLOSED_PERMANENTLY',
             'location' => 'Shibuya',
             'type' => 'Protein',
@@ -4811,6 +5002,7 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'Kantipur',
+            'name_ja' => 'カンティプール',
             'business_status' => 'CLOSED_PERMANENTLY',
             'location' => 'Shibuya, Sakuragaokacho',
             'type' => 'Nepalese',
@@ -4833,6 +5025,7 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'Atomasashiya',
+            'name_ja' => 'アートマサシヤ',
             'business_status' => 'OPERATIONAL',
             'location' => 'Shibuya, Nanpeidaicho',
             'type' => 'Ramen',
@@ -4855,6 +5048,9 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'Tengu Sakaba',
+            'name_ja' => 'テング酒場',
+            'business_status' => 'OPERATIONAL',
+            'google_place_id' => 'ChIJoXnt_FmLGGARonWviXg8GE8',
             'location' => 'Shibuya, Sakuragaokacho',
             'type' => 'Izakaya',
             'lunch_price' => 560,
@@ -4899,6 +5095,7 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'Gokigentori',
+            'name_ja' => 'ビストロゴキゲン鳥',
             'business_status' => 'CLOSED_PERMANENTLY',
             'location' => 'Shibuya, Dogenzaka',
             'type' => 'Yakitori',
@@ -4921,6 +5118,7 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'Kabe no ana',
+            'name_ja' => '壁の穴',
             'business_status' => 'OPERATIONAL',
             'google_place_id' => 'ChIJUexPwKmMGGARXqij03TWcB0',
             'location' => 'Shibuya, Dogenzaka',
@@ -4944,6 +5142,7 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'Gansozushi',
+            'name_ja' => '元祖寿司',
             'business_status' => 'OPERATIONAL',
             'location' => 'Shibuya, Dogenzaka',
             'type' => 'Sushi',
@@ -4966,6 +5165,7 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'Kirin City',
+            'name_ja' => 'キリンシティ',
             'business_status' => 'OPERATIONAL',
             'google_place_id' => 'ChIJ-Y6YvamMGGARXkm2IoHXSdA',
             'location' => 'Shibuya, Dogenzaka',
@@ -5012,6 +5212,7 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'Rin',
+            'name_ja' => '凛',
             'business_status' => 'OPERATIONAL',
             'google_place_id' => 'ChIJWZVws66MGGARURy02drLlkI',
             'location' => 'Shibuya, Udagawacho',
@@ -5057,6 +5258,7 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'Chao Thai',
+            'name_ja' => 'チャオタイ',
             'business_status' => 'OPERATIONAL',
             'google_place_id' => 'ChIJnzrG2amMGGARAIZHxbdb5p8',
             'location' => 'Shibuya, Dogenzaka',
@@ -5102,6 +5304,7 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'Grandma\'s Georges',
+            'name_ja' => 'グランマーズジョルジュパークサイドアヴェニュー',
             'business_status' => 'OPERATIONAL',
             'google_place_id' => 'ChIJLXEv8KiMGGARh_o_2JO0d1s',
             'location' => 'Shibuya, Jinnan',
@@ -5219,6 +5422,7 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'Black Brown',
+            'name_ja' => 'ブラックブラウン',
             'business_status' => 'OPERATIONAL',
             'google_place_id' => 'ChIJSWwbuamMGGARv81QPchctg0',
             'location' => 'Shibuya, Dogenzaka',
@@ -5286,6 +5490,9 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'Nanpeidai Lounge',
+            'name_ja' => '南平台ラウンジ',
+            'business_status' => 'OPERATIONAL',
+            'google_place_id' => 'ChIJ__8KKlSLGGARrXHZv-9IhQI',
             'location' => 'Shibuya, Nanpeidai',
             'type' => 'Lounge',
             'lunch_price' => 850,
@@ -5307,6 +5514,7 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'Erick South Masala Diner',
+            'name_ja' => 'エリックサウスマサラダイナー',
             'business_status' => 'OPERATIONAL',
             'google_place_id' => 'ChIJNQJdPqaMGGARQWLRc-KQbKM',
             'location' => 'Shibuya',
@@ -5330,6 +5538,7 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'Krung Siam',
+            'name_ja' => 'タイの食卓 クルン・サイアム',
             'business_status' => 'CLOSED_PERMANENTLY',
             'location' => 'Shibuya',
             'type' => 'Thai',
@@ -5375,6 +5584,7 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'Hideout',
+            'name_ja' => '渋谷 HIDEOUT',
             'business_status' => 'OPERATIONAL',
             'google_place_id' => 'ChIJdTcrb6mMGGARlX-o_Pzh344',
             'location' => 'Shibuya, Udagawacho',
@@ -5398,6 +5608,7 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'Torico',
+            'name_ja' => 'トリコ',
             'business_status' => 'CLOSED_PERMANENTLY',
             'location' => 'Shibuya, Kamiyamacho',
             'type' => 'Western',
@@ -5443,6 +5654,7 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'Rakeru',
+            'name_ja' => 'ラケル',
             'business_status' => 'OPERATIONAL',
             'google_place_id' => 'ChIJZUnTjFiLGGAR-IirDMcFqr4',
             'location' => 'Shibuya, 1Chome',
@@ -5488,6 +5700,7 @@ class RestaurantsTableSeeder extends Seeder
 
         $resto = Restaurant::create([
             'name' => 'Dao Thai Yumyum',
+            'name_ja' => 'DaoThai yumyum',
             'business_status' => 'CLOSED_PERMANENTLY',
             'google_place_id' => 'ChIJ13hzE6mMGGAR6BDYA97eC18',
             'location' => 'Shibuya, Udagawacho',

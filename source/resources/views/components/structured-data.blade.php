@@ -2,7 +2,7 @@
      and StructuredData::json() already encodes < > & so nothing from the database can close the script tag.
      The architecture tests allow the raw syntax and the inline script in this file only.
      Only on a page the search engines may index (Place::isIndexableIn() for the page's language): nothing for a place
-     gone for good (permanently closed, replaced: the markup describes a live business with our review), nor on a
+     gone for good (permanently closed, replaced, relocated: the markup describes a live business with our review), nor on a
      Japanese page without Japanese content (noindex, and its URL must not be named as the place's page).
      A temporarily closed place keeps it. --}}
 @props(['place'])

@@ -19,6 +19,7 @@ class BarsTableSeeder extends Seeder
 
         $bar = Bar::create([
             'name' => 'Tatsu Ichi',
+            'name_ja' => 'タスイチ',
             'business_status' => 'OPERATIONAL',
             'location' => 'Shibuya, Center Gai',
             'type' => 'Standing Bar',
@@ -39,6 +40,7 @@ class BarsTableSeeder extends Seeder
 
         $bar = Bar::create([
             'name' => 'Coins bar',
+            'name_ja' => 'コインズ バー',
             'business_status' => 'CLOSED_PERMANENTLY',
             'google_place_id' => 'ChIJoyRZQamMGGARxPz1Gjcb8LE',
             'location' => 'Shibuya, Udagawacho',
@@ -60,6 +62,7 @@ class BarsTableSeeder extends Seeder
 
         $bar = Bar::create([
             'name' => 'Hub',
+            'name_ja' => 'ハブ',
             'business_status' => 'OPERATIONAL',
             'google_place_id' => 'ChIJZfDY26mMGGARdFF_TnRLQXQ',
             'location' => 'Shibuya, Dogenzaka',
@@ -81,6 +84,7 @@ class BarsTableSeeder extends Seeder
 
         $bar = Bar::create([
             'name' => 'Hub',
+            'name_ja' => 'ハブ',
             'business_status' => 'OPERATIONAL',
             'google_place_id' => 'ChIJD8GkI6iMGGAR5uBU7SUamg0',
             'location' => 'Shibuya, Center Gai',
@@ -102,6 +106,7 @@ class BarsTableSeeder extends Seeder
 
         $bar = Bar::create([
             'name' => 'Hub',
+            'name_ja' => 'ハブ',
             'business_status' => 'OPERATIONAL',
             'google_place_id' => 'ChIJzVRwIKmMGGARwZ8F_QFVLZE',
             'location' => 'Shibuya, Udagawacho',
@@ -123,6 +128,7 @@ class BarsTableSeeder extends Seeder
 
         $bar = Bar::create([
             'name' => 'Hub',
+            'name_ja' => 'ハブ',
             'business_status' => 'OPERATIONAL',
             'google_place_id' => 'ChIJK2jWTKiMGGARhHCkOOxNNOk',
             'location' => 'Shibuya, Udagawacho',
@@ -165,6 +171,7 @@ class BarsTableSeeder extends Seeder
 
         $bar = Bar::create([
             'name' => 'The Dubliners',
+            'name_ja' => 'ダブリナーズ カフェ＆パブ',
             'business_status' => 'CLOSED_PERMANENTLY',
             'location' => 'Shibuya, Dogenzaka',
             'type' => 'Irish Pub',
@@ -185,6 +192,7 @@ class BarsTableSeeder extends Seeder
 
         $bar = Bar::create([
             'name' => 'Pres',
+            'name_ja' => 'プレス',
             'business_status' => 'OPERATIONAL',
             'location' => 'Shibuya, Center Gai',
             'type' => 'Jazz Bar',
@@ -226,7 +234,9 @@ class BarsTableSeeder extends Seeder
 
         $bar = Bar::create([
             'name' => 'The Wine',
+            'name_ja' => 'The Wine',
             'business_status' => 'OPERATIONAL',
+            'google_place_id' => 'ChIJkymfXVeLGGARmlPjw-XoMmY',
             'location' => 'Shibuya',
             'type' => 'Izakaya',
             'points' => 'Very cheap, and good wine. 500 yen table charge.',
@@ -246,6 +256,9 @@ class BarsTableSeeder extends Seeder
 
         $bar = Bar::create([
             'name' => 'Rock no cocoro',
+            'name_ja' => 'ロックのこころ',
+            'business_status' => 'OPERATIONAL',
+            'google_place_id' => 'ChIJYQBxTqmMGGAR090ZLcK1oao',
             'location' => 'Shibuya, Udagawacho',
             'type' => 'Bar',
             'points' => 'Loud rock music. Quite narrow, but pretty nice atmosphere.',
@@ -265,6 +278,9 @@ class BarsTableSeeder extends Seeder
 
         $bar = Bar::create([
             'name' => 'JBS',
+            'name_ja' => 'ジェイビーエス',
+            'business_status' => 'OPERATIONAL',
+            'google_place_id' => 'ChIJjT5KDVaLGGARJS6OOWk2Jzg',
             'location' => 'Shibuya',
             'type' => 'Music Bar',
             'points' => 'Small music bar. No smoking. Scary bartender. Great music, not too loud. No table charge. Cheap drinks. No food.',
@@ -284,6 +300,9 @@ class BarsTableSeeder extends Seeder
 
         $bar = Bar::create([
             'name' => 'Tokyo Wine Club Raku',
+            'name_ja' => '東京ワイン倶楽部 楽',
+            'business_status' => 'OPERATIONAL',
+            'google_place_id' => 'ChIJB9yNQFaLGGARdsBOj9fHyls',
             'location' => 'Shibuya',
             'type' => 'Izakaya',
             'points' => 'Nice and lively place. Good to enjoy some unexpensive wine. 500 yen otoshi.',
@@ -303,6 +322,7 @@ class BarsTableSeeder extends Seeder
 
         $bar = Bar::create([
             'name' => 'Tavern Bach',
+            'name_ja' => 'バッハ',
             'business_status' => 'CLOSED_PERMANENTLY',
             'google_place_id' => 'ChIJvwIva1aLGGAROhahP84QKxI',
             'location' => 'Shibuya',

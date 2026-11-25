@@ -198,15 +198,15 @@ test('apply --yes writes the statuses and the ids into the seeders, but not "rep
     assert.deepEqual(pick(get('Il Ritrovo')[0]), ['CLOSED_TEMPORARILY', 'ChIJknownRitrovo']);
     // Replaced is opt-in: --yes leaves it out.
     assert.deepEqual(pick(get('Bistro Shibuya')[0]), [null, null]);
-    // Reopened: the status line goes away (OPERATIONAL is the default).
-    assert.deepEqual(pick(get('Tengu Sakaba')[0]), [null, 'ChIJtengu']);
-    // Operational places get their id only.
-    assert.deepEqual(pick(get('Hakata Furyu')[0]), [null, 'ChIJhakata']);
-    assert.deepEqual(pick(get("Mc Donald's", 35.661)[0]), [null, 'ChIJmc2']);
-    assert.deepEqual(pick(get("Mc Donald's", 35.659)[0]), [null, 'ChIJmc1']);
-    assert.deepEqual(get('Usagi').map(pick), [[null, 'ChIJusagi'], [null, 'ChIJusagi']]);
+    // Reopened: the status says OPERATIONAL again.
+    assert.deepEqual(pick(get('Tengu Sakaba')[0]), ['OPERATIONAL', 'ChIJtengu']);
+    // Operational places: the status is written (a blank status means "not checked"), and the id.
+    assert.deepEqual(pick(get('Hakata Furyu')[0]), ['OPERATIONAL', 'ChIJhakata']);
+    assert.deepEqual(pick(get("Mc Donald's", 35.661)[0]), ['OPERATIONAL', 'ChIJmc2']);
+    assert.deepEqual(pick(get("Mc Donald's", 35.659)[0]), ['OPERATIONAL', 'ChIJmc1']);
+    assert.deepEqual(get('Usagi').map(pick), [['OPERATIONAL', 'ChIJusagi'], ['OPERATIONAL', 'ChIJusagi']]);
     // A partial name match: operational, but the id is not sure enough to store.
-    assert.deepEqual(pick(get('Pancho')[0]), [null, null]);
+    assert.deepEqual(pick(get('Pancho')[0]), ['OPERATIONAL', null]);
     // Unsure: untouched.
     assert.deepEqual(pick(get('Sushi Zanmai')[0]), [null, null]);
     // Already closed before: untouched.
@@ -230,6 +230,7 @@ test('apply shows the changes grouped by verdict, "replaced" unchecked, and keep
     };
     await runApply({ ...ws, prompt, run: noCommands, log: () => {} });
     assert.deepEqual(shown, [
+        ['operational', true, ['Hakata Furyu', "Mc Donald's", "Mc Donald's", 'Pancho', 'Krung Siam', 'Usagi']],
         ['closed_permanently', true, ['Go Go Curry']],
         ['closed_temporarily', true, ['Il Ritrovo']],
         ['reopened', true, ['Tengu Sakaba']],
@@ -240,6 +241,12 @@ test('apply shows the changes grouped by verdict, "replaced" unchecked, and keep
     // Replaced, and no id: the one found belongs to the new business.
     assert.deepEqual([places.find((p) => p.name === 'Bistro Shibuya').businessStatus, places.find((p) => p.name === 'Bistro Shibuya').googlePlaceId], ['REPLACED', null]);
     assert.equal(places.find((p) => p.name === 'Go Go Curry').businessStatus, null);
+    // Confirmed open: the status is written, once (a second apply rewrites the same line).
+    assert.equal(places.find((p) => p.name === 'Hakata Furyu').businessStatus, 'OPERATIONAL');
+    const file = join(ws.seedersDir, 'RestaurantsTableSeeder.php');
+    const before = readFileSync(file, 'utf8');
+    await runApply({ ...ws, prompt, run: noCommands, log: () => {} }); // the same choices again
+    assert.equal(readFileSync(file, 'utf8'), before);
 });
 
 test('apply does not offer a temporarily closed place that is still temporarily closed', async () => {

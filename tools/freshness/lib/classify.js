@@ -8,9 +8,10 @@ export const SEARCH_RADIUS_METRES = 50;
 // or another branch of a chain); beyond it, nothing found nearby.
 export const NEARBY_METRES = 200;
 
-// The verdicts that change the status of a place, and the business_status they write.
-// OPERATIONAL makes the seeder editor remove the business_status line (it is the default).
+// The verdicts that give a place a status, and the business_status they write. OPERATIONAL is
+// written too (the column's default, but a blank line means "not checked", a written one "confirmed").
 export const VERDICT_STATUS = {
+    operational: 'OPERATIONAL',
     reopened: 'OPERATIONAL',
     closed_permanently: 'CLOSED_PERMANENTLY',
     closed_temporarily: 'CLOSED_TEMPORARILY',

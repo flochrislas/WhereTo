@@ -97,12 +97,14 @@ test('the three known keys keep their places after the name', () => {
     assert.ok(out.includes("'name' => 'Hakata Furyu',\n            'name_ja' => '博多風龍',\n            'business_status' => 'CLOSED_TEMPORARILY',\n            'google_place_id' => 'ChIJnew',\n            'location'"));
 });
 
-test('null removes name_ja and google_place_id, OPERATIONAL or null removes the status', () => {
+test('null removes name_ja, google_place_id and the status; OPERATIONAL is written like any status', () => {
     const kindenmaru = 1; // has a status and an id
     const out = editPlaceText(restoText, 'restaurants', kindenmaru, { fields: { google_place_id: null, business_status: null } });
     const place = reread(out, kindenmaru);
     assert.equal(field(place, 'google_place_id'), undefined);
     assert.equal(field(place, 'business_status'), undefined);
+    const open = editPlaceText(restoText, 'restaurants', kindenmaru, { fields: { business_status: 'OPERATIONAL' } });
+    assert.equal(field(reread(open, kindenmaru), 'business_status'), 'OPERATIONAL');
     const withJa = editPlaceText(restoText, 'restaurants', 0, { fields: { name_ja: '博多風龍' } });
     const without = editPlaceText(withJa, 'restaurants', 0, { fields: { name_ja: null } });
     assert.equal(without, restoText);

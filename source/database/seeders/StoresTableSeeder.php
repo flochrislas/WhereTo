@@ -83,6 +83,7 @@ class StoresTableSeeder extends Seeder
 
         $store = Store::create([
             'name' => 'Asics Tiger',
+            'business_status' => 'REPLACED',
             'location' => 'Shibuya',
             'type' => 'Shoes',
             'points' => 'Nice small shop for this cool Japanese sports brand. Great sneakers and some clothes. Style between Onitsuka and Asics.',
@@ -125,6 +126,8 @@ class StoresTableSeeder extends Seeder
 
         $store = Store::create([
             'name' => 'Under Armor',
+            'name_ja' => 'アンダーアーマー',
+            'business_status' => 'RELOCATED',
             'location' => 'Shibuya',
             'type' => 'Sports',
             'points' => 'Under Armor flagship. Nice sneakers on the first floor. 2 upper floors of sports wear for men and women.',
@@ -269,6 +272,7 @@ class StoresTableSeeder extends Seeder
 
         $store = Store::create([
             'name' => 'Tokyu Hands',
+            'business_status' => 'CLOSED_PERMANENTLY',
             'location' => 'Shibuya, Udagawacho',
             'type' => 'Creative Gifts',
             'points' => 'Big store offering an enormous variety of gifts, craft and... lots of stuff.',
@@ -434,6 +438,7 @@ class StoresTableSeeder extends Seeder
 
         $store = Store::create([
             'name' => 'Tokyu Honten',
+            'business_status' => 'CLOSED_PERMANENTLY',
             'location' => 'Shibuya, Bunkamura',
             'type' => 'Mall',
             'points' => 'Tokyu main department store. Luxury stuff.',
@@ -722,6 +727,7 @@ class StoresTableSeeder extends Seeder
 
         $store = Store::create([
             'name' => '999.9',
+            'name_ja' => 'フォーナインズ',
             'location' => 'Shibuya, Jinnan',
             'type' => 'Glasses',
             'points' => 'Decent but rather small, with some glasses and sunglasses.',
@@ -792,6 +798,9 @@ class StoresTableSeeder extends Seeder
 
         $store = Store::create([
             'name' => 'Kaneko optical',
+            'name_ja' => '金子眼鏡',
+            'business_status' => 'OPERATIONAL',
+            'google_place_id' => 'ChIJaXS8vsGLGGARfI5lksAlg6o',
             'location' => 'Shibuya, Hikarie',
             'type' => 'Glasses',
             'points' => 'Rather small. Limited choice. Nothing cheap.',

@@ -186,8 +186,8 @@ test('lists the reports newest first and maps one to the places', async () => {
     writeFileSync(join(ws.reportsDir, 'notes.txt'), 'not a report');
     const list = await ws.api('/api/reports');
     assert.deepEqual(list.body.reports, [
-        { file: '2026-11-19T2000-names.json', kind: 'names', date: '2026-11-19' },
-        { file: '2026-11-18T0930-all.json', kind: 'check', date: '2026-11-18' },
+        { file: '2026-11-19T2000-names.json', kind: 'names', date: '2026-11-19', label: '2026-11-19 20:00  names' },
+        { file: '2026-11-18T0930-all.json', kind: 'check', date: '2026-11-18', label: '2026-11-18 09:30  all  check' },
     ]);
     const mapped = await ws.api('/api/reports/2026-11-18T0930-all.json');
     assert.equal(mapped.status, 200);
