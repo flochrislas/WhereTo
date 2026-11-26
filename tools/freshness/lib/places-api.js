@@ -1,4 +1,4 @@
-// A small client for the two Google Places API (New) calls the tool needs.
+// A small client for the Google Places API (New) calls the tool needs.
 // https://developers.google.com/maps/documentation/places/web-service/text-search
 // https://developers.google.com/maps/documentation/places/web-service/place-details
 
@@ -8,6 +8,8 @@ const SEARCH_FIELDS = 'places.id,places.displayName,places.formattedAddress,plac
 const DETAILS_FIELDS = 'id,displayName,formattedAddress,location,businessStatus';
 // Ask for names in English where Google has one, so they compare with ours.
 const LANGUAGE = 'en';
+// check --names: only the name, in Japanese (same Pro SKU as the other Details call).
+const JAPANESE_FIELDS = 'displayName';
 
 // Creates the client. `fetch`, `now` and `sleep` can be replaced in tests (no network there).
 // minIntervalMs: the minimum time between two requests (200 ms = 5 requests per second).
@@ -63,6 +65,16 @@ export function createPlacesClient({
             return request(`${BASE_URL}/places/${encodeURIComponent(id)}?languageCode=${LANGUAGE}`, {
                 headers: { 'X-Goog-Api-Key': apiKey, 'X-Goog-FieldMask': DETAILS_FIELDS },
             });
+        },
+
+        // Place Details in Japanese: Google's Japanese name of the place, or null (unknown id, no name).
+        // Google may answer with another language when it has no Japanese name. The caller only
+        // compares it with ours: Google's terms forbid storing it (doc/11-data-freshness.md, section 8).
+        async getJapaneseName(id) {
+            const body = await request(`${BASE_URL}/places/${encodeURIComponent(id)}?languageCode=ja`, {
+                headers: { 'X-Goog-Api-Key': apiKey, 'X-Goog-FieldMask': JAPANESE_FIELDS },
+            });
+            return body?.displayName?.text ?? null;
         },
     };
 }

@@ -76,3 +76,13 @@ test('requests are spaced by the minimum interval', async () => {
     await client.getDetails('c');
     assert.deepEqual(waits, [150, 200]);
 });
+
+test('getJapaneseName asks Place Details in Japanese for the name only', async () => {
+    const fetch = fakeFetch([{ body: { displayName: { text: '博多風龍', languageCode: 'ja' } } }, { status: 404 }, { body: {} }]);
+    const client = createPlacesClient({ apiKey: 'KEY', fetch, minIntervalMs: 0 });
+    assert.equal(await client.getJapaneseName('ChIJa'), '博多風龍');
+    assert.equal(fetch.calls[0].url, 'https://places.googleapis.com/v1/places/ChIJa?languageCode=ja');
+    assert.equal(fetch.calls[0].options.headers['X-Goog-FieldMask'], 'displayName');
+    assert.equal(await client.getJapaneseName('ChIJgone'), null); // unknown id
+    assert.equal(await client.getJapaneseName('ChIJnoname'), null); // no name
+});

@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { classify, normalizeName, nameMatch, namesMatch, distanceMetres, pickCandidate, VERDICT_STATUS } from '../lib/classify.js';
+import { classify, normalizeName, nameMatch, namesMatch, nearMiss, editDistance, placeMatch, hasNearbyMatch, distanceMetres, pickCandidate, VERDICT_STATUS } from '../lib/classify.js';
 
 const ours = { kind: 'restaurants', name: 'Hakata Furyu', lat: 35.658545, lon: 139.698468 };
 
@@ -39,6 +39,53 @@ test('names are compared without case, spaces, punctuation or the branch after "
     assert.equal(nameMatch('Bar', 'Barbacoa'), null);
     assert.equal(nameMatch('Ba', 'Ba Ban'), null);
     assert.ok(!namesMatch('Hakata Furyu', 'Ichiran'));
+});
+
+test('a partial match also counts Google\'s name as whole words of ours', () => {
+    assert.equal(nameMatch('Les deux magots', 'Deux Magots'), 'partial');
+    assert.equal(nameMatch('Standing pizza bar Cona', 'CONA'), 'partial');
+    // Whole words only, and 3 characters or more.
+    assert.equal(nameMatch('Barbacoa Grill', 'Bar'), null);
+    assert.equal(nameMatch('Le Petit', 'Le'), null);
+});
+
+test('a near miss counts as partial: one letter for 6 characters or more, two for 10 or more', () => {
+    assert.equal(editDistance('tatsuichi', 'tasuichi'), 1);
+    assert.equal(nameMatch('Tatsu Ichi', 'TASUICHI'), 'partial');
+    assert.equal(nameMatch('Disc Union Shibuya', 'Disk Union Shibuya Jazz Rare Groove CD Record Store'), 'partial');
+    assert.equal(nameMatch('Yasube', 'Tsukemen Yasubee Shibuya'), 'partial');
+    assert.equal(nameMatch('Atomasashiya', 'Art Masashi-Ya'), 'partial'); // 12 characters, 2 apart
+    assert.equal(nameMatch('Guykatsu Motomura', 'Gyukatsu Motomura Shibuya Sub-branch'), 'partial');
+    assert.equal(nameMatch('Belle Mare Cafe', 'Bel Mare Cafe Shibuya'), 'partial');
+    // Too short for a near miss: Denzo is not Denso, Ippudo not Ichiran.
+    assert.equal(nameMatch('Denzo', 'Denso'), null);
+    assert.equal(nearMiss('yasube', 'yasubee'), true);
+    assert.equal(nearMiss('ramens', 'ramenz'), true);
+    assert.equal(nearMiss('kitchen', 'kitchens2'), false); // 2 apart, but under 10 characters
+    assert.equal(nameMatch('Ippudo', 'ICHIRAN Harajuku'), null);
+});
+
+test('false "replaced" cases from the first real run are now operational', () => {
+    for (const [name, theirs] of [['Tatsu Ichi', 'TASUICHI'], ['Disc Union Shibuya', 'Disk Union Shibuya Jazz Rare Groove CD Record Store'], ['Atomasashiya', 'Art Masashi-Ya']]) {
+        const place = { ...ours, name };
+        const r = classify(place, google({ name: theirs, north: 2 }));
+        assert.deepEqual([name, r.verdict, r.idTrusted], [name, 'operational', false]);
+    }
+    // A near miss never drives a status change.
+    assert.equal(classify({ ...ours, name: 'Tatsu Ichi' }, google({ name: 'TASUICHI', status: 'CLOSED_PERMANENTLY' })).verdict, 'unsure');
+});
+
+test('a confirmed name_ja counts as an exact name', () => {
+    const tengu = { ...ours, name: 'Tengu Sakaba', nameJa: '天狗酒場' };
+    const japanese = google({ name: '天狗酒場 渋谷西口店', status: 'CLOSED_PERMANENTLY', north: 9 });
+    assert.equal(placeMatch(tengu, japanese), 'exact');
+    const r = classify(tengu, japanese, { results: [japanese] });
+    assert.deepEqual([r.verdict, r.idTrusted], ['closed_permanently', true]);
+    // Without a name_ja, or with another one: names in different scripts.
+    assert.equal(classify({ ...tengu, nameJa: null }, japanese).verdict, 'unsure');
+    assert.equal(placeMatch({ ...tengu, nameJa: '金田丸' }, japanese), null);
+    assert.equal(hasNearbyMatch(tengu, [japanese]), true);
+    assert.equal(hasNearbyMatch({ ...tengu, nameJa: null }, [japanese]), false);
 });
 
 test('the distance is in metres (haversine)', () => {
@@ -83,10 +130,11 @@ test('replaced: another open business on our spot, and our name nowhere in the r
     assert.deepEqual([r.verdict, r.idTrusted], ['replaced', false]);
 });
 
-test('not replaced when the business on our spot is not open', () => {
-    assert.equal(classify(ours, google({ name: 'Ichiran', status: 'CLOSED_TEMPORARILY', north: 5 })).verdict, 'unsure');
-    assert.equal(classify(ours, google({ name: 'Ichiran', status: 'CLOSED_PERMANENTLY', north: 5 })).verdict, 'unsure');
-    assert.equal(classify(ours, google({ name: 'Ichiran', status: null, north: 5 })).verdict, 'unsure');
+test('not replaced when the business on our spot is not open: not found nearby', () => {
+    for (const status of ['CLOSED_TEMPORARILY', 'CLOSED_PERMANENTLY', null]) {
+        const r = classify(ours, google({ name: 'Ichiran', status, north: 5 }));
+        assert.deepEqual([r.verdict, r.reason], ['not_found_nearby', 'no match within 200 m, other businesses on the spot']);
+    }
 });
 
 test('a building with several tenants: our name elsewhere in the list keeps us operational', () => {
@@ -96,10 +144,10 @@ test('a building with several tenants: our name elsewhere in the list keeps us o
     const candidate = pickCandidate(ours, results);
     assert.equal(candidate.id, 'us');
     assert.equal(classify(ours, candidate, { results }).verdict, 'operational');
-    // Our name in the list but too far to be us: not replaced either, unsure.
+    // Our name in the list but too far to be us: not replaced either, not found nearby.
     const farUs = google({ name: 'Hakata Furyu', north: 400, id: 'far' });
     const r = classify(ours, pickCandidate(ours, [neighbour, farUs]), { results: [neighbour, farUs] });
-    assert.equal(r.verdict, 'unsure');
+    assert.deepEqual([r.verdict, r.reason], ['not_found_nearby', 'no match within 200 m, nearest same name 400 m away']);
     // Ours absent from the list: replaced.
     assert.equal(classify(ours, neighbour, { results: [neighbour] }).verdict, 'replaced');
 });
@@ -149,13 +197,31 @@ test('a Japanese-only name on our spot is unsure, never replaced', () => {
     assert.equal(classify(ours, google({ name: '一蘭', north: 30 })).verdict, 'unsure');
 });
 
-test('unsure: nothing found, too far, another name a bit farther, or no status', () => {
-    assert.equal(classify(ours, null).verdict, 'unsure');
-    assert.equal(classify(ours, google({ north: 80 })).verdict, 'unsure');
-    assert.equal(classify(ours, google({ status: 'CLOSED_PERMANENTLY', north: 80 })).verdict, 'unsure');
-    assert.equal(classify(ours, google({ name: 'Ichiran', north: 30 })).verdict, 'unsure');
+test('unsure: our name 50 to 200 m away but not open, or no status', () => {
+    const r = classify(ours, google({ status: 'CLOSED_PERMANENTLY', north: 80 }));
+    assert.deepEqual([r.verdict, r.reason], ['unsure', 'same name 80 m away, Google says CLOSED_PERMANENTLY']);
+    // A temporarily closed place does not reopen on a result that far.
+    assert.equal(classify({ ...ours, businessStatus: 'CLOSED_TEMPORARILY' }, google({ north: 80 })).verdict, 'unsure');
     assert.equal(classify(ours, google({ status: null })).verdict, 'unsure');
-    assert.match(classify(ours, null).reason, /not found/);
+});
+
+test('operational: our name 50 to 200 m away and open, without storing the id', () => {
+    const r = classify(ours, google({ north: 97 }));
+    assert.deepEqual([r.verdict, r.reason, r.idTrusted], ['operational', 'same name 97 m away', false]);
+    const partial = classify(ours, google({ name: 'Hakata Furyu Center Gai', north: 150 }));
+    assert.deepEqual([partial.verdict, partial.idTrusted], ['operational', false]);
+    // pickCandidate takes it over a stranger nearer.
+    const stranger = google({ name: 'Ichiran', north: 5, id: 'stranger' });
+    const us = google({ north: 120, id: 'us' });
+    assert.equal(pickCandidate(ours, [stranger, us]).id, 'us');
+});
+
+test('not found nearby: nothing found, or no result with our name within 200 m', () => {
+    assert.deepEqual([classify(ours, null).verdict, classify(ours, null).reason], ['not_found_nearby', 'no match within 200 m, nothing found']);
+    const far = classify(ours, google({ north: 1745 }));
+    assert.deepEqual([far.verdict, far.reason, far.idTrusted], ['not_found_nearby', 'no match within 200 m, nearest same name 1745 m away', false]);
+    const other = classify(ours, google({ name: 'Ichiran', north: 30 }));
+    assert.deepEqual([other.verdict, other.reason], ['not_found_nearby', 'no match within 200 m, nearest result 30 m away']);
 });
 
 test('a place looked up by its stored id trusts the status, whatever the name', () => {
@@ -167,6 +233,7 @@ test('a place looked up by its stored id trusts the status, whatever the name', 
 
 test('the verdicts that change the status map to the app values', () => {
     assert.deepEqual(VERDICT_STATUS, {
+        operational: 'OPERATIONAL',
         reopened: 'OPERATIONAL',
         closed_permanently: 'CLOSED_PERMANENTLY',
         closed_temporarily: 'CLOSED_TEMPORARILY',
@@ -174,11 +241,18 @@ test('the verdicts that change the status map to the app values', () => {
     });
 });
 
-test('pickCandidate prefers a matching name within 50 m, then the nearest result', () => {
+test('pickCandidate prefers a matching name within 50 m, then within 200 m, then the nearest result', () => {
     const far = google({ name: 'Hakata Furyu', north: 400, id: 'far' });
     const near = google({ name: 'Ichiran', north: 3, id: 'near' });
     const match = google({ name: 'Hakata Furyu', north: 20, id: 'match' });
     assert.equal(pickCandidate(ours, [far, near, match]).id, 'match');
     assert.equal(pickCandidate(ours, [far, near]).id, 'near');
     assert.equal(pickCandidate(ours, []), null);
+});
+
+test('a near miss never differs in its digits', () => {
+    assert.equal(nearMiss('karaokekan1', 'karaokekan2'), false);
+    assert.equal(nearMiss('shibuya109', 'shibuya108'), false);
+    assert.equal(nameMatch('Bar 109 Lounge', 'Bar 108 Lounge'), null);
+    assert.equal(nearMiss('shibuya109', 'shibuia109'), true); // the same digits, one letter apart
 });

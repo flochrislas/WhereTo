@@ -1,7 +1,7 @@
 {
   "name": "whereto-freshness",
   "private": true,
-  "description": "Checks the WhereTo places against Google Places and marks the closed ones in the seeders. See README.md.",
+  "description": "Checks the WhereTo places against Google Places and marks the closed ones in the seeders, and fills their Japanese names from OpenStreetMap. See README.md.",
   "type": "module",
   "engines": {
     "node": ">=22"
@@ -9,6 +9,9 @@
   "scripts": {
     "check": "node check.js",
     "apply": "node apply.js",
+    "names": "node names.js",
+    "edit": "node edit.js",
+    "tabelog": "node tabelog.js",
     "test": "node --test"
   },
   "dependencies": {

@@ -50,7 +50,7 @@ class SitemapTest extends TestCase
         $this->assertStringNotContainsString('192.0.2.1', $xml);
     }
 
-    /** The home and main pages in every language; the place pages in English only while no place has a Japanese name */
+    /** The home and main pages in every language; the place pages in English, and in Japanese only with a Japanese name */
     public function test_sitemap_lists_the_pages_in_every_language_and_the_places_where_indexable(): void
     {
         $restaurant = Restaurant::create(['name' => 'Reviewed']);
@@ -62,6 +62,18 @@ class SitemapTest extends TestCase
         $this->assertStringNotContainsString(route('ja.restaurants.details.single', $restaurant->id), $xml);
         // Cached under a key that names the languages: a new language cannot be served the old sitemap
         $this->assertTrue(Cache::has('sitemap-en-ja'));
+    }
+
+    /** A place with a Japanese name gets its Japanese page in the sitemap, next to the English one */
+    public function test_sitemap_lists_the_japanese_page_of_a_place_with_a_japanese_name(): void
+    {
+        $named = Store::create(['name' => 'A shop', 'name_ja' => 'お店']);
+        $unnamed = Store::create(['name' => 'Another shop']);
+        $xml = $this->get('/sitemap.xml')->assertOk()->getContent();
+        $this->assertStringContainsString('<loc>'.route('stores.details.single', $named->id).'</loc>', $xml);
+        $this->assertStringContainsString('<loc>'.route('ja.stores.details.single', $named->id).'</loc>', $xml);
+        $this->assertStringContainsString('<loc>'.route('stores.details.single', $unnamed->id).'</loc>', $xml);
+        $this->assertStringNotContainsString('<loc>'.route('ja.stores.details.single', $unnamed->id).'</loc>', $xml);
     }
 
     /** The page of a closed place stays reachable, but is not offered to the search engines */

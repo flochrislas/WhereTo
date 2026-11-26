@@ -77,6 +77,7 @@
     "temporarily closed": "臨時休業中",
     "permanently closed": "閉店",
     "replaced by another business": "別のお店に変わりました",
+    "moved to another address": "移転しました",
     ":name, :status": ":name（:status）",
     "Stores in Shibuya": "渋谷のショップ",
     "Quickly find the best stores for shopping in Shibuya.": "渋谷で買い物におすすめのお店をすばやく検索。",
@@ -100,5 +101,6 @@
     "VIP area: coming later.": "VIPエリア：準備中。",
     "Match :all or :any": ":all か :any に一致",
     "all tags": "すべてのタグ",
-    "any tag": "いずれかのタグ"
+    "any tag": "いずれかのタグ",
+    "Japanese place names:": "店名の日本語表記："
 }

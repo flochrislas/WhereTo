@@ -12,6 +12,7 @@ use App\Models\Store;
 use App\Models\StoreTag;
 use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Cache;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Tests\TestCase;
 
@@ -207,37 +208,79 @@ class LocaleTest extends TestCase
         }
     }
 
-    public function test_a_place_with_japanese_content_gets_both_alternates(): void
+    public function test_japanese_content_is_a_japanese_name(): void
     {
-        // A restaurant that says it has Japanese content (what name_ja will do), not French: the rule of the models
-        $withJapanese = new class extends Restaurant
-        {
-            protected $table = 'restaurants';
-
-            public function hasContentIn(string $locale): bool
-            {
-                return in_array($locale, ['en', 'ja'], true);
-            }
-        };
-        $this->assertTrue($withJapanese->isIndexableIn('en'));
-        $this->assertTrue($withJapanese->isIndexableIn('ja'));
-        $this->assertFalse($withJapanese->isIndexableIn('fr'));
-        $withJapanese->setRawAttributes(['business_status' => 'REPLACED']);
-        $this->assertFalse($withJapanese->isIndexableIn('en'));
-        $this->assertFalse($withJapanese->isIndexableIn('ja'));
-        // Today's rule: English only
+        // English: always; Japanese: with a name_ja (a blank one counts as none); no French content at all
+        $named = new Restaurant(['name' => 'Menya Test', 'name_ja' => '麺屋テスト']);
+        $this->assertTrue($named->isIndexableIn('en'));
+        $this->assertTrue($named->isIndexableIn('ja'));
+        $this->assertFalse($named->isIndexableIn('fr'));
+        $this->assertSame('麺屋テスト', $named->nameIn('ja'));
+        $this->assertSame('Menya Test', $named->nameIn('en'));
+        $this->assertFalse((new Restaurant(['name' => 'Menya Test', 'name_ja' => ' ']))->isIndexableIn('ja'));
+        $this->assertSame('Menya Test', (new Restaurant(['name' => 'Menya Test']))->nameIn('ja'));
         $this->assertTrue((new Restaurant)->isIndexableIn('en'));
         $this->assertFalse((new Restaurant)->isIndexableIn('ja'));
+        // Gone for good: in no language, Japanese name or not
+        $named->setRawAttributes(['name_ja' => '麺屋テスト', 'business_status' => 'REPLACED']);
+        $this->assertFalse($named->isIndexableIn('en'));
+        $this->assertFalse($named->isIndexableIn('ja'));
+    }
 
-        // The indexing component with such a place, on its English page: both alternates and x-default
+    #[DataProvider('placeTypes')]
+    public function test_a_place_with_a_japanese_name_is_indexable_in_both_languages(string $plural, string $singular, string $model, string $tagModel, string $tag): void
+    {
+        $place = $this->seedOne($model, $tagModel, $tag);
+        $place->update(['name_ja' => '麺屋テスト']);
+        $english = url("/$singular/details/{$place->id}");
+        $japanese = url("/ja/$singular/details/{$place->id}");
+
+        // Japanese page: indexable, both alternates, the Japanese name first (title, heading, name box, JSON-LD)
+        $html = (string) $this->get("/ja/$singular/details/{$place->id}")->assertOk()
+            ->assertDontSee('name="robots"', false)
+            ->assertSee('<link rel="alternate" hreflang="en" href="'.$english.'">', false)
+            ->assertSee('<link rel="alternate" hreflang="ja" href="'.$japanese.'">', false)
+            ->assertSee('<link rel="alternate" hreflang="x-default" href="'.$english.'">', false)
+            ->assertSee('<title>'.config('app.name').' - 麺屋テスト Menya Test - ', false)
+            ->assertSee('<meta property="og:title" content="麺屋テスト Menya Test - ', false)
+            ->assertSee('<meta name="description" content="', false)
+            ->assertSee('<div>麺屋テスト <span lang="en">Menya Test</span></div>', false)
+            ->assertSee('"name":"麺屋テスト"', false)
+            ->assertSee('"url":"'.$japanese.'"', false)
+            ->getContent();
+        $this->assertMatchesRegularExpression('#<h1 class="visuallyHidden">\s*麺屋テスト <span lang="en">Menya Test</span>\s*</h1>#u', $html);
+        $this->assertMatchesRegularExpression('#<meta name="description" content="[^"]*麺屋テスト Menya Test#u', $html);
+
+        // English page: the same pair of alternates, and nothing Japanese
+        $this->get("/$singular/details/{$place->id}")->assertOk()
+            ->assertDontSee('name="robots"', false)
+            ->assertSee('<link rel="alternate" hreflang="ja" href="'.$japanese.'">', false)
+            ->assertSee('<title>'.config('app.name').' - Menya Test - ', false)
+            ->assertSee('<h1 class="visuallyHidden">Menya Test</h1>', false)
+            ->assertSee('"name":"Menya Test"', false)
+            ->assertDontSee('麺屋テスト');
+
+        // The list rows and the details fragment: Japanese name first on /ja, unchanged in English
+        $results = "$plural/results?op=AND&tags=".urlencode($tag).'&orderBy=distance&position=null';
+        $this->get("/ja/$results")->assertOk()
+            ->assertSee('<div class="rowName">麺屋テスト <span lang="en">Menya Test</span></div>', false);
+        $this->get("/$results")->assertOk()
+            ->assertSee('<div class="rowName" lang="en">Menya Test</div>', false)
+            ->assertDontSee('麺屋テスト');
+        $this->get("/ja/$plural/details/{$place->id}")->assertOk()
+            ->assertSee('id="detailName" class="detail" detailId="'.$place->id.'"><div>麺屋テスト <span lang="en">Menya Test</span></div>', false);
+        $this->get("/$plural/details/{$place->id}")->assertOk()
+            ->assertSee('id="detailName" class="detail" detailId="'.$place->id.'" lang="en"><div>Menya Test</div>', false)
+            ->assertDontSee('麺屋テスト');
+    }
+
+    public function test_the_title_of_a_closed_place_with_a_japanese_name(): void
+    {
         $place = $this->seedOne(Restaurant::class, RestaurantTag::class, 'ramen');
-        $fake = $withJapanese->newFromBuilder($place->getAttributes());
-        $this->get("/restaurant/details/{$place->id}"); // a request, so that the component knows the current route
-        $html = (string) $this->blade('<x-indexing :place="$place" />@stack(\'head\')', ['place' => $fake]);
-        $this->assertStringContainsString('<link rel="alternate" hreflang="en" href="'.url("/restaurant/details/{$place->id}").'">', $html);
-        $this->assertStringContainsString('<link rel="alternate" hreflang="ja" href="'.url("/ja/restaurant/details/{$place->id}").'">', $html);
-        $this->assertStringContainsString('<link rel="alternate" hreflang="x-default" href="'.url("/restaurant/details/{$place->id}").'">', $html);
-        $this->assertStringNotContainsString('noindex', $html);
+        $place->update(['name_ja' => '麺屋テスト', 'business_status' => 'CLOSED_TEMPORARILY']);
+        // Both names, then the status written the Japanese way
+        $this->get("/ja/restaurant/details/{$place->id}")->assertOk()
+            ->assertSee('<title>'.config('app.name').' - 麺屋テスト Menya Test（', false);
     }
 
     public function test_the_english_only_info_page_is_noindex_in_japanese(): void
@@ -246,7 +289,10 @@ class LocaleTest extends TestCase
         $this->get('/ja/info/main')->assertOk()
             ->assertSee('<html lang="ja"', false)
             ->assertSee('<meta name="robots" content="noindex">', false)
-            ->assertSee('<div lang="en">', false);
+            ->assertSee('<div lang="en">', false)
+            // The attribution of the Japanese names (OpenStreetMap licence), in the language of the page
+            ->assertSee('店名の日本語表記： <a href="https://www.openstreetmap.org/copyright" lang="en">© OpenStreetMap contributors</a>', false);
+        $this->get('/info/main')->assertSee('Japanese place names: <a href="https://www.openstreetmap.org/copyright" lang="en">© OpenStreetMap contributors</a>', false);
     }
 
     public function test_tag_label_falls_back_to_english(): void
@@ -268,6 +314,14 @@ class LocaleTest extends TestCase
         $sentence = trim((string) $this->get('/ja/suggestions?position=null')->assertOk()->getContent());
         $this->assertSame('<a href="'.url("/ja/restaurant/details/{$place->id}").'" lang="en">Only one</a>はいかが？おいしいラーメンのお店です。', $sentence);
         // And in English, lower case as before
+        $english = trim((string) $this->get('/suggestions?position=null')->assertOk()->getContent());
+        $this->assertSame('How about a nice ramen restaurant, <a href="'.url("/restaurant/details/{$place->id}").'" lang="en">Only one</a>?', $english);
+
+        // With a Japanese name: shown on /ja without lang="en", the English name still in English
+        $place->update(['name_ja' => 'ひとつだけ']);
+        Cache::flush(); // the suggestion reads the places from the cache
+        $sentence = trim((string) $this->get('/ja/suggestions?position=null')->assertOk()->getContent());
+        $this->assertSame('<a href="'.url("/ja/restaurant/details/{$place->id}").'">ひとつだけ</a>はいかが？おいしいラーメンのお店です。', $sentence);
         $english = trim((string) $this->get('/suggestions?position=null')->assertOk()->getContent());
         $this->assertSame('How about a nice ramen restaurant, <a href="'.url("/restaurant/details/{$place->id}").'" lang="en">Only one</a>?', $english);
     }

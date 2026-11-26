@@ -25,7 +25,8 @@ final class StructuredData
         $data = [
             '@context' => 'https://schema.org',
             '@type' => $type,
-            'name' => $place->getAttribute('name'),
+            // The name in the language of the page: the Japanese one on a Japanese page (name_ja)
+            'name' => $place->nameIn(app()->getLocale()),
             'url' => $url,
         ];
 

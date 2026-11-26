@@ -25,6 +25,8 @@ class StoresTableSeeder extends Seeder
 
         $store = Store::create([
             'name' => 'Yamada Denki LABI',
+            'name_ja' => 'LABI渋谷',
+            'business_status' => 'OPERATIONAL',
             'location' => 'Shibuya',
             'type' => 'Electronics',
             'points' => 'Big store with lots of appliances, audio and video electronics, phones, cameras and games.',
@@ -38,6 +40,8 @@ class StoresTableSeeder extends Seeder
 
         $store = Store::create([
             'name' => 'Asics Flagship',
+            'name_ja' => 'アシックス原宿フラッグシップ',
+            'business_status' => 'OPERATIONAL',
             'location' => 'Harajuku',
             'type' => 'Sports',
             'points' => 'Japanese sports wear. Specialized in sneakers using gel technology.',
@@ -51,6 +55,9 @@ class StoresTableSeeder extends Seeder
 
         $store = Store::create([
             'name' => 'Shibuya109',
+            'name_ja' => 'シブヤイチマルキュー',
+            'business_status' => 'OPERATIONAL',
+            'google_place_id' => 'ChIJhxxszamMGGARcuAXpFunolU',
             'location' => 'Shibuya',
             'type' => 'Fashion',
             'points' => 'The famous 109. Fashion for girls.',
@@ -64,6 +71,9 @@ class StoresTableSeeder extends Seeder
 
         $store = Store::create([
             'name' => 'Magnet by Shibuya109',
+            'name_ja' => 'マグネット バイ シブヤ109',
+            'business_status' => 'OPERATIONAL',
+            'google_place_id' => 'ChIJu7Og_VeLGGARpxf60AU-EGw',
             'location' => 'Shibuya',
             'type' => 'Fashion',
             'points' => 'Previously called 109men. Small shops mostly for young men\'s fashion.',
@@ -77,6 +87,8 @@ class StoresTableSeeder extends Seeder
 
         $store = Store::create([
             'name' => 'Asics Tiger',
+            'name_ja' => 'アシックスタイガー',
+            'business_status' => 'REPLACED',
             'location' => 'Shibuya',
             'type' => 'Shoes',
             'points' => 'Nice small shop for this cool Japanese sports brand. Great sneakers and some clothes. Style between Onitsuka and Asics.',
@@ -90,6 +102,9 @@ class StoresTableSeeder extends Seeder
 
         $store = Store::create([
             'name' => 'Onitsuka Tiger',
+            'name_ja' => 'オニツカタイガー',
+            'business_status' => 'OPERATIONAL',
+            'google_place_id' => 'ChIJEQ92ZKiMGGARj7K-lovMljQ',
             'location' => 'Shibuya',
             'type' => 'Shoes',
             'points' => 'Nice small shop for this cool Japanese sports brand. Great sneakers and some clothes.',
@@ -103,6 +118,8 @@ class StoresTableSeeder extends Seeder
 
         $store = Store::create([
             'name' => 'Adidas',
+            'name_ja' => 'アディダス',
+            'business_status' => 'OPERATIONAL',
             'location' => 'Shibuya',
             'type' => 'Sports',
             'points' => 'Adidas "Brand Core" store. Nice but possibly pricey sneakers on the first floor. 2 upper floors of sports wear for men and women.',
@@ -116,6 +133,8 @@ class StoresTableSeeder extends Seeder
 
         $store = Store::create([
             'name' => 'Under Armor',
+            'name_ja' => 'アンダーアーマー',
+            'business_status' => 'RELOCATED',
             'location' => 'Shibuya',
             'type' => 'Sports',
             'points' => 'Under Armor flagship. Nice sneakers on the first floor. 2 upper floors of sports wear for men and women.',
@@ -129,6 +148,9 @@ class StoresTableSeeder extends Seeder
 
         $store = Store::create([
             'name' => 'ABC Mart',
+            'name_ja' => 'ABCマート',
+            'business_status' => 'OPERATIONAL',
+            'google_place_id' => 'ChIJUWpetKmMGGARmrGFvI1axEg',
             'location' => 'Shibuya',
             'type' => 'Shoes',
             'points' => 'Various sneakers from popular brands.',
@@ -142,6 +164,9 @@ class StoresTableSeeder extends Seeder
 
         $store = Store::create([
             'name' => 'Asics Walking',
+            'name_ja' => 'アシックスウォーキング',
+            'business_status' => 'OPERATIONAL',
+            'google_place_id' => 'ChIJVVXp6liLGGARG5dsDhvPog4',
             'location' => 'Shibuya',
             'type' => 'Shoes',
             'points' => 'Dress shoes from Asics (Japanese sneakers brand).',
@@ -155,6 +180,8 @@ class StoresTableSeeder extends Seeder
 
         $store = Store::create([
             'name' => 'Glitter',
+            'name_ja' => 'グリッター',
+            'business_status' => 'REPLACED',
             'location' => 'Shibuya',
             'type' => 'Shoes',
             'points' => 'Small shoe shop',
@@ -168,6 +195,9 @@ class StoresTableSeeder extends Seeder
 
         $store = Store::create([
             'name' => 'Western Arms',
+            'name_ja' => 'ウエスタン・アームズ',
+            'business_status' => 'OPERATIONAL',
+            'google_place_id' => 'ChIJF3pqwViLGGARkf5tHf0FuxA',
             'location' => 'Shibuya',
             'type' => 'Airsoft guns',
             'points' => 'Airsoft guns, replicas from anime, movies and military.',
@@ -181,6 +211,8 @@ class StoresTableSeeder extends Seeder
 
         $store = Store::create([
             'name' => 'Tokyu',
+            'name_ja' => '東急百貨店東横店',
+            'business_status' => 'CLOSED_PERMANENTLY',
             'location' => 'Shibuya',
             'type' => 'Mall',
             'points' => 'Mall merged with the Shibuya train station.',
@@ -194,6 +226,8 @@ class StoresTableSeeder extends Seeder
 
         $store = Store::create([
             'name' => 'Yamaya',
+            'name_ja' => 'やまや',
+            'business_status' => 'OPERATIONAL',
             'location' => 'Shibuya',
             'type' => 'World liquor',
             'points' => 'Lots of Japanese and imported beverages. Some snacks, sweet, and other imported condiments as well.',
@@ -207,6 +241,8 @@ class StoresTableSeeder extends Seeder
 
         $store = Store::create([
             'name' => 'B&D',
+            'name_ja' => 'ビーアンドディー',
+            'business_status' => 'CLOSED_PERMANENTLY',
             'location' => 'Shibuya',
             'type' => 'Sports',
             'points' => 'Nice and relatively large sports shop.',
@@ -220,6 +256,9 @@ class StoresTableSeeder extends Seeder
 
         $store = Store::create([
             'name' => 'Daiso',
+            'name_ja' => 'ダイソー',
+            'business_status' => 'OPERATIONAL',
+            'google_place_id' => 'ChIJvamhX6mMGGARf280p9g3Va8',
             'location' => 'Shibuya',
             'type' => '100yen shop',
             'points' => 'All items are sold for 100 yen (+tax), and there is a lot of stuff.',
@@ -233,6 +272,8 @@ class StoresTableSeeder extends Seeder
 
         $store = Store::create([
             'name' => 'Can Do',
+            'name_ja' => 'キャンドゥ',
+            'business_status' => 'CLOSED_PERMANENTLY',
             'location' => 'Shibuya',
             'type' => '100yen shop',
             'points' => 'All items are sold for 100 yen (+tax), and there is a lot of stuff.',
@@ -246,6 +287,8 @@ class StoresTableSeeder extends Seeder
 
         $store = Store::create([
             'name' => 'Tokyu Hands',
+            'name_ja' => '東急ハンズ',
+            'business_status' => 'CLOSED_PERMANENTLY',
             'location' => 'Shibuya, Udagawacho',
             'type' => 'Creative Gifts',
             'points' => 'Big store offering an enormous variety of gifts, craft and... lots of stuff.',
@@ -289,6 +332,9 @@ class StoresTableSeeder extends Seeder
 
         $store = Store::create([
             'name' => 'Janpara',
+            'name_ja' => 'じゃんぱら',
+            'business_status' => 'OPERATIONAL',
+            'google_place_id' => 'ChIJK2Vk2amMGGARBa5MfvSFnK4',
             'location' => 'Shibuya, Dogenzaka',
             'type' => 'Used Electronics',
             'points' => 'Small shop. Buy and sell second hand smartphones and electronics..',
@@ -302,6 +348,9 @@ class StoresTableSeeder extends Seeder
 
         $store = Store::create([
             'name' => 'Janpara',
+            'name_ja' => 'じゃんぱら',
+            'business_status' => 'OPERATIONAL',
+            'google_place_id' => 'ChIJX8E3CqmMGGARP8sAlU0Ny94',
             'location' => 'Shibuya, Udagawa',
             'type' => 'Used Electronics',
             'points' => 'Small shop, on 2 floors. Buy and sell second hand smartphones and electronics.',
@@ -315,6 +364,8 @@ class StoresTableSeeder extends Seeder
 
         $store = Store::create([
             'name' => 'Mark City',
+            'name_ja' => '渋谷マークシティ',
+            'business_status' => 'OPERATIONAL',
             'location' => 'Shibuya, station',
             'type' => 'Mall',
             'points' => 'Big mall attached to Shibuya station.',
@@ -339,6 +390,8 @@ class StoresTableSeeder extends Seeder
 
         $store = Store::create([
             'name' => 'Seibu',
+            'name_ja' => '西武渋谷店',
+            'business_status' => 'OPERATIONAL',
             'location' => 'Shibuya, Seibu',
             'type' => 'Mall',
             'points' => 'Big spacious mall with multitudes of small luxury shops.',
@@ -376,6 +429,8 @@ class StoresTableSeeder extends Seeder
 
         $store = Store::create([
             'name' => 'Hikarie ShinQs',
+            'name_ja' => '渋谷ヒカリエ ShinQs',
+            'business_status' => 'OPERATIONAL',
             'location' => 'Shibuya, Hikarie',
             'type' => 'Mall',
             'points' => 'Fancy mall, connected to Shibuya station.',
@@ -403,6 +458,8 @@ class StoresTableSeeder extends Seeder
 
         $store = Store::create([
             'name' => 'Tokyu Honten',
+            'name_ja' => '東急百貨店本店',
+            'business_status' => 'CLOSED_PERMANENTLY',
             'location' => 'Shibuya, Bunkamura',
             'type' => 'Mall',
             'points' => 'Tokyu main department store. Luxury stuff.',
@@ -416,6 +473,8 @@ class StoresTableSeeder extends Seeder
 
         $store = Store::create([
             'name' => 'Lighthouse Records',
+            'name_ja' => 'ライトハウスレコーズ',
+            'business_status' => 'RELOCATED',
             'location' => 'Shibuya',
             'type' => 'Records',
             'points' => 'Cool shop, great for electronic and house music.',
@@ -429,6 +488,9 @@ class StoresTableSeeder extends Seeder
 
         $store = Store::create([
             'name' => 'HMV Record Shop',
+            'name_ja' => 'HMVレコードショップ',
+            'business_status' => 'OPERATIONAL',
+            'google_place_id' => 'ChIJoyRZQamMGGAR1QXLgPSo7oE',
             'location' => 'Shibuya, Udagawacho',
             'type' => 'Records',
             'points' => 'Big chain of records shops.',
@@ -442,6 +504,9 @@ class StoresTableSeeder extends Seeder
 
         $store = Store::create([
             'name' => 'Face Records',
+            'name_ja' => 'フェイスレコード',
+            'business_status' => 'OPERATIONAL',
+            'google_place_id' => 'ChIJBd3QB6yMGGARztJ-sz4Duno',
             'location' => 'Shibuya, Udagawacho',
             'type' => 'Records',
             'points' => 'Great for soul, jazz and reggae on vinyl',
@@ -455,6 +520,9 @@ class StoresTableSeeder extends Seeder
 
         $store = Store::create([
             'name' => 'Next Records',
+            'name_ja' => 'ネクストレコード',
+            'business_status' => 'OPERATIONAL',
+            'google_place_id' => 'ChIJo6_kTamMGGARoH3P80JuQwU',
             'location' => 'Shibuya, Udagawacho',
             'type' => 'Records',
             'points' => 'Vinyls for funk, disco, dance or RnB.',
@@ -468,6 +536,8 @@ class StoresTableSeeder extends Seeder
 
         $store = Store::create([
             'name' => 'Technique',
+            'name_ja' => 'テクニーク',
+            'business_status' => 'RELOCATED',
             'location' => 'Shibuya, Udagawacho',
             'type' => 'Records',
             'points' => 'Great for electronic music on vinyl.',
@@ -481,6 +551,9 @@ class StoresTableSeeder extends Seeder
 
         $store = Store::create([
             'name' => 'Manhattan Records',
+            'name_ja' => 'マンハッタンレコード',
+            'business_status' => 'OPERATIONAL',
+            'google_place_id' => 'ChIJYQBxTqmMGGAR4SKO82UNbs4',
             'location' => 'Shibuya, Udagawacho',
             'type' => 'Records',
             'points' => 'Awesome for rap and hip-hop.',
@@ -494,6 +567,8 @@ class StoresTableSeeder extends Seeder
 
         $store = Store::create([
             'name' => 'Disc Union Shibuya',
+            'name_ja' => 'ディスクユニオン',
+            'business_status' => 'OPERATIONAL',
             'location' => 'Shibuya, Udagawacho',
             'type' => 'Records',
             'points' => 'Very popular store for music and vinyls discs.',
@@ -507,6 +582,9 @@ class StoresTableSeeder extends Seeder
 
         $store = Store::create([
             'name' => 'Tower Records Shibuya',
+            'name_ja' => 'タワーレコード',
+            'business_status' => 'OPERATIONAL',
+            'google_place_id' => 'ChIJ1Ya6fqiMGGAR8FTtP_6yeMg',
             'location' => 'Shibuya, Jinnan',
             'type' => 'Records',
             'points' => 'Biggest records store in Japan.',
@@ -520,6 +598,9 @@ class StoresTableSeeder extends Seeder
 
         $store = Store::create([
             'name' => 'Mont-Bell',
+            'name_ja' => 'モンベル',
+            'business_status' => 'OPERATIONAL',
+            'google_place_id' => 'ChIJ19BkOKmMGGARV82saSruEaM',
             'location' => 'Shibuya, Udagawacho',
             'type' => 'Outdoor',
             'points' => 'Big store selling all kind of outdoor clothes and gear.',
@@ -541,6 +622,8 @@ class StoresTableSeeder extends Seeder
 
         $store = Store::create([
             'name' => 'Function Junction',
+            'name_ja' => 'ファンクションジャンクション',
+            'business_status' => 'RELOCATED',
             'location' => 'Shibuya, Udagawacho',
             'type' => 'Outdoor',
             'points' => 'Small shop, cool outdoor clothes and gear.',
@@ -554,6 +637,8 @@ class StoresTableSeeder extends Seeder
 
         $store = Store::create([
             'name' => 'A&F Country',
+            'name_ja' => 'A&Fカントリー',
+            'business_status' => 'CLOSED_PERMANENTLY',
             'location' => 'Shibuya, Hikarie',
             'type' => 'Outdoor',
             'points' => 'Nice outdoor shop inside the Hikarie building.',
@@ -583,6 +668,8 @@ class StoresTableSeeder extends Seeder
 
         $store = Store::create([
             'name' => 'Ikebe Digital Tower',
+            'name_ja' => 'イケベ・デジタル・タワー',
+            'business_status' => 'OPERATIONAL',
             'location' => 'Shibuya',
             'type' => 'Music gear',
             'points' => 'Sells and show stuff for DJs and home studio, keyboards and pianos.',
@@ -602,6 +689,9 @@ class StoresTableSeeder extends Seeder
 
         $store = Store::create([
             'name' => 'Zoff',
+            'name_ja' => 'ゾフ',
+            'business_status' => 'OPERATIONAL',
+            'google_place_id' => 'ChIJ4yddD1aLGGAR6MGMHsPSpCQ',
             'location' => 'Shibuya, Mark City',
             'type' => 'Glasses',
             'points' => 'Decent choice, nice prices.',
@@ -615,6 +705,8 @@ class StoresTableSeeder extends Seeder
 
         $store = Store::create([
             'name' => 'Zoff',
+            'name_ja' => 'ゾフ',
+            'business_status' => 'OPERATIONAL',
             'location' => 'Shibuya, Center Gai',
             'type' => 'Glasses',
             'points' => 'Decent choice, nice prices.',
@@ -628,6 +720,8 @@ class StoresTableSeeder extends Seeder
 
         $store = Store::create([
             'name' => 'Washin Optical Shibuya',
+            'name_ja' => '和真メガネ',
+            'business_status' => 'CLOSED_PERMANENTLY',
             'location' => 'Shibuya, Udagawacho',
             'type' => 'Glasses',
             'points' => 'Lots of choice, can be pricey.',
@@ -641,6 +735,9 @@ class StoresTableSeeder extends Seeder
 
         $store = Store::create([
             'name' => 'Megane Ichiba',
+            'name_ja' => '眼鏡市場',
+            'business_status' => 'OPERATIONAL',
+            'google_place_id' => 'ChIJTWDTEqiMGGARmZKt48PwsAY',
             'location' => 'Shibuya, Udagawacho',
             'type' => 'Glasses',
             'points' => 'Very decent choice, some sunglasses, decent prices.',
@@ -654,6 +751,8 @@ class StoresTableSeeder extends Seeder
 
         $store = Store::create([
             'name' => 'Owndays',
+            'name_ja' => 'オンデーズ',
+            'business_status' => 'OPERATIONAL',
             'location' => 'Shibuya, Mark City',
             'type' => 'Glasses',
             'points' => 'Very small, very little choice.',
@@ -667,6 +766,8 @@ class StoresTableSeeder extends Seeder
 
         $store = Store::create([
             'name' => '999.9',
+            'name_ja' => 'フォーナインズ',
+            'business_status' => 'RELOCATED',
             'location' => 'Shibuya, Jinnan',
             'type' => 'Glasses',
             'points' => 'Decent but rather small, with some glasses and sunglasses.',
@@ -680,6 +781,9 @@ class StoresTableSeeder extends Seeder
 
         $store = Store::create([
             'name' => 'Eyewear Mebius',
+            'name_ja' => 'アイウェア・メビウス',
+            'business_status' => 'OPERATIONAL',
+            'google_place_id' => 'ChIJ_8_H76iMGGARIcynDzhsIGs',
             'location' => 'Shibuya, Jinnan',
             'type' => 'Glasses',
             'points' => 'Small shop with some models out of the ordinary.',
@@ -693,6 +797,8 @@ class StoresTableSeeder extends Seeder
 
         $store = Store::create([
             'name' => 'Megane Super',
+            'name_ja' => 'メガネスーパー',
+            'business_status' => 'RELOCATED',
             'location' => 'Shibuya, Udagawacho',
             'type' => 'Glasses',
             'points' => 'Small place with very limited choice.',
@@ -706,6 +812,8 @@ class StoresTableSeeder extends Seeder
 
         $store = Store::create([
             'name' => 'Klein',
+            'name_ja' => 'クラインアイウェア',
+            'business_status' => 'OPERATIONAL',
             'location' => 'Shibuya, Udagawacho',
             'type' => 'Glasses',
             'points' => 'Small fashionable shop.',
@@ -719,6 +827,9 @@ class StoresTableSeeder extends Seeder
 
         $store = Store::create([
             'name' => 'JINS',
+            'name_ja' => 'ジンズ',
+            'business_status' => 'OPERATIONAL',
+            'google_place_id' => 'ChIJ095oE6mMGGARNSiTyp1dLJ4',
             'location' => 'Shibuya, Udagawacho',
             'type' => 'Glasses',
             'points' => 'Decent choice, nice prices.',
@@ -732,6 +843,9 @@ class StoresTableSeeder extends Seeder
 
         $store = Store::create([
             'name' => 'Kaneko optical',
+            'name_ja' => '金子眼鏡',
+            'business_status' => 'OPERATIONAL',
+            'google_place_id' => 'ChIJaXS8vsGLGGARfI5lksAlg6o',
             'location' => 'Shibuya, Hikarie',
             'type' => 'Glasses',
             'points' => 'Rather small. Limited choice. Nothing cheap.',
@@ -745,6 +859,9 @@ class StoresTableSeeder extends Seeder
 
         $store = Store::create([
             'name' => 'Ogura megane',
+            'name_ja' => 'オグラメガネ',
+            'business_status' => 'OPERATIONAL',
+            'google_place_id' => 'ChIJaeyN6KeMGGARs-a6Mg5hOsQ',
             'location' => 'Shibuya, 1Chome',
             'type' => 'Glasses',
             'points' => 'Large, upper class shop, decent choice.',

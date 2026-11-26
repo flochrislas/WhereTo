@@ -6,10 +6,16 @@
   <div class="resultsCounter"></div>
   <div class="resultRow">
     <!-- A real link to the standalone page (crawlers and new tabs); a click opens the details in the page instead -->
-    <!-- lang="en": the names, branches and descriptions are English on every page (doc/12-multilingual-ui.md) -->
+    <!-- lang="en": the names, branches and descriptions are English; on a Japanese page, the Japanese name comes first when the place has one (doc/12-multilingual-ui.md) -->
     <a class="resultCell nameAndType" href="{{ \App\Support\LocaleUrl::route('stores.details.single', $store->id) }}"
         onclick="showDetails(event, '{{ \App\Support\LocaleUrl::route('stores.details', $store->id) }}', '{{ $store->id }}')">
-      <div class="rowName" lang="en">{{ $store->name }}</div>
+      {{-- On a Japanese page, the Japanese name first when the place has one; only the English name is lang="en" --}}
+      @php($translatedName = $store->translatedName(app()->getLocale()))
+      @if ($translatedName === null)
+        <div class="rowName" lang="en">{{ $store->name }}</div>
+      @else
+        <div class="rowName">{{ $translatedName }} <span lang="en">{{ $store->name }}</span></div>
+      @endif
       <div class="rowType" lang="en">{{ $store->type }}</div>
     </a>
     <div class="resultCell distance centerContent">

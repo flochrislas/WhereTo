@@ -87,3 +87,7 @@ source/composer\.phar
 
 # Dev container first-run marker (dev/entrypoint.sh)
 source/storage/.dev-seeded
+
+# Working files of the coding agent (browser snapshots, implementation plans)
+.playwright-mcp/
+docs/superpowers/

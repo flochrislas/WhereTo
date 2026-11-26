@@ -321,6 +321,7 @@ class PlacesTest extends TestCase
             // status => [label shown on the page, noindex expected]
             'permanently closed' => ['CLOSED_PERMANENTLY', 'Permanently closed', true],
             'replaced' => ['REPLACED', 'Replaced by another business', true],
+            'relocated' => ['RELOCATED', 'Moved to another address', true],
             'temporarily closed' => ['CLOSED_TEMPORARILY', 'Temporarily closed', false],
         ];
     }

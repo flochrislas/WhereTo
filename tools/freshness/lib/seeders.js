@@ -15,6 +15,8 @@
 import { readFileSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { createHash } from 'node:crypto';
+import assert from 'node:assert/strict';
 
 // The seeder file of each kind of place.
 export const KINDS = {
@@ -28,7 +30,7 @@ export const KINDS = {
 export const DEFAULT_SEEDERS_DIR = fileURLToPath(new URL('../../../source/database/seeders/', import.meta.url));
 
 // The values the app accepts in the business_status column.
-export const BUSINESS_STATUSES = ['OPERATIONAL', 'CLOSED_TEMPORARILY', 'CLOSED_PERMANENTLY', 'REPLACED'];
+export const BUSINESS_STATUSES = ['OPERATIONAL', 'CLOSED_TEMPORARILY', 'CLOSED_PERMANENTLY', 'REPLACED', 'RELOCATED'];
 
 // `$resto = Restaurant::create([` -> indentation, variable name.
 const CREATE_RE = /^(\s*)\$(\w+) = \w+::create\(\[$/;
@@ -40,6 +42,16 @@ const KEY_RE = /^(\s*)'(\w+)' => (.*)$/;
 const COORDS_RE = /^\s*\$(\w+)->fillCoordinatesFromString\('\s*(-?[\d.]+)\s*,\s*(-?[\d.]+)\s*(?:,[^']*)?'\);$/;
 // The end of a block.
 const END_RE = /^\s*\]\);$/;
+// `$resto->attachTags(['ramen', 'japanese']);` -> variable name, the list between the brackets.
+const TAGS_RE = /^\s*\$(\w+)->attachTags\(\[(.*)\]\);$/;
+// Any attachTags call, on one line or the start of several.
+const TAGS_CALL_RE = /^\s*\$(\w+)->attachTags\(/;
+// The single-quoted strings of a PHP list: 'ramen', 'it\'s' -> their texts.
+const quotedStrings = (list) => [...list.matchAll(/'((?:[^'\\]|\\.)*)'/g)].map((m) => m[1].replace(/\\(['\\])/g, '$1'));
+
+// The revision of a seeder: the SHA-1 of its text. The editor sends it back with each edit, so
+// that a page built from an older text cannot edit the wrong block.
+export const revisionOf = (text) => createHash('sha1').update(text).digest('hex');
 
 // Returns the index of the quote that closes a PHP single-quoted string opened at text[0],
 // or -1 when the string goes on to the next line (a few descriptions span several lines).
@@ -66,8 +78,9 @@ function parseValue(raw) {
     throw new Error(`cannot read the value ${raw}`);
 }
 
-// Writes a JavaScript string as a PHP single-quoted string.
-function phpString(value) {
+// Writes a JavaScript string as a PHP single-quoted string. Only \\ and ' need escaping there;
+// any other character, Japanese included, is written as it is (the seeders are UTF-8).
+export function phpString(value) {
     return `'${value.replace(/[\\']/g, '\\$&')}'`;
 }
 
@@ -102,6 +115,7 @@ function parseBlocks(lines, label) {
         }
         if (key in block.values) fail(start, `the key '${key}' appears twice`);
         block.values[key] = value;
+        block.keyOrder.push(key);
         block.keyLines[key] = start;
         block.keyEnds[key] = end;
     };
@@ -140,6 +154,12 @@ function parseBlocks(lines, label) {
                 if (status !== undefined && !BUSINESS_STATUSES.includes(status)) {
                     fail(block.keyLines.business_status, `unknown business_status '${status}' for the place '${block.values.name}' (expected one of ${BUSINESS_STATUSES.join(', ')})`);
                 }
+                // name_ja is a name, null or absent: an empty or non-string value is a typo.
+                const nameJa = block.values.name_ja;
+                if (nameJa !== undefined && nameJa !== null && (typeof nameJa !== 'string' || nameJa.trim() === '')) {
+                    fail(block.keyLines.name_ja, `name_ja must be a non-empty string for the place '${block.values.name}'`);
+                }
+                block.end = index;
                 blocks.push(block);
                 last = block;
                 block = null;
@@ -160,14 +180,26 @@ function parseBlocks(lines, label) {
         if (create) {
             if (last && last.lat === undefined) fail(last.start, `the place '${last.values.name}' has no coordinates (fillCoordinatesFromString)`);
             // keyLines / keyEnds: the first and last line of each key (they differ for a multi-line string).
-            block = { start: index, variable: create[2], values: {}, keyLines: {}, keyEnds: {}, indent: undefined };
+            // keyOrder: the keys as they appear; end: the `]);` line; lineIndent: the indentation of the block's own lines.
+            block = { start: index, variable: create[2], lineIndent: create[1], values: {}, keyLines: {}, keyEnds: {}, keyOrder: [], indent: undefined, tags: undefined, tagsLine: undefined, tagsCalls: 0, coordsLine: undefined };
             return;
+        }
+
+        // Every attachTags call of the block is counted, whatever its form: only the first one, when
+        // it fits on a line, is read, and an edit of the tags must not leave the others behind.
+        const tagsCall = line.match(TAGS_CALL_RE);
+        if (tagsCall && last && tagsCall[1] === last.variable) last.tagsCalls += 1;
+        const tags = line.match(TAGS_RE);
+        if (tags && last && tags[1] === last.variable && last.tags === undefined) {
+            last.tags = quotedStrings(tags[2]);
+            last.tagsLine = index;
         }
 
         const coords = line.match(COORDS_RE);
         if (coords && last && coords[1] === last.variable && last.lat === undefined) {
             last.lat = Number(coords[2]);
             last.lon = Number(coords[3]);
+            last.coordsLine = index;
         }
     });
 
@@ -188,12 +220,45 @@ function toPlace(block, kind) {
     return {
         kind,
         name: block.values.name,
+        nameJa: block.values.name_ja ?? null,
         businessStatus: block.values.business_status ?? null,
         googlePlaceId: block.values.google_place_id ?? null,
+        googleMapsLink: block.values.google_maps_link ?? null,
+        tabelogLink: block.values.tabelog_link ?? null,
         lat: block.lat,
         lon: block.lon,
         line: block.start + 1,
     };
+}
+
+// The full shape of a place, for the editor: every key in the seeder's order, the tags, the
+// coordinates, and a stable id: the kind and the position of the block in its seeder. The line
+// number moves when a line is inserted; the position does not (the editor never adds a block).
+function toFullPlace(block, kind, index) {
+    return {
+        id: `${kind}/${index}`,
+        kind,
+        index,
+        line: block.start + 1,
+        name: block.values.name,
+        lat: block.lat,
+        lon: block.lon,
+        tags: block.tags ?? null,
+        fields: block.keyOrder.map((key) => ({ key, value: block.values[key] })),
+    };
+}
+
+// The full places of a seeder given as text, of a file, of several kinds.
+export function parseSeederFull(text, kind) {
+    return parseBlocks(splitLines(text).lines, kind).map((b, i) => toFullPlace(b, kind, i));
+}
+
+export function readSeederFull(filePath, kind) {
+    return parseSeederFull(readFileSync(filePath, 'utf8'), kind);
+}
+
+export function readAllSeedersFull(seedersDir = DEFAULT_SEEDERS_DIR, kinds = Object.keys(KINDS)) {
+    return kinds.flatMap((kind) => readSeederFull(join(seedersDir, KINDS[kind]), kind));
 }
 
 // Reads the places of a seeder given as text.
@@ -228,13 +293,18 @@ function findBlocks(blocks, target, label) {
     return here;
 }
 
-// Checks the two fields before they are written into PHP code.
+// Checks the fields before they are written into PHP code. null on any of the three means "no line"
+// (the editor's way to remove a Japanese name, an id, or a status: a place not checked yet).
 function checkFields(fields) {
-    if (fields.businessStatus !== undefined && !BUSINESS_STATUSES.includes(fields.businessStatus)) {
+    // A Japanese name is free text, but on one line (the reader reads one key per line) and not empty.
+    if (fields.nameJa !== undefined && fields.nameJa !== null && (typeof fields.nameJa !== 'string' || !fields.nameJa.trim() || /[\p{Cc}]/u.test(fields.nameJa))) {
+        throw new Error(`Unexpected Japanese name: ${JSON.stringify(fields.nameJa)}`);
+    }
+    if (fields.businessStatus !== undefined && fields.businessStatus !== null && !BUSINESS_STATUSES.includes(fields.businessStatus)) {
         throw new Error(`Unknown business status: ${fields.businessStatus}`);
     }
     // Google place ids are letters, digits, '-' and '_'; anything else would be suspicious in code.
-    if (fields.googlePlaceId !== undefined && !/^[\w-]+$/.test(fields.googlePlaceId)) {
+    if (fields.googlePlaceId !== undefined && fields.googlePlaceId !== null && !/^[\w-]+$/.test(fields.googlePlaceId)) {
         throw new Error(`Unexpected Google place id: ${fields.googlePlaceId}`);
     }
 }
@@ -249,41 +319,194 @@ function editLines(lines, kind, target, fields) {
 
 // Edits one block; `find` returns the block as it is in `lines` right now.
 function editBlock(lines, kind, find, fields) {
-    const block = find();
-    const indent = block.indent;
+    const indent = find().indent;
 
-    // business_status: OPERATIONAL is the default, so an open place carries no line at all.
+    // name_ja: always right after the 'name' line (the order is name, name_ja, business_status, google_place_id).
+    // null removes the line: absent is the "no Japanese name" of the seeders.
+    if (fields.nameJa !== undefined) {
+        const block = find();
+        const existing = block.keyLines.name_ja;
+        if (fields.nameJa === null) {
+            if (existing !== undefined) lines.splice(existing, 1);
+        } else {
+            const wanted = `${indent}'name_ja' => ${phpString(fields.nameJa)},`;
+            if (existing !== undefined) lines[existing] = wanted;
+            else lines.splice(block.keyEnds.name + 1, 0, wanted);
+        }
+    }
+
+    // business_status: OPERATIONAL is written like the other statuses (a confirmed open place);
+    // null removes the line (no line: the place was not checked, the column defaults to OPERATIONAL).
     if (fields.businessStatus !== undefined) {
+        const block = find(); // the name_ja line may have moved the others
         const existing = block.keyLines.business_status;
-        const wanted = `${indent}'business_status' => ${phpString(fields.businessStatus)},`;
-        if (fields.businessStatus === 'OPERATIONAL') {
+        const status = fields.businessStatus;
+        const wanted = status === null ? null : `${indent}'business_status' => ${phpString(status)},`;
+        if (status === null) {
             if (existing !== undefined) lines.splice(existing, 1);
         } else if (existing !== undefined) {
             lines[existing] = wanted;
         } else {
-            lines.splice(block.keyEnds.name + 1, 0, wanted); // right after the 'name' line
+            lines.splice((block.keyEnds.name_ja ?? block.keyEnds.name) + 1, 0, wanted); // after the name lines
         }
     }
 
-    // google_place_id: after the status line if there is one, after the name otherwise.
+    // google_place_id: after the status line if there is one, after the name lines otherwise. null removes it.
     if (fields.googlePlaceId !== undefined) {
         const updated = find(); // the status line may have moved the others
         const existing = updated.keyLines.google_place_id;
+        if (fields.googlePlaceId === null) {
+            if (existing !== undefined) lines.splice(existing, 1);
+            return;
+        }
         const wanted = `${indent}'google_place_id' => ${phpString(fields.googlePlaceId)},`;
         if (existing !== undefined) {
             lines[existing] = wanted;
         } else {
-            lines.splice((updated.keyEnds.business_status ?? updated.keyEnds.name) + 1, 0, wanted);
+            lines.splice((updated.keyEnds.business_status ?? updated.keyEnds.name_ja ?? updated.keyEnds.name) + 1, 0, wanted);
         }
     }
 }
 
-// Returns the text of a seeder with one place edited. `fields` is { businessStatus?, googlePlaceId? };
-// a field left undefined is not touched. Only the lines of those two keys change.
+// Returns the text of a seeder with one place edited. `fields` is { nameJa?, businessStatus?, googlePlaceId? };
+// a field left undefined is not touched. Only the lines of those keys change.
 export function editSeederText(text, kind, target, fields) {
     const { lines, eol } = splitLines(text);
     editLines(lines, kind, target, fields);
     return lines.join(eol);
+}
+
+// ---- The editor of any key, tags and coordinates, by block position (edit.js). ----
+
+// The keys the three-field editor above knows, with their camelCase names.
+const KNOWN_KEYS = { name_ja: 'nameJa', business_status: 'businessStatus', google_place_id: 'googlePlaceId' };
+
+// A JavaScript value as PHP writes it in a create([...]) block.
+function phpValue(value) {
+    if (typeof value === 'string') return phpString(value);
+    if (typeof value === 'number') return String(value);
+    if (typeof value === 'boolean') return value ? 'true' : 'false';
+    return 'null';
+}
+
+// Two numbers as the seeders write them: '35.658545, 139.698468'.
+export const formatCoordinates = (lat, lon) => `${lat}, ${lon}`;
+
+// Checks an edit of the editor ({ fields?, tags?, lat?, lon? }) before any line is touched.
+export function checkPlaceEdit(edit) {
+    const { fields, tags, lat, lon } = edit ?? {};
+    if (fields === undefined && tags === undefined && lat === undefined && lon === undefined) throw new Error('nothing to edit');
+    if (fields !== undefined && (typeof fields !== 'object' || fields === null || Array.isArray(fields))) throw new Error('fields must be an object');
+    for (const [key, value] of Object.entries(fields ?? {})) {
+        // A word, and not a name every object already has (constructor, toString...), which `in` would find.
+        if (!/^\w+$/.test(key) || key in {}) throw new Error(`unexpected key '${key}'`);
+        if (!['string', 'number', 'boolean'].includes(typeof value) && value !== null) throw new Error(`unexpected value for '${key}'`);
+        if (typeof value === 'number' && !Number.isFinite(value)) throw new Error(`'${key}' must be a finite number`);
+        // Newlines are fine (a description spans lines); other control characters are not.
+        if (typeof value === 'string' && /[^\P{Cc}\n]/u.test(value)) throw new Error(`'${key}' contains a control character`);
+        if (key === 'name' && (typeof value !== 'string' || !value.trim())) throw new Error('the name must be a non-empty string');
+        if (key === 'name_ja' && value !== null && (typeof value !== 'string' || !value.trim() || value.includes('\n'))) throw new Error('name_ja must be a non-empty one-line string, or null');
+        if (key === 'business_status' && value !== null && !BUSINESS_STATUSES.includes(value)) throw new Error(`unknown business status '${value}'`);
+        if (key === 'google_place_id' && value !== null && !/^[\w-]+$/.test(value)) throw new Error('a Google place id is letters, digits, - and _');
+    }
+    if (tags !== undefined && (!Array.isArray(tags) || tags.some((t) => typeof t !== 'string' || /[,\n'\\]/.test(t)))) {
+        throw new Error('tags must be a list of strings without commas or quotes');
+    }
+    if ((lat === undefined) !== (lon === undefined)) throw new Error('latitude and longitude go together');
+    if (lat !== undefined && (typeof lat !== 'number' || !(lat >= -90 && lat <= 90))) throw new Error('latitude must be a number between -90 and 90');
+    if (lon !== undefined && (typeof lon !== 'number' || !(lon >= -180 && lon <= 180))) throw new Error('longitude must be a number between -180 and 180');
+}
+
+// Edits the block at `index` (0-based position among the blocks of the seeder), in place in `lines`.
+function editLinesAt(lines, kind, index, edit) {
+    checkPlaceEdit(edit);
+    const find = () => {
+        const block = parseBlocks(lines, kind)[index];
+        if (!block) throw new Error(`${kind}: no block ${index}`);
+        return block;
+    };
+    const { fields = {}, tags, lat, lon } = edit;
+
+    // The three keys with a fixed place go through the editor above; the others are general.
+    const known = {};
+    for (const [key, camel] of Object.entries(KNOWN_KEYS)) if (key in fields) known[camel] = fields[key];
+    if (Object.keys(known).length) editBlock(lines, kind, find, known);
+
+    for (const [key, value] of Object.entries(fields)) {
+        if (key in KNOWN_KEYS) continue;
+        const block = find(); // every insert moves the lines below it: read again
+        const wanted = `${block.indent}'${key}' => ${phpValue(value)},`.split('\n'); // a multi-line string makes several lines
+        if (Object.hasOwn(block.keyLines, key)) {
+            lines.splice(block.keyLines[key], block.keyEnds[key] - block.keyLines[key] + 1, ...wanted);
+        } else {
+            // Before the closing `]);`. The reader accepts a last key without a comma, PHP would not:
+            // add it on the last key's line (a comment may sit between that line and the closing).
+            const lastKey = block.keyEnds[block.keyOrder.at(-1)];
+            if (!lines[lastKey].endsWith(',')) lines[lastKey] += ',';
+            lines.splice(block.end, 0, ...wanted);
+        }
+    }
+
+    if (tags !== undefined) {
+        const block = find();
+        if (block.tagsCalls > (block.tagsLine === undefined ? 0 : 1)) {
+            throw new Error(`the tags of '${block.values.name}' are written in several attachTags calls, or over several lines: edit them in the seeder`);
+        }
+        const clean = tags.map((t) => t.trim()).filter(Boolean);
+        const wanted = `${block.lineIndent}$${block.variable}->attachTags([${clean.map(phpString).join(', ')}]);`;
+        if (block.tagsLine !== undefined) lines[block.tagsLine] = wanted;
+        else lines.splice(block.end + 1, 0, wanted); // right after the block, before the coordinates
+    }
+
+    if (lat !== undefined) {
+        const block = find();
+        lines[block.coordsLine] = `${block.lineIndent}$${block.variable}->fillCoordinatesFromString(${phpString(formatCoordinates(lat, lon))});`;
+    }
+}
+
+// Returns the text of a seeder with the block at `index` edited. Only the lines of the edit change.
+export function editPlaceText(text, kind, index, edit) {
+    const { lines, eol } = splitLines(text);
+    editLinesAt(lines, kind, index, edit);
+    return lines.join(eol);
+}
+
+// The full place with an edit applied in memory, as the file should read back after the edit.
+function expectedAfter(place, edit) {
+    const values = Object.fromEntries(place.fields.map((f) => [f.key, f.value]));
+    for (const [key, value] of Object.entries(edit.fields ?? {})) {
+        if (key in KNOWN_KEYS && value === null) delete values[key];
+        else values[key] = value;
+    }
+    const tags = edit.tags === undefined ? place.tags : edit.tags.map((t) => t.trim()).filter(Boolean);
+    return { name: values.name, lat: edit.lat ?? place.lat, lon: edit.lon ?? place.lon, tags, values };
+}
+
+// What a full place looks like for the comparison: no line numbers, keys as a map.
+const comparable = (place) => ({ name: place.name, lat: place.lat, lon: place.lon, tags: place.tags, values: Object.fromEntries(place.fields.map((f) => [f.key, f.value])) });
+
+// Prepares one edit of the editor, in memory: edits the text, then reads it back and checks that the
+// edited block has the expected values and that every other block is untouched. Nothing is written.
+// `before` is the text to edit (read from the file when not given): the server passes the text whose
+// revision it checked, so the index cannot point at a block of a newer text.
+// Returns { filePath, before, after, changed }: pass it to writePlanSafely (lib/cli.js).
+export function planPlaceEdit(filePath, kind, index, edit, before = readFileSync(filePath, 'utf8')) {
+    const placesBefore = parseSeederFull(before, kind);
+    if (!placesBefore[index]) throw new Error(`${filePath}: no block ${index}`);
+    const after = editPlaceText(before, kind, index, edit);
+    if (after === before) return { filePath, before, after, changed: false };
+
+    const placesAfter = parseSeederFull(after, kind);
+    if (placesAfter.length !== placesBefore.length) throw new Error(`${filePath}: ${placesBefore.length} places before the edit, ${placesAfter.length} after`);
+    placesAfter.forEach((p, i) => {
+        const expected = i === index ? expectedAfter(placesBefore[i], edit) : comparable(placesBefore[i]);
+        try {
+            assert.deepStrictEqual(comparable(p), expected);
+        } catch {
+            throw new Error(`${filePath}: after the edit, '${p.name}' (block ${i}) would not read back as expected`);
+        }
+    });
+    return { filePath, before, after, changed: true };
 }
 
 // Prepares a list of edits ({ target, fields }) to a seeder file, in memory: edits the text, then
@@ -296,7 +519,7 @@ export function planSeederEdits(filePath, kind, edits) {
     const placesBefore = parseBlocks(lines, filePath).map((b) => toPlace(b, kind));
     for (const { target, fields } of edits) editLines(lines, kind, target, fields);
     const after = lines.join(eol);
-    if (after === before) return { filePath, after, changed: false };
+    if (after === before) return { filePath, before, after, changed: false };
 
     // Verify: same places, in the same order, with the new values where edited and the old ones elsewhere.
     const blocksAfter = parseBlocks(splitLines(after).lines, filePath);
@@ -309,19 +532,20 @@ export function planSeederEdits(filePath, kind, edits) {
         for (const block of findBlocks(blocksAfter, target, filePath)) {
             const index = blocksAfter.indexOf(block);
             if (fields.businessStatus !== undefined) {
-                expected[index].businessStatus = fields.businessStatus === 'OPERATIONAL' ? null : fields.businessStatus;
+                expected[index].businessStatus = fields.businessStatus;
             }
             if (fields.googlePlaceId !== undefined) expected[index].googlePlaceId = fields.googlePlaceId;
+            if (fields.nameJa !== undefined) expected[index].nameJa = fields.nameJa;
         }
     }
     placesAfter.forEach((p, i) => {
         const e = expected[i];
         // `line` moves with the inserted lines; everything else must match.
-        if (p.name !== e.name || p.lat !== e.lat || p.lon !== e.lon || p.businessStatus !== e.businessStatus || p.googlePlaceId !== e.googlePlaceId) {
+        if (p.name !== e.name || p.lat !== e.lat || p.lon !== e.lon || p.businessStatus !== e.businessStatus || p.googlePlaceId !== e.googlePlaceId || p.nameJa !== e.nameJa) {
             throw new Error(`${filePath}: after the edit, '${p.name}' (line ${p.line}) would not read back as expected`);
         }
     });
-    return { filePath, after, changed: true };
+    return { filePath, before, after, changed: true };
 }
 
 // Writes a file prepared by planSeederEdits (if it changed).

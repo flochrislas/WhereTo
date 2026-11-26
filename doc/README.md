@@ -16,5 +16,6 @@ The application code lives in `source/`. These notes were written in November 20
 | [08-findings.md](08-findings.md) | Bugs, security issues, dead code and quirks found during the review, as a checklist |
 | [09-potential-improvements.md](09-potential-improvements.md) | Ideas for the future: mobile/tablet/PC experience, front-end and back-end architecture, performance, testing, product features |
 | [10-seo.md](10-seo.md) | How the app looks to search engines, and the changes that would make the place pages findable |
-| [11-data-freshness.md](11-data-freshness.md) | Design of a stand-alone tool (`tools/freshness/`) that checks every place against the Google Places API and writes the business status into the seeders |
+| [11-data-freshness.md](11-data-freshness.md) | Design of a stand-alone tool (`tools/freshness/`) that checks every place against the Google Places API (then Tabelog for the doubtful ones) and writes the business status into the seeders |
 | [12-multilingual-ui.md](12-multilingual-ui.md) | Design of the multilingual UI: English at the existing URLs, Japanese and later languages under a prefix, translated strings and tags, hreflang |
+| [13-tag-icons.md](13-tag-icons.md) | Design note: a small icon next to each tag, from an emoji set first, generated images for the gaps, hand-written SVG for the abstract tags; the text stays |

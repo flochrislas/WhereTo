@@ -20,7 +20,7 @@ class Restaurant extends Model implements Place
         'name', 'location', 'lat', 'lon', 'type', 'lunch_price', 'points', 'experience',
         'visited', 'visit_date', 'google_maps_link', 'tabelog_link', 'official_website',
         'score_lunch', 'score_place', 'score_food', 'score_price', 'score_date',
-        'business_status', 'google_place_id',
+        'business_status', 'google_place_id', 'name_ja',
     ];
 
     /**

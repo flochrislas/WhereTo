@@ -12,7 +12,13 @@
 </div>
 
 <div id="detailTitle" class="detailRow">
-    <div id="detailName" class="detail" detailId="{{ $place->id }}" lang="en"><div>{{ $place->name }}</div></div>
+    {{-- On a Japanese page, the Japanese name first when the place has one; only the English name is lang="en" --}}
+    @php($translatedName = $place->translatedName(app()->getLocale()))
+    @if ($translatedName === null)
+      <div id="detailName" class="detail" detailId="{{ $place->id }}" lang="en"><div>{{ $place->name }}</div></div>
+    @else
+      <div id="detailName" class="detail" detailId="{{ $place->id }}"><div>{{ $translatedName }} <span lang="en">{{ $place->name }}</span></div></div>
+    @endif
     <div id="detailType" class="detail" lang="en"><div>{{ $place->type }}</div></div>
     <div id="detailLocation" class="detail" lang="en"><div>{{ $place->location }}</div></div>
 </div>
