@@ -213,6 +213,7 @@ class BarsTableSeeder extends Seeder
 
         $bar = Bar::create([
             'name' => 'Start bar',
+            'name_ja' => 'スタートバー',
             'business_status' => 'OPERATIONAL',
             'google_place_id' => 'ChIJq6qGWFeLGGARplWemxZ64co',
             'location' => 'Shibuya, Sakuragaokacho',

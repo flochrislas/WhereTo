@@ -37,6 +37,7 @@ class KaraokesTableSeeder extends Seeder
 
         $karaoke = Karaoke::create([
             'name' => 'Joysound',
+            'name_ja' => 'ジョイサウンド',
             'business_status' => 'OPERATIONAL',
             'area' => 'Shibuya',
             'location' => 'Sation\'s south exit',
@@ -53,6 +54,7 @@ class KaraokesTableSeeder extends Seeder
 
         $karaoke = Karaoke::create([
             'name' => 'Joysound',
+            'name_ja' => 'ジョイサウンド',
             'business_status' => 'OPERATIONAL',
             'area' => 'Shibuya',
             'location' => 'Dogenzaka',
