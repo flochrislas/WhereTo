@@ -491,7 +491,7 @@ test('apply offers an open place found 50 to 200 m away unticked, and --yes does
     const { reportPath, report } = await check(ws);
     // Hakata Furyu found 97 m away under its name (another branch, maybe), Usagi 120 m away but by its id.
     const far = (name, extra) => Object.assign(report.results.find((r) => r.name === name), { verdict: 'operational', ...extra });
-    far('Hakata Furyu', { reason: 'same name 97 m away', distance: 97, idTrusted: false });
+    far('Hakata Furyu', { reason: 'same name 97 m away', distance: 97, idTrusted: false, withinSearchRadius: false });
     far('Usagi', { reason: 'open', distance: 120, idTrusted: true });
     writeFileSync(reportPath, JSON.stringify(report));
 
@@ -511,4 +511,23 @@ test('apply offers an open place found 50 to 200 m away unticked, and --yes does
     assert.deepEqual(status('Hakata Furyu'), [null]); // not confirmed: for a look
     assert.deepEqual(status('Pancho'), ['OPERATIONAL']);
     assert.deepEqual(status('Usagi'), ['OPERATIONAL', 'OPERATIONAL']);
+});
+
+test('apply does not take a distance rounded down to 50 m as within the radius', async () => {
+    const ws = workspace();
+    const { reportPath, report } = await check(ws);
+    assert.ok(report.results.every((r) => typeof r.withinSearchRadius === 'boolean'));
+    // Hakata Furyu 50.4 m away, written 50; Pancho the same in a report from before the field.
+    const set = (name, extra) => Object.assign(report.results.find((r) => r.name === name), { verdict: 'operational', reason: 'same name 50 m away', distance: 50, idTrusted: false, ...extra });
+    set('Hakata Furyu', { withinSearchRadius: false });
+    delete set('Pancho', {}).withinSearchRadius;
+    writeFileSync(reportPath, JSON.stringify(report));
+
+    let unticked;
+    const prompt = async (groups) => {
+        unticked = groups.filter((g) => g.verdict === 'operational' && !g.checked).flatMap((g) => g.results.map((r) => r.name));
+        return [];
+    };
+    await runApply({ ...ws, reportPath, prompt, run: noCommands, log: () => {} });
+    assert.deepEqual(unticked, ['Hakata Furyu', 'Pancho']);
 });

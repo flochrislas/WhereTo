@@ -144,6 +144,8 @@ export async function runCheck({
                 lon: google.location?.longitude ?? null,
             },
             distance: distance === null ? null : Math.round(distance),
+            // Decided on the exact distance: the rounded one above would let 50.4 m pass for 50.
+            withinSearchRadius: distance !== null && distance <= SEARCH_RADIUS_METRES,
             verdict,
             reason: retiredNote,
             idTrusted, // true when Google's id is surely ours (exact name, or looked up by id)

@@ -266,11 +266,26 @@ test('a second pass on a +tabelog report keeps what the first pass read, and rea
     writeFileSync(inputPath, JSON.stringify({ date: '2026-11-19', generatedAt: 'x', kinds: ['restaurants'], tabelog: { from: '2026-11-19T2001-all.json' }, results }));
     const calls = [];
     const fetch = async (url) => { calls.push(url); return new Response(CLOSED, { status: 200 }); };
-    const { report } = await runTabelog({ reportsDir, seedersDir, fetch, minIntervalMs: 0, today: TODAY, log: () => {} });
+    const lines = [];
+    const { report } = await runTabelog({ reportsDir, seedersDir, fetch, minIntervalMs: 0, today: TODAY, log: (l) => lines.push(l) });
     assert.deepEqual(calls, ['https://tabelog.com/tokyo/A1303/A130301/9/']);
+    assert.match(lines.join('\n'), /\n1 checked on Tabelog: 1 closed, .*\n1 place read by an earlier pass kept as it is\./);
     assert.deepEqual(report.results[0].tabelog, evidence);
     assert.equal(report.results[1].verdict, 'closed_permanently');
     assert.deepEqual(report.results[1].tabelog, { link: 'https://tabelog.com/en/tokyo/A1303/A130301/9/', status: 'closed' }); // the seeder's link
+});
+
+test('a second pass with nothing left to read counts no page and no missing link', async () => {
+    const { seedersDir, reportsDir } = workspace();
+    const p = readSeeder(join(seedersDir, 'RestaurantsTableSeeder.php'), 'restaurants').find((x) => x.name === 'Hakata Furyu');
+    const results = [{ kind: 'restaurants', name: p.name, lat: p.lat, lon: p.lon, line: p.line, verdict: 'closed_permanently', reason: 'x', tabelog: { link: 'https://tabelog.com/tokyo/A1303/A130301/1/', status: 'closed' } }];
+    writeFileSync(join(reportsDir, '2026-11-20T0900-all+tabelog.json'), JSON.stringify({ date: '2026-11-19', generatedAt: 'x', kinds: ['restaurants'], results }));
+    const lines = [];
+    await runTabelog({ reportsDir, seedersDir, fetch: async () => assert.fail('no page to read'), minIntervalMs: 0, today: TODAY, log: (l) => lines.push(l) });
+    const out = lines.join('\n');
+    assert.match(out, /\n0 checked on Tabelog: 0 closed/);
+    assert.match(out, /1 place read by an earlier pass kept as it is\./);
+    assert.doesNotMatch(out, /flagged places had no Tabelog link/);
 });
 
 test('the English words of a Tabelog page are read whatever their case', () => {

@@ -259,6 +259,31 @@ test.describe('Seeder editor', () => {
     await expect(form).toBeVisible(); // the open form was not rebuilt
   });
 
+  test('a report button clicked while the move of the place is still being saved writes nothing', async ({ page }) => {
+    mkdirSync(join(dir, 'reports'));
+    const result = { kind: 'restaurants', name: 'Hakata Furyu', lat: 35.658545, lon: 139.698468, verdict: 'closed_permanently', reason: 'Google says permanently closed', google: { id: 'ChIJx', name: 'Furyu', address: 'Tokyo', status: 'CLOSED_PERMANENTLY' }, distance: 2 };
+    writeFileSync(join(dir, 'reports', '2026-11-18T0930-all.json'), JSON.stringify({ date: '2026-11-18', results: [result] }));
+    await page.goto(base + '/');
+    await page.locator('#report').selectOption('2026-11-18T0930-all.json');
+    const row = page.locator('tr.row[data-id="restaurants/0"]');
+    await row.locator('td').first().click();
+    // The move is held on its way to the server, so the click on Closed finds it pending.
+    let patches = 0;
+    await page.route('**/api/places/**', async (route) => {
+      patches += 1;
+      await new Promise((resolve) => setTimeout(resolve, 400));
+      await route.continue();
+    });
+    await page.locator('tr.form [data-coords]').fill('35.66, 139.70');
+    await row.getByRole('button', { name: 'Closed', exact: true }).click(); // leaves the input: the move is sent, the closure queued
+    await expect(row.locator('td.report')).toHaveText(/moved since the report/);
+    await page.waitForTimeout(600); // the time a second PATCH would take
+    expect(patches).toBe(1);
+    expect(seeder()).toContain("fillCoordinatesFromString('35.66, 139.7')");
+    expect(seeder()).toContain("'business_status' => 'CLOSED_PERMANENTLY',\n            'google_place_id' => 'ChIJclosedKindenmaru'"); // Kindenmaru's, the only one
+    expect(seeder().match(/CLOSED_PERMANENTLY/g)).toHaveLength(1);
+  });
+
   test('a long text that starts with a newline keeps it when the text is edited', async ({ page }) => {
     writeFileSync(seederPath(), seeder().replace("'points' => 'A line with", "'points' => '\nA line with"));
     await page.goto(base + '/');

@@ -51,6 +51,7 @@ export async function runTabelog({
     log(`${flagged.length} places are unsure or not found nearby; ${toCheck.length} have a Tabelog link. Reading their pages, one a second...`);
 
     const results = [];
+    const read = []; // the rows read on Tabelog in this pass
     let checked = 0;
     for (const r of input.results) {
         const link = links.get(placeKey(r)) ?? null;
@@ -70,11 +71,12 @@ export async function runTabelog({
             tabelog = { link, status: 'error', error: e.message }; // one bad page: note it and go on
         }
         const change = tabelogVerdict(tabelog.status);
-        results.push({
+        read.push({
             ...r,
             ...(change ? { verdict: change.verdict, reason: `${change.reason}; Google: ${r.reason}` } : {}),
             tabelog,
         });
+        results.push(read.at(-1));
         if (checked % 10 === 0) log(`  ${checked} / ${toCheck.length}`);
     }
 
@@ -90,23 +92,25 @@ export async function runTabelog({
     mkdirSync(reportsDir, { recursive: true });
     writeFileSync(outPath, JSON.stringify(report, null, 2) + '\n');
 
-    printSummary(results, flagged.length, missing, log);
+    const kept = results.filter((r) => r.tabelog).length - read.length;
+    printSummary({ read, kept, flagged: flagged.length, noLink: flagged.length - toCheck.length - missing, missing }, log);
     log(`\nReport written to ${outPath}`);
     log('Next: npm run apply (the closed places are ticked), or load it in npm run edit');
     return { report, reportPath: outPath };
 }
 
-// The table of the places read on Tabelog, by status, and the counts.
-function printSummary(results, flaggedCount, missing, log) {
-    const read = results.filter((r) => r.tabelog).toSorted((a, b) => STATUS_ORDER.indexOf(a.tabelog.status) - STATUS_ORDER.indexOf(b.tabelog.status));
-    if (read.length) {
-        const rows = read.map((r) => [r.kind, r.name, r.tabelog.status, r.verdict, r.tabelog.error ?? r.tabelog.link]);
+// The table of the places read on Tabelog in this pass, by status, and the counts. What an earlier
+// pass read stays in the report and is counted apart.
+function printSummary({ read, kept, flagged, noLink, missing }, log) {
+    const sorted = read.toSorted((a, b) => STATUS_ORDER.indexOf(a.tabelog.status) - STATUS_ORDER.indexOf(b.tabelog.status));
+    if (sorted.length) {
+        const rows = sorted.map((r) => [r.kind, r.name, r.tabelog.status, r.verdict, r.tabelog.error ?? r.tabelog.link]);
         log('\n' + formatTable(['kind', 'name', 'Tabelog', 'verdict', 'link'], rows));
     }
     const count = (status) => read.filter((r) => r.tabelog.status === status).length;
     log(`\n${read.length} checked on Tabelog: ${count('closed')} closed, ${count('temporarily_closed')} temporarily closed, ${count('moved')} moved, ${count('open')} open, ${count('error')} error`);
-    const noLink = flaggedCount - read.length - missing;
-    if (noLink) log(`${noLink} of ${flaggedCount} flagged places had no Tabelog link (stores and karaokes have none): look by hand.`);
+    if (kept) log(`${kept} place${kept === 1 ? '' : 's'} read by an earlier pass kept as ${kept === 1 ? 'it is' : 'they are'}.`);
+    if (noLink) log(`${noLink} of ${flagged} flagged places had no Tabelog link (stores and karaokes have none): look by hand.`);
     if (missing) log(`${missing} place${missing === 1 ? ' of the report is' : 's of the report are'} not in the seeders any more (renamed or moved since the check): left as they are.`);
 }
 

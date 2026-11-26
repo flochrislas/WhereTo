@@ -16,7 +16,9 @@ import { isMain, checkboxPrompt, runCommand, writePlans, DEFAULT_REPORTS_DIR, RE
 // `only`: the results of the verdict that go in the group (all of them without it). An open place
 // is confirmed on our spot (within 50 m, or found by its id); our name 50 to 200 m away may be
 // another branch of a chain while ours has closed, so that one is opt-in too.
-const onOurSpot = (r) => r.idTrusted || (typeof r.distance === 'number' && r.distance <= SEARCH_RADIUS_METRES);
+// The report says whether the exact distance was within the radius; an older report only has the
+// rounded distance, where 50 may be 50.4: that one is not taken as within.
+const onOurSpot = (r) => r.idTrusted || (r.withinSearchRadius ?? (typeof r.distance === 'number' && r.distance < SEARCH_RADIUS_METRES));
 const GROUPS = [
     { verdict: 'operational', only: onOurSpot, label: 'Confirmed open (business_status OPERATIONAL; a blank status means not checked)', checked: true },
     {

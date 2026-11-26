@@ -282,8 +282,9 @@ const setState = (el, className, text) => { if (el) { el.className = `state ${cl
 
 // Saves are queued per kind: each PATCH uses the revision the previous one answered. A 409 bumps the
 // kind's generation: the saves queued before it are dropped unsent (their block index may be wrong
-// now), marked "not saved", and the page reloads.
-function save(id, edit, stateEl) {
+// now), marked "not saved", and the page reloads. stillValid, when given, is asked just before the
+// PATCH is sent: a save that an earlier one in the queue made wrong is dropped.
+function save(id, edit, stateEl, stillValid) {
     const [kind, index] = id.split('/');
     const generation = (state.generation[kind] ??= 0);
     const placeName = state.places.find((p) => p.id === id)?.name ?? id;
@@ -296,6 +297,7 @@ function save(id, edit, stateEl) {
     };
     const run = async () => {
         if (state.generation[kind] !== generation) { lose('The seeder changed on disk.'); return; }
+        if (stillValid && !stillValid()) return;
         try {
             const { place, revision } = await api(`/api/places/${kind}/${index}`, { method: 'PATCH', body: { revision: state.revisions[kind], ...edit } });
             // A reload meanwhile superseded this snapshot: the write went to the right block (the server
@@ -337,7 +339,9 @@ $('rows').addEventListener('click', (event) => {
     if (button) {
         const id = button.closest('tr').dataset.id;
         const edit = actionEdit(button.dataset.action, resultOf(state.places.find((p) => p.id === id)));
-        if (edit) save(id, edit);
+        // A move of the place may be waiting in the queue: when this save's turn comes, the report
+        // must still be about the place's coordinates (the cell says so when it is not).
+        if (edit) save(id, edit, undefined, () => !state.report?.byId[id]?.moved);
         return;
     }
     if (event.target.closest('a, input, select, textarea, label')) return;
