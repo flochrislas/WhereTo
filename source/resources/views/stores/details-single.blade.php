@@ -56,9 +56,7 @@
   <div class="detailRow">
     <div class="detail">
     @foreach ($place->tagsCached() as $placeTag)
-        <span class="tag tagType{{$placeTag->type}}" data-tag="{{$placeTag->label}}">
-          {{ tag_label($placeTag->label) }}
-        </span>
+        <x-tag :tag="$placeTag" />
     @endforeach
     </div>
   </div>
