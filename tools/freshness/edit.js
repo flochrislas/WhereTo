@@ -1,7 +1,7 @@
 // npm run edit [-- --port 8020]
 //
 // A local page to edit the place seeders: lists the places, filters them, edits any field of one,
-// and shows a report of check or names next to each row. Listens on 127.0.0.1 only. Every request
+// adds a place, removes one, and shows a report of check or names next to each row. Listens on 127.0.0.1 only. Every request
 // reads the seeders again; a revision per file (SHA-1 of its text) refuses an edit made from a page
 // that saw an older text. See doc/11-data-freshness.md, section 9.
 
@@ -10,8 +10,8 @@ import { readFileSync, readdirSync } from 'node:fs';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { parseArgs } from 'node:util';
-import { parseSeederFull, revisionOf, planPlaceEdit, KINDS, DEFAULT_SEEDERS_DIR } from './lib/seeders.js';
-import { validateEdit, mapReport, knownKeys, reportKind, KEY_TYPES, reportLabel } from './lib/editor.js';
+import { parseSeederFull, revisionOf, planPlaceEdit, planPlaceAdd, planPlaceRemoval, KINDS, DEFAULT_SEEDERS_DIR } from './lib/seeders.js';
+import { validateEdit, validateNewPlace, mapReport, knownKeys, templateKeys, reportKind, KEY_TYPES, reportLabel } from './lib/editor.js';
 import { writePlanSafely, SeederChangedError, runCommand, isMain, DEFAULT_REPORTS_DIR, REPO_ROOT } from './lib/cli.js';
 
 const DEFAULT_PAGE = fileURLToPath(new URL('./editor/index.html', import.meta.url));
@@ -68,6 +68,27 @@ export function createEditorServer({
         if (origin !== undefined && origin !== `http://${host}`) throw new HttpError(403, 'refused: another origin');
     }
 
+    // A change of one seeder, from the page: checks the revision the page sent, has `plan` prepare the
+    // new text from exactly the text of that revision, writes it. `plan` gets the text and its places,
+    // and throws an HttpError, or any error for a refused change (answered 400).
+    // Returns the plan; its `after` is the text written, which the answer must describe (not the file
+    // as it is now: an outside save right after the write must make the page's next change a 409).
+    function change(kind, body, plan) {
+        if (typeof body.revision !== 'string') throw new HttpError(400, 'the revision is missing');
+        const stale = () => new HttpError(409, 'the seeder changed on disk: reload the page', { revision: readKind(kind).revision });
+        const current = readKind(kind);
+        if (current.revision !== body.revision) throw stale();
+        try {
+            const planned = plan(current);
+            write(planned, run);
+            return planned;
+        } catch (error) {
+            if (error instanceof HttpError) throw error;
+            if (error instanceof SeederChangedError) throw stale();
+            throw new HttpError(400, error.message);
+        }
+    }
+
     const routes = {
         'GET /': () => ({ type: 'text/html; charset=utf-8', text: readFileSync(pageFile, 'utf8'), frame: false }),
 
@@ -76,36 +97,53 @@ export function createEditorServer({
             const places = read.flatMap((r) => r.places);
             const revisions = Object.fromEntries(Object.keys(KINDS).map((kind, i) => [kind, read[i].revision]));
             const keys = Object.fromEntries(Object.keys(KINDS).map((kind) => [kind, knownKeys(kind, places)]));
-            return { json: { places, revisions, keys, types: KEY_TYPES } };
+            const templates = Object.fromEntries(Object.keys(KINDS).map((kind) => [kind, templateKeys(kind, places)]));
+            return { json: { places, revisions, keys, templates, types: KEY_TYPES } };
         },
 
         'PATCH /api/places/:kind/:index': async (request, { kind, index }) => {
             if (!(kind in KINDS) || !/^\d+$/.test(index)) throw new HttpError(404, `no place ${kind}/${index}`);
             const body = await readJson(request);
-            if (typeof body.revision !== 'string') throw new HttpError(400, 'the revision is missing');
             const edit = { fields: body.fields, tags: body.tags, lat: body.lat, lon: body.lon };
             try {
                 validateEdit(edit);
             } catch (error) {
                 throw new HttpError(400, error.message);
             }
-            const file = seederFile(kind);
-            const stale = () => new HttpError(409, 'the seeder changed on disk: reload the page', { revision: readKind(kind).revision });
-            const current = readKind(kind); // the one text this edit is checked on and built from
-            if (current.revision !== body.revision) throw stale();
             const position = Number(index);
-            if (!current.places[position]) throw new HttpError(404, `no place ${kind}/${index}`);
-            let plan;
-            try {
-                plan = planPlaceEdit(file, kind, position, edit, current.text);
-                write(plan, run);
-            } catch (error) {
-                if (error instanceof SeederChangedError) throw stale();
-                throw new HttpError(400, error.message);
-            }
-            // The answer describes the text written, not the file as it is now: an outside save right
-            // after the write must make the page's next edit a 409, not a hit on a moved block.
+            const plan = change(kind, body, (current) => {
+                if (!current.places[position]) throw new HttpError(404, `no place ${kind}/${index}`);
+                return planPlaceEdit(seederFile(kind), kind, position, edit, current.text);
+            });
             return { json: { place: parseSeederFull(plan.after, kind)[position], revision: revisionOf(plan.after) } };
+        },
+
+        // A new place, written after the last one of its seeder.
+        'POST /api/places/:kind': async (request, { kind }) => {
+            if (!(kind in KINDS)) throw new HttpError(404, `no kind ${kind}`);
+            const body = await readJson(request);
+            const place = { fields: body.fields, tags: body.tags ?? [], lat: body.lat, lon: body.lon };
+            const plan = change(kind, body, (current) => {
+                validateNewPlace(place, knownKeys(kind, current.places));
+                return planPlaceAdd(seederFile(kind), kind, place, current.text);
+            });
+            return { json: { place: parseSeederFull(plan.after, kind)[plan.index], revision: revisionOf(plan.after) } };
+        },
+
+        // Removes a place. The page sends the name it showed in its warning: the revision already ties
+        // the index to the text, the name ties the request to what the person agreed to.
+        'DELETE /api/places/:kind/:index': async (request, { kind, index }) => {
+            if (!(kind in KINDS) || !/^\d+$/.test(index)) throw new HttpError(404, `no place ${kind}/${index}`);
+            const body = await readJson(request);
+            const position = Number(index);
+            let removed;
+            const plan = change(kind, body, (current) => {
+                removed = current.places[position];
+                if (!removed) throw new HttpError(404, `no place ${kind}/${index}`);
+                if (body.name !== removed.name) throw new HttpError(400, `the place ${kind}/${index} is '${removed.name}', not the one to remove`);
+                return planPlaceRemoval(seederFile(kind), kind, position, current.text);
+            });
+            return { json: { removed: { kind, name: removed.name, line: removed.line }, revision: revisionOf(plan.after) } };
         },
 
         'GET /api/reports': () => {

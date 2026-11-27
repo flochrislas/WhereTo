@@ -1,6 +1,6 @@
 # Freshness: find the places that closed
 
-A small Node tool, run by hand on the dev machine from time to time. It checks every open or temporarily closed place of the seeders against Google Places, shows what closed, reopened or was replaced, and writes the confirmed changes into `source/database/seeders/*TableSeeder.php`. A second command fills the Japanese names of the places (`name_ja`) from OpenStreetMap, and `check --names` has Google confirm them. A third one, `edit`, opens a local page to edit any field of the places with a report next to each row. The design is in [`doc/11-data-freshness.md`](../../doc/11-data-freshness.md) (sections 6, 8 and 9).
+A small Node tool, run by hand on the dev machine from time to time. It checks every open or temporarily closed place of the seeders against Google Places, shows what closed, reopened or was replaced, and writes the confirmed changes into `source/database/seeders/*TableSeeder.php`. A second command fills the Japanese names of the places (`name_ja`) from OpenStreetMap, and `check --names` has Google confirm them. A third one, `edit`, opens a local page to edit any field of the places, add a place or delete one, with a report next to each row. The design is in [`doc/11-data-freshness.md`](../../doc/11-data-freshness.md) (sections 6, 8 and 9).
 
 It is not part of the Laravel app: it is never built into the image nor deployed, and the app does not know it exists. The only contract between the two is the shape of the seeders.
 
@@ -219,6 +219,8 @@ npm run edit                 # http://127.0.0.1:8020/ ; Ctrl+C stops it
 npm run edit -- --port 8030  # another port
 ```
 
+**Add a place** (the button of the top bar) opens a form with the usual keys of the kind; nothing is written until "Create", and the block goes after the last place of its seeder. **Delete this place…**, at the bottom of a place's form, asks for a confirmation that names the place, then removes its whole block with its tags and coordinates (a place that closed is better kept, with a `business_status`). The comments above a deleted block stay in the seeder. Both are refused when the place (for an addition, the last place of the seeder) is followed by code on its variable that is not right under its block, such as a second `attachTags` after a blank line or a call inside an `if`: change the seeder by hand then. The same goes for a place written inside an `if`, a loop or a closure, whatever its indentation, and for an addition when a `return` stands above the last place.
+
 The page only answers on this machine. Every save re-reads the seeder and refuses an edit made from a page that saw an older text ("changed on disk": the page reloads and marks in red the edits to enter again). Review with `git diff source/database/seeders` or the Diff button; undo a line by hand or with `git checkout -p source/database/seeders`. The page's own tests are in `e2e/tests/editor.spec.js` (Playwright, they start the server themselves).
 
 ## 8. A second opinion from Tabelog: `npm run tabelog`
@@ -243,7 +245,8 @@ Nothing on the page is kept but the status; the pass is a read of a public page,
 | `names.js` | the `names` command, from OpenStreetMap or (`--tabelog`) from the Tabelog pages |
 | `edit.js`, `editor/index.html` | the `edit` command: the server and the page |
 | `tabelog.js` | the `tabelog` command: the second opinion on the unsure and not-found places |
-| `lib/seeders.js` | reads the places from the seeders, and edits a place: the `name_ja`, `business_status` and `google_place_id` keys for `apply` and `names`, any key, the tags and the coordinates for `edit` (prepare and verify in memory, then write) |
+| `lib/seeders.js` | reads the places from the seeders, and edits a place: the `name_ja`, `business_status` and `google_place_id` keys for `apply` and `names`, any key, the tags and the coordinates, a new place and a removed one for `edit` (prepare and verify in memory, then write) |
+| `lib/php-structure.js` | a small lexer of PHP: the braces around a place, so that a place is added or removed only where it stands right in the body of a method |
 | `lib/classify.js` | the verdict: name comparison (near misses, the Japanese comparison), distance (haversine), rules above |
 | `lib/names.js` | the OpenStreetMap matcher (and the Japanese comparison, re-exported from `lib/classify.js`) |
 | `lib/overpass.js` | the Overpass request, with its daily cache |

@@ -38,6 +38,12 @@
   .muted { color: #8a8a96; }
   pre { background: #121215; color: #cfcfd6; padding: 8px; white-space: pre-wrap; }
   #diff { display: none; }
+  .state.done { color: #5fd38d; }
+  button.danger { color: #ffb4b4; border-color: #8a3a3a; }
+  button.danger:hover { background: #5a2424; }
+  #newPlace { margin: 12px 0; padding: 10px 12px; background: #1f2a24; border: 1px solid #3a5a48; border-radius: 4px; }
+  #newPlace h2 { font-size: 15px; margin: 0 0 8px; }
+  .actions { margin-top: 10px; display: flex; gap: 8px; align-items: center; }
 </style>
 </head>
 <body>
@@ -49,12 +55,15 @@
   <select id="verdict" hidden><option value="">any verdict</option></select>
   <select id="nameja" hidden><option value="">any Japanese name verdict</option><option>confirmed</option><option>disputed</option><option>unchecked</option></select>
   <span id="count"></span>
+  <button id="addPlace">Add a place</button>
   <button id="showDiff">Diff</button>
   <button id="reload">Reload</button>
+  <span id="done" class="state done"></span>
 </header>
 <main>
   <pre id="diff"></pre>
   <p id="notice" class="state error"></p>
+  <section id="newPlace" hidden></section>
   <p id="unmatched" class="muted" hidden></p>
   <table><thead><tr><th>kind</th><th>name</th><th>Japanese</th><th>location</th><th>type</th><th>status</th><th>tags</th><th>report</th><th></th></tr></thead><tbody id="rows"></tbody></table>
 </main>
@@ -64,7 +73,8 @@
 // types: the type of each key, from the server (one table for both sides); saving: per kind, the
 // chain of saves; generation: per kind, bumped on a 409 so the saves queued before it are dropped;
 // lost: the edits dropped that way, to show; added: per place id, the keys added to its form, unsaved.
-const state = { places: [], revisions: {}, keys: {}, types: {}, report: null, open: null, saving: {}, generation: {}, lost: [], added: {}, loading: null };
+// templates: per kind, the keys of the form of a new place.
+const state = { places: [], revisions: {}, keys: {}, templates: {}, types: {}, report: null, open: null, saving: {}, generation: {}, lost: [], added: {}, loading: null };
 const $ = (id) => document.getElementById(id);
 const field = (p, key) => p.fields.find((f) => f.key === key)?.value;
 const esc = (s) => String(s ?? '').replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
@@ -82,6 +92,10 @@ async function api(path, options = {}) {
 // together, in one step, just before the rows are redrawn: the old form must never send an edit
 // with the new revisions (its block index belongs to the old text). Two reloads at once are one:
 // the second returns the promise of the first, so `loading` only clears once the rows are redrawn.
+// The place of the list with the kind, name and coordinates of `target`: how a place is found again
+// after a reload, since an id is a position in the seeder as it was when the id was given.
+const samePlace = (target) => state.places.find((p) => p.kind === target.kind && p.name === target.name && p.lat === target.lat && p.lon === target.lon);
+
 function load() {
     if (!state.loading) state.loading = reload().finally(() => { state.loading = null; });
     return state.loading;
@@ -96,9 +110,9 @@ async function reload() {
     for (const kind of Object.keys(data.revisions)) {
         if (state.revisions[kind] !== undefined && state.revisions[kind] !== data.revisions[kind]) state.generation[kind] = (state.generation[kind] ?? 0) + 1;
     }
-    Object.assign(state, { places: data.places, revisions: data.revisions, keys: data.keys, types: data.types });
+    Object.assign(state, { places: data.places, revisions: data.revisions, keys: data.keys, templates: data.templates ?? {}, types: data.types });
     // The form follows its place, found again by name and coordinates: its position may have changed.
-    const same = open && state.places.find((p) => p.kind === open.kind && p.name === open.name && p.lat === open.lat && p.lon === open.lon);
+    const same = open && samePlace(open);
     state.open = same ? same.id : null;
     const select = $('report');
     const current = select.value;
@@ -226,8 +240,51 @@ function form(p) {
         <label>tags</label><div><input type="text" data-tags value="${esc((p.tags ?? []).join(', '))}"><span class="state"></span></div>
         <label>coordinates</label><div><input type="text" data-coords value="${p.lat}, ${p.lon}" placeholder="lat, lon"><span class="state"></span></div>
         <label>add a key</label><div><select data-add><option value="">…</option>${addable.map((k) => `<option>${esc(k)}</option>`).join('')}</select></div>
-      </div><p class="muted">Line ${p.line} of ${p.kind}. A field saves when you leave it.</p>`;
+      </div><p class="muted">Line ${p.line} of ${p.kind}. A field saves when you leave it.</p>
+      <div class="actions"><button class="danger" data-remove>Delete this place…</button><span class="state"></span></div>`;
 }
+
+// The form of a new place: the usual keys of the kind, empty (a score starts at 0), the tags and
+// the coordinates. Nothing is written until "Create"; `values` keeps what was typed when the kind changes.
+function newPlaceForm(kind, values = {}) {
+    const blank = (key) => {
+        const { type, nullable: mayBeNull } = keyInfo(key, '');
+        if (type === 'boolean') return false;
+        if (type === 'number') return mayBeNull ? null : 0;
+        return type === 'status' ? null : '';
+    };
+    const rows = (state.templates[kind] ?? ['name']).map((key) => {
+        const value = Object.hasOwn(values, key) ? values[key] : blank(key);
+        return `<label>${esc(key)}</label><div>${input(key, value)}<span class="state"></span></div>`;
+    }).join('');
+    return `<h2>New place</h2><div class="fields">
+        <label>kind</label><div><select data-new-kind>${Object.keys(state.revisions).map((k) => `<option${k === kind ? ' selected' : ''}>${k}</option>`).join('')}</select></div>
+        ${rows}
+        <label>tags</label><div><input type="text" data-tags value="${esc(values[TAGS] ?? '')}" placeholder="ramen, japanese"><span class="state"></span></div>
+        <label>coordinates</label><div><input type="text" data-coords value="${esc(values[COORDS] ?? '')}" placeholder="lat, lon"><span class="state"></span></div>
+      </div><p class="muted">Written after the last place of the seeder. Empty name_ja, business_status and google_place_id get no line; another key can be added once the place exists.</p>
+      <div class="actions"><button data-create>Create</button><button data-cancel>Cancel</button><span class="state"></span></div>`;
+}
+// The tags and the coordinates in the values of the new place's form (no key of a seeder has a space).
+const TAGS = ' tags';
+const COORDS = ' coordinates';
+
+// What the form of the new place holds, as typed: for the form of another kind.
+function typedValues(section) {
+    const values = { [TAGS]: section.querySelector('[data-tags]').value, [COORDS]: section.querySelector('[data-coords]').value };
+    for (const el of section.querySelectorAll('[data-key]')) {
+        values[el.dataset.key] = el.dataset.type === 'boolean' ? el.checked : el.tagName === 'SELECT' ? (el.value || null) : el.dataset.type === 'number' ? (el.value === '' ? null : Number(el.value)) : el.value;
+    }
+    return values;
+}
+
+// "35.65, 139.70" (a pasted zoom level ignored) as two numbers, or null; an empty part is not a zero.
+function parseCoordinates(text) {
+    const parts = text.split(',').map((n) => n.trim());
+    const [lat, lon] = parts.map((n) => (n === '' ? NaN : Number(n)));
+    return parts.length >= 2 && Number.isFinite(lat) && Number.isFinite(lon) ? { lat, lon } : null;
+}
+const parseTags = (text) => text.split(',').map((t) => t.trim()).filter(Boolean);
 
 // The value an input gives: null for an emptied nullable field, a number for a number box.
 // Throws when a number box holds no number (empty and not nullable, or text the box cannot parse):
@@ -334,7 +391,111 @@ function save(id, edit, stateEl, stillValid) {
     return state.saving[kind];
 }
 
+// A place added or removed changes the blocks of its seeder: it waits for the saves of the kind
+// already queued, then everything is read again (the ids of the places below a removed one moved).
+// `send` makes the request and returns what to say; a 409 reloads like for a save.
+function restructure(kind, send, stateEl) {
+    if (state.loading) { setState(stateEl, 'error', 'not done: the page is reloading, try again'); return Promise.resolve(); }
+    const generation = (state.generation[kind] ??= 0);
+    setState(stateEl, '', 'saving…');
+    const run = async () => {
+        if (state.generation[kind] !== generation) { setState(stateEl, 'error', 'not done: the seeder changed, try again'); return; }
+        try {
+            const after = await send();
+            state.added = {}; // the keys added to a form, unsaved, were filed under ids that may have moved
+            await load();
+            $('notice').textContent = '';
+            after();
+        } catch (error) {
+            if (error.status === 409) {
+                state.generation[kind]++;
+                await load();
+                $('notice').textContent = `${error.message}. Nothing was changed: try again.`;
+                return;
+            }
+            setState(stateEl, 'error', error.message);
+        }
+    };
+    state.saving[kind] = (state.saving[kind] ?? Promise.resolve()).then(run, run);
+    return state.saving[kind];
+}
+
+// Removes a place, after a warning that names it.
+function removePlace(id, stateEl) {
+    const place = state.places.find((p) => p.id === id);
+    if (!place) return;
+    const warning = `Delete "${place.name}" from the ${place.kind}?\n\n`
+        + `Its whole block (line ${place.line} of the seeder) is removed, with its tags and coordinates: the place leaves the app at the next seeding.\n\n`
+        + 'To keep it in the app as a closed place, cancel and set its business_status instead.\n\n'
+        + 'Undo: git checkout -p source/database/seeders';
+    if (!confirm(warning)) return;
+    return restructure(place.kind, async () => {
+        const { removed } = await api(`/api/places/${place.kind}/${place.index}`, { method: 'DELETE', body: { revision: state.revisions[place.kind], name: place.name } });
+        return () => { $('done').textContent = `Deleted "${removed.name}" from the ${removed.kind} (it was at line ${removed.line}).`; };
+    }, stateEl);
+}
+
+// Creates the place of the form: every field is read first, and nothing is sent while one is wrong.
+function createPlace(section) {
+    const kind = section.querySelector('[data-new-kind]').value;
+    const stateEl = section.querySelector('.actions .state');
+    const fields = {};
+    let wrong = 0;
+    const refuse = (el, message) => { wrong++; setState(el.parentElement.querySelector('.state'), 'error', message); };
+    for (const el of section.querySelectorAll('.state')) setState(el, '', '');
+    for (const el of section.querySelectorAll('[data-key]')) {
+        try {
+            const value = valueOf(el);
+            if (el.dataset.key === 'name' && !String(value).trim()) throw new Error('a place needs a name');
+            // An empty optional key gets no line; the server does the same for the three it knows.
+            if (!(value === null && ['name_ja', 'business_status', 'google_place_id'].includes(el.dataset.key))) fields[el.dataset.key] = value;
+        } catch (error) {
+            refuse(el, error.message);
+        }
+    }
+    const coordinates = parseCoordinates(section.querySelector('[data-coords]').value);
+    if (!coordinates) refuse(section.querySelector('[data-coords]'), 'two numbers: lat, lon');
+    if (wrong) return setState(stateEl, 'error', 'not created: see the fields in red');
+    const tags = parseTags(section.querySelector('[data-tags]').value);
+    return restructure(kind, async () => {
+        const { place } = await api(`/api/places/${kind}`, { method: 'POST', body: { revision: state.revisions[kind], fields, tags, ...coordinates } });
+        return () => {
+            section.hidden = true;
+            section.innerHTML = '';
+            // Found again in the list just read, not by the id of the answer: if the seeder changed
+            // between the write and the reload, that id is the position of another place.
+            const created = samePlace({ ...place, kind });
+            state.open = created ? created.id : null;
+            render();
+            const row = created && document.querySelector(`tr.row[data-id="${CSS.escape(created.id)}"]`);
+            $('done').textContent = !created ? `Added "${place.name}" to the ${kind}, but the seeder changed since: look for it in the list.`
+                : `Added "${created.name}" to the ${kind}, line ${created.line}.${row ? '' : ' The filters hide it.'}`;
+            row?.scrollIntoView({ block: 'center' });
+        };
+    }, stateEl);
+}
+
+$('addPlace').addEventListener('click', () => {
+    const section = $('newPlace');
+    if (!section.hidden) return section.querySelector('[data-key="name"]')?.focus();
+    section.innerHTML = newPlaceForm($('kind').value || Object.keys(state.revisions)[0]);
+    section.hidden = false;
+    section.querySelector('[data-key="name"]')?.focus();
+});
+$('newPlace').addEventListener('click', (event) => {
+    const section = $('newPlace');
+    if (event.target.closest('[data-cancel]')) { section.hidden = true; section.innerHTML = ''; return; }
+    if (event.target.closest('[data-create]')) createPlace(section);
+});
+$('newPlace').addEventListener('change', (event) => {
+    if (event.target.dataset.newKind === undefined) return;
+    const section = $('newPlace');
+    section.innerHTML = newPlaceForm(event.target.value, typedValues(section));
+});
+
 $('rows').addEventListener('click', (event) => {
+    const remove = event.target.closest('button[data-remove]');
+    if (remove) return removePlace(remove.closest('tr').dataset.id, remove.parentElement.querySelector('.state'));
     const button = event.target.closest('button[data-action]');
     if (button) {
         const id = button.closest('tr').dataset.id;
@@ -366,13 +527,11 @@ $('rows').addEventListener('change', (event) => {
         }
         return save(id, { fields: { [el.dataset.key]: value } }, stateEl);
     }
-    if (el.dataset.tags !== undefined) return save(id, { tags: el.value.split(',').map((t) => t.trim()).filter(Boolean) }, stateEl);
+    if (el.dataset.tags !== undefined) return save(id, { tags: parseTags(el.value) }, stateEl);
     if (el.dataset.coords !== undefined) {
-        // Two numbers, a pasted zoom level ignored; an empty part is not a zero.
-        const parts = el.value.split(',').map((n) => n.trim());
-        const [lat, lon] = parts.map((n) => (n === '' ? NaN : Number(n)));
-        if (parts.length < 2 || !Number.isFinite(lat) || !Number.isFinite(lon)) return setState(stateEl, 'error', 'two numbers: lat, lon');
-        return save(id, { lat, lon }, stateEl);
+        const coordinates = parseCoordinates(el.value);
+        if (!coordinates) return setState(stateEl, 'error', 'two numbers: lat, lon');
+        return save(id, coordinates, stateEl);
     }
     if (el.dataset.add !== undefined && el.value) {
         // Only the form gets the key: its line is written when the new input is left with a value.
@@ -388,7 +547,7 @@ $('rows').addEventListener('keydown', (event) => {
 
 for (const id of ['q', 'kind', 'status', 'verdict', 'nameja']) $(id).addEventListener('input', render);
 $('report').addEventListener('change', (e) => loadReport(e.target.value));
-$('reload').addEventListener('click', load);
+$('reload').addEventListener('click', () => { $('done').textContent = ''; return load(); });
 $('showDiff').addEventListener('click', async () => {
     const pre = $('diff');
     if (pre.style.display === 'block') { pre.style.display = 'none'; return; }

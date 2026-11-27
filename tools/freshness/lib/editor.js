@@ -2,7 +2,7 @@
 // and the mapping of a report's results to the places of the page. No I/O.
 // See doc/11-data-freshness.md, section 9.
 
-import { checkPlaceEdit } from './seeders.js';
+import { checkPlaceEdit, checkNewPlace } from './seeders.js';
 
 // The keys of the four seeders, with the input the page offers and whether null is a value.
 // The kinds share their key names (a store has no lunch_price, but the name means the same).
@@ -58,6 +58,14 @@ export function knownKeys(kind, places) {
     return keys;
 }
 
+// The keys of the form of a new place: name, the optional keys, then the keys most places of the kind
+// have (a key that a few blocks carry is added afterwards, like on any place).
+export function templateKeys(kind, places) {
+    const own = places.filter((p) => p.kind === kind);
+    const usual = (key) => own.filter((p) => p.fields.some((f) => f.key === key)).length * 2 > own.length;
+    return knownKeys(kind, places).filter((key) => key === 'name' || OPTIONAL_KEYS.includes(key) || usual(key));
+}
+
 const DATETIME_RE = /^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$/;
 
 // Checks the values of an edit against the type of their keys, then the low-level rules of the seeders.
@@ -80,6 +88,17 @@ export function validateEdit(edit) {
         if (type === 'url' && !/^https?:\/\/\S+$/.test(value)) throw new Error(`'${key}' must start with http:// or https://`);
     }
     checkPlaceEdit(edit);
+}
+
+// Checks a new place ({ fields, tags?, lat, lon }): the values like those of an edit, a name and
+// coordinates, and only keys the kind already uses (a typing mistake must not become a column).
+export function validateNewPlace(place, keys) {
+    const fields = place?.fields;
+    if (typeof fields !== 'object' || fields === null || Array.isArray(fields)) throw new Error('fields must be an object');
+    const unknown = Object.keys(fields).filter((key) => !keys.includes(key));
+    if (unknown.length) throw new Error(`unexpected key '${unknown[0]}'`);
+    validateEdit(place);
+    checkNewPlace(place);
 }
 
 // A names report carries its source (OpenStreetMap or Tabelog); a check report does not.

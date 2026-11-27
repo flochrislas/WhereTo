@@ -296,4 +296,162 @@ test.describe('Seeder editor', () => {
     await expect(page.locator('tr.form [data-key="points"] + .state')).toHaveText('saved');
     expect(seeder()).toContain("'points' => '\nA line with \\'quotes\\', commas, and => arrows inside. More.',");
   });
+
+  test('a new place is created from the form, written at the end of its seeder, and opened', async ({ page }) => {
+    await page.goto(base + '/');
+    await page.locator('#kind').selectOption('restaurants');
+    await page.getByRole('button', { name: 'Add a place' }).click();
+    const form = page.locator('#newPlace');
+    await expect(form.locator('[data-new-kind]')).toHaveValue('restaurants'); // the kind of the filter
+    await expect(form.locator('[data-key="score_food"]')).toHaveValue('0');
+    await form.locator('[data-key="name"]').fill("Menya d'Or");
+    await form.locator('[data-key="location"]').fill('Shibuya');
+    await form.locator('[data-key="type"]').fill('Ramen');
+    await form.locator('[data-key="points"]').fill('Rich broth.\nLong queue.');
+    await form.locator('[data-key="visited"]').check();
+    await form.locator('[data-key="score_lunch"]').fill('3');
+    await form.locator('[data-tags]').fill('ramen, japanese');
+    await form.locator('[data-coords]').fill('35.6601, 139.7002, 17z');
+    const before = seeder();
+    await form.getByRole('button', { name: 'Create' }).click();
+
+    await expect(page.locator('#done')).toHaveText(/Added "Menya d'Or" to the restaurants, line \d+\./);
+    await expect(form).toBeHidden();
+    await expect(page.locator('#count')).toHaveText('14 of 23');
+    // The new row is open, ready for the keys the form did not have
+    await expect(page.locator('tr.form[data-id="restaurants/13"] [data-key="name"]')).toHaveValue("Menya d'Or");
+    const text = seeder();
+    expect(text.startsWith(before.slice(0, before.indexOf('        /*\n        ///AAA///')))).toBe(true); // everything above is untouched
+    expect(text).toContain([
+      '        $resto = Restaurant::create([',
+      "            'name' => 'Menya d\\'Or',",
+      "            'location' => 'Shibuya',",
+      "            'type' => 'Ramen',",
+      "            'lunch_price' => null,",
+      "            'points' => 'Rich broth.",
+      "Long queue.',",
+      "            'visited' => true,",
+    ].join('\n'));
+    expect(text).toContain("            'score_lunch' => 3,\n            'score_food' => 0,\n        ]);\n        $resto->attachTags(['ramen', 'japanese']);\n        $resto->fillCoordinatesFromString('35.6601, 139.7002');");
+    expect(text).not.toContain("'name_ja' => null"); // an empty optional key gets no line
+
+    // The new place is edited like any other
+    const nameJa = page.locator('tr.form [data-add]');
+    await nameJa.selectOption('name_ja');
+    await page.locator('tr.form [data-key="name_ja"]').fill('麺屋ドール');
+    await page.locator('tr.form [data-key="name_ja"]').press('Enter');
+    await expect(page.locator('tr.form [data-key="name_ja"] + .state')).toHaveText('saved');
+    expect(seeder()).toContain("'name' => 'Menya d\\'Or',\n            'name_ja' => '麺屋ドール',");
+  });
+
+  test('a place created while a block is inserted above opens the new place, not the one at its old position', async ({ page }) => {
+    await page.goto(base + '/');
+    await page.locator('#kind').selectOption('restaurants');
+    await page.getByRole('button', { name: 'Add a place' }).click();
+    const form = page.locator('#newPlace');
+    await form.locator('[data-key="name"]').fill('Late Ramen');
+    await form.locator('[data-coords]').fill('35.6601, 139.7002');
+    // Between the write and the reload of the page, someone inserts a block at the top of the file
+    await page.route('**/api/places/restaurants', async (route) => {
+      const response = await route.fetch();
+      const text = seeder();
+      const start = text.indexOf('        $resto = Restaurant::create([');
+      const marker = "139.698468');";
+      const block = text.slice(start, text.indexOf(marker) + marker.length);
+      writeFileSync(seederPath(), text.replace(block, block.replace("'Hakata Furyu'", "'Inserted'") + '\n\n' + block));
+      await route.fulfill({ response });
+    });
+    await form.getByRole('button', { name: 'Create' }).click();
+
+    await expect(page.locator('#done')).toHaveText(/Added "Late Ramen" to the restaurants, line \d+\./);
+    await expect(page.locator('#count')).toHaveText('15 of 24');
+    // The answer said restaurants/13, which is now the place that was last before; the new one is 14
+    await expect(page.locator('tr.form')).toHaveCount(1);
+    await expect(page.locator('tr.form[data-id="restaurants/14"] [data-key="name"]')).toHaveValue('Late Ramen');
+  });
+
+  test('a new place with a wrong field is not sent; the form keeps what was typed when the kind changes', async ({ page }) => {
+    let posts = 0;
+    await page.route('**/api/places/*', (route) => { if (route.request().method() === 'POST') posts++; return route.continue(); });
+    await page.goto(base + '/');
+    await page.getByRole('button', { name: 'Add a place' }).click();
+    const form = page.locator('#newPlace');
+    const before = seeder();
+    await form.locator('[data-key="score_food"]').fill('');
+    await form.getByRole('button', { name: 'Create' }).click();
+    await expect(form.locator('[data-key="name"] + .state')).toHaveText('a place needs a name');
+    await expect(form.locator('[data-key="score_food"] + .state')).toHaveText('must be a number');
+    await expect(form.locator('[data-coords] + .state')).toHaveText('two numbers: lat, lon');
+    await expect(form.locator('.actions .state')).toHaveText('not created: see the fields in red');
+    expect(posts).toBe(0);
+
+    // Another kind: its own keys, the typed values kept
+    await form.locator('[data-key="name"]').fill('Big Echo');
+    await form.locator('[data-coords]').fill('35.66, 139.70');
+    await form.locator('[data-new-kind]').selectOption('karaokes');
+    await expect(form.locator('[data-key="name"]')).toHaveValue('Big Echo');
+    await expect(form.locator('[data-coords]')).toHaveValue('35.66, 139.70');
+    await expect(form.locator('[data-key="lunch_price"]')).toHaveCount(0);
+
+    // A server refusal (the same name at the same spot) is shown, the form stays
+    await form.locator('[data-key="name"]').fill('Karaoke-kan');
+    const kan = JSON.parse(await (await page.request.get(base + '/api/places')).text()).places.find((p) => p.kind === 'karaokes' && p.name === 'Karaoke-kan');
+    await form.locator('[data-coords]').fill(`${kan.lat}, ${kan.lon}`);
+    for (const score of await form.locator('input[type=number]').all()) if (!(await score.inputValue())) await score.fill('1');
+    await form.getByRole('button', { name: 'Create' }).click();
+    await expect(form.locator('.actions .state')).toHaveText(/already in karaokes/);
+    await expect(form).toBeVisible();
+    expect(seeder()).toBe(before);
+
+    await form.getByRole('button', { name: 'Cancel' }).click();
+    await expect(form).toBeHidden();
+  });
+
+  test('deleting a place asks first, naming it; refused, nothing changes; accepted, its block goes', async ({ page }) => {
+    await page.goto(base + '/');
+    await page.locator('tr.row', { hasText: 'Go Go Curry' }).click();
+    const before = seeder();
+
+    let warning = '';
+    page.once('dialog', (dialog) => { warning = dialog.message(); return dialog.dismiss(); });
+    await page.getByRole('button', { name: 'Delete this place…' }).click();
+    expect(warning).toContain('Delete "Go Go Curry" from the restaurants?');
+    expect(warning).toContain('line 64');
+    expect(warning).toContain('business_status');
+    expect(seeder()).toBe(before);
+    await expect(page.locator('#count')).toHaveText('22 of 22');
+
+    page.once('dialog', (dialog) => dialog.accept());
+    await page.getByRole('button', { name: 'Delete this place…' }).click();
+    await expect(page.locator('#done')).toHaveText('Deleted "Go Go Curry" from the restaurants (it was at line 64).');
+    await expect(page.locator('#count')).toHaveText('21 of 21');
+    await expect(page.locator('tr.row', { hasText: 'Go Go Curry' })).toHaveCount(0);
+    await expect(page.locator('tr.form')).toHaveCount(0);
+    const text = seeder();
+    expect(text).not.toContain('Go Go Curry');
+    expect(text).not.toContain('35.657333');
+    expect(text.split('\n')).toHaveLength(before.split('\n').length - 16);
+
+    // The place that took its position is the one the page now edits there
+    await page.locator('tr.row[data-id="restaurants/2"] td').first().click();
+    await expect(page.locator('tr.form [data-key="name"]')).toHaveValue("Mc Donald's");
+    await page.locator('tr.form [data-key="location"]').fill('Shibuya, Center Gai');
+    await page.locator('tr.form [data-key="location"]').press('Enter');
+    await expect(page.locator('tr.form [data-key="location"] + .state')).toHaveText('saved');
+    expect(seeder().match(/Shibuya, Center Gai/g)).toHaveLength(1);
+    expect(seeder()).toContain("'name' => 'Mc Donald\\'s',\n            'location' => 'Shibuya, Center Gai',");
+  });
+
+  test('a delete on a seeder that changed outside removes nothing and reloads', async ({ page }) => {
+    await page.goto(base + '/');
+    await page.locator('tr.row', { hasText: 'Go Go Curry' }).click();
+    writeFileSync(seederPath(), seeder().replace("'name' => 'Hakata Furyu'", "'name' => 'Hakata Furyu 2'"));
+    const changed = seeder();
+    page.once('dialog', (dialog) => dialog.accept());
+    await page.getByRole('button', { name: 'Delete this place…' }).click();
+    await expect(page.locator('#notice')).toHaveText(/the seeder changed on disk.*Nothing was changed/);
+    expect(seeder()).toBe(changed);
+    await expect(page.locator('tr.row', { hasText: 'Hakata Furyu 2' })).toHaveCount(1);
+    await expect(page.locator('tr.row', { hasText: 'Go Go Curry' })).toHaveCount(1);
+  });
 });

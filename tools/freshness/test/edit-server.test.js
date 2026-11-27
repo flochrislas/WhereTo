@@ -246,3 +246,90 @@ test('the diff route runs git diff on the seeders', async () => {
     assert.equal(body, 'diff --git a/x');
     assert.deepEqual(ran.at(-1), ['git', ['diff', '--', 'source/database/seeders'], ws.dir]);
 });
+
+// ---- A new place, a place removed. ----
+
+const NEW_PLACE = { fields: { name: 'Menya Musashi', location: 'Shibuya', type: 'Ramen', lunch_price: 1000, visited: false }, tags: ['ramen'], lat: 35.6601, lon: 139.7002 };
+
+test('the listing gives the keys of the form of a new place, per kind', async () => {
+    const ws = await workspace();
+    const { body } = await ws.api('/api/places');
+    assert.deepEqual(body.templates.restaurants.slice(0, 5), ['name', 'name_ja', 'business_status', 'google_place_id', 'location']);
+    assert.ok(!body.templates.karaokes.includes('lunch_price'));
+});
+
+test('a new place is written at the end of its seeder and answered with its id and the new revision', async () => {
+    const ws = await workspace();
+    const { status, body } = await ws.api('/api/places/restaurants', { method: 'POST', body: { revision: ws.revision(), ...NEW_PLACE } });
+    assert.equal(status, 200);
+    assert.equal(body.place.id, 'restaurants/13');
+    assert.equal(body.place.name, 'Menya Musashi');
+    assert.deepEqual(body.place.tags, ['ramen']);
+    assert.equal(body.revision, ws.revision());
+    const places = parseSeederFull(readFileSync(ws.seederFile, 'utf8'), 'restaurants');
+    assert.equal(places.length, 14);
+    assert.equal(places[13].name, 'Menya Musashi');
+    // The new place is edited like any other, with the revision just returned.
+    const edit = await ws.api('/api/places/restaurants/13', { method: 'PATCH', body: { revision: body.revision, fields: { name_ja: '麺屋武蔵' } } });
+    assert.equal(edit.status, 200);
+});
+
+test('a new place is refused when it is wrong, stale or a duplicate, and nothing is written', async () => {
+    const ws = await workspace();
+    const before = readFileSync(ws.seederFile, 'utf8');
+    const post = (kind, body) => ws.api(`/api/places/${kind}`, { method: 'POST', body });
+    const refused = async (body, pattern, status = 400) => {
+        const answer = await post('restaurants', body);
+        assert.equal(answer.status, status);
+        assert.match(answer.body.error, pattern);
+    };
+    await refused({ ...NEW_PLACE }, /revision is missing/);
+    await refused({ revision: 'old', ...NEW_PLACE }, /changed on disk/, 409);
+    await refused({ revision: ws.revision(), ...NEW_PLACE, fields: { location: 'Shibuya' } }, /name/);
+    await refused({ revision: ws.revision(), ...NEW_PLACE, lat: undefined, lon: undefined }, /coordinates/);
+    await refused({ revision: ws.revision(), ...NEW_PLACE, fields: { name: 'X', colour: 'red' } }, /unexpected key 'colour'/);
+    await refused({ revision: ws.revision(), ...NEW_PLACE, fields: { name: 'X', lunch_price: '1000' } }, /must be a number/);
+    await refused({ revision: ws.revision(), ...NEW_PLACE, fields: { name: 'Hakata Furyu' }, lat: 35.658545, lon: 139.698468 }, /already in restaurants/);
+    assert.equal((await post('clubs', { revision: ws.revision(), ...NEW_PLACE })).status, 404);
+    assert.equal(readFileSync(ws.seederFile, 'utf8'), before);
+});
+
+test('a place is removed when the request names it, and the places below take its position', async () => {
+    const ws = await workspace();
+    const { status, body } = await ws.api('/api/places/restaurants/2', { method: 'DELETE', body: { revision: ws.revision(), name: 'Go Go Curry' } });
+    assert.equal(status, 200);
+    assert.deepEqual(body.removed, { kind: 'restaurants', name: 'Go Go Curry', line: 64 });
+    assert.equal(body.revision, ws.revision());
+    const places = parseSeederFull(readFileSync(ws.seederFile, 'utf8'), 'restaurants');
+    assert.equal(places.length, 12);
+    assert.equal(places[2].name, "Mc Donald's");
+    // A page that still holds the old revision cannot edit the place that took position 2.
+    const stale = await ws.api('/api/places/restaurants/2', { method: 'PATCH', body: { revision: 'old', fields: { name: 'Go Go Curry 2' } } });
+    assert.equal(stale.status, 409);
+});
+
+test('a removal is refused without the right name, with a stale revision or for no place, and nothing is written', async () => {
+    const ws = await workspace();
+    const before = readFileSync(ws.seederFile, 'utf8');
+    const remove = (path, body) => ws.api(path, { method: 'DELETE', body });
+    const wrongName = await remove('/api/places/restaurants/2', { revision: ws.revision(), name: 'Hakata Furyu' });
+    assert.equal(wrongName.status, 400);
+    assert.match(wrongName.body.error, /is 'Go Go Curry', not the one to remove/);
+    assert.equal((await remove('/api/places/restaurants/2', { revision: ws.revision() })).status, 400); // no name
+    assert.equal((await remove('/api/places/restaurants/2', { name: 'Go Go Curry' })).status, 400); // no revision
+    assert.equal((await remove('/api/places/restaurants/2', { revision: 'old', name: 'Go Go Curry' })).status, 409);
+    assert.equal((await remove('/api/places/restaurants/99', { revision: ws.revision(), name: 'X' })).status, 404);
+    assert.equal((await remove('/api/places/clubs/0', { revision: ws.revision(), name: 'X' })).status, 404);
+    // Another origin cannot remove anything (a page open in the same browser).
+    const crossOrigin = await ws.api('/api/places/restaurants/2', { method: 'DELETE', headers: { Origin: 'http://evil.example' }, body: { revision: ws.revision(), name: 'Go Go Curry' } });
+    assert.equal(crossOrigin.status, 403);
+    assert.equal(readFileSync(ws.seederFile, 'utf8'), before);
+});
+
+test('a php -l failure leaves the seeder as it was, for a new place and for a removal', async () => {
+    const ws = await workspace({ run: () => ({ status: 255, stdout: 'PHP Parse error', stderr: '' }) });
+    const before = readFileSync(ws.seederFile, 'utf8');
+    assert.equal((await ws.api('/api/places/restaurants', { method: 'POST', body: { revision: ws.revision(), ...NEW_PLACE } })).status, 400);
+    assert.equal((await ws.api('/api/places/restaurants/2', { method: 'DELETE', body: { revision: ws.revision(), name: 'Go Go Curry' } })).status, 400);
+    assert.equal(readFileSync(ws.seederFile, 'utf8'), before);
+});

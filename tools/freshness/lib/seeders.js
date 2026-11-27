@@ -17,6 +17,7 @@ import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { createHash } from 'node:crypto';
 import assert from 'node:assert/strict';
+import { phpStructure } from './php-structure.js';
 
 // The seeder file of each kind of place.
 export const KINDS = {
@@ -32,8 +33,8 @@ export const DEFAULT_SEEDERS_DIR = fileURLToPath(new URL('../../../source/databa
 // The values the app accepts in the business_status column.
 export const BUSINESS_STATUSES = ['OPERATIONAL', 'CLOSED_TEMPORARILY', 'CLOSED_PERMANENTLY', 'REPLACED', 'RELOCATED'];
 
-// `$resto = Restaurant::create([` -> indentation, variable name.
-const CREATE_RE = /^(\s*)\$(\w+) = \w+::create\(\[$/;
+// `$resto = Restaurant::create([` -> indentation, variable name, model.
+const CREATE_RE = /^(\s*)\$(\w+) = (\w+)::create\(\[$/;
 // `'key' => value,` -> indentation, key, the rest of the line (the value and its comma).
 const KEY_RE = /^(\s*)'(\w+)' => (.*)$/;
 // `$resto->fillCoordinatesFromString('35.65, 139.69');` -> variable name, latitude, longitude.
@@ -181,7 +182,7 @@ function parseBlocks(lines, label) {
             if (last && last.lat === undefined) fail(last.start, `the place '${last.values.name}' has no coordinates (fillCoordinatesFromString)`);
             // keyLines / keyEnds: the first and last line of each key (they differ for a multi-line string).
             // keyOrder: the keys as they appear; end: the `]);` line; lineIndent: the indentation of the block's own lines.
-            block = { start: index, variable: create[2], lineIndent: create[1], values: {}, keyLines: {}, keyEnds: {}, keyOrder: [], indent: undefined, tags: undefined, tagsLine: undefined, tagsCalls: 0, coordsLine: undefined };
+            block = { start: index, variable: create[2], model: create[3], lineIndent: create[1], values: {}, keyLines: {}, keyEnds: {}, keyOrder: [], indent: undefined, tags: undefined, tagsLine: undefined, tagsCalls: 0, coordsLine: undefined };
             return;
         }
 
@@ -232,8 +233,9 @@ function toPlace(block, kind) {
 }
 
 // The full shape of a place, for the editor: every key in the seeder's order, the tags, the
-// coordinates, and a stable id: the kind and the position of the block in its seeder. The line
-// number moves when a line is inserted; the position does not (the editor never adds a block).
+// coordinates, and an id: the kind and the position of the block in its seeder. The line number
+// moves when a line is inserted; the position only moves when a block above is removed (a new block
+// goes after the last one), and the page reads everything again after that.
 function toFullPlace(block, kind, index) {
     return {
         id: `${kind}/${index}`,
@@ -506,6 +508,184 @@ export function planPlaceEdit(filePath, kind, index, edit, before = readFileSync
             throw new Error(`${filePath}: after the edit, '${p.name}' (block ${i}) would not read back as expected`);
         }
     });
+    return { filePath, before, after, changed: true };
+}
+
+// ---- A new place, a place removed (edit.js). ----
+
+// Where a place stands in the PHP of its seeder, for a change of structure: the braces are read by
+// phpStructure, since the indentation proves nothing (PHP runs an `if` whatever its body looks like).
+// Returns { last, first }: the last line of the place (its create([...]) block, then the calls on its
+// variable that follow it without a gap, attachTags and fillCoordinatesFromString, each a whole
+// statement on one line) and the first token of the place.
+// Throws, with `advice` as what to do instead, when the editor cannot answer for the change:
+// - the place is not a statement right in the body of a method: inside an `if`, a loop, a closure or
+//   a braceless `if (...)`, that code decides whether the place is seeded, a block added after it would
+//   depend on it too, and the lines of the place may go on after the closing brace;
+// - the variable of the place is used again before the next place or the end of the method, past
+//   the calls right under the block (after a blank line or a comment, inside an `if`, over several
+//   lines, passed to a function): such a line acts on the place the variable holds when it runs, so
+//   a new block written before it, or a removal that leaves it behind, would hand it to another place
+//   without the reader of this file seeing a difference.
+function placeBounds(lines, kind, blocks, position, advice) {
+    const block = blocks[position];
+    const name = block.values.name;
+    const structure = phpStructure(lines.join('\n'));
+    if (structure.unsupported) {
+        throw new Error(`${kind}: the seeder has ${structure.unsupported.why} (line ${structure.unsupported.line + 1}), which the editor does not follow: ${advice}`);
+    }
+    const { tokens } = structure;
+    const unreadable = (line) => new Error(`'${name}' has lines the editor cannot follow (line ${line + 1}): ${advice}`);
+    const nested = (line) => new Error(`'${name}' is written inside other code (line ${line + 1}), which decides whether it is seeded: ${advice}`);
+
+    const first = structure.first(block.start);
+    const shape = first && tokens.slice(first.index, first.index + 5).map((t) => t.text).join(' ');
+    if (first?.type !== 'var' || shape !== `${block.variable} = ${block.model} :: create`) throw unreadable(block.start);
+
+    // Right in the body of a method: only a class (and a namespace) around the method, and the
+    // statement starts where one can start, not after `if (...)`, `else` or inside an expression.
+    const around = first.stack.slice(0, -1);
+    const method = first.stack.at(-1);
+    if (method?.kind !== 'method' || around.some((entry) => entry.kind !== 'class' && entry.kind !== 'namespace')) {
+        const inner = first.stack.findLast((entry) => entry.kind === 'other' || entry.kind === 'closure');
+        throw nested(inner ? tokens[inner.open].line : block.start);
+    }
+    // A statement of the method's body starts after a `;`, a `{` or a `}`, outside any parenthesis.
+    // After `if (...)`, `else` or `do`, without braces, it is the body of that code.
+    const startsStatement = (token) => ['{', '}', ';'].includes(tokens[token.index - 1].text) && token.depth === tokens[method.open].depth;
+    if (!startsStatement(first)) throw nested(tokens[first.index - 1].line);
+
+    // The block itself, then each call under it: whole statements, with no brace in them.
+    const statementEnd = (line) => {
+        const end = structure.last(line);
+        return end?.text === ';' && end.depth === first.depth && end.stack === first.stack ? end : null;
+    };
+    let lastToken = statementEnd(block.end);
+    if (!lastToken) throw unreadable(block.end);
+    let last = block.end;
+    for (;;) {
+        const start = structure.first(last + 1);
+        const end = statementEnd(last + 1);
+        const call = start?.type === 'var' && start.text === block.variable && tokens[start.index + 1]?.text === '->' && tokens[start.index - 1] === lastToken;
+        if (!call || !end || tokens.slice(start.index, end.index).some((t) => !t.inString && t.text === ';')) break;
+        last += 1;
+        lastToken = end;
+    }
+
+    // The variable used again before it is given another place, or the end of the method. Only a place
+    // of the same variable that is itself a statement of the method's body ends the search: a place
+    // of another variable leaves this one as it was, and one inside an `if`, with braces or not,
+    // gives it a new value only sometimes (its own `$variable =` is then a use, and refuses the change).
+    const next = blocks.slice(position + 1).map((b) => b.variable === block.variable && structure.first(b.start)).find((t) => t && t.stack === first.stack && startsStatement(t));
+    const limit = next ? next.index : (method.close ?? tokens.length);
+    const stray = tokens.find((t) => t.index > lastToken.index && t.index < limit && t.type === 'var' && t.text === block.variable);
+    if (stray) throw new Error(`'${name}' has lines the editor cannot follow after its block (line ${stray.line + 1}): ${advice}`);
+
+    return { last, first, method, tokens };
+}
+
+// What makes a method stop before its end. A `return` or a `goto` inside a closure only leaves the
+// closure; an `exit` or a `throw` there still stops the seeding when the closure runs.
+const EXITS = new Set(['return', 'exit', 'die', 'throw', 'goto']);
+const LOCAL_EXITS = new Set(['return', 'goto']);
+const stopsMethod = (token, method) => {
+    if (token.type !== 'word' || token.method !== method) return false;
+    const word = token.text.toLowerCase();
+    if (!EXITS.has(word)) return false;
+    const inClosure = token.stack.slice(token.stack.indexOf(method) + 1).some((entry) => entry.kind === 'closure');
+    return !(inClosure && LOCAL_EXITS.has(word));
+};
+
+const sameSpot = (a, b) => Math.abs(a.lat - b.lat) < 1e-6 && Math.abs(a.lon - b.lon) < 1e-6;
+
+// Checks a new place ({ fields, tags?, lat, lon }) before any line is written: the rules of an edit,
+// and what a block cannot do without (a name, coordinates).
+export function checkNewPlace(place) {
+    const { fields, tags, lat, lon } = place ?? {};
+    if (typeof fields !== 'object' || fields === null || Array.isArray(fields)) throw new Error('fields must be an object');
+    checkPlaceEdit({ fields, tags, lat, lon });
+    if (typeof fields.name !== 'string') throw new Error('the name must be a non-empty string');
+    if (lat === undefined) throw new Error('a new place needs its coordinates');
+}
+
+// Adds a place after the last one of the seeder, written like it (variable, model, indentation):
+// name first, then name_ja, business_status and google_place_id when they have a value (null: no
+// line, as for an edit), then the other keys in the order given.
+function addLines(lines, kind, place) {
+    checkNewPlace(place);
+    const blocks = parseBlocks(lines, kind);
+    const model = blocks.at(-1);
+    if (!model) throw new Error(`${kind}: the seeder has no place to write the new one like: add the first one by hand`);
+    const { fields, tags = [], lat, lon } = place;
+    if (blocks.some((b) => b.values.name === fields.name && sameSpot(b, { lat, lon }))) {
+        throw new Error(`'${fields.name}' is already in ${kind} at these coordinates`);
+    }
+    const first = ['name', ...Object.keys(KNOWN_KEYS)];
+    const keys = [...first.filter((k) => Object.hasOwn(fields, k) && fields[k] !== null), ...Object.keys(fields).filter((k) => !first.includes(k))];
+    const clean = tags.map((t) => t.trim()).filter(Boolean);
+    const own = model.lineIndent;
+    const written = [
+        '',
+        `${own}$${model.variable} = ${model.model}::create([`,
+        ...keys.flatMap((key) => `${model.indent}'${key}' => ${phpValue(fields[key])},`.split('\n')),
+        `${own}]);`,
+        ...(clean.length ? [`${own}$${model.variable}->attachTags([${clean.map(phpString).join(', ')}]);`] : []),
+        `${own}$${model.variable}->fillCoordinatesFromString(${phpString(formatCoordinates(lat, lon))});`,
+    ];
+    const { last, first: start, method, tokens } = placeBounds(lines, kind, blocks, blocks.length - 1, `it is the last place of ${kind}, add the new one in the seeder`);
+    // A `return` above, even inside an `if`, and the new place is seeded only when the method gets there.
+    const exit = tokens.find((t) => t.index < start.index && stopsMethod(t, method));
+    if (exit) throw new Error(`${kind}: the method of the places can stop before its end (${exit.text}, line ${exit.line + 1}), which decides whether a new place is seeded: add it in the seeder`);
+    lines.splice(last + 1, 0, ...written);
+}
+
+// Removes the place at `index`: its block and the calls that follow it. The comments above it stay
+// (they are notes, and nothing says which block they are about).
+function removeLines(lines, kind, index) {
+    const blocks = parseBlocks(lines, kind);
+    const block = blocks[index];
+    if (!block) throw new Error(`${kind}: no block ${index}`);
+    const { last } = placeBounds(lines, kind, blocks, index, 'remove it in the seeder');
+    lines.splice(block.start, last - block.start + 1);
+    // One blank line between the neighbours, not two.
+    if (lines[block.start]?.trim() === '' && lines[block.start - 1]?.trim() === '') lines.splice(block.start, 1);
+}
+
+// Throws unless `after` reads back as `expected` (a list of comparable places).
+function assertReadsBack(filePath, kind, after, expected) {
+    const places = parseSeederFull(after, kind);
+    if (places.length !== expected.length) throw new Error(`${filePath}: ${expected.length} places expected after the change, ${places.length} read`);
+    places.forEach((p, i) => {
+        try {
+            assert.deepStrictEqual(comparable(p), expected[i]);
+        } catch {
+            throw new Error(`${filePath}: after the change, '${p.name}' (block ${i}) would not read back as expected`);
+        }
+    });
+}
+
+// Prepares a new place, in memory: writes its block after the last one, reads the text back and checks
+// that every place is as it was and that the new one has the values given. Nothing is written.
+// Returns { filePath, before, after, changed, index }: index is the position of the new place.
+export function planPlaceAdd(filePath, kind, place, before = readFileSync(filePath, 'utf8')) {
+    const { lines, eol } = splitLines(before);
+    addLines(lines, kind, place);
+    const after = lines.join(eol);
+    const placesBefore = parseSeederFull(before, kind);
+    const values = Object.fromEntries(Object.entries(place.fields).filter(([key, value]) => !(key in KNOWN_KEYS && value === null)));
+    const tags = (place.tags ?? []).map((t) => t.trim()).filter(Boolean);
+    const added = { name: values.name, lat: place.lat, lon: place.lon, tags: tags.length ? tags : null, values };
+    assertReadsBack(filePath, kind, after, [...placesBefore.map(comparable), added]);
+    return { filePath, before, after, changed: true, index: placesBefore.length };
+}
+
+// Prepares the removal of the place at `index`, in memory: removes its lines, reads the text back and
+// checks that the other places are all there, as they were, in the same order. Nothing is written.
+export function planPlaceRemoval(filePath, kind, index, before = readFileSync(filePath, 'utf8')) {
+    const { lines, eol } = splitLines(before);
+    removeLines(lines, kind, index);
+    const after = lines.join(eol);
+    assertReadsBack(filePath, kind, after, parseSeederFull(before, kind).filter((_, i) => i !== index).map(comparable));
     return { filePath, before, after, changed: true };
 }
 
