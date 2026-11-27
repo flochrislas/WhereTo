@@ -29,9 +29,13 @@ final class Tags
         return is_string($icon) && $icon !== '' ? $icon : null;
     }
 
-    /** The address of the sprite. ?v= is its modification time: new artwork has a new URL, past the caches */
+    /**
+     * The address of the sprite. ?v= is its modification time: new artwork has a new URL, past the caches.
+     * A path of the site and never asset(): a browser draws a <use> only from the origin of its page, so a
+     * sprite on an asset host (ASSET_URL) would leave every icon blank. It is also the path sw.js pre-caches.
+     */
     public static function sprite(): string
     {
-        return asset('icons/tags.svg').'?v='.filemtime(public_path('icons/tags.svg'));
+        return '/icons/tags.svg?v='.filemtime(public_path('icons/tags.svg'));
     }
 }

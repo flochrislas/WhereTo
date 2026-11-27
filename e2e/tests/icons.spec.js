@@ -22,6 +22,20 @@ test.describe('Tag icons', () => {
     expect(missing).toEqual([]);
   });
 
+  // The <svg> keeps its size when its <use> draws nothing (a sprite the browser refuses, a symbol that is
+  // not there): only the box of the <use> itself tells a drawn icon from a blank one.
+  test('every icon of the tag cloud is drawn', async ({ page }) => {
+    await page.goto('/restaurants');
+    const icons = page.locator('#tags .tag .tagIcon use');
+    await expect(icons.first()).toBeAttached();
+    const blank = () => icons.evaluateAll((uses) => uses.filter((use) => !(use.getBBox().width > 0)).map((use) => use.getAttribute('href').split('#')[1]));
+    await expect.poll(blank, 'icons that draw nothing').toEqual([]);
+
+    // The check does see a blank icon: a symbol the sprite does not have
+    await icons.first().evaluate((use) => use.setAttribute('href', use.getAttribute('href').split('#')[0] + '#no-such-icon'));
+    await expect.poll(blank).toEqual(['no-such-icon']);
+  });
+
   test('the icon sits before the label, hidden from screen readers, and does not make its tag taller', async ({ page }) => {
     await page.goto('/restaurants');
     const withIcon = page.locator('#tags .tag[data-tag="ramen"]');

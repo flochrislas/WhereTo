@@ -2,6 +2,7 @@
 
 namespace Tests\Architecture;
 
+use App\Support\Tags;
 use Tests\TestCase;
 
 /**
@@ -27,6 +28,15 @@ class TagIconsTest extends TestCase
         $this->assertNotEmpty($labels);
         $unknown = array_diff(array_keys(config('tag_icons')), $labels);
         $this->assertSame([], array_values($unknown), 'Labels of config/tag_icons.php that are not a tag of any seeder');
+    }
+
+    /** A <use> is drawn only from the origin of its page: the sprite must not follow ASSET_URL to another host */
+    public function test_the_sprite_is_a_path_of_the_site_whatever_the_asset_host(): void
+    {
+        config(['app.asset_url' => 'https://cdn.example.com']);
+        $this->app->forgetInstance('url');
+        $this->assertStringStartsWith('https://cdn.example.com/', asset('css/style.css'));
+        $this->assertMatchesRegularExpression('#^/icons/tags\.svg\?v=\d+$#', Tags::sprite());
     }
 
     public function test_the_licence_of_the_icon_set_is_published_with_the_sprite(): void

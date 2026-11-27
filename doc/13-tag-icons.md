@@ -74,7 +74,7 @@ The build does two things to each source besides copying it: it rounds the coord
 3. `node tools/tag-icons/build.mjs`, then `php artisan config:clear` in the dev container.
 4. Look at the chip on the page, in the dark and the light theme.
 
-`tests/Architecture/TagIconsTest.php` checks that every icon of the config is a symbol of the sprite, that every label of the config is a tag of a seeder, and that the licence is published.
+`tests/Architecture/TagIconsTest.php` checks that every icon of the config is a symbol of the sprite, that the address of the sprite is a path of the site (a `<use>` is drawn only from the origin of its page, so the sprite must not follow `ASSET_URL` to an asset host: `Tags::sprite()` does not use `asset()`), that every label of the config is a tag of a seeder, and that the licence is published.
 
 ## 4. The licence
 
