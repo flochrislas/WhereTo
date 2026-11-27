@@ -46,10 +46,7 @@
   <div class="detailRow">
     <div class="detail">
     @foreach ($place->tagsCached() as $placeTag)
-        {{-- data-tag: the English label, to find the same tag in the filter (whereto.js, moveTag) --}}
-        <button type="button" class="tag tagType{{$placeTag->type}}" data-tag="{{$placeTag->label}}" title="{{ __('Add this tag to the filter') }}" onclick="moveTag(event)">
-          {{ tag_label($placeTag->label) }}
-        </button>
+        <x-tag :tag="$placeTag" use="details" />
     @endforeach
     </div>
   </div>

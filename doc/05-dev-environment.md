@@ -115,16 +115,17 @@ Dependabot (`.github/dependabot.yml`) opens a weekly pull request for Composer a
 
 ## Browser tests
 
-The PHPUnit suite stops at the HTTP layer. The scenarios in `e2e/tests/` drive the real pages in Chromium with Playwright: home page and theme switch, tag filter with "all / any" and the keyboard, the three sort orders, details and BACK (and the details tags), the standalone page, the service worker offline (English and Japanese pages), the languages (a Japanese tag gives the same results as its English one, the switch keeps the open place and the tags, a filtered address copied from the address bar opens in the same state) the language banner (phone, Japanese browser), and the seeder editor of the freshness tool (its spec starts the editor's server itself, on a copy of the tool's fixtures, so it needs no app). They run twice, as a phone (Pixel 7) and as a desktop (1280px, three panels side by side), with the GPS faked near the station.
+The PHPUnit suite stops at the HTTP layer. The scenarios in `e2e/tests/` drive the real pages in a browser with Playwright: home page and theme switch, tag filter with "all / any" and the keyboard, the three sort orders, details and BACK (and the details tags), the standalone page, the tag icons (each one is a symbol of the sprite), the service worker offline (English and Japanese pages), the languages (a Japanese tag gives the same results as its English one, the switch keeps the open place and the tags, a filtered address copied from the address bar opens in the same state) the language banner (phone, Japanese browser), and the seeder editor of the freshness tool (its spec starts the editor's server itself, on a copy of the tool's fixtures, so it needs no app). They run four times, with the GPS faked near the station: as a phone (Pixel 7) and as a desktop (1280px, three panels side by side) in Chromium, and as an iPhone 15 and a desktop in WebKit, the engine of Safari (every browser of an iPhone runs on it). The service worker scenarios run in Chromium only. Firefox is not part of the usual run: `npm run test:firefox` runs the desktop scenarios in it, by hand, before an important release (`npx playwright install firefox` once).
 
 They need Node 22 and the app running (the dev stack by default, `BASE_URL` for another):
 
 ```sh
 cd e2e
 npm install                      # once: the Playwright test runner
-npx playwright install chromium  # once: the browser build the runner wants
+npx playwright install chromium webkit  # once: the browser builds the runner wants
 npm test                         # BASE_URL=http://localhost:8010 npm test to be explicit
 npm run test:headed              # watch the browser
+npm run test:firefox             # the desktop scenarios in Firefox, by hand before a release
 npx playwright show-trace test-results/<test>/trace.zip   # the trace of a failed test
 ```
 

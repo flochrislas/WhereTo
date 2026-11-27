@@ -35,7 +35,7 @@ class StoresTableSeeder extends Seeder
             'official_website' => 'http://www.yamadalabi.com/shibuya/',
             'score' => 3,
         ]);
-        $store->attachTags(['electronics', 'computers', 'phones', 'headphones', 'cameras', 'video games']);
+        $store->attachTags(['electronics', 'computers', 'phones', 'headphones', 'cameras', 'video games', 'toys']);
         $store->fillCoordinatesFromString('35.658545, 139.698468');
 
         $store = Store::create([
@@ -267,7 +267,7 @@ class StoresTableSeeder extends Seeder
             'official_website' => 'https://www.daiso-sangyo.co.jp/shop/detail/8931',
             'score' => 3,
         ]);
-        $store->attachTags(['100yen', 'gifts', 'snacks', 'housewares', 'stationery']);
+        $store->attachTags(['100yen', 'gifts', 'snacks', 'housewares', 'stationery', 'toys']);
         $store->fillCoordinatesFromString('35.661462, 139.697177');
 
         $store = Store::create([

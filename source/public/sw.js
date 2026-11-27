@@ -7,10 +7,10 @@
  *   - pages and data fragments go to the network first, and fall back to the last copy seen when offline.
  * Only GET requests of this site are handled. The Debugbar is left alone.
  *
- * The page registers this file as /sw.js?css=<version>&js=<version>&locales=<prefixes> (whereto.js, from the data
- * attributes of <html>): the versions are the ?v= query strings the page uses for its stylesheet and script, so the
- * pre-cache holds the exact URLs the page asks for; the prefixes are the languages served under a prefix ("ja"),
- * whose pages are pre-cached too (doc/12-multilingual-ui.md). A new version of either file, or a new language, is
+ * The page registers this file as /sw.js?css=<version>&js=<version>&icons=<version>&locales=<prefixes> (whereto.js,
+ * from the data attributes of <html>): the versions are the ?v= query strings the page uses for its stylesheet, its
+ * script and the sprite of the tag icons, so the pre-cache holds the exact URLs the page asks for; the prefixes are the languages served under a prefix ("ja"),
+ * whose pages are pre-cached too (doc/12-multilingual-ui.md). A new version of one of the files, or a new language, is
  * a new worker URL, hence a new install and a new cache; the old cache is deleted on activation.
  * Bump the "whereto-vN" part when the cached files change in a way the versions do not cover.
  * See https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API
@@ -20,11 +20,12 @@
 const PARAMS = new URL(self.location.href).searchParams;
 const CSS_VERSION = PARAMS.get('css') || '';
 const JS_VERSION = PARAMS.get('js') || '';
+const ICONS_VERSION = PARAMS.get('icons') || '';
 /** The path prefixes of the languages other than the default one, e.g. ['/ja'] (the default one has none) */
 const LOCALE_PREFIXES = (PARAMS.get('locales') || '').split(',').filter(locale => /^[a-z]{2,3}$/.test(locale)).map(locale => '/' + locale);
 
-// v4: the pages of every language in the pre-cache
-const CACHE_VERSION = 'whereto-v4-' + CSS_VERSION + '-' + JS_VERSION + '-' + LOCALE_PREFIXES.join('');
+// v5: the sprite of the tag icons in the pre-cache
+const CACHE_VERSION = 'whereto-v5-' + CSS_VERSION + '-' + JS_VERSION + '-' + ICONS_VERSION + '-' + LOCALE_PREFIXES.join('');
 
 /** The pages of the app shell in the default language; the same ones exist under each language prefix */
 const SHELL_PAGES = ['/', '/restaurants', '/stores', '/bars', '/karaokes'];
@@ -44,6 +45,8 @@ const PRECACHE = [
   '/js/whereto.js' + (JS_VERSION ? '?v=' + JS_VERSION : ''),
   '/fonts/open-sans-v15-latin-regular.woff2',
   '/icons/icon-192.png',
+  // The pictures of the tags (doc/13-tag-icons.md): without them the tags of an offline visit show their text only
+  '/icons/tags.svg' + (ICONS_VERSION ? '?v=' + ICONS_VERSION : ''),
   '/manifest.json'
 ];
 

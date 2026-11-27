@@ -23,5 +23,10 @@ module.exports = defineConfig({
     { name: 'phone', use: { ...devices['Pixel 7'] } },
     // A PC: the three panels side by side (style.css, "wide screens")
     { name: 'desktop', use: { ...devices['Desktop Chrome'], viewport: { width: 1280, height: 800 } } },
+    // The same two in WebKit, the engine of Safari: every browser of an iPhone, and Safari on a Mac
+    { name: 'safari-phone', use: { ...devices['iPhone 15'] } },
+    { name: 'safari-desktop', use: { ...devices['Desktop Safari'], viewport: { width: 1280, height: 800 } } },
+    // Firefox is not part of the usual run: "npm run test:firefox", by hand, before an important release
+    ...(process.env.FIREFOX ? [{ name: 'firefox-desktop', use: { ...devices['Desktop Firefox'], viewport: { width: 1280, height: 800 } } }] : []),
   ],
 });

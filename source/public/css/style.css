@@ -71,13 +71,10 @@ https://autoprefixer.github.io/
     --tag-bg: #3BA0C3;
     --tag-border: #45C3EC;
     --tag-bg-100: #5EB7D4; /* blue 1 */
-    --tag-border-100: #8ED1E7;
     --tag-bg-80: #3AD46E; /* green */
-    --tag-border-80: #5FE18B;
     --tag-bg-60: #6C80DB; /* purple */
     --tag-border-60: #98A7EA;
     --tag-bg-40: #3BA1C3; /* blue 2 */
-    --tag-border-40: #5EB7D4;
 }
 
 /* Light theme: same hues, dark enough to read on a light background.
@@ -561,8 +558,12 @@ td {
   cursor: pointer;
   border-style: solid;
   border-width: .2rem;
-  border-color: var(--tag-border);
-  background-color: var(--tag-bg);
+  /* --chip is the colour of the tag's group (the tagType classes below set it). The tag is tinted with it, on the
+     neutral colour of a cell, and bordered by it: the groups stay recognisable, and the colours of an icon are
+     not fought by a saturated background. A selected tag is filled with it (below) */
+  --chip: var(--tag-bg);
+  border-color: var(--chip);
+  background-color: color-mix(in srgb, var(--chip) 22%, var(--bg-color-cell));
   margin: .4rem .15rem;
   padding: .8rem 1.15rem;
   min-height: 44px; /* usual minimum tap target */
@@ -573,7 +574,7 @@ td {
   -webkit-user-select: none;
   /* text */
   font-family: 'ITCAvantGardeStdBk', sans-serif;
-  color: var(--color-txt-tag);
+  color: var(--color-txt-content);
   font-size: .8rem;
   font-weight: 500;
   text-decoration: none;
@@ -584,15 +585,25 @@ td {
   line-height: normal;
 }
 
+/* The picture of a tag, before its label: sized by the text, so it follows the smaller tags of the details */
+.tagIcon {
+  width: 1.6em;
+  height: 1.6em;
+  /* Negative margins above and below: the picture is taller than the text, and must not make its tag taller */
+  margin: -.4em .35em -.4em 0;
+  vertical-align: middle;
+}
+
 /* Keyboard focus visible on the tags and the clickable result names */
 .tag:focus-visible, a.resultCell:focus-visible {
   outline: 2px solid var(--color-dst);
   outline-offset: 2px;
 }
 
-/* Selected tag (moved to the selected list): a little brighter */
+/* Selected tag (moved to the selected list): filled with the colour of its group, black text */
 .tag[aria-pressed="true"] {
-  filter: brightness(1.15);
+  background-color: var(--chip);
+  color: var(--color-txt-tag);
 }
 
 /* The sort button of the current order */
@@ -602,26 +613,22 @@ td {
 
 .tagType100 {
   /* blue 1 */
-  border-color: var(--tag-border-100);
-  background-color: var(--tag-bg-100);
+  --chip: var(--tag-bg-100);
 }
 
 .tagType80 {
   /* green */
-  border-color: var(--tag-border-80);
-  background-color: var(--tag-bg-80);
+  --chip: var(--tag-bg-80);
 }
 
 .tagType60 {
-  /* purpule */
-  border-color: var(--tag-border-60);
-  background-color: var(--tag-bg-60);
+  /* purple */
+  --chip: var(--tag-bg-60);
 }
 
 .tagType40 {
   /* blue 2 */
-  border-color: var(--tag-border-40);
-  background-color: var(--tag-bg-40);
+  --chip: var(--tag-bg-40);
 }
 
 /* Palette picker */

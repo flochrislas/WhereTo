@@ -947,6 +947,6 @@ if ('serviceWorker' in navigator) {
   // The languages under a prefix travel there too: the worker pre-caches their pages (/ja/restaurants...)
   const versions = document.documentElement.dataset;
   navigator.serviceWorker.register('/sw.js?css=' + (versions.cssVersion || '') + '&js=' + (versions.jsVersion || '')
-      + '&locales=' + encodeURIComponent(versions.localePrefixes || ''))
+      + '&icons=' + (versions.iconsVersion || '') + '&locales=' + encodeURIComponent(versions.localePrefixes || ''))
     .catch(e => console.warn('Service worker registration failed: ' + e));
 }

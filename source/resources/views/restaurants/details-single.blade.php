@@ -18,6 +18,6 @@
   <x-business-status :place="$place" />
   <x-indexing :place="$place" />
   <div id="content-unchained">
-    @include('restaurants.details')
+    @include('restaurants.details', ['tagUse' => 'static'])
   </div>
 @endsection

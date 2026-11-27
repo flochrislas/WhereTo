@@ -2,7 +2,7 @@
 <!-- data-css-version / data-js-version: the ?v= of the two files below; whereto.js registers the service worker
      with them, so the worker pre-caches the exact URLs the page uses (and a new version means a new worker).
      data-locale-prefixes: the languages under a prefix ("ja"), so the worker also pre-caches /ja/restaurants... -->
-<html lang="{{ app()->getLocale() }}" data-css-version="{{ filemtime(public_path('css/style.css')) }}" data-js-version="{{ filemtime(public_path('js/whereto.js')) }}" data-locale-prefixes="{{ implode(',', \App\Support\LocaleUrl::prefixed()) }}">
+<html lang="{{ app()->getLocale() }}" data-css-version="{{ filemtime(public_path('css/style.css')) }}" data-js-version="{{ filemtime(public_path('js/whereto.js')) }}" data-icons-version="{{ filemtime(public_path('icons/tags.svg')) }}" data-locale-prefixes="{{ implode(',', \App\Support\LocaleUrl::prefixed()) }}">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
