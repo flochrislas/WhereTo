@@ -156,11 +156,11 @@ jobs:
           cache: npm
           cache-dependency-path: e2e/package-lock.json
 
-      - name: Install Playwright and Chromium
+      - name: Install Playwright, Chromium and WebKit
         working-directory: e2e
         run: |
           npm ci --no-fund --no-audit
-          npx playwright install --with-deps chromium
+          npx playwright install --with-deps chromium webkit
 
       - name: Run the browser tests
         working-directory: e2e

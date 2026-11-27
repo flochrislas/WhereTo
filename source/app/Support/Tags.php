@@ -3,7 +3,7 @@
 namespace App\Support;
 
 /**
- * The label of a tag in the language of the page (doc/12-multilingual-ui.md).
+ * The label of a tag in the language of the page (doc/12-multilingual-ui.md), and its icon (doc/13-tag-icons.md).
  * The tags stay English in the database, the search and the URLs (data-tag="ramen"); only the text shown changes:
  * lang/ja/tags.php maps 'ramen' => 'ラーメン'.
  */
@@ -19,5 +19,19 @@ final class Tags
         $translated = is_array($labels) ? ($labels[$label] ?? null) : null;
 
         return is_string($translated) && $translated !== '' ? $translated : $label;
+    }
+
+    /** The id of the tag's symbol in the sprite of the tag icons (config/tag_icons.php), or null: text only */
+    public static function icon(string $label): ?string
+    {
+        $icon = config('tag_icons')[$label] ?? null;
+
+        return is_string($icon) && $icon !== '' ? $icon : null;
+    }
+
+    /** The address of the sprite. ?v= is its modification time: new artwork has a new URL, past the caches */
+    public static function sprite(): string
+    {
+        return asset('icons/tags.svg').'?v='.filemtime(public_path('icons/tags.svg'));
     }
 }

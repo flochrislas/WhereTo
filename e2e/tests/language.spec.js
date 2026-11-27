@@ -35,11 +35,15 @@ test.describe('Languages', () => {
     await page.locator('#tags').getByRole('button', { name: 'ラーメン', exact: true }).click();
     await showResults(page);
     await expect(page.locator('#results .resultsCount')).toHaveText(/件$/);
-    const first = page.locator('#results a.resultCell').first();
-    const name = (await first.locator('.rowName').textContent()).trim();
+    // Both names and the click in one step in the page: the list may be redrawn at any moment (a late answer, the
+    // order by distance), and a name read from one drawing must not be compared with the place of another.
     // The English page shows the English name only: the row carries it in a lang="en" span, after the name_ja
-    const englishName = (await names(page))[0];
-    await first.click();
+    const { name, englishName } = await page.locator('#results a.resultCell').first().evaluate((row) => {
+      const rowName = row.querySelector('.rowName');
+      const english = rowName.matches('[lang="en"]') ? rowName : rowName.querySelector('[lang="en"]');
+      row.click();
+      return { name: rowName.textContent.trim(), englishName: english.textContent.trim() };
+    });
     await expect(page.locator('#detailName')).toHaveText(name);
     // The address bar carries the state
     await expect(page).toHaveURL(/\/ja\/restaurants\?tags=ramen&place=\d+$/);

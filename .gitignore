@@ -91,3 +91,8 @@ source/storage/.dev-seeded
 # Working files of the coding agent (browser snapshots, implementation plans)
 .playwright-mcp/
 docs/superpowers/
+
+# Tag icons: the full-size generated originals (17 MB, kept on disk as the source for tracing)
+# and the sheet made for reviewing new icons. Only the files listed in icons.json are used.
+tools/tag-icons/generated/
+tools/tag-icons/review-sheet.png

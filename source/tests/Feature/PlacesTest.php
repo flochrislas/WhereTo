@@ -422,6 +422,7 @@ class PlacesTest extends TestCase
             // The service worker is registered with the asset versions (data attributes of <html>)
             ->assertSee('data-css-version="'.filemtime(public_path('css/style.css')).'"', false)
             ->assertSee('data-js-version="'.filemtime(public_path('js/whereto.js')).'"', false)
+            ->assertSee('data-icons-version="'.filemtime(public_path('icons/tags.svg')).'"', false)
             ->assertSee("localStorage.getItem('theme')", false)
             // Progressive Web App: manifest and home screen icon
             ->assertSee('rel="manifest" href="'.asset('manifest.json').'"', false)

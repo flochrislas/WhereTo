@@ -5,6 +5,7 @@
   "scripts": {
     "test": "playwright test",
     "test:headed": "playwright test --headed",
+    "test:firefox": "FIREFOX=1 playwright test --project=firefox-desktop",
     "report": "playwright show-report"
   },
   "devDependencies": {

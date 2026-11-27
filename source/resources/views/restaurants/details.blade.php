@@ -76,7 +76,8 @@
 <div class="detailRow">
   <div class="detail">
   @foreach ($place->tagsCached() as $placeTag)
-      <x-tag :tag="$placeTag" use="details" />
+      {{-- $tagUse: set by the standalone page, which has no filter to add a tag to --}}
+      <x-tag :tag="$placeTag" :use="$tagUse ?? 'details'" />
   @endforeach
   </div>
 </div>

@@ -84,6 +84,12 @@ class StoreTagsTableSeeder extends Seeder
         ]);
 
         StoreTag::create([
+            'label' => 'toys',
+            'type' => '80',
+            'weight' => '300',
+        ]);
+
+        StoreTag::create([
             'label' => 'music instruments',
             'type' => '80',
             'weight' => '300',
@@ -227,11 +233,6 @@ class StoreTagsTableSeeder extends Seeder
             'weight' => '300',
         ]);
 
-        StoreTag::create([
-            'label' => 'glasses',
-            'type' => '80',
-            'weight' => '300',
-        ]);
         // check meaning of mall vs dept store .
 
     }

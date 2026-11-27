@@ -103,6 +103,7 @@ return [
     'sneakers' => 'スニーカー',
     'CD/DVD' => 'CD/DVD',
     'video games' => 'ゲーム',
+    'toys' => 'おもちゃ',
     'music instruments' => '楽器',
     'music gear' => '音楽機材',
     'guitars' => 'ギター',

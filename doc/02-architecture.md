@@ -9,6 +9,8 @@ WhereTo/
 ├── e2e/                  browser tests (Playwright): package.json, playwright.config.js, tests/*.spec.js
 ├── tools/freshness/      Node tool, run by hand, never deployed: checks the places against Google Places and
 │                         marks the closed ones in the seeders (see 11-data-freshness.md and its README.md)
+├── tools/tag-icons/      Node scripts, run by hand, never deployed: build the sprite of the tag icons,
+│                         source/public/icons/tags.svg, from their sources (see 13-tag-icons.md)
 ├── README.md, LICENSE    GPL-3.0 licence
 └── source/               the Laravel 13 application
     ├── app/
