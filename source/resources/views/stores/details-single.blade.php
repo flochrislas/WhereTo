@@ -18,12 +18,17 @@
 <div id="content-unchained">
 
   <div id="resultsControl">
+    @if (\App\Support\Standalone::offers($place->google_maps_link))
     <button class="sortButton"
       onclick="window.open('{{ $place->google_maps_link }}', '_blank')">
       {{ __('Google maps') }}</button>
+    @endif
+    {{-- The stand-alone app (App\Support\Standalone) has no use for a button that opens nothing --}}
+    @if (\App\Support\Standalone::offers($place->official_website))
     <button class="sortButton"
       onclick="window.open('{{ $place->official_website }}', '_blank')">
       {{ __('Website') }}</button>
+    @endif
     <button class="navButton" onclick="history.back(-1)">{{ __('BACK') }}</button>
   </div>
 

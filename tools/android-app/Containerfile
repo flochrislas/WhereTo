@@ -1,0 +1,47 @@
+# The image that builds the WhereTo APK: a JDK, the Android command-line tools, the one platform and
+# build-tools the project compiles with, and Gradle (only used once, to generate the wrapper).
+# Every version is pinned so that a build next year gives the same APK; see the "Versions" note in
+# android/app/build.gradle.kts for why these ones go together.
+
+# JDK 17: the minimum and default JDK of the Android Gradle Plugin 9.5
+FROM docker.io/library/eclipse-temurin:17.0.21.1_2-jdk-noble
+
+# From https://developer.android.com/studio#command-line-tools-only
+ARG CMDLINE_TOOLS_ZIP=commandlinetools-linux-15859902_latest.zip
+ARG CMDLINE_TOOLS_SHA256=4e4c464f145a7512b57d088ac6c278c03c9eea610886b35a5e0804e74eedf583
+# From https://services.gradle.org/distributions/gradle-9.6.0-bin.zip.sha256
+ARG GRADLE_VERSION=9.6.0
+ARG GRADLE_SHA256=bbaeb2fef8710818cf0e261201dab964c572f92b942812df0c3620d62a529a01
+
+ENV ANDROID_HOME=/opt/android-sdk
+ENV PATH=/opt/android-sdk/cmdline-tools/latest/bin:/opt/android-sdk/build-tools/36.0.0:/opt/android-sdk/platform-tools:/opt/gradle/bin:$PATH
+
+RUN apt-get update \
+ && apt-get install -y --no-install-recommends curl unzip \
+ && rm -rf /var/lib/apt/lists/*
+
+RUN curl -fsSLo /tmp/cmdline-tools.zip "https://dl.google.com/android/repository/${CMDLINE_TOOLS_ZIP}" \
+ && echo "${CMDLINE_TOOLS_SHA256}  /tmp/cmdline-tools.zip" | sha256sum -c - \
+ && unzip -q /tmp/cmdline-tools.zip -d /tmp/cmdline-tools \
+ && mkdir -p "$ANDROID_HOME/cmdline-tools" \
+ && mv /tmp/cmdline-tools/cmdline-tools "$ANDROID_HOME/cmdline-tools/latest" \
+ && rm -rf /tmp/cmdline-tools /tmp/cmdline-tools.zip
+
+# The licences are accepted here, at image build time, so that Gradle never stops to ask.
+# The packages match compileSdk and buildToolsVersion in android/app/build.gradle.kts.
+RUN yes | sdkmanager --licenses > /dev/null \
+ && sdkmanager --install "platforms;android-36" "build-tools;36.0.0" "platform-tools" > /dev/null \
+ && chmod -R a+rX "$ANDROID_HOME"
+
+RUN curl -fsSLo /tmp/gradle.zip "https://services.gradle.org/distributions/gradle-${GRADLE_VERSION}-bin.zip" \
+ && echo "${GRADLE_SHA256}  /tmp/gradle.zip" | sha256sum -c - \
+ && unzip -q /tmp/gradle.zip -d /opt \
+ && mv "/opt/gradle-${GRADLE_VERSION}" /opt/gradle \
+ && rm /tmp/gradle.zip
+
+# The Gradle cache lives in a named volume mounted here. The build runs as the host user
+# (--userns=keep-id), so the directory must be writable by anyone for the volume to inherit that.
+RUN mkdir -m 1777 /gradle-cache
+ENV GRADLE_USER_HOME=/gradle-cache
+# Android tools write their preferences under the home directory, which the host user has none of here
+ENV ANDROID_USER_HOME=/gradle-cache/android

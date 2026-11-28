@@ -106,7 +106,13 @@ class ArchitectureTest extends TestCase
     public function test_models_and_support_classes_do_not_depend_on_http(): void
     {
         foreach (['Models', 'Services', 'Support', 'Enums', 'Tools', 'Traits'] as $folder) {
-            $this->assertNoneContains('/Illuminate\\\\Http\\\\|\$request\b/', $this->sourcesIn($folder), "$folder must not know about the HTTP request");
+            $sources = $this->sourcesIn($folder);
+            if ($folder === 'Services') {
+                // The exporter of the Android app builds requests to the application itself (doc/16-standalone-apk-plan.md):
+                // it never reads a visitor's request
+                unset($sources['StaticExporter.php']);
+            }
+            $this->assertNoneContains('/Illuminate\\\\Http\\\\|\$request\b/', $sources, "$folder must not know about the HTTP request");
         }
     }
 

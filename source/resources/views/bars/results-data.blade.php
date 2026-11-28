@@ -4,7 +4,8 @@
 <div class="resultTable">
 @foreach ($places as $bar)
   <div class="resultsCounter"></div>
-  <div class="resultRow">
+  {{-- data-place-id: the stand-alone app (whereto-local.js) finds the row of a place by it, to build its own lists --}}
+  <div class="resultRow" data-place-id="{{ $bar->id }}">
     <!-- A real link to the standalone page (crawlers and new tabs); a click opens the details in the page instead -->
     <!-- lang="en": the names, branches and descriptions are English; on a Japanese page, the Japanese name comes first when the place has one (doc/12-multilingual-ui.md) -->
     <a class="resultCell nameAndType" href="{{ \App\Support\LocaleUrl::route('bars.details.single', $bar->id) }}"
@@ -19,13 +20,18 @@
       <div class="rowType" lang="en">{{ $bar->type }}</div>
     </a>
     <div class="resultCell distance centerContent">
+      {{-- The walking time links to Google Maps; in the stand-alone app a place without that link shows it as plain text --}}
+      @if (\App\Support\Standalone::offers($bar->google_maps_link))
       <a target="_blank"
          href="{{ $bar->google_maps_link }}">
+      @endif
         <div class="oneDigit inline">
         {{ App\Tools\GeoUtils::walkingTime($bar->currentDistance/1000) }}
         </div>
         <br /><div class="minute inline">{{ __('min') }}</div>
+      @if (\App\Support\Standalone::offers($bar->google_maps_link))
       </a>
+      @endif
     </div>
     <div class="resultCell description">
         <div class="extract" lang="en">{{ $bar->points }}</div>

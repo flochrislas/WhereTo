@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- The dark theme, used when the system is in dark mode: its isLightTheme is false, so the WebView
+         tells the page prefers-color-scheme: dark -->
+    <style name="Theme.WhereTo" parent="android:Theme.Material.NoActionBar">
+        <!-- The page background of the dark theme, THEME_COLORS in whereto.js -->
+        <item name="android:windowBackground">@color/bar_background</item>
+        <item name="android:colorPrimaryDark">@color/bar_background</item>
+    </style>
+
+    <color name="bar_background">#141422</color>
+</resources>

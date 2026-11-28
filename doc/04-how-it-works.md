@@ -144,3 +144,32 @@ The site is read-only: every route is a `GET`, there is no login and no account.
 4. Never touches `/_debugbar`, non-GET requests or other origins.
 
 `CACHE_VERSION` in `sw.js` names the cache; bumping it drops the previous cache on activation. The manifest (`public/manifest.json`) gives the name, colours and icons used by "Add to home screen"; the layout links it with `rel="manifest"` and an `apple-touch-icon` for iOS.
+
+## 11. The stand-alone Android app
+
+The APK of `tools/android-app/` carries the site and its data and has no server (`14-android-app.md`, `16-standalone-apk-plan.md`). Its pages are the site's own, written as files by `php artisan app:export-static`, which asks the application for each one through its HTTP kernel.
+
+**The stand-alone mode of the views.** The export sets `config('whereto.standalone')` to its date (`config/whereto.php`; never from `.env`). `App\Support\Standalone` tells the views, and then:
+
+- every internal URL is root-relative (`LocaleUrl::route()` and `twin()` default to `absolute: false`, the assets go through `Standalone::asset()`), so the same files work at the app's origin (`https://appassets.androidplatform.net/`) and at the desktop preview's; the canonical, Open Graph, hreflang and JSON-LD URLs keep naming the public site;
+- `<html>` carries `data-standalone="<date>"`, the layout loads `js/whereto-local.js` before `whereto.js`, and prints neither the manifest nor the CSRF token;
+- a place has no "Copy URL" button, nor a Website button when it has no website;
+- the home page always has the suggestion control, `hidden`.
+
+Every results row carries `data-place-id`, on the site too.
+
+**How the app gets its fragments.** `whereto.js` requests every fragment through `loadFragment(url)`. On the site that is `fetch`. In the app, `whereto-local.js` defines `window.whereToLocal`, and `loadFragment` asks it first: `handles(url)` is true for `/<kind>/results` and `/suggestions` (with or without the language prefix), and `load(url)` answers them from `/app-data/`, written by the export:
+
+| File | Content |
+|---|---|
+| `<kind>.json` | `byRatings` and, for a kind with a price, `byCost`: the ids of the open places in the server's two SQL orders; `places`: their English tags and coordinates (`null` when none) |
+| `<locale>/<kind>-results.html` | the results fragment with every row (`orderBy=ratings`) |
+| `<locale>/suggestions.json` | the sentence of each of the 100 best restaurants |
+| `<locale>/strings.json` | the count sentences of the fragment |
+| `meta.json` | the export date and the number of places per kind |
+
+The results are the server's rules in JavaScript (`whereToLocalCore`): the tags read as `formatTags` does, the four operators of `whereTags`, the position of `Position::tryFromString` and `resolvePosition`, the distance of `GeoUtils::equirectangularApprox` (with `deg2rad` computed in PHP's order, `degrees / 180 * π`), the stable sort by distance that drops the places without coordinates. The rows are clones of the server's, with the walking time rewritten. The details of a place and every page are plain files, fetched as on the site. The suggestion follows `SuggestionController`, and the control is shown from 11:30:00 to 14:00:00 Tokyo time by the phone's clock (on load, `pageshow`, `visibilitychange` and every minute). The parity spec of `e2e/tests/standalone.spec.js` compares the answers of `whereto-local.js` with the site's on the same database.
+
+**Back and restoration.** Opening a place adds no history entry, so the app asks the page. `syncState()` calls `whereToLocal.stateChanged()`, which tells the app `WhereToApp.setPlaceOpen(<bool>)` (true when a place is open on a phone layout); Android's Back then calls `whereToBack()`, which closes the place and returns `true`, or returns `false` and the app goes back in its history (or leaves). `window.open` (the Maps, Tabelog and Website buttons) goes to `WhereToApp.openExternal(url)`. Without the bridge (the desktop preview) neither is replaced. When Android kills the app, it restores the WebView's history or reloads the last address; the page rebuilds itself from its query string (`restoreState()`), as on the site. Back from the results panel to the filter panel on a phone is not done: the panels are switched by inline styles with no state of their own to report.
+
+The service worker is not registered in the app (`data-standalone`), and the export ships no `sw.js`.

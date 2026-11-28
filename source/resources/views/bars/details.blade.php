@@ -1,13 +1,21 @@
   <div id="resultsControl">
+    @if (\App\Support\Standalone::offers($place->google_maps_link))
     <button class="sortButton"
       onclick="window.open('{{ $place->google_maps_link }}', '_blank')">
       {{ __('Google maps') }}</button>
+    @endif
+    {{-- The stand-alone app (App\Support\Standalone) has no use for a button that opens nothing --}}
+    @if (\App\Support\Standalone::offers($place->official_website))
     <button class="sortButton"
       onclick="window.open('{{ $place->official_website }}', '_blank')">
       {{ __('Website') }}</button>
+    @endif
+    {{-- Not in the stand-alone app: its pages have no address worth sharing --}}
+    @unless (\App\Support\Standalone::active())
     <button class="sortButton"
       onclick="copyStringToClipboard('{{ \App\Support\LocaleUrl::route('bars.details.single',$place->id) }}')">
       {{ __('Copy URL') }}</button>
+    @endunless
     <button class="navButton" onclick="hideDetails()">{{ __('BACK') }}</button>
   </div>
 

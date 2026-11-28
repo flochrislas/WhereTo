@@ -99,6 +99,24 @@ return [
             'sslmode' => env('DB_SSLMODE', 'prefer'),
         ],
 
+        // The database of the stand-alone Android app (doc/16-standalone-apk-plan.md): "php artisan app:export-static"
+        // drops it, migrates and seeds it, then exports the site from it. The same server and user as the app, but a
+        // fixed database name and no 'url' key: neither DB_DATABASE nor DB_URL can aim it at the dev database.
+        // App\Support\ExportGuard checks the name again on the connection itself before anything is dropped.
+        'export' => [
+            'driver' => 'pgsql',
+            'host' => env('DB_HOST', '127.0.0.1'),
+            'port' => env('DB_PORT', '5432'),
+            'database' => 'whereto_export',
+            'username' => env('DB_USERNAME', 'root'),
+            'password' => env('DB_PASSWORD', ''),
+            'charset' => env('DB_CHARSET', 'utf8'),
+            'prefix' => '',
+            'prefix_indexes' => true,
+            'search_path' => 'public',
+            'sslmode' => env('DB_SSLMODE', 'prefer'),
+        ],
+
         'sqlsrv' => [
             'driver' => 'sqlsrv',
             'url' => env('DB_URL'),

@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <!-- data-css-version / data-js-version: the ?v= of the two files below; whereto.js registers the service worker
      with them, so the worker pre-caches the exact URLs the page uses (and a new version means a new worker).
-     data-locale-prefixes: the languages under a prefix ("ja"), so the worker also pre-caches /ja/restaurants... -->
-<html lang="{{ app()->getLocale() }}" data-css-version="{{ filemtime(public_path('css/style.css')) }}" data-js-version="{{ filemtime(public_path('js/whereto.js')) }}" data-icons-version="{{ filemtime(public_path('icons/tags.svg')) }}" data-locale-prefixes="{{ implode(',', \App\Support\LocaleUrl::prefixed()) }}">
+     data-locale-prefixes: the languages under a prefix ("ja"), so the worker also pre-caches /ja/restaurants...
+     data-standalone: the date of the export, only in the pages of the stand-alone Android app (App\Support\Standalone) -->
+<html lang="{{ app()->getLocale() }}" @if (\App\Support\Standalone::active()) data-standalone="{{ \App\Support\Standalone::exportDate() }}" @endif data-css-version="{{ filemtime(public_path('css/style.css')) }}" data-js-version="{{ filemtime(public_path('js/whereto.js')) }}" data-icons-version="{{ filemtime(public_path('icons/tags.svg')) }}" data-locale-prefixes="{{ implode(',', \App\Support\LocaleUrl::prefixed()) }}">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -27,14 +28,21 @@
             } catch (e) {}
         })();
     </script>
+    {{-- The stand-alone app (App\Support\Standalone) is already an app, and its files are the same for every user:
+         no manifest, and no CSRF token (a new value per session, which no script reads) --}}
+    @unless (\App\Support\Standalone::active())
     <!-- Progressive Web App: the manifest describes the app for "Add to home screen" (name, icons, colours) -->
     <link rel="manifest" href="{{ asset('manifest.json') }}">
-    <!-- Icons: browser tab, and the one iOS uses on the home screen -->
-    <link rel="icon" href="{{ asset('favicon.ico') }}" sizes="32x32">
-    <link rel="icon" href="{{ asset('icons/icon.svg') }}" type="image/svg+xml">
-    <link rel="apple-touch-icon" href="{{ asset('icons/icon-180.png') }}">
+    @endunless
+    <!-- Icons: browser tab, and the one iOS uses on the home screen. Standalone::asset(): asset() on the website,
+         a root-relative path in the stand-alone app -->
+    <link rel="icon" href="{{ \App\Support\Standalone::asset('favicon.ico') }}" sizes="32x32">
+    <link rel="icon" href="{{ \App\Support\Standalone::asset('icons/icon.svg') }}" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="{{ \App\Support\Standalone::asset('icons/icon-180.png') }}">
+    @unless (\App\Support\Standalone::active())
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    @endunless
     <!-- SEO: each view gives its 'title' and 'description' sections; everything below derives from them -->
     <title>{{ config('app.name') }} - @yield('title')</title>
     <meta name="description" content="@yield('description')">
@@ -94,10 +102,15 @@
     </script>
     <!-- Style -->
     <!-- ?v= is the file modification time: a changed stylesheet has a new URL, so the browser cache cannot serve the old one -->
-    <link href="{{ asset('css/style.css') }}?v={{ filemtime(public_path('css/style.css')) }}" rel="stylesheet">
+    <link href="{{ \App\Support\Standalone::asset('css/style.css') }}?v={{ filemtime(public_path('css/style.css')) }}" rel="stylesheet">
     <!-- Scripts: one static file, cached by the browser. "defer" runs it after the HTML is parsed.
          The ?v= query string changes with the file, so a new version is not served from the cache. -->
-    <script src="{{ asset('js/whereto.js') }}?v={{ filemtime(public_path('js/whereto.js')) }}" defer></script>
+    {{-- The stand-alone app computes the results and the suggestion in the page: whereto-local.js, before whereto.js
+         (deferred scripts run in their order), so that whereto.js finds window.whereToLocal when it starts --}}
+    @if (\App\Support\Standalone::active())
+    <script src="/js/whereto-local.js?v={{ filemtime(public_path('js/whereto-local.js')) }}" defer></script>
+    @endif
+    <script src="{{ \App\Support\Standalone::asset('js/whereto.js') }}?v={{ filemtime(public_path('js/whereto.js')) }}" defer></script>
 </head>
 <body>
      <div id="app">

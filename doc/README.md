@@ -19,3 +19,8 @@ The application code lives in `source/`. These notes were written in November 20
 | [11-data-freshness.md](11-data-freshness.md) | Design of a stand-alone tool (`tools/freshness/`) that checks every place against the Google Places API (then Tabelog for the doubtful ones) and writes the business status into the seeders |
 | [12-multilingual-ui.md](12-multilingual-ui.md) | Design of the multilingual UI: English at the existing URLs, Japanese and later languages under a prefix, translated strings and tags, hreflang |
 | [13-tag-icons.md](13-tag-icons.md) | The icons of the tags: an emoji set first, generated then traced images for the missing dishes, hand-written SVG for the flags; one sprite, built by `tools/tag-icons/`; the text stays |
+| [14-android-app.md](14-android-app.md) | Proposal for a Google Play app using the existing website, Bubblewrap and a Trusted Web Activity |
+| [15-iphone-app.md](15-iphone-app.md) | Proposal for iPhone Home Screen installation and a native offline guide for the App Store |
+| [16-standalone-apk-plan.md](16-standalone-apk-plan.md) | Implementation plan of the stand-alone Android APK (site and data in the package, no server), built as `tools/android-app/`: the export command, the stand-alone mode of the views, `whereto-local.js`, the preview and its parity tests, the WebView app |
+
+Tools beside the app, each with its README: `tools/freshness/` (doc 11), `tools/tag-icons/` (doc 13), `tools/android-app/` (the stand-alone APK, docs 14 and 16).

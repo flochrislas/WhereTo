@@ -63,19 +63,23 @@ final class LocaleUrl
     /**
      * The URL of a route in the language of the page (or the given one): route('restaurants.main') for the visitor's
      * language, e.g. LocaleUrl::route('restaurants.details', $place->id) gives /ja/restaurants/details/12 on a Japanese page.
+     * Absolute by default on the website (with the scheme and host of the request), root-relative by default in the
+     * stand-alone mode of the Android app (App\Support\Standalone), whose files must work at any origin.
      *
      * @param  mixed  $parameters  the route parameters, as for route()
+     * @param  bool|null  $absolute  null: the default of the mode, as above
      */
-    public static function route(string $name, mixed $parameters = [], bool $absolute = true, ?string $locale = null): string
+    public static function route(string $name, mixed $parameters = [], ?bool $absolute = null, ?string $locale = null): string
     {
-        return route(self::routeName($name, $locale), $parameters, $absolute);
+        return route(self::routeName($name, $locale), $parameters, $absolute ?? ! Standalone::active());
     }
 
     /**
      * The same page in another language (the language switch, the hreflang links), without the query string.
      * Outside a named route of the site (an error page), the home page of that language.
+     * Absolute or not as route() decides when $absolute is null.
      */
-    public static function twin(string $locale, bool $absolute = true): string
+    public static function twin(string $locale, ?bool $absolute = null): string
     {
         // The route that answered this request ('ja.restaurants.details.single'), null when there is none
         $route = Route::current();

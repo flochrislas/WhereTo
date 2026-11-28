@@ -53,6 +53,12 @@ abstract class PlaceSearch
         return null;
     }
 
+    /** Does the "cost" order of this kind differ from "ratings" (it has a price column) */
+    public function hasCost(): bool
+    {
+        return $this->costColumn() !== null;
+    }
+
     /** The station as a Position object */
     public static function station(): Position
     {

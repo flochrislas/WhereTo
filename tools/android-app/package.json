@@ -1,0 +1,19 @@
+{
+  "name": "whereto-android-app",
+  "private": true,
+  "description": "The stand-alone Android app of WhereTo: the site and its data in an APK that needs no server. See README.md and doc/16-standalone-apk-plan.md.",
+  "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "export": "node export.mjs",
+    "preview": "node preview.mjs 8030",
+    "test": "node --test test/*.test.mjs && npm run test:browser",
+    "test:node": "node --test test/*.test.mjs",
+    "test:browser": "cd ../../e2e && STANDALONE_DIR=../tools/android-app/export npx playwright test tests/standalone.spec.js --project=phone --project=desktop",
+    "apk": "./build-apk.sh",
+    "install-apk": "./install-apk.sh",
+    "build": "npm run export && npm test && npm run apk"
+  }
+}

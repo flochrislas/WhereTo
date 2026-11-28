@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- The light theme, used when the system is in light mode; values-night/ has the dark one.
+         The WebView tells the page prefers-color-scheme from the isLightTheme attribute of this theme
+         (apps targeting API 33+): https://developer.android.com/develop/ui/views/layout/webapps/dark-theme
+         A platform Material theme with a -night twin works from API 21, where the platform DayNight theme
+         needs API 29, above our minSdk. -->
+    <style name="Theme.WhereTo" parent="android:Theme.Material.Light.NoActionBar">
+        <!-- The colour behind the status and navigation bars (the app draws edge to edge):
+             the page background of the light theme, THEME_COLORS in whereto.js -->
+        <item name="android:windowBackground">@color/bar_background</item>
+        <item name="android:colorPrimaryDark">@color/bar_background</item>
+    </style>
+
+    <color name="bar_background">#f4f4f8</color>
+</resources>

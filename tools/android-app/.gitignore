@@ -1,0 +1,21 @@
+# What the tool makes: the export of the site, the reference answers of the parity tests, the APKs
+export/
+export-reference.json
+# While an export runs: the lock, the new pair being staged, the previous pair kept until the swap succeeds
+.export.lock/
+export.new/
+export.old/
+export-reference.json.new
+export-reference.json.old
+export.none
+export-reference.json.none
+build/
+# The signing key of the debug builds, generated once by build-apk.sh: never commit it
+.keystore/
+# The export copied into the Android project by build-apk.sh
+android/app/src/main/assets/site/
+# Gradle outputs
+android/.gradle/
+android/build/
+android/app/build/
+android/local.properties

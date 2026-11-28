@@ -111,7 +111,24 @@ Dependabot (`.github/dependabot.yml`) opens a weekly pull request for Composer a
 | `Architecture/TranslationCoverageTest` | every `__()` literal of the views and `app/` has a translation in every other `lang/<locale>.json` (and the translations keep the `:placeholders` of their sentence, add none, and are all used), every tag label and restaurant type of the seeders has one in `lang/<locale>/tags.php`, and that file has nothing else |
 | `Architecture/ArchitectureTest` | rules about the code's shape, checked with reflection and file scans: controllers extend `Controller` (place ones `PlaceController`) and never build another controller or a query (the search services and the models do that); models, services and support classes ignore the HTTP request; enums are string-backed with `fromRequest()`; no `dd()`/`dump()`/Debugbar/`env()` outside `config/`; no `$request->all()`; every application route is a named `GET`; every `onclick` in the views names a function of `whereto.js`; only the layout has inline `<script>`s (the theme snippet and the messages of the script); routes are cacheable (no closures) and exist in every language; the views build URLs with `LocaleUrl::route()`, never `route()`. Run alone with `php artisan test --testsuite=Architecture` |
 | `Feature/CacheSerializationTest` | forever-cache round trip through the `file` store, proving the `serializable_classes` allow-list is complete |
+| `Unit/ExportGuardTest` | the database guard of the Android export: only PostgreSQL `whereto_export` with a configuration read from the files |
+| `Feature/StandaloneModeTest` | the stand-alone mode of the views (`config('whereto.standalone')`): root-relative URLs, `data-standalone`, `whereto-local.js` before `whereto.js`, no manifest nor CSRF token, no "Copy URL", no empty Website button, the hidden suggestion control at any hour; the website unchanged without it |
+| `Feature/StaticExporterTest` | `App\Services\StaticExporter` on a few places: every page and place in both languages, the assets without `sw.js`, no internal absolute URL nor Debugbar, the search data (`byRatings`, `byCost`, coordinates, the per-language files), the real cache and session stores untouched |
+| `Feature/ExportStaticCommandTest` | `app:export-static` and `app:export-reference` refuse a non-empty directory (before any query), a cached configuration, a database other than `whereto_export` (PostgreSQL only: the test database survives) and a non-PostgreSQL connection |
 | `Feature/ExampleTest`, `Unit/ExampleTest` | skeleton smoke tests |
+
+## The export database of the Android app
+
+`tools/android-app/` builds an APK holding the site and its data (`16-standalone-apk-plan.md`, the tool's README). Its `php artisan app:export-static <dir>` drops, migrates and seeds a whole database, so it only works on the connection `export` of `config/database.php`: the host, port and user of the dev environment, but the fixed database name `whereto_export` and no `url` key (neither `DB_DATABASE` nor `DB_URL` can redirect it). `App\Support\ExportGuard` then asks that very connection for `select current_database()` and refuses anything but PostgreSQL `whereto_export`, and refuses a cached configuration. The run uses the `array` cache and session (`StaticExporter::prepare()`), so the dev cache is neither read nor flushed by the seeders. `app:export-reference` applies the same guard without rebuilding.
+
+`tools/android-app/export.mjs` creates the database once and runs both commands in the `app` container:
+
+```sh
+podman compose exec db psql -U wheretouser -d whereto -c "CREATE DATABASE whereto_export;"   # what export.mjs does, once
+cd tools/android-app && npm run export && npm test
+```
+
+The PHPUnit tests never rebuild a database: `StaticExporterTest` calls the exporter on the test database, `ExportStaticCommandTest` only sees the command refuse (on PostgreSQL, aimed at `whereto_test`, which stays intact). The full run, from the seeders, is the tool's: `npm test` there runs its Node tests (`node --test`), then `e2e/tests/standalone.spec.js` on the preview of the export, with `STANDALONE_DIR` set (without it the spec is skipped in the usual `npx playwright test`). These are run by hand, not in CI.
 
 ## Browser tests
 
@@ -133,6 +150,6 @@ CI runs them in a second job after the PHP checks, against a `php artisan serve`
 
 ## Front-end assets
 
-Nothing to build. Edit `public/css/style.css` and `public/js/whereto.js` directly; the script tag's `?v=` query string is the file's modification time, so the browser picks up a new version on the next load. `node --check public/js/whereto.js` (and `public/sw.js`) catches syntax errors.
+Nothing to build. Edit `public/css/style.css` and `public/js/whereto.js` directly; the script tag's `?v=` query string is the file's modification time, so the browser picks up a new version on the next load. `node --check public/js/whereto.js` (and `public/sw.js`, `public/js/whereto-local.js`) catches syntax errors. `whereto-local.js` is only loaded by the pages of the stand-alone Android app (section "The export database of the Android app" above).
 
 The service worker caches the static files: after editing the stylesheet, reload twice (the first reload serves the cached copy and fetches the new one), or tick "Update on reload" / "Bypass for network" in the browser's Application > Service Workers panel while developing. If you ever want a build step, re-add the Laravel 13 skeleton's Vite setup (`laravel/vite-plugin`, `package.json`, `vite.config.js`); those files were removed from this repository.

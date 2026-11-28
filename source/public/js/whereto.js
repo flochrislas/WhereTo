@@ -13,7 +13,12 @@
  * The URLs are in the language of the page (/ja/... on a Japanese page): the script never builds a path itself.
  * The messages it writes in the page come from window.whereToStrings, printed by the layout in the page's language.
  *
- * Sections: messages, geolocation, panels (filter/results/details), tag filter, results, details, state in the
+ * Every fragment is requested through loadFragment(). In the stand-alone Android app (doc/16-standalone-apk-plan.md,
+ * data-standalone on <html>) the layout also loads whereto-local.js before this script: loadFragment() lets it answer
+ * the results and the suggestion from the exported data, syncState() tells it when a place opens or closes, and the
+ * service worker is not registered. On the website none of this changes anything.
+ *
+ * Sections: messages, geolocation, panels (filter/results/details), fragments, tag filter, results, details, state in the
  * address bar, suggestion, theme, language banner.
  */
 
@@ -216,6 +221,24 @@ function showFilter() {
 }
 
 /* =========================================================================
+ * Fragments from the server
+ * ========================================================================= */
+
+/**
+ * The HTML text of a fragment (results, details, suggestion): a promise, rejected with the HTTP status on an error
+ * (404 for an unknown place). Every request of the page goes through here, so that the stand-alone Android app
+ * (doc/16-standalone-apk-plan.md) can answer the ones that depend on the visitor itself: its whereto-local.js,
+ * loaded before this script, computes the results and the suggestion from the exported data. On the website
+ * window.whereToLocal does not exist and this is a plain fetch().
+ */
+function loadFragment(url) {
+  if (window.whereToLocal && window.whereToLocal.handles(url)) {
+    return window.whereToLocal.load(url);
+  }
+  return fetch(url).then(response => response.ok ? response.text() : Promise.reject(response.status));
+}
+
+/* =========================================================================
  * Results list
  * ========================================================================= */
 
@@ -265,8 +288,7 @@ function loadAllResults() {
   const orderBy = getOrderBy();
   const url = getResultsUrl() + '?position=' + getLocation() + '&orderBy=' + encodeURIComponent(orderBy);
   console.info('GET: ' + url);
-  fetch(url)
-    .then(response => response.ok ? response.text() : Promise.reject(response.status))
+  loadFragment(url)
     .then(html => {
       // Only write if no other request (a later "all" one, or a tag search) started in the meantime
       if (now == getResultsLoadingTime()) {
@@ -405,10 +427,9 @@ function ajaxResults(op, tags, orderBy) {
   const now = nowStamp();
   setResultsLoadingTime(now);
   setResultsLoading("tag");
-  // fetch() returns a promise; the .then() steps run when the response arrives
-  fetch(url)
-    // HTTP error (4xx, 5xx): jump to .catch()
-    .then(response => response.ok ? response.text() : Promise.reject(response.status))
+  // loadFragment() returns a promise; the .then() steps run when the response arrives.
+  // An HTTP error (4xx, 5xx) jumps to .catch()
+  loadFragment(url)
     .then(html => {
       if (now < getResultsLoadingTime()) {
         return; // a more recent request was made (it may even have answered already): leave the list alone
@@ -529,8 +550,7 @@ function ajaxDetails(url) {
   const request = ++detailsRequest;
   getDetailsDiv().textContent = t("loading");
   console.info("GET: " + url);
-  fetch(url)
-    .then(response => response.ok ? response.text() : Promise.reject(response.status))
+  loadFragment(url)
     .then(html => {
       if (request === detailsRequest) {
         getDetailsDiv().innerHTML = html;
@@ -696,6 +716,10 @@ function syncState() {
   document.querySelectorAll("a[data-twin-base]").forEach(link => {
     link.href = link.dataset.twinBase + query;
   });
+  // The stand-alone app wants to know whether a place is open: its Back button closes it first (whereto-local.js)
+  if (window.whereToLocal) {
+    window.whereToLocal.stateChanged();
+  }
 }
 
 /**
@@ -747,8 +771,7 @@ function ajaxSuggestion() {
   // The URL is set by Blade on the suggestion div, the position comes from the browser
   const url = getSuggestionDiv().dataset.suggestionUrl + '?position=' + getLocation();
   console.info("GET: " + url);
-  fetch(url)
-    .then(response => response.ok ? response.text() : Promise.reject(response.status))
+  loadFragment(url)
     .then(html => {
       // Replace the box content with the suggestion and a button to ask again
       getSuggestionDiv().innerHTML = html;
@@ -942,7 +965,8 @@ showLanguageBanner();
 
 // Register the service worker (public/sw.js): makes the app installable and usable offline.
 // Needs HTTPS or localhost, like geolocation. Browsers without support simply skip this.
-if ('serviceWorker' in navigator) {
+// Not in the stand-alone app (data-standalone on <html>): its files are already on the phone, and it ships no sw.js
+if ('serviceWorker' in navigator && !document.documentElement.dataset.standalone) {
   // The asset versions (data attributes of <html>) travel in the worker's URL: it pre-caches those exact files
   // The languages under a prefix travel there too: the worker pre-caches their pages (/ja/restaurants...)
   const versions = document.documentElement.dataset;
